@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Design tokens.
+ *
+ * Values are space-separated RGB channels so Tailwind's `<alpha-value>`
+ * placeholder works (`bg-surface/50`, `text-fg/70`, ...). Semantic names are
+ * defined once per theme here, so components never need `dark:` variants for
+ * ordinary foreground/background work.
+ */
+@layer base {
+  :root {
+    /* Brand — the "fen" green */
+    --color-brand: 22 163 74;
+    --color-brand-soft: 220 252 231;
+    --color-on-brand: 255 255 255;
+
+    /* Surfaces */
+    --color-bg: 249 250 251;
+    --color-surface: 255 255 255;
+    --color-surface-alt: 243 244 246;
+    --color-border: 229 231 235;
+
+    /* Foreground */
+    --color-fg: 17 24 39;
+    --color-fg-muted: 107 114 128;
+    --color-fg-subtle: 156 163 175;
+
+    /* Macronutrients — kept distinct in both themes, these are data colors */
+    --color-protein: 239 68 68;
+    --color-carbs: 245 158 11;
+    --color-fat: 59 130 246;
+
+    /* Status */
+    --color-success: 22 163 74;
+    --color-warning: 217 119 6;
+    --color-danger: 220 38 38;
+  }
+
+  .dark:root {
+    --color-brand: 74 222 128;
+    --color-brand-soft: 22 45 32;
+    --color-on-brand: 5 46 22;
+
+    --color-bg: 9 9 11;
+    --color-surface: 24 24 27;
+    --color-surface-alt: 39 39 42;
+    --color-border: 63 63 70;
+
+    --color-fg: 250 250 250;
+    --color-fg-muted: 161 161 170;
+    --color-fg-subtle: 113 113 122;
+
+    --color-protein: 248 113 113;
+    --color-carbs: 251 191 36;
+    --color-fat: 96 165 250;
+
+    --color-success: 74 222 128;
+    --color-warning: 251 191 36;
+    --color-danger: 248 113 113;
+  }
+}
