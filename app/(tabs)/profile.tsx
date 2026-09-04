@@ -8,6 +8,8 @@ import { Card } from '@/components/ui/Card';
 import { ScrollScreen } from '@/components/ui/Screen';
 import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
+import { usePendingChanges } from '@/features/diary/queries';
+import { useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import type { ThemePreference } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -15,7 +17,8 @@ import { cn } from '@/lib/cn';
 import { haptics } from '@/lib/haptics';
 import {
   ACTIVITY_LABELS,
-  calculateGoals,
+  DIET_LABELS,
+  ageFromBirthYear,
   totalDailyEnergyExpenditure,
 } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
@@ -31,8 +34,14 @@ export default function ProfileScreen() {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
 
-  const user = useAuthStore((state) => state.session?.user);
+  const user = useProfileStore((state) => state.profile);
+  const eraseLocalData = useProfileStore((state) => state.eraseAll);
+
+  const session = useAuthStore((state) => state.session);
   const signOut = useAuthStore((state) => state.signOut);
+  const isSignedIn = session !== null;
+
+  const { data: pendingChanges = 0 } = usePendingChanges();
 
   const theme = useSettingsStore((state) => state.theme);
   const setTheme = useSettingsStore((state) => state.setTheme);
@@ -41,18 +50,32 @@ export default function ProfileScreen() {
 
   if (!user) return null;
 
-  const goals = calculateGoals(user);
   const maintenance = Math.round(totalDailyEnergyExpenditure(user));
+  const isPremium = user.subscriptionTier === 'premium';
 
   const confirmSignOut = () => {
-    Alert.alert('Sign out', 'You will need to sign in again to see your diary.', [
+    Alert.alert('Sign out', 'Your diary stays on this device.', [
       { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Sign out',
-        style: 'destructive',
-        onPress: () => void signOut(),
-      },
+      { text: 'Sign out', style: 'destructive', onPress: () => void signOut() },
     ]);
+  };
+
+  const confirmErase = () => {
+    Alert.alert(
+      'Erase local data',
+      'This permanently deletes your diary, your goals and your profile from this device. It cannot be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Erase',
+          style: 'destructive',
+          onPress: () => {
+            haptics.warning();
+            eraseLocalData();
+          },
+        },
+      ],
+    );
   };
 
   return (
@@ -61,35 +84,72 @@ export default function ProfileScreen() {
         Profile
       </Text>
 
-      <Card className="flex-row items-center gap-3">
-        <View className="h-14 w-14 items-center justify-center rounded-full bg-brand-soft">
-          <Text variant="heading" tone="brand">
-            {(user.displayName ?? user.email).charAt(0).toUpperCase()}
-          </Text>
+      <Card className="gap-3">
+        <View className="flex-row items-center gap-3">
+          <View className="h-14 w-14 items-center justify-center rounded-full bg-brand-soft">
+            <Text variant="heading" tone="brand">
+              {(session?.user.displayName ?? session?.user.email ?? 'G')
+                .charAt(0)
+                .toUpperCase()}
+            </Text>
+          </View>
+
+          <View className="flex-1 gap-0.5">
+            <View className="flex-row items-center gap-2">
+              <Text variant="heading" numberOfLines={1}>
+                {isSignedIn ? (session.user.displayName ?? 'Your account') : 'Guest'}
+              </Text>
+              {isPremium ? (
+                <View className="rounded-pill bg-brand px-2 py-0.5">
+                  <Text variant="caption" tone="onBrand">
+                    Premium
+                  </Text>
+                </View>
+              ) : null}
+            </View>
+            <Text variant="caption" tone="muted" numberOfLines={1}>
+              {isSignedIn ? session.user.email : 'Tracking offline on this device'}
+            </Text>
+          </View>
         </View>
 
-        <View className="flex-1 gap-0.5">
-          <Text variant="heading" numberOfLines={1}>
-            {user.displayName ?? 'Your account'}
-          </Text>
-          <Text variant="caption" tone="muted" numberOfLines={1}>
-            {user.email}
-          </Text>
-        </View>
+        {isSignedIn ? null : (
+          <View className="gap-2 border-t border-border pt-3">
+            <Pressable
+              onPress={() => router.push('/sign-in')}
+              accessibilityRole="button"
+              className="flex-row items-center justify-between active:opacity-60"
+            >
+              <Text variant="label" tone="brand">
+                Sign in to sync your data
+              </Text>
+              <Ionicons name="chevron-forward" size={16} color={colors.brand} />
+            </Pressable>
+            <Text variant="caption" tone="subtle">
+              Everything already works offline. An account keeps your diary backed up and
+              available on another device.
+            </Text>
+          </View>
+        )}
+
+        {pendingChanges > 0 ? (
+          <View className="flex-row items-center gap-2 border-t border-border pt-3">
+            <Ionicons name="cloud-offline-outline" size={16} color={colors.fgMuted} />
+            <Text variant="caption" tone="muted">
+              {pendingChanges} {pendingChanges === 1 ? 'change' : 'changes'} saved on this
+              device only
+            </Text>
+          </View>
+        ) : null}
       </Card>
 
       <Card className="gap-3">
         <Text variant="heading">Daily targets</Text>
 
-        <Row label="Calories" value={`${goals.calories.toLocaleString()} kcal`} />
-        <Row label="Protein" value={`${goals.protein} g`} />
-        <Row label="Carbs" value={`${goals.carbs} g`} />
-        <Row label="Fat" value={`${goals.fat} g`} />
-
         <Pressable
           onPress={() => router.push('/settings/goals')}
           accessibilityRole="button"
-          className="flex-row items-center justify-between border-t border-border pt-3 active:opacity-60"
+          className="flex-row items-center justify-between active:opacity-60"
         >
           <Text variant="label" tone="brand">
             Edit goals and body stats
@@ -97,37 +157,44 @@ export default function ProfileScreen() {
           <Ionicons name="chevron-forward" size={16} color={colors.brand} />
         </Pressable>
 
-        <View>
-          <Text variant="caption" tone="subtle">
-            {user.customGoals
-              ? 'Custom targets — these override the calculated values.'
-              : `Calculated from your profile. Maintenance is about ${maintenance.toLocaleString()} kcal a day.`}
-          </Text>
-        </View>
+        <Text variant="caption" tone="subtle">
+          {user.calorieCalcMode === 'manual'
+            ? 'Set by hand — these override the calculated values.'
+            : `Calculated from your profile. Maintenance is about ${maintenance.toLocaleString()} kcal a day.`}
+        </Text>
       </Card>
 
       <Card className="gap-3">
         <Text variant="heading">About you</Text>
 
-        <Row label="Sex" value={user.sex === 'male' ? 'Male' : 'Female'} />
-        <Row label="Age" value={`${user.age}`} />
-        <Row label="Height" value={`${user.heightCm} cm`} />
-        <Row label="Weight" value={`${user.weightKg} kg`} />
+        <Row
+          label="Sex"
+          value={
+            user.gender === 'male'
+              ? 'Male'
+              : user.gender === 'female'
+                ? 'Female'
+                : 'Other'
+          }
+        />
+        <Row label="Age" value={`${ageFromBirthYear(user.birthYear)}`} />
+        <Row label="Height" value={`${user.height} cm`} />
+        <Row label="Weight" value={`${user.weightCurrent} kg`} />
+        <Row label="Goal weight" value={`${user.weightGoal} kg`} />
         <Row
           label="Activity"
           value={ACTIVITY_LABELS[user.activityLevel].split(' — ')[0] ?? ''}
         />
+        <Row label="Diet" value={DIET_LABELS[user.dietType]} />
       </Card>
 
       <Card className="gap-3">
         <Text variant="heading">Appearance</Text>
-
         <SegmentedControl options={THEME_OPTIONS} value={theme} onChange={setTheme} />
       </Card>
 
       <Card className="gap-3">
         <Text variant="heading">Units</Text>
-
         <SegmentedControl
           options={[
             { value: 'kg' as const, label: 'Kilograms' },
@@ -138,29 +205,22 @@ export default function ProfileScreen() {
         />
       </Card>
 
-      <Card flush>
-        <Pressable
-          onPress={confirmSignOut}
-          accessibilityRole="button"
-          className="flex-row items-center justify-between px-4 py-4 active:bg-surface-alt"
-        >
-          <Text variant="body" tone="danger">
-            Sign out
-          </Text>
-          <Ionicons name="log-out-outline" size={20} color={colors.danger} />
-        </Pressable>
-      </Card>
+      {isSignedIn ? (
+        <Card flush>
+          <Pressable
+            onPress={confirmSignOut}
+            accessibilityRole="button"
+            className="flex-row items-center justify-between px-4 py-4 active:bg-surface-alt"
+          >
+            <Text variant="body" tone="danger">
+              Sign out
+            </Text>
+            <Ionicons name="log-out-outline" size={20} color={colors.danger} />
+          </Pressable>
+        </Card>
+      ) : null}
 
-      <Button
-        label="Delete account"
-        variant="ghost"
-        onPress={() =>
-          Alert.alert(
-            'Delete account',
-            'This permanently removes your diary and cannot be undone. Contact support to proceed.',
-          )
-        }
-      />
+      <Button label="Erase local data" variant="ghost" onPress={confirmErase} />
     </ScrollScreen>
   );
 }

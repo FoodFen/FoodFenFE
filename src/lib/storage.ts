@@ -3,8 +3,16 @@ import { createMMKV } from 'react-native-mmkv';
 /**
  * Synchronous key-value storage.
  *
- * Two separate instances so cached server data can be cleared on sign-out
- * without wiping the user's device-local preferences.
+ * Three separate instances, so clearing one never touches the others:
+ *   - `preferences` — device settings (theme, units). Survives sign-out.
+ *   - `localData`   — the diary, the food catalog, the local profile. This is
+ *     the source of truth while there is no backend, and it is NOT cleared on
+ *     sign-out: a guest's diary is not account data, and signing in later
+ *     should not delete it. Only an explicit "erase local data" action clears
+ *     this store.
+ *   - `cache`       — the persisted TanStack Query cache. Safe to wipe any
+ *     time; everything in it is derived from `localData` (or, once sync
+ *     exists, the server) and will be recomputed.
  *
  * MMKV is a native module built on Nitro: it is unavailable in Expo Go and in
  * Jest, so the accessors below degrade to an in-memory map rather than
@@ -45,6 +53,7 @@ function createStore(id: string): Store {
 }
 
 const preferencesStore = createStore('foodfen.preferences');
+const localDataStore = createStore('foodfen.localdata');
 const cacheStore = createStore('foodfen.cache');
 
 /** Typed JSON helpers over a raw store. */
@@ -76,16 +85,22 @@ function jsonAccessors(store: Store) {
   };
 }
 
-/** Survives sign-out: theme, units, onboarding state. */
+/** Device settings: theme, units, onboarding state. Survives sign-out. */
 export const preferences = jsonAccessors(preferencesStore);
 
-/** Cleared on sign-out: cached diary data, food search results. */
+/**
+ * The diary, the food catalog, and the local profile — the app's actual data,
+ * source-of-truth while there is no backend. See `src/data/` for the
+ * repositories built on top of this. Cleared only by an explicit
+ * "erase local data" action, never by sign-out.
+ */
+export const localData = jsonAccessors(localDataStore);
+
+/** The persisted TanStack Query cache. Safe to clear at any time. */
 export const cache = jsonAccessors(cacheStore);
 
 export const StorageKeys = {
   colorScheme: 'color-scheme',
   onboardingComplete: 'onboarding-complete',
-  lastViewedDate: 'last-viewed-date',
-  recentFoodIds: 'recent-food-ids',
   queryCache: 'react-query-cache',
 } as const;

@@ -1,15 +1,14 @@
 import type {
   ActivityLevel,
-  Food,
-  GoalKind,
+  CatalogFood,
+  CatalogServing,
+  DietType,
   Macros,
   Nutrition,
-  NutritionGoals,
-  ServingUnit,
   UserProfile,
 } from '@/types/models';
 
-/** Kilocalories per gram. Used to convert macro targets to grams. */
+/** Kilocalories per gram. Converts macro targets to grams and back. */
 export const KCAL_PER_GRAM = {
   protein: 4,
   carbs: 4,
@@ -20,13 +19,16 @@ export const KCAL_PER_GRAM = {
 const KCAL_PER_KG_BODY_MASS = 7700;
 
 /**
- * Daily deficit/surplus is capped so the app never suggests a target that is
- * unsafe. 1 kg/week is already an aggressive rate.
+ * Daily deficit or surplus is capped so the app never suggests an unsafe
+ * target. 1 kg/week is already an aggressive rate.
  */
-const MAX_DAILY_CALORIE_DELTA = 1000;
+const MAX_DAILY_KCAL_DELTA = 1000;
 
-/** Floors recommended by common clinical guidance; we never target below these. */
-const MIN_CALORIES_BY_SEX = { male: 1500, female: 1200 } as const;
+/** Floors from common clinical guidance; we never target below these. */
+const MIN_KCAL_BY_GENDER = { male: 1500, female: 1200, other: 1200 } as const;
+
+/** Millilitres of water per kilogram of body mass, the usual rule of thumb. */
+const WATER_ML_PER_KG = 35;
 
 const ACTIVITY_MULTIPLIERS: Record<ActivityLevel, number> = {
   sedentary: 1.2,
@@ -44,189 +46,273 @@ export const ACTIVITY_LABELS: Record<ActivityLevel, string> = {
   very_active: 'Very active — hard training or physical job',
 };
 
-export const EMPTY_NUTRITION: Nutrition = {
-  calories: 0,
-  protein: 0,
-  carbs: 0,
-  fat: 0,
+export const DIET_LABELS: Record<DietType, string> = {
+  balanced: 'Balanced',
+  low_carb: 'Low carb',
+  high_protein: 'High protein',
+  keto: 'Keto',
+  vegetarian: 'Vegetarian',
 };
+
+export const EMPTY_NUTRITION: Nutrition = {
+  kcal: 0,
+  carbsG: 0,
+  proteinG: 0,
+  fatG: 0,
+};
+
+/** Whole years, from the birth year the profile stores. */
+export function ageFromBirthYear(birthYear: number, now: Date = new Date()): number {
+  return Math.max(now.getFullYear() - birthYear, 0);
+}
 
 /**
  * Basal metabolic rate via Mifflin–St Jeor, the equation with the best
  * validated accuracy for the general population.
+ *
+ * The equation is only defined for male and female. `other` takes the mean of
+ * the two constants rather than defaulting to one of them, which would bias
+ * the target by ±83 kcal for everyone who selects it.
  */
 export function basalMetabolicRate(
-  profile: Pick<UserProfile, 'sex' | 'age' | 'heightCm' | 'weightKg'>,
+  profile: Pick<UserProfile, 'gender' | 'birthYear' | 'height' | 'weightCurrent'>,
+  now: Date = new Date(),
 ): number {
-  const base = 10 * profile.weightKg + 6.25 * profile.heightCm - 5 * profile.age;
+  const age = ageFromBirthYear(profile.birthYear, now);
+  const base = 10 * profile.weightCurrent + 6.25 * profile.height - 5 * age;
 
-  return profile.sex === 'male' ? base + 5 : base - 161;
+  switch (profile.gender) {
+    case 'male':
+      return base + 5;
+    case 'female':
+      return base - 161;
+    case 'other':
+      return base - 78;
+  }
 }
 
 /** Total daily energy expenditure: BMR scaled by activity level. */
 export function totalDailyEnergyExpenditure(
-  profile: Pick<UserProfile, 'sex' | 'age' | 'heightCm' | 'weightKg' | 'activityLevel'>,
+  profile: Pick<
+    UserProfile,
+    'gender' | 'birthYear' | 'height' | 'weightCurrent' | 'activityLevel'
+  >,
+  now: Date = new Date(),
 ): number {
-  return basalMetabolicRate(profile) * ACTIVITY_MULTIPLIERS[profile.activityLevel];
+  return basalMetabolicRate(profile, now) * ACTIVITY_MULTIPLIERS[profile.activityLevel];
+}
+
+export type GoalDirection = 'lose' | 'maintain' | 'gain';
+
+/**
+ * Which way the user is trying to move.
+ *
+ * Derived from goal weight rather than stored, because storing both is storing
+ * the same fact twice — and they can disagree.
+ */
+export function goalDirection(
+  profile: Pick<UserProfile, 'weightCurrent' | 'weightGoal'>,
+): GoalDirection {
+  // A goal within half a kilo of current weight is maintenance, not a plan;
+  // a stricter comparison would make everyone who rounds their weight a cutter.
+  const difference = profile.weightGoal - profile.weightCurrent;
+
+  if (Math.abs(difference) < 0.5) return 'maintain';
+
+  return difference < 0 ? 'lose' : 'gain';
 }
 
 /**
- * Daily calorie change implied by a target rate of weight change, clamped to
- * `MAX_DAILY_CALORIE_DELTA`. Positive means a surplus, negative a deficit.
+ * Daily calorie change implied by the target rate, clamped to
+ * `MAX_DAILY_KCAL_DELTA`. Negative is a deficit, positive a surplus.
  */
-export function dailyCalorieDelta(goalKind: GoalKind, weeklyRateKg: number): number {
-  if (goalKind === 'maintain') return 0;
+export function dailyKcalDelta(direction: GoalDirection, weeklyRateKg: number): number {
+  if (direction === 'maintain') return 0;
 
   const magnitude = Math.min(
     (Math.abs(weeklyRateKg) * KCAL_PER_KG_BODY_MASS) / 7,
-    MAX_DAILY_CALORIE_DELTA,
+    MAX_DAILY_KCAL_DELTA,
   );
 
-  return goalKind === 'lose' ? -magnitude : magnitude;
+  return direction === 'lose' ? -magnitude : magnitude;
 }
 
 /**
- * Macro split as a fraction of total calories. Protein is raised when cutting
- * so muscle is better preserved in a deficit.
+ * Macro split as a fraction of total calories.
+ *
+ * Diet type leads where the user has chosen one; otherwise the split follows
+ * the goal, raising protein on a cut so muscle is better preserved.
  */
-function macroSplitFor(goalKind: GoalKind): Macros {
-  switch (goalKind) {
+function macroSplitFor(direction: GoalDirection, dietType: DietType): Macros {
+  switch (dietType) {
+    case 'low_carb':
+      return { proteinG: 0.3, carbsG: 0.2, fatG: 0.5 };
+    case 'high_protein':
+      return { proteinG: 0.4, carbsG: 0.35, fatG: 0.25 };
+    case 'keto':
+      return { proteinG: 0.25, carbsG: 0.05, fatG: 0.7 };
+    case 'balanced':
+    case 'vegetarian':
+      break;
+  }
+
+  switch (direction) {
     case 'lose':
-      return { protein: 0.35, carbs: 0.35, fat: 0.3 };
+      return { proteinG: 0.35, carbsG: 0.35, fatG: 0.3 };
     case 'gain':
-      return { protein: 0.25, carbs: 0.45, fat: 0.3 };
+      return { proteinG: 0.25, carbsG: 0.45, fatG: 0.3 };
     case 'maintain':
-      return { protein: 0.3, carbs: 0.4, fat: 0.3 };
+      return { proteinG: 0.3, carbsG: 0.4, fatG: 0.3 };
   }
 }
 
+/** The daily targets a `daily_goal` row is created from. */
+export interface CalculatedTargets {
+  targetKcal: number;
+  targetCarbsG: number;
+  targetProteinG: number;
+  targetFatG: number;
+  targetWaterMl: number;
+}
+
 /**
- * The user's daily targets. Returns `customGoals` untouched when the user has
- * overridden them, otherwise derives targets from their profile.
+ * Derive daily targets from the profile.
+ *
+ * Only used when `calorieCalcMode` is `auto`; a `manual` user's targets come
+ * from whatever they typed into their latest `daily_goal` row, and this is
+ * never applied over the top of them.
  */
-export function calculateGoals(profile: UserProfile): NutritionGoals {
-  if (profile.customGoals) return profile.customGoals;
+export function calculateTargets(
+  profile: Pick<
+    UserProfile,
+    | 'gender'
+    | 'birthYear'
+    | 'height'
+    | 'weightCurrent'
+    | 'weightGoal'
+    | 'activityLevel'
+    | 'dietType'
+    | 'weeklyRateKg'
+  >,
+  now: Date = new Date(),
+): CalculatedTargets {
+  const direction = goalDirection(profile);
+  const maintenance = totalDailyEnergyExpenditure(profile, now);
+  const targetKcal = Math.round(
+    Math.max(
+      maintenance + dailyKcalDelta(direction, profile.weeklyRateKg),
+      MIN_KCAL_BY_GENDER[profile.gender],
+    ),
+  );
 
-  const maintenance = totalDailyEnergyExpenditure(profile);
-  const target = maintenance + dailyCalorieDelta(profile.goalKind, profile.weeklyRateKg);
-  const calories = Math.round(Math.max(target, MIN_CALORIES_BY_SEX[profile.sex]));
-
-  const split = macroSplitFor(profile.goalKind);
+  const split = macroSplitFor(direction, profile.dietType);
 
   return {
-    calories,
-    protein: Math.round((calories * split.protein) / KCAL_PER_GRAM.protein),
-    carbs: Math.round((calories * split.carbs) / KCAL_PER_GRAM.carbs),
-    fat: Math.round((calories * split.fat) / KCAL_PER_GRAM.fat),
+    targetKcal,
+    targetProteinG: Math.round((targetKcal * split.proteinG) / KCAL_PER_GRAM.protein),
+    targetCarbsG: Math.round((targetKcal * split.carbsG) / KCAL_PER_GRAM.carbs),
+    targetFatG: Math.round((targetKcal * split.fatG) / KCAL_PER_GRAM.fat),
+    targetWaterMl: Math.round((profile.weightCurrent * WATER_ML_PER_KG) / 50) * 50,
   };
 }
 
-/** Grams represented by `quantity` of a serving unit. */
-export function gramsFor(quantity: number, unit: ServingUnit): number {
-  return quantity * unit.grams;
+/** What one quantity of a catalog serving weighs. */
+export function gramsForServing(quantity: number, serving: CatalogServing): number {
+  return quantity * serving.grams;
 }
 
-export function findServingUnit(food: Food, unitId: string): ServingUnit | undefined {
-  return food.servingUnits.find((unit) => unit.id === unitId);
+export function findServing(
+  food: CatalogFood,
+  servingId: string,
+): CatalogServing | undefined {
+  return food.servings.find((serving) => serving.id === servingId);
 }
 
 /**
- * Scale a food's per-100 g nutrition to an actual portion.
+ * Scale a catalog food's per-100 g figures to an actual weight, for prefilling
+ * an ingredient row.
  *
- * Optional fields stay optional: a food with no fiber data must not report
- * `fiber: 0`, which would read as "contains no fiber" rather than "unknown".
+ * `fiberG` stays absent when the source has no value: reporting `0` would
+ * claim the food contains no fiber rather than that nobody measured it.
  */
 export function scaleNutrition(per100g: Nutrition, grams: number): Nutrition {
   const factor = grams / 100;
-  const scaleOptional = (value: number | undefined) =>
-    value === undefined ? undefined : round1(value * factor);
 
   return {
-    calories: Math.round(per100g.calories * factor),
-    protein: round1(per100g.protein * factor),
-    carbs: round1(per100g.carbs * factor),
-    fat: round1(per100g.fat * factor),
-    fiber: scaleOptional(per100g.fiber),
-    sugar: scaleOptional(per100g.sugar),
-    sodium: scaleOptional(per100g.sodium),
-    saturatedFat: scaleOptional(per100g.saturatedFat),
+    kcal: Math.round(per100g.kcal * factor),
+    carbsG: round1(per100g.carbsG * factor),
+    proteinG: round1(per100g.proteinG * factor),
+    fatG: round1(per100g.fatG * factor),
+    fiberG:
+      per100g.fiberG === undefined || per100g.fiberG === null
+        ? undefined
+        : round1(per100g.fiberG * factor),
   };
 }
 
-/** Nutrition for a portion expressed in serving units. */
-export function nutritionForPortion(
-  food: Food,
+/** Nutrition for a portion expressed in catalog servings. */
+export function nutritionForServing(
+  food: CatalogFood,
   quantity: number,
-  servingUnitId: string,
+  servingId: string,
 ): Nutrition {
-  const unit = findServingUnit(food, servingUnitId) ?? food.servingUnits[0];
+  const serving = findServing(food, servingId) ?? food.servings[0];
 
-  // A food with no serving units can still be logged by weight in grams.
-  const grams = unit ? gramsFor(quantity, unit) : quantity;
-
-  return scaleNutrition(food.per100g, grams);
+  // A food with no servings defined can still be logged by weight in grams.
+  return scaleNutrition(
+    food.per100g,
+    serving ? gramsForServing(quantity, serving) : quantity,
+  );
 }
 
-/** Sum nutrition across entries, dropping optional fields nobody reported. */
+/**
+ * Sum nutrition across ingredients or entries.
+ *
+ * `fiberG` survives only if at least one item reported it, so a total of
+ * `undefined` still means "not measured" rather than "none".
+ */
 export function sumNutrition(items: readonly Nutrition[]): Nutrition {
-  const total: Nutrition = { ...EMPTY_NUTRITION };
-  let hasFiber = false;
-  let hasSugar = false;
-  let hasSodium = false;
-  let hasSaturatedFat = false;
+  let kcal = 0;
+  let carbsG = 0;
+  let proteinG = 0;
+  let fatG = 0;
+  let fiberG: number | undefined;
 
   for (const item of items) {
-    total.calories += item.calories;
-    total.protein += item.protein;
-    total.carbs += item.carbs;
-    total.fat += item.fat;
+    kcal += item.kcal;
+    carbsG += item.carbsG;
+    proteinG += item.proteinG;
+    fatG += item.fatG;
 
-    if (item.fiber !== undefined) {
-      total.fiber = (total.fiber ?? 0) + item.fiber;
-      hasFiber = true;
-    }
-    if (item.sugar !== undefined) {
-      total.sugar = (total.sugar ?? 0) + item.sugar;
-      hasSugar = true;
-    }
-    if (item.sodium !== undefined) {
-      total.sodium = (total.sodium ?? 0) + item.sodium;
-      hasSodium = true;
-    }
-    if (item.saturatedFat !== undefined) {
-      total.saturatedFat = (total.saturatedFat ?? 0) + item.saturatedFat;
-      hasSaturatedFat = true;
+    if (item.fiberG !== undefined && item.fiberG !== null) {
+      fiberG = (fiberG ?? 0) + item.fiberG;
     }
   }
 
   return {
-    calories: Math.round(total.calories),
-    protein: round1(total.protein),
-    carbs: round1(total.carbs),
-    fat: round1(total.fat),
-    fiber: hasFiber ? round1(total.fiber ?? 0) : undefined,
-    sugar: hasSugar ? round1(total.sugar ?? 0) : undefined,
-    sodium: hasSodium ? round1(total.sodium ?? 0) : undefined,
-    saturatedFat: hasSaturatedFat ? round1(total.saturatedFat ?? 0) : undefined,
+    kcal: Math.round(kcal),
+    carbsG: round1(carbsG),
+    proteinG: round1(proteinG),
+    fatG: round1(fatG),
+    fiberG: fiberG === undefined ? undefined : round1(fiberG),
   };
 }
 
 /**
- * Calories still available today. Exercise calories are added back, matching
- * how mainstream trackers present the number.
+ * Calories still available today. Exercise is added back, matching how
+ * mainstream trackers present the number.
  */
-export function caloriesRemaining(
-  goalCalories: number,
-  consumed: number,
-  exerciseCalories = 0,
+export function kcalRemaining(
+  targetKcal: number,
+  consumedKcal: number,
+  exerciseKcal = 0,
 ): number {
-  return Math.round(goalCalories - consumed + exerciseCalories);
+  return Math.round(targetKcal - consumedKcal + exerciseKcal);
 }
 
 /**
  * Progress toward a target as a 0–1 fraction. Values above the target clamp to
- * 1 so progress bars do not overflow; use `caloriesRemaining` to detect
- * overshoot.
+ * 1 so bars do not overflow; use `kcalRemaining` to detect overshoot.
  */
 export function progressFraction(consumed: number, target: number): number {
   if (target <= 0) return 0;
@@ -236,17 +322,17 @@ export function progressFraction(consumed: number, target: number): number {
 
 /** Share of total calories contributed by each macro, as 0–1 fractions. */
 export function macroEnergyShare(macros: Macros): Macros {
-  const proteinKcal = macros.protein * KCAL_PER_GRAM.protein;
-  const carbsKcal = macros.carbs * KCAL_PER_GRAM.carbs;
-  const fatKcal = macros.fat * KCAL_PER_GRAM.fat;
+  const proteinKcal = macros.proteinG * KCAL_PER_GRAM.protein;
+  const carbsKcal = macros.carbsG * KCAL_PER_GRAM.carbs;
+  const fatKcal = macros.fatG * KCAL_PER_GRAM.fat;
   const total = proteinKcal + carbsKcal + fatKcal;
 
-  if (total <= 0) return { protein: 0, carbs: 0, fat: 0 };
+  if (total <= 0) return { proteinG: 0, carbsG: 0, fatG: 0 };
 
   return {
-    protein: proteinKcal / total,
-    carbs: carbsKcal / total,
-    fat: fatKcal / total,
+    proteinG: proteinKcal / total,
+    carbsG: carbsKcal / total,
+    fatG: fatKcal / total,
   };
 }
 

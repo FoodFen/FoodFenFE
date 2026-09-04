@@ -24,12 +24,22 @@ export const MEAL_ICONS: Record<MealType, string> = {
   snack: '🍎',
 };
 
+export function entryNutrition(entry: FoodEntry): Nutrition {
+  return {
+    kcal: entry.totalKcal,
+    carbsG: entry.carbsG,
+    proteinG: entry.proteinG,
+    fatG: entry.fatG,
+    fiberG: entry.fiberG,
+  };
+}
+
 /**
  * Group a day's entries into the four meals.
  *
  * Every meal is returned even when empty, so the diary always shows all four
- * sections with an "Add food" affordance rather than hiding the ones the user
- * has not filled in yet.
+ * sections with an "add" affordance rather than hiding the ones the user has
+ * not filled in yet.
  */
 export function groupByMeal(entries: readonly FoodEntry[]): MealGroup[] {
   return MEAL_TYPES.map((mealType) => {
@@ -41,21 +51,9 @@ export function groupByMeal(entries: readonly FoodEntry[]): MealGroup[] {
       totals:
         mealEntries.length === 0
           ? { ...EMPTY_NUTRITION }
-          : sumNutrition(mealEntries.map((entry) => entry.nutrition)),
+          : sumNutrition(mealEntries.map(entryNutrition)),
     };
   });
-}
-
-/** An empty day, so screens can render before the first fetch resolves. */
-export function emptyDiaryDay(date: string, goals: DiaryDay['goals']): DiaryDay {
-  return {
-    date,
-    entries: [],
-    totals: { ...EMPTY_NUTRITION },
-    goals,
-    exerciseCalories: 0,
-    waterMl: 0,
-  };
 }
 
 export function entryCount(day: DiaryDay | undefined): number {
@@ -71,4 +69,14 @@ export function suggestedMealType(now: Date = new Date()): MealType {
   if (hour < 21) return 'dinner';
 
   return 'snack';
+}
+
+/** One line summarising what a meal was made of, for the diary row. */
+export function describeIngredients(entry: FoodEntry, limit = 3): string {
+  if (entry.ingredients.length === 0) return 'No ingredients';
+
+  const names = entry.ingredients.slice(0, limit).map((row) => row.name);
+  const remaining = entry.ingredients.length - names.length;
+
+  return remaining > 0 ? `${names.join(', ')} +${remaining}` : names.join(', ');
 }

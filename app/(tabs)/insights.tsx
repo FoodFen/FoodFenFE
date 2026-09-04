@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { isApiError } from '@/api/errors';
 import { CalorieTrendChart } from '@/components/insights/CalorieTrendChart';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
@@ -44,7 +43,7 @@ export default function InsightsScreen() {
     return (
       <View style={{ paddingTop: insets.top }} className="flex-1 bg-bg">
         <ErrorState
-          description={isApiError(error) ? error.userMessage : 'Please try again.'}
+          description={error instanceof Error ? error.message : 'Please try again.'}
           onRetry={() => void refetch()}
         />
       </View>
@@ -74,7 +73,7 @@ export default function InsightsScreen() {
       <View className="flex-row gap-3">
         <StatCard
           label="Daily average"
-          value={summary.averageCalories.toLocaleString()}
+          value={summary.averageKcal.toLocaleString()}
           unit="kcal"
         />
         <StatCard
@@ -110,10 +109,16 @@ export default function InsightsScreen() {
       <Card className="gap-3">
         <Text variant="heading">Average macros</Text>
 
-        {(['protein', 'carbs', 'fat'] as const).map((macro) => (
+        {(
+          [
+            ['proteinG', 'Protein'],
+            ['carbsG', 'Carbs'],
+            ['fatG', 'Fat'],
+          ] as const
+        ).map(([macro, label]) => (
           <View key={macro} className="flex-row items-center justify-between">
-            <Text variant="body" tone="muted" className="capitalize">
-              {macro}
+            <Text variant="body" tone="muted">
+              {label}
             </Text>
             <Text variant="mono">
               {summary.averageMacros[macro]} g ·{' '}

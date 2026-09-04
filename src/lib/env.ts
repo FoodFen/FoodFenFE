@@ -7,22 +7,24 @@ import { Platform } from 'react-native';
  * Values come from `EXPO_PUBLIC_*` env vars (inlined into the bundle by Metro)
  * with `expo-constants` extra as a fallback for values set in `app.config.ts`.
  * Nothing secret belongs here — everything in this file ships to the device.
+ *
+ * `apiUrl` is optional on purpose: the app is fully usable offline, with no
+ * backend configured at all. Code that talks to the server (auth, and later,
+ * sync) must check `env.hasBackend` — or just call `api.*` and handle the
+ * resulting `ApiError`, since `src/api/client.ts` fails fast with a clear
+ * error when no URL is configured rather than crashing on a malformed one.
  */
 
 /**
  * The Android emulator runs in its own VM: `localhost` there is the emulator,
  * not the development machine. 10.0.2.2 is the emulator's alias for the host.
  */
-function resolveApiUrl(): string {
+function resolveApiUrl(): string | undefined {
   const configured =
     process.env.EXPO_PUBLIC_API_URL ??
     (Constants.expoConfig?.extra?.apiUrl as string | undefined);
 
-  if (!configured) {
-    throw new Error(
-      'EXPO_PUBLIC_API_URL is not set. Copy .env.example to .env.local and restart the dev server.',
-    );
-  }
+  if (!configured) return undefined;
 
   if (Platform.OS === 'android') {
     return configured.replace('localhost', '10.0.2.2').replace('127.0.0.1', '10.0.2.2');
@@ -37,8 +39,11 @@ function resolveNumber(value: string | undefined, fallback: number): number {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 }
 
+const apiUrl = resolveApiUrl();
+
 export const env = {
-  apiUrl: resolveApiUrl(),
+  apiUrl,
+  hasBackend: apiUrl !== undefined,
   apiTimeoutMs: resolveNumber(process.env.EXPO_PUBLIC_API_TIMEOUT_MS, 15_000),
   variant: (Constants.expoConfig?.extra?.variant as string | undefined) ?? 'development',
   isDev: __DEV__,

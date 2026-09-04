@@ -5,6 +5,7 @@
  * change in backend conventions stays confined to `client.ts`.
  */
 export type ApiErrorKind =
+  | 'not_configured' // No backend URL in this build — offline-only install.
   | 'network' // Request never reached the server.
   | 'timeout' // Server did not answer in time.
   | 'unauthorized' // 401 — token missing, expired or rejected.
@@ -55,6 +56,8 @@ export class ApiError extends Error {
   /** A message safe to show the user — never leaks internals. */
   get userMessage(): string {
     switch (this.kind) {
+      case 'not_configured':
+        return 'Accounts are not available in this build. Your diary works offline without one.';
       case 'network':
         return 'No connection. Your changes are saved and will sync when you are back online.';
       case 'timeout':

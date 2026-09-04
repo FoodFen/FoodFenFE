@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { isApiError } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
@@ -15,7 +14,6 @@ import type { SignUpValues } from '@/features/auth/schemas';
 import { useAuthStore } from '@/features/auth/store';
 
 export default function SignUpScreen() {
-  const insets = useSafeAreaInsets();
   const signUp = useAuthStore((state) => state.signUp);
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -38,6 +36,12 @@ export default function SignUpScreen() {
         password: values.password,
         displayName: values.displayName,
       });
+
+      // Back to wherever this was opened from — Profile, normally. The root
+      // layout's guard keys on the local profile, not on being signed in, so
+      // nothing swaps the stack on our behalf.
+      if (router.canGoBack()) router.back();
+      else router.replace('/');
     } catch (error) {
       if (isApiError(error)) {
         if (error.fieldErrors?.email) {
@@ -56,8 +60,8 @@ export default function SignUpScreen() {
       className="flex-1 bg-bg"
       contentContainerStyle={{
         flexGrow: 1,
-        paddingTop: insets.top + 32,
-        paddingBottom: insets.bottom + 24,
+        paddingTop: 24,
+        paddingBottom: 32,
         paddingHorizontal: 24,
       }}
       keyboardShouldPersistTaps="handled"
@@ -66,7 +70,8 @@ export default function SignUpScreen() {
       <View className="gap-2 pb-6">
         <Text variant="title">Create your account</Text>
         <Text variant="body" tone="muted">
-          We will use a few details to work out your daily calorie target.
+          Your diary stays on this device either way. An account is what lets it follow
+          you to another one.
         </Text>
       </View>
 

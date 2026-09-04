@@ -4,48 +4,43 @@ import { useCallback, useState } from 'react';
 import { Alert, Pressable, RefreshControl, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { isApiError } from '@/api/errors';
 import { CalorieSummaryCard } from '@/components/diary/CalorieSummaryCard';
 import { DateStrip } from '@/components/diary/DateStrip';
 import { MealSection } from '@/components/diary/MealSection';
+import { WaterCard } from '@/components/diary/WaterCard';
 import { ErrorState } from '@/components/ui/EmptyState';
 import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { DiaryDaySkeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
-import { useAuthStore } from '@/features/auth/store';
 import { useDeleteEntry, useDiaryDay } from '@/features/diary/queries';
-import { emptyDiaryDay, groupByMeal } from '@/features/diary/selectors';
+import { groupByMeal } from '@/features/diary/selectors';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { formatDiaryDate, todayKey } from '@/lib/date';
 import type { DateKey } from '@/lib/date';
 import { haptics } from '@/lib/haptics';
-import { calculateGoals } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 import type { FoodEntry, MealType } from '@/types/models';
 
-/** The Today screen: the day's totals and its four meals. */
+/** The Today screen: the day's totals, its four meals, and water. */
 export default function DiaryScreen() {
   const [selectedDate, setSelectedDate] = useState<DateKey>(todayKey());
   const insets = useSafeAreaInsets();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
 
-  const user = useAuthStore((state) => state.session?.user);
-  const { data, isPending, isRefetching, error, refetch } = useDiaryDay(selectedDate);
+  const {
+    data: day,
+    isPending,
+    isRefetching,
+    error,
+    refetch,
+  } = useDiaryDay(selectedDate);
   const deleteEntry = useDeleteEntry();
 
-  /**
-   * Fall back to a locally computed empty day so the ring and the meal
-   * sections render immediately on a date that has never been fetched, rather
-   * than showing a spinner over an otherwise usable screen.
-   */
-  const day =
-    data ?? (user ? emptyDiaryDay(selectedDate, calculateGoals(user)) : undefined);
-
-  const handleAddFood = useCallback(
+  const handleAddMeal = useCallback(
     (mealType: MealType) => {
       router.push({
-        pathname: '/log/search',
+        pathname: '/log/meal',
         params: { date: selectedDate, mealType },
       });
     },
@@ -56,30 +51,23 @@ export default function DiaryScreen() {
     (entry: FoodEntry) => {
       haptics.impact();
 
-      Alert.alert(entry.food.name, 'Remove this entry from your diary?', [
+      Alert.alert(entry.name, 'Remove this meal from your diary?', [
         { text: 'Cancel', style: 'cancel' },
         {
           text: 'Delete',
           style: 'destructive',
           onPress: () => {
             deleteEntry.mutate(
-              { id: entry.id, date: selectedDate },
+              { id: entry.id },
               {
-                onError: (mutationError) => {
-                  Alert.alert(
-                    'Could not delete',
-                    isApiError(mutationError)
-                      ? mutationError.userMessage
-                      : 'Please try again.',
-                  );
-                },
+                onError: () => Alert.alert('Could not delete', 'Please try again.'),
               },
             );
           },
         },
       ]);
     },
-    [deleteEntry, selectedDate],
+    [deleteEntry],
   );
 
   return (
@@ -104,16 +92,18 @@ export default function DiaryScreen() {
         <DateStrip selected={selectedDate} onSelect={setSelectedDate} />
       </View>
 
-      {isPending && !day ? (
+      {isPending ? (
         <View className="px-4">
           <DiaryDaySkeleton />
         </View>
-      ) : error && !data ? (
+      ) : error || !day ? (
         <ErrorState
-          description={isApiError(error) ? error.userMessage : 'Please try again.'}
+          description={
+            error instanceof Error ? error.message : 'That day could not be loaded.'
+          }
           onRetry={() => void refetch()}
         />
-      ) : day ? (
+      ) : (
         <ScrollScreen
           refreshControl={
             <RefreshControl
@@ -129,13 +119,19 @@ export default function DiaryScreen() {
             <MealSection
               key={group.mealType}
               group={group}
-              onAddFood={handleAddFood}
-              onPressEntry={(entry) => router.push(`/food/${entry.food.id}`)}
+              onAddMeal={handleAddMeal}
+              onPressEntry={(entry) => router.push(`/entry/${entry.id}`)}
               onLongPressEntry={handleLongPressEntry}
             />
           ))}
+
+          <WaterCard
+            date={selectedDate}
+            waterMl={day.waterMl}
+            targetMl={day.goal.targetWaterMl}
+          />
         </ScrollScreen>
-      ) : null}
+      )}
     </Screen>
   );
 }

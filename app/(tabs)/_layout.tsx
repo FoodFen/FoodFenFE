@@ -57,10 +57,10 @@ export default function TabsLayout() {
             <Pressable
               {...rest}
               accessibilityRole="button"
-              accessibilityLabel="Log food"
+              accessibilityLabel="Log a meal"
               onPress={() => {
                 haptics.selection();
-                router.push('/log/search');
+                router.push('/log/meal');
               }}
             />
           ),

@@ -5,7 +5,7 @@ import { MacroBarGroup } from '@/components/ui/MacroBar';
 import { ProgressRing } from '@/components/ui/ProgressRing';
 import { Text } from '@/components/ui/Text';
 import { useAppTheme } from '@/hooks/useAppTheme';
-import { caloriesRemaining, progressFraction } from '@/lib/nutrition';
+import { kcalRemaining, progressFraction } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 import type { DiaryDay } from '@/types/models';
 
@@ -14,25 +14,25 @@ export interface CalorieSummaryCardProps {
 }
 
 /**
- * The day at a glance: the calorie ring, the eaten/burned arithmetic behind it,
- * and the three macro bars.
+ * The day at a glance: the calorie ring, the arithmetic behind it, and the
+ * three macro bars.
  */
 export function CalorieSummaryCard({ day }: CalorieSummaryCardProps) {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
 
-  const consumed = day.totals.calories;
-  const remaining = caloriesRemaining(day.goals.calories, consumed, day.exerciseCalories);
+  const consumed = day.totals.kcal;
+  const remaining = kcalRemaining(day.goal.targetKcal, consumed, day.exerciseKcal);
   const isOver = remaining < 0;
 
-  const budget = day.goals.calories + day.exerciseCalories;
+  const budget = day.goal.targetKcal + day.exerciseKcal;
 
   return (
     <Card className="items-center gap-5">
       <ProgressRing
         progress={progressFraction(consumed, budget)}
         // Turning the ring red is the one signal that reads instantly; the
-        // number below it explains what happened.
+        // number inside it explains what happened.
         color={isOver ? colors.danger : colors.brand}
       >
         <Text variant="display" tone={isOver ? 'danger' : 'default'}>
@@ -44,21 +44,21 @@ export function CalorieSummaryCard({ day }: CalorieSummaryCardProps) {
       </ProgressRing>
 
       <View className="w-full flex-row justify-around border-t border-border pt-4">
-        <Stat label="Goal" value={day.goals.calories} />
+        <Stat label="Goal" value={day.goal.targetKcal} />
         <Stat label="Food" value={consumed} />
-        <Stat label="Exercise" value={day.exerciseCalories} />
+        <Stat label="Exercise" value={day.exerciseKcal} />
       </View>
 
       <MacroBarGroup
         consumed={{
-          protein: day.totals.protein,
-          carbs: day.totals.carbs,
-          fat: day.totals.fat,
+          proteinG: day.totals.proteinG,
+          carbsG: day.totals.carbsG,
+          fatG: day.totals.fatG,
         }}
         targets={{
-          protein: day.goals.protein,
-          carbs: day.goals.carbs,
-          fat: day.goals.fat,
+          proteinG: day.goal.targetProteinG,
+          carbsG: day.goal.targetCarbsG,
+          fatG: day.goal.targetFatG,
         }}
         className="w-full"
       />

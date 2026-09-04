@@ -71,6 +71,13 @@ export interface RequestOptions<TResponse> {
 }
 
 function buildUrl(path: string, query: RequestOptions<unknown>['query']): string {
+  if (!env.apiUrl) {
+    // Every diary/food read and write is local-first (see `src/data/`) and
+    // never reaches this function. Only auth and future sync calls do, so
+    // this fires only when someone taps "sign in" with no backend configured.
+    throw new ApiError('not_configured', 'No server is configured for this build.');
+  }
+
   const url = new URL(path.replace(/^\//, ''), ensureTrailingSlash(env.apiUrl));
 
   if (query) {

@@ -9,5 +9,5 @@ import { Redirect } from 'expo-router';
  * (a deep link, for instance).
  */
 export default function LogActionTab() {
-  return <Redirect href="/log/search" />;
+  return <Redirect href="/log/meal" />;
 }

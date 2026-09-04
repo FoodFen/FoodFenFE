@@ -1,6 +1,6 @@
 import { api } from '@/api/client';
-import { authSessionSchema, userProfileSchema } from '@/api/schemas';
-import type { AuthSession, UserProfile } from '@/types/models';
+import { authSessionSchema, userSchema } from '@/api/schemas';
+import type { RemoteAuthSession, RemoteUser } from '@/api/schemas';
 
 export interface SignInPayload {
   email: string;
@@ -14,17 +14,24 @@ export interface SignUpPayload {
 }
 
 /**
- * `skipAuth` on every call here: these endpoints establish the session, so
- * sending a stale (or missing) token would trigger a pointless refresh cycle.
+ * Account endpoints.
+ *
+ * Optional by design: the app tracks perfectly well without ever calling any
+ * of these. An account exists so a diary can follow the user to another
+ * device, which is why every one of these is reached from Profile rather than
+ * from a gate in front of the app.
+ *
+ * `skipAuth` on the credential exchanges: they establish the session, so
+ * sending a stale token would trigger a pointless refresh cycle.
  */
 export const authApi = {
-  signIn: (payload: SignInPayload): Promise<AuthSession> =>
+  signIn: (payload: SignInPayload): Promise<RemoteAuthSession> =>
     api.post('auth/sign-in', payload, { schema: authSessionSchema, skipAuth: true }),
 
-  signUp: (payload: SignUpPayload): Promise<AuthSession> =>
+  signUp: (payload: SignUpPayload): Promise<RemoteAuthSession> =>
     api.post('auth/sign-up', payload, { schema: authSessionSchema, skipAuth: true }),
 
-  refresh: (refreshToken: string): Promise<AuthSession> =>
+  refresh: (refreshToken: string): Promise<RemoteAuthSession> =>
     api.post(
       'auth/refresh',
       { refreshToken },
@@ -37,8 +44,5 @@ export const authApi = {
   requestPasswordReset: (email: string): Promise<void> =>
     api.post('auth/password-reset', { email }, { skipAuth: true }),
 
-  me: (): Promise<UserProfile> => api.get('auth/me', { schema: userProfileSchema }),
-
-  updateProfile: (patch: Partial<UserProfile>): Promise<UserProfile> =>
-    api.patch('auth/me', patch, { schema: userProfileSchema }),
+  me: (): Promise<RemoteUser> => api.get('auth/me', { schema: userSchema }),
 };

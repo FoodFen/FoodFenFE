@@ -1,43 +1,61 @@
-import type { DiaryDay, FoodEntry, MealType } from '@/types/models';
+import type { DailyGoal, DiaryDay, FoodEntry, MealType } from '@/types/models';
 
 import { averageByMeal, currentStreak, summarizeTrends } from '../trends';
 
-const goals = { calories: 2000, protein: 150, carbs: 200, fat: 67 };
+const goal: DailyGoal = {
+  id: 'goal',
+  userId: 'user',
+  targetKcal: 2000,
+  targetCarbsG: 200,
+  targetProteinG: 150,
+  targetFatG: 67,
+  targetWaterMl: 2000,
+  effectiveDate: '2026-03-01',
+  remoteId: null,
+  updatedAt: new Date(),
+  syncedAt: null,
+  deletedAt: null,
+};
 
-function entry(mealType: MealType, calories: number): FoodEntry {
+function entry(mealType: MealType, kcal: number): FoodEntry {
   return {
-    id: `${mealType}-${calories}`,
-    date: '2026-03-01',
+    id: `${mealType}-${kcal}`,
+    userId: 'user',
+    name: 'Meal',
+    inputMethod: 'type',
+    imageUrl: null,
+    totalKcal: kcal,
+    carbsG: 20,
+    proteinG: 10,
+    fatG: 5,
+    fiberG: null,
+    aiFeedback: null,
     mealType,
-    food: {
-      id: 'f',
-      name: 'Food',
-      per100g: { calories, protein: 0, carbs: 0, fat: 0 },
-      servingUnits: [],
-    },
-    quantity: 1,
-    servingUnitId: 'g',
-    nutrition: { calories, protein: 10, carbs: 20, fat: 5 },
-    loggedAt: '2026-03-01T12:00:00.000Z',
+    loggedAt: new Date('2026-03-01T12:00:00Z'),
+    loggedOn: '2026-03-01',
+    remoteId: null,
+    updatedAt: new Date(),
+    syncedAt: null,
+    deletedAt: null,
+    ingredients: [],
   };
 }
 
-function day(date: string, calories: number[]): DiaryDay {
-  const entries = calories.map((value, index) =>
-    entry((['breakfast', 'lunch', 'dinner', 'snack'] as const)[index % 4]!, value),
-  );
+function day(date: string, kcals: number[]): DiaryDay {
+  const meals = ['breakfast', 'lunch', 'dinner', 'snack'] as const;
+  const entries = kcals.map((kcal, index) => entry(meals[index % 4]!, kcal));
 
   return {
     date,
     entries,
     totals: {
-      calories: calories.reduce((sum, value) => sum + value, 0),
-      protein: entries.length * 10,
-      carbs: entries.length * 20,
-      fat: entries.length * 5,
+      kcal: kcals.reduce((sum, value) => sum + value, 0),
+      carbsG: entries.length * 20,
+      proteinG: entries.length * 10,
+      fatG: entries.length * 5,
     },
-    goals,
-    exerciseCalories: 0,
+    goal,
+    exerciseKcal: 0,
     waterMl: 0,
   };
 }
@@ -46,9 +64,9 @@ function emptyDay(date: string): DiaryDay {
   return {
     date,
     entries: [],
-    totals: { calories: 0, protein: 0, carbs: 0, fat: 0 },
-    goals,
-    exerciseCalories: 0,
+    totals: { kcal: 0, carbsG: 0, proteinG: 0, fatG: 0 },
+    goal,
+    exerciseKcal: 0,
     waterMl: 0,
   };
 }
@@ -63,7 +81,7 @@ describe('summarizeTrends', () => {
 
     // A blank day is "did not log", not "ate nothing" — including it would
     // drag the average to 1000.
-    expect(summary.averageCalories).toBe(1500);
+    expect(summary.averageKcal).toBe(1500);
     expect(summary.daysLogged).toBe(2);
     expect(summary.totalDays).toBe(3);
   });
@@ -78,16 +96,14 @@ describe('summarizeTrends', () => {
   });
 
   it('reports a deficit as a negative delta', () => {
-    const summary = summarizeTrends([day('2026-03-01', [1500])]);
-
-    expect(summary.averageDelta).toBe(-500);
+    expect(summarizeTrends([day('2026-03-01', [1500])]).averageDelta).toBe(-500);
   });
 
   it('handles an entirely empty window without dividing by zero', () => {
     const summary = summarizeTrends([emptyDay('2026-03-01')]);
 
-    expect(summary.averageCalories).toBe(0);
-    expect(summary.averageMacroShare).toEqual({ protein: 0, carbs: 0, fat: 0 });
+    expect(summary.averageKcal).toBe(0);
+    expect(summary.averageMacroShare).toEqual({ proteinG: 0, carbsG: 0, fatG: 0 });
   });
 });
 
@@ -111,8 +127,8 @@ describe('currentStreak', () => {
 describe('averageByMeal', () => {
   it('averages each meal across logged days, counting unlogged meals as zero', () => {
     const result = averageByMeal([
-      day('2026-03-01', [400, 600]), // breakfast 400, lunch 600
-      day('2026-03-02', [200, 400]), // breakfast 200, lunch 400
+      day('2026-03-01', [400, 600]),
+      day('2026-03-02', [200, 400]),
     ]);
 
     expect(result.breakfast).toBe(300);

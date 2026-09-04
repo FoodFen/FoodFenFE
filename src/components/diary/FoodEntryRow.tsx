@@ -1,8 +1,16 @@
 import { Pressable, View } from 'react-native';
 
 import { Text } from '@/components/ui/Text';
-import { findServingUnit } from '@/lib/nutrition';
-import type { FoodEntry } from '@/types/models';
+import { describeIngredients } from '@/features/diary/selectors';
+import type { FoodEntry, InputMethod } from '@/types/models';
+
+/** How the meal was captured, shown as a small provenance marker. */
+const INPUT_METHOD_ICONS: Record<InputMethod, string> = {
+  voice: '🎙️',
+  image: '📷',
+  type: '⌨️',
+  manual: '✏️',
+};
 
 export interface FoodEntryRowProps {
   entry: FoodEntry;
@@ -11,31 +19,28 @@ export interface FoodEntryRowProps {
 }
 
 /**
- * One logged food.
+ * One logged meal.
  *
- * Kept free of its own data fetching and mutations: it renders an entry and
- * reports taps upward, so it can be used identically in the diary, in search
- * results and in a "recently logged" list.
+ * Free of its own data fetching and mutations: it renders an entry and reports
+ * taps upward, so it can be used identically in the diary and in any future
+ * "recently logged" list.
  */
 export function FoodEntryRow({ entry, onPress, onLongPress }: FoodEntryRowProps) {
-  const unit = findServingUnit(entry.food, entry.servingUnitId);
-  const portion = unit
-    ? `${formatQuantity(entry.quantity)} × ${unit.label}`
-    : `${formatQuantity(entry.quantity)} g`;
-
-  const subtitle = entry.food.brand ? `${entry.food.brand} · ${portion}` : portion;
+  const subtitle = describeIngredients(entry);
 
   return (
     <Pressable
       onPress={() => onPress?.(entry)}
       onLongPress={() => onLongPress?.(entry)}
       accessibilityRole="button"
-      accessibilityLabel={`${entry.food.name}, ${portion}, ${entry.nutrition.calories} calories`}
+      accessibilityLabel={`${entry.name}, ${entry.totalKcal} calories, ${subtitle}`}
       className="flex-row items-center gap-3 px-4 py-3 active:bg-surface-alt"
     >
+      <Text className="text-sm">{INPUT_METHOD_ICONS[entry.inputMethod]}</Text>
+
       <View className="flex-1 gap-0.5">
         <Text variant="body" numberOfLines={1}>
-          {entry.food.name}
+          {entry.name}
         </Text>
         <Text variant="caption" tone="muted" numberOfLines={1}>
           {subtitle}
@@ -43,15 +48,8 @@ export function FoodEntryRow({ entry, onPress, onLongPress }: FoodEntryRowProps)
       </View>
 
       <Text variant="mono" tone="muted">
-        {entry.nutrition.calories}
+        {entry.totalKcal}
       </Text>
     </Pressable>
   );
-}
-
-/** `1.5 × Bowl`, not `1.50 × Bowl`; whole numbers stay whole. */
-function formatQuantity(quantity: number): string {
-  return Number.isInteger(quantity)
-    ? String(quantity)
-    : quantity.toFixed(2).replace(/0$/, '');
 }

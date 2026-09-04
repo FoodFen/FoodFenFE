@@ -24,6 +24,8 @@ interface SettingsState {
   setWeightUnit: (unit: WeightUnit) => void;
   setEnergyUnit: (unit: EnergyUnit) => void;
   completeOnboarding: () => void;
+  /** Part of "erase local data" — sends the user back through onboarding. */
+  resetOnboarding: () => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
@@ -50,6 +52,11 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   completeOnboarding: () => {
     preferences.set(StorageKeys.onboardingComplete, true);
     set({ onboardingComplete: true });
+  },
+
+  resetOnboarding: () => {
+    preferences.remove(StorageKeys.onboardingComplete);
+    set({ onboardingComplete: false });
   },
 }));
 

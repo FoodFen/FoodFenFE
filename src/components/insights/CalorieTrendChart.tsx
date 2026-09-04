@@ -8,8 +8,8 @@ import { colorsFor } from '@/theme/colors';
 
 export interface CalorieTrendPoint {
   date: string;
-  calories: number;
-  goal: number;
+  kcal: number;
+  target: number;
 }
 
 export interface CalorieTrendChartProps {
@@ -33,30 +33,30 @@ export function CalorieTrendChart({ series, height = 160 }: CalorieTrendChartPro
 
   if (series.length === 0) return null;
 
-  const goal = series[0]?.goal ?? 0;
+  const target = series[0]?.target ?? 0;
 
   // Scale to whichever is larger — the biggest day or the goal — so the goal
   // line is always on the chart, and pad by 15% so the tallest bar has air
   // above it.
-  const peak = Math.max(...series.map((point) => point.calories), goal, 1);
+  const peak = Math.max(...series.map((point) => point.kcal), target, 1);
   const scaleMax = peak * 1.15;
 
   const slotWidth = 100 / series.length;
   const barWidth = slotWidth * 0.55;
   const barInset = (slotWidth - barWidth) / 2;
 
-  const goalY = 100 - (goal / scaleMax) * 100;
+  const targetY = 100 - (target / scaleMax) * 100;
 
   return (
     <View className="gap-2">
       <Svg width="100%" height={height} viewBox="0 0 100 100" preserveAspectRatio="none">
-        {/* Goal line. `vectorEffect` keeps it hairline-thin despite the
+        {/* Target line. `vectorEffect` keeps it hairline-thin despite the
             non-uniform stretch the viewBox applies. */}
         <Line
           x1={0}
-          y1={goalY}
+          y1={targetY}
           x2={100}
-          y2={goalY}
+          y2={targetY}
           stroke={colors.fgSubtle}
           strokeWidth={1}
           strokeDasharray="3 3"
@@ -64,8 +64,8 @@ export function CalorieTrendChart({ series, height = 160 }: CalorieTrendChartPro
         />
 
         {series.map((point, index) => {
-          const barHeight = (point.calories / scaleMax) * 100;
-          const isOver = point.calories > goal;
+          const barHeight = (point.kcal / scaleMax) * 100;
+          const isOver = point.kcal > target;
 
           return (
             <Rect
@@ -76,7 +76,7 @@ export function CalorieTrendChart({ series, height = 160 }: CalorieTrendChartPro
               height={barHeight}
               rx={1}
               fill={
-                point.calories === 0
+                point.kcal === 0
                   ? colors.surfaceAlt
                   : isOver
                     ? colors.warning

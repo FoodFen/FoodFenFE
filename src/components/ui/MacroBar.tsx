@@ -5,12 +5,12 @@ import { progressFraction } from '@/lib/nutrition';
 
 import { Text } from './Text';
 
-export type MacroKey = 'protein' | 'carbs' | 'fat';
+export type MacroKey = 'proteinG' | 'carbsG' | 'fatG';
 
 const MACRO_LABELS: Record<MacroKey, string> = {
-  protein: 'Protein',
-  carbs: 'Carbs',
-  fat: 'Fat',
+  proteinG: 'Protein',
+  carbsG: 'Carbs',
+  fatG: 'Fat',
 };
 
 /**
@@ -18,15 +18,15 @@ const MACRO_LABELS: Record<MacroKey, string> = {
  * literals — so the per-macro classes are spelled out here.
  */
 const MACRO_FILL_CLASSES: Record<MacroKey, string> = {
-  protein: 'bg-protein',
-  carbs: 'bg-carbs',
-  fat: 'bg-fat',
+  proteinG: 'bg-protein',
+  carbsG: 'bg-carbs',
+  fatG: 'bg-fat',
 };
 
 const MACRO_TEXT_CLASSES: Record<MacroKey, string> = {
-  protein: 'text-protein',
-  carbs: 'text-carbs',
-  fat: 'text-fat',
+  proteinG: 'text-protein',
+  carbsG: 'text-carbs',
+  fatG: 'text-fat',
 };
 
 export interface MacroBarProps {
@@ -80,7 +80,7 @@ export interface MacroBarGroupProps {
 export function MacroBarGroup({ consumed, targets, className }: MacroBarGroupProps) {
   return (
     <View className={cn('flex-row gap-4', className)}>
-      {(['protein', 'carbs', 'fat'] as const).map((macro) => (
+      {(['proteinG', 'carbsG', 'fatG'] as const).map((macro) => (
         <MacroBar
           key={macro}
           macro={macro}

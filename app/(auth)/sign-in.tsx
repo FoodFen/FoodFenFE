@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { isApiError } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
@@ -15,7 +14,6 @@ import type { SignInValues } from '@/features/auth/schemas';
 import { useAuthStore } from '@/features/auth/store';
 
 export default function SignInScreen() {
-  const insets = useSafeAreaInsets();
   const signIn = useAuthStore((state) => state.signIn);
 
   /** Errors that belong to the request rather than a single field. */
@@ -36,8 +34,11 @@ export default function SignInScreen() {
 
     try {
       await signIn(values);
-      // No navigation here: the root layout's guard swaps the stack as soon as
-      // the store reports an authenticated session.
+      // Back to wherever this was opened from — Profile, normally. The root
+      // layout's guard keys on the local profile, not on being signed in, so
+      // nothing swaps the stack on our behalf.
+      if (router.canGoBack()) router.back();
+      else router.replace('/');
     } catch (error) {
       if (isApiError(error)) {
         // Map field-level errors from the server onto the right inputs.
@@ -65,8 +66,8 @@ export default function SignInScreen() {
       className="flex-1 bg-bg"
       contentContainerStyle={{
         flexGrow: 1,
-        paddingTop: insets.top + 48,
-        paddingBottom: insets.bottom + 24,
+        paddingTop: 24,
+        paddingBottom: 32,
         paddingHorizontal: 24,
       }}
       keyboardShouldPersistTaps="handled"
@@ -76,7 +77,8 @@ export default function SignInScreen() {
         <Text className="text-5xl">🥗</Text>
         <Text variant="title">Welcome back</Text>
         <Text variant="body" tone="muted">
-          Sign in to pick up your diary where you left off.
+          Optional — your diary already works offline. An account keeps it backed up and
+          available on your other devices.
         </Text>
       </View>
 

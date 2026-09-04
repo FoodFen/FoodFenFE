@@ -1,279 +1,251 @@
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { diaryApi } from '@/api/endpoints/diary';
-import type { UpdateEntryPayload } from '@/api/endpoints/diary';
-import { foodsApi } from '@/api/endpoints/foods';
+import * as diaryRepository from '@/data/diaryRepository';
+import * as entryRepository from '@/data/entryRepository';
+import type { CreateEntryInput, UpdateEntryInput } from '@/data/entryRepository';
+import { searchCatalog } from '@/data/foodCatalog';
+import * as gamification from '@/data/gamificationRepository';
+import * as logRepository from '@/data/logRepository';
+import { pullDayLogs, pullFoodEntries } from '@/data/pull';
+import { pendingChangeCount, readWithRefresh } from '@/data/sync';
+import { useProfileStore } from '@/features/profile/store';
 import type { DateKey } from '@/lib/date';
 import { isFutureDate, lastNDays, todayKey } from '@/lib/date';
-import { nutritionForPortion, sumNutrition } from '@/lib/nutrition';
 import { queryKeys } from '@/lib/queryClient';
-import type { DiaryDay, Food, FoodEntry, MealType } from '@/types/models';
 
-/** One day of the diary. */
+/**
+ * Diary reads and writes.
+ *
+ * Reads go through `readWithRefresh`: when there is a server and the user has
+ * signed in for it, the local database is refreshed first; either way the
+ * answer is assembled from local rows. Writes are local and immediate, marked
+ * unsynced for a push that does not exist yet.
+ *
+ * `retry: false` throughout — the local read cannot fail transiently, and the
+ * remote half already handles its own failure by falling back.
+ */
+
+function useUserId(): string | null {
+  return useProfileStore((state) => state.profile?.id ?? null);
+}
+
+/** Entries and the day-level logs are always refreshed together. */
+async function pullDiaryWindow(
+  userId: string,
+  from: DateKey,
+  to: DateKey,
+): Promise<void> {
+  await Promise.all([pullFoodEntries(userId, from, to), pullDayLogs(userId, from, to)]);
+}
+
 export function useDiaryDay(date: DateKey) {
+  const userId = useUserId();
+
   return useQuery({
     queryKey: queryKeys.diary.day(date),
-    queryFn: ({ signal }) => diaryApi.day(date, signal),
-    // Nothing can be logged in the future, so never spend a request on it.
-    enabled: !isFutureDate(date),
+    queryFn: () => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      return readWithRefresh({
+        pull: () => pullDiaryWindow(userId, date, date),
+        read: () => diaryRepository.getDiaryDay(userId, date),
+      });
+    },
+    // Nothing can be logged in the future, and there is nothing to show before
+    // onboarding has produced a user and a goal.
+    enabled: userId !== null && !isFutureDate(date),
+    retry: false,
   });
 }
 
-/** A trailing window of days, for the trends screen. */
 export function useDiaryRange(days = 7, endDate: DateKey = todayKey()) {
+  const userId = useUserId();
   const range = lastNDays(days, endDate);
   const from = range[0] ?? endDate;
   const to = range[range.length - 1] ?? endDate;
 
   return useQuery({
     queryKey: queryKeys.diary.range(from, to),
-    queryFn: ({ signal }) => diaryApi.range(from, to, signal),
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      return readWithRefresh({
+        pull: () => pullDiaryWindow(userId, from, to),
+        read: () => diaryRepository.getDiaryRange(userId, from, to),
+      });
+    },
+    enabled: userId !== null,
+    retry: false,
+  });
+}
+
+export function useEntry(entryId: string) {
+  return useQuery({
+    queryKey: queryKeys.entries.byId(entryId),
+    queryFn: () => {
+      const entry = entryRepository.getEntry(entryId);
+
+      if (!entry) throw new Error(`Entry ${entryId} was not found.`);
+
+      return entry;
+    },
+    retry: false,
   });
 }
 
 /**
- * Paged food search. `enabled` gates on a non-empty query so an empty search
- * box does not hammer the catalog endpoint.
+ * The bundled reference list, for prefilling an ingredient.
+ *
+ * Never hits the network — this list ships in the bundle. A server-backed
+ * catalog would be a separate hook, so this one keeps working offline.
  */
-export function useFoodSearch(query: string) {
+export function useCatalogSearch(query: string) {
   const trimmed = query.trim();
 
-  return useInfiniteQuery({
-    queryKey: queryKeys.foods.search(trimmed),
-    queryFn: ({ pageParam, signal }) =>
-      foodsApi.search({ query: trimmed, cursor: pageParam, signal }),
-    initialPageParam: undefined as string | undefined,
-    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+  return useQuery({
+    queryKey: queryKeys.catalog.search(trimmed),
+    queryFn: () => searchCatalog(trimmed),
     enabled: trimmed.length >= 2,
-    staleTime: 1000 * 60 * 10,
+    retry: false,
   });
 }
 
-export function useFrequentFoods() {
-  return useQuery({
-    queryKey: queryKeys.foods.frequent(),
-    queryFn: () => foodsApi.frequent(),
-    staleTime: 1000 * 60 * 30,
-  });
-}
+/** Invalidate everything a diary write can affect. */
+function useDiaryInvalidation() {
+  const queryClient = useQueryClient();
 
-export function useFood(id: string) {
-  return useQuery({
-    queryKey: queryKeys.foods.byId(id),
-    queryFn: () => foodsApi.byId(id),
-    staleTime: 1000 * 60 * 60,
-  });
-}
-
-export interface LogFoodInput {
-  date: DateKey;
-  mealType: MealType;
-  food: Food;
-  quantity: number;
-  servingUnitId: string;
-  notes?: string;
-  photoUri?: string;
-}
-
-/**
- * Recompute a day's totals from its entries.
- *
- * The server sends totals too, but an optimistic entry has to update them
- * locally or the header would disagree with the list until the round trip
- * lands.
- */
-function withRecalculatedTotals(day: DiaryDay, entries: FoodEntry[]): DiaryDay {
-  return {
-    ...day,
-    entries,
-    totals: sumNutrition(entries.map((entry) => entry.nutrition)),
+  return () => {
+    void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
+    void queryClient.invalidateQueries({ queryKey: queryKeys.entries.all });
+    void queryClient.invalidateQueries({ queryKey: queryKeys.sync.all });
   };
 }
 
+export type LogMealInput = Omit<CreateEntryInput, 'userId'>;
+
 /**
- * Log a food, applied optimistically.
+ * Log a meal.
  *
- * Logging is the app's core interaction and often happens on a bad connection,
- * so the entry must appear instantly and roll back cleanly if the write fails.
+ * The write completes before the mutation resolves — it is a local database
+ * insert — so there is nothing to be optimistic about and nothing to roll
+ * back. Logging also advances the streak: this is the one place that knows
+ * the user did something on a given day.
  */
-export function useLogFood() {
-  const queryClient = useQueryClient();
+export function useLogMeal() {
+  const userId = useUserId();
+  const invalidate = useDiaryInvalidation();
 
   return useMutation({
-    mutationFn: (input: LogFoodInput) =>
-      diaryApi.createEntry({
-        date: input.date,
-        mealType: input.mealType,
-        foodId: input.food.id,
-        quantity: input.quantity,
-        servingUnitId: input.servingUnitId,
-        notes: input.notes,
-        photoUri: input.photoUri,
-      }),
+    mutationFn: async (input: LogMealInput) => {
+      if (!userId) throw new Error('No local profile yet.');
 
-    onMutate: async (input) => {
-      const key = queryKeys.diary.day(input.date);
+      const entry = entryRepository.createEntry({ ...input, userId });
 
-      // Stop an in-flight refetch from overwriting the optimistic entry.
-      await queryClient.cancelQueries({ queryKey: key });
+      gamification.recordActiveDay(userId, input.loggedOn);
 
-      const previous = queryClient.getQueryData<DiaryDay>(key);
-
-      const optimisticEntry: FoodEntry = {
-        id: `optimistic-${Date.now()}`,
-        date: input.date,
-        mealType: input.mealType,
-        food: input.food,
-        quantity: input.quantity,
-        servingUnitId: input.servingUnitId,
-        nutrition: nutritionForPortion(input.food, input.quantity, input.servingUnitId),
-        notes: input.notes,
-        photoUri: input.photoUri,
-        loggedAt: new Date().toISOString(),
-      };
-
-      if (previous) {
-        queryClient.setQueryData<DiaryDay>(
-          key,
-          withRecalculatedTotals(previous, [...previous.entries, optimisticEntry]),
-        );
-      }
-
-      return { previous, key, optimisticId: optimisticEntry.id };
+      return entry;
     },
-
-    onError: (_error, _input, context) => {
-      if (context?.previous) {
-        queryClient.setQueryData(context.key, context.previous);
-      }
-    },
-
-    onSuccess: (created, _input, context) => {
-      if (!context) return;
-
-      // Swap the placeholder for the server's row so its real id is available
-      // to edit and delete without waiting for a refetch.
-      const day = queryClient.getQueryData<DiaryDay>(context.key);
-      if (!day) return;
-
-      const entries = day.entries.map((entry) =>
-        entry.id === context.optimisticId ? created : entry,
-      );
-
-      queryClient.setQueryData(context.key, withRecalculatedTotals(day, entries));
-    },
-
-    onSettled: (_data, _error, input) => {
-      void queryClient.invalidateQueries({ queryKey: queryKeys.diary.day(input.date) });
-      void queryClient.invalidateQueries({ queryKey: queryKeys.foods.recent() });
-    },
+    onSuccess: invalidate,
   });
 }
 
 export function useUpdateEntry() {
-  const queryClient = useQueryClient();
+  const invalidate = useDiaryInvalidation();
 
   return useMutation({
-    mutationFn: ({
-      id,
-      patch,
-    }: {
-      id: string;
-      patch: UpdateEntryPayload;
-      date: DateKey;
-    }) => diaryApi.updateEntry(id, patch),
-
-    onSettled: (_data, _error, variables) => {
-      void queryClient.invalidateQueries({
-        queryKey: queryKeys.diary.day(variables.date),
-      });
-
-      // An entry moved to another day invalidates that day too.
-      if (variables.patch.date && variables.patch.date !== variables.date) {
-        void queryClient.invalidateQueries({
-          queryKey: queryKeys.diary.day(variables.patch.date),
-        });
-      }
-    },
+    mutationFn: async ({ id, patch }: { id: string; patch: UpdateEntryInput }) =>
+      entryRepository.updateEntry(id, patch),
+    onSuccess: invalidate,
   });
 }
 
-/** Remove an entry, applied optimistically so the row disappears on tap. */
 export function useDeleteEntry() {
-  const queryClient = useQueryClient();
+  const invalidate = useDiaryInvalidation();
 
   return useMutation({
-    mutationFn: ({ id }: { id: string; date: DateKey }) => diaryApi.deleteEntry(id),
+    mutationFn: async ({ id }: { id: string }) => entryRepository.deleteEntry(id),
+    onSuccess: invalidate,
+  });
+}
 
-    onMutate: async ({ id, date }) => {
-      const key = queryKeys.diary.day(date);
+export function useAddWater() {
+  const userId = useUserId();
+  const invalidate = useDiaryInvalidation();
 
-      await queryClient.cancelQueries({ queryKey: key });
-      const previous = queryClient.getQueryData<DiaryDay>(key);
+  return useMutation({
+    mutationFn: async ({ amountMl, date }: { amountMl: number; date: DateKey }) => {
+      if (!userId) throw new Error('No local profile yet.');
 
-      if (previous) {
-        queryClient.setQueryData<DiaryDay>(
-          key,
-          withRecalculatedTotals(
-            previous,
-            previous.entries.filter((entry) => entry.id !== id),
-          ),
-        );
-      }
-
-      return { previous, key };
+      return logRepository.addWater(userId, amountMl, date);
     },
+    onSuccess: invalidate,
+  });
+}
 
-    onError: (_error, _variables, context) => {
-      if (context?.previous) {
-        queryClient.setQueryData(context.key, context.previous);
-      }
+export function useRemoveLastWater() {
+  const userId = useUserId();
+  const invalidate = useDiaryInvalidation();
+
+  return useMutation({
+    mutationFn: async ({ date }: { date: DateKey }) => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      return logRepository.removeLastWater(userId, date);
     },
+    onSuccess: invalidate,
+  });
+}
 
-    onSettled: (_data, _error, variables) => {
-      void queryClient.invalidateQueries({
-        queryKey: queryKeys.diary.day(variables.date),
-      });
+export function useLogWeight() {
+  const userId = useUserId();
+  const queryClient = useQueryClient();
+  const refreshProfile = useProfileStore((state) => state.refresh);
+  const saveProfile = useProfileStore((state) => state.saveProfile);
+
+  return useMutation({
+    mutationFn: async ({ weight, date }: { weight: number; date: DateKey }) => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      const log = logRepository.logWeight(userId, weight, date);
+
+      // Today's reading is also the user's current weight, which the calorie
+      // target is derived from. Recording one without the other would leave
+      // the goal keyed to a weight the user no longer has.
+      if (date === todayKey()) saveProfile({ weightCurrent: weight });
+
+      return log;
+    },
+    onSuccess: () => {
+      refreshProfile();
+      void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
+      void queryClient.invalidateQueries({ queryKey: queryKeys.weight.all });
     },
   });
 }
 
-export function useSetWater() {
-  const queryClient = useQueryClient();
+export function useWeightHistory(days = 30) {
+  const userId = useUserId();
+  const range = lastNDays(days);
+  const from = range[0] ?? todayKey();
+  const to = range[range.length - 1] ?? todayKey();
 
-  return useMutation({
-    mutationFn: ({ date, waterMl }: { date: DateKey; waterMl: number }) =>
-      diaryApi.setWater(date, waterMl),
+  return useQuery({
+    queryKey: queryKeys.weight.range(from, to),
+    queryFn: () => {
+      if (!userId) throw new Error('No local profile yet.');
 
-    onMutate: async ({ date, waterMl }) => {
-      const key = queryKeys.diary.day(date);
-
-      await queryClient.cancelQueries({ queryKey: key });
-      const previous = queryClient.getQueryData<DiaryDay>(key);
-
-      if (previous) {
-        queryClient.setQueryData<DiaryDay>(key, { ...previous, waterMl });
-      }
-
-      return { previous, key };
+      return logRepository.getWeightHistory(userId, from, to);
     },
+    enabled: userId !== null,
+    retry: false,
+  });
+}
 
-    onError: (_error, _variables, context) => {
-      if (context?.previous) {
-        queryClient.setQueryData(context.key, context.previous);
-      }
-    },
-
-    onSettled: (_data, _error, variables) => {
-      void queryClient.invalidateQueries({
-        queryKey: queryKeys.diary.day(variables.date),
-      });
-    },
+/** How many local writes are still waiting for a server that can take them. */
+export function usePendingChanges() {
+  return useQuery({
+    queryKey: queryKeys.sync.pending(),
+    queryFn: () => pendingChangeCount(),
+    retry: false,
   });
 }

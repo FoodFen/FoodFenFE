@@ -5,10 +5,19 @@ import { configureAuth } from '@/api/client';
 import { authApi } from '@/api/endpoints/auth';
 import type { SignInPayload, SignUpPayload } from '@/api/endpoints/auth';
 import { authSessionSchema } from '@/api/schemas';
-import type { AuthSession, UserProfile } from '@/types/models';
+import type { RemoteAuthSession } from '@/api/schemas';
 
 /**
- * Session state.
+ * The optional account session.
+ *
+ * Optional is the important word: the app tracks perfectly well with this
+ * store empty forever. A session does exactly one thing — it lets reads try
+ * the server before falling back to the device database (see
+ * `canUseRemote` in `src/data/sync.ts`) — and it is never what decides whether
+ * the app is usable. The local profile in `useProfileStore` does that.
+ *
+ * The session's `user` is the *server's* record, not the local profile; the
+ * two are reconciled by sync, which is not built yet.
  *
  * Tokens live in the OS keychain (`expo-secure-store`), never in MMKV: MMKV is
  * a plain file, readable on a rooted device or from an unencrypted backup.
@@ -22,6 +31,8 @@ const SESSION_KEY = 'foodfen.session';
  */
 const REFRESH_LEEWAY_MS = 60_000;
 
+export type AuthSession = RemoteAuthSession;
+
 export type AuthStatus = 'loading' | 'authenticated' | 'unauthenticated';
 
 interface AuthState {
@@ -33,8 +44,6 @@ interface AuthState {
   signIn: (payload: SignInPayload) => Promise<void>;
   signUp: (payload: SignUpPayload) => Promise<void>;
   signOut: () => Promise<void>;
-  /** Replace the cached profile after a settings change. */
-  setUser: (user: UserProfile) => void;
 }
 
 async function persistSession(session: AuthSession | null): Promise<void> {
@@ -98,24 +107,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       });
     }
   },
-
-  setUser: (user) => {
-    const { session } = get();
-    if (!session) return;
-
-    const next = { ...session, user };
-
-    set({ session: next });
-    void persistSession(next);
-  },
 }));
-
-/** Non-React accessors, for use inside the API layer. */
-export const authSelectors = {
-  session: () => useAuthStore.getState().session,
-  user: () => useAuthStore.getState().session?.user ?? null,
-  isAuthenticated: () => useAuthStore.getState().status === 'authenticated',
-};
 
 /**
  * Hand the API client its auth hooks. Called once from the root layout — the

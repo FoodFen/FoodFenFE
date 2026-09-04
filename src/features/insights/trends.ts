@@ -1,30 +1,31 @@
+import { entryNutrition } from '@/features/diary/selectors';
 import { macroEnergyShare } from '@/lib/nutrition';
 import type { DiaryDay, Macros, MealType } from '@/types/models';
 
 /**
  * Locally computed trends.
  *
- * These are deterministic statistics over the user's own diary — no model
- * involved. When the AI insight service is added it should consume this
- * summary rather than raw entries: it is smaller, already anonymised of food
- * names, and the same numbers the user sees on screen.
+ * Deterministic statistics over the user's own diary — no model involved. When
+ * the AI insight layer arrives it should consume this summary rather than raw
+ * entries: it is small, already aggregated, and the same numbers the user sees
+ * on screen.
  */
 
 export interface TrendSummary {
-  /** Days in the window that have at least one entry. */
+  /** Days in the window with at least one entry. */
   daysLogged: number;
   totalDays: number;
-  /** Mean calories across logged days only — blank days would drag it to zero. */
-  averageCalories: number;
+  /** Mean over logged days only — blank days would drag it toward zero. */
+  averageKcal: number;
   averageMacros: Macros;
   /** Mean share of energy from each macro, as 0–1 fractions. */
   averageMacroShare: Macros;
-  /** Mean daily calories minus mean daily goal. Negative is a deficit. */
+  /** Mean daily calories minus mean daily target. Negative is a deficit. */
   averageDelta: number;
-  /** Consecutive days ending today with at least one entry. */
+  /** Consecutive logged days ending at the most recent day in the window. */
   streak: number;
-  /** Calories per day, oldest first — the shape a chart consumes. */
-  series: { date: string; calories: number; goal: number }[];
+  /** Per-day figures, oldest first — the shape a chart consumes. */
+  series: { date: string; kcal: number; target: number }[];
 }
 
 function isLogged(day: DiaryDay): boolean {
@@ -42,30 +43,30 @@ export function summarizeTrends(days: readonly DiaryDay[]): TrendSummary {
   const logged = ordered.filter(isLogged);
 
   const averageMacros: Macros = {
-    protein: round1(mean(logged.map((day) => day.totals.protein))),
-    carbs: round1(mean(logged.map((day) => day.totals.carbs))),
-    fat: round1(mean(logged.map((day) => day.totals.fat))),
+    proteinG: round1(mean(logged.map((day) => day.totals.proteinG))),
+    carbsG: round1(mean(logged.map((day) => day.totals.carbsG))),
+    fatG: round1(mean(logged.map((day) => day.totals.fatG))),
   };
 
   return {
     daysLogged: logged.length,
     totalDays: ordered.length,
-    averageCalories: Math.round(mean(logged.map((day) => day.totals.calories))),
+    averageKcal: Math.round(mean(logged.map((day) => day.totals.kcal))),
     averageMacros,
     averageMacroShare: macroEnergyShare(averageMacros),
     averageDelta: Math.round(
-      mean(logged.map((day) => day.totals.calories - day.goals.calories)),
+      mean(logged.map((day) => day.totals.kcal - day.goal.targetKcal)),
     ),
     streak: currentStreak(ordered),
     series: ordered.map((day) => ({
       date: day.date,
-      calories: day.totals.calories,
-      goal: day.goals.calories,
+      kcal: day.totals.kcal,
+      target: day.goal.targetKcal,
     })),
   };
 }
 
-/** Consecutive logged days counting back from the most recent day in the window. */
+/** Consecutive logged days counting back from the most recent day. */
 export function currentStreak(orderedDays: readonly DiaryDay[]): number {
   let streak = 0;
 
@@ -87,8 +88,10 @@ export function averageByMeal(days: readonly DiaryDay[]): Record<MealType, numbe
     if (!isLogged(day)) continue;
 
     const perMeal: Record<string, number> = {};
+
     for (const entry of day.entries) {
-      perMeal[entry.mealType] = (perMeal[entry.mealType] ?? 0) + entry.nutrition.calories;
+      perMeal[entry.mealType] =
+        (perMeal[entry.mealType] ?? 0) + entryNutrition(entry).kcal;
     }
 
     for (const meal of ['breakfast', 'lunch', 'dinner', 'snack'] as const) {

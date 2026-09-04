@@ -1,202 +1,252 @@
-import type { Food, Nutrition, UserProfile } from '@/types/models';
+import type { CatalogFood, Nutrition, UserProfile } from '@/types/models';
 
 import {
+  ageFromBirthYear,
   basalMetabolicRate,
-  calculateGoals,
-  caloriesRemaining,
-  dailyCalorieDelta,
+  calculateTargets,
+  dailyKcalDelta,
+  goalDirection,
+  kcalRemaining,
   macroEnergyShare,
-  nutritionForPortion,
+  nutritionForServing,
   progressFraction,
   scaleNutrition,
   sumNutrition,
   totalDailyEnergyExpenditure,
 } from '../nutrition';
 
-const profile: UserProfile = {
-  id: 'u1',
-  email: 'test@example.com',
-  sex: 'male',
-  age: 30,
-  heightCm: 180,
-  weightKg: 80,
+/** Fixed so an age-dependent expectation cannot drift with the wall clock. */
+const NOW = new Date('2026-06-15T12:00:00Z');
+
+const profile: Pick<
+  UserProfile,
+  | 'gender'
+  | 'birthYear'
+  | 'height'
+  | 'weightCurrent'
+  | 'weightGoal'
+  | 'activityLevel'
+  | 'dietType'
+  | 'weeklyRateKg'
+> = {
+  gender: 'male',
+  birthYear: 1996,
+  height: 180,
+  weightCurrent: 80,
+  weightGoal: 80,
   activityLevel: 'moderate',
-  goalKind: 'maintain',
+  dietType: 'balanced',
   weeklyRateKg: 0,
 };
 
-const oats: Food = {
-  id: 'f1',
+const oats: CatalogFood = {
+  id: 'oats',
   name: 'Rolled oats',
-  per100g: {
-    calories: 379,
-    protein: 13.2,
-    carbs: 67.7,
-    fat: 6.5,
-    fiber: 10.1,
-  },
-  servingUnits: [
+  per100g: { kcal: 389, proteinG: 16.9, carbsG: 66.3, fatG: 6.9, fiberG: 10.6 },
+  servings: [
     { id: 'cup', label: '1 cup', grams: 81 },
     { id: 'g', label: 'gram', grams: 1 },
   ],
 };
 
+describe('ageFromBirthYear', () => {
+  it('is the difference in calendar years', () => {
+    expect(ageFromBirthYear(1996, NOW)).toBe(30);
+  });
+
+  it('never returns a negative age for a future birth year', () => {
+    expect(ageFromBirthYear(2100, NOW)).toBe(0);
+  });
+});
+
 describe('basalMetabolicRate', () => {
-  it('applies the Mifflin-St Jeor equation for males', () => {
+  it('applies Mifflin-St Jeor for males', () => {
     // 10*80 + 6.25*180 - 5*30 + 5 = 1780
-    expect(basalMetabolicRate(profile)).toBe(1780);
+    expect(basalMetabolicRate(profile, NOW)).toBe(1780);
   });
 
   it('applies the female offset', () => {
-    // The two sexes differ by exactly 166 kcal at the same body metrics.
-    expect(basalMetabolicRate({ ...profile, sex: 'female' })).toBe(1780 - 166);
+    expect(basalMetabolicRate({ ...profile, gender: 'female' }, NOW)).toBe(1780 - 166);
+  });
+
+  it('puts "other" midway between the two, not on one of them', () => {
+    const male = basalMetabolicRate(profile, NOW);
+    const female = basalMetabolicRate({ ...profile, gender: 'female' }, NOW);
+    const other = basalMetabolicRate({ ...profile, gender: 'other' }, NOW);
+
+    expect(other).toBe((male + female) / 2);
   });
 });
 
 describe('totalDailyEnergyExpenditure', () => {
   it('scales BMR by the activity multiplier', () => {
-    expect(totalDailyEnergyExpenditure(profile)).toBeCloseTo(1780 * 1.55, 5);
+    expect(totalDailyEnergyExpenditure(profile, NOW)).toBeCloseTo(1780 * 1.55, 5);
   });
 
-  it('increases monotonically with activity level', () => {
-    const sedentary = totalDailyEnergyExpenditure({
-      ...profile,
-      activityLevel: 'sedentary',
-    });
-    const veryActive = totalDailyEnergyExpenditure({
-      ...profile,
-      activityLevel: 'very_active',
-    });
-
-    expect(veryActive).toBeGreaterThan(sedentary);
+  it('increases with activity level', () => {
+    expect(
+      totalDailyEnergyExpenditure({ ...profile, activityLevel: 'very_active' }, NOW),
+    ).toBeGreaterThan(
+      totalDailyEnergyExpenditure({ ...profile, activityLevel: 'sedentary' }, NOW),
+    );
   });
 });
 
-describe('dailyCalorieDelta', () => {
-  it('is zero when maintaining', () => {
-    expect(dailyCalorieDelta('maintain', 0.5)).toBe(0);
+describe('goalDirection', () => {
+  it('reads the direction from the goal weight', () => {
+    expect(goalDirection({ weightCurrent: 80, weightGoal: 70 })).toBe('lose');
+    expect(goalDirection({ weightCurrent: 70, weightGoal: 80 })).toBe('gain');
+  });
+
+  it('treats a goal within half a kilo as maintenance', () => {
+    // Someone who rounds their weight should not be put on a deficit for it.
+    expect(goalDirection({ weightCurrent: 80, weightGoal: 80.3 })).toBe('maintain');
+  });
+});
+
+describe('dailyKcalDelta', () => {
+  it('is zero when maintaining, whatever the rate says', () => {
+    expect(dailyKcalDelta('maintain', 0.5)).toBe(0);
   });
 
   it('is negative when losing and positive when gaining', () => {
-    expect(dailyCalorieDelta('lose', 0.5)).toBeLessThan(0);
-    expect(dailyCalorieDelta('gain', 0.5)).toBeGreaterThan(0);
+    expect(dailyKcalDelta('lose', 0.5)).toBeLessThan(0);
+    expect(dailyKcalDelta('gain', 0.5)).toBeGreaterThan(0);
   });
 
-  it('caps an unrealistic rate at 1000 kcal per day', () => {
-    // 5 kg/week would imply ~5500 kcal/day without the clamp.
-    expect(dailyCalorieDelta('lose', 5)).toBe(-1000);
+  it('caps an unrealistic rate at 1000 kcal a day', () => {
+    // 5 kg/week implies ~5500 kcal/day without the clamp.
+    expect(dailyKcalDelta('lose', 5)).toBe(-1000);
   });
 });
 
-describe('calculateGoals', () => {
-  it('splits calories across macros with the right energy density', () => {
-    const goals = calculateGoals(profile);
-    const macroCalories = goals.protein * 4 + goals.carbs * 4 + goals.fat * 9;
+describe('calculateTargets', () => {
+  it('splits calories across macros at the right energy density', () => {
+    const targets = calculateTargets(profile, NOW);
+    const macroKcal =
+      targets.targetProteinG * 4 + targets.targetCarbsG * 4 + targets.targetFatG * 9;
 
     // Rounding each macro to a whole gram costs a few kcal of exactness.
-    expect(macroCalories).toBeCloseTo(goals.calories, -1);
+    expect(macroKcal).toBeCloseTo(targets.targetKcal, -1);
   });
 
   it('never targets below the safe floor', () => {
-    const goals = calculateGoals({
-      ...profile,
-      sex: 'female',
-      age: 70,
-      heightCm: 150,
-      weightKg: 45,
-      activityLevel: 'sedentary',
-      goalKind: 'lose',
-      weeklyRateKg: 1,
-    });
+    const targets = calculateTargets(
+      {
+        ...profile,
+        gender: 'female',
+        birthYear: 1956,
+        height: 150,
+        weightCurrent: 45,
+        weightGoal: 40,
+        activityLevel: 'sedentary',
+        weeklyRateKg: 1,
+      },
+      NOW,
+    );
 
-    expect(goals.calories).toBeGreaterThanOrEqual(1200);
-  });
-
-  it('returns custom goals untouched when the user set them', () => {
-    const customGoals = { calories: 2222, protein: 180, carbs: 200, fat: 70 };
-
-    expect(calculateGoals({ ...profile, customGoals })).toEqual(customGoals);
+    expect(targets.targetKcal).toBeGreaterThanOrEqual(1200);
   });
 
   it('gives a cut more protein than a bulk', () => {
-    const cutting = calculateGoals({ ...profile, goalKind: 'lose', weeklyRateKg: 0.5 });
-    const bulking = calculateGoals({ ...profile, goalKind: 'gain', weeklyRateKg: 0.5 });
+    const cutting = calculateTargets(
+      { ...profile, weightGoal: 70, weeklyRateKg: 0.5 },
+      NOW,
+    );
+    const bulking = calculateTargets(
+      { ...profile, weightGoal: 90, weeklyRateKg: 0.5 },
+      NOW,
+    );
 
-    const cutShare = (cutting.protein * 4) / cutting.calories;
-    const bulkShare = (bulking.protein * 4) / bulking.calories;
+    expect((cutting.targetProteinG * 4) / cutting.targetKcal).toBeGreaterThan(
+      (bulking.targetProteinG * 4) / bulking.targetKcal,
+    );
+  });
 
-    expect(cutShare).toBeGreaterThan(bulkShare);
+  it('lets diet type override the goal-based split', () => {
+    const keto = calculateTargets({ ...profile, dietType: 'keto' }, NOW);
+    const balanced = calculateTargets(profile, NOW);
+
+    expect(keto.targetCarbsG).toBeLessThan(balanced.targetCarbsG);
+    expect(keto.targetFatG).toBeGreaterThan(balanced.targetFatG);
+  });
+
+  it('scales the water target with body mass', () => {
+    const heavier = calculateTargets({ ...profile, weightCurrent: 100 }, NOW);
+    const lighter = calculateTargets({ ...profile, weightCurrent: 60 }, NOW);
+
+    expect(heavier.targetWaterMl).toBeGreaterThan(lighter.targetWaterMl);
   });
 });
 
 describe('scaleNutrition', () => {
   it('scales linearly from the per-100 g basis', () => {
-    const scaled = scaleNutrition(oats.per100g, 50);
+    const half = scaleNutrition(oats.per100g, 50);
 
-    expect(scaled.calories).toBe(190); // 379 / 2, rounded
-    expect(scaled.protein).toBeCloseTo(6.6, 1);
+    expect(half.kcal).toBe(195); // 389 / 2, rounded
+    expect(half.proteinG).toBeCloseTo(8.5, 1);
   });
 
-  it('leaves unreported nutrients undefined rather than zero', () => {
-    const scaled = scaleNutrition(oats.per100g, 50);
+  it('leaves an unreported nutrient undefined rather than zero', () => {
+    const scaled = scaleNutrition({ kcal: 100, proteinG: 1, carbsG: 2, fatG: 3 }, 50);
 
-    // "No sugar data" and "contains no sugar" must not look the same.
-    expect(scaled.sugar).toBeUndefined();
-    expect(scaled.fiber).toBeCloseTo(5.1, 1);
+    // "No fiber data" and "contains no fiber" must not look the same.
+    expect(scaled.fiberG).toBeUndefined();
   });
 });
 
-describe('nutritionForPortion', () => {
-  it('resolves the serving unit to grams', () => {
-    const oneCup = nutritionForPortion(oats, 1, 'cup');
-
-    expect(oneCup.calories).toBe(Math.round(379 * 0.81));
+describe('nutritionForServing', () => {
+  it('resolves the serving to grams', () => {
+    expect(nutritionForServing(oats, 1, 'cup').kcal).toBe(Math.round(389 * 0.81));
   });
 
-  it('falls back to the first unit when the id is unknown', () => {
-    expect(nutritionForPortion(oats, 1, 'nope')).toEqual(
-      nutritionForPortion(oats, 1, 'cup'),
+  it('falls back to the first serving when the id is unknown', () => {
+    expect(nutritionForServing(oats, 1, 'nope')).toEqual(
+      nutritionForServing(oats, 1, 'cup'),
     );
   });
 
-  it('treats quantity as grams when the food has no serving units', () => {
-    const byWeight = nutritionForPortion({ ...oats, servingUnits: [] }, 200, 'x');
-
-    expect(byWeight.calories).toBe(758);
+  it('treats the quantity as grams when a food defines no servings', () => {
+    expect(nutritionForServing({ ...oats, servings: [] }, 200, 'x').kcal).toBe(778);
   });
 });
 
 describe('sumNutrition', () => {
-  const a: Nutrition = { calories: 100, protein: 5, carbs: 10, fat: 2, fiber: 1 };
-  const b: Nutrition = { calories: 250, protein: 12.5, carbs: 30, fat: 8 };
+  const a: Nutrition = { kcal: 100, proteinG: 5, carbsG: 10, fatG: 2, fiberG: 1 };
+  const b: Nutrition = { kcal: 250, proteinG: 12.5, carbsG: 30, fatG: 8 };
 
   it('adds the required fields', () => {
     const total = sumNutrition([a, b]);
 
-    expect(total.calories).toBe(350);
-    expect(total.protein).toBe(17.5);
+    expect(total.kcal).toBe(350);
+    expect(total.proteinG).toBe(17.5);
   });
 
-  it('keeps an optional field when any entry reported it', () => {
-    expect(sumNutrition([a, b]).fiber).toBe(1);
+  it('keeps fiber when any item reported it', () => {
+    expect(sumNutrition([a, b]).fiberG).toBe(1);
   });
 
-  it('omits an optional field no entry reported', () => {
-    expect(sumNutrition([a, b]).sugar).toBeUndefined();
+  it('omits fiber when no item reported it', () => {
+    expect(sumNutrition([b]).fiberG).toBeUndefined();
   });
 
   it('returns zeros for an empty list', () => {
-    expect(sumNutrition([])).toMatchObject({ calories: 0, protein: 0, carbs: 0, fat: 0 });
+    expect(sumNutrition([])).toMatchObject({
+      kcal: 0,
+      proteinG: 0,
+      carbsG: 0,
+      fatG: 0,
+    });
   });
 });
 
-describe('caloriesRemaining', () => {
+describe('kcalRemaining', () => {
   it('adds exercise back into the budget', () => {
-    expect(caloriesRemaining(2000, 1800, 300)).toBe(500);
+    expect(kcalRemaining(2000, 1800, 300)).toBe(500);
   });
 
   it('goes negative once the budget is exceeded', () => {
-    expect(caloriesRemaining(2000, 2400)).toBe(-400);
+    expect(kcalRemaining(2000, 2400)).toBe(-400);
   });
 });
 
@@ -213,18 +263,17 @@ describe('progressFraction', () => {
 
 describe('macroEnergyShare', () => {
   it('weights fat at 9 kcal per gram', () => {
-    // 100 g fat = 900 kcal, 100 g protein = 400 kcal, 100 g carbs = 400 kcal.
-    const share = macroEnergyShare({ protein: 100, carbs: 100, fat: 100 });
+    const share = macroEnergyShare({ proteinG: 100, carbsG: 100, fatG: 100 });
 
-    expect(share.fat).toBeCloseTo(900 / 1700, 5);
-    expect(share.protein + share.carbs + share.fat).toBeCloseTo(1, 5);
+    expect(share.fatG).toBeCloseTo(900 / 1700, 5);
+    expect(share.proteinG + share.carbsG + share.fatG).toBeCloseTo(1, 5);
   });
 
   it('returns zeros rather than NaN with no macros', () => {
-    expect(macroEnergyShare({ protein: 0, carbs: 0, fat: 0 })).toEqual({
-      protein: 0,
-      carbs: 0,
-      fat: 0,
+    expect(macroEnergyShare({ proteinG: 0, carbsG: 0, fatG: 0 })).toEqual({
+      proteinG: 0,
+      carbsG: 0,
+      fatG: 0,
     });
   });
 });

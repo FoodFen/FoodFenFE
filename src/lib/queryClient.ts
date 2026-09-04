@@ -84,15 +84,28 @@ export const queryKeys = {
     day: (date: string) => [...queryKeys.diary.all, 'day', date] as const,
     range: (from: string, to: string) =>
       [...queryKeys.diary.all, 'range', from, to] as const,
-    weight: (from: string, to: string) =>
-      [...queryKeys.diary.all, 'weight', from, to] as const,
   },
-  foods: {
-    all: ['foods'] as const,
-    search: (query: string) => [...queryKeys.foods.all, 'search', query] as const,
-    byId: (id: string) => [...queryKeys.foods.all, 'detail', id] as const,
-    barcode: (code: string) => [...queryKeys.foods.all, 'barcode', code] as const,
-    frequent: () => [...queryKeys.foods.all, 'frequent'] as const,
-    recent: () => [...queryKeys.foods.all, 'recent'] as const,
+  entries: {
+    all: ['entries'] as const,
+    byId: (id: string) => [...queryKeys.entries.all, id] as const,
+  },
+  weight: {
+    all: ['weight'] as const,
+    range: (from: string, to: string) => [...queryKeys.weight.all, from, to] as const,
+  },
+  /** The bundled reference list. Local-only, never invalidated by a write. */
+  catalog: {
+    all: ['catalog'] as const,
+    search: (query: string) => [...queryKeys.catalog.all, 'search', query] as const,
+  },
+  gamification: {
+    all: ['gamification'] as const,
+    streak: () => [...queryKeys.gamification.all, 'streak'] as const,
+    quests: (date: string) => [...queryKeys.gamification.all, 'quests', date] as const,
+    coins: () => [...queryKeys.gamification.all, 'coins'] as const,
+  },
+  sync: {
+    all: ['sync'] as const,
+    pending: () => [...queryKeys.sync.all, 'pending'] as const,
   },
 } as const;

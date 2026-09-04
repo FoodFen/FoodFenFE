@@ -11,13 +11,13 @@ import { FoodEntryRow } from './FoodEntryRow';
 
 export interface MealSectionProps {
   group: MealGroup;
-  onAddFood: (mealType: MealGroup['mealType']) => void;
+  onAddMeal: (mealType: MealGroup['mealType']) => void;
   onPressEntry?: (entry: FoodEntry) => void;
   onLongPressEntry?: (entry: FoodEntry) => void;
 }
 
 /**
- * One meal of the day, with its entries and an add affordance.
+ * One meal of the day, with its logged entries and an add affordance.
  *
  * Empty meals still render: the add row is the primary way into the logging
  * flow, and hiding it behind a "+" in the header would cost a tap on the
@@ -25,7 +25,7 @@ export interface MealSectionProps {
  */
 export function MealSection({
   group,
-  onAddFood,
+  onAddMeal,
   onPressEntry,
   onLongPressEntry,
 }: MealSectionProps) {
@@ -41,7 +41,7 @@ export function MealSection({
 
         {hasEntries ? (
           <Text variant="mono" tone="muted">
-            {group.totals.calories} kcal
+            {group.totals.kcal} kcal
           </Text>
         ) : null}
       </View>
@@ -62,14 +62,14 @@ export function MealSection({
       <Pressable
         onPress={() => {
           haptics.selection();
-          onAddFood(group.mealType);
+          onAddMeal(group.mealType);
         }}
         accessibilityRole="button"
-        accessibilityLabel={`Add food to ${MEAL_LABELS[group.mealType]}`}
+        accessibilityLabel={`Add a meal to ${MEAL_LABELS[group.mealType]}`}
         className="flex-row items-center gap-2 border-t border-border px-4 py-3 active:bg-surface-alt"
       >
         <Text variant="label" tone="brand">
-          + Add food
+          + Add meal
         </Text>
       </Pressable>
     </Card>
