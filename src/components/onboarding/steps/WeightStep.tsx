@@ -5,14 +5,16 @@ import { Text } from '@/components/ui/Text';
 import { units } from '@/features/settings/store';
 import type { UnitSystem } from '@/types/models';
 
+// Wheel rows carry only the number — the unit shows once, as a static label
+// beside the wheel, not repeated on every row.
 const KG_OPTIONS = Array.from({ length: 171 }, (_, i) => {
   const kg = i + 30; // 30–200 kg
-  return { value: kg, label: `${kg} kg` };
+  return { value: kg, label: String(kg) };
 });
 
 const LB_OPTIONS = Array.from({ length: 375 }, (_, i) => {
   const lb = i + 66; // 66–440 lb
-  return { value: lb, label: `${lb} lb` };
+  return { value: lb, label: String(lb) };
 });
 
 export interface WeightWheelProps {

@@ -4,19 +4,21 @@ import { WheelPicker } from '@/components/onboarding/WheelPicker';
 import { Text } from '@/components/ui/Text';
 import type { UnitSystem } from '@/types/models';
 
+// Wheel rows carry only the number — the unit shows once, as a static label
+// beside (metric) or below (imperial) the wheel, not repeated on every row.
 const CM_OPTIONS = Array.from({ length: 121 }, (_, i) => {
   const cm = i + 100; // 100–220 cm
-  return { value: cm, label: `${cm} cm` };
+  return { value: cm, label: String(cm) };
 });
 
 const FEET_OPTIONS = Array.from({ length: 5 }, (_, i) => {
   const feet = i + 3; // 3–7 ft
-  return { value: feet, label: `${feet} ft` };
+  return { value: feet, label: String(feet) };
 });
 
 const INCH_OPTIONS = Array.from({ length: 12 }, (_, i) => ({
   value: i,
-  label: `${i} in`,
+  label: String(i),
 }));
 
 const CM_PER_INCH = 2.54;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import type { Control, FieldErrors } from 'react-hook-form';
 import { Pressable, View } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
@@ -274,7 +274,8 @@ function Chip({
   const scale = useSharedValue(1);
 
   useEffect(() => {
-    scale.value = withSpring(pressed ? 0.92 : 1, { damping: 15, stiffness: 400 });
+    // A timing curve, not a spring — subtle feedback with no overshoot/bounce.
+    scale.value = withTiming(pressed ? 0.97 : 1, { duration: 100 });
   }, [pressed, scale]);
 
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
