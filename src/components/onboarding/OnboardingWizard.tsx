@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { ActivityLevelStep } from '@/components/onboarding/steps/ActivityLevelStep';
 import { BirthYearStep } from '@/components/onboarding/steps/BirthYearStep';
+import { FinalizeStep } from '@/components/onboarding/steps/FinalizeStep';
 import { GenderStep } from '@/components/onboarding/steps/GenderStep';
 import { GoalStep } from '@/components/onboarding/steps/GoalStep';
 import { HeightStep } from '@/components/onboarding/steps/HeightStep';
@@ -53,16 +54,19 @@ const ALL_STEP_KEYS = [
   'activityLevel',
   'goal',
   'rate',
+  'finalize',
 ] as const;
 
 // A single-choice step advances itself the moment an option is tapped — a
 // separate Continue below it would just be a second tap for the same choice.
+// `finalize` also renders its own button rather than the generic footer.
 const TAP_ADVANCE_STEPS = new Set<(typeof ALL_STEP_KEYS)[number]>([
   'gender',
   'notifications',
   'unitSystem',
   'activityLevel',
   'rate',
+  'finalize',
 ]);
 
 export interface OnboardingWizardProps {
@@ -115,6 +119,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
       onBack={stepIndex > 0 ? goBack : undefined}
       onContinue={goNext}
       showContinue={!TAP_ADVANCE_STEPS.has(currentStep)}
+      showHeader={currentStep !== 'finalize'}
     >
       {currentStep === 'gender' && (
         <GenderStep
@@ -195,6 +200,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
           weightGoal={draft.weightGoal}
         />
       )}
+      {currentStep === 'finalize' && <FinalizeStep draft={draft} onDone={goNext} />}
     </StepScreen>
   );
 }

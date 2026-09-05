@@ -26,6 +26,8 @@ export interface StepScreenProps {
    * Enable/Skip choice) — a generic Continue below it would be redundant.
    */
   showContinue?: boolean;
+  /** False for the closing results screen, which has nothing to go back to and isn't part of the counted progress. */
+  showHeader?: boolean;
   children: React.ReactNode;
 }
 
@@ -43,6 +45,7 @@ export function StepScreen({
   onContinue,
   continueLabel = 'Continue',
   showContinue = true,
+  showHeader = true,
   children,
 }: StepScreenProps) {
   const insets = useSafeAreaInsets();
@@ -51,25 +54,27 @@ export function StepScreen({
 
   return (
     <View className="flex-1 bg-bg">
-      <View
-        className="flex-row items-center gap-3 px-4 pb-2"
-        style={{ paddingTop: insets.top + 12 }}
-      >
-        {onBack ? (
-          <Pressable
-            onPress={onBack}
-            accessibilityRole="button"
-            accessibilityLabel="Back"
-            hitSlop={8}
-          >
-            <Ionicons name="arrow-back" size={24} color={colors.fg} />
-          </Pressable>
-        ) : (
-          <View style={{ width: 24 }} />
-        )}
+      {showHeader ? (
+        <View
+          className="flex-row items-center gap-3 px-4 pb-2"
+          style={{ paddingTop: insets.top + 12 }}
+        >
+          {onBack ? (
+            <Pressable
+              onPress={onBack}
+              accessibilityRole="button"
+              accessibilityLabel="Back"
+              hitSlop={8}
+            >
+              <Ionicons name="arrow-back" size={24} color={colors.fg} />
+            </Pressable>
+          ) : (
+            <View style={{ width: 24 }} />
+          )}
 
-        <ProgressBar progress={(stepIndex + 1) / totalSteps} height={10} className="flex-1" />
-      </View>
+          <ProgressBar progress={(stepIndex + 1) / totalSteps} height={10} className="flex-1" />
+        </View>
+      ) : null}
 
       <KeyboardAwareScrollView
         className="flex-1"

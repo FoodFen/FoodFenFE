@@ -1,4 +1,5 @@
 import { OnboardingWizard } from '@/components/onboarding/OnboardingWizard';
+import { useProfileStore } from '@/features/profile/store';
 
 /**
  * First run.
@@ -9,12 +10,28 @@ import { OnboardingWizard } from '@/components/onboarding/OnboardingWizard';
  * their diary on a second device.
  */
 export default function OnboardingScreen() {
+  const createProfile = useProfileStore((state) => state.createProfile);
+
   return (
     <OnboardingWizard
-      onComplete={() => {
-        // Saving the draft (createProfile) is a separate piece of work — this
-        // is deliberately a stub. Not logging `draft` itself: it's body
-        // metrics, and those never go to the console.
+      onComplete={(draft) => {
+        // dietType isn't collected by this wizard; the schema's own default
+        // ('balanced') is what a fresh profile gets until a diet-type step
+        // exists. `notificationsEnabled` isn't a user-table column — the
+        // permission request already happened in NotificationsStep.
+        createProfile({
+          gender: draft.gender,
+          birthYear: draft.birthYear,
+          unitSystem: draft.unitSystem,
+          height: draft.height,
+          weightCurrent: draft.weightCurrent,
+          weightGoal: draft.weightGoal,
+          activityLevel: draft.activityLevel,
+          dietType: 'balanced',
+          weeklyRateKg: draft.weeklyRateKg,
+        });
+        // Not logging `draft`: it's body metrics, and those never go to the
+        // console per CLAUDE.md.
       }}
     />
   );

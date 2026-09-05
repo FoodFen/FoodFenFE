@@ -339,3 +339,28 @@ export function macroEnergyShare(macros: Macros): Macros {
 function round1(value: number): number {
   return Math.round(value * 10) / 10;
 }
+
+export type BmiCategory = 'underweight' | 'healthy' | 'overweight' | 'obese';
+
+export const BMI_CATEGORY_LABELS: Record<BmiCategory, string> = {
+  underweight: 'Underweight',
+  healthy: 'Healthy',
+  overweight: 'Overweight',
+  obese: 'Obese',
+};
+
+/** Body mass index from kg and cm. Standard formula, no age/sex adjustment. */
+export function bmi(weightKg: number, heightCm: number): number {
+  const heightM = heightCm / 100;
+
+  return weightKg / (heightM * heightM);
+}
+
+/** WHO adult BMI bands. */
+export function bmiCategory(bmiValue: number): BmiCategory {
+  if (bmiValue < 18.5) return 'underweight';
+  if (bmiValue < 25) return 'healthy';
+  if (bmiValue < 30) return 'overweight';
+
+  return 'obese';
+}
