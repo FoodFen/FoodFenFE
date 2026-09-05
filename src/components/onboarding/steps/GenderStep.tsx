@@ -1,13 +1,13 @@
 import { View } from 'react-native';
 
-import { ChipRow } from '@/components/profile/BodyStatsForm';
+import { OptionList } from '@/components/profile/BodyStatsForm';
 import { Text } from '@/components/ui/Text';
 import type { Gender } from '@/types/models';
 
-const GENDER_OPTIONS: { value: Gender; label: string }[] = [
-  { value: 'female', label: 'Female' },
-  { value: 'male', label: 'Male' },
-  { value: 'other', label: 'Other' },
+const GENDER_OPTIONS: { value: Gender; label: string; icon: string }[] = [
+  { value: 'male', label: 'Male', icon: '♂️' },
+  { value: 'female', label: 'Female', icon: '♀️' },
+  { value: 'other', label: 'Prefer not to answer', icon: '🙂' },
 ];
 
 export interface GenderStepProps {
@@ -18,10 +18,15 @@ export interface GenderStepProps {
 export function GenderStep({ value, onChange }: GenderStepProps) {
   return (
     <View className="w-full items-center gap-6">
-      <Text variant="title" className="w-full text-center text-3xl">
-        What&apos;s your sex?
-      </Text>
-      <ChipRow options={GENDER_OPTIONS} value={value} onChange={onChange} fullWidth />
+      <View className="w-full items-center gap-2">
+        <Text variant="title" className="w-full text-center text-3xl">
+          What&apos;s your sex?
+        </Text>
+        <Text variant="body" tone="muted" className="text-center">
+          This helps us personalize your daily calorie target.
+        </Text>
+      </View>
+      <OptionList options={GENDER_OPTIONS} value={value} onChange={onChange} />
     </View>
   );
 }

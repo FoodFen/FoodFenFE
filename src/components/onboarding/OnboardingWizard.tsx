@@ -55,6 +55,16 @@ const ALL_STEP_KEYS = [
   'rate',
 ] as const;
 
+// A single-choice step advances itself the moment an option is tapped — a
+// separate Continue below it would just be a second tap for the same choice.
+const TAP_ADVANCE_STEPS = new Set<(typeof ALL_STEP_KEYS)[number]>([
+  'gender',
+  'notifications',
+  'unitSystem',
+  'activityLevel',
+  'rate',
+]);
+
 export interface OnboardingWizardProps {
   onComplete: (draft: OnboardingDraft) => void;
 }
@@ -104,10 +114,16 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
       direction={direction}
       onBack={stepIndex > 0 ? goBack : undefined}
       onContinue={goNext}
-      showContinue={currentStep !== 'notifications'}
+      showContinue={!TAP_ADVANCE_STEPS.has(currentStep)}
     >
       {currentStep === 'gender' && (
-        <GenderStep value={draft.gender} onChange={(value) => update('gender', value)} />
+        <GenderStep
+          value={draft.gender}
+          onChange={(value) => {
+            update('gender', value);
+            goNext();
+          }}
+        />
       )}
       {currentStep === 'birthYear' && (
         <BirthYearStep
@@ -124,7 +140,10 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
       {currentStep === 'unitSystem' && (
         <UnitSystemStep
           value={draft.unitSystem}
-          onChange={(value) => update('unitSystem', value)}
+          onChange={(value) => {
+            update('unitSystem', value);
+            goNext();
+          }}
         />
       )}
       {currentStep === 'height' && (
@@ -144,7 +163,10 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
       {currentStep === 'activityLevel' && (
         <ActivityLevelStep
           value={draft.activityLevel}
-          onChange={(value) => update('activityLevel', value)}
+          onChange={(value) => {
+            update('activityLevel', value);
+            goNext();
+          }}
         />
       )}
       {currentStep === 'goal' && (
@@ -165,7 +187,10 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
       {currentStep === 'rate' && (
         <RateStep
           value={draft.weeklyRateKg}
-          onChange={(value) => update('weeklyRateKg', value)}
+          onChange={(value) => {
+            update('weeklyRateKg', value);
+            goNext();
+          }}
           weightCurrent={draft.weightCurrent}
           weightGoal={draft.weightGoal}
         />

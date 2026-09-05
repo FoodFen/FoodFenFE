@@ -60,9 +60,14 @@ export interface WeightStepProps {
 export function WeightStep({ unitSystem, value, onChange }: WeightStepProps) {
   return (
     <View className="w-full items-center gap-6">
-      <Text variant="title" className="w-full text-center text-3xl">
-        What&apos;s your current weight?
-      </Text>
+      <View className="w-full items-center gap-2">
+        <Text variant="title" className="w-full text-center text-3xl">
+          What&apos;s your current weight?
+        </Text>
+        <Text variant="body" tone="muted" className="text-center">
+          Don&apos;t worry, you can change this anytime.
+        </Text>
+      </View>
       <WeightWheel unitSystem={unitSystem} value={value} onChange={onChange} />
     </View>
   );

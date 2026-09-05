@@ -50,9 +50,14 @@ export function HeightStep({ unitSystem, value, onChange }: HeightStepProps) {
 
     return (
       <View className="w-full items-center gap-6">
-        <Text variant="title" className="w-full text-center text-3xl">
-          How tall are you?
-        </Text>
+        <View className="w-full items-center gap-2">
+          <Text variant="title" className="w-full text-center text-3xl">
+            How tall are you?
+          </Text>
+          <Text variant="body" tone="muted" className="text-center">
+            Don&apos;t worry, you can change this anytime.
+          </Text>
+        </View>
         <View className="w-full flex-row items-center justify-center gap-4">
           <WheelPicker
             data={FEET_OPTIONS}
@@ -76,9 +81,14 @@ export function HeightStep({ unitSystem, value, onChange }: HeightStepProps) {
 
   return (
     <View className="w-full items-center gap-6">
-      <Text variant="title" className="w-full text-center text-3xl">
-        How tall are you?
-      </Text>
+      <View className="w-full items-center gap-2">
+        <Text variant="title" className="w-full text-center text-3xl">
+          How tall are you?
+        </Text>
+        <Text variant="body" tone="muted" className="text-center">
+          Don&apos;t worry, you can change this anytime.
+        </Text>
+      </View>
       <WheelPicker data={CM_OPTIONS} value={cm} onChange={onChange} sideLabel={`${cm.toFixed(1)} cm`} />
     </View>
   );

@@ -23,6 +23,21 @@ const ACTIVITY_OPTIONS = Object.keys(ACTIVITY_LABELS) as ActivityLevel[];
 const DIET_OPTIONS = Object.keys(DIET_LABELS) as DietType[];
 const RATE_OPTIONS = [0, 0.25, 0.5, 0.75, 1];
 
+const ACTIVITY_ICONS: Record<ActivityLevel, string> = {
+  sedentary: '🛋️',
+  light: '👟',
+  moderate: '⚽',
+  active: '🚴',
+  very_active: '🏋️',
+};
+
+// ACTIVITY_LABELS packs "Title — description" into one string; split once
+// here rather than duplicating the facts in a second constant.
+const ACTIVITY_OPTION_LIST = ACTIVITY_OPTIONS.map((level) => {
+  const [title, description] = ACTIVITY_LABELS[level].split(' — ');
+  return { value: level, label: title ?? ACTIVITY_LABELS[level], description, icon: ACTIVITY_ICONS[level] };
+});
+
 export interface BodyStatsFormProps {
   control: Control<BodyStatsValues>;
   errors: FieldErrors<BodyStatsValues>;
@@ -197,61 +212,116 @@ export function ActivityLevelList({
   value: ActivityLevel | undefined;
   onChange: (value: ActivityLevel) => void;
 }) {
-  return (
-    <View className="gap-2">
-      {ACTIVITY_OPTIONS.map((level) => {
-        const isSelected = level === value;
+  return <OptionList options={ACTIVITY_OPTION_LIST} value={value} onChange={onChange} />;
+}
 
-        return (
-          <Pressable
-            key={level}
-            onPress={() => {
-              haptics.selection();
-              onChange(level);
-            }}
-            accessibilityRole="radio"
-            accessibilityState={{ selected: isSelected }}
-            className={cn(
-              'rounded-xl border p-3',
-              isSelected ? 'border-brand bg-brand-soft' : 'border-border',
-            )}
-          >
-            <Text variant="body" tone={isSelected ? 'brand' : 'default'}>
-              {ACTIVITY_LABELS[level]}
-            </Text>
-          </Pressable>
-        );
-      })}
+export interface Option<T extends string | number> {
+  value: T;
+  label: string;
+  /** A muted caption under the label. */
+  description?: string;
+  /** An emoji rendered to the left of the label. */
+  icon?: string;
+}
+
+/**
+ * A vertical list of full-width, selectable rows — one question, one tap.
+ * Shared by every single-choice onboarding step (gender, units, activity,
+ * goal direction, pace) so they read as one consistent picker, not several.
+ */
+export function OptionList<T extends string | number>({
+  options,
+  value,
+  onChange,
+}: {
+  options: Option<T>[];
+  value: T | undefined;
+  onChange: (value: T) => void;
+}) {
+  return (
+    <View className="w-full gap-3">
+      {options.map((option) => (
+        <OptionRow
+          key={String(option.value)}
+          option={option}
+          isSelected={option.value === value}
+          onPress={() => onChange(option.value)}
+        />
+      ))}
     </View>
   );
 }
 
-/** A row of selectable chips, shared with the onboarding wizard's own steps. */
+/** A single option row, with a press-in/press-out scale for tactile feedback. */
+function OptionRow<T extends string | number>({
+  option,
+  isSelected,
+  onPress,
+}: {
+  option: Option<T>;
+  isSelected: boolean;
+  onPress: () => void;
+}) {
+  const [pressed, setPressed] = useState(false);
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    // A timing curve, not a spring — subtle feedback with no overshoot/bounce.
+    scale.value = withTiming(pressed ? 0.98 : 1, { duration: 100 });
+  }, [pressed, scale]);
+
+  const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+
+  return (
+    <Animated.View style={animatedStyle}>
+      <Pressable
+        onPressIn={() => setPressed(true)}
+        onPressOut={() => setPressed(false)}
+        onPress={() => {
+          haptics.selection();
+          onPress();
+        }}
+        accessibilityRole="radio"
+        accessibilityState={{ selected: isSelected }}
+        className={cn(
+          'flex-row items-center gap-3 rounded-2xl border p-4',
+          isSelected ? 'border-brand bg-brand-soft' : 'border-transparent bg-surface-alt',
+        )}
+      >
+        {option.icon ? <Text className="text-2xl">{option.icon}</Text> : null}
+        <View className="flex-1 gap-0.5">
+          <Text variant="body" tone={isSelected ? 'brand' : 'default'} className="font-semibold">
+            {option.label}
+          </Text>
+          {option.description ? (
+            <Text variant="caption" tone="muted">
+              {option.description}
+            </Text>
+          ) : null}
+        </View>
+      </Pressable>
+    </Animated.View>
+  );
+}
+
+/** A row of selectable chips — the compact form used in the dense goals editor. */
 export function ChipRow<T extends string | number>({
   options,
   value,
   onChange,
-  fullWidth = false,
 }: {
   options: { value: T; label: string }[];
   value: T | undefined;
   onChange: (value: T) => void;
-  /**
-   * Equal-width chips filling the row, for a single full-screen question.
-   * `justify-center` on a shrink-wrapped row has nothing to center within —
-   * this is what actually centers a short row of chips.
-   */
-  fullWidth?: boolean;
 }) {
   return (
-    <View className={cn('flex-row gap-3', fullWidth ? 'w-full' : 'flex-wrap justify-center gap-2')}>
+    <View className="flex-row flex-wrap justify-center gap-2">
       {options.map((option) => (
         <Chip
           key={String(option.value)}
           label={option.label}
           isSelected={option.value === value}
           onPress={() => onChange(option.value)}
-          fullWidth={fullWidth}
         />
       ))}
     </View>
@@ -263,12 +333,10 @@ function Chip({
   label,
   isSelected,
   onPress,
-  fullWidth = false,
 }: {
   label: string;
   isSelected: boolean;
   onPress: () => void;
-  fullWidth?: boolean;
 }) {
   const [pressed, setPressed] = useState(false);
   const scale = useSharedValue(1);
@@ -281,7 +349,7 @@ function Chip({
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 
   return (
-    <Animated.View style={[animatedStyle, fullWidth && { flex: 1 }]}>
+    <Animated.View style={animatedStyle}>
       <Pressable
         onPressIn={() => setPressed(true)}
         onPressOut={() => setPressed(false)}
@@ -292,16 +360,11 @@ function Chip({
         accessibilityRole="radio"
         accessibilityState={{ selected: isSelected }}
         className={cn(
-          'items-center justify-center rounded-pill border',
-          fullWidth ? 'min-h-14 px-3 py-2' : 'h-10 px-4',
+          'h-10 items-center justify-center rounded-pill border px-4',
           isSelected ? 'border-brand bg-brand' : 'border-border bg-surface',
         )}
       >
-        <Text
-          variant="label"
-          tone={isSelected ? 'onBrand' : 'default'}
-          className={cn('text-center', fullWidth && 'text-base font-semibold')}
-        >
+        <Text variant="label" tone={isSelected ? 'onBrand' : 'default'}>
           {label}
         </Text>
       </Pressable>

@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 
-import { ChipRow } from '@/components/profile/BodyStatsForm';
+import { OptionList } from '@/components/profile/BodyStatsForm';
 import { Text } from '@/components/ui/Text';
 import type { UnitSystem } from '@/types/models';
 
@@ -17,10 +17,15 @@ export interface UnitSystemStepProps {
 export function UnitSystemStep({ value, onChange }: UnitSystemStepProps) {
   return (
     <View className="w-full items-center gap-6">
-      <Text variant="title" className="w-full text-center text-3xl">
-        Which units do you use?
-      </Text>
-      <ChipRow options={UNIT_SYSTEM_OPTIONS} value={value} onChange={onChange} fullWidth />
+      <View className="w-full items-center gap-2">
+        <Text variant="title" className="w-full text-center text-3xl">
+          Which units do you use?
+        </Text>
+        <Text variant="body" tone="muted" className="text-center">
+          This applies to every measurement in the app.
+        </Text>
+      </View>
+      <OptionList options={UNIT_SYSTEM_OPTIONS} value={value} onChange={onChange} />
     </View>
   );
 }

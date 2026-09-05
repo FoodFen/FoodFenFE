@@ -1,15 +1,15 @@
 import { View } from 'react-native';
 
 import { WeightWheel } from '@/components/onboarding/steps/WeightStep';
-import { ChipRow } from '@/components/profile/BodyStatsForm';
+import { OptionList } from '@/components/profile/BodyStatsForm';
 import { Text } from '@/components/ui/Text';
 import type { GoalDirection } from '@/lib/nutrition';
 import type { UnitSystem } from '@/types/models';
 
-const DIRECTION_OPTIONS: { value: GoalDirection; label: string }[] = [
-  { value: 'lose', label: 'Lose' },
-  { value: 'maintain', label: 'Maintain' },
-  { value: 'gain', label: 'Gain' },
+const DIRECTION_OPTIONS: { value: GoalDirection; label: string; icon: string }[] = [
+  { value: 'lose', label: 'Lose', icon: '📉' },
+  { value: 'maintain', label: 'Maintain', icon: '⚖️' },
+  { value: 'gain', label: 'Gain', icon: '📈' },
 ];
 
 export interface GoalStepProps {
@@ -30,10 +30,15 @@ export function GoalStep({
 }: GoalStepProps) {
   return (
     <View className="w-full items-center gap-6">
-      <Text variant="title" className="w-full text-center text-3xl">
-        What&apos;s your goal?
-      </Text>
-      <ChipRow options={DIRECTION_OPTIONS} value={direction} onChange={onChangeDirection} fullWidth />
+      <View className="w-full items-center gap-2">
+        <Text variant="title" className="w-full text-center text-3xl">
+          What&apos;s your goal?
+        </Text>
+        <Text variant="body" tone="muted" className="text-center">
+          You can always change this later.
+        </Text>
+      </View>
+      <OptionList options={DIRECTION_OPTIONS} value={direction} onChange={onChangeDirection} />
 
       {direction !== 'maintain' ? (
         <View className="items-center gap-2">

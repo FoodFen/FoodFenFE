@@ -12,9 +12,14 @@ export interface ActivityLevelStepProps {
 export function ActivityLevelStep({ value, onChange }: ActivityLevelStepProps) {
   return (
     <View className="w-full items-center gap-6">
-      <Text variant="title" className="w-full text-center text-3xl">
-        How active are you?
-      </Text>
+      <View className="w-full items-center gap-2">
+        <Text variant="title" className="w-full text-center text-3xl">
+          How active are you?
+        </Text>
+        <Text variant="body" tone="muted" className="text-center">
+          This helps us estimate your daily calorie burn.
+        </Text>
+      </View>
       <View className="w-full">
         <ActivityLevelList value={value} onChange={onChange} />
       </View>

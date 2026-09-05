@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 
-import { ChipRow } from '@/components/profile/BodyStatsForm';
+import { OptionList } from '@/components/profile/BodyStatsForm';
 import { Text } from '@/components/ui/Text';
 
 const RATE_VALUES = [0.25, 0.5, 0.75, 1];
@@ -34,10 +34,15 @@ export function RateStep({ value, onChange, weightCurrent, weightGoal }: RateSte
 
   return (
     <View className="w-full items-center gap-6">
-      <Text variant="title" className="w-full text-center text-3xl">
-        How fast do you want to get there?
-      </Text>
-      <ChipRow options={options} value={value} onChange={onChange} fullWidth />
+      <View className="w-full items-center gap-2">
+        <Text variant="title" className="w-full text-center text-3xl">
+          How fast do you want to get there?
+        </Text>
+        <Text variant="body" tone="muted" className="text-center">
+          A realistic pace is easier to stick with.
+        </Text>
+      </View>
+      <OptionList options={options} value={value} onChange={onChange} />
     </View>
   );
 }

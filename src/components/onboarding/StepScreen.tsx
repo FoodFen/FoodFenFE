@@ -6,7 +6,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/ui/Button';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { Text } from '@/components/ui/Text';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { colorsFor } from '@/theme/colors';
 
@@ -63,17 +62,13 @@ export function StepScreen({
             accessibilityLabel="Back"
             hitSlop={8}
           >
-            <Ionicons name="chevron-back" size={24} color={colors.fg} />
+            <Ionicons name="arrow-back" size={24} color={colors.fg} />
           </Pressable>
         ) : (
           <View style={{ width: 24 }} />
         )}
 
-        <ProgressBar progress={(stepIndex + 1) / totalSteps} className="flex-1" />
-
-        <Text variant="caption" tone="muted">
-          {stepIndex + 1}/{totalSteps}
-        </Text>
+        <ProgressBar progress={(stepIndex + 1) / totalSteps} height={10} className="flex-1" />
       </View>
 
       <KeyboardAwareScrollView
