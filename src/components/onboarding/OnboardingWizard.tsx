@@ -160,6 +160,8 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
         <RateStep
           value={draft.weeklyRateKg}
           onChange={(value) => update('weeklyRateKg', value)}
+          weightCurrent={draft.weightCurrent}
+          weightGoal={draft.weightGoal}
         />
       )}
     </StepScreen>
