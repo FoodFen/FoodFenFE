@@ -104,6 +104,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
       direction={direction}
       onBack={stepIndex > 0 ? goBack : undefined}
       onContinue={goNext}
+      showContinue={currentStep !== 'notifications'}
     >
       {currentStep === 'gender' && (
         <GenderStep value={draft.gender} onChange={(value) => update('gender', value)} />
@@ -116,8 +117,8 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
       )}
       {currentStep === 'notifications' && (
         <NotificationsStep
-          value={draft.notificationsEnabled}
           onChange={(value) => update('notificationsEnabled', value)}
+          onDone={goNext}
         />
       )}
       {currentStep === 'unitSystem' && (

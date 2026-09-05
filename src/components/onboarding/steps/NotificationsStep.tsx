@@ -5,14 +5,15 @@ import { Button } from '@/components/ui/Button';
 import { Text } from '@/components/ui/Text';
 
 export interface NotificationsStepProps {
-  value: boolean;
   onChange: (value: boolean) => void;
+  /** Each button is a direct action, not a toggle — pressing either advances the wizard. */
+  onDone: () => void;
 }
 
-export function NotificationsStep({ value, onChange }: NotificationsStepProps) {
+export function NotificationsStep({ onChange, onDone }: NotificationsStepProps) {
   return (
     <View className="w-full items-center gap-6">
-      <Text variant="title" className="text-center text-3xl">
+      <Text variant="title" className="w-full text-center text-3xl">
         Stay on track
       </Text>
       <Text variant="body" tone="muted" className="text-center">
@@ -23,19 +24,23 @@ export function NotificationsStep({ value, onChange }: NotificationsStepProps) {
       <View className="w-full flex-row gap-3">
         <Button
           label="Enable"
-          variant={value ? 'primary' : 'secondary'}
+          variant="primary"
           className="flex-1"
           onPress={() => {
             void Notifications.requestPermissionsAsync().then(({ granted }) => {
               onChange(granted);
+              onDone();
             });
           }}
         />
         <Button
           label="Skip"
-          variant={value ? 'secondary' : 'primary'}
+          variant="secondary"
           className="flex-1"
-          onPress={() => onChange(false)}
+          onPress={() => {
+            onChange(false);
+            onDone();
+          }}
         />
       </View>
     </View>

@@ -231,19 +231,27 @@ export function ChipRow<T extends string | number>({
   options,
   value,
   onChange,
+  fullWidth = false,
 }: {
   options: { value: T; label: string }[];
   value: T | undefined;
   onChange: (value: T) => void;
+  /**
+   * Equal-width chips filling the row, for a single full-screen question.
+   * `justify-center` on a shrink-wrapped row has nothing to center within —
+   * this is what actually centers a short row of chips.
+   */
+  fullWidth?: boolean;
 }) {
   return (
-    <View className="flex-row flex-wrap justify-center gap-2">
+    <View className={cn('flex-row gap-3', fullWidth ? 'w-full' : 'flex-wrap justify-center gap-2')}>
       {options.map((option) => (
         <Chip
           key={String(option.value)}
           label={option.label}
           isSelected={option.value === value}
           onPress={() => onChange(option.value)}
+          fullWidth={fullWidth}
         />
       ))}
     </View>
@@ -255,10 +263,12 @@ function Chip({
   label,
   isSelected,
   onPress,
+  fullWidth = false,
 }: {
   label: string;
   isSelected: boolean;
   onPress: () => void;
+  fullWidth?: boolean;
 }) {
   const [pressed, setPressed] = useState(false);
   const scale = useSharedValue(1);
@@ -270,7 +280,7 @@ function Chip({
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 
   return (
-    <Animated.View style={animatedStyle}>
+    <Animated.View style={[animatedStyle, fullWidth && { flex: 1 }]}>
       <Pressable
         onPressIn={() => setPressed(true)}
         onPressOut={() => setPressed(false)}
@@ -281,11 +291,16 @@ function Chip({
         accessibilityRole="radio"
         accessibilityState={{ selected: isSelected }}
         className={cn(
-          'h-10 justify-center rounded-pill border px-4',
+          'items-center justify-center rounded-pill border',
+          fullWidth ? 'min-h-14 px-3 py-2' : 'h-10 px-4',
           isSelected ? 'border-brand bg-brand' : 'border-border bg-surface',
         )}
       >
-        <Text variant="label" tone={isSelected ? 'onBrand' : 'default'}>
+        <Text
+          variant="label"
+          tone={isSelected ? 'onBrand' : 'default'}
+          className={cn('text-center', fullWidth && 'text-base font-semibold')}
+        >
           {label}
         </Text>
       </Pressable>

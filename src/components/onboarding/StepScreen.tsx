@@ -22,6 +22,11 @@ export interface StepScreenProps {
   onBack?: () => void;
   onContinue: () => void;
   continueLabel?: string;
+  /**
+   * False for a step whose own buttons already advance the wizard (e.g. an
+   * Enable/Skip choice) — a generic Continue below it would be redundant.
+   */
+  showContinue?: boolean;
   children: React.ReactNode;
 }
 
@@ -38,6 +43,7 @@ export function StepScreen({
   onBack,
   onContinue,
   continueLabel = 'Continue',
+  showContinue = true,
   children,
 }: StepScreenProps) {
   const insets = useSafeAreaInsets();
@@ -91,12 +97,14 @@ export function StepScreen({
         </Animated.View>
       </KeyboardAwareScrollView>
 
-      <View
-        className="border-t border-border p-4"
-        style={{ paddingBottom: insets.bottom + 16 }}
-      >
-        <Button label={continueLabel} onPress={onContinue} fullWidth size="lg" />
-      </View>
+      {showContinue ? (
+        <View
+          className="border-t border-border p-4"
+          style={{ paddingBottom: insets.bottom + 16 }}
+        >
+          <Button label={continueLabel} onPress={onContinue} fullWidth size="lg" />
+        </View>
+      ) : null}
     </View>
   );
 }

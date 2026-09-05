@@ -30,10 +30,10 @@ export function GoalStep({
 }: GoalStepProps) {
   return (
     <View className="w-full items-center gap-6">
-      <Text variant="title" className="text-center text-3xl">
+      <Text variant="title" className="w-full text-center text-3xl">
         What&apos;s your goal?
       </Text>
-      <ChipRow options={DIRECTION_OPTIONS} value={direction} onChange={onChangeDirection} />
+      <ChipRow options={DIRECTION_OPTIONS} value={direction} onChange={onChangeDirection} fullWidth />
 
       {direction !== 'maintain' ? (
         <View className="items-center gap-2">

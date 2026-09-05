@@ -34,10 +34,10 @@ export function RateStep({ value, onChange, weightCurrent, weightGoal }: RateSte
 
   return (
     <View className="w-full items-center gap-6">
-      <Text variant="title" className="text-center text-3xl">
+      <Text variant="title" className="w-full text-center text-3xl">
         How fast do you want to get there?
       </Text>
-      <ChipRow options={options} value={value} onChange={onChange} />
+      <ChipRow options={options} value={value} onChange={onChange} fullWidth />
     </View>
   );
 }

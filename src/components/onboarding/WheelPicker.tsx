@@ -51,7 +51,7 @@ export function WheelPicker<T extends string | number>({
   if (!sideLabel) return picker;
 
   return (
-    <View className="flex-row items-center justify-center gap-3">
+    <View className="w-full flex-row items-center justify-center gap-3">
       {picker}
       <Text variant="heading" tone="brand" className="text-xl">
         {sideLabel}
