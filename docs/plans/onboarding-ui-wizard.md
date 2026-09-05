@@ -20,7 +20,7 @@ that contains around 9 mini screens"). It owns:
 
 ```
 ┌─────────────────────────────┐
-│  ← Back        ▓▓▓▓▓░░░░ 5/9│  ← progress bar (top)
+│  ←        ▓▓▓▓▓░░░░ 5/9│  ← progress bar (top)
 │                              │
 │      "What's your sex?"      │  ← question + input (middle,
 │      [ Female ] [ Male ] …   │     scrollable if content is tall)
@@ -83,28 +83,8 @@ you said you'd look at later.
 
 ## 3. The wheel picker — no library installed, two ways to get one
 
-Checked `package.json`: no `@react-native-picker/picker`,
-`@react-native-community/slider`, or any wheel/scroll-picker package is
-installed today.
-
-**Option A — `@react-native-picker/picker` (new dependency).** Official,
-Expo-installable (`npx expo install @react-native-picker/picker`), New
-Architecture compatible. Fastest to wire up. Downside: on Android it renders
-as a dropdown/dialog, not an inline spinning wheel — it wouldn't actually
-look like the "wheel" the use case describes on that platform.
-
-**Option B — a small custom `WheelPicker` (no new dependency).** A `FlatList`
-with `snapToInterval` + `onMomentumScrollEnd`/`viewabilityConfig`, `react-
-native` core only. One component (~100 lines), reused by all three numeric
-steps (birth year, height, weight, goal-weight) by just passing a different
-range/formatter. Looks and behaves the same on both platforms — an actual
-scrolling wheel, not a native dialog.
-
-**Recommendation: Option B.** It's the "already-installed, no new
-dependency" rung of the ladder *and* the one that actually matches "input
-wheel" visually — `@react-native-picker/picker` would need its own follow-up
-work later to reskin Android anyway. Flag if you'd rather take Option A for
-speed and live with the platform difference.
+Use this library to implement: https://github.com/quidone/react-native-wheel-picker
+- Look up the internet and learn how to use it properly.
 
 Everything else (sex, units, activity, goal direction, rate) reuses the
 existing `ChipRow`/radio-list patterns already in `BodyStatsForm.tsx` —
@@ -128,7 +108,7 @@ point, not a redesign.
 ```
 src/components/onboarding/
   StepScreen.tsx        — progress bar + question/body/footer frame
-  WheelPicker.tsx        — the FlatList-based scroll wheel (§3, option B)
+  WheelPicker.tsx        — the react-native-wheel-picker based scroll wheel
   steps/
     GenderStep.tsx
     BirthYearStep.tsx
@@ -162,18 +142,7 @@ each its own turn once you say go:
 4. Wizard container rewiring `index.tsx`, wiring steps together with the
    skip-rate-on-Maintain rule and the `onComplete(draft)` stub
 
-## 7. Questions before implementation starts
-
-1. §3: build the custom `WheelPicker` (Option B, no new dependency, matches
-   "wheel" on both platforms), or install `@react-native-picker/picker`
-   (Option A, faster, native-dialog look on Android)?
-2. Step 3 (notifications): should tapping "Enable" actually call
-   `Notifications.requestPermissionsAsync()` inline, or should this step be
-   a pure UI stub (button just sets `notificationsEnabled: true` without
-   touching the OS permission API) for now, since permission APIs arguably
-   cross into "logic"?
-3. A back button — do you want steps 1–9 to be able to go backward and
-   re-edit, or is this a forward-only wizard (no back nav) for v1?
-4. Is a full-object `console.log`/dev-only stub an acceptable `onComplete`
-   for now, or do you want it to land somewhere durable (e.g. a Zustand
-   draft store) even before the database-saving piece is built?
+## 7. Things to note:
+1. At step 3, after user tapped the Enable notification. Run the `Notifications.requestPermissionsAsync()` so that the app can start send the notification later down the line.
+2. A back button only (with no step) is located at the top left beside the progress bar to allow the user to return to the previous step and re/edit their value.
+3. The result of this feature is a completed object for later feats down the line. DO NOT coding further than this.

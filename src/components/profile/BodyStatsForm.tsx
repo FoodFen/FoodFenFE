@@ -145,31 +145,7 @@ export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
           control={control}
           name="activityLevel"
           render={({ field: { onChange, value } }) => (
-            <View className="gap-2">
-              {ACTIVITY_OPTIONS.map((level) => {
-                const isSelected = level === value;
-
-                return (
-                  <Pressable
-                    key={level}
-                    onPress={() => {
-                      haptics.selection();
-                      onChange(level);
-                    }}
-                    accessibilityRole="radio"
-                    accessibilityState={{ selected: isSelected }}
-                    className={cn(
-                      'rounded-xl border p-3',
-                      isSelected ? 'border-brand bg-brand-soft' : 'border-border',
-                    )}
-                  >
-                    <Text variant="body" tone={isSelected ? 'brand' : 'default'}>
-                      {ACTIVITY_LABELS[level]}
-                    </Text>
-                  </Pressable>
-                );
-              })}
-            </View>
+            <ActivityLevelList value={value} onChange={onChange} />
           )}
         />
       </Card>
@@ -211,7 +187,45 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function ChipRow<T extends string | number>({
+/** The activity radio list, shared with the onboarding wizard's own step. */
+export function ActivityLevelList({
+  value,
+  onChange,
+}: {
+  value: ActivityLevel | undefined;
+  onChange: (value: ActivityLevel) => void;
+}) {
+  return (
+    <View className="gap-2">
+      {ACTIVITY_OPTIONS.map((level) => {
+        const isSelected = level === value;
+
+        return (
+          <Pressable
+            key={level}
+            onPress={() => {
+              haptics.selection();
+              onChange(level);
+            }}
+            accessibilityRole="radio"
+            accessibilityState={{ selected: isSelected }}
+            className={cn(
+              'rounded-xl border p-3',
+              isSelected ? 'border-brand bg-brand-soft' : 'border-border',
+            )}
+          >
+            <Text variant="body" tone={isSelected ? 'brand' : 'default'}>
+              {ACTIVITY_LABELS[level]}
+            </Text>
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+}
+
+/** A row of selectable chips, shared with the onboarding wizard's own steps. */
+export function ChipRow<T extends string | number>({
   options,
   value,
   onChange,
