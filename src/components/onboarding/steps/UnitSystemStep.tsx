@@ -16,8 +16,10 @@ export interface UnitSystemStepProps {
 
 export function UnitSystemStep({ value, onChange }: UnitSystemStepProps) {
   return (
-    <View className="gap-4">
-      <Text variant="title">Which units do you use?</Text>
+    <View className="w-full items-center gap-6">
+      <Text variant="title" className="text-center text-3xl">
+        Which units do you use?
+      </Text>
       <ChipRow options={UNIT_SYSTEM_OPTIONS} value={value} onChange={onChange} />
     </View>
   );

@@ -1,5 +1,7 @@
 import QuidoneWheelPicker from '@quidone/react-native-wheel-picker';
+import { View } from 'react-native';
 
+import { Text } from '@/components/ui/Text';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { colorsFor } from '@/theme/colors';
 
@@ -15,6 +17,8 @@ export interface WheelPickerProps<T extends string | number> {
   itemHeight?: number;
   visibleItemCount?: number;
   width?: number | 'auto' | `${number}%`;
+  /** A bold "132.3 kg"-style readout shown beside the wheel. */
+  sideLabel?: string;
 }
 
 /** The onboarding wizard's scroll-wheel input, themed to match the app palette. */
@@ -22,14 +26,15 @@ export function WheelPicker<T extends string | number>({
   data,
   value,
   onChange,
-  itemHeight = 44,
+  itemHeight = 56,
   visibleItemCount = 5,
   width,
+  sideLabel,
 }: WheelPickerProps<T>) {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
 
-  return (
+  const picker = (
     <QuidoneWheelPicker
       data={data}
       value={value}
@@ -38,8 +43,19 @@ export function WheelPicker<T extends string | number>({
       visibleItemCount={visibleItemCount}
       width={width}
       enableScrollByTapOnItem
-      itemTextStyle={{ color: colors.fg, fontSize: 18 }}
-      overlayItemStyle={{ backgroundColor: colors.surfaceAlt, borderRadius: 12 }}
+      itemTextStyle={{ color: colors.fg, fontSize: 26, fontWeight: '700' }}
+      overlayItemStyle={{ borderTopWidth: 2, borderBottomWidth: 2, borderColor: colors.brand }}
     />
+  );
+
+  if (!sideLabel) return picker;
+
+  return (
+    <View className="flex-row items-center justify-center gap-3">
+      {picker}
+      <Text variant="heading" tone="brand" className="text-xl">
+        {sideLabel}
+      </Text>
+    </View>
   );
 }

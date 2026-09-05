@@ -47,9 +47,11 @@ export function HeightStep({ unitSystem, value, onChange }: HeightStepProps) {
     const { feet, inches } = cmToFtIn(value);
 
     return (
-      <View className="gap-4">
-        <Text variant="title">How tall are you?</Text>
-        <View className="flex-row justify-center gap-4">
+      <View className="w-full items-center gap-6">
+        <Text variant="title" className="text-center text-3xl">
+          How tall are you?
+        </Text>
+        <View className="flex-row items-center justify-center gap-4">
           <WheelPicker
             data={FEET_OPTIONS}
             value={feet}
@@ -61,14 +63,21 @@ export function HeightStep({ unitSystem, value, onChange }: HeightStepProps) {
             onChange={(nextInches) => onChange(ftInToCm(feet, nextInches))}
           />
         </View>
+        <Text variant="heading" tone="brand">
+          {feet}&apos; {inches}&quot;
+        </Text>
       </View>
     );
   }
 
+  const cm = Math.round(value);
+
   return (
-    <View className="gap-4">
-      <Text variant="title">How tall are you?</Text>
-      <WheelPicker data={CM_OPTIONS} value={Math.round(value)} onChange={onChange} />
+    <View className="w-full items-center gap-6">
+      <Text variant="title" className="text-center text-3xl">
+        How tall are you?
+      </Text>
+      <WheelPicker data={CM_OPTIONS} value={cm} onChange={onChange} sideLabel={`${cm.toFixed(1)} cm`} />
     </View>
   );
 }

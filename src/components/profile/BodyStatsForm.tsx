@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import type { Control, FieldErrors } from 'react-hook-form';
 import { Pressable, View } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
@@ -235,30 +237,58 @@ export function ChipRow<T extends string | number>({
   onChange: (value: T) => void;
 }) {
   return (
-    <View className="flex-row flex-wrap gap-2">
-      {options.map((option) => {
-        const isSelected = option.value === value;
-
-        return (
-          <Pressable
-            key={String(option.value)}
-            onPress={() => {
-              haptics.selection();
-              onChange(option.value);
-            }}
-            accessibilityRole="radio"
-            accessibilityState={{ selected: isSelected }}
-            className={cn(
-              'h-10 justify-center rounded-pill border px-4',
-              isSelected ? 'border-brand bg-brand' : 'border-border bg-surface',
-            )}
-          >
-            <Text variant="label" tone={isSelected ? 'onBrand' : 'default'}>
-              {option.label}
-            </Text>
-          </Pressable>
-        );
-      })}
+    <View className="flex-row flex-wrap justify-center gap-2">
+      {options.map((option) => (
+        <Chip
+          key={String(option.value)}
+          label={option.label}
+          isSelected={option.value === value}
+          onPress={() => onChange(option.value)}
+        />
+      ))}
     </View>
+  );
+}
+
+/** A single chip, with a press-in/press-out scale for tactile feedback. */
+function Chip({
+  label,
+  isSelected,
+  onPress,
+}: {
+  label: string;
+  isSelected: boolean;
+  onPress: () => void;
+}) {
+  const [pressed, setPressed] = useState(false);
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    scale.value = withSpring(pressed ? 0.92 : 1, { damping: 15, stiffness: 400 });
+  }, [pressed, scale]);
+
+  const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+
+  return (
+    <Animated.View style={animatedStyle}>
+      <Pressable
+        onPressIn={() => setPressed(true)}
+        onPressOut={() => setPressed(false)}
+        onPress={() => {
+          haptics.selection();
+          onPress();
+        }}
+        accessibilityRole="radio"
+        accessibilityState={{ selected: isSelected }}
+        className={cn(
+          'h-10 justify-center rounded-pill border px-4',
+          isSelected ? 'border-brand bg-brand' : 'border-border bg-surface',
+        )}
+      >
+        <Text variant="label" tone={isSelected ? 'onBrand' : 'default'}>
+          {label}
+        </Text>
+      </Pressable>
+    </Animated.View>
   );
 }

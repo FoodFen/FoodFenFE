@@ -19,8 +19,10 @@ export interface BirthYearStepProps {
 
 export function BirthYearStep({ value, onChange }: BirthYearStepProps) {
   return (
-    <View className="gap-4">
-      <Text variant="title">What year were you born?</Text>
+    <View className="w-full items-center gap-6">
+      <Text variant="title" className="text-center text-3xl">
+        What year were you born?
+      </Text>
       <WheelPicker data={YEAR_OPTIONS} value={value} onChange={onChange} />
     </View>
   );

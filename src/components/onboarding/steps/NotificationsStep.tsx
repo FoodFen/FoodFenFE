@@ -11,14 +11,16 @@ export interface NotificationsStepProps {
 
 export function NotificationsStep({ value, onChange }: NotificationsStepProps) {
   return (
-    <View className="gap-4">
-      <Text variant="title">Stay on track</Text>
-      <Text variant="body" tone="muted">
+    <View className="w-full items-center gap-6">
+      <Text variant="title" className="text-center text-3xl">
+        Stay on track
+      </Text>
+      <Text variant="body" tone="muted" className="text-center">
         We can remind you to log meals and celebrate streaks. You can change this anytime
         in Settings.
       </Text>
 
-      <View className="flex-row gap-3">
+      <View className="w-full flex-row gap-3">
         <Button
           label="Enable"
           variant={value ? 'primary' : 'secondary'}

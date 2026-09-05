@@ -17,8 +17,10 @@ export interface GenderStepProps {
 
 export function GenderStep({ value, onChange }: GenderStepProps) {
   return (
-    <View className="gap-4">
-      <Text variant="title">What&apos;s your sex?</Text>
+    <View className="w-full items-center gap-6">
+      <Text variant="title" className="text-center text-3xl">
+        What&apos;s your sex?
+      </Text>
       <ChipRow options={GENDER_OPTIONS} value={value} onChange={onChange} />
     </View>
   );

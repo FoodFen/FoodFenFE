@@ -32,11 +32,21 @@ export function WeightWheel({ unitSystem, value, onChange }: WeightWheelProps) {
         data={LB_OPTIONS}
         value={lb}
         onChange={(nextLb) => onChange(units.weightToKg(nextLb, 'lb'))}
+        sideLabel={`${lb.toFixed(1)} lb`}
       />
     );
   }
 
-  return <WheelPicker data={KG_OPTIONS} value={Math.round(value)} onChange={onChange} />;
+  const kg = Math.round(value);
+
+  return (
+    <WheelPicker
+      data={KG_OPTIONS}
+      value={kg}
+      onChange={onChange}
+      sideLabel={`${kg.toFixed(1)} kg`}
+    />
+  );
 }
 
 export interface WeightStepProps {
@@ -47,8 +57,10 @@ export interface WeightStepProps {
 
 export function WeightStep({ unitSystem, value, onChange }: WeightStepProps) {
   return (
-    <View className="gap-4">
-      <Text variant="title">What&apos;s your current weight?</Text>
+    <View className="w-full items-center gap-6">
+      <Text variant="title" className="text-center text-3xl">
+        What&apos;s your current weight?
+      </Text>
       <WeightWheel unitSystem={unitSystem} value={value} onChange={onChange} />
     </View>
   );

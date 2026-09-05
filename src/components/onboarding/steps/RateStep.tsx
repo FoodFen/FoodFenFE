@@ -33,8 +33,10 @@ export function RateStep({ value, onChange, weightCurrent, weightGoal }: RateSte
   }));
 
   return (
-    <View className="gap-4">
-      <Text variant="title">How fast do you want to get there?</Text>
+    <View className="w-full items-center gap-6">
+      <Text variant="title" className="text-center text-3xl">
+        How fast do you want to get there?
+      </Text>
       <ChipRow options={options} value={value} onChange={onChange} />
     </View>
   );

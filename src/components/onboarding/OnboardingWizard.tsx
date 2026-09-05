@@ -69,18 +69,20 @@ export interface OnboardingWizardProps {
 export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
   const [draft, setDraft] = useState<OnboardingDraft>(DEFAULT_DRAFT);
   const [stepIndex, setStepIndex] = useState(0);
+  const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
 
   // The rate only means something when there's a direction to pursue.
   const steps = ALL_STEP_KEYS.filter(
     (key) => key !== 'rate' || draft.goalDirection !== 'maintain',
   );
-  const currentStep = steps[stepIndex];
+  const currentStep = steps[stepIndex] ?? ALL_STEP_KEYS[0];
 
   function update<K extends keyof OnboardingDraft>(key: K, value: OnboardingDraft[K]) {
     setDraft((previous) => ({ ...previous, [key]: value }));
   }
 
   function goBack() {
+    setDirection('backward');
     setStepIndex((index) => Math.max(0, index - 1));
   }
 
@@ -90,6 +92,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
       return;
     }
 
+    setDirection('forward');
     setStepIndex((index) => index + 1);
   }
 
@@ -97,6 +100,8 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
     <StepScreen
       stepIndex={stepIndex}
       totalSteps={steps.length}
+      stepKey={currentStep}
+      direction={direction}
       onBack={stepIndex > 0 ? goBack : undefined}
       onContinue={goNext}
     >

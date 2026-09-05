@@ -29,12 +29,14 @@ export function GoalStep({
   onChangeWeightGoal,
 }: GoalStepProps) {
   return (
-    <View className="gap-4">
-      <Text variant="title">What&apos;s your goal?</Text>
+    <View className="w-full items-center gap-6">
+      <Text variant="title" className="text-center text-3xl">
+        What&apos;s your goal?
+      </Text>
       <ChipRow options={DIRECTION_OPTIONS} value={direction} onChange={onChangeDirection} />
 
       {direction !== 'maintain' ? (
-        <View className="gap-2">
+        <View className="items-center gap-2">
           <Text variant="label" tone="muted">
             Goal weight
           </Text>
