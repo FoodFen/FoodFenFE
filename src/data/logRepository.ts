@@ -48,6 +48,56 @@ export function getWaterMl(userId: string, date: DateKey): number {
   return row?.total ?? 0;
 }
 
+/** A day's live water rows, most recently written first. */
+export function getWaterEntries(userId: string, date: DateKey): WaterLog[] {
+  return db
+    .select()
+    .from(waterLog)
+    .where(
+      and(eq(waterLog.userId, userId), eq(waterLog.loggedOn, date), notDeleted(waterLog)),
+    )
+    .orderBy(desc(waterLog.loggedAt), sql`rowid desc`)
+    .all();
+}
+
+/**
+ * Set the day's water total to exactly `targetMl` (the "tap a cup" interaction).
+ *
+ * Increasing inserts one new row for the difference, same as a normal log.
+ * Decreasing trims the most-recently-written rows first — soft-deleting whole
+ * ones and shrinking the last one only as much as needed — so the log stays
+ * append-only (nothing is ever un-deleted or rewritten to a bigger amount) while
+ * the sum lands exactly on the target.
+ */
+export function setWaterTotal(userId: string, date: DateKey, targetMl: number): void {
+  const current = getWaterMl(userId, date);
+  const diff = targetMl - current;
+
+  if (diff > 0) {
+    addWater(userId, diff, date);
+    return;
+  }
+
+  if (diff === 0) return;
+
+  let remaining = -diff;
+
+  for (const entry of getWaterEntries(userId, date)) {
+    if (remaining <= 0) break;
+
+    if (entry.amountMl <= remaining) {
+      db.update(waterLog).set(touchDeleted()).where(eq(waterLog.id, entry.id)).run();
+      remaining -= entry.amountMl;
+    } else {
+      db.update(waterLog)
+        .set({ amountMl: entry.amountMl - remaining, ...touch() })
+        .where(eq(waterLog.id, entry.id))
+        .run();
+      remaining = 0;
+    }
+  }
+}
+
 /** Per-day totals across a range, as a `yyyy-MM-dd` → millilitres map. */
 export function getWaterByDay(
   userId: string,

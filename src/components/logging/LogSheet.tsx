@@ -10,8 +10,16 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { SheetScrim } from '@/components/ui/SheetScrim';
 import { Text } from '@/components/ui/Text';
-import { useAddWater, useLogWeight } from '@/features/diary/queries';
+import { WheelPicker } from '@/components/ui/WheelPicker';
+import { GLASS_ML } from '@/features/dashboard/constants';
+import {
+  useAddWater,
+  useDiaryDay,
+  useLogWeight,
+  useSetWaterGoal,
+} from '@/features/diary/queries';
 import { useLogSheetStore } from '@/features/logging/store';
+import { units, useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
@@ -28,8 +36,17 @@ import { colorsFor } from '@/theme/colors';
  * the existing diary mutations; the food panel is a placeholder this pass.
  */
 
-const WATER_PRESETS_ML = [250, 500, 750] as const;
-const DEFAULT_WATER_ML = 500;
+const DEFAULT_WATER_ML = GLASS_ML;
+/** 50–2000 ml, 50 ml steps — a precise custom amount for one drink. */
+const WATER_AMOUNT_OPTIONS = Array.from({ length: 40 }, (_, i) => {
+  const ml = (i + 1) * 50;
+  return { value: ml, label: String(ml) };
+});
+/** 500–5000 ml, 250 ml steps — matches the cup grid's own granularity. */
+const WATER_GOAL_OPTIONS = Array.from({ length: 19 }, (_, i) => {
+  const ml = 500 + i * 250;
+  return { value: ml, label: String(ml) };
+});
 
 export function LogSheet() {
   const { t } = useTranslation();
@@ -42,6 +59,7 @@ export function LogSheet() {
   const focus = useLogSheetStore((state) => state.focus);
   const setFocus = useLogSheetStore((state) => state.setFocus);
   const dismiss = useLogSheetStore((state) => state.dismiss);
+  const weightUnit = useSettingsStore((state) => state.weightUnit);
 
   const sheetRef = useRef<BottomSheetMethods>(null);
 
@@ -51,6 +69,8 @@ export function LogSheet() {
 
   const logWeight = useLogWeight();
   const addWater = useAddWater();
+  const setWaterGoal = useSetWaterGoal();
+  const { data: today } = useDiaryDay(todayKey());
 
   useEffect(() => {
     if (open) sheetRef.current?.present();
@@ -75,15 +95,24 @@ export function LogSheet() {
   }
 
   function submitWeight() {
-    const value = Number(weightText.replace(',', '.'));
+    const typed = Number(weightText.replace(',', '.'));
 
-    if (!Number.isFinite(value) || value <= 0 || value > 500) {
+    if (!Number.isFinite(typed) || typed <= 0) {
+      setError(t('logSheet', 'weightError'));
+      return;
+    }
+
+    // Canonical storage is always kg (UC-18) — convert whatever unit the
+    // device is set to before validating and saving.
+    const kg = units.weightToKg(typed, weightUnit);
+
+    if (kg > 500) {
       setError(t('logSheet', 'weightError'));
       return;
     }
 
     logWeight.mutate(
-      { weight: value, date: todayKey() },
+      { weight: kg, date: todayKey() },
       { onSuccess: close, onError: () => setError(t('auth', 'genericError')) },
     );
   }
@@ -93,6 +122,13 @@ export function LogSheet() {
       { amountMl, date: todayKey() },
       { onSuccess: close, onError: () => setError(t('auth', 'genericError')) },
     );
+  }
+
+  function submitWaterGoal(targetMl: number) {
+    setWaterGoal.mutate(targetMl, {
+      onSuccess: close,
+      onError: () => setError(t('auth', 'genericError')),
+    });
   }
 
   return (
@@ -159,7 +195,7 @@ export function LogSheet() {
             {focus === 'weight' ? (
               <View className="gap-3">
                 <Input
-                  label={t('logSheet', 'weightLabel')}
+                  label={t('logSheet', 'weightLabel').replace('{unit}', weightUnit)}
                   value={weightText}
                   onChangeText={setWeightText}
                   keyboardType="decimal-pad"
@@ -176,33 +212,16 @@ export function LogSheet() {
             ) : null}
 
             {focus === 'water' ? (
-              <View className="gap-3">
+              <View className="items-center gap-3">
                 <Text variant="label" tone="muted">
                   {t('logSheet', 'waterLabel')}
                 </Text>
-                <View className="flex-row gap-2">
-                  {WATER_PRESETS_ML.map((preset) => (
-                    <Pressable
-                      key={preset}
-                      onPress={() => setAmountMl(preset)}
-                      accessibilityRole="button"
-                      accessibilityState={{ selected: amountMl === preset }}
-                      className={cn(
-                        'flex-1 items-center rounded-xl border py-3',
-                        amountMl === preset
-                          ? 'border-brand bg-brand-soft'
-                          : 'border-border bg-surface',
-                      )}
-                    >
-                      <Text
-                        variant="label"
-                        tone={amountMl === preset ? 'brand' : 'default'}
-                      >
-                        {preset} ml
-                      </Text>
-                    </Pressable>
-                  ))}
-                </View>
+                <WheelPicker
+                  data={WATER_AMOUNT_OPTIONS}
+                  value={amountMl}
+                  onChange={setAmountMl}
+                  sideLabel=" ml"
+                />
                 {error ? (
                   <Text variant="caption" tone="danger">
                     {error}
@@ -215,6 +234,15 @@ export function LogSheet() {
                   fullWidth
                 />
               </View>
+            ) : null}
+
+            {focus === 'waterGoal' ? (
+              <WaterGoalPanel
+                initialMl={today?.goal.targetWaterMl ?? 2000}
+                error={error}
+                isPending={setWaterGoal.isPending}
+                onSave={submitWaterGoal}
+              />
             ) : null}
 
             {focus === 'food' ? (
@@ -243,6 +271,52 @@ export function LogSheet() {
         </BottomSheetView>
       </BottomSheet>
     </>
+  );
+}
+
+/**
+ * The water-goal wheel, split out so its draft value can initialize straight
+ * from `initialMl` (a prop) rather than a `useEffect` writing state after
+ * mount — the panel only exists in the tree while `focus === 'waterGoal'`, so
+ * each open is a fresh mount with the current target already in hand.
+ */
+function WaterGoalPanel({
+  initialMl,
+  error,
+  isPending,
+  onSave,
+}: {
+  initialMl: number;
+  error: string | null;
+  isPending: boolean;
+  onSave: (goalMl: number) => void;
+}) {
+  const { t } = useTranslation();
+  const [goalMl, setGoalMl] = useState(initialMl);
+
+  return (
+    <View className="items-center gap-3">
+      <Text variant="label" tone="muted">
+        {t('logSheet', 'waterGoalLabel')}
+      </Text>
+      <WheelPicker
+        data={WATER_GOAL_OPTIONS}
+        value={goalMl}
+        onChange={setGoalMl}
+        sideLabel=" ml"
+      />
+      {error ? (
+        <Text variant="caption" tone="danger">
+          {error}
+        </Text>
+      ) : null}
+      <Button
+        label={t('logSheet', 'save')}
+        onPress={() => onSave(goalMl)}
+        loading={isPending}
+        fullWidth
+      />
+    </View>
   );
 }
 

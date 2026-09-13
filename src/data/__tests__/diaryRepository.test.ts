@@ -209,6 +209,68 @@ describe('water logs', () => {
   });
 });
 
+describe('setWaterTotal (UC-20 cup-tap adjust)', () => {
+  it('inserts one row for the difference when increasing from a clean day', () => {
+    const user = createUser();
+
+    logRepository.setWaterTotal(user.id, '2026-03-01', 750);
+
+    expect(logRepository.getWaterMl(user.id, '2026-03-01')).toBe(750);
+    expect(logRepository.getWaterEntries(user.id, '2026-03-01')).toHaveLength(1);
+  });
+
+  it('tops up with one more row when increasing on top of existing entries', () => {
+    const user = createUser();
+
+    logRepository.addWater(user.id, 250, '2026-03-01');
+    logRepository.setWaterTotal(user.id, '2026-03-01', 750);
+
+    expect(logRepository.getWaterMl(user.id, '2026-03-01')).toBe(750);
+    expect(logRepository.getWaterEntries(user.id, '2026-03-01')).toHaveLength(2);
+  });
+
+  it('removes whole rows and trims the last partial one when decreasing', () => {
+    const user = createUser();
+
+    logRepository.addWater(user.id, 250, '2026-03-01');
+    logRepository.addWater(user.id, 300, '2026-03-01');
+    logRepository.addWater(user.id, 250, '2026-03-01'); // total 800, most recent
+
+    logRepository.setWaterTotal(user.id, '2026-03-01', 400);
+
+    expect(logRepository.getWaterMl(user.id, '2026-03-01')).toBe(400);
+    // The most recent (250) row is gone entirely, the 300 row is trimmed to
+    // 150 to land exactly on the target, and the original 250 is untouched.
+    const remaining = logRepository
+      .getWaterEntries(user.id, '2026-03-01')
+      .map((row) => row.amountMl)
+      .sort((a, b) => a - b);
+    expect(remaining).toEqual([150, 250]);
+  });
+
+  it('removes everything when decreasing to zero', () => {
+    const user = createUser();
+
+    logRepository.addWater(user.id, 250, '2026-03-01');
+    logRepository.addWater(user.id, 500, '2026-03-01');
+
+    logRepository.setWaterTotal(user.id, '2026-03-01', 0);
+
+    expect(logRepository.getWaterMl(user.id, '2026-03-01')).toBe(0);
+    expect(logRepository.getWaterEntries(user.id, '2026-03-01')).toEqual([]);
+  });
+
+  it('does nothing when the target already matches the total', () => {
+    const user = createUser();
+
+    logRepository.addWater(user.id, 250, '2026-03-01');
+    logRepository.setWaterTotal(user.id, '2026-03-01', 250);
+
+    expect(logRepository.getWaterEntries(user.id, '2026-03-01')).toHaveLength(1);
+    expect(logRepository.getWaterMl(user.id, '2026-03-01')).toBe(250);
+  });
+});
+
 describe('weight logs', () => {
   it('corrects the day rather than adding a second reading', () => {
     const user = createUser();

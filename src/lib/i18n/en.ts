@@ -406,6 +406,7 @@ export const en: DeepPartial<Translations> = {
     kcalOver: '{kcal} kcal over',
     addA11y: 'Add',
     viewEntriesA11y: 'View logged meals',
+    editWaterGoalA11y: 'Change water goal',
     moreEntries: '+{count}',
   },
 
@@ -418,12 +419,14 @@ export const en: DeepPartial<Translations> = {
     weight: 'Log weight',
     water: 'Log water',
     activity: 'Log activity',
+    waterGoal: 'Water goal',
     food: 'Log food',
     search: 'Find a food',
     manualEntry: 'Manual entry',
-    weightLabel: 'Weight (kg)',
+    weightLabel: 'Weight ({unit})',
     weightError: 'Enter a weight between 0 and 500 kg.',
     waterLabel: 'How much water?',
+    waterGoalLabel: 'Daily water goal (ml)',
     save: 'Save',
   },
 
@@ -442,6 +445,10 @@ export const en: DeepPartial<Translations> = {
     title: 'Shop',
     emptyTitle: 'Shop coming soon',
     emptyDescription: 'Spend your reward points on items — coming soon.',
+  },
+
+  insights: {
+    weightTrendHeading: 'Weight trend',
   },
 
   ringColors: {

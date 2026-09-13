@@ -330,7 +330,60 @@ export function useAddWater() {
     mutationFn: async ({ amountMl, date }: { amountMl: number; date: DateKey }) => {
       if (!userId) throw new Error('No local profile yet.');
 
-      return logRepository.addWater(userId, amountMl, date);
+      const log = logRepository.addWater(userId, amountMl, date);
+
+      // UC-20 includes UC-22: logging water counts as "did something today",
+      // same as every food-logging mutation.
+      gamification.recordActiveDay(userId, date);
+
+      return log;
+    },
+    onSuccess: invalidate,
+  });
+}
+
+/**
+ * Set the day's water total directly (the dashboard's tap-a-cup interaction),
+ * rather than adding one more drink.
+ */
+export function useSetWaterTotal() {
+  const userId = useUserId();
+  const invalidate = useDiaryInvalidation();
+
+  return useMutation({
+    mutationFn: async ({ targetMl, date }: { targetMl: number; date: DateKey }) => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      logRepository.setWaterTotal(userId, date, targetMl);
+      gamification.recordActiveDay(userId, date);
+    },
+    onSuccess: invalidate,
+  });
+}
+
+/**
+ * Change today's water goal only, carrying every other target over unchanged —
+ * `daily_goal` rows are one unit, so editing one field means rewriting the
+ * whole row for today, the same way `logWeight` corrects a day in place.
+ */
+export function useSetWaterGoal() {
+  const userId = useUserId();
+  const invalidate = useDiaryInvalidation();
+
+  return useMutation({
+    mutationFn: async (targetWaterMl: number) => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      const current = userRepository.getGoalForDate(userId);
+      if (!current) throw new Error('No goal set yet.');
+
+      return userRepository.setGoal(userId, {
+        targetKcal: current.targetKcal,
+        targetCarbsG: current.targetCarbsG,
+        targetProteinG: current.targetProteinG,
+        targetFatG: current.targetFatG,
+        targetWaterMl,
+      });
     },
     onSuccess: invalidate,
   });

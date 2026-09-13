@@ -425,6 +425,7 @@ export const vi = {
     kcalOver: 'Vượt {kcal} kcal',
     addA11y: 'Thêm',
     viewEntriesA11y: 'Xem các món đã ghi',
+    editWaterGoalA11y: 'Đổi mục tiêu nước',
     moreEntries: '+{count}',
   },
 
@@ -438,11 +439,13 @@ export const vi = {
     water: 'Ghi lượng nước',
     food: 'Ghi bữa ăn',
     activity: 'Ghi hoạt động',
+    waterGoal: 'Mục tiêu nước',
     search: 'Tìm món ăn',
     manualEntry: 'Nhập chi tiết',
-    weightLabel: 'Cân nặng (kg)',
+    weightLabel: 'Cân nặng ({unit})',
     weightError: 'Nhập cân nặng từ 0 đến 500 kg.',
     waterLabel: 'Bao nhiêu nước?',
+    waterGoalLabel: 'Mục tiêu nước mỗi ngày (ml)',
     save: 'Lưu',
   },
 
@@ -461,6 +464,10 @@ export const vi = {
     title: 'Cửa hàng',
     emptyTitle: 'Cửa hàng sắp ra mắt',
     emptyDescription: 'Dùng điểm thưởng để mở khóa vật phẩm — sắp có.',
+  },
+
+  insights: {
+    weightTrendHeading: 'Xu hướng cân nặng',
   },
 
   ringColors: {
