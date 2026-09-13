@@ -21,7 +21,7 @@ export interface WheelPickerProps<T extends string | number> {
   sideLabel?: string;
 }
 
-/** The onboarding wizard's scroll-wheel input, themed to match the app palette. */
+/** A scroll-wheel numeric input, themed to match the app palette. */
 export function WheelPicker<T extends string | number>({
   data,
   value,

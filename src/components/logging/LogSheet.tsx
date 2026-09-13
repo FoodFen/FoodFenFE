@@ -144,6 +144,15 @@ export function LogSheet() {
                   color={colors.fgMuted}
                   onPress={() => goToPanel('food')}
                 />
+                <MenuRow
+                  icon="barbell-outline"
+                  label={t('logSheet', 'activity')}
+                  color={colors.fgMuted}
+                  onPress={() => {
+                    close();
+                    router.push('/log/activity');
+                  }}
+                />
               </View>
             ) : null}
 

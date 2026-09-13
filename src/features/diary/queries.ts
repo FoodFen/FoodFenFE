@@ -337,11 +337,11 @@ export function useAddWater() {
 }
 
 /**
- * Log an activity (a workout / burned calories).
+ * Log an activity (a workout / burned calories), UC-16.
  *
- * Mirrors `useAddWater`: a local insert, then the same broad diary
- * invalidation so any day total that counts exercise back in recomputes. No
- * caller yet — this is the recompute seam for when activity logging lands.
+ * Mirrors `useLogMeal`: a local insert, then the streak advance (this is the
+ * one other place, besides eating, that counts as "did something today"),
+ * then the same broad diary invalidation so exercise kcal recomputes.
  */
 export function useLogActivity() {
   const userId = useUserId();
@@ -351,7 +351,11 @@ export function useLogActivity() {
     mutationFn: async (input: Omit<AddActivityInput, 'userId'>) => {
       if (!userId) throw new Error('No local profile yet.');
 
-      return logRepository.addActivity({ ...input, userId });
+      const log = logRepository.addActivity({ ...input, userId });
+
+      gamification.recordActiveDay(userId, input.date);
+
+      return log;
     },
     onSuccess: invalidate,
   });

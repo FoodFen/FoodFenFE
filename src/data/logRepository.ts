@@ -104,6 +104,8 @@ export interface AddActivityInput {
   caloriesBurned: number;
   date: DateKey;
   source?: ActivitySource;
+  /** When the activity happened, if backdated from "now" (UC-16's time picker). */
+  loggedAt?: Date;
 }
 
 export function addActivity(input: AddActivityInput): void {
@@ -116,7 +118,7 @@ export function addActivity(input: AddActivityInput): void {
       activityType: input.activityType,
       caloriesBurned: input.caloriesBurned,
       source: input.source ?? 'manual',
-      loggedAt: now,
+      loggedAt: input.loggedAt ?? now,
       loggedOn: input.date,
       remoteId: null,
       deletedAt: null,

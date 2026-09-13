@@ -155,6 +155,41 @@ describe('getDiaryRange', () => {
   });
 });
 
+describe('activity logs', () => {
+  it('stores a backdated loggedAt verbatim (UC-16 time picker)', () => {
+    const user = createUser();
+    const backdated = new Date('2026-03-01T08:15:00');
+
+    logRepository.addActivity({
+      userId: user.id,
+      activityType: 'walking',
+      caloriesBurned: 141,
+      date: '2026-03-01',
+      loggedAt: backdated,
+    });
+
+    const [activity] = logRepository.getActivities(user.id, '2026-03-01');
+
+    expect(activity?.loggedAt).toEqual(backdated);
+  });
+
+  it('defaults loggedAt to now when not given', () => {
+    const user = createUser();
+    const before = new Date();
+
+    logRepository.addActivity({
+      userId: user.id,
+      activityType: 'running',
+      caloriesBurned: 351,
+      date: '2026-03-01',
+    });
+
+    const [activity] = logRepository.getActivities(user.id, '2026-03-01');
+
+    expect(activity?.loggedAt.getTime()).toBeGreaterThanOrEqual(before.getTime());
+  });
+});
+
 describe('water logs', () => {
   it('undoes the most recent drink only', () => {
     const user = createUser();

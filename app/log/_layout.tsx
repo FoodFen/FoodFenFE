@@ -17,6 +17,7 @@ export default function LogLayout() {
       <Stack.Screen name="ingredient" options={{ title: t('logIngredient', 'layoutTitle') }} />
       <Stack.Screen name="search" options={{ title: t('logSearch', 'layoutTitle') }} />
       <Stack.Screen name="manual" options={{ headerShown: false }} />
+      <Stack.Screen name="activity" options={{ title: t('logActivity', 'layoutTitle') }} />
     </Stack>
   );
 }

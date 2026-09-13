@@ -349,6 +349,31 @@ export const en: DeepPartial<Translations> = {
     modeManual: 'Manual',
   },
 
+  logActivity: {
+    layoutTitle: 'Activity',
+    presetHeading: 'Pick an activity',
+    kcalPer30Min: '{kcal} kcal / 30 min',
+    pickPresetA11y: '{name}, {kcal} kcal per 30 minutes',
+    durationLabel: 'Duration',
+    customMinutes: 'Custom (minutes)',
+    minutesSuffix: 'min',
+    timeLabel: 'Time',
+    now: 'Now',
+    pickTime: 'Pick a time',
+    freeTextLabel: 'Type your workout (e.g. cycling for 45 minutes)',
+    save: 'Save',
+    saveErrorTitle: 'Could not save that activity',
+  },
+
+  activityPresets: {
+    walking: 'Walking',
+    running: 'Running',
+    cycling: 'Cycling',
+    elliptical: 'Elliptical',
+    swimming: 'Swimming',
+    strength: 'Strength training',
+  },
+
   dashboard: {
     pointsA11y: '{count} reward points',
     openShop: 'Open shop',
@@ -392,6 +417,7 @@ export const en: DeepPartial<Translations> = {
     title: 'What do you want to log?',
     weight: 'Log weight',
     water: 'Log water',
+    activity: 'Log activity',
     food: 'Log food',
     search: 'Find a food',
     manualEntry: 'Manual entry',

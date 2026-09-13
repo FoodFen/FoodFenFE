@@ -366,6 +366,31 @@ export const vi = {
     modeManual: 'Nhập tay',
   },
 
+  logActivity: {
+    layoutTitle: 'Hoạt động',
+    presetHeading: 'Chọn hoạt động',
+    kcalPer30Min: '{kcal} kcal / 30 phút',
+    pickPresetA11y: '{name}, {kcal} kcal mỗi 30 phút',
+    durationLabel: 'Thời lượng',
+    customMinutes: 'Tuỳ chỉnh (phút)',
+    minutesSuffix: 'phút',
+    timeLabel: 'Thời điểm',
+    now: 'Bây giờ',
+    pickTime: 'Chọn giờ',
+    freeTextLabel: 'Nhập bài tập của bạn (ví dụ: đạp xe 45 phút)',
+    save: 'Lưu',
+    saveErrorTitle: 'Không thể lưu hoạt động này',
+  },
+
+  activityPresets: {
+    walking: 'Đi bộ',
+    running: 'Chạy bộ',
+    cycling: 'Đạp xe',
+    elliptical: 'Máy tập elliptical',
+    swimming: 'Bơi lội',
+    strength: 'Tập tạ',
+  },
+
   dashboard: {
     pointsA11y: '{count} điểm thưởng',
     openShop: 'Mở cửa hàng',
@@ -412,6 +437,7 @@ export const vi = {
     weight: 'Ghi cân nặng',
     water: 'Ghi lượng nước',
     food: 'Ghi bữa ăn',
+    activity: 'Ghi hoạt động',
     search: 'Tìm món ăn',
     manualEntry: 'Nhập chi tiết',
     weightLabel: 'Cân nặng (kg)',

@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 
-import { WheelPicker } from '@/components/onboarding/WheelPicker';
 import { Text } from '@/components/ui/Text';
+import { WheelPicker } from '@/components/ui/WheelPicker';
 import { useTranslation } from '@/hooks/useTranslation';
 
 const CURRENT_YEAR = new Date().getFullYear();

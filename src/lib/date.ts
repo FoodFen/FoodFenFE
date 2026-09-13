@@ -6,6 +6,8 @@ import {
   isToday,
   isYesterday,
   parseISO,
+  setHours,
+  setMinutes,
   startOfDay,
   startOfWeek,
   subDays,
@@ -70,6 +72,17 @@ export function formatTime(value: string | number | Date): string {
   const date = typeof value === 'string' ? parseISO(value) : new Date(value);
 
   return format(date, 'HH:mm');
+}
+
+/**
+ * `day` at the given wall-clock hour/minute, in local time.
+ *
+ * Goes through `fromDateKey` rather than the device's current offset, for the
+ * same reason `loggedOn` is stored rather than derived: the day must stay the
+ * one the user picked regardless of when "now" happens to be.
+ */
+export function withTime(day: DateKey, hours: number, minutes: number): Date {
+  return setMinutes(setHours(fromDateKey(day), hours), minutes);
 }
 
 export function isFutureDate(key: DateKey): boolean {
