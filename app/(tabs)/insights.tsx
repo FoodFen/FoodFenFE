@@ -3,17 +3,23 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CalorieTrendChart } from '@/components/insights/CalorieTrendChart';
+import { WeightTrendChart } from '@/components/insights/WeightTrendChart';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
 import { ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
-import { useDiaryRange } from '@/features/diary/queries';
+import { useDiaryRange, useWeightHistory } from '@/features/diary/queries';
 import { MEAL_LABELS } from '@/features/diary/selectors';
 import { averageByMeal, summarizeTrends } from '@/features/insights/trends';
+import { useProfileStore } from '@/features/profile/store';
+import { useTranslation } from '@/hooks/useTranslation';
+import { todayKey } from '@/lib/date';
+import { weightGoalDelta } from '@/lib/nutrition';
 import { MEAL_TYPES } from '@/types/models';
 
 const WINDOW_DAYS = 7;
+const WEIGHT_WINDOW_DAYS = 90;
 
 /**
  * Trends over the last week.
@@ -23,8 +29,11 @@ const WINDOW_DAYS = 7;
  * rather than raw entries — see `src/features/insights/trends.ts`.
  */
 export default function InsightsScreen() {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const { data, isPending, error, refetch } = useDiaryRange(WINDOW_DAYS);
+  const weightHistory = useWeightHistory(WEIGHT_WINDOW_DAYS);
+  const profile = useProfileStore((state) => state.profile);
 
   const summary = useMemo(() => (data ? summarizeTrends(data) : null), [data]);
   const perMeal = useMemo(() => (data ? averageByMeal(data) : null), [data]);
@@ -64,6 +73,19 @@ export default function InsightsScreen() {
 
   const isDeficit = summary.averageDelta < 0;
 
+  const weightSeries =
+    weightHistory.data && weightHistory.data.length > 0
+      ? weightHistory.data.map((log) => ({ date: log.recordedAt, weightKg: log.weight }))
+      : profile
+        ? [{ date: todayKey(), weightKg: profile.weightCurrent }]
+        : [];
+
+  const latestWeightKg = weightSeries[weightSeries.length - 1]?.weightKg;
+  const weightDelta =
+    profile && latestWeightKg !== undefined
+      ? weightGoalDelta(latestWeightKg, profile.weightGoal)
+      : null;
+
   return (
     <ScrollScreen bottomSpacing={96} style={{ paddingTop: insets.top }}>
       <Text variant="title" className="pt-2">
@@ -93,6 +115,32 @@ export default function InsightsScreen() {
 
         <CalorieTrendChart series={summary.series} />
       </Card>
+
+      {profile ? (
+        <Card className="gap-4">
+          <CardHeader>
+            <Text variant="heading">{t('insights', 'weightTrendHeading')}</Text>
+          </CardHeader>
+
+          {weightHistory.isPending ? (
+            <Skeleton className="h-40 rounded-card" />
+          ) : (
+            <>
+              <WeightTrendChart series={weightSeries} goalKg={profile.weightGoal} />
+              {weightDelta ? (
+                <Text variant="caption" tone="subtle">
+                  {weightDelta.direction === 'atGoal'
+                    ? t('dashboard', 'weightReached')
+                    : t('dashboard', 'weightToGo').replace(
+                        '{delta}',
+                        String(Math.round(weightDelta.deltaKg * 10) / 10),
+                      )}
+                </Text>
+              ) : null}
+            </>
+          )}
+        </Card>
+      ) : null}
 
       <Card className="gap-3">
         <Text variant="heading">Against your goal</Text>

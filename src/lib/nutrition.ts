@@ -130,6 +130,26 @@ export function goalDirection(
   return difference < 0 ? 'lose' : 'gain';
 }
 
+export interface WeightGoalDelta {
+  /** Always ≥ 0 — the caller pairs this with `direction` for a sign. */
+  deltaKg: number;
+  direction: 'above' | 'below' | 'atGoal';
+}
+
+/**
+ * How far a weight reading sits from the goal, for UC-19's trend display.
+ *
+ * Same 0.5 kg "close enough" band as `goalDirection`, so the two never
+ * disagree about whether someone has reached their goal.
+ */
+export function weightGoalDelta(currentKg: number, goalKg: number): WeightGoalDelta {
+  const diff = currentKg - goalKg;
+
+  if (Math.abs(diff) < 0.5) return { deltaKg: 0, direction: 'atGoal' };
+
+  return { deltaKg: Math.abs(diff), direction: diff > 0 ? 'above' : 'below' };
+}
+
 /**
  * Daily calorie change implied by the target rate, clamped to
  * `MAX_DAILY_KCAL_DELTA`. Negative is a deficit, positive a surplus.

@@ -14,6 +14,7 @@ import {
   scaleNutrition,
   sumNutrition,
   totalDailyEnergyExpenditure,
+  weightGoalDelta,
 } from '../nutrition';
 
 /** Fixed so an age-dependent expectation cannot drift with the wall clock. */
@@ -104,6 +105,24 @@ describe('goalDirection', () => {
   it('treats a goal within half a kilo as maintenance', () => {
     // Someone who rounds their weight should not be put on a deficit for it.
     expect(goalDirection({ weightCurrent: 80, weightGoal: 80.3 })).toBe('maintain');
+  });
+});
+
+describe('weightGoalDelta', () => {
+  it('reports above when current is heavier than goal', () => {
+    expect(weightGoalDelta(80, 70)).toEqual({ deltaKg: 10, direction: 'above' });
+  });
+
+  it('reports below when current is lighter than goal', () => {
+    expect(weightGoalDelta(65, 70)).toEqual({ deltaKg: 5, direction: 'below' });
+  });
+
+  it('treats a difference within half a kilo as at goal', () => {
+    expect(weightGoalDelta(80.3, 80)).toEqual({ deltaKg: 0, direction: 'atGoal' });
+  });
+
+  it('reports at goal for an exact match', () => {
+    expect(weightGoalDelta(70, 70)).toEqual({ deltaKg: 0, direction: 'atGoal' });
   });
 });
 
