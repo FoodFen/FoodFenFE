@@ -36,6 +36,7 @@ export type {
   InputMethod,
   MealType,
   PlanType,
+  QuestCadence,
   QuestType,
   SubscriptionStatus,
   SubscriptionTier,

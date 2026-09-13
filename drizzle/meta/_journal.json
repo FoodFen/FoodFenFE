@@ -15,6 +15,13 @@
       "when": 1788961356052,
       "tag": "0001_tricky_deadpool",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789278505873,
+      "tag": "0002_good_maddog",
+      "breakpoints": true
     }
   ]
 }

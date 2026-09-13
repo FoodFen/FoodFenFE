@@ -3,11 +3,13 @@ import { and, desc, eq, sql } from 'drizzle-orm';
 import { db } from '@/db/client';
 import { coinTransaction, quest, streak, subscription } from '@/db/schema';
 import type { DateKey } from '@/lib/date';
-import { shiftDateKey, todayKey } from '@/lib/date';
+import { calendarWeek, shiftDateKey, todayKey } from '@/lib/date';
 import { generateLocalId } from '@/lib/id';
 import type {
   CoinReason,
+  DiaryDay,
   Quest,
+  QuestCadence,
   QuestType,
   Streak,
   Subscription,
@@ -15,6 +17,10 @@ import type {
 } from '@/types/models';
 
 import { notDeleted, touch } from './sync';
+
+/** Same as `GLASS_ML` in `src/features/dashboard/constants.ts` — `src/data/`
+ * cannot import from `src/features/`, so the figure is mirrored, not shared. */
+const WATER_CUP_ML = 250;
 
 /**
  * Streaks, quests, coins and subscription state.
@@ -83,15 +89,53 @@ export function recordActiveDay(userId: string, date: DateKey = todayKey()): Str
 
 export interface QuestDefinition {
   questType: QuestType;
+  cadence: QuestCadence;
+  /**
+   * The displayed denominator. For `hit_calorie_goal` this is a placeholder —
+   * `ensureDailyQuests` resolves the real figure from that day's goal instead,
+   * since the target varies per user and can drift day to day.
+   */
   target: number;
+  /** Fraction of `target` that counts as complete. `1` = the simple case. */
+  completionRatio: number;
   rewardCoins: number;
 }
 
 /** The daily quest set. Server-driven once a backend exists. */
 export const DAILY_QUESTS: QuestDefinition[] = [
-  { questType: 'log_all_meals', target: 3, rewardCoins: 30 },
-  { questType: 'hit_calorie_goal', target: 1, rewardCoins: 50 },
-  { questType: 'drink_water', target: 8, rewardCoins: 20 },
+  {
+    questType: 'log_all_meals',
+    cadence: 'daily',
+    target: 3,
+    completionRatio: 1,
+    rewardCoins: 30,
+  },
+  // "Reach 90% of your calorie goal" (UC-22) — target is resolved per day below.
+  {
+    questType: 'hit_calorie_goal',
+    cadence: 'daily',
+    target: 2000,
+    completionRatio: 0.9,
+    rewardCoins: 50,
+  },
+  {
+    questType: 'drink_water',
+    cadence: 'daily',
+    target: 8,
+    completionRatio: 1,
+    rewardCoins: 20,
+  },
+];
+
+/** The weekly quest set — issued once per calendar week, not once per day. */
+export const WEEKLY_QUESTS: QuestDefinition[] = [
+  {
+    questType: 'stay_active_week',
+    cadence: 'weekly',
+    target: 5,
+    completionRatio: 1,
+    rewardCoins: 40,
+  },
 ];
 
 export function getQuests(userId: string, date: DateKey = todayKey()): Quest[] {
@@ -102,20 +146,22 @@ export function getQuests(userId: string, date: DateKey = todayKey()): Quest[] {
     .all();
 }
 
-/** Issue the day's quests, once. Safe to call on every app open. */
-export function ensureDailyQuests(userId: string, date: DateKey = todayKey()): Quest[] {
-  const existing = getQuests(userId, date);
-
-  if (existing.length > 0) return existing;
-
-  const rows: Quest[] = DAILY_QUESTS.map((definition) => ({
+function insertQuests(
+  userId: string,
+  date: DateKey,
+  definitions: QuestDefinition[],
+  targetFor: (definition: QuestDefinition) => number,
+): Quest[] {
+  const rows: Quest[] = definitions.map((definition) => ({
     id: generateLocalId('quest'),
     userId,
     questType: definition.questType,
     progress: 0,
-    target: definition.target,
+    target: targetFor(definition),
     rewardCoins: definition.rewardCoins,
     completed: false,
+    cadence: definition.cadence,
+    completionRatio: definition.completionRatio,
     questDate: date,
     remoteId: null,
     deletedAt: null,
@@ -125,6 +171,56 @@ export function ensureDailyQuests(userId: string, date: DateKey = todayKey()): Q
   db.insert(quest).values(rows).run();
 
   return rows;
+}
+
+/**
+ * Issue the day's quests, once. Safe to call on every app open.
+ *
+ * `hit_calorie_goal`'s target is resolved from `targetKcal` when given (the
+ * caller already has the day's goal from `useDiaryDay`) — falling back to the
+ * definition's placeholder only if it genuinely isn't available yet.
+ */
+export function ensureDailyQuests(
+  userId: string,
+  date: DateKey = todayKey(),
+  targetKcal?: number,
+): Quest[] {
+  const existing = getQuests(userId, date).filter((row) => row.cadence === 'daily');
+
+  if (existing.length > 0) return existing;
+
+  return insertQuests(userId, date, DAILY_QUESTS, (definition) =>
+    definition.questType === 'hit_calorie_goal' && targetKcal
+      ? targetKcal
+      : definition.target,
+  );
+}
+
+/** Issue this week's quests, once per week rather than once per day. */
+export function ensureWeeklyQuests(userId: string, weekStart: DateKey): Quest[] {
+  const existing = getQuests(userId, weekStart).filter((row) => row.cadence === 'weekly');
+
+  if (existing.length > 0) return existing;
+
+  return insertQuests(
+    userId,
+    weekStart,
+    WEEKLY_QUESTS,
+    (definition) => definition.target,
+  );
+}
+
+/** Every quest active right now: today's daily set plus this week's weekly set. */
+export function getActiveQuests(
+  userId: string,
+  today: DateKey = todayKey(),
+  targetKcal?: number,
+): Quest[] {
+  const daily = ensureDailyQuests(userId, today, targetKcal);
+  const weekStart = calendarWeek(today)[0] ?? today;
+  const weekly = ensureWeeklyQuests(userId, weekStart);
+
+  return [...daily, ...weekly];
 }
 
 /**
@@ -144,7 +240,9 @@ export function setQuestProgress(
 
   if (!existing || existing.completed) return existing;
 
-  const completed = progress >= existing.target;
+  // Not always `progress >= target` — a quest's own `completionRatio` (e.g. 0.9
+  // for "reach 90% of your calorie goal") decides how much of `target` counts.
+  const completed = progress / existing.target >= existing.completionRatio;
 
   const updated: Quest = {
     ...existing,
@@ -160,6 +258,48 @@ export function setQuestProgress(
   }
 
   return updated;
+}
+
+/**
+ * Recompute every active quest's live progress and persist it — the "each bar
+ * reads live from UC-11's aggregation"/"reads from STREAK" mapping in UC-22.
+ *
+ * Called right after a log completes (food, activity or water — UC-22's
+ * trigger list), so the post-log interstitial and the challenges screen never
+ * show stale numbers. Returns the updated rows so a caller doesn't need a
+ * second read to display them immediately.
+ */
+export function evaluateQuestProgress(userId: string, day: DiaryDay): Quest[] {
+  const active = getActiveQuests(userId, day.date, day.goal.targetKcal);
+
+  return active
+    .map((row) =>
+      setQuestProgress(
+        userId,
+        row.questType,
+        liveProgress(row, userId, day),
+        row.questDate,
+      ),
+    )
+    .filter((row): row is Quest => row !== undefined);
+}
+
+function liveProgress(row: Quest, userId: string, day: DiaryDay): number {
+  switch (row.questType) {
+    case 'log_all_meals':
+      return day.entries.length;
+    case 'hit_calorie_goal':
+      return day.totals.kcal;
+    case 'drink_water':
+      return Math.floor(day.waterMl / WATER_CUP_ML);
+    case 'stay_active_week':
+      return getStreak(userId)?.currentStreak ?? 0;
+    default:
+      // log_breakfast / hit_protein_goal / log_weight — defined in the
+      // schema, not in DAILY_QUESTS/WEEKLY_QUESTS, so never issued or
+      // evaluated by this pass. Leave whatever progress they already have.
+      return row.progress;
+  }
 }
 
 export function addCoins(userId: string, amount: number, reason: CoinReason): void {

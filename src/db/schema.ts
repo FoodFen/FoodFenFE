@@ -257,7 +257,10 @@ export type QuestType =
   | 'hit_calorie_goal'
   | 'hit_protein_goal'
   | 'drink_water'
-  | 'log_weight';
+  | 'log_weight'
+  | 'stay_active_week';
+
+export type QuestCadence = 'daily' | 'weekly';
 
 export const quest = sqliteTable(
   'quest',
@@ -271,7 +274,24 @@ export const quest = sqliteTable(
     target: integer('target').notNull(),
     rewardCoins: integer('reward_coins').notNull(),
     completed: integer('completed', { mode: 'boolean' }).notNull().default(false),
-    /** `yyyy-MM-dd` — quests are issued per day. */
+    /**
+     * Extension: `'daily'` quests are issued fresh each day; `'weekly'` ones
+     * once per calendar week. Not in ERD v1.0.0 — quests were a single-day
+     * concept there.
+     */
+    cadence: text('cadence').$type<QuestCadence>().notNull().default('daily'),
+    /**
+     * Extension: the fraction of `target` that counts as complete — copied
+     * onto the row at issuance so a later change to a quest's definition can
+     * never rewrite what a past quest actually required, the same reasoning
+     * `target`/`rewardCoins` already follow. `1` (the default) means the
+     * previous, simpler behavior: complete only at `progress >= target`.
+     */
+    completionRatio: real('completion_ratio').notNull().default(1),
+    /**
+     * `yyyy-MM-dd` — the day a daily quest is issued for, or the Monday a
+     * weekly quest's week starts on.
+     */
     questDate: text('quest_date').notNull(),
     ...syncColumns,
   },
