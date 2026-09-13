@@ -5,6 +5,7 @@ import { WaterCup } from '@/components/dashboard/WaterCup';
 import { Text } from '@/components/ui/Text';
 import { GLASS_ML } from '@/features/dashboard/constants';
 import { useSetWaterTotal } from '@/features/diary/queries';
+import { usePostLogInterstitial } from '@/features/gamification/queries';
 import { useLogSheetStore } from '@/features/logging/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -30,6 +31,7 @@ export function WaterSection({ day }: { day: DiaryDay }) {
   const colors = colorsFor(resolved);
   const present = useLogSheetStore((state) => state.present);
   const setWaterTotal = useSetWaterTotal();
+  const finishLogging = usePostLogInterstitial();
 
   const targetMl = day.goal.targetWaterMl;
   const glassCount = Math.max(Math.round(targetMl / GLASS_ML), 1);
@@ -37,7 +39,10 @@ export function WaterSection({ day }: { day: DiaryDay }) {
 
   const setCups = (cupCount: number) => {
     haptics.selection();
-    setWaterTotal.mutate({ targetMl: cupCount * GLASS_ML, date: day.date });
+    setWaterTotal.mutate(
+      { targetMl: cupCount * GLASS_ML, date: day.date },
+      { onSuccess: finishLogging },
+    );
   };
 
   return (

@@ -280,8 +280,7 @@ export const vi = {
     protein: 'Đạm',
     fat: 'Chất béo',
     reconcileWarning: 'Calo không khớp với tổng các chất dinh dưỡng.',
-    multiIngredientNote:
-      'Món có nhiều nguyên liệu chỉ sửa được tên và bữa ăn ở đây.',
+    multiIngredientNote: 'Món có nhiều nguyên liệu chỉ sửa được tên và bữa ăn ở đây.',
     save: 'Lưu',
     saveErrorTitle: 'Không thể lưu thay đổi',
     saveErrorFallback: 'Vui lòng thử lại.',
@@ -292,7 +291,8 @@ export const vi = {
     mealNameLabel: 'Tên bữa ăn',
     mealNameHint: 'Không bắt buộc — chúng tôi sẽ đặt tên theo nguyên liệu.',
     mealLabel: 'Bữa ăn',
-    emptyHint: 'Thêm những gì có trong bữa ăn này. Chọn từ danh sách có sẵn, hoặc tự nhập.',
+    emptyHint:
+      'Thêm những gì có trong bữa ăn này. Chọn từ danh sách có sẵn, hoặc tự nhập.',
     removeIngredientA11y: 'Xóa {name}',
     addIngredientA11y: 'Thêm nguyên liệu',
     addIngredientLabel: '+ Thêm nguyên liệu',
@@ -357,7 +357,8 @@ export const vi = {
     protein: 'Đạm',
     fat: 'Chất béo',
     gramSuffix: 'g',
-    reconcileWarning: 'Calo nhập vào lệch khá nhiều so với tổng từ tinh bột, đạm và chất béo.',
+    reconcileWarning:
+      'Calo nhập vào lệch khá nhiều so với tổng từ tinh bột, đạm và chất béo.',
     save: 'Lưu',
     saveErrorTitle: 'Không thể lưu món này',
     saveErrorFallback: 'Vui lòng thử lại.',
@@ -454,8 +455,33 @@ export const vi = {
     ringColorsRow: 'Giải thích màu vòng tròn',
   },
 
+  questTitles: {
+    log_all_meals: 'Duy trì thói quen',
+    hit_calorie_goal: 'Cân bằng calo',
+    drink_water: 'Uống đủ nước',
+    stay_active_week: 'Giữ chuỗi ngày',
+  },
+
+  questDescriptions: {
+    log_all_meals: 'Ghi {target} bữa ăn hôm nay',
+    hit_calorie_goal: 'Đạt {percent}% mục tiêu calo của bạn',
+    drink_water: 'Uống {target} cốc nước hôm nay',
+    stay_active_week: 'Hoạt động {target} ngày trong tuần này',
+  },
+
+  interstitial: {
+    title: 'Tiến triển ngon lành!',
+    continue: 'Tiếp tục',
+    hideProgress: 'Ẩn tiến độ thử thách',
+    coinsA11y: '+{count} điểm thưởng',
+  },
+
   achievements: {
-    title: 'Thành tích',
+    title: 'Thử thách',
+    dailyHeading: 'Hằng ngày',
+    weeklyHeading: 'Hằng tuần',
+    daysLeft: 'Còn {days} ngày',
+    todayLeft: 'Hết hạn hôm nay',
     emptyTitle: 'Thành tích sắp ra mắt',
     emptyDescription: 'Chuỗi ngày, nhiệm vụ và huy hiệu sẽ xuất hiện ở đây.',
   },

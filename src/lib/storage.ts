@@ -105,4 +105,5 @@ export const StorageKeys = {
   onboardingComplete: 'onboarding-complete',
   queryCache: 'react-query-cache',
   devSeed: 'dev-seed-enabled',
+  hideChallengeProgress: 'hide-challenge-progress',
 } as const;

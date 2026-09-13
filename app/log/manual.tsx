@@ -11,6 +11,7 @@ import { Text } from '@/components/ui/Text';
 import { useCatalogSearch, useLogManualEntry } from '@/features/diary/queries';
 import { manualEntrySchema } from '@/features/diary/schemas';
 import { suggestedMealType } from '@/features/diary/selectors';
+import { usePostLogInterstitial } from '@/features/gamification/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -42,6 +43,7 @@ export default function ManualEntryScreen() {
   const insets = useSafeAreaInsets();
 
   const logManual = useLogManualEntry();
+  const finishLogging = usePostLogInterstitial();
 
   const [name, setName] = useState('');
   const [nameFocused, setNameFocused] = useState(false);
@@ -70,11 +72,20 @@ export default function ManualEntryScreen() {
 
   const parsed = useMemo(
     () =>
-      manualEntrySchema.safeParse({ name, amount, amountUnit, kcal, carbsG, proteinG, fatG }),
+      manualEntrySchema.safeParse({
+        name,
+        amount,
+        amountUnit,
+        kcal,
+        carbsG,
+        proteinG,
+        fatG,
+      }),
     [name, amount, amountUnit, kcal, carbsG, proteinG, fatG],
   );
 
-  const canSave = name.trim().length > 0 && kcal !== null && macrosPresent && parsed.success;
+  const canSave =
+    name.trim().length > 0 && kcal !== null && macrosPresent && parsed.success;
 
   const showWarning =
     kcal !== null && macrosPresent && !macrosReconcile(kcal, { carbsG, proteinG, fatG });
@@ -83,7 +94,8 @@ export default function ManualEntryScreen() {
     haptics.selection();
     if (blurTimer.current) clearTimeout(blurTimer.current);
 
-    const servingId = food.servings.find((s) => s.default)?.id ?? food.servings[0]?.id ?? '';
+    const servingId =
+      food.servings.find((s) => s.default)?.id ?? food.servings[0]?.id ?? '';
     const serving = food.servings.find((s) => s.id === servingId);
     const n = nutritionForServing(food, 1, servingId);
 
@@ -117,7 +129,7 @@ export default function ManualEntryScreen() {
       {
         onSuccess: () => {
           haptics.success();
-          router.dismissAll();
+          finishLogging();
         },
         onError: (error) => {
           haptics.error();
@@ -153,7 +165,7 @@ export default function ManualEntryScreen() {
 
       <View className="relative z-20 px-4 pt-1">
         <TextInput
-          className="font-sans text-3xl font-bold text-fg"
+          className="font-bold font-sans text-3xl text-fg"
           value={name}
           onChangeText={setName}
           onFocus={() => {
@@ -388,7 +400,9 @@ function ModeTab({ label, active = false }: { label: string; active?: boolean })
       <Text variant="label" tone={active ? 'brand' : 'subtle'}>
         {label}
       </Text>
-      <View className={cn('h-0.5 w-6 rounded-full', active ? 'bg-brand' : 'bg-transparent')} />
+      <View
+        className={cn('h-0.5 w-6 rounded-full', active ? 'bg-brand' : 'bg-transparent')}
+      />
     </View>
   );
 }

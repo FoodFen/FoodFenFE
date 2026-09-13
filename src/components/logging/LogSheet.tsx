@@ -18,6 +18,7 @@ import {
   useLogWeight,
   useSetWaterGoal,
 } from '@/features/diary/queries';
+import { usePostLogInterstitial } from '@/features/gamification/queries';
 import { useLogSheetStore } from '@/features/logging/store';
 import { units, useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -70,6 +71,7 @@ export function LogSheet() {
   const logWeight = useLogWeight();
   const addWater = useAddWater();
   const setWaterGoal = useSetWaterGoal();
+  const finishLogging = usePostLogInterstitial();
   const { data: today } = useDiaryDay(todayKey());
 
   useEffect(() => {
@@ -120,7 +122,13 @@ export function LogSheet() {
   function submitWater() {
     addWater.mutate(
       { amountMl, date: todayKey() },
-      { onSuccess: close, onError: () => setError(t('auth', 'genericError')) },
+      {
+        onSuccess: () => {
+          close();
+          finishLogging();
+        },
+        onError: () => setError(t('auth', 'genericError')),
+      },
     );
   }
 

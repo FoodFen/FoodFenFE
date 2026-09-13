@@ -275,7 +275,8 @@ export const en: DeepPartial<Translations> = {
     mealNameLabel: 'Meal name',
     mealNameHint: 'Optional — we will name it after its ingredients.',
     mealLabel: 'Meal',
-    emptyHint: 'Add what was in this meal. Pick from the built-in list, or enter your own.',
+    emptyHint:
+      'Add what was in this meal. Pick from the built-in list, or enter your own.',
     removeIngredientA11y: 'Remove {name}',
     addIngredientA11y: 'Add an ingredient',
     addIngredientLabel: '+ Add ingredient',
@@ -340,7 +341,8 @@ export const en: DeepPartial<Translations> = {
     protein: 'Protein',
     fat: 'Fat',
     gramSuffix: 'g',
-    reconcileWarning: 'The calories entered are well off the total from carbs, protein and fat.',
+    reconcileWarning:
+      'The calories entered are well off the total from carbs, protein and fat.',
     save: 'Save',
     saveErrorTitle: 'Could not save that food',
     saveErrorFallback: 'Please try again.',
@@ -435,8 +437,33 @@ export const en: DeepPartial<Translations> = {
     ringColorsRow: 'Ring colors explained',
   },
 
+  questTitles: {
+    log_all_meals: 'Stay consistent',
+    hit_calorie_goal: 'Calorie balance',
+    drink_water: 'Stay hydrated',
+    stay_active_week: 'Keep the streak',
+  },
+
+  questDescriptions: {
+    log_all_meals: 'Log meals {target} times today',
+    hit_calorie_goal: 'Reach {percent}% of your calorie goal',
+    drink_water: 'Drink {target} cups of water today',
+    stay_active_week: 'Stay active {target} days this week',
+  },
+
+  interstitial: {
+    title: "That's tasty progress!",
+    continue: 'Continue',
+    hideProgress: 'Hide challenge progress',
+    coinsA11y: '+{count} reward points',
+  },
+
   achievements: {
-    title: 'Achievements',
+    title: 'Challenges',
+    dailyHeading: 'Daily',
+    weeklyHeading: 'Weekly',
+    daysLeft: '{days}d left',
+    todayLeft: 'Ends today',
     emptyTitle: 'Achievements coming soon',
     emptyDescription: 'Streaks, quests and badges will show up here.',
   },

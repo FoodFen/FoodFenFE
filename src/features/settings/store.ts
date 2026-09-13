@@ -23,12 +23,15 @@ interface SettingsState {
   onboardingComplete: boolean;
   /** Dev-only: populate the last few diary days on boot. Defaults to `__DEV__`. */
   devSeedEnabled: boolean;
+  /** UC-22's per-user opt-out — skip the post-log challenge interstitial. */
+  hideChallengeProgress: boolean;
 
   setTheme: (theme: ThemePreference) => void;
   setWeightUnit: (unit: WeightUnit) => void;
   setEnergyUnit: (unit: EnergyUnit) => void;
   setLocale: (locale: Locale) => void;
   setDevSeedEnabled: (value: boolean) => void;
+  setHideChallengeProgress: (value: boolean) => void;
   completeOnboarding: () => void;
   /** Part of "erase local data" — sends the user back through onboarding. */
   resetOnboarding: () => void;
@@ -41,6 +44,8 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   locale: preferences.get<Locale>(StorageKeys.locale) ?? DEFAULT_LOCALE,
   onboardingComplete: preferences.get<boolean>(StorageKeys.onboardingComplete) ?? false,
   devSeedEnabled: preferences.get<boolean>(StorageKeys.devSeed) ?? __DEV__,
+  hideChallengeProgress:
+    preferences.get<boolean>(StorageKeys.hideChallengeProgress) ?? false,
 
   setTheme: (theme) => {
     preferences.set(StorageKeys.colorScheme, theme);
@@ -65,6 +70,11 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setDevSeedEnabled: (devSeedEnabled) => {
     preferences.set(StorageKeys.devSeed, devSeedEnabled);
     set({ devSeedEnabled });
+  },
+
+  setHideChallengeProgress: (hideChallengeProgress) => {
+    preferences.set(StorageKeys.hideChallengeProgress, hideChallengeProgress);
+    set({ hideChallengeProgress });
   },
 
   completeOnboarding: () => {

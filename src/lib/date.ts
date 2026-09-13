@@ -85,8 +85,13 @@ export function withTime(day: DateKey, hours: number, minutes: number): Date {
   return setMinutes(setHours(fromDateKey(day), hours), minutes);
 }
 
+/** Days from today until `key` — negative for a date already in the past. */
+export function daysUntil(key: DateKey): number {
+  return differenceInCalendarDays(fromDateKey(key), startOfDay(new Date()));
+}
+
 export function isFutureDate(key: DateKey): boolean {
-  return differenceInCalendarDays(fromDateKey(key), startOfDay(new Date())) > 0;
+  return daysUntil(key) > 0;
 }
 
 /** The `count` days ending at `endKey`, oldest first. */

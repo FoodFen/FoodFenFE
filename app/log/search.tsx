@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Alert, Pressable, ScrollView, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
@@ -11,7 +11,12 @@ import { Input } from '@/components/ui/Input';
 import { NumberField } from '@/components/ui/NumberField';
 import { Text } from '@/components/ui/Text';
 import { getCatalogFood } from '@/data/foodCatalog';
-import { useCatalogSearch, useQuickLogFood, useRecentFoods } from '@/features/diary/queries';
+import {
+  useCatalogSearch,
+  useQuickLogFood,
+  useRecentFoods,
+} from '@/features/diary/queries';
+import { usePostLogInterstitial } from '@/features/gamification/queries';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -230,6 +235,7 @@ function PortionStep({
   const colors = colorsFor(resolved);
   const isPremium = useIsPremium();
   const quickLog = useQuickLogFood();
+  const finishLogging = usePostLogInterstitial();
 
   const [servingId, setServingId] = useState(initialServingId);
   const [quantity, setQuantity] = useState(initialQuantity);
@@ -245,7 +251,7 @@ function PortionStep({
       {
         onSuccess: () => {
           haptics.success();
-          router.dismissAll();
+          finishLogging();
         },
         onError: (error) => {
           haptics.error();
@@ -340,7 +346,10 @@ function PortionStep({
         </View>
         <View className="gap-2 border-t border-border pt-3">
           <Row label={t('logIngredient', 'weight')} value={`${Math.round(grams)} g`} />
-          <Row label={t('onboardingFinalize', 'protein')} value={`${nutrition.proteinG} g`} />
+          <Row
+            label={t('onboardingFinalize', 'protein')}
+            value={`${nutrition.proteinG} g`}
+          />
           <Row label={t('onboardingFinalize', 'carbs')} value={`${nutrition.carbsG} g`} />
           <Row label={t('onboardingFinalize', 'fat')} value={`${nutrition.fatG} g`} />
           {isPremium && nutrition.fiberG !== undefined && nutrition.fiberG !== null ? (
