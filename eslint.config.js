@@ -61,4 +61,9 @@ module.exports = [
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
+  {
+    // Build-time Node scripts, not app code: stdout is their whole point.
+    files: ['scripts/**/*.mjs'],
+    rules: { 'no-console': 'off' },
+  },
 ];

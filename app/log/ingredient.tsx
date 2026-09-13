@@ -14,6 +14,7 @@ import { useCatalogSearch } from '@/features/diary/queries';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { haptics } from '@/lib/haptics';
 import { nutritionForServing } from '@/lib/nutrition';
@@ -35,6 +36,7 @@ export default function AddIngredientScreen() {
   const debouncedQuery = useDebounce(query, 250);
   const search = useCatalogSearch(debouncedQuery);
   const isPremium = useIsPremium();
+  const { t } = useTranslation();
 
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
@@ -55,7 +57,7 @@ export default function AddIngredientScreen() {
         <Input
           value={query}
           onChangeText={setQuery}
-          placeholder="Search foods"
+          placeholder={t('logIngredient', 'searchPlaceholder')}
           autoFocus
           returnKeyType="search"
           leading={<Ionicons name="search" size={18} color={colors.fgSubtle} />}
@@ -64,7 +66,7 @@ export default function AddIngredientScreen() {
               <Pressable
                 onPress={() => setQuery('')}
                 accessibilityRole="button"
-                accessibilityLabel="Clear search"
+                accessibilityLabel={t('logIngredient', 'clearSearchA11y')}
                 hitSlop={8}
               >
                 <Ionicons name="close-circle" size={18} color={colors.fgSubtle} />
@@ -83,7 +85,9 @@ export default function AddIngredientScreen() {
               setSelected(food);
             }}
             accessibilityRole="button"
-            accessibilityLabel={`${food.name}, ${food.per100g.kcal} kcal per 100 grams`}
+            accessibilityLabel={t('logIngredient', 'foodA11y')
+              .replace('{name}', food.name)
+              .replace('{kcal}', String(food.per100g.kcal))}
             className="flex-row items-center gap-3 border-b border-border px-4 py-3 active:bg-surface-alt"
           >
             <View className="flex-1 gap-0.5">
@@ -91,7 +95,10 @@ export default function AddIngredientScreen() {
                 {food.name}
               </Text>
               <Text variant="caption" tone="muted">
-                {food.per100g.kcal} kcal / 100 g
+                {t('logIngredient', 'kcalPer100g').replace(
+                  '{kcal}',
+                  String(food.per100g.kcal),
+                )}
               </Text>
             </View>
             <Ionicons name="chevron-forward" size={16} color={colors.fgSubtle} />
@@ -101,15 +108,18 @@ export default function AddIngredientScreen() {
         {debouncedQuery.trim().length >= 2 && (search.data ?? []).length === 0 ? (
           <EmptyState
             icon="🔍"
-            title="No matches"
-            description={`Nothing in the built-in list for “${debouncedQuery.trim()}”.`}
+            title={t('logIngredient', 'noMatches')}
+            description={t('logIngredient', 'noMatchesDescription').replace(
+              '{query}',
+              debouncedQuery.trim(),
+            )}
           />
         ) : null}
 
         {debouncedQuery.trim().length < 2 ? (
           <View className="px-4 pt-2">
             <Text variant="caption" tone="subtle">
-              Search the built-in list of common foods, or enter one yourself below.
+              {t('logIngredient', 'searchHint')}
             </Text>
           </View>
         ) : null}
@@ -121,11 +131,10 @@ export default function AddIngredientScreen() {
             <Card className="gap-2">
               <View className="flex-row items-center gap-2">
                 <Ionicons name="lock-closed" size={16} color={colors.fgMuted} />
-                <Text variant="heading">Enter your own</Text>
+                <Text variant="heading">{t('logIngredient', 'enterYourOwn')}</Text>
               </View>
               <Text variant="body" tone="muted">
-                Adding an ingredient by hand is a Premium feature. Everything in the
-                built-in list stays free.
+                {t('logIngredient', 'premiumHint')}
               </Text>
             </Card>
           )}
@@ -147,6 +156,7 @@ function PortionForm({
 }) {
   const addIngredient = useDraftStore((state) => state.addIngredient);
   const isPremium = useIsPremium();
+  const { t } = useTranslation();
 
   const [quantityText, setQuantityText] = useState('1');
   const [servingId, setServingId] = useState(food.servings[0]?.id ?? '');
@@ -191,7 +201,7 @@ function PortionForm({
         className="flex-row items-center gap-1 active:opacity-60"
       >
         <Text variant="label" tone="brand">
-          ← Back to search
+          {t('logIngredient', 'backToSearch')}
         </Text>
       </Pressable>
 
@@ -199,21 +209,21 @@ function PortionForm({
 
       <Card className="gap-4">
         <Input
-          label="Amount"
+          label={t('logIngredient', 'amount')}
           value={quantityText}
           onChangeText={setQuantityText}
           keyboardType="decimal-pad"
           selectTextOnFocus
           error={
             quantity === 0 && quantityText !== ''
-              ? 'Enter an amount above zero.'
+              ? t('logIngredient', 'amountError')
               : undefined
           }
         />
 
         <View className="gap-2">
           <Text variant="label" tone="muted">
-            Serving
+            {t('logIngredient', 'serving')}
           </Text>
 
           <View className="flex-row flex-wrap gap-2">
@@ -246,23 +256,23 @@ function PortionForm({
 
       <Card className="gap-3">
         <View className="flex-row items-baseline justify-between">
-          <Text variant="heading">Calories</Text>
+          <Text variant="heading">{t('logIngredient', 'calories')}</Text>
           <Text variant="title">{nutrition.kcal.toLocaleString()}</Text>
         </View>
 
         <View className="gap-2 border-t border-border pt-3">
-          <Row label="Weight" value={`${Math.round(grams)} g`} />
-          <Row label="Protein" value={`${nutrition.proteinG} g`} />
-          <Row label="Carbs" value={`${nutrition.carbsG} g`} />
-          <Row label="Fat" value={`${nutrition.fatG} g`} />
+          <Row label={t('logIngredient', 'weight')} value={`${Math.round(grams)} g`} />
+          <Row label={t('onboardingFinalize', 'protein')} value={`${nutrition.proteinG} g`} />
+          <Row label={t('onboardingFinalize', 'carbs')} value={`${nutrition.carbsG} g`} />
+          <Row label={t('onboardingFinalize', 'fat')} value={`${nutrition.fatG} g`} />
           {isPremium && nutrition.fiberG !== undefined && nutrition.fiberG !== null ? (
-            <Row label="Fiber" value={`${nutrition.fiberG} g`} />
+            <Row label={t('entryDetail', 'fiber')} value={`${nutrition.fiberG} g`} />
           ) : null}
         </View>
       </Card>
 
       <Button
-        label="Add to meal"
+        label={t('logIngredient', 'addToMeal')}
         onPress={add}
         disabled={quantity === 0}
         fullWidth
@@ -275,6 +285,7 @@ function PortionForm({
 /** The Premium path: type an ingredient's numbers directly. */
 function ManualIngredientForm({ onDone }: { onDone: () => void }) {
   const addIngredient = useDraftStore((state) => state.addIngredient);
+  const { t } = useTranslation();
 
   const [name, setName] = useState('');
   const [grams, setGrams] = useState('');
@@ -308,10 +319,10 @@ function ManualIngredientForm({ onDone }: { onDone: () => void }) {
 
   return (
     <Card className="gap-4">
-      <Text variant="heading">Enter your own</Text>
+      <Text variant="heading">{t('logIngredient', 'enterYourOwn')}</Text>
 
       <Input
-        label="Name"
+        label={t('common', 'name')}
         value={name}
         onChangeText={setName}
         autoCapitalize="sentences"
@@ -320,14 +331,14 @@ function ManualIngredientForm({ onDone }: { onDone: () => void }) {
       <View className="flex-row gap-3">
         <Input
           containerClassName="flex-1"
-          label="Weight (g)"
+          label={t('logIngredient', 'weightGrams')}
           value={grams}
           onChangeText={setGrams}
           keyboardType="decimal-pad"
         />
         <Input
           containerClassName="flex-1"
-          label="Calories"
+          label={t('logIngredient', 'calories')}
           value={kcal}
           onChangeText={setKcal}
           keyboardType="number-pad"
@@ -337,28 +348,28 @@ function ManualIngredientForm({ onDone }: { onDone: () => void }) {
       <View className="flex-row gap-3">
         <Input
           containerClassName="flex-1"
-          label="Protein"
+          label={t('onboardingFinalize', 'protein')}
           value={proteinG}
           onChangeText={setProteinG}
           keyboardType="decimal-pad"
         />
         <Input
           containerClassName="flex-1"
-          label="Carbs"
+          label={t('onboardingFinalize', 'carbs')}
           value={carbsG}
           onChangeText={setCarbsG}
           keyboardType="decimal-pad"
         />
         <Input
           containerClassName="flex-1"
-          label="Fat"
+          label={t('onboardingFinalize', 'fat')}
           value={fatG}
           onChangeText={setFatG}
           keyboardType="decimal-pad"
         />
       </View>
 
-      <Button label="Add to meal" onPress={add} disabled={!canAdd} fullWidth />
+      <Button label={t('logIngredient', 'addToMeal')} onPress={add} disabled={!canAdd} fullWidth />
     </Card>
   );
 }

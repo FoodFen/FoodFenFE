@@ -2,6 +2,7 @@ import { View } from 'react-native';
 
 import { ActivityLevelList } from '@/components/profile/BodyStatsForm';
 import { Text } from '@/components/ui/Text';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { ActivityLevel } from '@/types/models';
 
 export interface ActivityLevelStepProps {
@@ -10,14 +11,16 @@ export interface ActivityLevelStepProps {
 }
 
 export function ActivityLevelStep({ value, onChange }: ActivityLevelStepProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="w-full items-center gap-6">
       <View className="w-full items-center gap-2">
         <Text variant="title" className="w-full text-center text-3xl">
-          How active are you?
+          {t('onboardingActivity', 'title')}
         </Text>
         <Text variant="body" tone="muted" className="text-center">
-          This helps us estimate your daily calorie burn.
+          {t('onboardingActivity', 'subtitle')}
         </Text>
       </View>
       <View className="w-full">

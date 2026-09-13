@@ -15,6 +15,17 @@ import { getGoalForDate } from './userRepository';
  * that composition in one place instead of in every screen that needs a day.
  */
 
+/**
+ * No `daily_goal` row is in force for a date. Named so a screen can detect it
+ * (`error instanceof MissingGoalError`) and self-heal rather than string-match.
+ */
+export class MissingGoalError extends Error {
+  constructor(readonly date: DateKey) {
+    super(`No daily goal is in force on ${date}.`);
+    this.name = 'MissingGoalError';
+  }
+}
+
 function entryNutrition(entry: FoodEntry): Nutrition {
   return {
     kcal: entry.totalKcal,
@@ -52,9 +63,7 @@ function assembleDays(
     const dayEntries = entriesByDay.get(date) ?? [];
     const goal = getGoalForDate(userId, date);
 
-    if (!goal) {
-      throw new Error(`No daily goal is in force on ${date}; onboarding did not run.`);
-    }
+    if (!goal) throw new MissingGoalError(date);
 
     return {
       date,

@@ -3,6 +3,7 @@ import { View } from 'react-native';
 
 import { Button } from '@/components/ui/Button';
 import { Text } from '@/components/ui/Text';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export interface NotificationsStepProps {
   onChange: (value: boolean) => void;
@@ -11,19 +12,20 @@ export interface NotificationsStepProps {
 }
 
 export function NotificationsStep({ onChange, onDone }: NotificationsStepProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="w-full items-center gap-6">
       <Text variant="title" className="w-full text-center text-3xl">
-        Stay on track
+        {t('onboardingNotifications', 'title')}
       </Text>
       <Text variant="body" tone="muted" className="text-center">
-        We can remind you to log meals and celebrate streaks. You can change this anytime
-        in Settings.
+        {t('onboardingNotifications', 'subtitle')}
       </Text>
 
       <View className="w-full flex-row gap-3">
         <Button
-          label="Enable"
+          label={t('common', 'enable')}
           variant="primary"
           className="flex-1"
           onPress={() => {
@@ -34,7 +36,7 @@ export function NotificationsStep({ onChange, onDone }: NotificationsStepProps) 
           }}
         />
         <Button
-          label="Skip"
+          label={t('common', 'skip')}
           variant="secondary"
           className="flex-1"
           onPress={() => {

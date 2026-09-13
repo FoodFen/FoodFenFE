@@ -255,3 +255,20 @@ export function getLatestWeight(userId: string): WeightLog | undefined {
     .limit(1)
     .all()[0];
 }
+
+/** The weigh-in in force on `date`: the newest row recorded on or before it. */
+export function getWeightAsOf(userId: string, date: DateKey): WeightLog | undefined {
+  return db
+    .select()
+    .from(weightLog)
+    .where(
+      and(
+        eq(weightLog.userId, userId),
+        lte(weightLog.recordedAt, date),
+        notDeleted(weightLog),
+      ),
+    )
+    .orderBy(desc(weightLog.recordedAt))
+    .limit(1)
+    .all()[0];
+}

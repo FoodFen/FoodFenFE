@@ -10,9 +10,9 @@ import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
 import { draftName, draftTotals, useDraftStore } from '@/features/diary/draftStore';
 import { useLogMeal } from '@/features/diary/queries';
-import { MEAL_LABELS } from '@/features/diary/selectors';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { todayKey } from '@/lib/date';
 import { haptics } from '@/lib/haptics';
@@ -33,6 +33,7 @@ export default function MealComposerScreen() {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const isPremium = useIsPremium();
+  const { t } = useTranslation();
 
   const draft = useDraftStore();
   const logMeal = useLogMeal();
@@ -72,8 +73,8 @@ export default function MealComposerScreen() {
         onError: (error) => {
           haptics.error();
           Alert.alert(
-            'Could not save that meal',
-            error instanceof Error ? error.message : 'Please try again.',
+            t('logMeal', 'saveErrorTitle'),
+            error instanceof Error ? error.message : t('logMeal', 'saveErrorFallback'),
           );
         },
       },
@@ -89,24 +90,24 @@ export default function MealComposerScreen() {
     >
       <Card className="gap-4">
         <Input
-          label="Meal name"
+          label={t('logMeal', 'mealNameLabel')}
           value={draft.name}
           onChangeText={draft.setName}
           placeholder={draftName('', draft.ingredients)}
-          hint="Optional — we will name it after its ingredients."
+          hint={t('logMeal', 'mealNameHint')}
           autoCapitalize="sentences"
         />
 
         <View className="gap-2">
           <Text variant="label" tone="muted">
-            Meal
+            {t('logMeal', 'mealLabel')}
           </Text>
 
           <View className="flex-row flex-wrap gap-2">
             {MEAL_TYPES.map((meal) => (
               <Chip
                 key={meal}
-                label={MEAL_LABELS[meal]}
+                label={t('mealType', meal)}
                 selected={meal === draft.mealType}
                 onPress={() => draft.setMealType(meal)}
               />
@@ -117,7 +118,7 @@ export default function MealComposerScreen() {
 
       <Card flush className="overflow-hidden">
         <View className="flex-row items-center justify-between px-4 pb-2 pt-4">
-          <Text variant="heading">Ingredients</Text>
+          <Text variant="heading">{t('entryDetail', 'ingredients')}</Text>
           {draft.ingredients.length > 0 ? (
             <Text variant="mono" tone="muted">
               {totals.kcal} kcal
@@ -128,7 +129,7 @@ export default function MealComposerScreen() {
         {draft.ingredients.length === 0 ? (
           <View className="px-4 pb-3">
             <Text variant="body" tone="subtle">
-              Add what was in this meal. Pick from the built-in list, or enter your own.
+              {t('logMeal', 'emptyHint')}
             </Text>
           </View>
         ) : (
@@ -158,7 +159,10 @@ export default function MealComposerScreen() {
                     draft.removeIngredient(row.key);
                   }}
                   accessibilityRole="button"
-                  accessibilityLabel={`Remove ${row.name}`}
+                  accessibilityLabel={t('logMeal', 'removeIngredientA11y').replace(
+                    '{name}',
+                    row.name,
+                  )}
                   hitSlop={8}
                 >
                   <Ionicons name="close-circle" size={20} color={colors.fgSubtle} />
@@ -174,11 +178,11 @@ export default function MealComposerScreen() {
             router.push('/log/ingredient');
           }}
           accessibilityRole="button"
-          accessibilityLabel="Add an ingredient"
+          accessibilityLabel={t('logMeal', 'addIngredientA11y')}
           className="flex-row items-center gap-2 border-t border-border px-4 py-3 active:bg-surface-alt"
         >
           <Text variant="label" tone="brand">
-            + Add ingredient
+            {t('logMeal', 'addIngredientLabel')}
           </Text>
         </Pressable>
       </Card>
@@ -186,23 +190,23 @@ export default function MealComposerScreen() {
       {draft.ingredients.length > 0 ? (
         <Card className="gap-3">
           <View className="flex-row items-baseline justify-between">
-            <Text variant="heading">Total</Text>
+            <Text variant="heading">{t('entryDetail', 'total')}</Text>
             <Text variant="title">{totals.kcal.toLocaleString()} kcal</Text>
           </View>
 
           <View className="gap-2 border-t border-border pt-3">
-            <TotalRow label="Protein" value={`${totals.proteinG} g`} />
-            <TotalRow label="Carbs" value={`${totals.carbsG} g`} />
-            <TotalRow label="Fat" value={`${totals.fatG} g`} />
+            <TotalRow label={t('onboardingFinalize', 'protein')} value={`${totals.proteinG} g`} />
+            <TotalRow label={t('onboardingFinalize', 'carbs')} value={`${totals.carbsG} g`} />
+            <TotalRow label={t('onboardingFinalize', 'fat')} value={`${totals.fatG} g`} />
             {isPremium && totals.fiberG !== undefined && totals.fiberG !== null ? (
-              <TotalRow label="Fiber" value={`${totals.fiberG} g`} />
+              <TotalRow label={t('entryDetail', 'fiber')} value={`${totals.fiberG} g`} />
             ) : null}
           </View>
         </Card>
       ) : null}
 
       <Button
-        label="Save to diary"
+        label={t('logMeal', 'saveToDiary')}
         onPress={save}
         disabled={!canSave}
         loading={logMeal.isPending}

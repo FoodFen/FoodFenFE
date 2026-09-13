@@ -107,12 +107,18 @@ export interface CatalogServing {
   label: string;
   /** What one of this serving weighs. Drives all scaling. */
   grams: number;
+  /** The serving shown selected first. "100 g" is always present but never it. */
+  default?: boolean;
 }
 
 export interface CatalogFood {
   id: string;
   name: string;
   brand?: string;
+  /** Folded search terms — no-diacritic Vietnamese plus English. */
+  aliases: string[];
+  /** Slug bucket the food sorts into (`mon-nuoc`, `do-uong`, `an-vat`, …). */
+  category: string;
   /** Nutrition for 100 g of this food. */
   per100g: Nutrition;
   servings: CatalogServing[];

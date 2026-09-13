@@ -1,4 +1,4 @@
-import { and, asc, eq, gte, inArray, lte } from 'drizzle-orm';
+import { and, asc, desc, eq, gte, inArray, isNotNull, lte } from 'drizzle-orm';
 
 import { db } from '@/db/client';
 import { foodEntry, ingredient } from '@/db/schema';
@@ -47,6 +47,21 @@ export interface CreateEntryInput {
   loggedAt?: Date;
   imageUrl?: string | null;
   ingredients: IngredientInput[];
+}
+
+export interface CreateManualEntryInput {
+  userId: string;
+  name: string;
+  mealType: MealType;
+  /** `yyyy-MM-dd`, the local day this meal belongs to. */
+  loggedOn: DateKey;
+  /** Free-label "amount eaten" — a number and its unit, stored as picked. */
+  amount?: number | null;
+  amountUnit?: 'g' | 'serving' | null;
+  totalKcal: number;
+  carbsG: number;
+  proteinG: number;
+  fatG: number;
 }
 
 function toNutrition(
@@ -136,6 +151,49 @@ export function createEntry(input: CreateEntryInput): FoodEntry {
   }
 
   recalculateTotals(entryId);
+
+  const created = getEntry(entryId);
+
+  if (!created) throw new Error('Entry vanished immediately after being created.');
+
+  return created;
+}
+
+/**
+ * Insert one aggregate `food_entry` with no ingredients (UC-12, manual entry).
+ *
+ * Unlike `createEntry`, the stored header totals are the source of truth: the
+ * user typed the final numbers, so there is nothing to sum and
+ * `recalculateTotals` — which would zero a header with no ingredient rows — is
+ * deliberately not called. `fiberG` stays null: unknown, not measured-none.
+ */
+export function createManualEntry(input: CreateManualEntryInput): FoodEntry {
+  const now = new Date();
+  const entryId = generateLocalId('entry');
+
+  db.insert(foodEntry)
+    .values({
+      id: entryId,
+      userId: input.userId,
+      name: input.name,
+      inputMethod: 'manual',
+      imageUrl: null,
+      totalKcal: input.totalKcal,
+      carbsG: input.carbsG,
+      proteinG: input.proteinG,
+      fatG: input.fatG,
+      fiberG: null,
+      amount: input.amount ?? null,
+      amountUnit: input.amountUnit ?? null,
+      aiFeedback: null,
+      mealType: input.mealType,
+      loggedAt: now,
+      loggedOn: input.loggedOn,
+      remoteId: null,
+      deletedAt: null,
+      ...touch(now),
+    })
+    .run();
 
   const created = getEntry(entryId);
 
@@ -280,6 +338,44 @@ export function updateEntry(entryId: string, patch: UpdateEntryInput): FoodEntry
   return updated;
 }
 
+export interface UpdateManualEntryInput {
+  name?: string;
+  mealType?: MealType;
+  amount?: number | null;
+  amountUnit?: 'g' | 'serving' | null;
+  totalKcal?: number;
+  carbsG?: number;
+  proteinG?: number;
+  fatG?: number;
+}
+
+/**
+ * Patch an aggregate entry's typed numbers in place (the edit screen).
+ *
+ * The mirror of `createManualEntry`: the header totals are the source of truth,
+ * so the macro columns are written directly and `recalculateTotals` is not
+ * called. Only meaningful for an entry with no ingredient rows.
+ */
+export function updateManualEntry(
+  entryId: string,
+  patch: UpdateManualEntryInput,
+): FoodEntry {
+  const now = new Date();
+
+  if (Object.keys(patch).length > 0) {
+    db.update(foodEntry)
+      .set({ ...patch, ...touch(now) })
+      .where(eq(foodEntry.id, entryId))
+      .run();
+  }
+
+  const updated = getEntry(entryId);
+
+  if (!updated) throw new Error(`Entry ${entryId} was not found.`);
+
+  return updated;
+}
+
 /** Soft delete, so the deletion itself can be synced later. */
 export function deleteEntry(entryId: string): void {
   const now = new Date();
@@ -290,6 +386,63 @@ export function deleteEntry(entryId: string): void {
     .set(touchDeleted(now))
     .where(and(eq(ingredient.foodEntryId, entryId), notDeleted(ingredient)))
     .run();
+}
+
+export interface RecentCatalogFood {
+  catalogFoodId: string;
+  name: string;
+  /** The weight logged the last time this food was used. */
+  quantityG: number;
+}
+
+/**
+ * The catalog foods this user logged most recently, one row per food.
+ *
+ * Joins `ingredient` to `food_entry` for the user filter and recency order,
+ * then keeps the first (newest) occurrence of each `catalogFoodId`. Powers the
+ * "Gần đây" shortcut in the search-and-portion flow.
+ */
+export function getRecentCatalogFoods(
+  userId: string,
+  limit = 8,
+): RecentCatalogFood[] {
+  const rows = db
+    .select({
+      catalogFoodId: ingredient.catalogFoodId,
+      name: ingredient.name,
+      quantityG: ingredient.quantityG,
+      loggedAt: foodEntry.loggedAt,
+    })
+    .from(ingredient)
+    .innerJoin(foodEntry, eq(ingredient.foodEntryId, foodEntry.id))
+    .where(
+      and(
+        eq(foodEntry.userId, userId),
+        isNotNull(ingredient.catalogFoodId),
+        notDeleted(ingredient),
+        notDeleted(foodEntry),
+      ),
+    )
+    .orderBy(desc(foodEntry.loggedAt))
+    .all();
+
+  const seen = new Set<string>();
+  const recents: RecentCatalogFood[] = [];
+
+  for (const row of rows) {
+    if (row.catalogFoodId === null || seen.has(row.catalogFoodId)) continue;
+
+    seen.add(row.catalogFoodId);
+    recents.push({
+      catalogFoodId: row.catalogFoodId,
+      name: row.name,
+      quantityG: row.quantityG,
+    });
+
+    if (recents.length >= limit) break;
+  }
+
+  return recents;
 }
 
 /** Distinct days with at least one entry, for streaks and trends. */

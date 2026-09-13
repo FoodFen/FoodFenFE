@@ -2,6 +2,7 @@ import { View } from 'react-native';
 
 import { WheelPicker } from '@/components/onboarding/WheelPicker';
 import { Text } from '@/components/ui/Text';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { UnitSystem } from '@/types/models';
 
 // Wheel rows carry only the number — the unit shows once, as a static label
@@ -45,34 +46,43 @@ export interface HeightStepProps {
 }
 
 export function HeightStep({ unitSystem, value, onChange }: HeightStepProps) {
+  const { t } = useTranslation();
+
+  const header = (
+    <View className="w-full items-center gap-2">
+      <Text variant="title" className="w-full text-center text-3xl">
+        {t('onboardingHeight', 'title')}
+      </Text>
+      <Text variant="body" tone="muted" className="text-center">
+        {t('onboardingHeight', 'subtitle')}
+      </Text>
+    </View>
+  );
+
   if (unitSystem === 'imperial') {
     const { feet, inches } = cmToFtIn(value);
 
     return (
       <View className="w-full items-center gap-6">
-        <View className="w-full items-center gap-2">
-          <Text variant="title" className="w-full text-center text-3xl">
-            How tall are you?
-          </Text>
-          <Text variant="body" tone="muted" className="text-center">
-            Don&apos;t worry, you can change this anytime.
-          </Text>
-        </View>
+        {header}
         <View className="w-full flex-row items-center justify-center gap-4">
           <WheelPicker
             data={FEET_OPTIONS}
             value={feet}
             onChange={(nextFeet) => onChange(ftInToCm(nextFeet, inches))}
           />
+          <Text variant="heading" tone="brand">
+            &apos;
+          </Text>
           <WheelPicker
             data={INCH_OPTIONS}
             value={inches}
             onChange={(nextInches) => onChange(ftInToCm(feet, nextInches))}
           />
+          <Text variant="heading" tone="brand">
+            &quot;
+          </Text>
         </View>
-        <Text variant="heading" tone="brand">
-          {feet}&apos; {inches}&quot;
-        </Text>
       </View>
     );
   }
@@ -81,15 +91,8 @@ export function HeightStep({ unitSystem, value, onChange }: HeightStepProps) {
 
   return (
     <View className="w-full items-center gap-6">
-      <View className="w-full items-center gap-2">
-        <Text variant="title" className="w-full text-center text-3xl">
-          How tall are you?
-        </Text>
-        <Text variant="body" tone="muted" className="text-center">
-          Don&apos;t worry, you can change this anytime.
-        </Text>
-      </View>
-      <WheelPicker data={CM_OPTIONS} value={cm} onChange={onChange} sideLabel={`${cm.toFixed(1)} cm`} />
+      {header}
+      <WheelPicker data={CM_OPTIONS} value={cm} onChange={onChange} sideLabel={`cm`} />
     </View>
   );
 }

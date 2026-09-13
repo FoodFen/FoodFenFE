@@ -29,6 +29,8 @@ function entry(mealType: MealType, kcal: number): FoodEntry {
     proteinG: 10,
     fatG: 5,
     fiberG: null,
+    amount: null,
+    amountUnit: null,
     aiFeedback: null,
     mealType,
     loggedAt: new Date('2026-03-01T12:00:00Z'),

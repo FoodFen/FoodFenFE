@@ -1,0 +1,6792 @@
+[
+  {
+    "name": "Thịt bò thăn (sống)",
+    "aliases": [
+      "thit bo than",
+      "beef sirloin",
+      "beef tenderloin raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 130,
+      "carbsG": 0,
+      "proteinG": 21,
+      "fatG": 5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 miếng (~150 g)",
+        "grams": 150
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt bò thăn (nấu chín)",
+    "aliases": [
+      "thit bo than nau chin",
+      "beef sirloin cooked",
+      "grilled beef"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 210,
+      "carbsG": 0,
+      "proteinG": 29,
+      "fatG": 10
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt bò xay (sống)",
+    "aliases": [
+      "thit bo xay",
+      "ground beef raw",
+      "minced beef"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 254,
+      "carbsG": 0,
+      "proteinG": 17,
+      "fatG": 20
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt bò xay (nấu chín)",
+    "aliases": [
+      "thit bo xay nau chin",
+      "ground beef cooked",
+      "minced beef cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 250,
+      "carbsG": 0,
+      "proteinG": 26,
+      "fatG": 15
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Gầu bò (nạm bò)",
+    "aliases": [
+      "gau bo",
+      "nam bo",
+      "beef brisket"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 155,
+      "carbsG": 0,
+      "proteinG": 19,
+      "fatG": 8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bắp bò (sống)",
+    "aliases": [
+      "bap bo",
+      "beef shank raw",
+      "beef shin"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 130,
+      "carbsG": 0,
+      "proteinG": 21,
+      "fatG": 5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bắp bò (nấu chín)",
+    "aliases": [
+      "bap bo nau chin",
+      "beef shank cooked",
+      "braised beef shank"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 200,
+      "carbsG": 0,
+      "proteinG": 30,
+      "fatG": 8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sườn heo (sống)",
+    "aliases": [
+      "suon heo",
+      "pork ribs raw",
+      "pork spare ribs"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 220,
+      "carbsG": 0,
+      "proteinG": 17,
+      "fatG": 17
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "3 miếng (~150 g)",
+        "grams": 150
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sườn heo (nấu chín)",
+    "aliases": [
+      "suon heo nau chin",
+      "pork ribs cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 290,
+      "carbsG": 0,
+      "proteinG": 25,
+      "fatG": 21
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "3 miếng (~130 g)",
+        "grams": 130
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nạc vai heo (sống)",
+    "aliases": [
+      "nac vai heo",
+      "pork shoulder raw",
+      "pork collar"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 180,
+      "carbsG": 0,
+      "proteinG": 18,
+      "fatG": 12
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 miếng (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nạc vai heo (nấu chín)",
+    "aliases": [
+      "nac vai heo nau chin",
+      "pork shoulder cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 250,
+      "carbsG": 0,
+      "proteinG": 25,
+      "fatG": 16
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 miếng (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Chân giò heo",
+    "aliases": [
+      "chan gio heo",
+      "gio heo",
+      "pork hock",
+      "pork trotter"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 230,
+      "carbsG": 0,
+      "proteinG": 19,
+      "fatG": 17
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 khoanh (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt heo xay (sống)",
+    "aliases": [
+      "thit heo xay",
+      "ground pork raw",
+      "minced pork"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 260,
+      "carbsG": 0,
+      "proteinG": 17,
+      "fatG": 21
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt heo xay (nấu chín)",
+    "aliases": [
+      "thit heo xay nau chin",
+      "ground pork cooked",
+      "minced pork cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 300,
+      "carbsG": 0,
+      "proteinG": 26,
+      "fatG": 21
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thăn heo (sống)",
+    "aliases": [
+      "than heo",
+      "cot let heo",
+      "pork loin raw",
+      "pork chop raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 145,
+      "carbsG": 0,
+      "proteinG": 21,
+      "fatG": 6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 miếng (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thăn heo (nấu chín)",
+    "aliases": [
+      "than heo nau chin",
+      "pork loin cooked",
+      "pork chop cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 230,
+      "carbsG": 0,
+      "proteinG": 30,
+      "fatG": 12
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 miếng (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Da heo (luộc)",
+    "aliases": [
+      "da heo",
+      "pork skin",
+      "pork rind boiled"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 290,
+      "carbsG": 0,
+      "proteinG": 30,
+      "fatG": 19
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~50 g)",
+        "grams": 50
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Tai heo",
+    "aliases": [
+      "tai heo",
+      "pig ear",
+      "pork ear"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 234,
+      "carbsG": 1,
+      "proteinG": 18,
+      "fatG": 17
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~60 g)",
+        "grams": 60
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Gan heo",
+    "aliases": [
+      "gan heo",
+      "pork liver"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 134,
+      "carbsG": 3,
+      "proteinG": 21,
+      "fatG": 4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~60 g)",
+        "grams": 60
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Gan gà",
+    "aliases": [
+      "gan ga",
+      "chicken liver"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 167,
+      "carbsG": 1,
+      "proteinG": 24,
+      "fatG": 6
+    },
+    "servings": [
+      {
+        "label": "1 bộ gan (~40 g)",
+        "grams": 40,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đùi gà (có da, sống)",
+    "aliases": [
+      "dui ga co da",
+      "chicken thigh raw skin on"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 210,
+      "carbsG": 0,
+      "proteinG": 17,
+      "fatG": 15
+    },
+    "servings": [
+      {
+        "label": "1 cái đùi (~120 g)",
+        "grams": 120,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đùi gà (không da, nấu chín)",
+    "aliases": [
+      "dui ga khong da nau chin",
+      "chicken thigh skinless cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 209,
+      "carbsG": 0,
+      "proteinG": 26,
+      "fatG": 11
+    },
+    "servings": [
+      {
+        "label": "1 cái đùi (~95 g)",
+        "grams": 95,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cánh gà (sống)",
+    "aliases": [
+      "canh ga",
+      "chicken wings raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 203,
+      "carbsG": 0,
+      "proteinG": 18,
+      "fatG": 14
+    },
+    "servings": [
+      {
+        "label": "1 cái cánh (~90 g)",
+        "grams": 90,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cánh gà (nấu chín)",
+    "aliases": [
+      "canh ga nau chin",
+      "chicken wings cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 290,
+      "carbsG": 0,
+      "proteinG": 27,
+      "fatG": 19
+    },
+    "servings": [
+      {
+        "label": "1 cái cánh (~70 g)",
+        "grams": 70,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Da gà",
+    "aliases": [
+      "da ga",
+      "chicken skin"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 450,
+      "carbsG": 0,
+      "proteinG": 20,
+      "fatG": 40
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~30 g)",
+        "grams": 30
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Ức gà (sống)",
+    "aliases": [
+      "uc ga",
+      "chicken breast raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 120,
+      "carbsG": 0,
+      "proteinG": 23,
+      "fatG": 2.6
+    },
+    "servings": [
+      {
+        "label": "1 miếng (~150 g)",
+        "grams": 150,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Ức gà (nấu chín)",
+    "aliases": [
+      "uc ga nau chin",
+      "chicken breast cooked",
+      "chicken breast"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 165,
+      "carbsG": 0,
+      "proteinG": 31,
+      "fatG": 3.6
+    },
+    "servings": [
+      {
+        "label": "1 miếng (~120 g)",
+        "grams": 120,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Chân gà",
+    "aliases": [
+      "chan ga",
+      "chicken feet"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 215,
+      "carbsG": 0.2,
+      "proteinG": 19,
+      "fatG": 15
+    },
+    "servings": [
+      {
+        "label": "1 cái chân (~35 g)",
+        "grams": 35,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt gà xay",
+    "aliases": [
+      "thit ga xay",
+      "ground chicken",
+      "minced chicken"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 143,
+      "carbsG": 0,
+      "proteinG": 17,
+      "fatG": 8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt vịt (có da)",
+    "aliases": [
+      "thit vit",
+      "duck meat skin on"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 337,
+      "carbsG": 0,
+      "proteinG": 19,
+      "fatG": 28
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Ức vịt (không da, nấu chín)",
+    "aliases": [
+      "uc vit",
+      "duck breast skinless cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 201,
+      "carbsG": 0,
+      "proteinG": 24,
+      "fatG": 11
+    },
+    "servings": [
+      {
+        "label": "1 miếng (~110 g)",
+        "grams": 110,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt cừu (sống)",
+    "aliases": [
+      "thit cuu",
+      "lamb raw",
+      "mutton raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 195,
+      "carbsG": 0,
+      "proteinG": 18,
+      "fatG": 13
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt cừu (nấu chín)",
+    "aliases": [
+      "thit cuu nau chin",
+      "lamb cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 258,
+      "carbsG": 0,
+      "proteinG": 25,
+      "fatG": 17
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Xúc xích heo",
+    "aliases": [
+      "xuc xich",
+      "pork sausage",
+      "sausage"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 300,
+      "carbsG": 3,
+      "proteinG": 12,
+      "fatG": 27
+    },
+    "servings": [
+      {
+        "label": "1 cây (~45 g)",
+        "grams": 45,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Giăm bông (thịt nguội)",
+    "aliases": [
+      "giam bong",
+      "ham",
+      "sliced ham"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 145,
+      "carbsG": 1.5,
+      "proteinG": 21,
+      "fatG": 5.5
+    },
+    "servings": [
+      {
+        "label": "1 lát (~28 g)",
+        "grams": 28,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt xông khói (ba rọi xông khói)",
+    "aliases": [
+      "thit xong khoi",
+      "bacon"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 540,
+      "carbsG": 1.4,
+      "proteinG": 37,
+      "fatG": 42
+    },
+    "servings": [
+      {
+        "label": "1 lát (~12 g)",
+        "grams": 12,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Chả cá thác lác",
+    "aliases": [
+      "cha ca thac lac",
+      "fish paste",
+      "ground fish cake"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 150,
+      "carbsG": 3,
+      "proteinG": 18,
+      "fatG": 7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 viên (~25 g)",
+        "grams": 25
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá hồi (sống)",
+    "aliases": [
+      "ca hoi",
+      "salmon raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 208,
+      "carbsG": 0,
+      "proteinG": 20,
+      "fatG": 13
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phi lê (~150 g)",
+        "grams": 150
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá hồi (nấu chín)",
+    "aliases": [
+      "ca hoi nau chin",
+      "salmon cooked",
+      "grilled salmon"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 231,
+      "carbsG": 0,
+      "proteinG": 25,
+      "fatG": 14
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phi lê (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá thu (sống)",
+    "aliases": [
+      "ca thu",
+      "mackerel raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 205,
+      "carbsG": 0,
+      "proteinG": 19,
+      "fatG": 14
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 khúc (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá thu (nấu chín)",
+    "aliases": [
+      "ca thu nau chin",
+      "mackerel cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 262,
+      "carbsG": 0,
+      "proteinG": 24,
+      "fatG": 18
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 khúc (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá ngừ (sống)",
+    "aliases": [
+      "ca ngu",
+      "tuna raw",
+      "fresh tuna"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 130,
+      "carbsG": 0,
+      "proteinG": 23,
+      "fatG": 4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá ngừ đóng hộp (ngâm nước)",
+    "aliases": [
+      "ca ngu dong hop",
+      "canned tuna",
+      "tuna in water"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 116,
+      "carbsG": 0,
+      "proteinG": 26,
+      "fatG": 1
+    },
+    "servings": [
+      {
+        "label": "1 hộp (~140 g)",
+        "grams": 140,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá rô phi / cá diêu hồng",
+    "aliases": [
+      "ca ro phi",
+      "ca dieu hong",
+      "tilapia",
+      "red tilapia"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 96,
+      "carbsG": 0,
+      "proteinG": 20,
+      "fatG": 1.7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 con (~200 g)",
+        "grams": 200
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá lóc (cá quả)",
+    "aliases": [
+      "ca loc",
+      "ca qua",
+      "snakehead fish"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 97,
+      "carbsG": 0,
+      "proteinG": 20,
+      "fatG": 1.5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 khúc (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá trê",
+    "aliases": [
+      "ca tre",
+      "catfish"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 105,
+      "carbsG": 0,
+      "proteinG": 18,
+      "fatG": 3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 khúc (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá nục",
+    "aliases": [
+      "ca nuc",
+      "round scad",
+      "mackerel scad"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 110,
+      "carbsG": 0,
+      "proteinG": 20,
+      "fatG": 3
+    },
+    "servings": [
+      {
+        "label": "1 con (~80 g)",
+        "grams": 80,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá mòi đóng hộp",
+    "aliases": [
+      "ca moi dong hop",
+      "canned sardines",
+      "sardines"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 208,
+      "carbsG": 0,
+      "proteinG": 25,
+      "fatG": 11
+    },
+    "servings": [
+      {
+        "label": "1 hộp (~90 g)",
+        "grams": 90,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nghêu (thịt)",
+    "aliases": [
+      "ngheu",
+      "clam",
+      "clam meat"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 86,
+      "carbsG": 3,
+      "proteinG": 15,
+      "fatG": 1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén thịt (~80 g)",
+        "grams": 80
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sò huyết (thịt)",
+    "aliases": [
+      "so huyet",
+      "blood cockle",
+      "cockle"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 80,
+      "carbsG": 4,
+      "proteinG": 12,
+      "fatG": 1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~80 g)",
+        "grams": 80
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sò điệp (cồi)",
+    "aliases": [
+      "so diep",
+      "scallop",
+      "scallops"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 88,
+      "carbsG": 3,
+      "proteinG": 17,
+      "fatG": 0.8
+    },
+    "servings": [
+      {
+        "label": "1 cồi (~20 g)",
+        "grams": 20,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hàu (thịt)",
+    "aliases": [
+      "hau",
+      "oyster",
+      "oysters"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 68,
+      "carbsG": 4,
+      "proteinG": 7,
+      "fatG": 2.5
+    },
+    "servings": [
+      {
+        "label": "1 con (~25 g)",
+        "grams": 25,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cua (thịt, nấu chín)",
+    "aliases": [
+      "cua",
+      "crab meat",
+      "crab cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 97,
+      "carbsG": 0,
+      "proteinG": 19,
+      "fatG": 1.5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần thịt (~85 g)",
+        "grams": 85
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Ghẹ (thịt)",
+    "aliases": [
+      "ghe",
+      "blue swimming crab",
+      "flower crab"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 87,
+      "carbsG": 0,
+      "proteinG": 18,
+      "fatG": 1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần thịt (~80 g)",
+        "grams": 80
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thịt cua đóng hộp",
+    "aliases": [
+      "thit cua dong hop",
+      "canned crab meat"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 83,
+      "carbsG": 0,
+      "proteinG": 17,
+      "fatG": 1
+    },
+    "servings": [
+      {
+        "label": "1 hộp (~120 g)",
+        "grams": 120,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đùi ếch",
+    "aliases": [
+      "dui ech",
+      "ech",
+      "frog legs"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 73,
+      "carbsG": 0,
+      "proteinG": 16,
+      "fatG": 0.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Lươn (sống)",
+    "aliases": [
+      "luon",
+      "eel raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 184,
+      "carbsG": 0,
+      "proteinG": 18,
+      "fatG": 12
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 khúc (~80 g)",
+        "grams": 80
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Lươn (nấu chín)",
+    "aliases": [
+      "luon nau chin",
+      "eel cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 236,
+      "carbsG": 0,
+      "proteinG": 24,
+      "fatG": 15
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 khúc (~70 g)",
+        "grams": 70
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Ốc (thịt)",
+    "aliases": [
+      "oc",
+      "snail",
+      "sea snail"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 90,
+      "carbsG": 2,
+      "proteinG": 16,
+      "fatG": 1.4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~60 g)",
+        "grams": 60
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bạch tuộc",
+    "aliases": [
+      "bach tuoc",
+      "octopus"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 82,
+      "carbsG": 2,
+      "proteinG": 15,
+      "fatG": 1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Tôm khô",
+    "aliases": [
+      "tom kho",
+      "dried shrimp"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 290,
+      "carbsG": 3,
+      "proteinG": 62,
+      "fatG": 3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~10 g)",
+        "grams": 10
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cá khô",
+    "aliases": [
+      "ca kho",
+      "dried fish"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 335,
+      "carbsG": 0,
+      "proteinG": 62,
+      "fatG": 9
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 con nhỏ (~40 g)",
+        "grams": 40
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Thanh cua (surimi)",
+    "aliases": [
+      "thanh cua",
+      "crab stick",
+      "surimi",
+      "imitation crab"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 95,
+      "carbsG": 15,
+      "proteinG": 8,
+      "fatG": 0.5
+    },
+    "servings": [
+      {
+        "label": "1 thanh (~17 g)",
+        "grams": 17,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Lòng trắng trứng",
+    "aliases": [
+      "long trang trung",
+      "egg white"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 52,
+      "carbsG": 0.7,
+      "proteinG": 11,
+      "fatG": 0.2
+    },
+    "servings": [
+      {
+        "label": "1 lòng trắng (~33 g)",
+        "grams": 33,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Lòng đỏ trứng",
+    "aliases": [
+      "long do trung",
+      "egg yolk"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 322,
+      "carbsG": 3.6,
+      "proteinG": 16,
+      "fatG": 27
+    },
+    "servings": [
+      {
+        "label": "1 lòng đỏ (~17 g)",
+        "grams": 17,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Trứng cút",
+    "aliases": [
+      "trung cut",
+      "quail egg",
+      "quail eggs"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 158,
+      "carbsG": 0.4,
+      "proteinG": 13,
+      "fatG": 11
+    },
+    "servings": [
+      {
+        "label": "1 quả (~9 g)",
+        "grams": 9,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Phô mai cheddar",
+    "aliases": [
+      "pho mai cheddar",
+      "cheddar cheese"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 403,
+      "carbsG": 3.4,
+      "proteinG": 23,
+      "fatG": 33
+    },
+    "servings": [
+      {
+        "label": "1 lát (~28 g)",
+        "grams": 28,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Phô mai mozzarella",
+    "aliases": [
+      "pho mai mozzarella",
+      "mozzarella cheese"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 280,
+      "carbsG": 3.1,
+      "proteinG": 28,
+      "fatG": 17
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~30 g)",
+        "grams": 30
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Phô mai kem (cream cheese)",
+    "aliases": [
+      "pho mai kem",
+      "cream cheese"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 342,
+      "carbsG": 4.1,
+      "proteinG": 6,
+      "fatG": 34
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~15 g)",
+        "grams": 15
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Phô mai lát (chế biến)",
+    "aliases": [
+      "pho mai lat",
+      "cheese slice",
+      "processed cheese"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 280,
+      "carbsG": 6,
+      "proteinG": 14,
+      "fatG": 22
+    },
+    "servings": [
+      {
+        "label": "1 lát (~21 g)",
+        "grams": 21,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Phô mai Parmesan",
+    "aliases": [
+      "pho mai parmesan",
+      "parmesan cheese"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 431,
+      "carbsG": 4,
+      "proteinG": 38,
+      "fatG": 29
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh bào (~5 g)",
+        "grams": 5
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bơ lạt (butter)",
+    "aliases": [
+      "bo lat",
+      "butter"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 717,
+      "carbsG": 0.1,
+      "proteinG": 0.9,
+      "fatG": 81
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~14 g)",
+        "grams": 14
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sữa chua không đường",
+    "aliases": [
+      "sua chua khong duong",
+      "plain yogurt",
+      "unsweetened yogurt"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 61,
+      "carbsG": 4.7,
+      "proteinG": 3.5,
+      "fatG": 3.3
+    },
+    "servings": [
+      {
+        "label": "1 hũ (~100 g)",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sữa chua Hy Lạp không đường",
+    "aliases": [
+      "sua chua hy lap",
+      "greek yogurt",
+      "plain greek yogurt"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 59,
+      "carbsG": 3.6,
+      "proteinG": 10,
+      "fatG": 0.4
+    },
+    "servings": [
+      {
+        "label": "1 hũ (~150 g)",
+        "grams": 150,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sữa tươi không đường",
+    "aliases": [
+      "sua tuoi khong duong",
+      "unsweetened milk",
+      "whole milk"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 61,
+      "carbsG": 4.8,
+      "proteinG": 3.2,
+      "fatG": 3.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 ly (~240 ml)",
+        "grams": 245
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sữa tách béo",
+    "aliases": [
+      "sua tach beo",
+      "skim milk",
+      "nonfat milk"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 34,
+      "carbsG": 5,
+      "proteinG": 3.4,
+      "fatG": 0.1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 ly (~240 ml)",
+        "grams": 245
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Whey protein (bột)",
+    "aliases": [
+      "whey protein",
+      "bot whey",
+      "protein powder"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 400,
+      "carbsG": 8,
+      "proteinG": 80,
+      "fatG": 5
+    },
+    "servings": [
+      {
+        "label": "1 muỗng (~30 g)",
+        "grams": 30,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Kem tươi (whipping cream)",
+    "aliases": [
+      "kem tuoi",
+      "whipping cream",
+      "heavy cream"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 340,
+      "carbsG": 3,
+      "proteinG": 2.8,
+      "fatG": 36
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~15 g)",
+        "grams": 15
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Kem chua (sour cream)",
+    "aliases": [
+      "kem chua",
+      "sour cream"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 198,
+      "carbsG": 4.6,
+      "proteinG": 2.4,
+      "fatG": 19
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~15 g)",
+        "grams": 15
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Yến mạch (khô)",
+    "aliases": [
+      "yen mach",
+      "oats",
+      "rolled oats dry"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 389,
+      "carbsG": 66,
+      "proteinG": 17,
+      "fatG": 7,
+      "fiberG": 10
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~40 g)",
+        "grams": 40
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Yến mạch (nấu chín)",
+    "aliases": [
+      "yen mach nau chin",
+      "oatmeal",
+      "cooked oats",
+      "porridge"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 71,
+      "carbsG": 12,
+      "proteinG": 2.5,
+      "fatG": 1.5,
+      "fiberG": 1.7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~230 g)",
+        "grams": 230
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bột mì đa dụng",
+    "aliases": [
+      "bot mi",
+      "all-purpose flour",
+      "wheat flour"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 364,
+      "carbsG": 76,
+      "proteinG": 10,
+      "fatG": 1,
+      "fiberG": 2.7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~125 g)",
+        "grams": 125
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bột mì nguyên cám",
+    "aliases": [
+      "bot mi nguyen cam",
+      "whole wheat flour"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 340,
+      "carbsG": 72,
+      "proteinG": 13,
+      "fatG": 2.5,
+      "fiberG": 11
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh mì sandwich (trắng)",
+    "aliases": [
+      "banh mi sandwich",
+      "white bread",
+      "sandwich bread"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 265,
+      "carbsG": 49,
+      "proteinG": 9,
+      "fatG": 3.2,
+      "fiberG": 2.7
+    },
+    "servings": [
+      {
+        "label": "1 lát (~28 g)",
+        "grams": 28,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh mì nguyên cám",
+    "aliases": [
+      "banh mi nguyen cam",
+      "whole wheat bread",
+      "brown bread"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 247,
+      "carbsG": 41,
+      "proteinG": 13,
+      "fatG": 3.4,
+      "fiberG": 7
+    },
+    "servings": [
+      {
+        "label": "1 lát (~32 g)",
+        "grams": 32,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh mì nướng (toast)",
+    "aliases": [
+      "banh mi nuong",
+      "toast",
+      "toasted bread"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 293,
+      "carbsG": 54,
+      "proteinG": 10,
+      "fatG": 3.5,
+      "fiberG": 3.5
+    },
+    "servings": [
+      {
+        "label": "1 lát (~25 g)",
+        "grams": 25,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mì Ý / spaghetti (khô)",
+    "aliases": [
+      "mi y",
+      "spaghetti",
+      "dry pasta",
+      "pasta"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 371,
+      "carbsG": 75,
+      "proteinG": 13,
+      "fatG": 1.5,
+      "fiberG": 3.2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~85 g)",
+        "grams": 85
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mì Ý / spaghetti (nấu chín)",
+    "aliases": [
+      "mi y nau chin",
+      "spaghetti cooked",
+      "cooked pasta"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 158,
+      "carbsG": 31,
+      "proteinG": 6,
+      "fatG": 0.9,
+      "fiberG": 1.8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~140 g)",
+        "grams": 140
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nui (nấu chín)",
+    "aliases": [
+      "nui",
+      "macaroni cooked",
+      "elbow pasta"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 157,
+      "carbsG": 31,
+      "proteinG": 5.8,
+      "fatG": 0.9,
+      "fiberG": 1.8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~140 g)",
+        "grams": 140
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mì gói (mì ăn liền)",
+    "aliases": [
+      "mi goi",
+      "instant noodles",
+      "ramen"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 440,
+      "carbsG": 60,
+      "proteinG": 9,
+      "fatG": 18,
+      "fiberG": 3
+    },
+    "servings": [
+      {
+        "label": "1 gói (~75 g)",
+        "grams": 75,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Khoai tây (sống)",
+    "aliases": [
+      "khoai tay",
+      "potato raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 77,
+      "carbsG": 17,
+      "proteinG": 2,
+      "fatG": 0.1,
+      "fiberG": 2.2
+    },
+    "servings": [
+      {
+        "label": "1 củ vừa (~170 g)",
+        "grams": 170,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Khoai tây (luộc)",
+    "aliases": [
+      "khoai tay luoc",
+      "boiled potato",
+      "potato cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 87,
+      "carbsG": 20,
+      "proteinG": 1.9,
+      "fatG": 0.1,
+      "fiberG": 1.8
+    },
+    "servings": [
+      {
+        "label": "1 củ vừa (~150 g)",
+        "grams": 150,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Khoai lang (sống)",
+    "aliases": [
+      "khoai lang",
+      "sweet potato raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 86,
+      "carbsG": 20,
+      "proteinG": 1.6,
+      "fatG": 0.1,
+      "fiberG": 3
+    },
+    "servings": [
+      {
+        "label": "1 củ vừa (~130 g)",
+        "grams": 130,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Khoai lang (luộc / hấp)",
+    "aliases": [
+      "khoai lang luoc",
+      "sweet potato cooked",
+      "steamed sweet potato"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 90,
+      "carbsG": 21,
+      "proteinG": 2,
+      "fatG": 0.15,
+      "fiberG": 3.3
+    },
+    "servings": [
+      {
+        "label": "1 củ vừa (~120 g)",
+        "grams": 120,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Khoai môn (nấu chín)",
+    "aliases": [
+      "khoai mon",
+      "taro cooked"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 142,
+      "carbsG": 35,
+      "proteinG": 0.5,
+      "fatG": 0.1,
+      "fiberG": 5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Khoai mì / sắn (luộc)",
+    "aliases": [
+      "khoai mi",
+      "san",
+      "cassava",
+      "yuca"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 160,
+      "carbsG": 38,
+      "proteinG": 1.4,
+      "fatG": 0.3,
+      "fiberG": 1.8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 khúc (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Ngô / bắp ngọt (sống)",
+    "aliases": [
+      "ngo",
+      "bap ngot",
+      "sweet corn raw",
+      "corn"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 86,
+      "carbsG": 15.6,
+      "proteinG": 3.2,
+      "fatG": 1.2,
+      "fiberG": 2.7
+    },
+    "servings": [
+      {
+        "label": "1 trái (~145 g)",
+        "grams": 145,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Ngô ngọt đóng hộp",
+    "aliases": [
+      "ngo dong hop",
+      "canned sweet corn",
+      "canned corn"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 81,
+      "carbsG": 18,
+      "proteinG": 2.9,
+      "fatG": 0.6,
+      "fiberG": 2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~80 g)",
+        "grams": 80
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Gạo tẻ (sống)",
+    "aliases": [
+      "gao te song",
+      "white rice uncooked",
+      "raw white rice"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 365,
+      "carbsG": 80,
+      "proteinG": 7,
+      "fatG": 0.7,
+      "fiberG": 1.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~90 g)",
+        "grams": 90
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Gạo nếp (sống)",
+    "aliases": [
+      "gao nep song",
+      "glutinous rice uncooked",
+      "sticky rice raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 370,
+      "carbsG": 81,
+      "proteinG": 6.8,
+      "fatG": 0.6,
+      "fiberG": 1.4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~90 g)",
+        "grams": 90
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Gạo lứt (sống)",
+    "aliases": [
+      "gao lut song",
+      "brown rice uncooked",
+      "raw brown rice"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 370,
+      "carbsG": 77,
+      "proteinG": 8,
+      "fatG": 2.9,
+      "fiberG": 3.5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~90 g)",
+        "grams": 90
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bột năng (bột sắn)",
+    "aliases": [
+      "bot nang",
+      "tapioca starch",
+      "tapioca flour"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 358,
+      "carbsG": 88,
+      "proteinG": 0.2,
+      "fatG": 0,
+      "fiberG": 0.9
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~10 g)",
+        "grams": 10
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bột bắp (bột ngô)",
+    "aliases": [
+      "bot bap",
+      "cornstarch",
+      "corn flour"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 381,
+      "carbsG": 91,
+      "proteinG": 0.3,
+      "fatG": 0.1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~8 g)",
+        "grams": 8
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bột gạo",
+    "aliases": [
+      "bot gao",
+      "rice flour"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 366,
+      "carbsG": 80,
+      "proteinG": 6,
+      "fatG": 1.4,
+      "fiberG": 2.4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~155 g)",
+        "grams": 155
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bột chiên giòn",
+    "aliases": [
+      "bot chien gion",
+      "crispy frying flour",
+      "tempura flour"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 360,
+      "carbsG": 78,
+      "proteinG": 8,
+      "fatG": 1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~60 g)",
+        "grams": 60
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Ngũ cốc ăn sáng (bắp)",
+    "aliases": [
+      "ngu coc an sang",
+      "corn flakes",
+      "breakfast cereal"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 357,
+      "carbsG": 84,
+      "proteinG": 7,
+      "fatG": 0.4,
+      "fiberG": 3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~30 g)",
+        "grams": 30
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Granola",
+    "aliases": [
+      "granola"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 471,
+      "carbsG": 64,
+      "proteinG": 10,
+      "fatG": 20,
+      "fiberG": 7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~50 g)",
+        "grams": 50
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh mì hamburger (ổ)",
+    "aliases": [
+      "banh mi hamburger",
+      "burger bun",
+      "hamburger bun"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 280,
+      "carbsG": 50,
+      "proteinG": 9,
+      "fatG": 4,
+      "fiberG": 2.5
+    },
+    "servings": [
+      {
+        "label": "1 ổ (~52 g)",
+        "grams": 52,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh tortilla (bột mì)",
+    "aliases": [
+      "banh tortilla",
+      "flour tortilla",
+      "wrap"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 310,
+      "carbsG": 51,
+      "proteinG": 8,
+      "fatG": 8,
+      "fiberG": 3
+    },
+    "servings": [
+      {
+        "label": "1 cái (~45 g)",
+        "grams": 45,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Couscous (nấu chín)",
+    "aliases": [
+      "couscous"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 112,
+      "carbsG": 23,
+      "proteinG": 3.8,
+      "fatG": 0.16,
+      "fiberG": 1.4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~155 g)",
+        "grams": 155
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Quinoa (nấu chín)",
+    "aliases": [
+      "quinoa",
+      "hat diem mach"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 120,
+      "carbsG": 21,
+      "proteinG": 4.4,
+      "fatG": 1.9,
+      "fiberG": 2.8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~185 g)",
+        "grams": 185
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh mì ổ (baguette không nhân)",
+    "aliases": [
+      "banh mi o",
+      "baguette",
+      "plain bread roll"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 274,
+      "carbsG": 52,
+      "proteinG": 9,
+      "fatG": 2.5,
+      "fiberG": 2.5
+    },
+    "servings": [
+      {
+        "label": "1 ổ (~90 g)",
+        "grams": 90,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu nành (luộc)",
+    "aliases": [
+      "dau nanh luoc",
+      "boiled soybeans",
+      "edamame"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 173,
+      "carbsG": 10,
+      "proteinG": 17,
+      "fatG": 9,
+      "fiberG": 6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~85 g)",
+        "grams": 85
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu nành (khô)",
+    "aliases": [
+      "dau nanh kho",
+      "dried soybeans",
+      "raw soybeans"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 446,
+      "carbsG": 30,
+      "proteinG": 36,
+      "fatG": 20,
+      "fiberG": 9
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/4 chén (~45 g)",
+        "grams": 45
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu phộng (rang)",
+    "aliases": [
+      "dau phong rang",
+      "roasted peanuts",
+      "peanuts"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 587,
+      "carbsG": 21,
+      "proteinG": 24,
+      "fatG": 50,
+      "fiberG": 8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~28 g)",
+        "grams": 28
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bơ đậu phộng",
+    "aliases": [
+      "bo dau phong",
+      "peanut butter"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 588,
+      "carbsG": 20,
+      "proteinG": 25,
+      "fatG": 50,
+      "fiberG": 6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~16 g)",
+        "grams": 16
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu đỏ khô",
+    "aliases": [
+      "dau do kho",
+      "dried red beans",
+      "adzuki beans"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 329,
+      "carbsG": 63,
+      "proteinG": 20,
+      "fatG": 0.5,
+      "fiberG": 13
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/4 chén (~50 g)",
+        "grams": 50
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu đỏ (nấu chín)",
+    "aliases": [
+      "dau do nau chin",
+      "cooked red beans",
+      "cooked adzuki"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 128,
+      "carbsG": 25,
+      "proteinG": 7.5,
+      "fatG": 0.1,
+      "fiberG": 7.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~115 g)",
+        "grams": 115
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu xanh cà vỏ (khô)",
+    "aliases": [
+      "dau xanh kho",
+      "dried split mung beans",
+      "mung beans"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 347,
+      "carbsG": 63,
+      "proteinG": 24,
+      "fatG": 1.2,
+      "fiberG": 16
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/4 chén (~50 g)",
+        "grams": 50
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu xanh (nấu chín)",
+    "aliases": [
+      "dau xanh nau chin",
+      "cooked mung beans"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 105,
+      "carbsG": 19,
+      "proteinG": 7,
+      "fatG": 0.4,
+      "fiberG": 7.6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu đen khô",
+    "aliases": [
+      "dau den kho",
+      "dried black beans"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 341,
+      "carbsG": 62,
+      "proteinG": 21,
+      "fatG": 1.4,
+      "fiberG": 15
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/4 chén (~50 g)",
+        "grams": 50
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu đen (nấu chín)",
+    "aliases": [
+      "dau den nau chin",
+      "cooked black beans"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 132,
+      "carbsG": 24,
+      "proteinG": 8.9,
+      "fatG": 0.5,
+      "fiberG": 8.7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~85 g)",
+        "grams": 85
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu Hà Lan (hạt)",
+    "aliases": [
+      "dau ha lan",
+      "green peas",
+      "garden peas"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 81,
+      "carbsG": 14,
+      "proteinG": 5.4,
+      "fatG": 0.4,
+      "fiberG": 5.7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~80 g)",
+        "grams": 80
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu gà (nấu chín)",
+    "aliases": [
+      "dau ga",
+      "chickpeas",
+      "garbanzo beans"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 164,
+      "carbsG": 27,
+      "proteinG": 8.9,
+      "fatG": 2.6,
+      "fiberG": 7.6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~82 g)",
+        "grams": 82
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu lăng (nấu chín)",
+    "aliases": [
+      "dau lang",
+      "lentils",
+      "cooked lentils"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 116,
+      "carbsG": 20,
+      "proteinG": 9,
+      "fatG": 0.4,
+      "fiberG": 7.9
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu trắng (nấu chín)",
+    "aliases": [
+      "dau trang",
+      "white beans",
+      "cannellini beans"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 139,
+      "carbsG": 25,
+      "proteinG": 9.7,
+      "fatG": 0.35,
+      "fiberG": 6.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~90 g)",
+        "grams": 90
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hạt điều",
+    "aliases": [
+      "hat dieu",
+      "cashews",
+      "cashew nuts"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 553,
+      "carbsG": 30,
+      "proteinG": 18,
+      "fatG": 44,
+      "fiberG": 3.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~28 g)",
+        "grams": 28
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hạnh nhân",
+    "aliases": [
+      "hanh nhan",
+      "almonds"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 579,
+      "carbsG": 22,
+      "proteinG": 21,
+      "fatG": 50,
+      "fiberG": 12.5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~28 g)",
+        "grams": 28
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Óc chó",
+    "aliases": [
+      "oc cho",
+      "walnuts"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 654,
+      "carbsG": 14,
+      "proteinG": 15,
+      "fatG": 65,
+      "fiberG": 6.7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~28 g)",
+        "grams": 28
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hạt chia",
+    "aliases": [
+      "hat chia",
+      "chia seeds"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 486,
+      "carbsG": 42,
+      "proteinG": 17,
+      "fatG": 31,
+      "fiberG": 34
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~12 g)",
+        "grams": 12
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mè / vừng",
+    "aliases": [
+      "hat me",
+      "vung",
+      "sesame seeds"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 573,
+      "carbsG": 23,
+      "proteinG": 18,
+      "fatG": 50,
+      "fiberG": 12
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~9 g)",
+        "grams": 9
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hạt bí (hạt bí ngô)",
+    "aliases": [
+      "hat bi",
+      "pumpkin seeds"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 559,
+      "carbsG": 11,
+      "proteinG": 30,
+      "fatG": 49,
+      "fiberG": 6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~28 g)",
+        "grams": 28
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hạt hướng dương",
+    "aliases": [
+      "hat huong duong",
+      "sunflower seeds"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 584,
+      "carbsG": 20,
+      "proteinG": 21,
+      "fatG": 51,
+      "fiberG": 8.6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~28 g)",
+        "grams": 28
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hạt dẻ cười (pistachio)",
+    "aliases": [
+      "hat de cuoi",
+      "pistachios"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 560,
+      "carbsG": 28,
+      "proteinG": 20,
+      "fatG": 45,
+      "fiberG": 10
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~28 g)",
+        "grams": 28
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hạt sen (khô)",
+    "aliases": [
+      "hat sen kho",
+      "dried lotus seeds",
+      "lotus seeds"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 332,
+      "carbsG": 64,
+      "proteinG": 15,
+      "fatG": 2,
+      "fiberG": 5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/4 chén (~35 g)",
+        "grams": 35
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu hũ (đậu phụ)",
+    "aliases": [
+      "dau hu",
+      "dau phu",
+      "tofu",
+      "firm tofu"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 76,
+      "carbsG": 1.9,
+      "proteinG": 8,
+      "fatG": 4.8,
+      "fiberG": 0.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 miếng (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu hũ non",
+    "aliases": [
+      "dau hu non",
+      "silken tofu",
+      "soft tofu"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 55,
+      "carbsG": 2,
+      "proteinG": 4.8,
+      "fatG": 2.7,
+      "fiberG": 0.2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 hộp (~150 g)",
+        "grams": 150
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Tempeh",
+    "aliases": [
+      "tempeh"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 193,
+      "carbsG": 9,
+      "proteinG": 19,
+      "fatG": 11,
+      "fiberG": 1.4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~85 g)",
+        "grams": 85
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bơ hạnh nhân (almond butter)",
+    "aliases": [
+      "bo hanh nhan",
+      "almond butter"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 614,
+      "carbsG": 19,
+      "proteinG": 21,
+      "fatG": 56,
+      "fiberG": 10
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~16 g)",
+        "grams": 16
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cà chua",
+    "aliases": [
+      "ca chua",
+      "tomato"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 18,
+      "carbsG": 3.2,
+      "proteinG": 0.9,
+      "fatG": 0.2,
+      "fiberG": 1.2
+    },
+    "servings": [
+      {
+        "label": "1 quả vừa (~120 g)",
+        "grams": 120,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Dưa leo (dưa chuột)",
+    "aliases": [
+      "dua leo",
+      "dua chuot",
+      "cucumber"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 15,
+      "carbsG": 2.8,
+      "proteinG": 0.7,
+      "fatG": 0.1,
+      "fiberG": 0.5
+    },
+    "servings": [
+      {
+        "label": "1 quả (~150 g)",
+        "grams": 150,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Xà lách",
+    "aliases": [
+      "xa lach",
+      "lettuce"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 15,
+      "carbsG": 1.9,
+      "proteinG": 1.4,
+      "fatG": 0.2,
+      "fiberG": 1.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~35 g)",
+        "grams": 35
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cà rốt (sống)",
+    "aliases": [
+      "ca rot",
+      "carrot raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 41,
+      "carbsG": 10,
+      "proteinG": 0.9,
+      "fatG": 0.2,
+      "fiberG": 2.8
+    },
+    "servings": [
+      {
+        "label": "1 củ vừa (~60 g)",
+        "grams": 60,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cà rốt (luộc)",
+    "aliases": [
+      "ca rot luoc",
+      "boiled carrot",
+      "cooked carrot"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 35,
+      "carbsG": 8,
+      "proteinG": 0.8,
+      "fatG": 0.2,
+      "fiberG": 3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~80 g)",
+        "grams": 80
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bông cải xanh (sống)",
+    "aliases": [
+      "bong cai xanh",
+      "broccoli raw"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 34,
+      "carbsG": 4.8,
+      "proteinG": 2.8,
+      "fatG": 0.4,
+      "fiberG": 2.6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~90 g)",
+        "grams": 90
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bông cải xanh (luộc)",
+    "aliases": [
+      "bong cai xanh luoc",
+      "broccoli cooked",
+      "steamed broccoli"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 35,
+      "carbsG": 5.4,
+      "proteinG": 2.4,
+      "fatG": 0.4,
+      "fiberG": 3.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~155 g)",
+        "grams": 155
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Súp lơ trắng",
+    "aliases": [
+      "sup lo trang",
+      "cauliflower"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 25,
+      "carbsG": 3.7,
+      "proteinG": 1.9,
+      "fatG": 0.3,
+      "fiberG": 2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cải bó xôi (rau chân vịt)",
+    "aliases": [
+      "cai bo xoi",
+      "rau chan vit",
+      "spinach"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 23,
+      "carbsG": 2.2,
+      "proteinG": 2.9,
+      "fatG": 0.4,
+      "fiberG": 2.2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~30 g)",
+        "grams": 30
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cải thìa (sống)",
+    "aliases": [
+      "cai thia",
+      "bok choy raw",
+      "pak choi"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 13,
+      "carbsG": 1.3,
+      "proteinG": 1.5,
+      "fatG": 0.2,
+      "fiberG": 1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 cây (~85 g)",
+        "grams": 85
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bắp cải",
+    "aliases": [
+      "bap cai",
+      "cabbage"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 25,
+      "carbsG": 4.7,
+      "proteinG": 1.3,
+      "fatG": 0.1,
+      "fiberG": 2.5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén thái (~90 g)",
+        "grams": 90
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bắp cải tím",
+    "aliases": [
+      "bap cai tim",
+      "red cabbage",
+      "purple cabbage"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 31,
+      "carbsG": 5.9,
+      "proteinG": 1.4,
+      "fatG": 0.2,
+      "fiberG": 2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén thái (~90 g)",
+        "grams": 90
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hành tây",
+    "aliases": [
+      "hanh tay",
+      "onion"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 40,
+      "carbsG": 9,
+      "proteinG": 1.1,
+      "fatG": 0.1,
+      "fiberG": 1.7
+    },
+    "servings": [
+      {
+        "label": "1 củ vừa (~110 g)",
+        "grams": 110,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hành lá",
+    "aliases": [
+      "hanh la",
+      "scallion",
+      "green onion",
+      "spring onion"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 32,
+      "carbsG": 5.8,
+      "proteinG": 1.8,
+      "fatG": 0.2,
+      "fiberG": 2.6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh thái (~6 g)",
+        "grams": 6
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Tỏi",
+    "aliases": [
+      "toi",
+      "garlic"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 149,
+      "carbsG": 33,
+      "proteinG": 6.4,
+      "fatG": 0.5,
+      "fiberG": 2.1
+    },
+    "servings": [
+      {
+        "label": "1 tép (~3 g)",
+        "grams": 3,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Gừng",
+    "aliases": [
+      "gung",
+      "ginger"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 80,
+      "carbsG": 18,
+      "proteinG": 1.8,
+      "fatG": 0.75,
+      "fiberG": 2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh băm (~6 g)",
+        "grams": 6
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Ớt chuông đỏ",
+    "aliases": [
+      "ot chuong do",
+      "red bell pepper"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 31,
+      "carbsG": 6,
+      "proteinG": 1,
+      "fatG": 0.3,
+      "fiberG": 2.1
+    },
+    "servings": [
+      {
+        "label": "1 quả vừa (~120 g)",
+        "grams": 120,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Ớt chuông xanh",
+    "aliases": [
+      "ot chuong xanh",
+      "green bell pepper"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 20,
+      "carbsG": 3.6,
+      "proteinG": 0.9,
+      "fatG": 0.2,
+      "fiberG": 1.7
+    },
+    "servings": [
+      {
+        "label": "1 quả vừa (~120 g)",
+        "grams": 120,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nấm rơm",
+    "aliases": [
+      "nam rom",
+      "straw mushroom"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 22,
+      "carbsG": 2.5,
+      "proteinG": 2.7,
+      "fatG": 0.2,
+      "fiberG": 2.5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~90 g)",
+        "grams": 90
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nấm hương (tươi)",
+    "aliases": [
+      "nam huong",
+      "shiitake mushroom"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 34,
+      "carbsG": 5.2,
+      "proteinG": 2.2,
+      "fatG": 0.5,
+      "fiberG": 2.5
+    },
+    "servings": [
+      {
+        "label": "1 tai (~19 g)",
+        "grams": 19,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nấm kim châm",
+    "aliases": [
+      "nam kim cham",
+      "enoki mushroom"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 37,
+      "carbsG": 5.9,
+      "proteinG": 2.7,
+      "fatG": 0.3,
+      "fiberG": 2.7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 bó (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nấm mỡ (nấm trắng)",
+    "aliases": [
+      "nam mo",
+      "button mushroom",
+      "white mushroom"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 22,
+      "carbsG": 1.7,
+      "proteinG": 3.1,
+      "fatG": 0.3,
+      "fiberG": 1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~70 g)",
+        "grams": 70
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nấm bào ngư",
+    "aliases": [
+      "nam bao ngu",
+      "oyster mushroom"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 33,
+      "carbsG": 4.1,
+      "proteinG": 3.3,
+      "fatG": 0.4,
+      "fiberG": 2.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~85 g)",
+        "grams": 85
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Giá đỗ",
+    "aliases": [
+      "gia do",
+      "bean sprouts",
+      "mung bean sprouts"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 30,
+      "carbsG": 4.1,
+      "proteinG": 3,
+      "fatG": 0.2,
+      "fiberG": 1.8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~50 g)",
+        "grams": 50
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu bắp",
+    "aliases": [
+      "dau bap",
+      "okra",
+      "ladyfinger"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 33,
+      "carbsG": 5.9,
+      "proteinG": 1.9,
+      "fatG": 0.2,
+      "fiberG": 3.2
+    },
+    "servings": [
+      {
+        "label": "1 quả (~12 g)",
+        "grams": 12,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bí đỏ (bí ngô)",
+    "aliases": [
+      "bi do",
+      "bi ngo",
+      "pumpkin",
+      "kabocha"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 26,
+      "carbsG": 5.3,
+      "proteinG": 1,
+      "fatG": 0.1,
+      "fiberG": 0.5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén cắt hạt (~116 g)",
+        "grams": 116
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Khổ qua (mướp đắng)",
+    "aliases": [
+      "kho qua",
+      "muop dang",
+      "bitter melon",
+      "bitter gourd"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 17,
+      "carbsG": 2.8,
+      "proteinG": 1,
+      "fatG": 0.2,
+      "fiberG": 2.8
+    },
+    "servings": [
+      {
+        "label": "1 quả (~120 g)",
+        "grams": 120,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Măng tươi",
+    "aliases": [
+      "mang tuoi",
+      "bamboo shoots"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 27,
+      "carbsG": 3.5,
+      "proteinG": 2.6,
+      "fatG": 0.3,
+      "fiberG": 2.2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~120 g)",
+        "grams": 120
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Măng tây",
+    "aliases": [
+      "mang tay",
+      "asparagus"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 20,
+      "carbsG": 2.6,
+      "proteinG": 2.2,
+      "fatG": 0.1,
+      "fiberG": 2.1
+    },
+    "servings": [
+      {
+        "label": "1 cọng (~17 g)",
+        "grams": 17,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cà tím",
+    "aliases": [
+      "ca tim",
+      "eggplant",
+      "aubergine"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 25,
+      "carbsG": 4.8,
+      "proteinG": 1,
+      "fatG": 0.2,
+      "fiberG": 3
+    },
+    "servings": [
+      {
+        "label": "1 quả (~250 g)",
+        "grams": 250,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Rau muống (sống)",
+    "aliases": [
+      "rau muong",
+      "water spinach raw",
+      "morning glory"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 19,
+      "carbsG": 2.1,
+      "proteinG": 2.6,
+      "fatG": 0.2,
+      "fiberG": 2.1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 bó (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bí xanh (bí đao)",
+    "aliases": [
+      "bi xanh",
+      "bi dao",
+      "winter melon",
+      "wax gourd"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 14,
+      "carbsG": 2.9,
+      "proteinG": 0.4,
+      "fatG": 0.2,
+      "fiberG": 2.9
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén cắt khúc (~130 g)",
+        "grams": 130
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Su su (su su)",
+    "aliases": [
+      "su su",
+      "chayote",
+      "chow chow"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 19,
+      "carbsG": 3.7,
+      "proteinG": 0.8,
+      "fatG": 0.1,
+      "fiberG": 1.7
+    },
+    "servings": [
+      {
+        "label": "1 quả (~200 g)",
+        "grams": 200,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Củ cải trắng",
+    "aliases": [
+      "cu cai trang",
+      "daikon radish",
+      "white radish"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 18,
+      "carbsG": 4.1,
+      "proteinG": 0.6,
+      "fatG": 0.1,
+      "fiberG": 1.6
+    },
+    "servings": [
+      {
+        "label": "1 củ (~340 g)",
+        "grams": 340,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Củ dền",
+    "aliases": [
+      "cu den",
+      "beetroot",
+      "beet"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 43,
+      "carbsG": 10,
+      "proteinG": 1.6,
+      "fatG": 0.2,
+      "fiberG": 2.8
+    },
+    "servings": [
+      {
+        "label": "1 củ (~82 g)",
+        "grams": 82,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cải thảo",
+    "aliases": [
+      "cai thao",
+      "napa cabbage",
+      "chinese cabbage"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 16,
+      "carbsG": 2.3,
+      "proteinG": 1.2,
+      "fatG": 0.2,
+      "fiberG": 1.2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén thái (~75 g)",
+        "grams": 75
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bông cải Brussels",
+    "aliases": [
+      "bong cai brussels",
+      "brussels sprouts"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 43,
+      "carbsG": 6.7,
+      "proteinG": 3.4,
+      "fatG": 0.3,
+      "fiberG": 3.8
+    },
+    "servings": [
+      {
+        "label": "1 quả (~19 g)",
+        "grams": 19,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đậu que (đậu cô ve)",
+    "aliases": [
+      "dau que",
+      "dau co ve",
+      "green beans",
+      "string beans"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 31,
+      "carbsG": 5.5,
+      "proteinG": 1.8,
+      "fatG": 0.2,
+      "fiberG": 2.7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cần tây",
+    "aliases": [
+      "can tay",
+      "celery"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 16,
+      "carbsG": 3,
+      "proteinG": 0.7,
+      "fatG": 0.2,
+      "fiberG": 1.6
+    },
+    "servings": [
+      {
+        "label": "1 cọng (~40 g)",
+        "grams": 40,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mộc nhĩ (nấm mèo, khô)",
+    "aliases": [
+      "moc nhi",
+      "nam meo",
+      "wood ear mushroom",
+      "black fungus"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 284,
+      "carbsG": 70,
+      "proteinG": 9.3,
+      "fatG": 0.7,
+      "fiberG": 70
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh khô (~7 g)",
+        "grams": 7
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Rong biển khô",
+    "aliases": [
+      "rong bien kho",
+      "dried seaweed",
+      "nori",
+      "dried laver"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 306,
+      "carbsG": 46,
+      "proteinG": 30,
+      "fatG": 1,
+      "fiberG": 35
+    },
+    "servings": [
+      {
+        "label": "1 tờ (~3 g)",
+        "grams": 3,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bí ngòi (zucchini)",
+    "aliases": [
+      "bi ngoi",
+      "zucchini",
+      "courgette"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 17,
+      "carbsG": 2.4,
+      "proteinG": 1.2,
+      "fatG": 0.3,
+      "fiberG": 1
+    },
+    "servings": [
+      {
+        "label": "1 quả (~200 g)",
+        "grams": 200,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Táo",
+    "aliases": [
+      "tao",
+      "apple"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 52,
+      "carbsG": 12.3,
+      "proteinG": 0.3,
+      "fatG": 0.2,
+      "fiberG": 2.4
+    },
+    "servings": [
+      {
+        "label": "1 quả vừa (~180 g)",
+        "grams": 180,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Lê",
+    "aliases": [
+      "le",
+      "pear"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 57,
+      "carbsG": 15,
+      "proteinG": 0.4,
+      "fatG": 0.1,
+      "fiberG": 3.1
+    },
+    "servings": [
+      {
+        "label": "1 quả vừa (~180 g)",
+        "grams": 180,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nho",
+    "aliases": [
+      "nho",
+      "grapes"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 69,
+      "carbsG": 18,
+      "proteinG": 0.7,
+      "fatG": 0.2,
+      "fiberG": 0.9
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chùm nhỏ (~100 g)",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nho khô",
+    "aliases": [
+      "nho kho",
+      "raisins"
+    ],
+    "category": "che-trang-mieng",
+    "per100g": {
+      "kcal": 299,
+      "carbsG": 79,
+      "proteinG": 3.1,
+      "fatG": 0.5,
+      "fiberG": 3.7
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 hộp nhỏ (~43 g)",
+        "grams": 43
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Dâu tây",
+    "aliases": [
+      "dau tay",
+      "strawberry",
+      "strawberries"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 32,
+      "carbsG": 6.6,
+      "proteinG": 0.7,
+      "fatG": 0.3,
+      "fiberG": 2
+    },
+    "servings": [
+      {
+        "label": "1 quả (~18 g)",
+        "grams": 18,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cam",
+    "aliases": [
+      "cam",
+      "orange"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 47,
+      "carbsG": 12,
+      "proteinG": 0.9,
+      "fatG": 0.1,
+      "fiberG": 2.4
+    },
+    "servings": [
+      {
+        "label": "1 quả vừa (~130 g)",
+        "grams": 130,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Quýt",
+    "aliases": [
+      "quyt",
+      "mandarin",
+      "tangerine"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 53,
+      "carbsG": 13,
+      "proteinG": 0.8,
+      "fatG": 0.3,
+      "fiberG": 1.8
+    },
+    "servings": [
+      {
+        "label": "1 quả (~90 g)",
+        "grams": 90,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bưởi",
+    "aliases": [
+      "buoi",
+      "pomelo",
+      "grapefruit"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 38,
+      "carbsG": 8.6,
+      "proteinG": 0.8,
+      "fatG": 0.04,
+      "fiberG": 1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 múi (~90 g)",
+        "grams": 90
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Kiwi",
+    "aliases": [
+      "kiwi"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 61,
+      "carbsG": 15,
+      "proteinG": 1.1,
+      "fatG": 0.5,
+      "fiberG": 3
+    },
+    "servings": [
+      {
+        "label": "1 quả (~75 g)",
+        "grams": 75,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Dứa (thơm / khóm)",
+    "aliases": [
+      "dua",
+      "thom",
+      "khom",
+      "pineapple"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 50,
+      "carbsG": 13,
+      "proteinG": 0.5,
+      "fatG": 0.1,
+      "fiberG": 1.4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 lát (~80 g)",
+        "grams": 80
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Dưa lưới (dưa vàng)",
+    "aliases": [
+      "dua luoi",
+      "cantaloupe",
+      "muskmelon"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 34,
+      "carbsG": 8,
+      "proteinG": 0.8,
+      "fatG": 0.2,
+      "fiberG": 0.9
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 miếng (~160 g)",
+        "grams": 160
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Dưa gang",
+    "aliases": [
+      "dua gang",
+      "vietnamese melon",
+      "snake melon"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 24,
+      "carbsG": 5.2,
+      "proteinG": 0.6,
+      "fatG": 0.1,
+      "fiberG": 0.6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 miếng (~150 g)",
+        "grams": 150
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Việt quất",
+    "aliases": [
+      "viet quat",
+      "blueberry",
+      "blueberries"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 57,
+      "carbsG": 14,
+      "proteinG": 0.7,
+      "fatG": 0.3,
+      "fiberG": 2.4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~50 g)",
+        "grams": 50
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mâm xôi",
+    "aliases": [
+      "mam xoi",
+      "raspberry",
+      "raspberries"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 52,
+      "carbsG": 10.2,
+      "proteinG": 1.2,
+      "fatG": 0.7,
+      "fiberG": 6.5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~60 g)",
+        "grams": 60
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Lựu",
+    "aliases": [
+      "luu",
+      "pomegranate"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 83,
+      "carbsG": 19,
+      "proteinG": 1.7,
+      "fatG": 1.2,
+      "fiberG": 4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 quả hạt (~90 g)",
+        "grams": 90
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hồng (quả hồng)",
+    "aliases": [
+      "hong",
+      "persimmon"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 70,
+      "carbsG": 16.5,
+      "proteinG": 0.6,
+      "fatG": 0.2,
+      "fiberG": 3.6
+    },
+    "servings": [
+      {
+        "label": "1 quả (~168 g)",
+        "grams": 168,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Roi (mận miền Nam)",
+    "aliases": [
+      "roi",
+      "man mien nam",
+      "water apple",
+      "rose apple",
+      "wax apple"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 25,
+      "carbsG": 6,
+      "proteinG": 0.6,
+      "fatG": 0.2,
+      "fiberG": 1.5
+    },
+    "servings": [
+      {
+        "label": "1 quả (~60 g)",
+        "grams": 60,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mận (mận Hà Nội)",
+    "aliases": [
+      "man",
+      "plum"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 46,
+      "carbsG": 11,
+      "proteinG": 0.7,
+      "fatG": 0.3,
+      "fiberG": 1.4
+    },
+    "servings": [
+      {
+        "label": "1 quả (~66 g)",
+        "grams": 66,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Chanh (chanh xanh)",
+    "aliases": [
+      "chanh",
+      "lime"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 30,
+      "carbsG": 6.4,
+      "proteinG": 0.7,
+      "fatG": 0.2,
+      "fiberG": 2.8
+    },
+    "servings": [
+      {
+        "label": "1 quả (~67 g)",
+        "grams": 67,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Chanh vàng",
+    "aliases": [
+      "chanh vang",
+      "lemon"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 29,
+      "carbsG": 5.5,
+      "proteinG": 1.1,
+      "fatG": 0.3,
+      "fiberG": 2.8
+    },
+    "servings": [
+      {
+        "label": "1 quả (~84 g)",
+        "grams": 84,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Cùi dừa (dừa nạo)",
+    "aliases": [
+      "cui dua",
+      "dua nao",
+      "coconut meat",
+      "grated coconut"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 354,
+      "carbsG": 15,
+      "proteinG": 3.3,
+      "fatG": 33,
+      "fiberG": 9
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/4 chén (~20 g)",
+        "grams": 20
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đào",
+    "aliases": [
+      "dao",
+      "peach"
+    ],
+    "category": "trai-cay",
+    "per100g": {
+      "kcal": 39,
+      "carbsG": 8.2,
+      "proteinG": 0.9,
+      "fatG": 0.3,
+      "fiberG": 1.5
+    },
+    "servings": [
+      {
+        "label": "1 quả (~150 g)",
+        "grams": 150,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Dầu ô liu",
+    "aliases": [
+      "dau o liu",
+      "olive oil"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 884,
+      "carbsG": 0,
+      "proteinG": 0,
+      "fatG": 100
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~14 g)",
+        "grams": 14
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Dầu mè",
+    "aliases": [
+      "dau me",
+      "sesame oil"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 884,
+      "carbsG": 0,
+      "proteinG": 0,
+      "fatG": 100
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng cà phê (~5 g)",
+        "grams": 5
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Dầu dừa",
+    "aliases": [
+      "dau dua",
+      "coconut oil"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 892,
+      "carbsG": 0,
+      "proteinG": 0,
+      "fatG": 100
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~14 g)",
+        "grams": 14
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mỡ heo (nước)",
+    "aliases": [
+      "mo heo",
+      "lard",
+      "pork fat"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 902,
+      "carbsG": 0,
+      "proteinG": 0,
+      "fatG": 100
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~13 g)",
+        "grams": 13
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Tương ớt (sriracha)",
+    "aliases": [
+      "tuong ot",
+      "chili sauce",
+      "sriracha",
+      "hot sauce"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 93,
+      "carbsG": 19,
+      "proteinG": 2,
+      "fatG": 1,
+      "fiberG": 1.6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~17 g)",
+        "grams": 17
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Tương cà (ketchup)",
+    "aliases": [
+      "tuong ca",
+      "ketchup",
+      "tomato ketchup"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 101,
+      "carbsG": 27,
+      "proteinG": 1.2,
+      "fatG": 0.1,
+      "fiberG": 0.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~17 g)",
+        "grams": 17
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mayonnaise",
+    "aliases": [
+      "mayonnaise",
+      "mayo",
+      "xot mayonnaise"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 680,
+      "carbsG": 0.6,
+      "proteinG": 1,
+      "fatG": 75
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~14 g)",
+        "grams": 14
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Xì dầu (nước tương)",
+    "aliases": [
+      "xi dau",
+      "nuoc tuong",
+      "soy sauce"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 53,
+      "carbsG": 5,
+      "proteinG": 8,
+      "fatG": 0.6
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~16 g)",
+        "grams": 16
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Dầu hào",
+    "aliases": [
+      "dau hao",
+      "oyster sauce"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 51,
+      "carbsG": 11,
+      "proteinG": 1.4,
+      "fatG": 0.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~18 g)",
+        "grams": 18
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Tương đen (hoisin)",
+    "aliases": [
+      "tuong den",
+      "hoisin sauce"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 220,
+      "carbsG": 44,
+      "proteinG": 3,
+      "fatG": 3.4,
+      "fiberG": 2.8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~16 g)",
+        "grams": 16
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mật ong",
+    "aliases": [
+      "mat ong",
+      "honey"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 304,
+      "carbsG": 82,
+      "proteinG": 0.3,
+      "fatG": 0
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~21 g)",
+        "grams": 21
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Muối",
+    "aliases": [
+      "muoi",
+      "salt",
+      "table salt"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 0,
+      "carbsG": 0,
+      "proteinG": 0,
+      "fatG": 0
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng cà phê (~6 g)",
+        "grams": 6
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Tiêu đen (xay)",
+    "aliases": [
+      "tieu den",
+      "black pepper",
+      "ground pepper"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 251,
+      "carbsG": 45.3,
+      "proteinG": 10,
+      "fatG": 3.3,
+      "fiberG": 25
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng cà phê (~2 g)",
+        "grams": 2
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bột ngọt (mì chính)",
+    "aliases": [
+      "bot ngot",
+      "mi chinh",
+      "msg",
+      "monosodium glutamate"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 0,
+      "carbsG": 0,
+      "proteinG": 0,
+      "fatG": 0
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng cà phê (~5 g)",
+        "grams": 5
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sốt teriyaki",
+    "aliases": [
+      "sot teriyaki",
+      "teriyaki sauce"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 89,
+      "carbsG": 16,
+      "proteinG": 5.9,
+      "fatG": 0
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~18 g)",
+        "grams": 18
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Giấm gạo",
+    "aliases": [
+      "giam gao",
+      "rice vinegar",
+      "vinegar"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 4,
+      "carbsG": 0,
+      "proteinG": 0,
+      "fatG": 0
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~15 g)",
+        "grams": 15
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sốt BBQ",
+    "aliases": [
+      "sot bbq",
+      "barbecue sauce",
+      "bbq sauce"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 172,
+      "carbsG": 41,
+      "proteinG": 0.8,
+      "fatG": 0.6,
+      "fiberG": 0.8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~17 g)",
+        "grams": 17
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Mù tạt (mustard)",
+    "aliases": [
+      "mu tat",
+      "mustard",
+      "yellow mustard"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 66,
+      "carbsG": 6,
+      "proteinG": 4,
+      "fatG": 3.3,
+      "fiberG": 3.3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng cà phê (~5 g)",
+        "grams": 5
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Tương miso",
+    "aliases": [
+      "tuong miso",
+      "miso paste",
+      "miso"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 199,
+      "carbsG": 26,
+      "proteinG": 12,
+      "fatG": 6,
+      "fiberG": 5.4
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~17 g)",
+        "grams": 17
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sốt cà chua (mì Ý)",
+    "aliases": [
+      "sot ca chua",
+      "marinara sauce",
+      "pasta sauce",
+      "tomato sauce"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 60,
+      "carbsG": 9,
+      "proteinG": 1.8,
+      "fatG": 1.8,
+      "fiberG": 2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1/2 chén (~125 g)",
+        "grams": 125
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Đường nâu",
+    "aliases": [
+      "duong nau",
+      "brown sugar"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 380,
+      "carbsG": 98,
+      "proteinG": 0,
+      "fatG": 0
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~13 g)",
+        "grams": 13
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Siro cây phong (maple)",
+    "aliases": [
+      "siro cay phong",
+      "maple syrup"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 260,
+      "carbsG": 67,
+      "proteinG": 0,
+      "fatG": 0.1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng canh (~20 g)",
+        "grams": 20
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sa tế",
+    "aliases": [
+      "sa te",
+      "satay chili oil",
+      "chili oil"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 550,
+      "carbsG": 10,
+      "proteinG": 5,
+      "fatG": 55,
+      "fiberG": 2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng cà phê (~5 g)",
+        "grams": 5
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Hạt nêm (bột nêm)",
+    "aliases": [
+      "hat nem",
+      "bot nem",
+      "seasoning powder",
+      "bouillon powder"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 200,
+      "carbsG": 20,
+      "proteinG": 12,
+      "fatG": 8
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 muỗng cà phê (~5 g)",
+        "grams": 5
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nước hầm xương (nước dùng)",
+    "aliases": [
+      "nuoc ham xuong",
+      "nuoc dung",
+      "bone broth",
+      "stock"
+    ],
+    "category": "nguyen-lieu",
+    "per100g": {
+      "kcal": 15,
+      "carbsG": 0.9,
+      "proteinG": 2,
+      "fatG": 0.5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~240 ml)",
+        "grams": 240
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Snack khoai tây (khoai tây chiên giòn)",
+    "aliases": [
+      "snack khoai tay",
+      "potato chips",
+      "crisps"
+    ],
+    "category": "an-vat",
+    "per100g": {
+      "kcal": 536,
+      "carbsG": 53,
+      "proteinG": 7,
+      "fatG": 34,
+      "fiberG": 4.4
+    },
+    "servings": [
+      {
+        "label": "1 gói nhỏ (~28 g)",
+        "grams": 28,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bắp rang bơ",
+    "aliases": [
+      "bap rang bo",
+      "popcorn",
+      "buttered popcorn"
+    ],
+    "category": "an-vat",
+    "per100g": {
+      "kcal": 500,
+      "carbsG": 55,
+      "proteinG": 8,
+      "fatG": 28,
+      "fiberG": 10
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~15 g)",
+        "grams": 15
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sô cô la sữa (thanh)",
+    "aliases": [
+      "so co la sua",
+      "milk chocolate",
+      "chocolate bar"
+    ],
+    "category": "che-trang-mieng",
+    "per100g": {
+      "kcal": 535,
+      "carbsG": 59,
+      "proteinG": 7.6,
+      "fatG": 30,
+      "fiberG": 3.4
+    },
+    "servings": [
+      {
+        "label": "1 thanh nhỏ (~40 g)",
+        "grams": 40,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sô cô la đen",
+    "aliases": [
+      "so co la den",
+      "dark chocolate"
+    ],
+    "category": "che-trang-mieng",
+    "per100g": {
+      "kcal": 598,
+      "carbsG": 46,
+      "proteinG": 7.8,
+      "fatG": 43,
+      "fiberG": 11
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "2 ô (~20 g)",
+        "grams": 20
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh quy (cookie)",
+    "aliases": [
+      "banh quy",
+      "cookie",
+      "biscuit"
+    ],
+    "category": "che-trang-mieng",
+    "per100g": {
+      "kcal": 480,
+      "carbsG": 64,
+      "proteinG": 5,
+      "fatG": 22,
+      "fiberG": 2
+    },
+    "servings": [
+      {
+        "label": "1 cái (~16 g)",
+        "grams": 16,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh quy giòn (cracker)",
+    "aliases": [
+      "banh quy gion",
+      "cracker",
+      "crackers"
+    ],
+    "category": "an-vat",
+    "per100g": {
+      "kcal": 502,
+      "carbsG": 61,
+      "proteinG": 9,
+      "fatG": 25,
+      "fiberG": 3
+    },
+    "servings": [
+      {
+        "label": "1 cái (~7 g)",
+        "grams": 7,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh muffin",
+    "aliases": [
+      "banh muffin",
+      "muffin"
+    ],
+    "category": "che-trang-mieng",
+    "per100g": {
+      "kcal": 377,
+      "carbsG": 51,
+      "proteinG": 6,
+      "fatG": 17,
+      "fiberG": 1.7
+    },
+    "servings": [
+      {
+        "label": "1 cái (~113 g)",
+        "grams": 113,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh donut (phủ đường)",
+    "aliases": [
+      "banh donut",
+      "donut",
+      "doughnut"
+    ],
+    "category": "che-trang-mieng",
+    "per100g": {
+      "kcal": 452,
+      "carbsG": 51,
+      "proteinG": 4.9,
+      "fatG": 25,
+      "fiberG": 1.5
+    },
+    "servings": [
+      {
+        "label": "1 cái (~60 g)",
+        "grams": 60,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh croissant (bơ)",
+    "aliases": [
+      "banh croissant",
+      "croissant"
+    ],
+    "category": "an-vat",
+    "per100g": {
+      "kcal": 406,
+      "carbsG": 46,
+      "proteinG": 8,
+      "fatG": 21,
+      "fiberG": 2.6
+    },
+    "servings": [
+      {
+        "label": "1 cái (~57 g)",
+        "grams": 57,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh pancake",
+    "aliases": [
+      "banh pancake",
+      "pancake"
+    ],
+    "category": "chien-nuong",
+    "per100g": {
+      "kcal": 227,
+      "carbsG": 28,
+      "proteinG": 6.4,
+      "fatG": 9.7,
+      "fiberG": 1
+    },
+    "servings": [
+      {
+        "label": "1 cái (~77 g)",
+        "grams": 77,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh waffle",
+    "aliases": [
+      "banh waffle",
+      "waffle"
+    ],
+    "category": "chien-nuong",
+    "per100g": {
+      "kcal": 291,
+      "carbsG": 33,
+      "proteinG": 7.9,
+      "fatG": 14,
+      "fiberG": 1.5
+    },
+    "servings": [
+      {
+        "label": "1 cái (~75 g)",
+        "grams": 75,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Trứng luộc",
+    "aliases": [
+      "trung luoc",
+      "boiled egg",
+      "hard boiled egg"
+    ],
+    "category": "mon-man",
+    "per100g": {
+      "kcal": 155,
+      "carbsG": 1.1,
+      "proteinG": 13,
+      "fatG": 11
+    },
+    "servings": [
+      {
+        "label": "1 quả (~50 g)",
+        "grams": 50,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Khoai tây nghiền",
+    "aliases": [
+      "khoai tay nghien",
+      "mashed potato",
+      "mashed potatoes"
+    ],
+    "category": "chien-nuong",
+    "per100g": {
+      "kcal": 113,
+      "carbsG": 17,
+      "proteinG": 2,
+      "fatG": 4,
+      "fiberG": 1.5
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~210 g)",
+        "grams": 210
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Khoai lang chiên (kiểu Tây)",
+    "aliases": [
+      "khoai lang chien",
+      "sweet potato fries"
+    ],
+    "category": "chien-nuong",
+    "per100g": {
+      "kcal": 165,
+      "carbsG": 25,
+      "proteinG": 1.5,
+      "fatG": 6,
+      "fiberG": 3
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~85 g)",
+        "grams": 85
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Khoai tây nướng (cả vỏ)",
+    "aliases": [
+      "khoai tay nuong",
+      "baked potato"
+    ],
+    "category": "chien-nuong",
+    "per100g": {
+      "kcal": 93,
+      "carbsG": 21,
+      "proteinG": 2.5,
+      "fatG": 0.1,
+      "fiberG": 2.2
+    },
+    "servings": [
+      {
+        "label": "1 củ (~173 g)",
+        "grams": 173,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Sandwich kẹp giăm bông phô mai",
+    "aliases": [
+      "sandwich kep",
+      "ham and cheese sandwich"
+    ],
+    "category": "banh-mi",
+    "per100g": {
+      "kcal": 250,
+      "carbsG": 28,
+      "proteinG": 12,
+      "fatG": 10,
+      "fiberG": 2
+    },
+    "servings": [
+      {
+        "label": "1 phần (~150 g)",
+        "grams": 150,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Salad trộn dầu giấm",
+    "aliases": [
+      "salad tron dau giam",
+      "garden salad",
+      "green salad vinaigrette"
+    ],
+    "category": "rau-chay",
+    "per100g": {
+      "kcal": 90,
+      "carbsG": 6,
+      "proteinG": 1.5,
+      "fatG": 7,
+      "fiberG": 2
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 phần (~150 g)",
+        "grams": 150
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Súp bí đỏ",
+    "aliases": [
+      "sup bi do",
+      "pumpkin soup"
+    ],
+    "category": "mon-nuoc",
+    "per100g": {
+      "kcal": 46,
+      "carbsG": 7,
+      "proteinG": 1.3,
+      "fatG": 1.6,
+      "fiberG": 1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 chén (~245 g)",
+        "grams": 245
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh mì bơ tỏi",
+    "aliases": [
+      "banh mi bo toi",
+      "garlic bread"
+    ],
+    "category": "an-vat",
+    "per100g": {
+      "kcal": 350,
+      "carbsG": 44,
+      "proteinG": 8,
+      "fatG": 15,
+      "fiberG": 2.5
+    },
+    "servings": [
+      {
+        "label": "1 lát (~35 g)",
+        "grams": 35,
+        "default": true
+      },
+      {
+        "label": "100 g",
+        "grams": 100
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Nước ép nho",
+    "aliases": [
+      "nuoc ep nho",
+      "grape juice"
+    ],
+    "category": "do-uong",
+    "per100g": {
+      "kcal": 60,
+      "carbsG": 15,
+      "proteinG": 0.4,
+      "fatG": 0.1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 ly (~240 ml)",
+        "grams": 250
+      }
+    ],
+    "source": "generic"
+  },
+  {
+    "name": "Bánh phồng tôm (chiên)",
+    "aliases": [
+      "banh phong tom",
+      "prawn crackers",
+      "shrimp chips"
+    ],
+    "category": "an-vat",
+    "per100g": {
+      "kcal": 525,
+      "carbsG": 60,
+      "proteinG": 2,
+      "fatG": 30,
+      "fiberG": 1
+    },
+    "servings": [
+      {
+        "label": "100 g",
+        "grams": 100,
+        "default": true
+      },
+      {
+        "label": "1 nắm (~20 g)",
+        "grams": 20
+      }
+    ],
+    "source": "generic"
+  }
+]

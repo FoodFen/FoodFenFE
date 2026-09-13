@@ -1,7 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import { Alert, Pressable, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -13,26 +12,17 @@ import { useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import type { ThemePreference } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { haptics } from '@/lib/haptics';
-import {
-  ACTIVITY_LABELS,
-  DIET_LABELS,
-  ageFromBirthYear,
-  totalDailyEnergyExpenditure,
-} from '@/lib/nutrition';
+import type { Locale } from '@/lib/i18n';
+import { ageFromBirthYear, totalDailyEnergyExpenditure } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 
-const THEME_OPTIONS: { value: ThemePreference; label: string }[] = [
-  { value: 'light', label: 'Light' },
-  { value: 'dark', label: 'Dark' },
-  { value: 'system', label: 'System' },
-];
-
-export default function ProfileScreen() {
-  const insets = useSafeAreaInsets();
+export default function SettingsScreen() {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
+  const { t, locale, setLocale } = useTranslation();
 
   const user = useProfileStore((state) => state.profile);
   const eraseLocalData = useProfileStore((state) => state.eraseAll);
@@ -47,42 +37,56 @@ export default function ProfileScreen() {
   const setTheme = useSettingsStore((state) => state.setTheme);
   const weightUnit = useSettingsStore((state) => state.weightUnit);
   const setWeightUnit = useSettingsStore((state) => state.setWeightUnit);
+  const devSeedEnabled = useSettingsStore((state) => state.devSeedEnabled);
+  const setDevSeedEnabled = useSettingsStore((state) => state.setDevSeedEnabled);
+
+  const languageOptions: { value: Locale; label: string }[] = [
+    { value: 'vi', label: t('profileLanguage', 'vietnamese') },
+    { value: 'en', label: t('profileLanguage', 'english') },
+  ];
+
+  const themeOptions: { value: ThemePreference; label: string }[] = [
+    { value: 'light', label: t('profile', 'themeLight') },
+    { value: 'dark', label: t('profile', 'themeDark') },
+    { value: 'system', label: t('profile', 'themeSystem') },
+  ];
 
   if (!user) return null;
 
   const maintenance = Math.round(totalDailyEnergyExpenditure(user));
   const isPremium = user.subscriptionTier === 'premium';
 
+  const genderLabel =
+    user.gender === 'male'
+      ? t('onboardingGender', 'male')
+      : user.gender === 'female'
+        ? t('onboardingGender', 'female')
+        : t('onboardingGender', 'other');
+
   const confirmSignOut = () => {
-    Alert.alert('Sign out', 'Your diary stays on this device.', [
-      { text: 'Cancel', style: 'cancel' },
-      { text: 'Sign out', style: 'destructive', onPress: () => void signOut() },
+    Alert.alert(t('profile', 'signOut'), t('profile', 'signOutMessage'), [
+      { text: t('common', 'cancel'), style: 'cancel' },
+      { text: t('profile', 'signOut'), style: 'destructive', onPress: () => void signOut() },
     ]);
   };
 
   const confirmErase = () => {
-    Alert.alert(
-      'Erase local data',
-      'This permanently deletes your diary, your goals and your profile from this device. It cannot be undone.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Erase',
-          style: 'destructive',
-          onPress: () => {
-            haptics.warning();
-            eraseLocalData();
-          },
+    Alert.alert(t('profile', 'eraseLocalData'), t('profile', 'eraseMessage'), [
+      { text: t('common', 'cancel'), style: 'cancel' },
+      {
+        text: t('profile', 'eraseConfirm'),
+        style: 'destructive',
+        onPress: () => {
+          haptics.warning();
+          eraseLocalData();
         },
-      ],
-    );
+      },
+    ]);
   };
 
   return (
-    <ScrollScreen style={{ paddingTop: insets.top }}>
-      <Text variant="title" className="pt-2">
-        Profile
-      </Text>
+    <ScrollScreen>
+      <Stack.Screen options={{ title: t('settings', 'title') }} />
 
       <Card className="gap-3">
         <View className="flex-row items-center gap-3">
@@ -97,18 +101,20 @@ export default function ProfileScreen() {
           <View className="flex-1 gap-0.5">
             <View className="flex-row items-center gap-2">
               <Text variant="heading" numberOfLines={1}>
-                {isSignedIn ? (session.user.displayName ?? 'Your account') : 'Guest'}
+                {isSignedIn
+                  ? (session.user.displayName ?? t('profile', 'yourAccount'))
+                  : t('profile', 'guest')}
               </Text>
               {isPremium ? (
                 <View className="rounded-pill bg-brand px-2 py-0.5">
                   <Text variant="caption" tone="onBrand">
-                    Premium
+                    {t('common', 'premium')}
                   </Text>
                 </View>
               ) : null}
             </View>
             <Text variant="caption" tone="muted" numberOfLines={1}>
-              {isSignedIn ? session.user.email : 'Tracking offline on this device'}
+              {isSignedIn ? session.user.email : t('profile', 'trackingOffline')}
             </Text>
           </View>
         </View>
@@ -121,13 +127,12 @@ export default function ProfileScreen() {
               className="flex-row items-center justify-between active:opacity-60"
             >
               <Text variant="label" tone="brand">
-                Sign in to sync your data
+                {t('profile', 'signInToSync')}
               </Text>
               <Ionicons name="chevron-forward" size={16} color={colors.brand} />
             </Pressable>
             <Text variant="caption" tone="subtle">
-              Everything already works offline. An account keeps your diary backed up and
-              available on another device.
+              {t('profile', 'offlineNotice')}
             </Text>
           </View>
         )}
@@ -136,15 +141,15 @@ export default function ProfileScreen() {
           <View className="flex-row items-center gap-2 border-t border-border pt-3">
             <Ionicons name="cloud-offline-outline" size={16} color={colors.fgMuted} />
             <Text variant="caption" tone="muted">
-              {pendingChanges} {pendingChanges === 1 ? 'change' : 'changes'} saved on this
-              device only
+              {pendingChanges} {t('profile', pendingChanges === 1 ? 'change' : 'changes')}{' '}
+              {t('profile', 'savedOnDeviceOnly')}
             </Text>
           </View>
         ) : null}
       </Card>
 
       <Card className="gap-3">
-        <Text variant="heading">Daily targets</Text>
+        <Text variant="heading">{t('profile', 'dailyTargets')}</Text>
 
         <Pressable
           onPress={() => router.push('/settings/goals')}
@@ -152,58 +157,79 @@ export default function ProfileScreen() {
           className="flex-row items-center justify-between active:opacity-60"
         >
           <Text variant="label" tone="brand">
-            Edit goals and body stats
+            {t('profile', 'editGoals')}
           </Text>
           <Ionicons name="chevron-forward" size={16} color={colors.brand} />
         </Pressable>
 
         <Text variant="caption" tone="subtle">
           {user.calorieCalcMode === 'manual'
-            ? 'Set by hand — these override the calculated values.'
-            : `Calculated from your profile. Maintenance is about ${maintenance.toLocaleString()} kcal a day.`}
+            ? t('profile', 'targetsManual')
+            : t('profile', 'targetsAuto').replace('{kcal}', maintenance.toLocaleString())}
         </Text>
       </Card>
 
-      <Card className="gap-3">
-        <Text variant="heading">About you</Text>
-
-        <Row
-          label="Sex"
-          value={
-            user.gender === 'male'
-              ? 'Male'
-              : user.gender === 'female'
-                ? 'Female'
-                : 'Other'
-          }
-        />
-        <Row label="Age" value={`${ageFromBirthYear(user.birthYear)}`} />
-        <Row label="Height" value={`${user.height} cm`} />
-        <Row label="Weight" value={`${user.weightCurrent} kg`} />
-        <Row label="Goal weight" value={`${user.weightGoal} kg`} />
-        <Row
-          label="Activity"
-          value={ACTIVITY_LABELS[user.activityLevel].split(' — ')[0] ?? ''}
-        />
-        <Row label="Diet" value={DIET_LABELS[user.dietType]} />
+      <Card flush>
+        <Pressable
+          onPress={() => router.push('/settings/ring-colors')}
+          accessibilityRole="button"
+          className="flex-row items-center justify-between px-4 py-4 active:bg-surface-alt"
+        >
+          <Text variant="label">{t('settings', 'ringColorsRow')}</Text>
+          <Ionicons name="chevron-forward" size={16} color={colors.fgMuted} />
+        </Pressable>
       </Card>
 
       <Card className="gap-3">
-        <Text variant="heading">Appearance</Text>
-        <SegmentedControl options={THEME_OPTIONS} value={theme} onChange={setTheme} />
+        <Text variant="heading">{t('profileBodyStats', 'aboutYou')}</Text>
+
+        <Row label={t('profileBodyStats', 'sex')} value={genderLabel} />
+        <Row label={t('profile', 'age')} value={`${ageFromBirthYear(user.birthYear)}`} />
+        <Row label={t('profile', 'height')} value={`${user.height} cm`} />
+        <Row label={t('profileBodyStats', 'weight')} value={`${user.weightCurrent} kg`} />
+        <Row label={t('onboardingGoal', 'goalWeightLabel')} value={`${user.weightGoal} kg`} />
+        <Row label={t('profileBodyStats', 'activity')} value={t('activityLevel', user.activityLevel)} />
+        <Row label={t('profileBodyStats', 'diet')} value={t('dietType', user.dietType)} />
       </Card>
 
       <Card className="gap-3">
-        <Text variant="heading">Units</Text>
+        <Text variant="heading">{t('profileLanguage', 'heading')}</Text>
+        <SegmentedControl options={languageOptions} value={locale} onChange={setLocale} />
+      </Card>
+
+      <Card className="gap-3">
+        <Text variant="heading">{t('profile', 'appearance')}</Text>
+        <SegmentedControl options={themeOptions} value={theme} onChange={setTheme} />
+      </Card>
+
+      <Card className="gap-3">
+        <Text variant="heading">{t('profile', 'units')}</Text>
         <SegmentedControl
           options={[
-            { value: 'kg' as const, label: 'Kilograms' },
-            { value: 'lb' as const, label: 'Pounds' },
+            { value: 'kg' as const, label: t('profile', 'kilograms') },
+            { value: 'lb' as const, label: t('profile', 'pounds') },
           ]}
           value={weightUnit}
           onChange={setWeightUnit}
         />
       </Card>
+
+      {__DEV__ ? (
+        <Card className="gap-3">
+          <Text variant="heading">{t('developer', 'heading')}</Text>
+          <SegmentedControl
+            options={[
+              { value: 'on' as const, label: t('developer', 'on') },
+              { value: 'off' as const, label: t('developer', 'off') },
+            ]}
+            value={devSeedEnabled ? 'on' : 'off'}
+            onChange={(value) => setDevSeedEnabled(value === 'on')}
+          />
+          <Text variant="caption" tone="subtle">
+            {t('developer', 'seedData')}
+          </Text>
+        </Card>
+      ) : null}
 
       {isSignedIn ? (
         <Card flush>
@@ -213,14 +239,14 @@ export default function ProfileScreen() {
             className="flex-row items-center justify-between px-4 py-4 active:bg-surface-alt"
           >
             <Text variant="body" tone="danger">
-              Sign out
+              {t('profile', 'signOut')}
             </Text>
             <Ionicons name="log-out-outline" size={20} color={colors.danger} />
           </Pressable>
         </Card>
       ) : null}
 
-      <Button label="Erase local data" variant="ghost" onPress={confirmErase} />
+      <Button label={t('profile', 'eraseLocalData')} variant="ghost" onPress={confirmErase} />
     </ScrollScreen>
   );
 }

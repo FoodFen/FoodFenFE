@@ -88,9 +88,14 @@ export const queryKeys = {
   entries: {
     all: ['entries'] as const,
     byId: (id: string) => [...queryKeys.entries.all, id] as const,
+    /** Recently logged catalog foods — derived from entries, so it lives here
+     * and the standard diary invalidation refreshes it after every log. */
+    recent: (userId: string | null, limit: number) =>
+      [...queryKeys.entries.all, 'recent', userId, limit] as const,
   },
   weight: {
     all: ['weight'] as const,
+    asOf: (date: string) => [...queryKeys.weight.all, 'asOf', date] as const,
     range: (from: string, to: string) => [...queryKeys.weight.all, from, to] as const,
   },
   /** The bundled reference list. Local-only, never invalidated by a write. */

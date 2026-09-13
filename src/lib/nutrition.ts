@@ -27,6 +27,14 @@ const MAX_DAILY_KCAL_DELTA = 1000;
 /** Floors from common clinical guidance; we never target below these. */
 const MIN_KCAL_BY_GENDER = { male: 1500, female: 1200, other: 1200 } as const;
 
+/**
+ * The pace assumed when nothing else says otherwise — matches
+ * `user.weekly_rate_kg`'s own column default. Onboarding no longer asks for a
+ * pace explicitly, so every new profile starts here; the goals editor still
+ * lets it be changed later.
+ */
+export const DEFAULT_WEEKLY_RATE_KG = 0.5;
+
 /** Millilitres of water per kilogram of body mass, the usual rule of thumb. */
 const WATER_ML_PER_KG = 35;
 
@@ -135,6 +143,19 @@ export function dailyKcalDelta(direction: GoalDirection, weeklyRateKg: number): 
   );
 
   return direction === 'lose' ? -magnitude : magnitude;
+}
+
+/**
+ * Weeks to close the gap between current and goal weight at the given pace.
+ * `0` for `maintain` (there is no gap to close) or a non-positive rate.
+ */
+export function weeksToGoal(
+  profile: Pick<UserProfile, 'weightCurrent' | 'weightGoal'>,
+  weeklyRateKg: number,
+): number {
+  if (weeklyRateKg <= 0 || goalDirection(profile) === 'maintain') return 0;
+
+  return Math.abs(profile.weightGoal - profile.weightCurrent) / weeklyRateKg;
 }
 
 /**
@@ -320,6 +341,32 @@ export function progressFraction(consumed: number, target: number): number {
   return Math.min(Math.max(consumed / target, 0), 1);
 }
 
+/**
+ * Energy the macros imply, via the Atwater factors (4 kcal/g carbs and
+ * protein, 9 kcal/g fat). Rounded to a whole kcal.
+ */
+export function kcalFromMacros({ carbsG, proteinG, fatG }: Macros): number {
+  return Math.round(
+    carbsG * KCAL_PER_GRAM.carbs +
+      proteinG * KCAL_PER_GRAM.protein +
+      fatG * KCAL_PER_GRAM.fat,
+  );
+}
+
+/**
+ * Whether a stated calorie figure sits within `tolerance` (default 15%) of the
+ * energy its macros imply. A soft consistency check for the manual-entry form —
+ * never a hard block. True when the macros imply no energy: there is nothing to
+ * compare against.
+ */
+export function macrosReconcile(kcal: number, macros: Macros, tolerance = 0.15): boolean {
+  const implied = kcalFromMacros(macros);
+
+  if (implied <= 0) return true;
+
+  return Math.abs(kcal - implied) / implied <= tolerance;
+}
+
 /** Share of total calories contributed by each macro, as 0–1 fractions. */
 export function macroEnergyShare(macros: Macros): Macros {
   const proteinKcal = macros.proteinG * KCAL_PER_GRAM.protein;
@@ -341,13 +388,6 @@ function round1(value: number): number {
 }
 
 export type BmiCategory = 'underweight' | 'healthy' | 'overweight' | 'obese';
-
-export const BMI_CATEGORY_LABELS: Record<BmiCategory, string> = {
-  underweight: 'Underweight',
-  healthy: 'Healthy',
-  overweight: 'Overweight',
-  obese: 'Obese',
-};
 
 /** Body mass index from kg and cm. Standard formula, no age/sex adjustment. */
 export function bmi(weightKg: number, heightCm: number): number {

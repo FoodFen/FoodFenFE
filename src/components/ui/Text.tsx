@@ -20,7 +20,7 @@ export type TextVariant =
   | 'mono'; // Numbers in tables, where alignment matters.
 
 export type TextTone =
-  'default' | 'muted' | 'subtle' | 'brand' | 'warning' | 'danger' | 'onBrand';
+  'default' | 'muted' | 'subtle' | 'brand' | 'success' | 'warning' | 'danger' | 'onBrand';
 
 const VARIANT_CLASSES: Record<TextVariant, string> = {
   display: 'font-bold text-5xl leading-tight',
@@ -37,6 +37,7 @@ const TONE_CLASSES: Record<TextTone, string> = {
   muted: 'text-fg-muted',
   subtle: 'text-fg-subtle',
   brand: 'text-brand',
+  success: 'text-success',
   warning: 'text-warning',
   danger: 'text-danger',
   onBrand: 'text-on-brand',

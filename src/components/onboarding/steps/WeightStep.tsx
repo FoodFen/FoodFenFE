@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { WheelPicker } from '@/components/onboarding/WheelPicker';
 import { Text } from '@/components/ui/Text';
 import { units } from '@/features/settings/store';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { UnitSystem } from '@/types/models';
 
 // Wheel rows carry only the number — the unit shows once, as a static label
@@ -34,7 +35,7 @@ export function WeightWheel({ unitSystem, value, onChange }: WeightWheelProps) {
         data={LB_OPTIONS}
         value={lb}
         onChange={(nextLb) => onChange(units.weightToKg(nextLb, 'lb'))}
-        sideLabel={`${lb.toFixed(1)} lb`}
+        sideLabel={` lb`}
       />
     );
   }
@@ -46,7 +47,7 @@ export function WeightWheel({ unitSystem, value, onChange }: WeightWheelProps) {
       data={KG_OPTIONS}
       value={kg}
       onChange={onChange}
-      sideLabel={`${kg.toFixed(1)} kg`}
+      sideLabel={` kg`}
     />
   );
 }
@@ -58,14 +59,16 @@ export interface WeightStepProps {
 }
 
 export function WeightStep({ unitSystem, value, onChange }: WeightStepProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="w-full items-center gap-6">
       <View className="w-full items-center gap-2">
         <Text variant="title" className="w-full text-center text-3xl">
-          What&apos;s your current weight?
+          {t('onboardingWeight', 'title')}
         </Text>
         <Text variant="body" tone="muted" className="text-center">
-          Don&apos;t worry, you can change this anytime.
+          {t('onboardingWeight', 'subtitle')}
         </Text>
       </View>
       <WeightWheel unitSystem={unitSystem} value={value} onChange={onChange} />

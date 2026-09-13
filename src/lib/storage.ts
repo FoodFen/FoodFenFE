@@ -101,6 +101,8 @@ export const cache = jsonAccessors(cacheStore);
 
 export const StorageKeys = {
   colorScheme: 'color-scheme',
+  locale: 'locale',
   onboardingComplete: 'onboarding-complete',
   queryCache: 'react-query-cache',
+  devSeed: 'dev-seed-enabled',
 } as const;

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n';
 import { StorageKeys, preferences } from '@/lib/storage';
 
 /**
@@ -18,11 +19,16 @@ interface SettingsState {
   theme: ThemePreference;
   weightUnit: WeightUnit;
   energyUnit: EnergyUnit;
+  locale: Locale;
   onboardingComplete: boolean;
+  /** Dev-only: populate the last few diary days on boot. Defaults to `__DEV__`. */
+  devSeedEnabled: boolean;
 
   setTheme: (theme: ThemePreference) => void;
   setWeightUnit: (unit: WeightUnit) => void;
   setEnergyUnit: (unit: EnergyUnit) => void;
+  setLocale: (locale: Locale) => void;
+  setDevSeedEnabled: (value: boolean) => void;
   completeOnboarding: () => void;
   /** Part of "erase local data" — sends the user back through onboarding. */
   resetOnboarding: () => void;
@@ -32,7 +38,9 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   theme: preferences.get<ThemePreference>(StorageKeys.colorScheme) ?? 'system',
   weightUnit: preferences.get<WeightUnit>('weight-unit') ?? 'kg',
   energyUnit: preferences.get<EnergyUnit>('energy-unit') ?? 'kcal',
+  locale: preferences.get<Locale>(StorageKeys.locale) ?? DEFAULT_LOCALE,
   onboardingComplete: preferences.get<boolean>(StorageKeys.onboardingComplete) ?? false,
+  devSeedEnabled: preferences.get<boolean>(StorageKeys.devSeed) ?? __DEV__,
 
   setTheme: (theme) => {
     preferences.set(StorageKeys.colorScheme, theme);
@@ -47,6 +55,16 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setEnergyUnit: (energyUnit) => {
     preferences.set('energy-unit', energyUnit);
     set({ energyUnit });
+  },
+
+  setLocale: (locale) => {
+    preferences.set(StorageKeys.locale, locale);
+    set({ locale });
+  },
+
+  setDevSeedEnabled: (devSeedEnabled) => {
+    preferences.set(StorageKeys.devSeed, devSeedEnabled);
+    set({ devSeedEnabled });
   },
 
   completeOnboarding: () => {

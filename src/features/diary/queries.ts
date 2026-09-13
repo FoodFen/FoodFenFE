@@ -2,15 +2,24 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import * as diaryRepository from '@/data/diaryRepository';
 import * as entryRepository from '@/data/entryRepository';
-import type { CreateEntryInput, UpdateEntryInput } from '@/data/entryRepository';
-import { searchCatalog } from '@/data/foodCatalog';
+import type {
+  CreateEntryInput,
+  CreateManualEntryInput,
+  UpdateEntryInput,
+  UpdateManualEntryInput,
+} from '@/data/entryRepository';
+import { getCatalogFood, searchCatalog } from '@/data/foodCatalog';
 import * as gamification from '@/data/gamificationRepository';
 import * as logRepository from '@/data/logRepository';
+import type { AddActivityInput } from '@/data/logRepository';
 import { pullDayLogs, pullFoodEntries } from '@/data/pull';
 import { pendingChangeCount, readWithRefresh } from '@/data/sync';
+import * as userRepository from '@/data/userRepository';
+import { suggestedMealType } from '@/features/diary/selectors';
 import { useProfileStore } from '@/features/profile/store';
 import type { DateKey } from '@/lib/date';
 import { isFutureDate, lastNDays, todayKey } from '@/lib/date';
+import { findServing, gramsForServing, nutritionForServing } from '@/lib/nutrition';
 import { queryKeys } from '@/lib/queryClient';
 
 /**
@@ -30,7 +39,7 @@ function useUserId(): string | null {
 }
 
 /** Entries and the day-level logs are always refreshed together. */
-async function pullDiaryWindow(
+export async function pullDiaryWindow(
   userId: string,
   from: DateKey,
   to: DateKey,
@@ -99,13 +108,35 @@ export function useEntry(entryId: string) {
  * Never hits the network — this list ships in the bundle. A server-backed
  * catalog would be a separate hook, so this one keeps working offline.
  */
-export function useCatalogSearch(query: string) {
+export function useCatalogSearch(query: string, recentIds?: string[]) {
   const trimmed = query.trim();
 
   return useQuery({
     queryKey: queryKeys.catalog.search(trimmed),
-    queryFn: () => searchCatalog(trimmed),
+    queryFn: () => searchCatalog(trimmed, { recentIds }),
     enabled: trimmed.length >= 2,
+    retry: false,
+  });
+}
+
+/**
+ * The catalog foods this user logged most recently.
+ *
+ * A read over past entries, not the catalog — so it sits under `entries` and
+ * `useDiaryInvalidation` refreshes it after every log. Feeds the "Gần đây"
+ * shortcut on the search screen.
+ */
+export function useRecentFoods(limit = 8) {
+  const userId = useUserId();
+
+  return useQuery({
+    queryKey: queryKeys.entries.recent(userId, limit),
+    queryFn: () => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      return entryRepository.getRecentCatalogFoods(userId, limit);
+    },
+    enabled: userId !== null,
     retry: false,
   });
 }
@@ -119,6 +150,27 @@ function useDiaryInvalidation() {
     void queryClient.invalidateQueries({ queryKey: queryKeys.entries.all });
     void queryClient.invalidateQueries({ queryKey: queryKeys.sync.all });
   };
+}
+
+/**
+ * Repair a missing `daily_goal` row by recomputing it from the profile — the
+ * same call onboarding makes. The dashboard fires this once when `useDiaryDay`
+ * throws `MissingGoalError`, then the invalidation lets the day query retry.
+ */
+export function useHealMissingGoal() {
+  const queryClient = useQueryClient();
+  const profile = useProfileStore((state) => state.profile);
+
+  return useMutation({
+    mutationFn: async () => {
+      if (!profile) throw new Error('No local profile yet.');
+
+      return userRepository.writeCalculatedGoal(profile);
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
+    },
+  });
 }
 
 export type LogMealInput = Omit<CreateEntryInput, 'userId'>;
@@ -149,12 +201,114 @@ export function useLogMeal() {
   });
 }
 
+export type LogManualEntryInput = Omit<CreateManualEntryInput, 'userId'>;
+
+/**
+ * Log a manual aggregate entry (UC-12).
+ *
+ * Mirrors `useLogMeal` — a local insert then the streak advance — but writes
+ * one `food_entry` with the totals the user typed and no ingredient rows.
+ */
+export function useLogManualEntry() {
+  const userId = useUserId();
+  const invalidate = useDiaryInvalidation();
+
+  return useMutation({
+    mutationFn: async (input: LogManualEntryInput) => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      const entry = entryRepository.createManualEntry({ ...input, userId });
+
+      gamification.recordActiveDay(userId, input.loggedOn);
+
+      return entry;
+    },
+    onSuccess: invalidate,
+  });
+}
+
+export interface QuickLogFoodInput {
+  catalogFoodId: string;
+  servingId: string;
+  /** How many of the chosen serving. */
+  quantity: number;
+}
+
+/**
+ * Log one catalog food, scaled to a portion, as its own single-item entry.
+ *
+ * The "search → pick a portion → done" path. The chosen serving's nutrition is
+ * scaled and copied onto one ingredient row (`catalogFoodId` kept so the food
+ * shows up in "Gần đây" next time); the entry lands on today with the meal
+ * guessed from the clock.
+ */
+export function useQuickLogFood() {
+  const userId = useUserId();
+  const invalidate = useDiaryInvalidation();
+
+  return useMutation({
+    mutationFn: async ({ catalogFoodId, servingId, quantity }: QuickLogFoodInput) => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      const food = getCatalogFood(catalogFoodId);
+      if (!food) throw new Error(`Catalog food ${catalogFoodId} not found.`);
+
+      const serving = findServing(food, servingId) ?? food.servings[0];
+      const grams = serving ? gramsForServing(quantity, serving) : quantity;
+      const nutrition = nutritionForServing(food, quantity, servingId);
+      const today = todayKey();
+
+      const entry = entryRepository.createEntry({
+        userId,
+        name: food.name,
+        mealType: suggestedMealType(),
+        inputMethod: 'type',
+        loggedOn: today,
+        ingredients: [
+          {
+            name: food.name,
+            quantityG: grams,
+            kcal: nutrition.kcal,
+            carbsG: nutrition.carbsG,
+            proteinG: nutrition.proteinG,
+            fatG: nutrition.fatG,
+            fiberG: nutrition.fiberG ?? null,
+            catalogFoodId: food.id,
+          },
+        ],
+      });
+
+      gamification.recordActiveDay(userId, today);
+
+      return entry;
+    },
+    onSuccess: invalidate,
+  });
+}
+
 export function useUpdateEntry() {
   const invalidate = useDiaryInvalidation();
 
   return useMutation({
     mutationFn: async ({ id, patch }: { id: string; patch: UpdateEntryInput }) =>
       entryRepository.updateEntry(id, patch),
+    onSuccess: invalidate,
+  });
+}
+
+/**
+ * Edit an aggregate (manual) entry's typed numbers.
+ *
+ * Mirrors `useUpdateEntry` but routes to `updateManualEntry`, which writes the
+ * macro columns directly. For an entry that has one ingredient the edit screen
+ * uses `useUpdateEntry` with a rebuilt row instead.
+ */
+export function useUpdateManualEntry() {
+  const invalidate = useDiaryInvalidation();
+
+  return useMutation({
+    mutationFn: async ({ id, patch }: { id: string; patch: UpdateManualEntryInput }) =>
+      entryRepository.updateManualEntry(id, patch),
     onSuccess: invalidate,
   });
 }
@@ -177,6 +331,27 @@ export function useAddWater() {
       if (!userId) throw new Error('No local profile yet.');
 
       return logRepository.addWater(userId, amountMl, date);
+    },
+    onSuccess: invalidate,
+  });
+}
+
+/**
+ * Log an activity (a workout / burned calories).
+ *
+ * Mirrors `useAddWater`: a local insert, then the same broad diary
+ * invalidation so any day total that counts exercise back in recomputes. No
+ * caller yet — this is the recompute seam for when activity logging lands.
+ */
+export function useLogActivity() {
+  const userId = useUserId();
+  const invalidate = useDiaryInvalidation();
+
+  return useMutation({
+    mutationFn: async (input: Omit<AddActivityInput, 'userId'>) => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      return logRepository.addActivity({ ...input, userId });
     },
     onSuccess: invalidate,
   });

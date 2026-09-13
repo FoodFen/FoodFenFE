@@ -13,6 +13,7 @@ import { getGoalForDate, setGoal } from '@/data/userRepository';
 import { bodyStatsSchema } from '@/features/profile/schemas';
 import type { BodyStatsValues } from '@/features/profile/schemas';
 import { useProfileStore } from '@/features/profile/store';
+import { useTranslation } from '@/hooks/useTranslation';
 import { haptics } from '@/lib/haptics';
 import { calculateTargets } from '@/lib/nutrition';
 
@@ -26,6 +27,7 @@ import { calculateTargets } from '@/lib/nutrition';
 export default function GoalsScreen() {
   const user = useProfileStore((state) => state.profile);
   const saveProfile = useProfileStore((state) => state.saveProfile);
+  const { t } = useTranslation();
 
   const {
     control,
@@ -69,12 +71,12 @@ export default function GoalsScreen() {
 
   const switchToCalculated = () => {
     Alert.alert(
-      'Use calculated targets',
-      'Your targets will be worked out from your body stats and goal from today onward.',
+      t('goals', 'useCalculatedTitle'),
+      t('goals', 'useCalculatedMessage'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('common', 'cancel'), style: 'cancel' },
         {
-          text: 'Use calculated',
+          text: t('goals', 'useCalculatedConfirm'),
           onPress: () => {
             const updated = saveProfile({ calorieCalcMode: 'auto' });
 
@@ -100,23 +102,25 @@ export default function GoalsScreen() {
       {preview ? (
         <GoalsPreviewCard
           targets={preview}
-          title={isManual ? 'What would be calculated' : 'Your new targets'}
+          title={t('goals', isManual ? 'whatWouldBeCalculated' : 'yourNewTargets')}
           footnote={
             isManual ? (
               <Text variant="caption" tone="warning">
-                You are on manual targets ({currentGoal?.targetKcal.toLocaleString()}{' '}
-                kcal), so these calculated figures are not being used.
+                {t('goals', 'manualWarning').replace(
+                  '{kcal}',
+                  currentGoal?.targetKcal.toLocaleString() ?? '',
+                )}
               </Text>
             ) : undefined
           }
         />
       ) : null}
 
-      <Button label="Save" onPress={() => void onSubmit()} fullWidth size="lg" />
+      <Button label={t('common', 'save')} onPress={() => void onSubmit()} fullWidth size="lg" />
 
       {isManual ? (
         <Button
-          label="Switch to calculated targets"
+          label={t('goals', 'switchToCalculated')}
           variant="ghost"
           onPress={switchToCalculated}
         />

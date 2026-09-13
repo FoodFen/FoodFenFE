@@ -8,17 +8,14 @@ import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
 import type { BodyStatsValues } from '@/features/profile/schemas';
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { haptics } from '@/lib/haptics';
 import { ACTIVITY_LABELS, DIET_LABELS } from '@/lib/nutrition';
 import type { ActivityLevel, DietType, Gender } from '@/types/models';
 
-const GENDER_OPTIONS: { value: Gender; label: string }[] = [
-  { value: 'female', label: 'Female' },
-  { value: 'male', label: 'Male' },
-  { value: 'other', label: 'Other' },
-];
-
+// Only used to enumerate each enum's values — the *display* label comes from
+// `useTranslation` below, not from these English constants.
 const ACTIVITY_OPTIONS = Object.keys(ACTIVITY_LABELS) as ActivityLevel[];
 const DIET_OPTIONS = Object.keys(DIET_LABELS) as DietType[];
 const RATE_OPTIONS = [0, 0.25, 0.5, 0.75, 1];
@@ -30,13 +27,6 @@ const ACTIVITY_ICONS: Record<ActivityLevel, string> = {
   active: '🚴',
   very_active: '🏋️',
 };
-
-// ACTIVITY_LABELS packs "Title — description" into one string; split once
-// here rather than duplicating the facts in a second constant.
-const ACTIVITY_OPTION_LIST = ACTIVITY_OPTIONS.map((level) => {
-  const [title, description] = ACTIVITY_LABELS[level].split(' — ');
-  return { value: level, label: title ?? ACTIVITY_LABELS[level], description, icon: ACTIVITY_ICONS[level] };
-});
 
 export interface BodyStatsFormProps {
   control: Control<BodyStatsValues>;
@@ -51,17 +41,42 @@ export interface BodyStatsFormProps {
  * copy and buttons differ.
  */
 export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
+  const { t } = useTranslation();
+
+  const genderOptions: { value: Gender; label: string }[] = [
+    { value: 'female', label: t('onboardingGender', 'female') },
+    { value: 'male', label: t('onboardingGender', 'male') },
+    { value: 'other', label: t('onboardingGender', 'preferNotToAnswer') },
+  ];
+
+  const activityOptionList = ACTIVITY_OPTIONS.map((level) => ({
+    value: level,
+    label: t('activityLevel', level),
+    description: t('activityLevelDescription', level),
+    icon: ACTIVITY_ICONS[level],
+  }));
+
+  const rateOptions = RATE_OPTIONS.map((rate) => ({
+    value: rate,
+    label: rate === 0 ? t('onboardingGoal', 'maintain') : `${rate} kg`,
+  }));
+
+  const dietOptions = DIET_OPTIONS.map((diet) => ({
+    value: diet,
+    label: t('dietType', diet),
+  }));
+
   return (
     <>
       <Card className="gap-4">
-        <Text variant="heading">About you</Text>
+        <Text variant="heading">{t('profileBodyStats', 'aboutYou')}</Text>
 
         <Controller
           control={control}
           name="gender"
           render={({ field: { onChange, value } }) => (
-            <Field label="Sex">
-              <ChipRow options={GENDER_OPTIONS} value={value} onChange={onChange} />
+            <Field label={t('profileBodyStats', 'sex')}>
+              <ChipRow options={genderOptions} value={value} onChange={onChange} />
             </Field>
           )}
         />
@@ -71,7 +86,7 @@ export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
           name="birthYear"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="Year of birth"
+              label={t('profileBodyStats', 'yearOfBirth')}
               value={String(value ?? '')}
               onChangeText={onChange}
               onBlur={onBlur}
@@ -87,7 +102,7 @@ export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
           name="height"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="Height (cm)"
+              label={t('profileBodyStats', 'heightCm')}
               value={String(value ?? '')}
               onChangeText={onChange}
               onBlur={onBlur}
@@ -99,14 +114,14 @@ export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
       </Card>
 
       <Card className="gap-4">
-        <Text variant="heading">Weight</Text>
+        <Text variant="heading">{t('profileBodyStats', 'weight')}</Text>
 
         <Controller
           control={control}
           name="weightCurrent"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="Current (kg)"
+              label={t('profileBodyStats', 'currentKg')}
               value={String(value ?? '')}
               onChangeText={onChange}
               onBlur={onBlur}
@@ -121,12 +136,12 @@ export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
           name="weightGoal"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="Goal (kg)"
+              label={t('profileBodyStats', 'goalKg')}
               value={String(value ?? '')}
               onChangeText={onChange}
               onBlur={onBlur}
               error={errors.weightGoal?.message}
-              hint="The same as your current weight means maintain."
+              hint={t('profileBodyStats', 'goalHint')}
               keyboardType="decimal-pad"
             />
           )}
@@ -136,15 +151,8 @@ export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
           control={control}
           name="weeklyRateKg"
           render={({ field: { onChange, value } }) => (
-            <Field label="Pace — kg per week">
-              <ChipRow
-                options={RATE_OPTIONS.map((rate) => ({
-                  value: rate,
-                  label: rate === 0 ? 'Maintain' : `${rate} kg`,
-                }))}
-                value={value}
-                onChange={onChange}
-              />
+            <Field label={t('profileBodyStats', 'paceLabel')}>
+              <ChipRow options={rateOptions} value={value} onChange={onChange} />
               {errors.weeklyRateKg?.message ? (
                 <Text variant="caption" tone="danger">
                   {errors.weeklyRateKg.message}
@@ -156,37 +164,30 @@ export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
       </Card>
 
       <Card className="gap-4">
-        <Text variant="heading">Activity</Text>
+        <Text variant="heading">{t('profileBodyStats', 'activity')}</Text>
 
         <Controller
           control={control}
           name="activityLevel"
           render={({ field: { onChange, value } }) => (
-            <ActivityLevelList value={value} onChange={onChange} />
+            <OptionList options={activityOptionList} value={value} onChange={onChange} />
           )}
         />
       </Card>
 
       <Card className="gap-4">
-        <Text variant="heading">Diet</Text>
+        <Text variant="heading">{t('profileBodyStats', 'diet')}</Text>
 
         <Controller
           control={control}
           name="dietType"
           render={({ field: { onChange, value } }) => (
-            <ChipRow
-              options={DIET_OPTIONS.map((diet) => ({
-                value: diet,
-                label: DIET_LABELS[diet],
-              }))}
-              value={value}
-              onChange={onChange}
-            />
+            <ChipRow options={dietOptions} value={value} onChange={onChange} />
           )}
         />
 
         <Text variant="caption" tone="subtle">
-          Changes how your calories are split across protein, carbs and fat.
+          {t('profileBodyStats', 'dietHint')}
         </Text>
       </Card>
     </>
@@ -212,7 +213,16 @@ export function ActivityLevelList({
   value: ActivityLevel | undefined;
   onChange: (value: ActivityLevel) => void;
 }) {
-  return <OptionList options={ACTIVITY_OPTION_LIST} value={value} onChange={onChange} />;
+  const { t } = useTranslation();
+
+  const activityOptionList = ACTIVITY_OPTIONS.map((level) => ({
+    value: level,
+    label: t('activityLevel', level),
+    description: t('activityLevelDescription', level),
+    icon: ACTIVITY_ICONS[level],
+  }));
+
+  return <OptionList options={activityOptionList} value={value} onChange={onChange} />;
 }
 
 export interface Option<T extends string | number> {

@@ -12,9 +12,11 @@ import { Text } from '@/components/ui/Text';
 import { signInSchema } from '@/features/auth/schemas';
 import type { SignInValues } from '@/features/auth/schemas';
 import { useAuthStore } from '@/features/auth/store';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function SignInScreen() {
   const signIn = useAuthStore((state) => state.signIn);
+  const { t } = useTranslation();
 
   /** Errors that belong to the request rather than a single field. */
   const [formError, setFormError] = useState<string | null>(null);
@@ -52,11 +54,11 @@ export default function SignInScreen() {
 
         setFormError(
           error.kind === 'unauthorized'
-            ? 'That email and password do not match.'
+            ? t('auth', 'invalidCredentials')
             : error.userMessage,
         );
       } else {
-        setFormError('Something went wrong. Please try again.');
+        setFormError(t('auth', 'genericError'));
       }
     }
   });
@@ -75,10 +77,9 @@ export default function SignInScreen() {
     >
       <View className="gap-2 pb-8">
         <Text className="text-5xl">🥗</Text>
-        <Text variant="title">Welcome back</Text>
+        <Text variant="title">{t('auth', 'welcomeBack')}</Text>
         <Text variant="body" tone="muted">
-          Optional — your diary already works offline. An account keeps it backed up and
-          available on your other devices.
+          {t('auth', 'signInSubtitle')}
         </Text>
       </View>
 
@@ -88,7 +89,7 @@ export default function SignInScreen() {
           name="email"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="Email"
+              label={t('auth', 'email')}
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
@@ -107,7 +108,7 @@ export default function SignInScreen() {
           name="password"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="Password"
+              label={t('auth', 'password')}
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
@@ -128,7 +129,7 @@ export default function SignInScreen() {
         ) : null}
 
         <Button
-          label="Sign in"
+          label={t('auth', 'signInTitle')}
           onPress={() => void onSubmit()}
           loading={isSubmitting}
           fullWidth
@@ -139,11 +140,11 @@ export default function SignInScreen() {
 
       <View className="mt-auto flex-row justify-center gap-1 pt-8">
         <Text variant="body" tone="muted">
-          New to FoodFen?
+          {t('auth', 'newToApp')}
         </Text>
         <Link href="/sign-up" asChild>
           <Text variant="body" tone="brand" accessibilityRole="link">
-            Create an account
+            {t('auth', 'createAccountLink')}
           </Text>
         </Link>
       </View>

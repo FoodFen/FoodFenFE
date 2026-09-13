@@ -6,6 +6,7 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
+import { useQueryClient } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import { useFonts } from 'expo-font';
@@ -18,13 +19,16 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { LogSheet } from '@/components/logging/LogSheet';
 import { ErrorState } from '@/components/ui/EmptyState';
+import { clearSeededDays, seedRecentDays } from '@/data/devSeed';
 import { db, enableForeignKeys } from '@/db/client';
 import { connectAuthToApiClient, useAuthStore } from '@/features/auth/store';
 import { useProfileStore } from '@/features/profile/store';
+import { useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useReactQueryBridge } from '@/hooks/useReactQueryBridge';
-import { createQueryClient, persistOptions } from '@/lib/queryClient';
+import { createQueryClient, persistOptions, queryKeys } from '@/lib/queryClient';
 import { colorsFor } from '@/theme/colors';
 
 import migrations from '../drizzle/migrations';
@@ -104,7 +108,7 @@ export default function RootLayout() {
       <PersistQueryClientProvider client={queryClient} persistOptions={persistOptions}>
         <SafeAreaProvider>
           <KeyboardProvider>
-            <AppShell />
+            <AppShell migrated={migrated} />
           </KeyboardProvider>
         </SafeAreaProvider>
       </PersistQueryClientProvider>
@@ -116,16 +120,33 @@ export default function RootLayout() {
  * Split from `RootLayout` so it sits inside the providers: `useAppTheme` and
  * the query bridge both need context that the outer component establishes.
  */
-function AppShell() {
+function AppShell({ migrated }: { migrated: boolean }) {
   const { resolved, isDark } = useAppTheme();
   const colors = colorsFor(resolved);
 
   // The local profile — not an account — decides what the user sees. FoodFen
   // works fully offline: this reflects only whether the one-time onboarding
   // has been completed on this device, never whether anyone is signed in.
-  const hasProfile = useProfileStore((state) => state.profile !== null);
+  const profileId = useProfileStore((state) => state.profile?.id ?? null);
+  const hasProfile = profileId !== null;
+
+  const devSeedEnabled = useSettingsStore((state) => state.devSeedEnabled);
+  const queryClient = useQueryClient();
 
   useReactQueryBridge();
+
+  // Dev-only: fill the last few days so the dashboard has data to render while
+  // food logging is unbuilt. The whole effect no-ops in a release build.
+  // Turning the Settings → Developer toggle off wipes the last-3-days window
+  // (dev-only; there is no real diary data there yet).
+  useEffect(() => {
+    if (!__DEV__ || !migrated || !profileId) return;
+
+    if (devSeedEnabled) seedRecentDays(profileId);
+    else clearSeededDays(profileId);
+
+    void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
+  }, [migrated, devSeedEnabled, profileId, queryClient]);
 
   // The navigator paints the screen background behind our own views during
   // transitions; without this it flashes white in dark mode.
@@ -171,7 +192,9 @@ function AppShell() {
             options={{ headerShown: false, presentation: 'modal' }}
           />
           <Stack.Screen name="entry/[id]" options={{ title: 'Meal' }} />
+          <Stack.Screen name="entry/edit/[id]" options={{ title: 'Edit' }} />
           <Stack.Screen name="settings" options={{ headerShown: false }} />
+          <Stack.Screen name="shop" options={{ title: 'Shop' }} />
         </Stack.Protected>
 
         {/* Reachable at any time from Profile — "sign in to sync" — and gating
@@ -180,6 +203,10 @@ function AppShell() {
 
         <Stack.Screen name="+not-found" options={{ title: 'Not found' }} />
       </Stack>
+
+      {/* One instance for the whole app: the tab-bar "+" and every dashboard
+          card's "+" open this same sheet through `useLogSheetStore`. */}
+      <LogSheet />
     </ThemeProvider>
   );
 }

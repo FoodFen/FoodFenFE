@@ -4,6 +4,7 @@
   "main": "expo-router/entry",
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.2",
+    "@expo/ui": "~57.0.16",
     "@expo/vector-icons": "^15.0.2",
     "@hookform/resolvers": "^5.9.1",
     "@quidone/react-native-wheel-picker": "^1.7.1",
@@ -81,6 +82,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "verify": "npm run typecheck && npm run lint && npm test",
+    "catalog:build": "node scripts/build-catalog.mjs",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio"
   },

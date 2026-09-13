@@ -2,7 +2,7 @@ import { relations } from 'drizzle-orm';
 import { index, integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 /**
- * The CalSnap ERD v1.0.0, as the on-device SQLite schema.
+ * The FoodFen ERD v1.0.0, as the on-device SQLite schema.
  *
  * Three deliberate departures from the server-side ERD, each because this copy
  * lives on a phone that may never have talked to a server:
@@ -130,6 +130,16 @@ export const foodEntry = sqliteTable(
     fatG: real('fat_g').notNull().default(0),
     /** Premium-only field; free accounts do not see it. */
     fiberG: real('fiber_g'),
+    /**
+     * Extension: how much the user said they ate, kept as a label rather than a
+     * normalized weight. `amount` is the number and `amountUnit` its unit
+     * (`'g'` or `'serving'`). Manual aggregate entries (UC-12) store exactly
+     * what was picked, with no conversion or scaling; both are null for catalog
+     * and composed-meal entries, whose portion already lives on the ingredient
+     * rows.
+     */
+    amount: real('amount'),
+    amountUnit: text('amount_unit').$type<'g' | 'serving'>(),
     /** Thumbs up/down on the AI's extraction, for future model feedback. */
     aiFeedback: text('ai_feedback').$type<AiFeedback>(),
     /**

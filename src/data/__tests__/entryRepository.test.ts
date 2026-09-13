@@ -1,6 +1,6 @@
-import { isNotNull } from 'drizzle-orm';
+import { eq, isNotNull } from 'drizzle-orm';
 
-import { foodEntry } from '@/db/schema';
+import { foodEntry, ingredient } from '@/db/schema';
 import { createTestDatabase } from '@/db/testDatabase';
 import type { TestDatabase } from '@/db/testDatabase';
 
@@ -158,6 +158,54 @@ describe('updateEntry', () => {
   });
 });
 
+describe('updateManualEntry', () => {
+  it('patches the typed numbers in place without adding ingredient rows', () => {
+    const user = createUser();
+    const entry = entryRepository.createManualEntry({
+      userId: user.id,
+      name: 'Bún bò',
+      mealType: 'lunch',
+      loggedOn: '2026-03-01',
+      amount: 400,
+      amountUnit: 'g',
+      totalKcal: 480,
+      carbsG: 55,
+      proteinG: 28,
+      fatG: 14,
+    });
+
+    const updated = entryRepository.updateManualEntry(entry.id, {
+      name: 'Bún bò Huế',
+      totalKcal: 520,
+      proteinG: 30,
+    });
+
+    expect(updated.name).toBe('Bún bò Huế');
+    expect(updated.totalKcal).toBe(520);
+    expect(updated.proteinG).toBe(30);
+    expect(updated.carbsG).toBe(55);
+    expect(updated.ingredients).toEqual([]);
+  });
+
+  it('marks the row unsynced after the edit', () => {
+    const user = createUser();
+    const entry = entryRepository.createManualEntry({
+      userId: user.id,
+      name: 'Snack',
+      mealType: 'snack',
+      loggedOn: '2026-03-01',
+      totalKcal: 200,
+      carbsG: 20,
+      proteinG: 5,
+      fatG: 10,
+    });
+
+    const updated = entryRepository.updateManualEntry(entry.id, { totalKcal: 250 });
+
+    expect(updated.syncedAt).toBeNull();
+  });
+});
+
 describe('deleteEntry', () => {
   it('hides the meal from reads', () => {
     const user = createUser();
@@ -198,6 +246,39 @@ describe('deleteEntry', () => {
 
     expect(softDeleted).toHaveLength(1);
     expect(softDeleted[0]?.syncedAt).toBeNull();
+  });
+
+  it('cascades to the child ingredient rows (UC-14)', () => {
+    const user = createUser();
+    const entry = entryRepository.createEntry({
+      userId: user.id,
+      name: 'Lunch',
+      mealType: 'lunch',
+      inputMethod: 'type',
+      loggedOn: '2026-03-01',
+      ingredients: [chicken, rice],
+    });
+
+    entryRepository.deleteEntry(entry.id);
+
+    const liveIngredients = mockDb
+      .select()
+      .from(ingredient)
+      .where(eq(ingredient.foodEntryId, entry.id))
+      .all()
+      .filter((row) => row.deletedAt === null);
+
+    expect(liveIngredients).toEqual([]);
+
+    // Soft deleted, not gone — same reasoning as the entry itself.
+    const softDeletedIngredients = mockDb
+      .select()
+      .from(ingredient)
+      .where(eq(ingredient.foodEntryId, entry.id))
+      .all();
+
+    expect(softDeletedIngredients).toHaveLength(2);
+    expect(softDeletedIngredients.every((row) => row.syncedAt === null)).toBe(true);
   });
 });
 

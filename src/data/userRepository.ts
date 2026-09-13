@@ -70,11 +70,15 @@ export function createLocalUser(input: CreateUserInput): {
     ...touch(now),
   };
 
-  db.insert(user).values(row).run();
+  // One transaction: a crash between the two writes must not leave a profile
+  // with no goal to measure a day against.
+  return db.transaction(() => {
+    db.insert(user).values(row).run();
 
-  const goal = writeCalculatedGoal(row, todayKey(), now);
+    const goal = writeCalculatedGoal(row, todayKey(), now);
 
-  return { user: row, goal };
+    return { user: row, goal };
+  });
 }
 
 export function updateLocalUser(

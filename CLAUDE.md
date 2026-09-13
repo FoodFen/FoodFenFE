@@ -34,7 +34,7 @@ Open with 2–4 bullets naming the files and scope first when the task is non-tr
 
 ## Product
 
-CalSnap: AI-powered nutrition and calorie tracking. Surfaces are AI food recognition (photograph a meal → identified items with estimated kcal/macros), a long multi-step personalized onboarding, a daily dashboard, gamification (streaks, quests, coins), and a freemium Premium paywall. This context informs naming and data modelling — it never licenses building more than the current turn asked for.
+FoodFend: AI-powered nutrition and calorie tracking. Surfaces are AI food recognition (photograph a meal → identified items with estimated kcal/macros), a long multi-step personalized onboarding, a daily dashboard, gamification (streaks, quests, coins), and a freemium Premium paywall. This context informs naming and data modelling — it never licenses building more than the current turn asked for.
 
 ## Commands
 
@@ -101,7 +101,7 @@ Two orthogonal pieces of identity:
 
 ### Data model
 
-`src/db/schema.ts` is the CalSnap ERD v1.0.0 as SQLite (11 tables), with four documented departures: text ids + nullable `remote_id`, sync columns everywhere, no `password_hash`, and three added columns (`food_entry.meal_type`, `*.logged_on`, `user.weekly_rate_kg`). `src/types/models.ts` aliases the Drizzle row types rather than duplicating them; only composite shapes (`FoodEntry`, `DiaryDay`) are hand-written there.
+`src/db/schema.ts` is the FoodFen ERD v1.0.0 as SQLite (11 tables), with four documented departures: text ids + nullable `remote_id`, sync columns everywhere, no `password_hash`, and three added columns (`food_entry.meal_type`, `*.logged_on`, `user.weekly_rate_kg`). `src/types/models.ts` aliases the Drizzle row types rather than duplicating them; only composite shapes (`FoodEntry`, `DiaryDay`) are hand-written there.
 
 Where the load-bearing logic lives:
 
@@ -133,3 +133,8 @@ Where the load-bearing logic lives:
 ## Not yet built
 
 Push sync · AI meal capture (`input_method` and `ai_feedback` columns exist; only typed/manual paths do) · AI insights (should consume the pre-aggregated `summarizeTrends()`, not raw entries) · gamification UI (schema, repositories and tested rules exist; streaks already advance on log) · barcode and photo logging (`expo-camera`/`expo-image-picker` installed and permissioned, `food_entry.image_url` plumbed).
+
+
+## Other instructions:
+
+- Reduce commenting in code, only put comments at the top explaining what this file does in a brief, high-level summary. Do not comment every line or function.

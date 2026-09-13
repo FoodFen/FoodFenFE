@@ -31,7 +31,7 @@ export default function InsightsScreen() {
 
   if (isPending) {
     return (
-      <ScrollScreen style={{ paddingTop: insets.top }}>
+      <ScrollScreen bottomSpacing={96} style={{ paddingTop: insets.top }}>
         <Skeleton className="h-10 w-40" />
         <Skeleton className="h-48 rounded-card" />
         <Skeleton className="h-40 rounded-card" />
@@ -65,7 +65,7 @@ export default function InsightsScreen() {
   const isDeficit = summary.averageDelta < 0;
 
   return (
-    <ScrollScreen style={{ paddingTop: insets.top }}>
+    <ScrollScreen bottomSpacing={96} style={{ paddingTop: insets.top }}>
       <Text variant="title" className="pt-2">
         Insights
       </Text>

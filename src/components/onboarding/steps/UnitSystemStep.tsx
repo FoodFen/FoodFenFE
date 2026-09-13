@@ -2,12 +2,8 @@ import { View } from 'react-native';
 
 import { OptionList } from '@/components/profile/BodyStatsForm';
 import { Text } from '@/components/ui/Text';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { UnitSystem } from '@/types/models';
-
-const UNIT_SYSTEM_OPTIONS: { value: UnitSystem; label: string }[] = [
-  { value: 'metric', label: 'Metric (cm, kg)' },
-  { value: 'imperial', label: 'Imperial (ft/in, lb)' },
-];
 
 export interface UnitSystemStepProps {
   value: UnitSystem;
@@ -15,17 +11,24 @@ export interface UnitSystemStepProps {
 }
 
 export function UnitSystemStep({ value, onChange }: UnitSystemStepProps) {
+  const { t } = useTranslation();
+
+  const options: { value: UnitSystem; label: string }[] = [
+    { value: 'metric', label: t('onboardingUnitSystem', 'metric') },
+    { value: 'imperial', label: t('onboardingUnitSystem', 'imperial') },
+  ];
+
   return (
     <View className="w-full items-center gap-6">
       <View className="w-full items-center gap-2">
         <Text variant="title" className="w-full text-center text-3xl">
-          Which units do you use?
+          {t('onboardingUnitSystem', 'title')}
         </Text>
         <Text variant="body" tone="muted" className="text-center">
-          This applies to every measurement in the app.
+          {t('onboardingUnitSystem', 'subtitle')}
         </Text>
       </View>
-      <OptionList options={UNIT_SYSTEM_OPTIONS} value={value} onChange={onChange} />
+      <OptionList options={options} value={value} onChange={onChange} />
     </View>
   );
 }

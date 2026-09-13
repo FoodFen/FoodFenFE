@@ -12,10 +12,12 @@ import { Text } from '@/components/ui/Text';
 import { signUpSchema } from '@/features/auth/schemas';
 import type { SignUpValues } from '@/features/auth/schemas';
 import { useAuthStore } from '@/features/auth/store';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function SignUpScreen() {
   const signUp = useAuthStore((state) => state.signUp);
   const [formError, setFormError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const {
     control,
@@ -50,7 +52,7 @@ export default function SignUpScreen() {
 
         setFormError(error.userMessage);
       } else {
-        setFormError('Something went wrong. Please try again.');
+        setFormError(t('auth', 'genericError'));
       }
     }
   });
@@ -68,10 +70,9 @@ export default function SignUpScreen() {
       bottomOffset={24}
     >
       <View className="gap-2 pb-6">
-        <Text variant="title">Create your account</Text>
+        <Text variant="title">{t('auth', 'createYourAccount')}</Text>
         <Text variant="body" tone="muted">
-          Your diary stays on this device either way. An account is what lets it follow
-          you to another one.
+          {t('auth', 'signUpSubtitle')}
         </Text>
       </View>
 
@@ -81,7 +82,7 @@ export default function SignUpScreen() {
           name="displayName"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="Name"
+              label={t('common', 'name')}
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
@@ -98,7 +99,7 @@ export default function SignUpScreen() {
           name="email"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="Email"
+              label={t('auth', 'email')}
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
@@ -116,12 +117,12 @@ export default function SignUpScreen() {
           name="password"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="Password"
+              label={t('auth', 'password')}
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
               error={errors.password?.message}
-              hint="At least 8 characters, including a number."
+              hint={t('auth', 'passwordHint')}
               secureTextEntry
               // `newPassword` is what prompts the OS to offer a strong password
               // and save it to the keychain.
@@ -136,7 +137,7 @@ export default function SignUpScreen() {
           name="confirmPassword"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="Confirm password"
+              label={t('auth', 'confirmPassword')}
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
@@ -157,7 +158,7 @@ export default function SignUpScreen() {
         ) : null}
 
         <Button
-          label="Create account"
+          label={t('auth', 'createAccountTitle')}
           onPress={() => void onSubmit()}
           loading={isSubmitting}
           fullWidth
@@ -168,11 +169,11 @@ export default function SignUpScreen() {
 
       <View className="mt-auto flex-row justify-center gap-1 pt-8">
         <Text variant="body" tone="muted">
-          Already have an account?
+          {t('auth', 'alreadyHaveAccount')}
         </Text>
         <Link href="/sign-in" asChild>
           <Text variant="body" tone="brand" accessibilityRole="link">
-            Sign in
+            {t('auth', 'signInTitle')}
           </Text>
         </Link>
       </View>

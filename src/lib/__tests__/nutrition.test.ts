@@ -6,6 +6,7 @@ import {
   calculateTargets,
   dailyKcalDelta,
   goalDirection,
+  weeksToGoal,
   kcalRemaining,
   macroEnergyShare,
   nutritionForServing,
@@ -42,6 +43,8 @@ const profile: Pick<
 const oats: CatalogFood = {
   id: 'oats',
   name: 'Rolled oats',
+  aliases: [],
+  category: 'nguyen-lieu',
   per100g: { kcal: 389, proteinG: 16.9, carbsG: 66.3, fatG: 6.9, fiberG: 10.6 },
   servings: [
     { id: 'cup', label: '1 cup', grams: 81 },
@@ -101,6 +104,21 @@ describe('goalDirection', () => {
   it('treats a goal within half a kilo as maintenance', () => {
     // Someone who rounds their weight should not be put on a deficit for it.
     expect(goalDirection({ weightCurrent: 80, weightGoal: 80.3 })).toBe('maintain');
+  });
+});
+
+describe('weeksToGoal', () => {
+  it('divides the weight gap by the weekly rate', () => {
+    expect(weeksToGoal({ weightCurrent: 80, weightGoal: 75 }, 0.5)).toBe(10);
+    expect(weeksToGoal({ weightCurrent: 70, weightGoal: 80 }, 2)).toBe(5);
+  });
+
+  it('is zero when maintaining, even at a valid rate', () => {
+    expect(weeksToGoal({ weightCurrent: 80, weightGoal: 80 }, 0.5)).toBe(0);
+  });
+
+  it('is zero for a non-positive rate rather than dividing by zero', () => {
+    expect(weeksToGoal({ weightCurrent: 80, weightGoal: 75 }, 0)).toBe(0);
   });
 });
 

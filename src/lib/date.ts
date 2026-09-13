@@ -7,6 +7,7 @@ import {
   isYesterday,
   parseISO,
   startOfDay,
+  startOfWeek,
   subDays,
 } from 'date-fns';
 
@@ -58,8 +59,17 @@ export function formatDayOfMonth(key: DateKey): string {
   return format(fromDateKey(key), 'd');
 }
 
-export function formatTime(isoTimestamp: string): string {
-  return format(parseISO(isoTimestamp), 'HH:mm');
+/**
+ * "HH:mm" local time from a stored `loggedAt`.
+ *
+ * Accepts a Date, an epoch-ms number, or an ISO string: rows read straight from
+ * SQLite give a Date, but the persisted query cache rehydrates the same field
+ * as a string, so both must format.
+ */
+export function formatTime(value: string | number | Date): string {
+  const date = typeof value === 'string' ? parseISO(value) : new Date(value);
+
+  return format(date, 'HH:mm');
 }
 
 export function isFutureDate(key: DateKey): boolean {
@@ -73,12 +83,9 @@ export function lastNDays(count: number, endKey: DateKey = todayKey()): DateKey[
   return eachDayOfInterval({ start: subDays(end, count - 1), end }).map(toDateKey);
 }
 
-/** The seven days centred on `key`, for the date strip. */
-export function weekAround(key: DateKey): DateKey[] {
-  const center = fromDateKey(key);
+/** The Monday–Sunday calendar week containing `key`, for the week strip. */
+export function calendarWeek(key: DateKey): DateKey[] {
+  const start = startOfWeek(fromDateKey(key), { weekStartsOn: 1 });
 
-  return eachDayOfInterval({
-    start: subDays(center, 3),
-    end: addDays(center, 3),
-  }).map(toDateKey);
+  return eachDayOfInterval({ start, end: addDays(start, 6) }).map(toDateKey);
 }

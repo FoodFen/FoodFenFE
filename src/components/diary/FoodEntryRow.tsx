@@ -16,6 +16,10 @@ export interface FoodEntryRowProps {
   entry: FoodEntry;
   onPress?: (entry: FoodEntry) => void;
   onLongPress?: (entry: FoodEntry) => void;
+  /** Replaces the input-method glyph — e.g. a food emoji in the day sheet. */
+  emoji?: string;
+  /** Replaces the ingredient summary line — e.g. "Bữa trưa · 12:30". */
+  secondaryText?: string;
 }
 
 /**
@@ -25,8 +29,14 @@ export interface FoodEntryRowProps {
  * taps upward, so it can be used identically in the diary and in any future
  * "recently logged" list.
  */
-export function FoodEntryRow({ entry, onPress, onLongPress }: FoodEntryRowProps) {
-  const subtitle = describeIngredients(entry);
+export function FoodEntryRow({
+  entry,
+  onPress,
+  onLongPress,
+  emoji,
+  secondaryText,
+}: FoodEntryRowProps) {
+  const subtitle = secondaryText ?? describeIngredients(entry);
 
   return (
     <Pressable
@@ -36,7 +46,7 @@ export function FoodEntryRow({ entry, onPress, onLongPress }: FoodEntryRowProps)
       accessibilityLabel={`${entry.name}, ${entry.totalKcal} calories, ${subtitle}`}
       className="flex-row items-center gap-3 px-4 py-3 active:bg-surface-alt"
     >
-      <Text className="text-sm">{INPUT_METHOD_ICONS[entry.inputMethod]}</Text>
+      <Text className="text-sm">{emoji ?? INPUT_METHOD_ICONS[entry.inputMethod]}</Text>
 
       <View className="flex-1 gap-0.5">
         <Text variant="body" numberOfLines={1}>

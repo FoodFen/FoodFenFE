@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/ui/Button';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { useTranslation } from '@/hooks/useTranslation';
 import { colorsFor } from '@/theme/colors';
 
 export interface StepScreenProps {
@@ -28,6 +29,13 @@ export interface StepScreenProps {
   showContinue?: boolean;
   /** False for the closing results screen, which has nothing to go back to and isn't part of the counted progress. */
   showHeader?: boolean;
+  /**
+   * Vertically centers the content instead of packing it below `paddingTop`.
+   * Every step but the closing one has enough content (and a header above it)
+   * that top-alignment reads fine; a short, header-less screen like the
+   * "calculating" beat looks stranded at the top without this.
+   */
+  centerContent?: boolean;
   children: React.ReactNode;
 }
 
@@ -43,14 +51,16 @@ export function StepScreen({
   direction,
   onBack,
   onContinue,
-  continueLabel = 'Continue',
+  continueLabel,
   showContinue = true,
   showHeader = true,
+  centerContent = false,
   children,
 }: StepScreenProps) {
   const insets = useSafeAreaInsets();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
+  const { t } = useTranslation();
 
   return (
     <View className="flex-1 bg-bg">
@@ -63,7 +73,7 @@ export function StepScreen({
             <Pressable
               onPress={onBack}
               accessibilityRole="button"
-              accessibilityLabel="Back"
+              accessibilityLabel={t('common', 'back')}
               hitSlop={8}
             >
               <Ionicons name="arrow-back" size={24} color={colors.fg} />
@@ -80,8 +90,9 @@ export function StepScreen({
         className="flex-1"
         contentContainerStyle={{
           padding: 16,
-          paddingTop: 48,
+          paddingTop: centerContent ? 16 : 48,
           alignItems: 'center',
+          justifyContent: centerContent ? 'center' : 'flex-start',
           flexGrow: 1,
         }}
         keyboardShouldPersistTaps="handled"
@@ -102,7 +113,12 @@ export function StepScreen({
           className="border-t border-border p-4"
           style={{ paddingBottom: insets.bottom + 16 }}
         >
-          <Button label={continueLabel} onPress={onContinue} fullWidth size="lg" />
+          <Button
+            label={continueLabel ?? t('common', 'continue')}
+            onPress={onContinue}
+            fullWidth
+            size="lg"
+          />
         </View>
       ) : null}
     </View>

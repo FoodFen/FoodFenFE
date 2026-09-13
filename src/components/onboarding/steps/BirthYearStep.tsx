@@ -2,6 +2,7 @@ import { View } from 'react-native';
 
 import { WheelPicker } from '@/components/onboarding/WheelPicker';
 import { Text } from '@/components/ui/Text';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const CURRENT_YEAR = new Date().getFullYear();
 const MIN_YEAR = CURRENT_YEAR - 100;
@@ -18,14 +19,16 @@ export interface BirthYearStepProps {
 }
 
 export function BirthYearStep({ value, onChange }: BirthYearStepProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="w-full items-center gap-6">
       <View className="w-full items-center gap-2">
         <Text variant="title" className="w-full text-center text-3xl">
-          What year were you born?
+          {t('onboardingBirthYear', 'title')}
         </Text>
         <Text variant="body" tone="muted" className="text-center">
-          Age affects how many calories your body needs each day.
+          {t('onboardingBirthYear', 'subtitle')}
         </Text>
       </View>
       <WheelPicker data={YEAR_OPTIONS} value={value} onChange={onChange} />

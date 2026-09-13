@@ -4,14 +4,14 @@ import { ActivityLevelStep } from '@/components/onboarding/steps/ActivityLevelSt
 import { BirthYearStep } from '@/components/onboarding/steps/BirthYearStep';
 import { FinalizeStep } from '@/components/onboarding/steps/FinalizeStep';
 import { GenderStep } from '@/components/onboarding/steps/GenderStep';
-import { GoalStep } from '@/components/onboarding/steps/GoalStep';
 import { HeightStep } from '@/components/onboarding/steps/HeightStep';
 import { NotificationsStep } from '@/components/onboarding/steps/NotificationsStep';
 import { RateStep } from '@/components/onboarding/steps/RateStep';
+import { TargetWeightStep } from '@/components/onboarding/steps/TargetWeightStep';
 import { UnitSystemStep } from '@/components/onboarding/steps/UnitSystemStep';
 import { WeightStep } from '@/components/onboarding/steps/WeightStep';
 import { StepScreen } from '@/components/onboarding/StepScreen';
-import type { GoalDirection } from '@/lib/nutrition';
+import { DEFAULT_WEEKLY_RATE_KG, goalDirection } from '@/lib/nutrition';
 import type { ActivityLevel, Gender, UnitSystem } from '@/types/models';
 
 export interface OnboardingDraft {
@@ -24,10 +24,13 @@ export interface OnboardingDraft {
   /** Always in kg. */
   weightCurrent: number;
   activityLevel: ActivityLevel;
-  goalDirection: GoalDirection;
-  /** Always in kg. Equal to `weightCurrent` when `goalDirection` is `maintain`. */
+  /**
+   * Always in kg. `src/lib/nutrition.ts#goalDirection` derives lose/maintain/
+   * gain from comparing this to `weightCurrent` rather than storing a
+   * separate choice that could disagree with it.
+   */
   weightGoal: number;
-  /** 0 when `goalDirection` is `maintain`. */
+  /** 0 when the derived direction is `maintain`. */
   weeklyRateKg: number;
 }
 
@@ -39,9 +42,8 @@ const DEFAULT_DRAFT: OnboardingDraft = {
   height: 165,
   weightCurrent: 65,
   activityLevel: 'moderate',
-  goalDirection: 'maintain',
   weightGoal: 65,
-  weeklyRateKg: 0,
+  weeklyRateKg: DEFAULT_WEEKLY_RATE_KG,
 };
 
 const ALL_STEP_KEYS = [
@@ -65,9 +67,15 @@ const TAP_ADVANCE_STEPS = new Set<(typeof ALL_STEP_KEYS)[number]>([
   'notifications',
   'unitSystem',
   'activityLevel',
-  'rate',
   'finalize',
 ]);
+
+type StepKey = (typeof ALL_STEP_KEYS)[number];
+
+/** The pace step only means something once there's a gap to close. */
+function routeFor(target: OnboardingDraft): StepKey[] {
+  return ALL_STEP_KEYS.filter((key) => key !== 'rate' || goalDirection(target) !== 'maintain');
+}
 
 export interface OnboardingWizardProps {
   onComplete: (draft: OnboardingDraft) => void;
@@ -82,13 +90,18 @@ export interface OnboardingWizardProps {
  */
 export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
   const [draft, setDraft] = useState<OnboardingDraft>(DEFAULT_DRAFT);
+  // The route (which steps exist, and how many) is its own state rather than
+  // a value derived fresh from `draft` on every render. Deriving it live
+  // would make `rate` pop in and out of the array on every drag of the
+  // target-weight wheel — and since the same `stepIndex` then means a
+  // different step depending on whether that render's array happens to
+  // include it, the wrong screen (`finalize`, one past `rate`) would flash
+  // before the array settled back to the right shape. Recomputing only here,
+  // at the moment a step is actually left, avoids that entirely.
+  const [steps, setSteps] = useState<StepKey[]>(() => routeFor(DEFAULT_DRAFT));
   const [stepIndex, setStepIndex] = useState(0);
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
 
-  // The rate only means something when there's a direction to pursue.
-  const steps = ALL_STEP_KEYS.filter(
-    (key) => key !== 'rate' || draft.goalDirection !== 'maintain',
-  );
   const currentStep = steps[stepIndex] ?? ALL_STEP_KEYS[0];
 
   function update<K extends keyof OnboardingDraft>(key: K, value: OnboardingDraft[K]) {
@@ -101,7 +114,10 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
   }
 
   function goNext() {
-    if (stepIndex === steps.length - 1) {
+    const nextSteps = routeFor(draft);
+    setSteps(nextSteps);
+
+    if (stepIndex === nextSteps.length - 1) {
       onComplete(draft);
       return;
     }
@@ -120,6 +136,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
       onContinue={goNext}
       showContinue={!TAP_ADVANCE_STEPS.has(currentStep)}
       showHeader={currentStep !== 'finalize'}
+      centerContent={currentStep === 'finalize'}
     >
       {currentStep === 'gender' && (
         <GenderStep
@@ -162,7 +179,17 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
         <WeightStep
           unitSystem={draft.unitSystem}
           value={draft.weightCurrent}
-          onChange={(value) => update('weightCurrent', value)}
+          onChange={(value) => {
+            setDraft((previous) => ({
+              ...previous,
+              weightCurrent: value,
+              // Keeps the target following current weight — i.e. "maintain"
+              // — until the user sets their own target on the next step.
+              weightGoal: previous.weightGoal === previous.weightCurrent
+                ? value
+                : previous.weightGoal,
+            }));
+          }}
         />
       )}
       {currentStep === 'activityLevel' && (
@@ -175,27 +202,17 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
         />
       )}
       {currentStep === 'goal' && (
-        <GoalStep
+        <TargetWeightStep
           unitSystem={draft.unitSystem}
-          direction={draft.goalDirection}
-          weightGoal={draft.weightGoal}
-          onChangeDirection={(direction) => {
-            setDraft((previous) => ({
-              ...previous,
-              goalDirection: direction,
-              weightGoal: direction === 'maintain' ? previous.weightCurrent : previous.weightGoal,
-            }));
-          }}
-          onChangeWeightGoal={(value) => update('weightGoal', value)}
+          value={draft.weightGoal}
+          onChange={(value) => update('weightGoal', value)}
         />
       )}
       {currentStep === 'rate' && (
         <RateStep
+          unitSystem={draft.unitSystem}
           value={draft.weeklyRateKg}
-          onChange={(value) => {
-            update('weeklyRateKg', value);
-            goNext();
-          }}
+          onChange={(value) => update('weeklyRateKg', value)}
           weightCurrent={draft.weightCurrent}
           weightGoal={draft.weightGoal}
         />
