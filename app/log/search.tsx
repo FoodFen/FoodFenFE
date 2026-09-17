@@ -17,7 +17,7 @@ import {
   useQuickLogFood,
   useRecentFoods,
 } from '@/features/diary/queries';
-import { usePostLogInterstitial } from '@/features/gamification/queries';
+import { dismissLogFlow, usePostLogInterstitial } from '@/features/gamification/queries';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -241,7 +241,7 @@ function PortionStep({
   const { t } = useTranslation();
   const isPremium = useIsPremium();
   const quickLog = useQuickLogFood();
-  const finishLogging = usePostLogInterstitial();
+  const finishLogging = usePostLogInterstitial(dismissLogFlow);
 
   const [servingId, setServingId] = useState(initialServingId);
   const [quantity, setQuantity] = useState(initialQuantity);

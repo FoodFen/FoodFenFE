@@ -12,7 +12,7 @@ import { Text } from '@/components/ui/Text';
 import { TimePicker } from '@/components/ui/TimePicker';
 import type { TimeOfDay } from '@/components/ui/TimePicker';
 import { useLogActivity } from '@/features/diary/queries';
-import { usePostLogInterstitial } from '@/features/gamification/queries';
+import { dismissLogFlow, usePostLogInterstitial } from '@/features/gamification/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { ACTIVITY_PRESETS, caloriesBurnedForPreset } from '@/lib/activity';
@@ -127,7 +127,7 @@ function DurationStep({
 }) {
   const { t } = useTranslation();
   const logActivity = useLogActivity();
-  const finishLogging = usePostLogInterstitial();
+  const finishLogging = usePostLogInterstitial(dismissLogFlow);
 
   const [duration, setDuration] = useState(30);
   const [useNow, setUseNow] = useState(true);

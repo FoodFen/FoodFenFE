@@ -14,7 +14,7 @@ import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import { useCatalogSearch, useLogManualEntry } from '@/features/diary/queries';
 import { manualEntrySchema } from '@/features/diary/schemas';
 import { suggestedMealType } from '@/features/diary/selectors';
-import { usePostLogInterstitial } from '@/features/gamification/queries';
+import { dismissLogFlow, usePostLogInterstitial } from '@/features/gamification/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -46,7 +46,7 @@ export default function ManualEntryScreen() {
   const insets = useSafeAreaInsets();
 
   const logManual = useLogManualEntry();
-  const finishLogging = usePostLogInterstitial();
+  const finishLogging = usePostLogInterstitial(dismissLogFlow);
 
   const [name, setName] = useState('');
   const [emoji, setEmoji] = useState<string | null>(null);

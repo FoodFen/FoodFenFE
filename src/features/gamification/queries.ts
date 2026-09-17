@@ -17,9 +17,9 @@ function useUserId(): string | null {
 }
 
 /**
- * Leave the log modal stack and return to the dashboard, called directly
- * from the manual/search/activity/water entry points — always exactly one
- * screen deep in the `log` group, same as those screens' own Cancel buttons.
+ * The `leave` to pass from the routed `log/manual`, `log/search` and
+ * `log/activity` screens — always exactly one screen deep in the `log`
+ * group, same as those screens' own Cancel buttons.
  *
  * Deliberately the plain `dismiss()` those Cancel buttons already use
  * successfully, not `replace('/')` or `dismissTo('/')`: `replace` swaps the
@@ -29,8 +29,7 @@ function useUserId(): string | null {
  * `dismissAll` route through href resolution that can silently no-op from
  * some navigator depths with no error at all. A bare `POP` bubbles to the
  * parent stack when the local one has nothing left to pop, which is exactly
- * "close this modal" here. `app/log/interstitial.tsx`, pushed one screen
- * deeper than this, calls `router.dismiss(2)` directly for the same reason.
+ * "close this modal" here.
  */
 export function dismissLogFlow(): void {
   router.dismiss();
@@ -39,6 +38,15 @@ export function dismissLogFlow(): void {
 /**
  * The single exit point every UC-22-triggering log flow calls instead of
  * dismissing the modal stack directly.
+ *
+ * `leave` is how *this specific caller* gets back to where it started once
+ * gamification bookkeeping is done — it has no universal answer, because
+ * callers sit at different navigation depths: the routed log screens need
+ * `dismissLogFlow` to close the modal stack, while `LogSheet`'s panels and a
+ * direct dashboard action (the water cups) never pushed anything and need no
+ * navigation at all, so they pass nothing and get the default no-op. Calling
+ * `router.dismiss()` unconditionally here — the previous approach — crashed
+ * with "POP ... not handled by any navigator" from exactly those callers.
  *
  * Reads today straight from the repository rather than a query hook's
  * `data`: `onSuccess` fires as soon as the write commits, before the
@@ -51,7 +59,7 @@ export function dismissLogFlow(): void {
  * small toast with whatever progressed, so the mechanic is taught once and
  * then gets out of the way.
  */
-export function usePostLogInterstitial() {
+export function usePostLogInterstitial(leave: () => void = () => {}) {
   const userId = useUserId();
   const hideChallengeProgress = useSettingsStore((state) => state.hideChallengeProgress);
   const seenQuestTypes = useSettingsStore((state) => state.seenQuestTypes);
@@ -62,13 +70,13 @@ export function usePostLogInterstitial() {
   const queryClient = useQueryClient();
 
   return () => {
-    // Getting back to the dashboard must never depend on quest evaluation or
-    // the toast succeeding — both are decorative. Whatever goes wrong below,
-    // the catch below still gets the user home; `dismissLogFlow()` a second
-    // time is harmless if the first one already ran.
+    // Getting back to the caller must never depend on quest evaluation or the
+    // toast succeeding — both are decorative. Whatever goes wrong below, the
+    // catch below still calls `leave()`; a second call is harmless if the
+    // first one already ran.
     try {
       if (!userId) {
-        dismissLogFlow();
+        leave();
         return;
       }
 
@@ -85,7 +93,7 @@ export function usePostLogInterstitial() {
       void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.all });
 
       if (hideChallengeProgress) {
-        dismissLogFlow();
+        leave();
         return;
       }
 
@@ -95,12 +103,12 @@ export function usePostLogInterstitial() {
 
       if (unseenTypes.length > 0) {
         markQuestTypesSeen(quests.map((q) => q.questType));
-        present(quests);
+        present(quests, leave);
         router.push('/log/interstitial');
         return;
       }
 
-      dismissLogFlow();
+      leave();
 
       // A quest that's already completed never changes again (`setQuestProgress`
       // no-ops once `completed`), so "progress went up" is exactly "this action
@@ -120,8 +128,8 @@ export function usePostLogInterstitial() {
 
       if (entries.length > 0) showToast(entries);
     } catch (error) {
-      console.error('[usePostLogInterstitial] failed, dismissing anyway', error);
-      dismissLogFlow();
+      console.error('[usePostLogInterstitial] failed, leaving anyway', error);
+      leave();
     }
   };
 }
