@@ -34,8 +34,12 @@ export function WaterSection({ day }: { day: DiaryDay }) {
   const finishLogging = usePostLogInterstitial();
 
   const targetMl = day.goal.targetWaterMl;
-  const glassCount = Math.max(Math.round(targetMl / GLASS_ML), 1);
-  const filled = Math.min(Math.round(day.waterMl / GLASS_ML), glassCount);
+  const filled = Math.round(day.waterMl / GLASS_ML);
+  // At least enough cups to reach the goal (rounded up — a target that isn't
+  // a clean multiple of a cup must never render fewer cups than it takes to
+  // reach it), and always at least one past however many are already filled,
+  // so reaching or passing the goal never removes the "add another" cup.
+  const glassCount = Math.max(Math.ceil(targetMl / GLASS_ML), filled + 1, 1);
 
   const setCups = (cupCount: number) => {
     haptics.selection();
