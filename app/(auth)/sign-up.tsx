@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, router } from 'expo-router';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
@@ -9,7 +9,7 @@ import { isApiError } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
-import { signUpSchema } from '@/features/auth/schemas';
+import { makeSignUpSchema } from '@/features/auth/schemas';
 import type { SignUpValues } from '@/features/auth/schemas';
 import { useAuthStore } from '@/features/auth/store';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -18,6 +18,7 @@ export default function SignUpScreen() {
   const signUp = useAuthStore((state) => state.signUp);
   const [formError, setFormError] = useState<string | null>(null);
   const { t } = useTranslation();
+  const schema = useMemo(() => makeSignUpSchema(t), [t]);
 
   const {
     control,
@@ -25,7 +26,7 @@ export default function SignUpScreen() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<SignUpValues>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(schema),
     defaultValues: { displayName: '', email: '', password: '', confirmPassword: '' },
   });
 

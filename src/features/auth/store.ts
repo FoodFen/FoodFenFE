@@ -6,6 +6,7 @@ import { authApi } from '@/api/endpoints/auth';
 import type { SignInPayload, SignUpPayload } from '@/api/endpoints/auth';
 import { authSessionSchema } from '@/api/schemas';
 import type { RemoteAuthSession } from '@/api/schemas';
+import { configureSyncAuth } from '@/data/sync';
 
 /**
  * The optional account session.
@@ -145,6 +146,14 @@ export function connectAuthToApiClient(): void {
       void persistSession(null);
     },
   });
+}
+
+/**
+ * Hand `src/data/sync.ts` a way to check for a session without it importing
+ * this feature — the same indirection `connectAuthToApiClient` uses.
+ */
+export function connectAuthToSync(): void {
+  configureSyncAuth(() => useAuthStore.getState().session !== null);
 }
 
 /** True when the access token is expired or about to be. */

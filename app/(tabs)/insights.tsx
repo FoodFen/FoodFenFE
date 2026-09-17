@@ -1,16 +1,14 @@
 import { useMemo } from 'react';
 import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CalorieTrendChart } from '@/components/insights/CalorieTrendChart';
 import { WeightTrendChart } from '@/components/insights/WeightTrendChart';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
-import { ScrollScreen } from '@/components/ui/Screen';
+import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useDiaryRange, useWeightHistory } from '@/features/diary/queries';
-import { MEAL_LABELS } from '@/features/diary/selectors';
 import { averageByMeal, summarizeTrends } from '@/features/insights/trends';
 import { useProfileStore } from '@/features/profile/store';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -30,7 +28,6 @@ const WEIGHT_WINDOW_DAYS = 90;
  */
 export default function InsightsScreen() {
   const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
   const { data, isPending, error, refetch } = useDiaryRange(WINDOW_DAYS);
   const weightHistory = useWeightHistory(WEIGHT_WINDOW_DAYS);
   const profile = useProfileStore((state) => state.profile);
@@ -40,7 +37,7 @@ export default function InsightsScreen() {
 
   if (isPending) {
     return (
-      <ScrollScreen bottomSpacing={96} style={{ paddingTop: insets.top }}>
+      <ScrollScreen tabBar topInset>
         <Skeleton className="h-10 w-40" />
         <Skeleton className="h-48 rounded-card" />
         <Skeleton className="h-40 rounded-card" />
@@ -50,24 +47,26 @@ export default function InsightsScreen() {
 
   if (error) {
     return (
-      <View style={{ paddingTop: insets.top }} className="flex-1 bg-bg">
+      <Screen tabBar topInset>
         <ErrorState
-          description={error instanceof Error ? error.message : 'Please try again.'}
+          description={
+            error instanceof Error ? error.message : t('common', 'pleaseTryAgain')
+          }
           onRetry={() => void refetch()}
         />
-      </View>
+      </Screen>
     );
   }
 
   if (!summary || summary.daysLogged === 0) {
     return (
-      <View style={{ paddingTop: insets.top }} className="flex-1 bg-bg">
+      <Screen tabBar topInset>
         <EmptyState
           icon="📊"
-          title="Nothing to chart yet"
-          description="Log a few days of meals and your trends will show up here."
+          title={t('insights', 'emptyTitle')}
+          description={t('insights', 'emptyDescription')}
         />
-      </View>
+      </Screen>
     );
   }
 
@@ -87,29 +86,33 @@ export default function InsightsScreen() {
       : null;
 
   return (
-    <ScrollScreen bottomSpacing={96} style={{ paddingTop: insets.top }}>
+    <ScrollScreen tabBar topInset>
       <Text variant="title" className="pt-2">
-        Insights
+        {t('insights', 'title')}
       </Text>
 
       <View className="flex-row gap-3">
         <StatCard
-          label="Daily average"
+          label={t('insights', 'dailyAverage')}
           value={summary.averageKcal.toLocaleString()}
           unit="kcal"
         />
         <StatCard
-          label="Logging streak"
+          label={t('insights', 'loggingStreak')}
           value={String(summary.streak)}
-          unit={summary.streak === 1 ? 'day' : 'days'}
+          unit={t('insights', 'dayUnit')}
         />
       </View>
 
       <Card className="gap-4">
         <CardHeader>
-          <Text variant="heading">Last {WINDOW_DAYS} days</Text>
+          <Text variant="heading">
+            {t('insights', 'windowHeading').replace('{days}', String(WINDOW_DAYS))}
+          </Text>
           <Text variant="caption" tone="muted">
-            {summary.daysLogged} of {summary.totalDays} logged
+            {t('insights', 'daysLoggedOf')
+              .replace('{logged}', String(summary.daysLogged))
+              .replace('{total}', String(summary.totalDays))}
           </Text>
         </CardHeader>
 
@@ -142,31 +145,30 @@ export default function InsightsScreen() {
         </Card>
       ) : null}
 
-      <Card className="gap-3">
-        <Text variant="heading">Against your goal</Text>
+      <Card className="gap-1">
+        <Text variant="heading">{t('insights', 'againstGoalHeading')}</Text>
+        <Text variant="title" tone={isDeficit ? 'brand' : 'danger'}>
+          {isDeficit ? '−' : '+'}
+          {Math.abs(summary.averageDelta).toLocaleString()} kcal
+        </Text>
         <Text variant="body" tone="muted">
-          You averaged{' '}
-          <Text variant="body" tone={isDeficit ? 'brand' : 'danger'}>
-            {Math.abs(summary.averageDelta).toLocaleString()} kcal{' '}
-            {isDeficit ? 'under' : 'over'}
-          </Text>{' '}
-          your daily target across the days you logged.
+          {t('insights', isDeficit ? 'averageDeficit' : 'averageSurplus')}
         </Text>
       </Card>
 
       <Card className="gap-3">
-        <Text variant="heading">Average macros</Text>
+        <Text variant="heading">{t('insights', 'averageMacrosHeading')}</Text>
 
         {(
           [
-            ['proteinG', 'Protein'],
-            ['carbsG', 'Carbs'],
-            ['fatG', 'Fat'],
+            ['proteinG', 'protein'],
+            ['carbsG', 'carbs'],
+            ['fatG', 'fat'],
           ] as const
-        ).map(([macro, label]) => (
+        ).map(([macro, labelKey]) => (
           <View key={macro} className="flex-row items-center justify-between">
             <Text variant="body" tone="muted">
-              {label}
+              {t('dashboard', labelKey)}
             </Text>
             <Text variant="mono">
               {summary.averageMacros[macro]} g ·{' '}
@@ -178,12 +180,12 @@ export default function InsightsScreen() {
 
       {perMeal ? (
         <Card className="gap-3">
-          <Text variant="heading">Calories by meal</Text>
+          <Text variant="heading">{t('insights', 'caloriesByMealHeading')}</Text>
 
           {MEAL_TYPES.map((meal) => (
             <View key={meal} className="flex-row items-center justify-between">
               <Text variant="body" tone="muted">
-                {MEAL_LABELS[meal]}
+                {t('mealType', meal)}
               </Text>
               <Text variant="mono">{perMeal[meal].toLocaleString()} kcal</Text>
             </View>

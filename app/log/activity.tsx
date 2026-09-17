@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Stack } from 'expo-router';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Pressable, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
@@ -7,6 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { NumberField } from '@/components/ui/NumberField';
+import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
 import { TimePicker } from '@/components/ui/TimePicker';
 import type { TimeOfDay } from '@/components/ui/TimePicker';
@@ -53,6 +54,13 @@ function ActivityListScreen({
 
   return (
     <View className="flex-1 bg-bg">
+      <ScreenHeader
+        title={t('logActivity', 'layoutTitle')}
+        icon="close"
+        onPress={() => router.dismiss()}
+        accessibilityLabel={t('common', 'cancel')}
+      />
+
       <View className="px-4 pt-3">
         <Text variant="label" tone="muted">
           {t('logActivity', 'presetHeading')}
@@ -118,8 +126,6 @@ function DurationStep({
   onBack: () => void;
 }) {
   const { t } = useTranslation();
-  const { resolved } = useAppTheme();
-  const colors = colorsFor(resolved);
   const logActivity = useLogActivity();
   const finishLogging = usePostLogInterstitial();
 
@@ -133,6 +139,8 @@ function DurationStep({
   const kcal = caloriesBurnedForPreset(preset, duration);
 
   const save = () => {
+    if (logActivity.isPending) return;
+
     const loggedAt = useNow ? undefined : withTime(todayKey(), time.hours, time.minutes);
 
     logActivity.mutate(
@@ -154,134 +162,124 @@ function DurationStep({
   };
 
   return (
-    <KeyboardAwareScrollView
-      className="flex-1 bg-bg"
-      contentContainerStyle={{ padding: 16, gap: 16 }}
-      keyboardShouldPersistTaps="handled"
-      bottomOffset={24}
-    >
-      <Stack.Screen
-        options={{
-          headerBackVisible: false,
-          headerLeft: () => (
-            <Pressable
-              onPress={onBack}
-              hitSlop={12}
-              accessibilityRole="button"
-              accessibilityLabel={t('common', 'back')}
-              style={{ paddingRight: 16 }}
-            >
-              <Ionicons name="arrow-back" size={24} color={colors.fg} />
-            </Pressable>
-          ),
-        }}
+    <View className="flex-1 bg-bg">
+      <ScreenHeader
+        title={t('activityPresets', preset.id)}
+        icon="arrow-back"
+        onPress={onBack}
+        accessibilityLabel={t('common', 'back')}
       />
 
-      <Text variant="title">{t('activityPresets', preset.id)}</Text>
-
-      <Card className="gap-4">
-        <View className="gap-2">
-          <Text variant="label" tone="muted">
-            {t('logActivity', 'durationLabel')}
-          </Text>
-          <View className="flex-row flex-wrap gap-2">
-            {DURATION_PRESETS_MIN.map((minutes) => {
-              const isSelected = minutes === duration;
-
-              return (
-                <Pressable
-                  key={minutes}
-                  onPress={() => {
-                    haptics.selection();
-                    setDuration(minutes);
-                  }}
-                  accessibilityRole="radio"
-                  accessibilityState={{ selected: isSelected }}
-                  className={cn(
-                    'h-10 justify-center rounded-pill border px-4',
-                    isSelected ? 'border-brand bg-brand' : 'border-border bg-surface',
-                  )}
-                >
-                  <Text variant="label" tone={isSelected ? 'onBrand' : 'default'}>
-                    {minutes}
-                  </Text>
-                </Pressable>
-              );
-            })}
-          </View>
-          <View className="flex-row items-center justify-between">
+      <KeyboardAwareScrollView
+        className="flex-1"
+        contentContainerStyle={{ padding: 16, gap: 16 }}
+        keyboardShouldPersistTaps="handled"
+        bottomOffset={24}
+      >
+        <Card className="gap-4">
+          <View className="gap-2">
             <Text variant="label" tone="muted">
-              {t('logActivity', 'customMinutes')}
+              {t('logActivity', 'durationLabel')}
             </Text>
-            <NumberField
-              compact
-              label={t('logActivity', 'customMinutes')}
-              value={duration}
-              onChange={(next) => setDuration(next ?? duration)}
-              min={1}
-              max={600}
-              precision={0}
-            />
-          </View>
-        </View>
+            <View className="flex-row flex-wrap gap-2">
+              {DURATION_PRESETS_MIN.map((minutes) => {
+                const isSelected = minutes === duration;
 
-        <View className="gap-2 border-t border-border pt-3">
-          <Text variant="label" tone="muted">
-            {t('logActivity', 'timeLabel')}
-          </Text>
-          <View className="flex-row gap-2">
-            <Pressable
-              onPress={() => {
-                haptics.selection();
-                setUseNow(true);
-              }}
-              accessibilityRole="radio"
-              accessibilityState={{ selected: useNow }}
-              className={cn(
-                'h-10 flex-1 items-center justify-center rounded-pill border',
-                useNow ? 'border-brand bg-brand' : 'border-border bg-surface',
-              )}
-            >
-              <Text variant="label" tone={useNow ? 'onBrand' : 'default'}>
-                {t('logActivity', 'now')}
+                return (
+                  <Pressable
+                    key={minutes}
+                    onPress={() => {
+                      haptics.selection();
+                      setDuration(minutes);
+                    }}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected: isSelected }}
+                    className={cn(
+                      'h-10 justify-center rounded-pill border px-4',
+                      isSelected ? 'border-brand bg-brand' : 'border-border bg-surface',
+                    )}
+                  >
+                    <Text variant="label" tone={isSelected ? 'onBrand' : 'default'}>
+                      {minutes}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+            <View className="flex-row items-center justify-between">
+              <Text variant="label" tone="muted">
+                {t('logActivity', 'customMinutes')}
               </Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                haptics.selection();
-                setUseNow(false);
-              }}
-              accessibilityRole="radio"
-              accessibilityState={{ selected: !useNow }}
-              className={cn(
-                'h-10 flex-1 items-center justify-center rounded-pill border',
-                !useNow ? 'border-brand bg-brand' : 'border-border bg-surface',
-              )}
-            >
-              <Text variant="label" tone={!useNow ? 'onBrand' : 'default'}>
-                {t('logActivity', 'pickTime')}
-              </Text>
-            </Pressable>
+              <NumberField
+                compact
+                label={t('logActivity', 'customMinutes')}
+                value={duration}
+                onChange={(next) => setDuration(next ?? duration)}
+                min={1}
+                max={600}
+                precision={0}
+              />
+            </View>
           </View>
-          {!useNow ? <TimePicker value={time} onChange={setTime} /> : null}
-        </View>
-      </Card>
 
-      <Card className="gap-3">
-        <View className="flex-row items-baseline justify-between">
-          <Text variant="heading">{t('dashboard', 'caloriesBurned')}</Text>
-          <Text variant="title">{kcal.toLocaleString()}</Text>
-        </View>
-      </Card>
+          <View className="gap-2 border-t border-border pt-3">
+            <Text variant="label" tone="muted">
+              {t('logActivity', 'timeLabel')}
+            </Text>
+            <View className="flex-row gap-2">
+              <Pressable
+                onPress={() => {
+                  haptics.selection();
+                  setUseNow(true);
+                }}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: useNow }}
+                className={cn(
+                  'h-10 flex-1 items-center justify-center rounded-pill border',
+                  useNow ? 'border-brand bg-brand' : 'border-border bg-surface',
+                )}
+              >
+                <Text variant="label" tone={useNow ? 'onBrand' : 'default'}>
+                  {t('logActivity', 'now')}
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  haptics.selection();
+                  setUseNow(false);
+                }}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: !useNow }}
+                className={cn(
+                  'h-10 flex-1 items-center justify-center rounded-pill border',
+                  !useNow ? 'border-brand bg-brand' : 'border-border bg-surface',
+                )}
+              >
+                <Text variant="label" tone={!useNow ? 'onBrand' : 'default'}>
+                  {t('logActivity', 'pickTime')}
+                </Text>
+              </Pressable>
+            </View>
+            {!useNow ? <TimePicker value={time} onChange={setTime} /> : null}
+          </View>
+        </Card>
 
-      <Button
-        label={t('logActivity', 'save')}
-        onPress={save}
-        loading={logActivity.isPending}
-        disabled={duration <= 0}
-        fullWidth
-        size="lg"
-      />
-    </KeyboardAwareScrollView>
+        <Card className="gap-3">
+          <View className="flex-row items-baseline justify-between">
+            <Text variant="heading">{t('dashboard', 'caloriesBurned')}</Text>
+            <Text variant="title">{kcal.toLocaleString()}</Text>
+          </View>
+        </Card>
+
+        <Button
+          label={t('logActivity', 'save')}
+          onPress={save}
+          loading={logActivity.isPending}
+          disabled={duration <= 0}
+          fullWidth
+          size="lg"
+        />
+      </KeyboardAwareScrollView>
+    </View>
   );
 }

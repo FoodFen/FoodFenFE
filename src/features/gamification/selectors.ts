@@ -1,4 +1,6 @@
-import type { Quest, QuestType } from '@/types/models';
+import type { DateKey } from '@/lib/date';
+import { lastNDays, shiftDateKey, todayKey } from '@/lib/date';
+import type { Quest, QuestType, Streak } from '@/types/models';
 
 /**
  * Display copy for a quest, shared by the post-log interstitial and the
@@ -48,4 +50,48 @@ export function questDescription(t: Translate, quest: Quest): string {
     default:
       return '';
   }
+}
+
+export interface StreakDay {
+  date: DateKey;
+  active: boolean;
+}
+
+/**
+ * The last 7 calendar days, each marked whether it was part of the active
+ * run, for the streak screen's day row.
+ *
+ * `recordActiveDay` guarantees `currentStreak` is exactly the number of
+ * consecutive days ending at `lastActiveDate` — so the active run can be
+ * derived from those two fields without a new query. A day the user has not
+ * logged yet (typically "today") simply falls outside the run.
+ */
+export function streakDayStatuses(
+  streakState: Pick<Streak, 'currentStreak' | 'lastActiveDate'> | undefined,
+  today: DateKey = todayKey(),
+): StreakDay[] {
+  const days = lastNDays(7, today);
+
+  const lastActiveDate = streakState?.lastActiveDate;
+
+  if (!lastActiveDate || streakState.currentStreak <= 0) {
+    return days.map((date) => ({ date, active: false }));
+  }
+
+  const runStart = shiftDateKey(lastActiveDate, -(streakState.currentStreak - 1));
+
+  return days.map((date) => ({
+    date,
+    active: date >= runStart && date <= lastActiveDate,
+  }));
+}
+
+/**
+ * Whether this advance of a quest earns a toast: the first ever, then every
+ * other one, and always the one that completes it — so routine progress
+ * doesn't nag on every single log, but the mechanic is taught immediately and
+ * the payoff is never missed.
+ */
+export function shouldAnnounce(count: number, completed: boolean): boolean {
+  return count === 1 || count % 2 === 0 || completed;
 }

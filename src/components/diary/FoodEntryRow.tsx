@@ -1,4 +1,5 @@
 import { Pressable, View } from 'react-native';
+import Animated, { FadeIn, FadeOutLeft, LinearTransition } from 'react-native-reanimated';
 
 import { Text } from '@/components/ui/Text';
 import { describeIngredients } from '@/features/diary/selectors';
@@ -39,27 +40,33 @@ export function FoodEntryRow({
   const subtitle = secondaryText ?? describeIngredients(entry);
 
   return (
-    <Pressable
-      onPress={() => onPress?.(entry)}
-      onLongPress={() => onLongPress?.(entry)}
-      accessibilityRole="button"
-      accessibilityLabel={`${entry.name}, ${entry.totalKcal} calories, ${subtitle}`}
-      className="flex-row items-center gap-3 px-4 py-3 active:bg-surface-alt"
+    <Animated.View
+      entering={FadeIn.duration(220)}
+      exiting={FadeOutLeft.duration(180)}
+      layout={LinearTransition.duration(200)}
     >
-      <Text className="text-sm">{emoji ?? INPUT_METHOD_ICONS[entry.inputMethod]}</Text>
+      <Pressable
+        onPress={() => onPress?.(entry)}
+        onLongPress={() => onLongPress?.(entry)}
+        accessibilityRole="button"
+        accessibilityLabel={`${entry.name}, ${entry.totalKcal} calories, ${subtitle}`}
+        className="flex-row items-center gap-3 px-4 py-3 active:bg-surface-alt"
+      >
+        <Text className="text-sm">{emoji ?? INPUT_METHOD_ICONS[entry.inputMethod]}</Text>
 
-      <View className="flex-1 gap-0.5">
-        <Text variant="body" numberOfLines={1}>
-          {entry.name}
-        </Text>
-        <Text variant="caption" tone="muted" numberOfLines={1}>
-          {subtitle}
-        </Text>
-      </View>
+        <View className="flex-1 gap-0.5">
+          <Text variant="body" numberOfLines={1}>
+            {entry.name}
+          </Text>
+          <Text variant="caption" tone="muted" numberOfLines={1}>
+            {subtitle}
+          </Text>
+        </View>
 
-      <Text variant="mono" tone="muted">
-        {entry.totalKcal}
-      </Text>
-    </Pressable>
+        <Text variant="mono" tone="muted">
+          {entry.totalKcal}
+        </Text>
+      </Pressable>
+    </Animated.View>
   );
 }

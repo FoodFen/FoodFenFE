@@ -19,15 +19,18 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { QuestToast } from '@/components/gamification/QuestToast';
 import { LogSheet } from '@/components/logging/LogSheet';
 import { ErrorState } from '@/components/ui/EmptyState';
+import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { clearSeededDays, seedRecentDays } from '@/data/devSeed';
 import { db, enableForeignKeys } from '@/db/client';
-import { connectAuthToApiClient, useAuthStore } from '@/features/auth/store';
+import { connectAuthToApiClient, connectAuthToSync, useAuthStore } from '@/features/auth/store';
 import { useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useReactQueryBridge } from '@/hooks/useReactQueryBridge';
+import { useTranslation } from '@/hooks/useTranslation';
 import { createQueryClient, persistOptions, queryKeys } from '@/lib/queryClient';
 import { colorsFor } from '@/theme/colors';
 
@@ -45,6 +48,7 @@ const queryClient = createQueryClient();
 // module scope is the only place guaranteed to run before the first render.
 // An account is optional, but the wiring still has to exist for when one is used.
 connectAuthToApiClient();
+connectAuthToSync();
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -94,10 +98,7 @@ export default function RootLayout() {
     return (
       <SafeAreaProvider>
         <View className="flex-1 justify-center bg-bg">
-          <ErrorState
-            title="Could not open your data"
-            description={`The local database failed to prepare: ${migrationError.message}`}
-          />
+          <MigrationError message={migrationError.message} />
         </View>
       </SafeAreaProvider>
     );
@@ -116,11 +117,23 @@ export default function RootLayout() {
   );
 }
 
+function MigrationError({ message }: { message: string }) {
+  const { t } = useTranslation();
+
+  return (
+    <ErrorState
+      title={t('dataError', 'title')}
+      description={t('dataError', 'description').replace('{message}', message)}
+    />
+  );
+}
+
 /**
  * Split from `RootLayout` so it sits inside the providers: `useAppTheme` and
  * the query bridge both need context that the outer component establishes.
  */
 function AppShell({ migrated }: { migrated: boolean }) {
+  const { t } = useTranslation();
   const { resolved, isDark } = useAppTheme();
   const colors = colorsFor(resolved);
 
@@ -191,22 +204,37 @@ function AppShell({ migrated }: { migrated: boolean }) {
             name="log"
             options={{ headerShown: false, presentation: 'modal' }}
           />
-          <Stack.Screen name="entry/[id]" options={{ title: 'Meal' }} />
-          <Stack.Screen name="entry/edit/[id]" options={{ title: 'Edit' }} />
+          <Stack.Screen
+            name="entry/[id]"
+            options={{ title: t('entryDetail', 'layoutTitle') }}
+          />
+          <Stack.Screen
+            name="entry/edit/[id]"
+            options={{ title: t('entryEdit', 'layoutTitle') }}
+          />
           <Stack.Screen name="settings" options={{ headerShown: false }} />
-          <Stack.Screen name="shop" options={{ title: 'Shop' }} />
+          <Stack.Screen name="shop" options={{ title: t('shop', 'title') }} />
+          <Stack.Screen name="streak" options={{ title: t('streak', 'title') }} />
         </Stack.Protected>
 
         {/* Reachable at any time from Profile — "sign in to sync" — and gating
             nothing. */}
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
 
-        <Stack.Screen name="+not-found" options={{ title: 'Not found' }} />
+        <Stack.Screen
+          name="+not-found"
+          options={{ title: t('notFound', 'layoutTitle') }}
+        />
       </Stack>
 
       {/* One instance for the whole app: the tab-bar "+" and every dashboard
           card's "+" open this same sheet through `useLogSheetStore`. */}
       <LogSheet />
+      {/* Decorative — a bug in here must never be able to take the navigator
+          down with it. */}
+      <ErrorBoundary name="QuestToast">
+        <QuestToast />
+      </ErrorBoundary>
     </ThemeProvider>
   );
 }

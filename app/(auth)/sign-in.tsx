@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, router } from 'expo-router';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
@@ -9,7 +9,7 @@ import { isApiError } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
-import { signInSchema } from '@/features/auth/schemas';
+import { makeSignInSchema } from '@/features/auth/schemas';
 import type { SignInValues } from '@/features/auth/schemas';
 import { useAuthStore } from '@/features/auth/store';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -17,6 +17,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 export default function SignInScreen() {
   const signIn = useAuthStore((state) => state.signIn);
   const { t } = useTranslation();
+  const schema = useMemo(() => makeSignInSchema(t), [t]);
 
   /** Errors that belong to the request rather than a single field. */
   const [formError, setFormError] = useState<string | null>(null);
@@ -27,7 +28,7 @@ export default function SignInScreen() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<SignInValues>({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(schema),
     defaultValues: { email: '', password: '' },
   });
 

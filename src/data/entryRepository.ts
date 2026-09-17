@@ -40,6 +40,8 @@ export interface IngredientInput {
 export interface CreateEntryInput {
   userId: string;
   name: string;
+  /** User-chosen override for `foodEmojiFor`'s keyword guess. */
+  emoji?: string | null;
   mealType: MealType;
   inputMethod: InputMethod;
   /** `yyyy-MM-dd`, the local day this meal belongs to. */
@@ -52,6 +54,8 @@ export interface CreateEntryInput {
 export interface CreateManualEntryInput {
   userId: string;
   name: string;
+  /** User-chosen override for `foodEmojiFor`'s keyword guess. */
+  emoji?: string | null;
   mealType: MealType;
   /** `yyyy-MM-dd`, the local day this meal belongs to. */
   loggedOn: DateKey;
@@ -116,6 +120,7 @@ export function createEntry(input: CreateEntryInput): FoodEntry {
       id: entryId,
       userId: input.userId,
       name: input.name,
+      emoji: input.emoji ?? null,
       inputMethod: input.inputMethod,
       imageUrl: input.imageUrl ?? null,
       mealType: input.mealType,
@@ -176,6 +181,7 @@ export function createManualEntry(input: CreateManualEntryInput): FoodEntry {
       id: entryId,
       userId: input.userId,
       name: input.name,
+      emoji: input.emoji ?? null,
       inputMethod: 'manual',
       imageUrl: null,
       totalKcal: input.totalKcal,
@@ -278,6 +284,7 @@ export function getEntriesInRange(
 
 export interface UpdateEntryInput {
   name?: string;
+  emoji?: string | null;
   mealType?: MealType;
   /** Move the meal to another day. */
   loggedOn?: DateKey;
@@ -340,6 +347,7 @@ export function updateEntry(entryId: string, patch: UpdateEntryInput): FoodEntry
 
 export interface UpdateManualEntryInput {
   name?: string;
+  emoji?: string | null;
   mealType?: MealType;
   amount?: number | null;
   amountUnit?: 'g' | 'serving' | null;

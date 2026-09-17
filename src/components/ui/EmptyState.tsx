@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 
 import { Button } from './Button';
@@ -52,18 +53,15 @@ export interface ErrorStateProps {
 }
 
 /** The failure counterpart to `EmptyState`, with a retry affordance. */
-export function ErrorState({
-  title = 'Something went wrong',
-  description,
-  onRetry,
-  className,
-}: ErrorStateProps) {
+export function ErrorState({ title, description, onRetry, className }: ErrorStateProps) {
+  const { t } = useTranslation();
+
   return (
     <EmptyState
       icon="⚠️"
-      title={title}
+      title={title ?? t('common', 'somethingWentWrong')}
       description={description}
-      actionLabel={onRetry ? 'Try again' : undefined}
+      actionLabel={onRetry ? t('common', 'retry') : undefined}
       onAction={onRetry}
       className={className}
     />

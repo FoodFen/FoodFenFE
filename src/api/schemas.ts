@@ -34,6 +34,7 @@ export const dietTypeSchema = z.enum([
   'vegetarian',
 ]);
 export const calorieCalcModeSchema = z.enum(['auto', 'manual']);
+export const calorieLeftModeSchema = z.enum(['smart', 'all_calories']);
 export const subscriptionTierSchema = z.enum(['free', 'premium']);
 export const mealTypeSchema = z.enum(['breakfast', 'lunch', 'dinner', 'snack']);
 export const inputMethodSchema = z.enum(['voice', 'image', 'type', 'manual']);
@@ -53,6 +54,7 @@ export const userSchema = z.object({
   activityLevel: activityLevelSchema,
   dietType: dietTypeSchema,
   calorieCalcMode: calorieCalcModeSchema,
+  calorieLeftMode: calorieLeftModeSchema,
   subscriptionTier: subscriptionTierSchema,
   weeklyRateKg: z.number().nonnegative(),
   createdAt: z.iso.datetime(),

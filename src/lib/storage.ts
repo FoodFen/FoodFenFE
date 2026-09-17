@@ -106,4 +106,7 @@ export const StorageKeys = {
   queryCache: 'react-query-cache',
   devSeed: 'dev-seed-enabled',
   hideChallengeProgress: 'hide-challenge-progress',
+  seenQuestTypes: 'seen-quest-types',
+  streakCommittedDate: 'streak-committed-date',
+  questAdvanceCounts: 'quest-advance-counts',
 } as const;

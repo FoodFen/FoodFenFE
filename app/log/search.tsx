@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Stack } from 'expo-router';
+import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Alert, Pressable, ScrollView, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Input } from '@/components/ui/Input';
 import { NumberField } from '@/components/ui/NumberField';
+import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
 import { getCatalogFood } from '@/data/foodCatalog';
 import {
@@ -85,6 +86,13 @@ export default function SearchFoodScreen() {
 
   return (
     <View className="flex-1 bg-bg">
+      <ScreenHeader
+        title={t('logSearch', 'layoutTitle')}
+        icon="close"
+        onPress={() => router.dismiss()}
+        accessibilityLabel={t('common', 'cancel')}
+      />
+
       <View className="px-4 pb-2 pt-3">
         <Input
           value={query}
@@ -231,8 +239,6 @@ function PortionStep({
   onBack: () => void;
 }) {
   const { t } = useTranslation();
-  const { resolved } = useAppTheme();
-  const colors = colorsFor(resolved);
   const isPremium = useIsPremium();
   const quickLog = useQuickLogFood();
   const finishLogging = usePostLogInterstitial();
@@ -246,6 +252,8 @@ function PortionStep({
   const nutrition = nutritionForServing(food, quantity, servingId);
 
   const save = () => {
+    if (quickLog.isPending) return;
+
     quickLog.mutate(
       { catalogFoodId: food.id, servingId, quantity },
       {
@@ -265,108 +273,101 @@ function PortionStep({
   };
 
   return (
-    <KeyboardAwareScrollView
-      className="flex-1 bg-bg"
-      contentContainerStyle={{ padding: 16, gap: 16 }}
-      keyboardShouldPersistTaps="handled"
-      bottomOffset={24}
-    >
-      <Stack.Screen
-        options={{
-          headerBackVisible: false,
-          headerLeft: () => (
-            <Pressable
-              onPress={onBack}
-              hitSlop={12}
-              accessibilityRole="button"
-              accessibilityLabel={t('logIngredient', 'backToSearch')}
-              style={{ paddingRight: 16 }}
-            >
-              <Ionicons name="arrow-back" size={24} color={colors.fg} />
-            </Pressable>
-          ),
-        }}
+    <View className="flex-1 bg-bg">
+      <ScreenHeader
+        title={food.name}
+        icon="arrow-back"
+        onPress={onBack}
+        accessibilityLabel={t('logIngredient', 'backToSearch')}
       />
 
-      <Text variant="title">{food.name}</Text>
+      <KeyboardAwareScrollView
+        className="flex-1"
+        contentContainerStyle={{ padding: 16, gap: 16 }}
+        keyboardShouldPersistTaps="handled"
+        bottomOffset={24}
+      >
+        <Card className="gap-4">
+          <View className="gap-2">
+            <Text variant="label" tone="muted">
+              {t('logSearch', 'serving')}
+            </Text>
+            <View className="flex-row flex-wrap gap-2">
+              {food.servings.map((row) => {
+                const isSelected = row.id === servingId;
 
-      <Card className="gap-4">
-        <View className="gap-2">
-          <Text variant="label" tone="muted">
-            {t('logSearch', 'serving')}
-          </Text>
-          <View className="flex-row flex-wrap gap-2">
-            {food.servings.map((row) => {
-              const isSelected = row.id === servingId;
-
-              return (
-                <Pressable
-                  key={row.id}
-                  onPress={() => {
-                    haptics.selection();
-                    setServingId(row.id);
-                    setQuantity(1);
-                  }}
-                  accessibilityRole="radio"
-                  accessibilityState={{ selected: isSelected }}
-                  className={cn(
-                    'h-10 justify-center rounded-pill border px-4',
-                    isSelected ? 'border-brand bg-brand' : 'border-border bg-surface',
-                  )}
-                >
-                  <Text variant="label" tone={isSelected ? 'onBrand' : 'default'}>
-                    {row.label}
-                  </Text>
-                </Pressable>
-              );
-            })}
+                return (
+                  <Pressable
+                    key={row.id}
+                    onPress={() => {
+                      haptics.selection();
+                      setServingId(row.id);
+                      setQuantity(1);
+                    }}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected: isSelected }}
+                    className={cn(
+                      'h-10 justify-center rounded-pill border px-4',
+                      isSelected ? 'border-brand bg-brand' : 'border-border bg-surface',
+                    )}
+                  >
+                    <Text variant="label" tone={isSelected ? 'onBrand' : 'default'}>
+                      {row.label}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
           </View>
-        </View>
 
-        <View className="flex-row items-center justify-between">
-          <Text variant="label" tone="muted">
-            {t('logSearch', 'amount')}
-          </Text>
-          <NumberField
-            compact
-            label={t('logSearch', 'amount')}
-            value={quantity}
-            onChange={(next) => setQuantity(next ?? (isGramServing ? 10 : 0.5))}
-            min={isGramServing ? 10 : 0.5}
-            max={isGramServing ? 5000 : 20}
-            precision={isGramServing ? 0 : 1}
-          />
-        </View>
-      </Card>
+          <View className="flex-row items-center justify-between">
+            <Text variant="label" tone="muted">
+              {t('logSearch', 'amount')}
+            </Text>
+            <NumberField
+              compact
+              label={t('logSearch', 'amount')}
+              value={quantity}
+              onChange={(next) => setQuantity(next ?? (isGramServing ? 10 : 0.5))}
+              min={isGramServing ? 10 : 0.5}
+              max={isGramServing ? 5000 : 20}
+              precision={isGramServing ? 0 : 1}
+            />
+          </View>
+        </Card>
 
-      <Card className="gap-3">
-        <View className="flex-row items-baseline justify-between">
-          <Text variant="heading">{t('logIngredient', 'calories')}</Text>
-          <Text variant="title">{nutrition.kcal.toLocaleString()}</Text>
-        </View>
-        <View className="gap-2 border-t border-border pt-3">
-          <Row label={t('logIngredient', 'weight')} value={`${Math.round(grams)} g`} />
-          <Row
-            label={t('onboardingFinalize', 'protein')}
-            value={`${nutrition.proteinG} g`}
-          />
-          <Row label={t('onboardingFinalize', 'carbs')} value={`${nutrition.carbsG} g`} />
-          <Row label={t('onboardingFinalize', 'fat')} value={`${nutrition.fatG} g`} />
-          {isPremium && nutrition.fiberG !== undefined && nutrition.fiberG !== null ? (
-            <Row label={t('entryDetail', 'fiber')} value={`${nutrition.fiberG} g`} />
-          ) : null}
-        </View>
-      </Card>
+        <Card className="gap-3">
+          <View className="flex-row items-baseline justify-between">
+            <Text variant="heading">{t('logIngredient', 'calories')}</Text>
+            <Text variant="title">{nutrition.kcal.toLocaleString()}</Text>
+          </View>
+          <View className="gap-2 border-t border-border pt-3">
+            <Row label={t('logIngredient', 'weight')} value={`${Math.round(grams)} g`} />
+            <Row
+              label={t('onboardingFinalize', 'protein')}
+              value={`${nutrition.proteinG} g`}
+            />
+            <Row
+              label={t('onboardingFinalize', 'carbs')}
+              value={`${nutrition.carbsG} g`}
+            />
+            <Row label={t('onboardingFinalize', 'fat')} value={`${nutrition.fatG} g`} />
+            {isPremium && nutrition.fiberG !== undefined && nutrition.fiberG !== null ? (
+              <Row label={t('entryDetail', 'fiber')} value={`${nutrition.fiberG} g`} />
+            ) : null}
+          </View>
+        </Card>
 
-      <Button
-        label={t('logSearch', 'add')}
-        onPress={save}
-        loading={quickLog.isPending}
-        disabled={quantity <= 0}
-        fullWidth
-        size="lg"
-      />
-    </KeyboardAwareScrollView>
+        <Button
+          label={t('logSearch', 'add')}
+          onPress={save}
+          loading={quickLog.isPending}
+          disabled={quantity <= 0}
+          fullWidth
+          size="lg"
+        />
+      </KeyboardAwareScrollView>
+    </View>
   );
 }
 

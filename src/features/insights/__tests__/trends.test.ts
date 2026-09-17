@@ -22,6 +22,7 @@ function entry(mealType: MealType, kcal: number): FoodEntry {
     id: `${mealType}-${kcal}`,
     userId: 'user',
     name: 'Meal',
+    emoji: null,
     inputMethod: 'type',
     imageUrl: null,
     totalKcal: kcal,

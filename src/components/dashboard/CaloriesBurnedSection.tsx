@@ -1,10 +1,10 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from 'expo-router';
 import { View } from 'react-native';
 
 import { ProgressRing } from '@/components/ui/ProgressRing';
 import { Text } from '@/components/ui/Text';
 import { DASHBOARD_BURN_GOAL_KCAL } from '@/features/dashboard/constants';
-import { useLogSheetStore } from '@/features/logging/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { colorsFor } from '@/theme/colors';
@@ -23,13 +23,12 @@ export function CaloriesBurnedSection({ day }: { day: DiaryDay }) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
-  const present = useLogSheetStore((state) => state.present);
 
   return (
     <MetricSection
       title={t('dashboard', 'caloriesBurned')}
       value={day.exerciseKcal}
-      onAdd={() => present()}
+      onAdd={() => router.push('/log/activity')}
     >
       <View className="gap-3 pt-1">
         <View className="flex-row items-center justify-between">

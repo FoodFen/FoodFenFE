@@ -7,13 +7,15 @@ import { Card } from '@/components/ui/Card';
 import { ScrollScreen } from '@/components/ui/Screen';
 import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
-import { usePendingChanges } from '@/features/diary/queries';
+import { useDiaryDay, usePendingChanges } from '@/features/diary/queries';
+import { useLogSheetStore } from '@/features/logging/store';
 import { useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import type { ThemePreference } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
+import { todayKey } from '@/lib/date';
 import { haptics } from '@/lib/haptics';
 import type { Locale } from '@/lib/i18n';
 import { ageFromBirthYear, totalDailyEnergyExpenditure } from '@/lib/nutrition';
@@ -25,6 +27,7 @@ export default function SettingsScreen() {
   const { t, locale, setLocale } = useTranslation();
 
   const user = useProfileStore((state) => state.profile);
+  const saveProfile = useProfileStore((state) => state.saveProfile);
   const eraseLocalData = useProfileStore((state) => state.eraseAll);
 
   const session = useAuthStore((state) => state.session);
@@ -32,6 +35,8 @@ export default function SettingsScreen() {
   const isSignedIn = session !== null;
 
   const { data: pendingChanges = 0 } = usePendingChanges();
+  const { data: today } = useDiaryDay(todayKey());
+  const presentLogSheet = useLogSheetStore((state) => state.present);
 
   const theme = useSettingsStore((state) => state.theme);
   const setTheme = useSettingsStore((state) => state.setTheme);
@@ -39,6 +44,10 @@ export default function SettingsScreen() {
   const setWeightUnit = useSettingsStore((state) => state.setWeightUnit);
   const devSeedEnabled = useSettingsStore((state) => state.devSeedEnabled);
   const setDevSeedEnabled = useSettingsStore((state) => state.setDevSeedEnabled);
+  const hideChallengeProgress = useSettingsStore((state) => state.hideChallengeProgress);
+  const setHideChallengeProgress = useSettingsStore(
+    (state) => state.setHideChallengeProgress,
+  );
 
   const languageOptions: { value: Locale; label: string }[] = [
     { value: 'vi', label: t('profileLanguage', 'vietnamese') },
@@ -167,6 +176,69 @@ export default function SettingsScreen() {
             ? t('profile', 'targetsManual')
             : t('profile', 'targetsAuto').replace('{kcal}', maintenance.toLocaleString())}
         </Text>
+
+        <View className="flex-row items-center justify-between border-t border-border pt-3">
+          <View className="gap-0.5">
+            <Text variant="label">{t('targetMode', 'title')}</Text>
+            <Text variant="caption" tone="muted">
+              {user.calorieCalcMode === 'manual'
+                ? t('targetMode', 'modeManual')
+                : t('targetMode', 'modeAuto')}
+            </Text>
+          </View>
+
+          <Pressable
+            onPress={() => router.push('/settings/goals')}
+            accessibilityRole="button"
+            accessibilityLabel={t('profile', 'editGoals')}
+            hitSlop={8}
+            className="h-9 w-9 items-center justify-center rounded-full active:bg-surface-alt"
+          >
+            <Ionicons name="pencil" size={16} color={colors.fgMuted} />
+          </Pressable>
+        </View>
+
+        <View className="gap-1 border-t border-border pt-3">
+          <Pressable
+            onPress={() => presentLogSheet('waterGoal')}
+            accessibilityRole="button"
+            accessibilityLabel={t('dashboard', 'editWaterGoalA11y')}
+            className="flex-row items-center justify-between active:opacity-60"
+          >
+            <Text variant="label" tone="brand">
+              {t('logSheet', 'waterGoal')}
+            </Text>
+            <Ionicons name="chevron-forward" size={16} color={colors.brand} />
+          </Pressable>
+
+          <Text variant="caption" tone="subtle">
+            {t('dashboard', 'waterGoal').replace(
+              '{ml}',
+              (today?.goal.targetWaterMl ?? 2000).toLocaleString(),
+            )}
+          </Text>
+        </View>
+      </Card>
+
+      <Card className="gap-3">
+        <Text variant="heading">{t('smartMode', 'title')}</Text>
+        <SegmentedControl
+          options={[
+            { value: 'smart' as const, label: t('smartMode', 'modeSmart') },
+            { value: 'all_calories' as const, label: t('smartMode', 'modeAllCalories') },
+          ]}
+          value={user.calorieLeftMode}
+          onChange={(calorieLeftMode) => saveProfile({ calorieLeftMode })}
+        />
+        <Pressable
+          onPress={() => router.push('/settings/smart-mode')}
+          accessibilityRole="button"
+          className="active:opacity-60"
+        >
+          <Text variant="caption" tone="brand">
+            {t('smartMode', 'explainerLink')}
+          </Text>
+        </Pressable>
       </Card>
 
       <Card flush>
@@ -212,6 +284,21 @@ export default function SettingsScreen() {
           value={weightUnit}
           onChange={setWeightUnit}
         />
+      </Card>
+
+      <Card className="gap-3">
+        <Text variant="heading">{t('profile', 'challengeProgress')}</Text>
+        <SegmentedControl
+          options={[
+            { value: 'on' as const, label: t('developer', 'on') },
+            { value: 'off' as const, label: t('developer', 'off') },
+          ]}
+          value={hideChallengeProgress ? 'off' : 'on'}
+          onChange={(value) => setHideChallengeProgress(value === 'off')}
+        />
+        <Text variant="caption" tone="subtle">
+          {t('profile', 'challengeProgressCaption')}
+        </Text>
       </Card>
 
       {__DEV__ ? (

@@ -2,15 +2,18 @@ import { router } from 'expo-router';
 
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Screen } from '@/components/ui/Screen';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function NotFoundScreen() {
+  const { t } = useTranslation();
+
   return (
     <Screen className="justify-center">
       <EmptyState
         icon="🧭"
-        title="This screen does not exist"
-        description="The link you followed may be broken or the page may have moved."
-        actionLabel="Go to your diary"
+        title={t('notFound', 'title')}
+        description={t('notFound', 'description')}
+        actionLabel={t('notFound', 'action')}
         onAction={() => router.replace('/')}
       />
     </Screen>

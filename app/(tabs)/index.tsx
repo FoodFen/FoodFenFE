@@ -12,12 +12,13 @@ import { WaterSection } from '@/components/dashboard/WaterSection';
 import { WeekStrip } from '@/components/dashboard/WeekStrip';
 import { WeightSection } from '@/components/dashboard/WeightSection';
 import { ErrorState } from '@/components/ui/EmptyState';
-import { Screen, ScrollScreen } from '@/components/ui/Screen';
+import { Screen, ScrollScreen, TAB_BAR_CLEARANCE } from '@/components/ui/Screen';
 import { DiaryDaySkeleton } from '@/components/ui/Skeleton';
 import { MissingGoalError } from '@/data/diaryRepository';
 import { useDiaryDay, useHealMissingGoal } from '@/features/diary/queries';
 import { useProfileStore } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { useTranslation } from '@/hooks/useTranslation';
 import { todayKey } from '@/lib/date';
 import type { DateKey } from '@/lib/date';
 import { colorsFor } from '@/theme/colors';
@@ -29,10 +30,18 @@ import { colorsFor } from '@/theme/colors';
  */
 export default function DashboardScreen() {
   const [selectedDate, setSelectedDate] = useState<DateKey>(todayKey());
+  const [weekOffset, setWeekOffset] = useState(0);
   const [entriesOpen, setEntriesOpen] = useState(false);
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
+
+  const isToday = selectedDate === todayKey();
+  const backToToday = () => {
+    setSelectedDate(todayKey());
+    setWeekOffset(0);
+  };
 
   const { data: day, isPending, isRefetching, error, refetch } = useDiaryDay(selectedDate);
 
@@ -52,27 +61,34 @@ export default function DashboardScreen() {
   return (
     <Screen>
       <View style={{ paddingTop: insets.top }} className="gap-3 bg-bg pb-3">
-        <DashboardHeader />
-        <WeekStrip selected={selectedDate} onSelect={setSelectedDate} />
+        <DashboardHeader isToday={isToday} onBackToToday={backToToday} />
+        <WeekStrip
+          selected={selectedDate}
+          onSelect={setSelectedDate}
+          weekOffset={weekOffset}
+          onWeekOffsetChange={setWeekOffset}
+        />
       </View>
 
       {isPending ? (
-        <View className="px-4">
+        <View className="px-4" style={{ paddingBottom: TAB_BAR_CLEARANCE }}>
           <DiaryDaySkeleton />
         </View>
       ) : error || !day ? (
-        <ErrorState
-          description={
-            error instanceof Error ? error.message : 'That day could not be loaded.'
-          }
-          onRetry={() => {
-            resetHeal();
-            void refetch();
-          }}
-        />
+        <View style={{ paddingBottom: TAB_BAR_CLEARANCE }}>
+          <ErrorState
+            description={
+              error instanceof Error ? error.message : t('dashboard', 'dayLoadError')
+            }
+            onRetry={() => {
+              resetHeal();
+              void refetch();
+            }}
+          />
+        </View>
       ) : (
         <ScrollScreen
-          bottomSpacing={96}
+          tabBar
           refreshControl={
             <RefreshControl
               refreshing={isRefetching}

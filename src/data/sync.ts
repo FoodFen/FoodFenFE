@@ -14,7 +14,6 @@ import {
   waterLog,
   weightLog,
 } from '@/db/schema';
-import { useAuthStore } from '@/features/auth/store';
 import { env } from '@/lib/env';
 
 /**
@@ -38,6 +37,21 @@ import { env } from '@/lib/env';
  */
 
 /**
+ * Whether there is a signed-in session, wired in by `connectAuthToSync()` at
+ * startup.
+ *
+ * The data layer sits *under* `src/features/`, so this file cannot import the
+ * auth store directly without inverting that layering — instead it exposes a
+ * setter, the same registration pattern `src/api/client.ts` uses for its
+ * auth headers, and `src/features/auth/store.ts` calls it with its own state.
+ */
+let hasActiveSession: () => boolean = () => false;
+
+export function configureSyncAuth(check: () => boolean): void {
+  hasActiveSession = check;
+}
+
+/**
  * Whether the remote path is worth attempting at all.
  *
  * All three have to hold: the build knows a server URL, the user has an
@@ -46,9 +60,7 @@ import { env } from '@/lib/env';
  * certain to fail.
  */
 export function canUseRemote(): boolean {
-  return (
-    env.hasBackend && useAuthStore.getState().session !== null && onlineManager.isOnline()
-  );
+  return env.hasBackend && hasActiveSession() && onlineManager.isOnline();
 }
 
 export interface ReadOptions<T> {

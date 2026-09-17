@@ -1,5 +1,6 @@
 import { router } from 'expo-router';
 import { View } from 'react-native';
+import Animated, { BounceIn, FadeInDown, ZoomIn } from 'react-native-reanimated';
 
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -28,7 +29,16 @@ export default function InterstitialScreen() {
 
   const finish = () => {
     dismiss();
-    router.dismissAll();
+    // Pushed one screen deeper than the manual/search/activity entry point it
+    // came from. A `POP` only bubbles to close the whole modal once the local
+    // "log" stack is already down to its single first screen — any count is
+    // otherwise clamped and handled locally (see expo-router's StackRouter) —
+    // so this takes two separate pops, not one `dismiss(2)`: the first lands
+    // on that first screen, the second is what actually bubbles and closes
+    // the modal. `dismissLogFlow` in `src/features/gamification/queries.ts`
+    // is the one-pop version, for the entry points one screen shallower.
+    router.dismiss();
+    router.dismiss();
   };
 
   const hideProgress = () => {
@@ -39,33 +49,39 @@ export default function InterstitialScreen() {
   return (
     <View className="flex-1 justify-between bg-bg p-4">
       <View className="gap-4 pt-6">
-        <Text variant="title" className="text-center">
-          {t('interstitial', 'title')}
-        </Text>
+        <Animated.View entering={ZoomIn.duration(300)}>
+          <Text variant="title" className="text-center">
+            {t('interstitial', 'title')}
+          </Text>
+        </Animated.View>
 
-        {quests.map((quest) => (
-          <Card key={quest.id} className="gap-2">
-            <View className="flex-row items-baseline justify-between">
-              <Text variant="heading">{questTitle(t, quest.questType)}</Text>
-              <Text
-                variant="caption"
-                tone="brand"
-                accessibilityLabel={t('interstitial', 'coinsA11y').replace(
-                  '{count}',
-                  String(quest.rewardCoins),
-                )}
-              >
-                +{quest.rewardCoins}
+        {quests.map((quest, index) => (
+          <Animated.View key={quest.id} entering={FadeInDown.delay(index * 90).duration(280)}>
+            <Card className="gap-2">
+              <View className="flex-row items-baseline justify-between">
+                <Text variant="heading">{questTitle(t, quest.questType)}</Text>
+                <Animated.View entering={BounceIn.delay(index * 90 + 200)}>
+                  <Text
+                    variant="caption"
+                    tone="brand"
+                    accessibilityLabel={t('interstitial', 'coinsA11y').replace(
+                      '{count}',
+                      String(quest.rewardCoins),
+                    )}
+                  >
+                    +{quest.rewardCoins}
+                  </Text>
+                </Animated.View>
+              </View>
+              <Text variant="body" tone="muted">
+                {questDescription(t, quest)}
               </Text>
-            </View>
-            <Text variant="body" tone="muted">
-              {questDescription(t, quest)}
-            </Text>
-            <ProgressBar progress={progressFraction(quest.progress, quest.target)} />
-            <Text variant="caption" tone="subtle">
-              {quest.progress}/{quest.target}
-            </Text>
-          </Card>
+              <ProgressBar progress={progressFraction(quest.progress, quest.target)} />
+              <Text variant="caption" tone="subtle">
+                {quest.progress}/{quest.target}
+              </Text>
+            </Card>
+          </Animated.View>
         ))}
       </View>
 

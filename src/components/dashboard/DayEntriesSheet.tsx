@@ -6,6 +6,7 @@ import { ScrollView, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { FoodEntryRow } from '@/components/diary/FoodEntryRow';
+import { TAB_BAR_CLEARANCE } from '@/components/ui/Screen';
 import { SheetScrim } from '@/components/ui/SheetScrim';
 import { Text } from '@/components/ui/Text';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
@@ -50,7 +51,7 @@ export function DayEntriesSheet({
 
   return (
     <>
-      <SheetScrim visible={open} />
+      <SheetScrim visible={open} onPress={onClose} />
       <BottomSheet
         ref={sheetRef}
         index={-1}
@@ -59,7 +60,12 @@ export function DayEntriesSheet({
         backgroundStyle={{ backgroundColor: colors.surface }}
         onClose={onClose}
       >
-        <BottomSheetView style={{ width, paddingBottom: insets.bottom + 16 }}>
+        {/* The sheet mounts inside the tab screen, so the floating tab bar is
+            drawn over its bottom edge — reserve that height, not just the
+            safe area. */}
+        <BottomSheetView
+          style={{ width, paddingBottom: insets.bottom + TAB_BAR_CLEARANCE }}
+        >
           <View style={{ height: sheetBody }} className="gap-3 pt-3">
             <View className="h-11 flex-row items-center justify-between px-4">
               <Text variant="heading">{formatDiaryDate(day.date)}</Text>

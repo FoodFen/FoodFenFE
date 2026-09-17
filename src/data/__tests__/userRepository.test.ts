@@ -1,7 +1,9 @@
 import { createTestDatabase } from '@/db/testDatabase';
 import type { TestDatabase } from '@/db/testDatabase';
+import { calculateTargets } from '@/lib/nutrition';
 
 import * as gamification from '../gamificationRepository';
+import * as logRepository from '../logRepository';
 import * as userRepository from '../userRepository';
 
 let mockDb: TestDatabase;
@@ -99,6 +101,23 @@ describe('refreshGoalIfAuto', () => {
 
     expect(userRepository.refreshGoalIfAuto(manual)).toBeUndefined();
     expect(userRepository.getGoalForDate(user.id)?.targetKcal).toBe(1500);
+  });
+
+  it('prefers the latest logged weight over the profile field', () => {
+    const { user } = userRepository.createLocalUser(input);
+
+    // `user.weightCurrent` is still 85 (from `input`) — logging a much
+    // heavier weigh-in must not require also patching the profile for the
+    // formula to notice.
+    logRepository.logWeight(user.id, 110, '2026-03-01');
+
+    const refreshed = userRepository.refreshGoalIfAuto(user);
+    const expected = calculateTargets({ ...user, weightCurrent: 110 });
+
+    expect(refreshed?.targetKcal).toBe(expected.targetKcal);
+    expect(refreshed?.targetKcal).not.toBe(
+      calculateTargets({ ...user, weightCurrent: 85 }).targetKcal,
+    );
   });
 });
 

@@ -8,6 +8,7 @@ import { ErrorState } from '@/components/ui/EmptyState';
 import { NumberField } from '@/components/ui/NumberField';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
+import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import { useEntry, useUpdateEntry, useUpdateManualEntry } from '@/features/diary/queries';
 import { MEAL_ICONS } from '@/features/diary/selectors';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -69,6 +70,7 @@ function EditForm({ entry }: { entry: FoodEntry }) {
   const numbersEditable = entry.ingredients.length <= 1;
 
   const [name, setName] = useState(entry.name);
+  const [emoji, setEmoji] = useState<string | null>(entry.emoji);
   const [mealType, setMealType] = useState<MealType>(entry.mealType);
   const [kcal, setKcal] = useState<number | null>(entry.totalKcal);
   const [carbsG, setCarbsG] = useState<number | null>(entry.carbsG);
@@ -107,6 +109,7 @@ function EditForm({ entry }: { entry: FoodEntry }) {
   const save = () => {
     if (!canSave) return;
     const trimmedName = name.trim();
+    const emojiPatch = emoji && emoji.length > 0 ? emoji : null;
 
     if (entry.ingredients.length === 0) {
       updateManual.mutate(
@@ -114,6 +117,7 @@ function EditForm({ entry }: { entry: FoodEntry }) {
           id: entry.id,
           patch: {
             name: trimmedName,
+            emoji: emojiPatch,
             mealType,
             totalKcal: kcal ?? 0,
             carbsG: carbsG ?? 0,
@@ -134,6 +138,7 @@ function EditForm({ entry }: { entry: FoodEntry }) {
           id: entry.id,
           patch: {
             name: trimmedName,
+            emoji: emojiPatch,
             mealType,
             ingredients: [
               {
@@ -155,7 +160,7 @@ function EditForm({ entry }: { entry: FoodEntry }) {
     }
 
     updateEntry.mutate(
-      { id: entry.id, patch: { name: trimmedName, mealType } },
+      { id: entry.id, patch: { name: trimmedName, emoji: emojiPatch, mealType } },
       { onSuccess: done, onError: fail },
     );
   };
@@ -171,14 +176,23 @@ function EditForm({ entry }: { entry: FoodEntry }) {
         <Text variant="label" tone="muted">
           {t('entryEdit', 'name')}
         </Text>
-        <TextInput
-          className="h-12 rounded-lg border border-border bg-surface px-3 font-sans text-base text-fg"
-          value={name}
-          onChangeText={setName}
-          placeholder={t('entryEdit', 'name')}
-          placeholderTextColor={colors.fgSubtle}
-          autoCapitalize="sentences"
-        />
+        <View className="flex-row gap-2">
+          <TextInput
+            value={emoji ?? foodEmojiFor({ name, mealType })}
+            onChangeText={setEmoji}
+            selectTextOnFocus
+            accessibilityLabel={t('logManual', 'chooseEmojiA11y')}
+            className="h-12 w-12 rounded-lg border border-border bg-surface text-center text-2xl"
+          />
+          <TextInput
+            className="h-12 flex-1 rounded-lg border border-border bg-surface px-3 font-sans text-base text-fg"
+            value={name}
+            onChangeText={setName}
+            placeholder={t('entryEdit', 'name')}
+            placeholderTextColor={colors.fgSubtle}
+            autoCapitalize="sentences"
+          />
+        </View>
       </View>
 
       <View className="gap-1.5">

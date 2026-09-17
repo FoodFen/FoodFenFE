@@ -97,6 +97,8 @@ export function LogSheet() {
   }
 
   function submitWeight() {
+    if (logWeight.isPending) return;
+
     const typed = Number(weightText.replace(',', '.'));
 
     if (!Number.isFinite(typed) || typed <= 0) {
@@ -120,6 +122,8 @@ export function LogSheet() {
   }
 
   function submitWater() {
+    if (addWater.isPending) return;
+
     addWater.mutate(
       { amountMl, date: todayKey() },
       {
@@ -133,6 +137,8 @@ export function LogSheet() {
   }
 
   function submitWaterGoal(targetMl: number) {
+    if (setWaterGoal.isPending) return;
+
     setWaterGoal.mutate(targetMl, {
       onSuccess: close,
       onError: () => setError(t('auth', 'genericError')),
@@ -141,7 +147,7 @@ export function LogSheet() {
 
   return (
     <>
-      <SheetScrim visible={open} />
+      <SheetScrim visible={open} onPress={close} />
       <BottomSheet
         ref={sheetRef}
         index={-1}

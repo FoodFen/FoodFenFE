@@ -431,24 +431,23 @@ export function useRemoveLastWater() {
 export function useLogWeight() {
   const userId = useUserId();
   const queryClient = useQueryClient();
-  const refreshProfile = useProfileStore((state) => state.refresh);
-  const saveProfile = useProfileStore((state) => state.saveProfile);
+  const profile = useProfileStore((state) => state.profile);
 
   return useMutation({
     mutationFn: async ({ weight, date }: { weight: number; date: DateKey }) => {
-      if (!userId) throw new Error('No local profile yet.');
+      if (!userId || !profile) throw new Error('No local profile yet.');
 
       const log = logRepository.logWeight(userId, weight, date);
 
-      // Today's reading is also the user's current weight, which the calorie
-      // target is derived from. Recording one without the other would leave
-      // the goal keyed to a weight the user no longer has.
-      if (date === todayKey()) saveProfile({ weightCurrent: weight });
+      // Today's reading is the user's current weight as far as the calorie
+      // formula is concerned (`writeCalculatedGoal` resolves it from
+      // `weight_log`, not the profile) — recompute today's target so it
+      // reflects the weight just logged, same as any other formula-relevant edit.
+      if (date === todayKey()) userRepository.refreshGoalIfAuto(profile);
 
       return log;
     },
     onSuccess: () => {
-      refreshProfile();
       void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
       void queryClient.invalidateQueries({ queryKey: queryKeys.weight.all });
     },

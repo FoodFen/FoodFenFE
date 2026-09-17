@@ -27,6 +27,11 @@ export const vi = {
     delete: 'Xóa',
     name: 'Tên',
     premium: 'Cao cấp',
+    dismiss: 'Đóng',
+    calories: 'Calo',
+    water: 'Nước',
+    somethingWentWrong: 'Đã có lỗi xảy ra',
+    pleaseTryAgain: 'Vui lòng thử lại.',
   },
 
   onboardingGender: {
@@ -170,6 +175,12 @@ export const vi = {
     activity: 'Vận động',
     diet: 'Chế độ ăn',
     dietHint: 'Thay đổi cách phân bổ calo giữa đạm, tinh bột và chất béo.',
+    birthYearError: 'Nhập năm sinh hợp lệ.',
+    birthYearTooYoungError: 'Bạn phải từ 13 tuổi trở lên.',
+    heightError: 'Nhập chiều cao của bạn theo cm.',
+    weightCurrentError: 'Nhập cân nặng của bạn theo kg.',
+    weightGoalError: 'Nhập cân nặng mục tiêu theo kg.',
+    paceRequiredError: 'Chọn tốc độ bạn muốn đạt được mục tiêu.',
   },
 
   profileLanguage: {
@@ -178,9 +189,8 @@ export const vi = {
     english: 'English',
   },
 
-  // Mirrors `MealType` — shared by the entry detail screen and the meal
-  // composer. `src/features/diary/selectors.ts` keeps its own English
-  // `MEAL_LABELS` for the screens not yet migrated (the diary list, Insights).
+  // Mirrors `MealType` — shared by the entry detail screen, the meal
+  // composer, and Insights' per-meal breakdown.
   mealType: {
     breakfast: 'Bữa sáng',
     lunch: 'Bữa trưa',
@@ -212,6 +222,9 @@ export const vi = {
     units: 'Đơn vị',
     kilograms: 'Kilôgam',
     pounds: 'Pound',
+    challengeProgress: 'Tiến độ thử thách',
+    challengeProgressCaption:
+      'Hiện màn hình thử thách sau khi ghi bữa ăn, hoạt động hoặc nước uống.',
     signOut: 'Đăng xuất',
     signOutMessage: 'Nhật ký của bạn vẫn ở lại trên thiết bị này.',
     eraseLocalData: 'Xóa dữ liệu trên thiết bị',
@@ -221,6 +234,7 @@ export const vi = {
   },
 
   goals: {
+    layoutTitle: 'Mục tiêu',
     whatWouldBeCalculated: 'Giá trị sẽ được tính',
     yourNewTargets: 'Mục tiêu mới của bạn',
     manualWarning:
@@ -250,9 +264,16 @@ export const vi = {
     passwordHint: 'Ít nhất 8 ký tự, bao gồm một chữ số.',
     confirmPassword: 'Xác nhận mật khẩu',
     alreadyHaveAccount: 'Đã có tài khoản?',
+    emailInvalidError: 'Nhập một địa chỉ email hợp lệ.',
+    passwordRequiredError: 'Nhập mật khẩu của bạn.',
+    displayNameRequiredError: 'Cho chúng tôi biết nên gọi bạn là gì.',
+    passwordMinLengthError: 'Dùng ít nhất {count} ký tự.',
+    passwordNeedsDigitError: 'Bao gồm ít nhất một chữ số.',
+    passwordsMismatchError: 'Mật khẩu không khớp.',
   },
 
   entryDetail: {
+    layoutTitle: 'Bữa ăn',
     loadError: 'Không thể tải bữa ăn này.',
     deleteConfirmMessage: 'Xóa bữa ăn này khỏi nhật ký của bạn?',
     at: 'lúc',
@@ -343,6 +364,7 @@ export const vi = {
   logManual: {
     layoutTitle: 'Nhập chi tiết',
     mealName: 'Tên món',
+    chooseEmojiA11y: 'Chọn biểu tượng cảm xúc cho món ăn',
     mealNamePlaceholder: 'ví dụ: Phở bò',
     smartEntry: 'Mô tả bằng một câu (AI)',
     comingSoon: 'Sắp có',
@@ -427,7 +449,9 @@ export const vi = {
     addA11y: 'Thêm',
     viewEntriesA11y: 'Xem các món đã ghi',
     editWaterGoalA11y: 'Đổi mục tiêu nước',
+    backToToday: 'Hôm nay',
     moreEntries: '+{count}',
+    dayLoadError: 'Không tải được ngày này.',
   },
 
   dayEntries: {
@@ -448,6 +472,7 @@ export const vi = {
     waterLabel: 'Bao nhiêu nước?',
     waterGoalLabel: 'Mục tiêu nước mỗi ngày (ml)',
     save: 'Lưu',
+    openA11y: 'Mở bảng ghi nhật ký',
   },
 
   settings: {
@@ -492,8 +517,54 @@ export const vi = {
     emptyDescription: 'Dùng điểm thưởng để mở khóa vật phẩm — sắp có.',
   },
 
+  streak: {
+    title: 'Chuỗi ngày',
+    viewStreak: 'Xem chuỗi ngày',
+    currentStreak: 'Chuỗi hiện tại',
+    longestStreak: 'Chuỗi dài nhất',
+    days: 'ngày',
+    noStreakYet: 'Ghi lại hôm nay để bắt đầu chuỗi ngày của bạn.',
+    share: 'Chia sẻ',
+    shareMessage: 'Tôi đang duy trì chuỗi {days} ngày trên FoodFen! 🔥',
+    commit: 'Tôi cam kết',
+    committedToday: 'Bạn đã cam kết hôm nay ✓',
+  },
+
   insights: {
+    title: 'Thống kê',
+    dailyAverage: 'Trung bình ngày',
+    loggingStreak: 'Chuỗi ngày ghi',
+    dayUnit: 'ngày',
+    windowHeading: '{days} ngày qua',
+    daysLoggedOf: 'Đã ghi {logged}/{total} ngày',
+    emptyTitle: 'Chưa có dữ liệu để vẽ biểu đồ',
+    emptyDescription:
+      'Ghi lại vài ngày ăn uống, xu hướng của bạn sẽ xuất hiện ở đây.',
+    againstGoalHeading: 'So với mục tiêu',
+    averageDeficit: 'Trung bình mỗi ngày đã ghi, bạn ăn ít hơn mục tiêu.',
+    averageSurplus: 'Trung bình mỗi ngày đã ghi, bạn ăn nhiều hơn mục tiêu.',
+    averageMacrosHeading: 'Dinh dưỡng trung bình',
+    caloriesByMealHeading: 'Calo theo bữa',
+    onOrUnderGoal: 'Đạt/dưới mục tiêu',
+    overGoal: 'Vượt mục tiêu',
+    notLogged: 'Chưa ghi',
+    targetLegend: 'Mục tiêu',
     weightTrendHeading: 'Xu hướng cân nặng',
+    weightLegend: 'Cân nặng',
+    goalLegend: 'Mục tiêu',
+    goalValue: 'Mục tiêu: {weight} kg',
+  },
+
+  notFound: {
+    layoutTitle: 'Không tìm thấy',
+    title: 'Trang này không tồn tại',
+    description: 'Liên kết bạn vừa mở có thể đã hỏng hoặc đã được chuyển đi.',
+    action: 'Về nhật ký của bạn',
+  },
+
+  dataError: {
+    title: 'Không mở được dữ liệu của bạn',
+    description: 'Không chuẩn bị được cơ sở dữ liệu trên máy: {message}',
   },
 
   ringColors: {
@@ -515,6 +586,33 @@ export const vi = {
   weekStrip: {
     previousWeek: 'Tuần trước',
     nextWeek: 'Tuần sau',
+  },
+
+  targetMode: {
+    title: 'Cách tính mục tiêu',
+    modeAuto: 'Tự động',
+    modeManual: 'Thủ công',
+  },
+
+  smartMode: {
+    title: 'Chế độ thông minh',
+    modeSmart: 'Thông minh',
+    modeAllCalories: 'Cộng mọi calo',
+    explainerLink: 'Ảnh hưởng đến calo hằng ngày thế nào',
+    intro:
+      'Chế độ thông minh quyết định calo vận động bạn ghi lại có được cộng ngược vào lượng calo còn lại hôm nay hay không. Nó không thay đổi mục tiêu calo của bạn — mục tiêu được đặt riêng ở mục Cách tính mục tiêu.',
+    smartHeading: 'Thông minh',
+    smartDescription:
+      'Mức vận động của bạn đã tính đến hoạt động thường ngày, nên calo vận động bạn ghi lại không được cộng ngược vào ngân sách calo — chỉ được ghi nhận như một hoạt động.',
+    allCaloriesHeading: 'Cộng mọi calo',
+    allCaloriesDescription:
+      'Mỗi buổi tập bạn ghi lại đều được cộng ngược vào ngân sách calo hôm nay, thêm vào mục tiêu của bạn.',
+  },
+
+  tabs: {
+    home: 'Trang chủ',
+    achievements: 'Thử thách',
+    insights: 'Thống kê',
   },
 
   developer: {

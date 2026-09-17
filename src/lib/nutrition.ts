@@ -1,5 +1,6 @@
 import type {
   ActivityLevel,
+  CalorieLeftMode,
   CatalogFood,
   CatalogServing,
   DietType,
@@ -340,15 +341,22 @@ export function sumNutrition(items: readonly Nutrition[]): Nutrition {
 }
 
 /**
- * Calories still available today. Exercise is added back, matching how
- * mainstream trackers present the number.
+ * Calories still available today.
+ *
+ * `all_calories` adds exercise back, matching how mainstream trackers present
+ * the number. `smart` does not: the activity-level multiplier already bakes
+ * routine activity into `targetKcal`, so adding logged exercise back on top
+ * would double-count it.
  */
 export function kcalRemaining(
   targetKcal: number,
   consumedKcal: number,
   exerciseKcal = 0,
+  mode: CalorieLeftMode = 'all_calories',
 ): number {
-  return Math.round(targetKcal - consumedKcal + exerciseKcal);
+  const exerciseAddBack = mode === 'all_calories' ? exerciseKcal : 0;
+
+  return Math.round(targetKcal - consumedKcal + exerciseAddBack);
 }
 
 /**

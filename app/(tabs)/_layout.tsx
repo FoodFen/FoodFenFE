@@ -4,6 +4,7 @@ import { Tabs } from 'expo-router/js-tabs';
 
 import { FloatingTabBar } from '@/components/navigation/FloatingTabBar';
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { useTranslation } from '@/hooks/useTranslation';
 import { colorsFor } from '@/theme/colors';
 
 /**
@@ -13,6 +14,7 @@ import { colorsFor } from '@/theme/colors';
  * shop and settings live on the dashboard, not here.
  */
 export default function TabsLayout() {
+  const { t } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
 
@@ -24,9 +26,12 @@ export default function TabsLayout() {
         sceneStyle: { backgroundColor: colors.bg },
       }}
     >
-      <Tabs.Screen name="index" options={{ title: 'Home' }} />
-      <Tabs.Screen name="achievements" options={{ title: 'Achievements' }} />
-      <Tabs.Screen name="insights" options={{ title: 'Stats' }} />
+      <Tabs.Screen name="index" options={{ title: t('tabs', 'home') }} />
+      <Tabs.Screen
+        name="achievements"
+        options={{ title: t('tabs', 'achievements') }}
+      />
+      <Tabs.Screen name="insights" options={{ title: t('tabs', 'insights') }} />
     </Tabs>
   );
 }

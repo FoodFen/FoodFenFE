@@ -4,6 +4,7 @@ import { Pressable, View } from 'react-native';
 import { Text } from '@/components/ui/Text';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import { useLogSheetStore } from '@/features/logging/store';
+import { useProfileStore } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { haptics } from '@/lib/haptics';
@@ -27,10 +28,19 @@ export function CaloriesEatenSection({
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const present = useLogSheetStore((state) => state.present);
+  const calorieLeftMode = useProfileStore(
+    (state) => state.profile?.calorieLeftMode ?? 'all_calories',
+  );
 
-  // Calories left today: target minus what was eaten, with exercise added back
-  // (same arithmetic as the orphaned CalorieSummaryCard). Negative means over.
-  const remaining = kcalRemaining(day.goal.targetKcal, day.totals.kcal, day.exerciseKcal);
+  // Calories left today: target minus what was eaten, with exercise added
+  // back unless the user is on Smart mode (Settings → Smart mode). Negative
+  // means over.
+  const remaining = kcalRemaining(
+    day.goal.targetKcal,
+    day.totals.kcal,
+    day.exerciseKcal,
+    calorieLeftMode,
+  );
   const isOver = remaining < 0;
   const remainingLabel = (
     isOver ? t('dashboard', 'kcalOver') : t('dashboard', 'kcalLeft')

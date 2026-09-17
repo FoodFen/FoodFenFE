@@ -278,12 +278,20 @@ describe('sumNutrition', () => {
 });
 
 describe('kcalRemaining', () => {
-  it('adds exercise back into the budget', () => {
+  it('adds exercise back into the budget by default (all_calories)', () => {
     expect(kcalRemaining(2000, 1800, 300)).toBe(500);
   });
 
   it('goes negative once the budget is exceeded', () => {
     expect(kcalRemaining(2000, 2400)).toBe(-400);
+  });
+
+  it('adds exercise back when explicitly in all_calories mode', () => {
+    expect(kcalRemaining(2000, 1800, 300, 'all_calories')).toBe(500);
+  });
+
+  it('ignores exercise entirely in smart mode', () => {
+    expect(kcalRemaining(2000, 1800, 300, 'smart')).toBe(200);
   });
 });
 

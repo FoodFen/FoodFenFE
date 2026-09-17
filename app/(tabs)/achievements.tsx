@@ -1,17 +1,20 @@
-import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from 'expo-router';
+import { Pressable, View } from 'react-native';
 
 import { Card } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { ScrollScreen } from '@/components/ui/Screen';
+import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
-import { useActiveQuests } from '@/features/gamification/queries';
+import { useActiveQuests, useStreak } from '@/features/gamification/queries';
 import { questDescription, questTitle } from '@/features/gamification/selectors';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { calendarWeek, daysUntil, todayKey } from '@/lib/date';
 import { progressFraction } from '@/lib/nutrition';
+import { colorsFor } from '@/theme/colors';
 import type { Quest } from '@/types/models';
 
 /**
@@ -22,13 +25,13 @@ import type { Quest } from '@/types/models';
  * number staler than whatever was last logged.
  */
 export default function AchievementsScreen() {
-  const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const { data: quests, isPending, error, refetch } = useActiveQuests();
+  const { data: streak } = useStreak();
 
   if (isPending) {
     return (
-      <ScrollScreen bottomSpacing={96} style={{ paddingTop: insets.top }}>
+      <ScrollScreen tabBar topInset>
         <Skeleton className="h-10 w-40" />
         <Skeleton className="h-24 rounded-card" />
         <Skeleton className="h-24 rounded-card" />
@@ -38,18 +41,20 @@ export default function AchievementsScreen() {
 
   if (error) {
     return (
-      <View style={{ paddingTop: insets.top }} className="flex-1 bg-bg">
+      <Screen tabBar topInset>
         <ErrorState
-          description={error instanceof Error ? error.message : 'Please try again.'}
+          description={
+            error instanceof Error ? error.message : t('common', 'pleaseTryAgain')
+          }
           onRetry={() => void refetch()}
         />
-      </View>
+      </Screen>
     );
   }
 
   if (!quests || quests.length === 0) {
     return (
-      <View style={{ paddingTop: insets.top }} className="flex-1 bg-bg">
+      <Screen tabBar topInset>
         <Text variant="title" className="px-4 pt-2">
           {t('achievements', 'title')}
         </Text>
@@ -58,7 +63,7 @@ export default function AchievementsScreen() {
           title={t('achievements', 'emptyTitle')}
           description={t('achievements', 'emptyDescription')}
         />
-      </View>
+      </Screen>
     );
   }
 
@@ -67,10 +72,12 @@ export default function AchievementsScreen() {
   const weekEnd = calendarWeek(todayKey())[6] ?? todayKey();
 
   return (
-    <ScrollScreen bottomSpacing={96} style={{ paddingTop: insets.top }}>
+    <ScrollScreen tabBar topInset>
       <Text variant="title" className="pt-2">
         {t('achievements', 'title')}
       </Text>
+
+      <StreakSummaryCard currentStreak={streak?.currentStreak ?? 0} />
 
       {daily.length > 0 ? (
         <View className="gap-3">
@@ -94,6 +101,34 @@ export default function AchievementsScreen() {
         </View>
       ) : null}
     </ScrollScreen>
+  );
+}
+
+/** Links to the streak detail screen (UC-24b's day-streak screen). */
+function StreakSummaryCard({ currentStreak }: { currentStreak: number }) {
+  const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
+
+  return (
+    <Pressable
+      onPress={() => router.push('/streak')}
+      accessibilityRole="button"
+      accessibilityLabel={t('streak', 'viewStreak')}
+    >
+      <Card className="flex-row items-center gap-3 active:bg-surface-alt">
+        <Ionicons name="flame" size={22} color={colors.warning} />
+        <View className="flex-1">
+          <Text variant="label">
+            {currentStreak} {t('streak', 'days')}
+          </Text>
+          <Text variant="caption" tone="muted">
+            {t('streak', 'currentStreak')}
+          </Text>
+        </View>
+        <Ionicons name="chevron-forward" size={18} color={colors.fgSubtle} />
+      </Card>
+    </Pressable>
   );
 }
 

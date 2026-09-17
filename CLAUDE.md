@@ -34,7 +34,7 @@ Open with 2–4 bullets naming the files and scope first when the task is non-tr
 
 ## Product
 
-FoodFend: AI-powered nutrition and calorie tracking. Surfaces are AI food recognition (photograph a meal → identified items with estimated kcal/macros), a long multi-step personalized onboarding, a daily dashboard, gamification (streaks, quests, coins), and a freemium Premium paywall. This context informs naming and data modelling — it never licenses building more than the current turn asked for.
+FoodFend: AI-powered nutrition and calorie tracking. Surfaces are AI food recognition (photograph a meal → identified items with estimated kcal/macros), a long multi-step personalized onboarding, a daily dashboard, gamification (streaks, quests, coins, a shop), and a freemium Premium paywall. This context informs naming and data modelling — it never licenses building more than the current turn asked for.
 
 ## Commands
 
@@ -46,22 +46,23 @@ npm test                        # jest
 npx jest src/lib/__tests__/nutrition.test.ts        # one file
 npx jest -t "recalculateTotals"                     # one test by name
 npm run db:generate             # emit a migration after editing src/db/schema.ts
+npm run db:studio               # browse the schema in Drizzle Studio
 npm run doctor                  # expo-doctor; must stay 21/21
 npm run android | npm run ios   # build + run the dev client
 npm start                       # dev server for an already-installed dev client
 npm run prebuild                # regenerate android/ and ios/
 ```
 
-No env setup is needed — the app runs fully offline with no `.env` at all.
+No env setup is needed — the app runs fully offline with no `.env` at all. Copy `.env.example` to `.env.local` only when pointing at a real backend.
 
 ## Non-negotiable constraints
 
 - **Development build only, no Expo Go.** SQLite, MMKV, Reanimated 4 and the camera modules all need custom native code.
 - **No web target.** `app.config.ts` declares `platforms: ['ios', 'android']` and no `web` block. Don't add web fallbacks.
-- **Never import `@react-navigation/*`.** Since SDK 56 expo-router vendors its own navigation core; importing React Navigation directly is a hard Metro bundling error. `Stack`, `ThemeProvider`, `DarkTheme`, `DefaultTheme` come from `expo-router`; `Tabs` from `expo-router/js-tabs`.
-- **Don't add the Reanimated/Worklets babel plugin.** `babel-preset-expo` registers it automatically; adding it manually double-registers and the build fails.
+- **Never import `@react-navigation/*`.** Since SDK 56 expo-router vendors its own navigation core; importing React Navigation directly is a hard Metro bundling error. `Stack`, `ThemeProvider`, `DarkTheme`, `DefaultTheme` come from `expo-router`; `Tabs` from `expo-router/js-tabs` (the plain `expo-router` re-export is deprecated in SDK 57).
+- **Don't add the Reanimated/Worklets babel plugin.** `babel-preset-expo` registers `react-native-worklets/plugin` automatically when `react-native-reanimated` is installed; adding it manually double-registers and the build fails.
 - **`android/` and `ios/` are generated and gitignored** (CNG). Change `app.config.ts`, never the native projects.
-- **Never import `@/db/testDatabase` from app code.** ESLint blocks it — better-sqlite3 cannot run on a device.
+- **Never import `@/db/testDatabase` from app code.** ESLint (`eslint.config.js`) blocks it via `no-restricted-imports` — better-sqlite3 cannot run on a device.
 - **Auth tokens go in `expo-secure-store`, never MMKV.** MMKV is a plain file, readable on a rooted device or from an unencrypted backup.
 - **Nothing secret in `EXPO_PUBLIC_*`.** It is inlined into the bundle. Any future AI/model call belongs on a server.
 - Versions are pinned to what `expo install` resolves for SDK 57. Add dependencies with `npx expo install`, not `npm install`.
@@ -72,7 +73,7 @@ No env setup is needed — the app runs fully offline with no `.env` at all.
 
 The on-device SQLite database is the source of truth. The app is fully usable with **no account and no connection**; a server is an accelerator and a backup.
 
-- `src/data/sync.ts` is the entire policy, ~40 lines. `readWithRefresh({ pull, read })` optionally refreshes from the server, then **always** answers from local rows — never "remote value, or local on failure". So online and offline take the same code path, and a slow server never produces an error state for data already on disk.
+- `src/data/sync.ts` is the entire policy, ~170 lines. `readWithRefresh({ pull, read })` optionally refreshes from the server, then **always** answers from local rows — never "remote value, or local on failure". So online and offline take the same code path, and a slow server never produces an error state for data already on disk.
 - `canUseRemote()` requires all three of `env.hasBackend`, a session, and connectivity.
 - Writes are local and immediate. Every insert/update spreads `touch()` (`updatedAt` now, `syncedAt` null); deletes are soft via `touchDeleted()`. "Rows the server hasn't seen" is therefore a query — `pendingChangeCount()`.
 - **Push sync is not built.** The dirty flag, soft deletes, `remote_id` and `markSynced()` all exist; nothing drains them. `src/data/pull.ts` refuses to overwrite a locally modified row, which any push must respect.
@@ -90,25 +91,28 @@ src/data/       repositories (all SQL lives here) + sync policy
 src/db/         Drizzle schema + client
 ```
 
-`src/api/` sits beside this, not under it: it is only auth and future sync. Diary and food reads/writes never touch it.
+`src/api/` sits beside this, not under it: it is only auth and future sync (`client.ts`, `errors.ts`, `schemas.ts`, `endpoints/`). Diary and food reads/writes never touch it.
 
 Two orthogonal pieces of identity:
 
-- `useProfileStore` — the **local profile** (a `user` row). This is what the root layout gates on: onboarding, not sign-in, is the only thing between a fresh install and the diary.
-- `useAuthStore` — an **optional session**. It gates nothing; it only decides whether reads try the server first. `(auth)` routes are reachable from Profile at any time.
+- `useProfileStore` — the **local profile** (a `user` row). This is what the root layout gates on: onboarding, not sign-in, is the only thing between a fresh install and the diary (`Stack.Protected guard={!hasProfile}` in `app/_layout.tsx`).
+- `useAuthStore` — an **optional session**. It gates nothing; it only decides whether reads try the server first. `(auth)` routes are reachable at any time and gate nothing.
 
-`app/_layout.tsx` holds the boot sequence: fonts, Drizzle `useMigrations`, stored-session hydration, then `enableForeignKeys()` + first profile read. Nothing may query the database before migrations report success — on a fresh install the tables don't exist yet.
+`app/_layout.tsx` holds the boot sequence: fonts, Drizzle `useMigrations`, stored-session hydration, then `enableForeignKeys()` + first profile read. Nothing may query the database before migrations report success — on a fresh install the tables don't exist yet. It also hosts the app-wide `LogSheet` (the tab bar's "+" and every dashboard card's "+" open the same instance via `useLogSheetStore`) and `QuestToast`.
+
+Logging is not a tab. `(tabs)` is Home / Achievements / Stats, drawn by the custom `FloatingTabBar`; the green "+" button pushes the `log` modal stack (`app/log/`: meal → ingredient, plus `activity`, `manual`, `search`, `interstitial`) and returns you to wherever you were.
 
 ### Data model
 
-`src/db/schema.ts` is the FoodFen ERD v1.0.0 as SQLite (11 tables), with four documented departures: text ids + nullable `remote_id`, sync columns everywhere, no `password_hash`, and three added columns (`food_entry.meal_type`, `*.logged_on`, `user.weekly_rate_kg`). `src/types/models.ts` aliases the Drizzle row types rather than duplicating them; only composite shapes (`FoodEntry`, `DiaryDay`) are hand-written there.
+`src/db/schema.ts` is the FoodFen ERD v1.0.0 as SQLite, with four documented departures: text ids + nullable `remote_id`, sync columns everywhere, no `password_hash`, and three added columns (`food_entry.meal_type`, `*.logged_on`, `user.weekly_rate_kg`). `src/types/models.ts` aliases the Drizzle row types rather than duplicating them; only composite shapes (`FoodEntry`, `DiaryDay`) are hand-written there.
 
 Where the load-bearing logic lives:
 
 - `src/lib/nutrition.ts` — the domain core. BMR (Mifflin–St Jeor), TDEE, target derivation, portion scaling. Pure and heavily tested; everything nutritional flows through it.
 - `src/data/entryRepository.ts` — `recalculateTotals` is the _only_ writer of an entry's stored totals, which keeps the denormalized header honest against its ingredients.
 - `src/data/userRepository.ts` — daily goals are append-only history: the goal in force on a day is the newest row effective on or before it, so changing today's target never rewrites what last week was measured against.
-- `src/data/foodCatalog.ts` — a bundled read-only reference list, not a table. Chosen values are _copied_ onto the ingredient row, so editing the catalog can never rewrite history.
+- `src/data/foodCatalog.ts` (backed by `src/data/catalog/foods.json`) — a bundled read-only reference list, not a table. Chosen values are _copied_ onto the ingredient row, so editing the catalog can never rewrite history.
+- `src/data/gamificationRepository.ts` + `src/features/gamification/` (`queries.ts`, `selectors.ts`, `toastStore.ts`, `interstitialStore.ts`) — streaks, weekly quests and coin balances; rules are tested independently of the UI that now surfaces them (`app/(tabs)/achievements.tsx`, `app/log/interstitial.tsx`, `src/components/gamification/QuestToast.tsx`).
 
 ### Conventions
 
@@ -132,9 +136,12 @@ Where the load-bearing logic lives:
 
 ## Not yet built
 
-Push sync · AI meal capture (`input_method` and `ai_feedback` columns exist; only typed/manual paths do) · AI insights (should consume the pre-aggregated `summarizeTrends()`, not raw entries) · gamification UI (schema, repositories and tested rules exist; streaks already advance on log) · barcode and photo logging (`expo-camera`/`expo-image-picker` installed and permissioned, `food_entry.image_url` plumbed).
+- **Push sync.** Reads already refresh from the server; writes queue locally (dirty flag, soft deletes, `remote_id`) and nothing drains them yet.
+- **AI meal capture.** `input_method` covers `voice`/`image`/`type`/`manual` and `ai_feedback` records thumbs up/down, but only the typed and manual paths exist. When the model lands, it should produce ingredient rows and let the existing composer save them; the call belongs on the server, never with a key in the bundle.
+- **AI insights.** The Stats tab shows locally computed trends. The AI layer should consume `summarizeTrends()` — small and pre-aggregated — rather than raw entries.
+- **Barcode scanning and photo logging.** `expo-camera`/`expo-image-picker` are installed and permissioned, `food_entry.image_url` is plumbed through — no capture screens yet.
+- **Coin shop.** `app/shop.tsx` is a placeholder `EmptyState`; coin balances already accrue through gamification.
 
-
-## Other instructions:
+## Other instructions
 
 - Reduce commenting in code, only put comments at the top explaining what this file does in a brief, high-level summary. Do not comment every line or function.

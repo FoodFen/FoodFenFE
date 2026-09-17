@@ -5,6 +5,7 @@ import { Text } from '@/components/ui/Text';
 import { useWeightAsOf } from '@/features/dashboard/queries';
 import { useLogSheetStore } from '@/features/logging/store';
 import { useProfileStore } from '@/features/profile/store';
+import { units, useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { colorsFor } from '@/theme/colors';
@@ -30,30 +31,38 @@ export function WeightSection({ day }: { day: DiaryDay }) {
   const user = useProfileStore((state) => state.profile);
   const present = useLogSheetStore((state) => state.present);
   const { data: logged } = useWeightAsOf(day.date);
+  const weightUnit = useSettingsStore((state) => state.weightUnit);
 
   if (!user) return null;
 
-  const currentWeight = logged?.weight ?? user.weightCurrent;
-  const remaining = currentWeight - user.weightGoal;
-  // Display rounding only — one decimal place, absolute value.
-  const deltaLabel = String(Math.round(Math.abs(remaining) * 10) / 10);
+  // Canonical storage and the "at goal" band are always kg; only the numbers
+  // shown on screen convert to the device's unit.
+  const currentWeightKg = logged?.weight ?? user.weightCurrent;
+  const remainingKg = currentWeightKg - user.weightGoal;
+
+  const round1 = (n: number) => Math.round(n * 10) / 10;
+  const displayWeight = round1(units.weightFromKg(currentWeightKg, weightUnit));
+  const displayGoal = round1(units.weightFromKg(user.weightGoal, weightUnit));
+  const deltaLabel = String(
+    round1(units.weightFromKg(Math.abs(remainingKg), weightUnit)),
+  );
 
   const remainingCaption =
-    Math.abs(remaining) < AT_GOAL_BAND_KG
+    Math.abs(remainingKg) < AT_GOAL_BAND_KG
       ? t('dashboard', 'weightReached')
       : t('dashboard', 'weightToGo').replace('{delta}', deltaLabel);
 
   return (
     <MetricSection
       title={t('dashboard', 'weight')}
-      value={currentWeight}
-      unit="kg"
+      value={displayWeight}
+      unit={weightUnit}
       onAdd={() => present('weight')}
     >
       <View className="gap-1 pt-1">
         <View className="flex-row items-center justify-between">
           <Text variant="caption" tone="subtle">
-            {t('dashboard', 'weightGoal').replace('{weight}', String(user.weightGoal))}
+            {t('dashboard', 'weightGoal').replace('{weight}', String(displayGoal))}
           </Text>
           <Ionicons name="ellipsis-horizontal" size={16} color={colors.fgSubtle} />
         </View>

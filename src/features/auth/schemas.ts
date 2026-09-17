@@ -1,49 +1,48 @@
 import { z } from 'zod';
 
+import type { useTranslation } from '@/hooks/useTranslation';
+
 /**
  * Form validation.
  *
  * Separate from `src/api/schemas.ts`: those describe what the server sends,
  * these describe what the user may type. The messages here are shown directly
- * under the field, so they are written for a person, not a log.
+ * under the field, so they are built from a `t` function rather than baked in
+ * as English — each is a factory the screen calls with its own `t`.
  */
+
+type Translate = ReturnType<typeof useTranslation>['t'];
 
 const MIN_PASSWORD_LENGTH = 8;
 
-export const signInSchema = z.object({
-  email: z.email('Enter a valid email address.'),
-  password: z.string().min(1, 'Enter your password.'),
-});
-
-export const signUpSchema = z
-  .object({
-    displayName: z.string().trim().min(1, 'Tell us what to call you.').max(60),
-    email: z.email('Enter a valid email address.'),
-    password: z
-      .string()
-      .min(MIN_PASSWORD_LENGTH, `Use at least ${MIN_PASSWORD_LENGTH} characters.`)
-      // A length floor alone lets through "password"; requiring a digit is the
-      // cheapest meaningful strengthening without frustrating the user.
-      .regex(/\d/, 'Include at least one number.'),
-    confirmPassword: z.string(),
-  })
-  .refine((values) => values.password === values.confirmPassword, {
-    message: 'Passwords do not match.',
-    path: ['confirmPassword'],
+export function makeSignInSchema(t: Translate) {
+  return z.object({
+    email: z.email(t('auth', 'emailInvalidError')),
+    password: z.string().min(1, t('auth', 'passwordRequiredError')),
   });
+}
 
-export type SignInValues = z.infer<typeof signInSchema>;
-export type SignUpValues = z.infer<typeof signUpSchema>;
+export function makeSignUpSchema(t: Translate) {
+  return z
+    .object({
+      displayName: z.string().trim().min(1, t('auth', 'displayNameRequiredError')).max(60),
+      email: z.email(t('auth', 'emailInvalidError')),
+      password: z
+        .string()
+        .min(
+          MIN_PASSWORD_LENGTH,
+          t('auth', 'passwordMinLengthError').replace('{count}', String(MIN_PASSWORD_LENGTH)),
+        )
+        // A length floor alone lets through "password"; requiring a digit is the
+        // cheapest meaningful strengthening without frustrating the user.
+        .regex(/\d/, t('auth', 'passwordNeedsDigitError')),
+      confirmPassword: z.string(),
+    })
+    .refine((values) => values.password === values.confirmPassword, {
+      message: t('auth', 'passwordsMismatchError'),
+      path: ['confirmPassword'],
+    });
+}
 
-/** Onboarding: the physical details that drive the calorie target. */
-export const onboardingSchema = z.object({
-  sex: z.enum(['male', 'female']),
-  age: z.coerce.number<number>().int().min(13, 'Must be 13 or older.').max(120),
-  heightCm: z.coerce.number<number>().min(100, 'Enter your height in cm.').max(250),
-  weightKg: z.coerce.number<number>().min(30, 'Enter your weight in kg.').max(400),
-  activityLevel: z.enum(['sedentary', 'light', 'moderate', 'active', 'very_active']),
-  goalKind: z.enum(['lose', 'maintain', 'gain']),
-  weeklyRateKg: z.coerce.number<number>().min(0).max(1.5),
-});
-
-export type OnboardingValues = z.infer<typeof onboardingSchema>;
+export type SignInValues = z.infer<ReturnType<typeof makeSignInSchema>>;
+export type SignUpValues = z.infer<ReturnType<typeof makeSignUpSchema>>;

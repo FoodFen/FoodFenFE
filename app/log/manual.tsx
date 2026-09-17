@@ -1,13 +1,16 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, Keyboard, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { Alert, Keyboard, Pressable, TextInput, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/ui/Button';
 import { NumberField } from '@/components/ui/NumberField';
+import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
+import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import { useCatalogSearch, useLogManualEntry } from '@/features/diary/queries';
 import { manualEntrySchema } from '@/features/diary/schemas';
 import { suggestedMealType } from '@/features/diary/selectors';
@@ -46,6 +49,7 @@ export default function ManualEntryScreen() {
   const finishLogging = usePostLogInterstitial();
 
   const [name, setName] = useState('');
+  const [emoji, setEmoji] = useState<string | null>(null);
   const [nameFocused, setNameFocused] = useState(false);
   const blurTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(
@@ -111,12 +115,13 @@ export default function ManualEntryScreen() {
   };
 
   const save = () => {
-    if (!parsed.success) return;
+    if (!parsed.success || logManual.isPending) return;
     const v = parsed.data;
 
     logManual.mutate(
       {
         name: v.name,
+        emoji: emoji && emoji.length > 0 ? emoji : null,
         mealType: suggestedMealType(),
         loggedOn: todayKey(),
         amount: v.amount,
@@ -144,28 +149,24 @@ export default function ManualEntryScreen() {
 
   return (
     <View className="flex-1 bg-bg">
-      <View
-        style={{ paddingTop: insets.top + 4 }}
-        className="flex-row items-center px-4 pb-2"
-      >
-        <Pressable
-          onPress={() => router.dismiss()}
-          accessibilityRole="button"
-          accessibilityLabel={t('common', 'cancel')}
-          hitSlop={8}
-          className="h-9 w-9 items-center justify-center rounded-full bg-surface-alt active:opacity-70"
-        >
-          <Ionicons name="close" size={20} color={colors.fg} />
-        </Pressable>
-        <Text variant="heading" className="flex-1 text-center">
-          FoodFen
-        </Text>
-        <View className="h-9 w-9" />
-      </View>
+      <ScreenHeader
+        title="FoodFen"
+        icon="close"
+        onPress={() => router.dismiss()}
+        accessibilityLabel={t('common', 'cancel')}
+      />
 
-      <View className="relative z-20 px-4 pt-1">
+      <View className="relative z-20 flex-row items-center gap-2 px-4 pt-1">
         <TextInput
-          className="font-bold font-sans text-3xl text-fg"
+          value={emoji ?? foodEmojiFor({ name, mealType: suggestedMealType() })}
+          onChangeText={(next) => setEmoji(next)}
+          selectTextOnFocus
+          accessibilityLabel={t('logManual', 'chooseEmojiA11y')}
+          className="h-11 w-11 rounded-xl border border-border bg-surface text-center text-2xl"
+        />
+
+        <TextInput
+          className="flex-1 font-bold font-sans text-3xl text-fg"
           value={name}
           onChangeText={setName}
           onFocus={() => {

@@ -25,6 +25,11 @@ export const en: DeepPartial<Translations> = {
     delete: 'Delete',
     name: 'Name',
     premium: 'Premium',
+    dismiss: 'Dismiss',
+    calories: 'Calories',
+    water: 'Water',
+    somethingWentWrong: 'Something went wrong',
+    pleaseTryAgain: 'Please try again.',
   },
 
   onboardingGender: {
@@ -156,6 +161,12 @@ export const en: DeepPartial<Translations> = {
     activity: 'Activity',
     diet: 'Diet',
     dietHint: 'Changes how your calories are split across protein, carbs and fat.',
+    birthYearError: 'Enter a valid year of birth.',
+    birthYearTooYoungError: 'You must be at least 13.',
+    heightError: 'Enter your height in cm.',
+    weightCurrentError: 'Enter your weight in kg.',
+    weightGoalError: 'Enter a goal weight in kg.',
+    paceRequiredError: 'Choose how fast you want to get there.',
   },
 
   profileLanguage: {
@@ -195,6 +206,9 @@ export const en: DeepPartial<Translations> = {
     units: 'Units',
     kilograms: 'Kilograms',
     pounds: 'Pounds',
+    challengeProgress: 'Challenge progress',
+    challengeProgressCaption:
+      'Show the challenge screen after logging a meal, activity, or water.',
     signOut: 'Sign out',
     signOutMessage: 'Your diary stays on this device.',
     eraseLocalData: 'Erase local data',
@@ -204,6 +218,7 @@ export const en: DeepPartial<Translations> = {
   },
 
   goals: {
+    layoutTitle: 'Goals',
     whatWouldBeCalculated: 'What would be calculated',
     yourNewTargets: 'Your new targets',
     manualWarning:
@@ -233,9 +248,16 @@ export const en: DeepPartial<Translations> = {
     passwordHint: 'At least 8 characters, including a number.',
     confirmPassword: 'Confirm password',
     alreadyHaveAccount: 'Already have an account?',
+    emailInvalidError: 'Enter a valid email address.',
+    passwordRequiredError: 'Enter your password.',
+    displayNameRequiredError: 'Tell us what to call you.',
+    passwordMinLengthError: 'Use at least {count} characters.',
+    passwordNeedsDigitError: 'Include at least one number.',
+    passwordsMismatchError: 'Passwords do not match.',
   },
 
   entryDetail: {
+    layoutTitle: 'Meal',
     loadError: 'That meal could not be loaded.',
     deleteConfirmMessage: 'Remove this meal from your diary?',
     at: 'at',
@@ -327,6 +349,7 @@ export const en: DeepPartial<Translations> = {
   logManual: {
     layoutTitle: 'Manual entry',
     mealName: 'Food name',
+    chooseEmojiA11y: 'Choose an emoji for this food',
     mealNamePlaceholder: 'e.g. Beef pho',
     smartEntry: 'Describe it in one sentence (AI)',
     comingSoon: 'Coming soon',
@@ -409,7 +432,9 @@ export const en: DeepPartial<Translations> = {
     addA11y: 'Add',
     viewEntriesA11y: 'View logged meals',
     editWaterGoalA11y: 'Change water goal',
+    backToToday: 'Today',
     moreEntries: '+{count}',
+    dayLoadError: 'That day could not be loaded.',
   },
 
   dayEntries: {
@@ -430,6 +455,7 @@ export const en: DeepPartial<Translations> = {
     waterLabel: 'How much water?',
     waterGoalLabel: 'Daily water goal (ml)',
     save: 'Save',
+    openA11y: 'Open the logging sheet',
   },
 
   settings: {
@@ -474,8 +500,54 @@ export const en: DeepPartial<Translations> = {
     emptyDescription: 'Spend your reward points on items — coming soon.',
   },
 
+  streak: {
+    title: 'Day Streak',
+    viewStreak: 'View streak',
+    currentStreak: 'Current streak',
+    longestStreak: 'Longest streak',
+    days: 'days',
+    noStreakYet: 'Log something today to start your streak.',
+    share: 'Share',
+    shareMessage: "I'm on a {days}-day streak on FoodFen! 🔥",
+    commit: "I'm committed",
+    committedToday: "You're committed today ✓",
+  },
+
   insights: {
+    title: 'Insights',
+    dailyAverage: 'Daily average',
+    loggingStreak: 'Logging streak',
+    dayUnit: 'days',
+    windowHeading: 'Last {days} days',
+    daysLoggedOf: '{logged} of {total} logged',
+    emptyTitle: 'Nothing to chart yet',
+    emptyDescription:
+      'Log a few days of meals and your trends will show up here.',
+    againstGoalHeading: 'Against your goal',
+    averageDeficit: 'On an average logged day you ate under your target.',
+    averageSurplus: 'On an average logged day you ate over your target.',
+    averageMacrosHeading: 'Average macros',
+    caloriesByMealHeading: 'Calories by meal',
+    onOrUnderGoal: 'On or under goal',
+    overGoal: 'Over goal',
+    notLogged: 'Not logged',
+    targetLegend: 'Target',
     weightTrendHeading: 'Weight trend',
+    weightLegend: 'Weight',
+    goalLegend: 'Goal',
+    goalValue: 'Goal: {weight} kg',
+  },
+
+  notFound: {
+    layoutTitle: 'Not found',
+    title: 'This screen does not exist',
+    description: 'The link you followed may be broken or the page may have moved.',
+    action: 'Go to your diary',
+  },
+
+  dataError: {
+    title: 'Could not open your data',
+    description: 'The local database failed to prepare: {message}',
   },
 
   ringColors: {
@@ -497,6 +569,33 @@ export const en: DeepPartial<Translations> = {
   weekStrip: {
     previousWeek: 'Previous week',
     nextWeek: 'Next week',
+  },
+
+  targetMode: {
+    title: 'Target calculation',
+    modeAuto: 'Auto',
+    modeManual: 'Manual',
+  },
+
+  smartMode: {
+    title: 'Smart mode',
+    modeSmart: 'Smart',
+    modeAllCalories: 'All calories',
+    explainerLink: 'How it affects daily calories',
+    intro:
+      "Smart mode decides whether exercise you log adds back to today's calories left. It doesn't change your calorie target itself — that's set separately under Target calculation.",
+    smartHeading: 'Smart',
+    smartDescription:
+      "Your activity level already accounts for typical daily movement, so logged exercise doesn't add back to your calorie budget — it just tracks the activity itself.",
+    allCaloriesHeading: 'All calories',
+    allCaloriesDescription:
+      "Every workout you log adds its calories back to today's budget, on top of your target.",
+  },
+
+  tabs: {
+    home: 'Home',
+    achievements: 'Achievements',
+    insights: 'Stats',
   },
 
   developer: {

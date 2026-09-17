@@ -1,0 +1,1 @@
+ALTER TABLE `user` ADD `calorie_left_mode` text DEFAULT 'all_calories' NOT NULL;

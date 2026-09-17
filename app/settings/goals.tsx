@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useMemo } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
@@ -9,13 +10,16 @@ import { BodyStatsForm } from '@/components/profile/BodyStatsForm';
 import { GoalsPreviewCard } from '@/components/profile/GoalsPreviewCard';
 import { Button } from '@/components/ui/Button';
 import { Text } from '@/components/ui/Text';
-import { getGoalForDate, setGoal } from '@/data/userRepository';
-import { bodyStatsSchema } from '@/features/profile/schemas';
+import * as logRepository from '@/data/logRepository';
+import { getGoalForDate, writeCalculatedGoal } from '@/data/userRepository';
+import { makeBodyStatsSchema } from '@/features/profile/schemas';
 import type { BodyStatsValues } from '@/features/profile/schemas';
 import { useProfileStore } from '@/features/profile/store';
 import { useTranslation } from '@/hooks/useTranslation';
+import { todayKey } from '@/lib/date';
 import { haptics } from '@/lib/haptics';
 import { calculateTargets } from '@/lib/nutrition';
+import { queryKeys } from '@/lib/queryClient';
 
 /**
  * Body stats and goal.
@@ -27,14 +31,16 @@ import { calculateTargets } from '@/lib/nutrition';
 export default function GoalsScreen() {
   const user = useProfileStore((state) => state.profile);
   const saveProfile = useProfileStore((state) => state.saveProfile);
+  const queryClient = useQueryClient();
   const { t } = useTranslation();
+  const schema = useMemo(() => makeBodyStatsSchema(t), [t]);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<BodyStatsValues>({
-    resolver: zodResolver(bodyStatsSchema),
+    resolver: zodResolver(schema),
     defaultValues: user
       ? {
           gender: user.gender,
@@ -52,19 +58,27 @@ export default function GoalsScreen() {
   const values = useWatch({ control });
 
   const preview = useMemo(() => {
-    const parsed = bodyStatsSchema.safeParse(values);
+    const parsed = schema.safeParse(values);
 
     return parsed.success ? calculateTargets(parsed.data) : null;
-  }, [values]);
+  }, [schema, values]);
 
   if (!user) return null;
 
   const isManual = user.calorieCalcMode === 'manual';
 
-  const onSubmit = handleSubmit((formValues) => {
-    // `saveProfile` recomputes today's goal for `auto` users; a `manual` user's
-    // typed targets are left exactly as they are.
-    saveProfile(formValues);
+  const onSubmit = handleSubmit(({ weightCurrent, ...rest }) => {
+    // Weight goes through the same log the dashboard uses — a `weight_log`
+    // entry, not a direct field write — so there is one source of truth for
+    // "current weight" everywhere, including the calorie formula.
+    logRepository.logWeight(user.id, weightCurrent, todayKey());
+
+    // `saveProfile` recomputes today's goal for `auto` users, using the
+    // weight just logged above; a `manual` user's typed targets are left
+    // exactly as they are.
+    saveProfile(rest);
+    void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
+    void queryClient.invalidateQueries({ queryKey: queryKeys.weight.all });
     haptics.success();
     router.back();
   });
@@ -80,7 +94,8 @@ export default function GoalsScreen() {
           onPress: () => {
             const updated = saveProfile({ calorieCalcMode: 'auto' });
 
-            setGoal(updated.id, calculateTargets(updated));
+            writeCalculatedGoal(updated);
+            void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
             haptics.success();
           },
         },

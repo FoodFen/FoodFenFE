@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import type { ReactNode } from 'react';
 import { Pressable, View } from 'react-native';
 
+import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 import { Card } from '@/components/ui/Card';
 import { Text } from '@/components/ui/Text';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -53,9 +54,13 @@ export function MetricSection({ title, value, unit, onAdd, children }: MetricSec
       </View>
 
       <View className="flex-row items-baseline gap-1">
-        <Text variant="display" className="text-4xl">
-          {typeof value === 'number' ? value.toLocaleString() : value}
-        </Text>
+        {typeof value === 'number' ? (
+          <AnimatedNumber value={value} variant="display" className="text-4xl" />
+        ) : (
+          <Text variant="display" className="text-4xl">
+            {value}
+          </Text>
+        )}
         {unit ? (
           <Text variant="body" tone="muted">
             {unit}

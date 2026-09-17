@@ -8,6 +8,7 @@ import { generateLocalId } from '@/lib/id';
 import { calculateTargets } from '@/lib/nutrition';
 import type { DailyGoal, UserProfile } from '@/types/models';
 
+import { getLatestWeight } from './logRepository';
 import { notDeleted, touch } from './sync';
 
 /**
@@ -62,6 +63,7 @@ export function createLocalUser(input: CreateUserInput): {
     activityLevel: input.activityLevel,
     dietType: input.dietType,
     calorieCalcMode: 'auto' as const,
+    calorieLeftMode: 'all_calories' as const,
     subscriptionTier: 'free' as const,
     weeklyRateKg: input.weeklyRateKg,
     createdAt: now,
@@ -195,13 +197,24 @@ export function setGoal(
   return row;
 }
 
-/** Recompute targets from the profile and store them. Only for `auto` mode. */
+/**
+ * Recompute targets from the profile and store them. Only for `auto` mode.
+ *
+ * `weightCurrent` on the profile is an onboarding baseline only — this always
+ * prefers the latest `weight_log` entry when one exists, so the formula
+ * tracks what the user actually weighs now rather than what they weighed at
+ * signup.
+ */
 export function writeCalculatedGoal(
   profile: Parameters<typeof calculateTargets>[0] & { id: string },
   effectiveDate: DateKey = todayKey(),
   now: Date = new Date(),
 ): DailyGoal {
-  return setGoal(profile.id, calculateTargets(profile, now), effectiveDate);
+  const latestWeight = getLatestWeight(profile.id)?.weight;
+  const resolved =
+    latestWeight === undefined ? profile : { ...profile, weightCurrent: latestWeight };
+
+  return setGoal(profile.id, calculateTargets(resolved, now), effectiveDate);
 }
 
 /**

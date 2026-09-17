@@ -39,9 +39,15 @@ export function WaterSection({ day }: { day: DiaryDay }) {
 
   const setCups = (cupCount: number) => {
     haptics.selection();
+    const newTotalMl = cupCount * GLASS_ML;
+    // Only a genuine increase is "logging progress" — tapping a lower cup to
+    // correct today's total is an undo, and must not re-run quest evaluation
+    // or surface a toast about something (like calories) water never touched.
+    const isIncrease = newTotalMl > day.waterMl;
+
     setWaterTotal.mutate(
-      { targetMl: cupCount * GLASS_ML, date: day.date },
-      { onSuccess: finishLogging },
+      { targetMl: newTotalMl, date: day.date },
+      { onSuccess: isIncrease ? finishLogging : undefined },
     );
   };
 

@@ -85,7 +85,11 @@ const MEAL_FALLBACK: Record<MealType, string> = {
   snack: '🍪',
 };
 
-export function foodEmojiFor(entry: Pick<FoodEntry, 'name' | 'mealType'>): string {
+export function foodEmojiFor(
+  entry: Pick<FoodEntry, 'name' | 'mealType'> & { emoji?: string | null },
+): string {
+  if (entry.emoji) return entry.emoji;
+
   const name = fold(` ${entry.name} `);
 
   for (const [keyword, emoji] of KEYWORD_EMOJI) {

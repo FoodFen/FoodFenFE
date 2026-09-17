@@ -41,6 +41,13 @@ export type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'active' | 'ver
 export type DietType = 'balanced' | 'low_carb' | 'high_protein' | 'keto' | 'vegetarian';
 /** Whether daily targets are derived from the profile or set by hand. */
 export type CalorieCalcMode = 'auto' | 'manual';
+/**
+ * Whether burned exercise calories add back into "calories left". `smart`
+ * assumes the activity-level multiplier already bakes in routine activity, so
+ * adding logged exercise back on top would double-count it; `all_calories`
+ * adds every logged activity back regardless.
+ */
+export type CalorieLeftMode = 'smart' | 'all_calories';
 export type SubscriptionTier = 'free' | 'premium';
 
 export const user = sqliteTable('user', {
@@ -53,7 +60,12 @@ export const user = sqliteTable('user', {
   unitSystem: text('unit_system').$type<UnitSystem>().notNull().default('metric'),
   /** Centimetres. Always metric in storage; `unitSystem` is display only. */
   height: real('height').notNull(),
-  /** Kilograms. */
+  /**
+   * Kilograms. An onboarding baseline only — never rewritten afterward.
+   * Anything that needs "current weight" (the BMR formula included) should
+   * prefer the latest `weight_log` row via `logRepository.getLatestWeight`,
+   * falling back to this only when no weigh-in has ever been logged.
+   */
   weightCurrent: real('weight_current').notNull(),
   /** Kilograms. */
   weightGoal: real('weight_goal').notNull(),
@@ -63,6 +75,15 @@ export const user = sqliteTable('user', {
     .$type<CalorieCalcMode>()
     .notNull()
     .default('auto'),
+  /**
+   * Extension: not in ERD v1.0.0. Defaults to `all_calories` — the arithmetic
+   * every existing row already had before this column existed — so adding it
+   * changes no one's displayed number until they switch it themselves.
+   */
+  calorieLeftMode: text('calorie_left_mode')
+    .$type<CalorieLeftMode>()
+    .notNull()
+    .default('all_calories'),
   subscriptionTier: text('subscription_tier')
     .$type<SubscriptionTier>()
     .notNull()
@@ -117,6 +138,12 @@ export const foodEntry = sqliteTable(
       .references(() => user.id, { onDelete: 'cascade' }),
     /** What the user called this meal. */
     name: text('name').notNull(),
+    /**
+     * Extension: a user-chosen emoji, overriding `foodEmojiFor`'s keyword
+     * guess wherever this entry is shown. Null means "keep guessing from the
+     * name" — most entries never set this.
+     */
+    emoji: text('emoji'),
     inputMethod: text('input_method').$type<InputMethod>().notNull(),
     imageUrl: text('image_url'),
     /**

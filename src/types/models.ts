@@ -30,6 +30,7 @@ export type {
   ActivitySource,
   AiFeedback,
   CalorieCalcMode,
+  CalorieLeftMode,
   CoinReason,
   DietType,
   Gender,

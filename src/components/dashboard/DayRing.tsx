@@ -31,7 +31,6 @@ export interface DayRingProps {
   /** 0–1, the day's calories eaten over its target. Drives how far the arc fills. */
   progress: number;
   selected: boolean;
-  isToday: boolean;
   onPress: () => void;
 }
 
@@ -40,17 +39,11 @@ export interface DayRingProps {
  *
  * The arc fills with the day's calories-eaten fraction of target and is
  * coloured by `dayRingStatus`. Selecting a day fills the circle behind the
- * ring without hiding it, so a selected day keeps its colour and progress. An
- * unselected "today" gets a small dot beneath the circle.
+ * ring without hiding it, so a selected day keeps its colour and progress.
+ * "Today" has no marker of its own — the dashboard header's "back to today"
+ * shortcut is how you tell you've wandered off it.
  */
-export function DayRing({
-  date,
-  status,
-  progress,
-  selected,
-  isToday,
-  onPress,
-}: DayRingProps) {
+export function DayRing({ date, status, progress, selected, onPress }: DayRingProps) {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const disabled = status === 'future';
@@ -96,10 +89,6 @@ export function DayRing({
           </Text>
         </ProgressRing>
       </View>
-
-      {isToday && !selected ? (
-        <View className="h-1 w-1 rounded-full bg-fg-muted" />
-      ) : null}
     </Pressable>
   );
 }
