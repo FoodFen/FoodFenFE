@@ -109,6 +109,10 @@ export const queryKeys = {
     quests: (date: string) => [...queryKeys.gamification.all, 'quests', date] as const,
     coins: () => [...queryKeys.gamification.all, 'coins'] as const,
   },
+  health: {
+    all: ['health'] as const,
+    steps: (date: string) => [...queryKeys.health.all, 'steps', date] as const,
+  },
   sync: {
     all: ['sync'] as const,
     pending: () => [...queryKeys.sync.all, 'pending'] as const,
