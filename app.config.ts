@@ -68,11 +68,12 @@ const OWN_PLUGINS: PluginEntry[] = [
     },
   ],
   ['expo-notifications', { color: '#16A34A' }],
+  'react-native-health-connect',
   [
     'expo-build-properties',
     {
       ios: { useFrameworks: 'static' },
-      android: { minSdkVersion: 24 },
+      android: { minSdkVersion: 26 },
     },
   ],
 ];
