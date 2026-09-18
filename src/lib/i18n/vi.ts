@@ -434,6 +434,8 @@ export const vi = {
     caloriesBurned: 'Calo đã đốt',
     steps: 'Bước chân',
     noWorkouts: 'Chưa có bài tập nào',
+    automaticActivity: 'tự động',
+    reconnectHealth: 'Kết nối lại',
     burnGoal: 'Mục tiêu: {kcal} kcal',
     water: 'Nước',
     waterGoal: 'Mục tiêu: {ml} ml',

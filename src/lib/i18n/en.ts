@@ -417,6 +417,8 @@ export const en: DeepPartial<Translations> = {
     caloriesBurned: 'Calories burned',
     steps: 'Steps',
     noWorkouts: 'No workouts yet',
+    automaticActivity: 'automatic',
+    reconnectHealth: 'Reconnect',
     burnGoal: 'Goal: {kcal} kcal',
     water: 'Water',
     waterGoal: 'Goal: {ml} ml',
