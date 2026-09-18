@@ -3,9 +3,9 @@
  */
 import { Linking } from 'react-native';
 import {
+  aggregateRecord,
   getSdkStatus,
   initialize,
-  readRecords,
   requestPermission,
   SdkAvailabilityStatus,
 } from 'react-native-health-connect';
@@ -34,26 +34,32 @@ async function isAvailable(): Promise<boolean> {
 }
 
 async function requestPermissions(): Promise<boolean> {
-  const status = await getSdkStatus();
+  try {
+    const status = await getSdkStatus();
 
-  if (status === SdkAvailabilityStatus.SDK_UNAVAILABLE) {
-    // Not installed at all — send the user to install it instead of
-    // silently failing every future attempt (spec requirement).
-    try {
-      await Linking.openURL(`market://details?id=${HEALTH_CONNECT_PACKAGE}`);
-    } catch {
-      // No Play Store app to handle the link either — nothing more we can do.
+    if (status === SdkAvailabilityStatus.SDK_UNAVAILABLE) {
+      // Not installed at all — send the user to install it instead of
+      // silently failing every future attempt (spec requirement).
+      try {
+        await Linking.openURL(`market://details?id=${HEALTH_CONNECT_PACKAGE}`);
+      } catch {
+        // No Play Store app to handle the link either — nothing more we can do.
+      }
+      return false;
     }
+
+    if (status !== SdkAvailabilityStatus.SDK_AVAILABLE) return false; // e.g. needs a provider update
+
+    await initialize();
+
+    const granted = await requestPermission([{ accessType: 'read', recordType: 'Steps' }]);
+
+    return granted.some((p) => p.recordType === 'Steps');
+  } catch {
+    // Native-layer failure in any of the calls above — treat as "not granted"
+    // rather than an unhandled rejection (mirrors healthKit.ts).
     return false;
   }
-
-  if (status !== SdkAvailabilityStatus.SDK_AVAILABLE) return false; // e.g. needs a provider update
-
-  await initialize();
-
-  const granted = await requestPermission([{ accessType: 'read', recordType: 'Steps' }]);
-
-  return granted.some((p) => p.recordType === 'Steps');
 }
 
 async function getStepCount(date: DateKey): Promise<number | null> {
@@ -62,13 +68,14 @@ async function getStepCount(date: DateKey): Promise<number | null> {
   try {
     await initialize();
 
-    const { records } = await readRecords('Steps', {
+    const result = await aggregateRecord({
+      recordType: 'Steps',
       timeRangeFilter: { operator: 'between', ...dayBounds(date) },
     });
 
-    if (records.length === 0) return null;
-
-    return records.reduce((sum, record) => sum + record.count, 0);
+    // Health Connect's aggregation de-duplicates across data origins (phone,
+    // watch, other step-tracking apps), unlike summing raw `Steps` records.
+    return result?.COUNT_TOTAL ?? 0;
   } catch {
     // Permission revoked from system Settings after being granted, or any
     // other native-layer read failure — treat as "nothing usable" per the

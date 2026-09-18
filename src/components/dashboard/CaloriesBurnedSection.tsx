@@ -1,4 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { Pressable, View } from 'react-native';
 
@@ -14,6 +15,7 @@ import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { getHealthProvider } from '@/lib/health';
 import { progressFraction } from '@/lib/nutrition';
+import { queryKeys } from '@/lib/queryClient';
 import { colorsFor } from '@/theme/colors';
 import type { DiaryDay } from '@/types/models';
 
@@ -30,9 +32,18 @@ export function CaloriesBurnedSection({ day }: { day: DiaryDay }) {
   const userId = useProfileStore((state) => state.profile?.id ?? null);
   const healthSyncEnabled = useSettingsStore((state) => state.healthSyncEnabled);
   const steps = useHealthSteps(day.date);
+  const queryClient = useQueryClient();
 
   const activities = userId ? logRepository.getActivities(userId, day.date) : [];
   const needsReconnect = healthSyncEnabled && steps.data === null;
+
+  const reconnect = async () => {
+    const granted = await getHealthProvider().requestPermissions();
+
+    if (granted) {
+      void queryClient.invalidateQueries({ queryKey: queryKeys.health.all });
+    }
+  };
 
   return (
     <MetricSection
@@ -47,7 +58,7 @@ export function CaloriesBurnedSection({ day }: { day: DiaryDay }) {
               {t('dashboard', 'steps')}
             </Text>
             {needsReconnect ? (
-              <Pressable onPress={() => void getHealthProvider().requestPermissions()}>
+              <Pressable onPress={() => void reconnect()}>
                 <Text variant="heading" tone="brand">
                   {t('dashboard', 'reconnectHealth')}
                 </Text>

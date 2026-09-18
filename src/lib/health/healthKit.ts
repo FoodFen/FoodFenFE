@@ -47,7 +47,9 @@ async function getStepCount(date: DateKey): Promise<number | null> {
 
     const total = stats.sumQuantity?.quantity;
 
-    return typeof total === 'number' ? Math.round(total) : null;
+    // The query succeeded but found no samples for the day (e.g. before health
+    // tracking started, or nothing walked yet) — that's 0 steps, not a failure.
+    return typeof total === 'number' ? Math.round(total) : 0;
   } catch {
     // Permission revoked from system Settings after being granted, or any
     // other native-layer read failure — treat as "nothing usable" per the

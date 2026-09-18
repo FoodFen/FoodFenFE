@@ -115,7 +115,11 @@ export function useHealthSteps(date: DateKey) {
 
       if (steps === null) return null;
 
-      const kcal = estimateStepsCalories(steps, profile.weightCurrent);
+      // Estimate against the weight in force as of this day, not today's —
+      // matches this codebase's history-is-measured-as-of-the-time principle
+      // (see `useWeightAsOf` / `userRepository.ts`).
+      const weightKg = getWeightAsOf(userId, date)?.weight ?? profile.weightCurrent;
+      const kcal = estimateStepsCalories(steps, weightKg);
       const source = Platform.OS === 'ios' ? 'apple_health' : 'google_fit';
 
       logRepository.upsertHealthSteps(userId, date, kcal, source);

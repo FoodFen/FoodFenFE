@@ -19,9 +19,11 @@ export interface HealthProvider {
   requestPermissions(): Promise<boolean>;
   /**
    * Total steps for the given local calendar day. Both platforms can answer
-   * for past days as well as today; returns null if there is no permission,
-   * no provider on this device, or no recorded data for that day (including
-   * "before health tracking started on this phone").
+   * for past days as well as today; returns 0 if the day was successfully
+   * read but has no recorded steps (including before health tracking started
+   * on this phone, or a day with nothing walked yet); returns null only if
+   * there is no permission, no provider on this device, or the read itself
+   * failed.
    */
   getStepCount(date: DateKey): Promise<number | null>;
 }
