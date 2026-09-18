@@ -252,15 +252,42 @@ export function getExerciseKcal(userId: string, date: DateKey): number {
   return row?.total ?? 0;
 }
 
+/**
+ * The one activity type that represents passive/ambient movement — steps
+ * taken over the course of a normal day — rather than a deliberate workout.
+ * The TDEE activity-level multiplier chosen at onboarding already assumes
+ * typical daily movement like this, so it must not also add back to the
+ * eating budget under All-calories mode (`kcalRemaining`) — doing so would
+ * count the same movement twice. Everything else (a chosen preset, a
+ * manually-typed activity, or — if a future pass imports real workouts from
+ * a health app — a synced run/ride/swim) represents exertion beyond that
+ * baseline and is eligible.
+ *
+ * This is the one place that distinction lives. A future recalibration
+ * (e.g. deriving the baseline itself from a trend of measured activity
+ * instead of a static onboarding answer) still needs this same "ambient vs.
+ * deliberate" split — it would only replace this one check, not anything
+ * downstream of it.
+ */
+const AMBIENT_ACTIVITY_TYPE = 'steps';
+
+export interface ExerciseTotals {
+  /** Every logged activity for the day, regardless of type — what "Calories burned" displays. */
+  total: number;
+  /** The subset eligible to add back to the eating budget (see `AMBIENT_ACTIVITY_TYPE`). */
+  addBackEligible: number;
+}
+
 export function getExerciseByDay(
   userId: string,
   from: DateKey,
   to: DateKey,
-): Map<DateKey, number> {
+): Map<DateKey, ExerciseTotals> {
   const rows = db
     .select({
       day: activityLog.loggedOn,
       total: sql<number>`coalesce(sum(${activityLog.caloriesBurned}), 0)`,
+      addBackEligible: sql<number>`coalesce(sum(case when ${activityLog.activityType} != ${AMBIENT_ACTIVITY_TYPE} then ${activityLog.caloriesBurned} else 0 end), 0)`,
     })
     .from(activityLog)
     .where(
@@ -274,7 +301,7 @@ export function getExerciseByDay(
     .groupBy(activityLog.loggedOn)
     .all();
 
-  return new Map(rows.map((row) => [row.day, row.total]));
+  return new Map(rows.map((row) => [row.day, { total: row.total, addBackEligible: row.addBackEligible }]));
 }
 
 export function getActivities(userId: string, date: DateKey) {

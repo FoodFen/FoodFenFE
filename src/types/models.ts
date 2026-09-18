@@ -89,8 +89,15 @@ export interface DiaryDay {
   entries: FoodEntry[];
   totals: Nutrition;
   goal: DailyGoal;
-  /** Sum of the day's activity logs. */
+  /** Sum of the day's activity logs, every type — what "Calories burned" displays. */
   exerciseKcal: number;
+  /**
+   * The `exerciseKcal` subset eligible to add back to the eating budget
+   * under All-calories mode (`kcalRemaining`). Excludes ambient movement
+   * (steps) that the TDEE activity-level multiplier already assumes —
+   * see `AMBIENT_ACTIVITY_TYPE` in `src/data/logRepository.ts`.
+   */
+  addBackEligibleExerciseKcal: number;
   /** Sum of the day's water logs. */
   waterMl: number;
 }

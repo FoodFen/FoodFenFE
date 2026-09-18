@@ -347,6 +347,13 @@ export function sumNutrition(items: readonly Nutrition[]): Nutrition {
  * the number. `smart` does not: the activity-level multiplier already bakes
  * routine activity into `targetKcal`, so adding logged exercise back on top
  * would double-count it.
+ *
+ * `exerciseKcal` here must already be the add-back-eligible portion (see
+ * `DiaryDay.addBackEligibleExerciseKcal`), not the full "calories burned"
+ * total — ambient movement (steps) is excluded from that portion for the
+ * same double-counting reason `smart` mode excludes everything. This
+ * function stays agnostic to *why* a figure is or isn't eligible; that
+ * decision lives entirely where the figure is computed.
  */
 export function kcalRemaining(
   targetKcal: number,
