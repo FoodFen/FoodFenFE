@@ -17,6 +17,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { todayKey } from '@/lib/date';
 import { haptics } from '@/lib/haptics';
+import { getHealthProvider } from '@/lib/health';
 import type { Locale } from '@/lib/i18n';
 import { ageFromBirthYear, totalDailyEnergyExpenditure } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
@@ -48,6 +49,8 @@ export default function SettingsScreen() {
   const setHideChallengeProgress = useSettingsStore(
     (state) => state.setHideChallengeProgress,
   );
+  const healthSyncEnabled = useSettingsStore((state) => state.healthSyncEnabled);
+  const setHealthSyncEnabled = useSettingsStore((state) => state.setHealthSyncEnabled);
 
   const languageOptions: { value: Locale; label: string }[] = [
     { value: 'vi', label: t('profileLanguage', 'vietnamese') },
@@ -77,6 +80,21 @@ export default function SettingsScreen() {
       { text: t('common', 'cancel'), style: 'cancel' },
       { text: t('profile', 'signOut'), style: 'destructive', onPress: () => void signOut() },
     ]);
+  };
+
+  const toggleHealthSync = async (value: boolean) => {
+    if (!value) {
+      setHealthSyncEnabled(false);
+      return;
+    }
+
+    const granted = await getHealthProvider().requestPermissions();
+
+    if (granted) {
+      setHealthSyncEnabled(true);
+    } else {
+      Alert.alert(t('healthSync', 'heading'), t('healthSync', 'permissionDenied'));
+    }
   };
 
   const confirmErase = () => {
@@ -298,6 +316,21 @@ export default function SettingsScreen() {
         />
         <Text variant="caption" tone="subtle">
           {t('profile', 'challengeProgressCaption')}
+        </Text>
+      </Card>
+
+      <Card className="gap-3">
+        <Text variant="heading">{t('healthSync', 'heading')}</Text>
+        <SegmentedControl
+          options={[
+            { value: 'on' as const, label: t('developer', 'on') },
+            { value: 'off' as const, label: t('developer', 'off') },
+          ]}
+          value={healthSyncEnabled ? 'on' : 'off'}
+          onChange={(value) => void toggleHealthSync(value === 'on')}
+        />
+        <Text variant="caption" tone="subtle">
+          {t('healthSync', 'caption')}
         </Text>
       </Card>
 

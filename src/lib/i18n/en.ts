@@ -592,6 +592,13 @@ export const en: DeepPartial<Translations> = {
       "Every workout you log adds its calories back to today's budget, on top of your target.",
   },
 
+  healthSync: {
+    heading: 'Step sync',
+    caption:
+      "Reads today's step count from Health Connect / Apple Health to estimate extra calories burned.",
+    permissionDenied: 'Could not get permission. You can re-enable it from system Settings.',
+  },
+
   tabs: {
     home: 'Home',
     achievements: 'Achievements',
