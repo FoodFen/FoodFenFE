@@ -113,4 +113,8 @@ export const queryKeys = {
     all: ['sync'] as const,
     pending: () => [...queryKeys.sync.all, 'pending'] as const,
   },
+  chat: {
+    all: ['chat'] as const,
+    history: () => [...queryKeys.chat.all, 'history'] as const,
+  },
 } as const;
