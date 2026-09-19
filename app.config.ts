@@ -73,11 +73,14 @@ const OWN_PLUGINS: PluginEntry[] = [
     '@react-native-google-signin/google-signin',
     {
       // The reversed form of the iOS OAuth client ID from Google Cloud
-      // Console (e.g. "com.googleusercontent.apps.1234567890-abc"). This is
-      // a placeholder until a real Google Cloud project exists — Google
+      // Console (e.g. "com.googleusercontent.apps.1234567890-abc"). The
+      // fallback is a syntactically-valid placeholder (it starts with
+      // "com.googleusercontent.apps." as the plugin's validation requires),
+      // not a real working value — it exists only so config resolution
+      // doesn't throw when no real Google Cloud project exists yet. Google
       // sign-in on iOS will not work until it's replaced with the real
       // value; this does not block building or running the app otherwise.
-      iosUrlScheme: process.env.GOOGLE_IOS_URL_SCHEME ?? '',
+      iosUrlScheme: process.env.GOOGLE_IOS_URL_SCHEME ?? 'com.googleusercontent.apps.placeholder',
     },
   ],
   [
