@@ -2,7 +2,7 @@ import { Chat, useStreamingMessages } from '@kesha-antonov/react-native-chat';
 import type { IMessage } from '@kesha-antonov/react-native-chat';
 import { useQueryClient, onlineManager } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { streamChatReply } from '@/api/endpoints/chat';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
@@ -45,21 +45,25 @@ export default function ChatScreen() {
     [data],
   );
 
-  // Seed history as pages arrive, re-seeding only the messages not already
-  // seeded (a second page from `fetchNextPage` must not be dropped, and a
-  // page that arrives after the user already sent a message must not be
-  // seeded as if it were newer). History is always older than anything
-  // already in the list, so it is spliced onto the end directly via
-  // `setMessages` rather than `append()`, which always prepends its
-  // argument as the newest message.
-  const seededCountRef = useRef(0);
+  // Seed history as pages arrive, re-seeding only messages not already
+  // present by id. A plain length/tail-diff isn't safe here: a second page
+  // from `fetchNextPage` does grow the flattened array at its tail, but
+  // `onDone`'s `invalidateQueries` below can also cause page 0 itself to be
+  // refetched with the just-completed exchange inserted at its *head* (this
+  // page is newest-first) — a tail-slice would then re-seed already-live
+  // messages as if they were new, duplicating them. Comparing ids against
+  // the current list via `setMessages`'s functional form is correct
+  // regardless of where growth actually lands. Newly-seeded messages are
+  // always older than anything already in the list, so they are appended to
+  // its end directly via `setMessages` rather than `append()`, which always
+  // prepends its argument as the newest message.
   useEffect(() => {
-    if (historyMessages.length <= seededCountRef.current) return;
+    setMessages((prev) => {
+      const existingIds = new Set(prev.map((message) => message._id));
+      const newlySeeded = historyMessages.filter((message) => !existingIds.has(message._id));
 
-    const newlySeeded = historyMessages.slice(seededCountRef.current);
-    seededCountRef.current = historyMessages.length;
-
-    setMessages((prev) => [...prev, ...newlySeeded]);
+      return newlySeeded.length === 0 ? prev : [...prev, ...newlySeeded];
+    });
   }, [historyMessages, setMessages]);
 
   const onSend = useCallback(
