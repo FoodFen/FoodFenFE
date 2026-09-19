@@ -9,9 +9,9 @@ come back to a client-side update, not a silent divergence.
 
 ## `POST /auth/social`
 
-Exchanges a Google or Apple identity token for the same session shape
-`/auth/sign-in` and `/auth/sign-up` already return. `skipAuth` — no bearer
-token on this request, it's what establishes one.
+Exchanges a Google or Apple identity token for the same `AuthSession` shape
+[`auth.md`](./auth.md)'s `/auth/sign-in` and `/auth/sign-up` already return.
+`skipAuth` — no bearer token on this request, it's what establishes one.
 
 Request body:
 ```json

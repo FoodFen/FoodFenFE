@@ -12,6 +12,7 @@ here for its contract section rather than duplicating it.
 
 | Feature | Contract | Design spec |
 |---|---|---|
+| Email/password auth | [`auth.md`](./auth.md) | none — documents an already-shipped client |
 | AI chat | [`ai-chat.md`](./ai-chat.md) | [`2026-09-19-ai-chat-design.md`](../superpowers/specs/2026-09-19-ai-chat-design.md) |
 | Social sign-in | [`social-sign-in.md`](./social-sign-in.md) | [`2026-09-19-social-sign-in-design.md`](../superpowers/specs/2026-09-19-social-sign-in-design.md) |
 
