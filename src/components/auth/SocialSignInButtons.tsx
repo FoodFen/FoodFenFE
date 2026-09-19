@@ -55,7 +55,7 @@ export function SocialSignInButtons({
         <GoogleSigninButton
           size={GoogleSigninButton.Size.Wide}
           color={isDark ? GoogleSigninButton.Color.Dark : GoogleSigninButton.Color.Light}
-          disabled={loadingProvider !== null}
+          disabled={loadingProvider === 'google'}
           onPress={() => void runProvider('google', signInWithGoogle)}
         />
       ) : null}
@@ -69,7 +69,7 @@ export function SocialSignInButtons({
               : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
           }
           cornerRadius={8}
-          style={{ height: 48, opacity: loadingProvider !== null ? 0.5 : 1 }}
+          style={{ height: 48, opacity: loadingProvider === 'apple' ? 0.5 : 1 }}
           onPress={() => void runProvider('apple', signInWithApple)}
         />
       ) : null}
