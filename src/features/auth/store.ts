@@ -7,6 +7,7 @@ import type { SignInPayload, SignUpPayload } from '@/api/endpoints/auth';
 import { authSessionSchema } from '@/api/schemas';
 import type { RemoteAuthSession } from '@/api/schemas';
 import { configureSyncAuth } from '@/data/sync';
+import { getAppleCredential, getGoogleIdToken } from '@/features/auth/social';
 
 /**
  * The optional account session.
@@ -44,6 +45,8 @@ interface AuthState {
   hydrate: () => Promise<void>;
   signIn: (payload: SignInPayload) => Promise<void>;
   signUp: (payload: SignUpPayload) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithApple: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -89,6 +92,31 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   signUp: async (payload) => {
     const session = await authApi.signUp(payload);
+
+    await persistSession(session);
+    set({ session, status: 'authenticated' });
+  },
+
+  signInWithGoogle: async () => {
+    const idToken = await getGoogleIdToken();
+    if (!idToken) return; // User cancelled — not an error.
+
+    const session = await authApi.socialSignIn({ provider: 'google', idToken });
+
+    await persistSession(session);
+    set({ session, status: 'authenticated' });
+  },
+
+  signInWithApple: async () => {
+    const credential = await getAppleCredential();
+    if (!credential) return; // User cancelled — not an error.
+
+    const session = await authApi.socialSignIn({
+      provider: 'apple',
+      idToken: credential.identityToken,
+      fullName: credential.fullName,
+      email: credential.email,
+    });
 
     await persistSession(session);
     set({ session, status: 'authenticated' });
