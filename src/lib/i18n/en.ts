@@ -612,5 +612,6 @@ export const en: DeepPartial<Translations> = {
     unavailableTitle: 'Chat is unavailable',
     unavailableDescription:
       'This feature needs an account and a connection. Sign in from Profile to use it.',
+    signIn: 'Sign in',
   },
 };

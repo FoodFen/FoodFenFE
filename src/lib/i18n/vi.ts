@@ -629,6 +629,7 @@ export const vi = {
     unavailableTitle: 'Trò chuyện chưa khả dụng',
     unavailableDescription:
       'Tính năng này cần tài khoản và kết nối mạng. Đăng nhập trong Hồ sơ để sử dụng.',
+    signIn: 'Đăng nhập',
   },
 } as const;
 

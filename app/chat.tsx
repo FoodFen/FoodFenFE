@@ -1,14 +1,19 @@
 import { Chat, useStreamingMessages } from '@kesha-antonov/react-native-chat';
 import type { IMessage } from '@kesha-antonov/react-native-chat';
+import { useQueryClient, onlineManager } from '@tanstack/react-query';
+import { router } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { streamChatReply } from '@/api/endpoints/chat';
-import { ErrorState } from '@/components/ui/EmptyState';
+import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
 import { Screen } from '@/components/ui/Screen';
 import { canUseRemote } from '@/data/sync';
+import { useAuthStore } from '@/features/auth/store';
 import { CHAT_ASSISTANT, CHAT_USER, toIMessage } from '@/features/chat/mappers';
 import { useChatHistory } from '@/features/chat/queries';
 import { useTranslation } from '@/hooks/useTranslation';
+import { env } from '@/lib/env';
+import { queryKeys } from '@/lib/queryClient';
 
 /**
  * The single continuous conversation with the assistant. Gated exactly like
@@ -17,10 +22,18 @@ import { useTranslation } from '@/hooks/useTranslation';
  */
 export default function ChatScreen() {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const session = useAuthStore((state) => state.session);
   const available = canUseRemote();
+  // The one reason among the three `canUseRemote()` checks worth a distinct
+  // affordance: everything else about the build/connection is fine, only
+  // signing in is missing.
+  const isNoSessionReason = env.hasBackend && onlineManager.isOnline() && !session;
 
-  const { data } = useChatHistory();
-  const { messages, append, startStream } = useStreamingMessages<IMessage>();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useChatHistory({
+    enabled: available,
+  });
+  const { messages, append, setMessages, startStream } = useStreamingMessages<IMessage>();
 
   // `useChatHistory` pages are newest-first, and within a page messages are
   // newest-first too (design spec), so this flattened array is already in
@@ -32,16 +45,22 @@ export default function ChatScreen() {
     [data],
   );
 
-  // Seed history into the hook's own message list once per fetched set.
-  // `append` accepts a single message or an array (checked against the
-  // installed package's types), so this is one call rather than a loop.
-  const seededRef = useRef(false);
+  // Seed history as pages arrive, re-seeding only the messages not already
+  // seeded (a second page from `fetchNextPage` must not be dropped, and a
+  // page that arrives after the user already sent a message must not be
+  // seeded as if it were newer). History is always older than anything
+  // already in the list, so it is spliced onto the end directly via
+  // `setMessages` rather than `append()`, which always prepends its
+  // argument as the newest message.
+  const seededCountRef = useRef(0);
   useEffect(() => {
-    if (seededRef.current || historyMessages.length === 0) return;
+    if (historyMessages.length <= seededCountRef.current) return;
 
-    seededRef.current = true;
-    append(historyMessages);
-  }, [historyMessages, append]);
+    const newlySeeded = historyMessages.slice(seededCountRef.current);
+    seededCountRef.current = historyMessages.length;
+
+    setMessages((prev) => [...prev, ...newlySeeded]);
+  }, [historyMessages, setMessages]);
 
   const onSend = useCallback(
     (newMessages: IMessage[] = []) => {
@@ -51,23 +70,36 @@ export default function ChatScreen() {
       append(outgoing);
       const stream = startStream({ user: CHAT_ASSISTANT });
 
-      void streamChatReply(String(outgoing.text), {
+      void streamChatReply(outgoing.text, {
         signal: stream.signal,
         onToken: (delta) => stream.push(delta),
-        onDone: (message) => stream.done(toIMessage(message)),
+        onDone: (message) => {
+          stream.done(toIMessage(message));
+          void queryClient.invalidateQueries({ queryKey: queryKeys.chat.all });
+        },
         onError: (message) => stream.done({ text: message }),
       });
     },
-    [append, startStream],
+    [append, startStream, queryClient],
   );
 
   if (!available) {
     return (
       <Screen>
-        <ErrorState
-          title={t('chat', 'unavailableTitle')}
-          description={t('chat', 'unavailableDescription')}
-        />
+        {isNoSessionReason ? (
+          <EmptyState
+            icon="⚠️"
+            title={t('chat', 'unavailableTitle')}
+            description={t('chat', 'unavailableDescription')}
+            actionLabel={t('chat', 'signIn')}
+            onAction={() => router.push('/sign-in')}
+          />
+        ) : (
+          <ErrorState
+            title={t('chat', 'unavailableTitle')}
+            description={t('chat', 'unavailableDescription')}
+          />
+        )}
       </Screen>
     );
   }
@@ -79,6 +111,12 @@ export default function ChatScreen() {
         onSend={onSend}
         user={CHAT_USER}
         labels={{ placeholder: t('chat', 'inputPlaceholder') }}
+        enableGestureHandlerRootView={false}
+        loadEarlierMessagesProps={{
+          isAvailable: hasNextPage,
+          isLoading: isFetchingNextPage,
+          onPress: fetchNextPage,
+        }}
       />
     </Screen>
   );
