@@ -68,6 +68,7 @@ const OWN_PLUGINS: PluginEntry[] = [
     },
   ],
   ['expo-notifications', { color: '#16A34A' }],
+  'expo-apple-authentication',
   [
     'expo-build-properties',
     {
@@ -92,6 +93,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     bundleIdentifier: BUNDLE_ID,
     supportsTablet: true,
+    usesAppleSignIn: true,
     infoPlist: {
       // Required so `expo-camera` / `expo-image-picker` can be used to log
       // meals from a photo. iOS rejects builds that use these APIs without
