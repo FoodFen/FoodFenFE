@@ -6,6 +6,7 @@ import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 import { isApiError } from '@/api/errors';
+import { SocialSignInButtons } from '@/components/auth/SocialSignInButtons';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
@@ -78,6 +79,8 @@ export default function SignUpScreen() {
       </View>
 
       <View className="gap-4">
+        <SocialSignInButtons onError={setFormError} />
+
         <Controller
           control={control}
           name="displayName"
