@@ -134,6 +134,20 @@ export const authSessionSchema = z.object({
   user: userSchema,
 });
 
+export const chatRoleSchema = z.enum(['user', 'assistant']);
+
+export const chatMessageSchema = z.object({
+  id: z.string(),
+  role: chatRoleSchema,
+  content: z.string(),
+  createdAt: z.iso.datetime(),
+});
+
+export const chatHistoryResponseSchema = z.object({
+  messages: z.array(chatMessageSchema),
+  nextCursor: z.string().nullable(),
+});
+
 export type RemoteUser = z.infer<typeof userSchema>;
 export type RemoteDailyGoal = z.infer<typeof dailyGoalSchema>;
 export type RemoteFoodEntry = z.infer<typeof foodEntrySchema>;
@@ -142,3 +156,5 @@ export type RemoteActivityLog = z.infer<typeof activityLogSchema>;
 export type RemoteWeightLog = z.infer<typeof weightLogSchema>;
 export type RemoteWaterLog = z.infer<typeof waterLogSchema>;
 export type RemoteAuthSession = z.infer<typeof authSessionSchema>;
+export type RemoteChatMessage = z.infer<typeof chatMessageSchema>;
+export type RemoteChatHistoryResponse = z.infer<typeof chatHistoryResponseSchema>;
