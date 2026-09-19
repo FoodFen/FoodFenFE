@@ -18,14 +18,16 @@ export interface SseFrame {
  * text arrives.
  */
 export function parseSseFrames(buffer: string): { frames: SseFrame[]; remainder: string } {
-  const parts = buffer.split('\n\n');
+  // `\r\n\r\n`/`\r\n` (CRLF) is as legal a line ending as `\n\n`/`\n` (LF) per
+  // the SSE spec, so both must split frames/lines the same way.
+  const parts = buffer.split(/\r?\n\r?\n/);
   const remainder = parts.pop() ?? '';
 
   const frames = parts.map((part): SseFrame => {
     let event = 'message';
     let data = '';
 
-    for (const line of part.split('\n')) {
+    for (const line of part.split(/\r?\n/)) {
       if (line.startsWith('event:')) event = line.slice('event:'.length).trim();
       else if (line.startsWith('data:')) data = line.slice('data:'.length).trim();
     }

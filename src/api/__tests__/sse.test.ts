@@ -43,4 +43,13 @@ describe('parseSseFrames', () => {
     expect(frames).toEqual([]);
     expect(remainder).toBe('event: tok');
   });
+
+  it('parses a CRLF-terminated frame the same as an LF one', () => {
+    const { frames, remainder } = parseSseFrames(
+      'event: token\r\ndata: {"delta":"hi"}\r\n\r\n',
+    );
+
+    expect(frames).toEqual([{ event: 'token', data: '{"delta":"hi"}' }]);
+    expect(remainder).toBe('');
+  });
 });

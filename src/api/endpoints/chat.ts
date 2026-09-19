@@ -1,10 +1,16 @@
 import { fetch as expoFetch } from 'expo/fetch';
 
-import { api, getAccessToken, notifySessionExpired, refreshAccessToken } from '@/api/client';
+import {
+  api,
+  buildUrl,
+  getAccessToken,
+  notifySessionExpired,
+  parseErrorBody,
+  refreshAccessToken,
+} from '@/api/client';
 import { ApiError, statusToKind } from '@/api/errors';
 import { chatHistoryResponseSchema, chatMessageSchema } from '@/api/schemas';
 import type { RemoteChatHistoryResponse, RemoteChatMessage } from '@/api/schemas';
-import { env } from '@/lib/env';
 
 import { parseSseFrames } from '../sse';
 
@@ -40,16 +46,6 @@ export interface StreamReplyHandlers {
   signal?: AbortSignal;
 }
 
-function chatUrl(): string {
-  if (!env.apiUrl) {
-    throw new ApiError('not_configured', 'No server is configured for this build.');
-  }
-
-  const base = env.apiUrl.endsWith('/') ? env.apiUrl : `${env.apiUrl}/`;
-
-  return new URL('chat/messages', base).toString();
-}
-
 function sendChatRequest(url: string, message: string, token: string | null, signal?: AbortSignal) {
   return expoFetch(url, {
     method: 'POST',
@@ -72,12 +68,21 @@ export async function streamChatReply(
   message: string,
   handlers: StreamReplyHandlers,
 ): Promise<void> {
+  // Tracks whether `onDone`/`onError` has already fired, so the stream is
+  // never settled twice — in particular, so the post-loop fallback below
+  // only fires when nothing else already resolved the stream.
+  let settled = false;
+  const fail = (userMessage: string) => {
+    settled = true;
+    handlers.onError(userMessage);
+  };
+
   let url: string;
 
   try {
-    url = chatUrl();
+    url = buildUrl('chat/messages', undefined);
   } catch (error) {
-    handlers.onError(error instanceof ApiError ? error.userMessage : 'Something went wrong.');
+    fail(error instanceof ApiError ? error.userMessage : 'Something went wrong.');
     return;
   }
 
@@ -89,7 +94,7 @@ export async function streamChatReply(
 
       if (!refreshed) {
         notifySessionExpired();
-        handlers.onError(new ApiError('unauthorized', 'Session expired.').userMessage);
+        fail(new ApiError('unauthorized', 'Session expired.').userMessage);
         return;
       }
 
@@ -99,15 +104,26 @@ export async function streamChatReply(
       // the new token is bad too, so we stop rather than loop.
       if (response.status === 401) {
         notifySessionExpired();
-        handlers.onError(new ApiError('unauthorized', 'Session expired.').userMessage);
+        fail(new ApiError('unauthorized', 'Session expired.').userMessage);
         return;
       }
     }
 
-    if (!response.ok || !response.body) {
-      handlers.onError(
-        new ApiError(statusToKind(response.status), 'The assistant could not reply.').userMessage,
+    if (!response.ok) {
+      const { message: serverMessage, fieldErrors } = await parseErrorBody(response);
+
+      fail(
+        new ApiError(
+          statusToKind(response.status),
+          serverMessage ?? 'The assistant could not reply.',
+          { status: response.status, fieldErrors },
+        ).userMessage,
       );
+      return;
+    }
+
+    if (!response.body) {
+      fail(new ApiError('parse', 'The assistant could not reply.').userMessage);
       return;
     }
 
@@ -135,15 +151,23 @@ export async function streamChatReply(
           const parsed = JSON.parse(frame.data) as { message: unknown };
           const result = chatMessageSchema.safeParse(parsed.message);
 
+          settled = true;
           if (result.success) handlers.onDone(result.data);
           else handlers.onError('The server returned an unexpected reply.');
           return;
         } else if (frame.event === 'error') {
           const parsed = JSON.parse(frame.data) as { message: string };
-          handlers.onError(parsed.message);
+          fail(parsed.message);
           return;
         }
       }
+    }
+
+    // The stream ended (native EOF) without ever sending a `done` or `error`
+    // frame. Without this, the chat UI is stuck "streaming" forever — the
+    // bubble never finalizes and the typing indicator never clears.
+    if (!settled) {
+      fail(new ApiError('parse', 'The server ended the stream without a reply.').userMessage);
     }
   } catch (error) {
     // Covers a rejected `expoFetch` call (network drop, timeout, caller
@@ -153,18 +177,16 @@ export async function streamChatReply(
     // reports failure through `onError`, exactly like `request()` in
     // `client.ts` turns every failure into an `ApiError`.
     if (error instanceof ApiError) {
-      handlers.onError(error.userMessage);
+      fail(error.userMessage);
     } else if (error instanceof Error && error.name === 'AbortError') {
-      handlers.onError(new ApiError('canceled', 'Request canceled.', { cause: error }).userMessage);
+      fail(new ApiError('canceled', 'Request canceled.', { cause: error }).userMessage);
     } else if (error instanceof SyntaxError) {
-      handlers.onError(
+      fail(
         new ApiError('parse', 'The server returned an unexpected reply.', { cause: error })
           .userMessage,
       );
     } else {
-      handlers.onError(
-        new ApiError('network', 'Unable to reach the server.', { cause: error }).userMessage,
-      );
+      fail(new ApiError('network', 'Unable to reach the server.', { cause: error }).userMessage);
     }
   }
 }

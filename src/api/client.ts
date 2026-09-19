@@ -88,7 +88,12 @@ export interface RequestOptions<TResponse> {
   timeoutMs?: number;
 }
 
-function buildUrl(path: string, query: RequestOptions<unknown>['query']): string {
+/**
+ * Exposed for `endpoints/chat.ts`'s hand-rolled streaming request, which
+ * builds its own URL outside `request()` but still needs the same base-URL
+ * and query-string handling every other endpoint gets for free.
+ */
+export function buildUrl(path: string, query: RequestOptions<unknown>['query']): string {
   if (!env.apiUrl) {
     // Every diary/food read and write is local-first (see `src/data/`) and
     // never reaches this function. Only auth and future sync calls do, so
@@ -142,7 +147,12 @@ function withTimeout(
   };
 }
 
-async function parseErrorBody(
+/**
+ * Exposed for `endpoints/chat.ts`'s non-streaming failure branch, which needs
+ * the same error-body parsing `request()` uses but isn't itself going through
+ * `request()` (its success path is a stream, not one parsed JSON value).
+ */
+export async function parseErrorBody(
   response: Response,
 ): Promise<{ message?: string; fieldErrors?: Record<string, string> }> {
   try {

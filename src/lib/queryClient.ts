@@ -1,4 +1,5 @@
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, defaultShouldDehydrateQuery } from '@tanstack/react-query';
+import type { Query } from '@tanstack/react-query';
 import type { Persister } from '@tanstack/react-query-persist-client';
 
 import { isApiError } from '@/api/errors';
@@ -66,6 +67,15 @@ export const persistOptions = {
    * the old cache instead of feeding stale shapes into new components.
    */
   buster: 'v1',
+  /**
+   * Chat has no offline identity (see the AI chat design spec) — its history
+   * is never written to MMKV, so excluding it here is the enforcement point
+   * for that boundary.
+   */
+  dehydrateOptions: {
+    shouldDehydrateQuery: (query: Query) =>
+      defaultShouldDehydrateQuery(query) && query.queryKey[0] !== 'chat',
+  },
 };
 
 /**
