@@ -139,93 +139,12 @@ input placeholder, unavailable-state copy, retry button, error message.
 
 ## API contract (for the backend session)
 
-This section is the complete interface the client is built against. The
-backend session should treat it as the spec to implement — not a suggestion
-to redesign — since the client code (this session's output) will already
-depend on these exact shapes. If a change is needed, it should come back to
-a client-side update, not a silent divergence.
-
-### Auth
-
-Identical to every other authenticated endpoint in this app: `Authorization:
-Bearer <accessToken>`, standard 401 on an expired/invalid token (the client
-already retries once after a token refresh — no special-case needed).
-
-### `GET /chat/messages`
-
-Cursor-paginated history, newest-first page semantics (client reverses for
-display).
-
-Query params:
-- `before?: string` — an opaque cursor (recommend the previous page's oldest
-  message id or a timestamp string); omitted for the first page.
-- `limit?: number` — page size; server may cap/default this.
-
-Response `200`:
-```json
-{
-  "messages": [
-    {
-      "id": "string",
-      "role": "user" | "assistant",
-      "content": "string",
-      "createdAt": "ISO 8601 string"
-    }
-  ],
-  "nextCursor": "string | null"
-}
-```
-
-### `POST /chat/messages`
-
-Sends one user message and streams the assistant's reply.
-
-Request body:
-```json
-{ "message": "string" }
-```
-
-No other fields — v1 sends no diary/profile/context data, per the scope
-above.
-
-Response: `200`, `Content-Type: text/event-stream`, body is a sequence of
-frames in the standard SSE wire format (`event: <name>\ndata: <json>\n\n`):
-
-- `event: token` — one incremental text delta.
-  ```json
-  { "delta": "string" }
-  ```
-- `event: done` — exactly once, last frame of a successful stream. Carries
-  the full persisted assistant message so the client can reconcile against
-  its accumulated text (they should match, but the server's copy is
-  canonical — e.g. if any server-side post-processing altered the final
-  text).
-  ```json
-  { "message": { "id": "string", "role": "assistant", "content": "string", "createdAt": "ISO 8601 string" } }
-  ```
-- `event: error` — sent instead of `done` if generation fails after
-  streaming has already started (so a plain HTTP error status is no longer
-  possible). Carries a user-safe message.
-  ```json
-  { "message": "string" }
-  ```
-
-If the request fails before any streaming begins (auth failure, rate limit,
-validation, server error), respond with a normal non-200 status and the same
-error body shape every other endpoint in this API already uses (`message`
-and/or `errors`, per `src/api/errors.ts`'s `parseErrorBody`) rather than a
-stream — the client's existing `ApiErrorKind` handling (`unauthorized`,
-`rate_limited`, `validation`, `server`, etc.) covers this without any
-chat-specific branching.
-
-### Left to the backend session's own judgment
-
-- The assistant's system prompt / persona / model choice.
-- Rate limiting and abuse prevention — the client only needs a `429` to
-  produce `rate_limited`, already handled generically.
-- Message persistence/storage design, moderation, and retention policy.
-- Cursor format for `before` — any opaque string works; the client never
-  parses it, only round-trips it.
+The complete wire contract — endpoints, request/response shapes, auth, error
+conventions — lives in its own file so a backend session can implement
+against it directly:
+[`docs/backend-contracts/ai-chat.md`](../../backend-contracts/ai-chat.md).
+Treat it as the spec to implement, not a suggestion to redesign — the client
+code already depends on these exact shapes.
 
 ## Testing
 
