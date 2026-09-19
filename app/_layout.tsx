@@ -215,6 +215,10 @@ function AppShell({ migrated }: { migrated: boolean }) {
           <Stack.Screen name="settings" options={{ headerShown: false }} />
           <Stack.Screen name="shop" options={{ title: t('shop', 'title') }} />
           <Stack.Screen name="streak" options={{ title: t('streak', 'title') }} />
+          <Stack.Screen
+            name="chat"
+            options={{ title: t('chat', 'layoutTitle'), presentation: 'modal' }}
+          />
         </Stack.Protected>
 
         {/* Reachable at any time from Profile — "sign in to sync" — and gating

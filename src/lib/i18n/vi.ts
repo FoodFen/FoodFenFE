@@ -621,6 +621,14 @@ export const vi = {
     on: 'Bật',
     off: 'Tắt',
   },
+
+  chat: {
+    layoutTitle: 'Trợ lý AI',
+    inputPlaceholder: 'Hỏi trợ lý...',
+    unavailableTitle: 'Trò chuyện chưa khả dụng',
+    unavailableDescription:
+      'Tính năng này cần tài khoản và kết nối mạng. Đăng nhập trong Hồ sơ để sử dụng.',
+  },
 } as const;
 
 export type Translations = typeof vi;
