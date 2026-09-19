@@ -43,12 +43,21 @@ export function SocialSignInButtons({
     try {
       // `action` resolves without throwing on both a genuine sign-in and a
       // plain user cancellation (see `src/features/auth/social.ts`), so the
-      // only way to tell them apart here is whether a session now exists.
-      const hadSession = useAuthStore.getState().session !== null;
+      // only way to tell them apart here is whether the store's session
+      // actually changed. Reference equality, not null-presence, is the
+      // right check: a cancellation returns early without ever calling
+      // `set()`, so `session` is the exact same reference either way — while
+      // a real sign-in always installs a new session object via
+      // `persistSession` + `set()`, whether that replaces `null` or an
+      // already-signed-in session with a different one (e.g. via a direct
+      // deep link into this screen while signed in — `(auth)` routes gate
+      // nothing). A presence-only check (`null` vs. non-`null`) would miss
+      // that second case.
+      const sessionBefore = useAuthStore.getState().session;
       await action();
-      const hasSession = useAuthStore.getState().session !== null;
+      const sessionAfter = useAuthStore.getState().session;
 
-      if (!hadSession && hasSession) onSuccess();
+      if (sessionAfter !== sessionBefore) onSuccess();
     } catch (error) {
       onError(isApiError(error) ? error.userMessage : t('auth', 'genericError'));
     } finally {
