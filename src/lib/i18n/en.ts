@@ -254,6 +254,7 @@ export const en: DeepPartial<Translations> = {
     passwordMinLengthError: 'Use at least {count} characters.',
     passwordNeedsDigitError: 'Include at least one number.',
     passwordsMismatchError: 'Passwords do not match.',
+    orDivider: 'or',
   },
 
   entryDetail: {
