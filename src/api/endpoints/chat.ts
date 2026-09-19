@@ -81,59 +81,90 @@ export async function streamChatReply(
     return;
   }
 
-  let response = await sendChatRequest(url, message, getAccessToken(), handlers.signal);
+  try {
+    let response = await sendChatRequest(url, message, getAccessToken(), handlers.signal);
 
-  if (response.status === 401) {
-    const refreshed = await refreshAccessToken();
+    if (response.status === 401) {
+      const refreshed = await refreshAccessToken();
 
-    if (!refreshed) {
-      notifySessionExpired();
-      handlers.onError(new ApiError('unauthorized', 'Session expired.').userMessage);
+      if (!refreshed) {
+        notifySessionExpired();
+        handlers.onError(new ApiError('unauthorized', 'Session expired.').userMessage);
+        return;
+      }
+
+      response = await sendChatRequest(url, message, refreshed, handlers.signal);
+
+      // Same as `request()`: a second 401 after a successful refresh means
+      // the new token is bad too, so we stop rather than loop.
+      if (response.status === 401) {
+        notifySessionExpired();
+        handlers.onError(new ApiError('unauthorized', 'Session expired.').userMessage);
+        return;
+      }
+    }
+
+    if (!response.ok || !response.body) {
+      handlers.onError(
+        new ApiError(statusToKind(response.status), 'The assistant could not reply.').userMessage,
+      );
       return;
     }
 
-    response = await sendChatRequest(url, message, refreshed, handlers.signal);
-  }
+    const reader = response.body.getReader();
+    // `TextDecoder` ships as a global on this project's RN/Hermes version; if
+    // this throws on the device it's built for, that's the one runtime
+    // assumption in this function worth checking first.
+    const decoder = new TextDecoder();
+    let buffer = '';
 
-  if (!response.ok || !response.body) {
-    handlers.onError(
-      new ApiError(statusToKind(response.status), 'The assistant could not reply.').userMessage,
-    );
-    return;
-  }
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
 
-  const reader = response.body.getReader();
-  // `TextDecoder` ships as a global on this project's RN/Hermes version; if
-  // this throws on the device it's built for, that's the one runtime
-  // assumption in this function worth checking first.
-  const decoder = new TextDecoder();
-  let buffer = '';
+      buffer += decoder.decode(value, { stream: true });
 
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
+      const { frames, remainder } = parseSseFrames(buffer);
+      buffer = remainder;
 
-    buffer += decoder.decode(value, { stream: true });
+      for (const frame of frames) {
+        if (frame.event === 'token') {
+          const parsed = JSON.parse(frame.data) as { delta: string };
+          handlers.onToken(parsed.delta);
+        } else if (frame.event === 'done') {
+          const parsed = JSON.parse(frame.data) as { message: unknown };
+          const result = chatMessageSchema.safeParse(parsed.message);
 
-    const { frames, remainder } = parseSseFrames(buffer);
-    buffer = remainder;
-
-    for (const frame of frames) {
-      if (frame.event === 'token') {
-        const parsed = JSON.parse(frame.data) as { delta: string };
-        handlers.onToken(parsed.delta);
-      } else if (frame.event === 'done') {
-        const parsed = JSON.parse(frame.data) as { message: unknown };
-        const result = chatMessageSchema.safeParse(parsed.message);
-
-        if (result.success) handlers.onDone(result.data);
-        else handlers.onError('The server returned an unexpected reply.');
-        return;
-      } else if (frame.event === 'error') {
-        const parsed = JSON.parse(frame.data) as { message: string };
-        handlers.onError(parsed.message);
-        return;
+          if (result.success) handlers.onDone(result.data);
+          else handlers.onError('The server returned an unexpected reply.');
+          return;
+        } else if (frame.event === 'error') {
+          const parsed = JSON.parse(frame.data) as { message: string };
+          handlers.onError(parsed.message);
+          return;
+        }
       }
+    }
+  } catch (error) {
+    // Covers a rejected `expoFetch` call (network drop, timeout, caller
+    // abort), a rejected `reader.read()`, and a malformed frame's
+    // `JSON.parse` throwing — none of these may escape as an unhandled
+    // rejection; the contract is that this function always resolves and
+    // reports failure through `onError`, exactly like `request()` in
+    // `client.ts` turns every failure into an `ApiError`.
+    if (error instanceof ApiError) {
+      handlers.onError(error.userMessage);
+    } else if (error instanceof Error && error.name === 'AbortError') {
+      handlers.onError(new ApiError('canceled', 'Request canceled.', { cause: error }).userMessage);
+    } else if (error instanceof SyntaxError) {
+      handlers.onError(
+        new ApiError('parse', 'The server returned an unexpected reply.', { cause: error })
+          .userMessage,
+      );
+    } else {
+      handlers.onError(
+        new ApiError('network', 'Unable to reach the server.', { cause: error }).userMessage,
+      );
     }
   }
 }
