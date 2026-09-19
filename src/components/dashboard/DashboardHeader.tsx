@@ -68,6 +68,15 @@ export function DashboardHeader({
           >
             <Ionicons name="settings-outline" size={22} color={colors.fgMuted} />
           </Pressable>
+
+          <Pressable
+            onPress={() => router.push('/chat')}
+            accessibilityRole="button"
+            accessibilityLabel={t('dashboard', 'openChat')}
+            className="h-9 w-9 items-center justify-center rounded-full active:bg-surface-alt"
+          >
+            <Ionicons name="chatbubble-ellipses-outline" size={22} color={colors.fgMuted} />
+          </Pressable>
         </View>
       ) : (
         <Pressable

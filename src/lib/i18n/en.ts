@@ -403,6 +403,7 @@ export const en: DeepPartial<Translations> = {
     pointsA11y: '{count} reward points',
     openShop: 'Open shop',
     openSettings: 'Open settings',
+    openChat: 'Open AI assistant',
     target: 'Target',
     consumed: 'Consumed',
     burned: 'Burned',

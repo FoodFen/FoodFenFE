@@ -418,6 +418,7 @@ export const vi = {
     pointsA11y: '{count} điểm thưởng',
     openShop: 'Mở cửa hàng',
     openSettings: 'Mở cài đặt',
+    openChat: 'Mở trợ lý AI',
     // Summary card
     target: 'Mục tiêu',
     consumed: 'Đã nạp',
