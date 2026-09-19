@@ -70,6 +70,17 @@ const OWN_PLUGINS: PluginEntry[] = [
   ['expo-notifications', { color: '#16A34A' }],
   'expo-apple-authentication',
   [
+    '@react-native-google-signin/google-signin',
+    {
+      // The reversed form of the iOS OAuth client ID from Google Cloud
+      // Console (e.g. "com.googleusercontent.apps.1234567890-abc"). This is
+      // a placeholder until a real Google Cloud project exists — Google
+      // sign-in on iOS will not work until it's replaced with the real
+      // value; this does not block building or running the app otherwise.
+      iosUrlScheme: process.env.GOOGLE_IOS_URL_SCHEME ?? '',
+    },
+  ],
+  [
     'expo-build-properties',
     {
       ios: { useFrameworks: 'static' },
