@@ -79,7 +79,13 @@ export default function SignUpScreen() {
       </View>
 
       <View className="gap-4">
-        <SocialSignInButtons onError={setFormError} />
+        <SocialSignInButtons
+          onError={setFormError}
+          onSuccess={() => {
+            if (router.canGoBack()) router.back();
+            else router.replace('/');
+          }}
+        />
 
         <Controller
           control={control}

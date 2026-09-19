@@ -18,8 +18,10 @@ import { env } from '@/lib/env';
  */
 export function SocialSignInButtons({
   onError,
+  onSuccess,
 }: {
   onError: (message: string) => void;
+  onSuccess: () => void;
 }) {
   const { t } = useTranslation();
   const { isDark } = useAppTheme();
@@ -39,7 +41,14 @@ export function SocialSignInButtons({
     setLoadingProvider(provider);
 
     try {
+      // `action` resolves without throwing on both a genuine sign-in and a
+      // plain user cancellation (see `src/features/auth/social.ts`), so the
+      // only way to tell them apart here is whether a session now exists.
+      const hadSession = useAuthStore.getState().session !== null;
       await action();
+      const hasSession = useAuthStore.getState().session !== null;
+
+      if (!hadSession && hasSession) onSuccess();
     } catch (error) {
       onError(isApiError(error) ? error.userMessage : t('auth', 'genericError'));
     } finally {
@@ -61,17 +70,22 @@ export function SocialSignInButtons({
       ) : null}
 
       {appleAvailable ? (
-        <AppleAuthentication.AppleAuthenticationButton
-          buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
-          buttonStyle={
-            isDark
-              ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
-              : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-          }
-          cornerRadius={8}
-          style={{ height: 48, opacity: loadingProvider === 'apple' ? 0.5 : 1 }}
-          onPress={() => void runProvider('apple', signInWithApple)}
-        />
+        // `AppleAuthenticationButtonProps` has no `disabled` prop, so
+        // `pointerEvents` is what actually blocks taps while dimmed — the
+        // opacity alone is cosmetic.
+        <View pointerEvents={loadingProvider === 'apple' ? 'none' : 'auto'}>
+          <AppleAuthentication.AppleAuthenticationButton
+            buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
+            buttonStyle={
+              isDark
+                ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
+                : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+            }
+            cornerRadius={8}
+            style={{ height: 48, opacity: loadingProvider === 'apple' ? 0.5 : 1 }}
+            onPress={() => void runProvider('apple', signInWithApple)}
+          />
+        </View>
       ) : null}
 
       <View className="flex-row items-center gap-3 py-1">
