@@ -53,6 +53,24 @@ function refreshOnce(): Promise<string | null> {
   return inFlightRefresh;
 }
 
+/**
+ * Exposed for `endpoints/chat.ts`'s hand-rolled streaming request, which
+ * cannot go through `request()` (its body is a partial stream, not one
+ * parsed JSON value) but still needs the same auth-header-and-refresh-once
+ * behavior `request()` gives every other endpoint.
+ */
+export function getAccessToken(): string | null {
+  return authHandlers?.getAccessToken() ?? null;
+}
+
+export function refreshAccessToken(): Promise<string | null> {
+  return refreshOnce();
+}
+
+export function notifySessionExpired(): void {
+  authHandlers?.onSessionExpired();
+}
+
 export type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 export interface RequestOptions<TResponse> {
