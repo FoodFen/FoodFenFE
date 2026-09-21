@@ -45,6 +45,18 @@ export const env = {
   apiUrl,
   hasBackend: apiUrl !== undefined,
   apiTimeoutMs: resolveNumber(process.env.EXPO_PUBLIC_API_TIMEOUT_MS, 15_000),
+  /**
+   * The Google Cloud OAuth web client ID `GoogleSignin.configure()` needs to
+   * receive an `idToken`. Optional, like `apiUrl` — Google sign-in is simply
+   * unavailable (its button hidden) until this is set, rather than crashing.
+   */
+  googleWebClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+  /**
+   * The iOS OAuth client ID `GoogleSignin.configure()` needs for the native
+   * iOS sign-in flow, separate from `googleWebClientId`. Optional, like
+   * `apiUrl` — iOS Google sign-in simply won't work correctly without it.
+   */
+  googleIosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
   variant: (Constants.expoConfig?.extra?.variant as string | undefined) ?? 'development',
   isDev: __DEV__,
 } as const;

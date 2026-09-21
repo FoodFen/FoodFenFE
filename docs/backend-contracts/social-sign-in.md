@@ -34,7 +34,13 @@ Request body:
   backend must persist them against the resolved account the first time
   they arrive, since the client has no way to re-supply them later. Absent
   for Google (the ID token itself already carries name/email claims once
-  verified).
+  verified). `fullName` is a client-side join of Apple's structured name
+  components as `"<givenName> <familyName>"`, not those components
+  themselves — Apple's own structured fields are not sent. This
+  given-then-family order is a Western naming convention and may not be the
+  correct or authoritative order for all users' names, so the backend
+  should not assume it's always correct (e.g. if it ever needs to split the
+  string back into parts).
 
 Response `200` — identical shape to `/auth/sign-in`:
 ```json

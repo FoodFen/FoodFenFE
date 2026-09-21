@@ -13,6 +13,15 @@ export interface SignUpPayload {
   displayName?: string;
 }
 
+export interface SocialSignInPayload {
+  provider: 'google' | 'apple';
+  idToken: string;
+  /** Apple only, and only present on the user's first-ever authorization —
+   * see docs/backend-contracts/social-sign-in.md. */
+  fullName?: string;
+  email?: string;
+}
+
 /**
  * Account endpoints.
  *
@@ -30,6 +39,9 @@ export const authApi = {
 
   signUp: (payload: SignUpPayload): Promise<RemoteAuthSession> =>
     api.post('auth/sign-up', payload, { schema: authSessionSchema, skipAuth: true }),
+
+  socialSignIn: (payload: SocialSignInPayload): Promise<RemoteAuthSession> =>
+    api.post('auth/social', payload, { schema: authSessionSchema, skipAuth: true }),
 
   refresh: (refreshToken: string): Promise<RemoteAuthSession> =>
     api.post(

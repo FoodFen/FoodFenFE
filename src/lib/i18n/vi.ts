@@ -270,6 +270,7 @@ export const vi = {
     passwordMinLengthError: 'Dùng ít nhất {count} ký tự.',
     passwordNeedsDigitError: 'Bao gồm ít nhất một chữ số.',
     passwordsMismatchError: 'Mật khẩu không khớp.',
+    orDivider: 'hoặc',
   },
 
   entryDetail: {
