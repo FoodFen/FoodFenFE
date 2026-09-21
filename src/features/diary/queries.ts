@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { foodAiApi } from '@/api/endpoints/foodAi';
 import * as diaryRepository from '@/data/diaryRepository';
 import * as entryRepository from '@/data/entryRepository';
 import type {
@@ -224,6 +225,26 @@ export function useLogManualEntry() {
       return entry;
     },
     onSuccess: invalidate,
+  });
+}
+
+export type AnalyzeFoodInput =
+  | { type: 'image'; uri: string; fileName: string; mimeType: string }
+  | { type: 'text'; description: string };
+
+/**
+ * Send a photo or a typed sentence to the backend AI and get back a
+ * suggested meal name plus itemized ingredient rows. Read-only network call —
+ * nothing is written locally here; the caller feeds the result into
+ * `useDraftStore` and lets the meal composer save it, same as any other
+ * ingredient source.
+ */
+export function useAnalyzeFood() {
+  return useMutation({
+    mutationFn: (input: AnalyzeFoodInput) =>
+      input.type === 'image'
+        ? foodAiApi.analyzeImage(input.uri, input.fileName, input.mimeType)
+        : foodAiApi.analyzeText(input.description),
   });
 }
 

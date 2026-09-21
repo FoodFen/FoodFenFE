@@ -148,6 +148,25 @@ export const chatHistoryResponseSchema = z.object({
   nextCursor: z.string().nullable(),
 });
 
+export const aiIngredientSchema = z.object({
+  name: z.string(),
+  quantityG: z.number().nonnegative(),
+  kcal: z.number().int().nonnegative(),
+  carbsG: z.number().nonnegative(),
+  proteinG: z.number().nonnegative(),
+  fatG: z.number().nonnegative(),
+  fiberG: z.number().nonnegative().nullish(),
+  /** 0–1, how confident the model is in this specific row. Not stored. */
+  confidence: z.number().min(0).max(1),
+});
+
+export const aiFoodAnalysisResponseSchema = z.object({
+  mealName: z.string(),
+  ingredients: z.array(aiIngredientSchema),
+  /** Set only when the server persisted the uploaded photo; null for text. */
+  imageUrl: z.url().nullish(),
+});
+
 export type RemoteUser = z.infer<typeof userSchema>;
 export type RemoteDailyGoal = z.infer<typeof dailyGoalSchema>;
 export type RemoteFoodEntry = z.infer<typeof foodEntrySchema>;
@@ -158,3 +177,5 @@ export type RemoteWaterLog = z.infer<typeof waterLogSchema>;
 export type RemoteAuthSession = z.infer<typeof authSessionSchema>;
 export type RemoteChatMessage = z.infer<typeof chatMessageSchema>;
 export type RemoteChatHistoryResponse = z.infer<typeof chatHistoryResponseSchema>;
+export type RemoteAiIngredient = z.infer<typeof aiIngredientSchema>;
+export type RemoteAiFoodAnalysisResponse = z.infer<typeof aiFoodAnalysisResponseSchema>;

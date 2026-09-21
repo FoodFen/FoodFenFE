@@ -1,17 +1,30 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { onlineManager } from '@tanstack/react-query';
+import * as ImagePicker from 'expo-image-picker';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, Keyboard, Pressable, TextInput, View } from 'react-native';
+import { Alert, Image, Keyboard, Pressable, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { ApiError } from '@/api/errors';
+import type { RemoteAiFoodAnalysisResponse } from '@/api/schemas';
 import { Button } from '@/components/ui/Button';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { Input } from '@/components/ui/Input';
 import { NumberField } from '@/components/ui/NumberField';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
+import { canUseRemote } from '@/data/sync';
+import { useAuthStore } from '@/features/auth/store';
+import { useDraftStore } from '@/features/diary/draftStore';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
-import { useCatalogSearch, useLogManualEntry } from '@/features/diary/queries';
+import {
+  useAnalyzeFood,
+  useCatalogSearch,
+  useLogManualEntry,
+} from '@/features/diary/queries';
 import { manualEntrySchema } from '@/features/diary/schemas';
 import { suggestedMealType } from '@/features/diary/selectors';
 import { dismissLogFlow, usePostLogInterstitial } from '@/features/gamification/queries';
@@ -20,10 +33,11 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { todayKey } from '@/lib/date';
+import { env } from '@/lib/env';
 import { haptics } from '@/lib/haptics';
 import { macrosReconcile, nutritionForServing } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
-import type { CatalogFood } from '@/types/models';
+import type { CatalogFood, InputMethod } from '@/types/models';
 
 /**
  * Manual detailed food entry (UC-12).
@@ -32,21 +46,158 @@ import type { CatalogFood } from '@/types/models';
  * the three macros — logged as one `input_method: 'manual'` `food_entry` with
  * no ingredient breakdown. Typing the name shows a floating catalog list;
  * picking one prefills every field from its default serving, all editable. The
- * kcal-vs-macros check is a soft note. The smart one-sentence (AI) path is an
- * inert "coming soon" affordance.
+ * kcal-vs-macros check is a soft note.
+ *
+ * The Image tab and the inline "Smart Entry" sentence field both send their
+ * input to the backend AI (`useAnalyzeFood`) and get back itemized
+ * ingredient rows, which are pushed into `useDraftStore` and handed off to
+ * the meal composer (`app/log/meal.tsx`) for the user to review and save —
+ * the AI never writes a `food_entry` directly. The Voice tab stays inert;
+ * that input method isn't built yet.
  */
 
 type AmountUnit = 'g' | 'serving';
+type CaptureMode = 'manual' | 'image';
 const MAX_SUGGESTIONS = 8;
+
+/** A failed AI call surfaces the same way every other API failure does. */
+function analyzeErrorMessage(error: unknown, fallback: string): string {
+  return error instanceof ApiError ? error.userMessage : fallback;
+}
+
+/**
+ * Seed a fresh meal draft from an AI analysis and hand off to the composer.
+ *
+ * `catalogFoodId` stays null — these rows came from the model, not the
+ * bundled catalog. `confidence` rides along on the draft row so the composer
+ * can flag an uncertain guess, but `DraftIngredient` is the only place it
+ * lives — `IngredientInput` (what `useLogMeal` actually persists) has no such
+ * field, so it never reaches the database.
+ */
+function applyAnalysisToDraft(
+  result: RemoteAiFoodAnalysisResponse,
+  inputMethod: InputMethod,
+): void {
+  const draft = useDraftStore.getState();
+  draft.start(todayKey(), suggestedMealType());
+
+  for (const ing of result.ingredients) {
+    draft.addIngredient({
+      name: ing.name,
+      quantityG: ing.quantityG,
+      kcal: ing.kcal,
+      carbsG: ing.carbsG,
+      proteinG: ing.proteinG,
+      fatG: ing.fatG,
+      fiberG: ing.fiberG ?? null,
+      catalogFoodId: null,
+      confidence: ing.confidence,
+    });
+  }
+
+  useDraftStore.setState({
+    name: result.mealName,
+    inputMethod,
+    imageUrl: result.imageUrl ?? null,
+  });
+
+  router.replace('/log/meal');
+}
 
 export default function ManualEntryScreen() {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const insets = useSafeAreaInsets();
+  const params = useLocalSearchParams<{ mode?: string }>();
 
   const logManual = useLogManualEntry();
   const finishLogging = usePostLogInterstitial(dismissLogFlow);
+  const analyzeFood = useAnalyzeFood();
+
+  const session = useAuthStore((state) => state.session);
+  const aiAvailable = canUseRemote();
+  // The one `canUseRemote()` reason worth its own affordance: everything else
+  // about the build/connection is fine, only signing in is missing (mirrors
+  // `app/chat.tsx`'s gating).
+  const isNoSessionReason = env.hasBackend && onlineManager.isOnline() && !session;
+
+  const [captureMode, setCaptureMode] = useState<CaptureMode>(
+    params.mode === 'image' ? 'image' : 'manual',
+  );
+  const [pickedImage, setPickedImage] = useState<ImagePicker.ImagePickerAsset | null>(
+    null,
+  );
+  const [smartEntryOpen, setSmartEntryOpen] = useState(false);
+  const [smartText, setSmartText] = useState('');
+
+  const pickImage = async (source: 'camera' | 'library') => {
+    const permission =
+      source === 'camera'
+        ? await ImagePicker.requestCameraPermissionsAsync()
+        : await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) return;
+
+    const result =
+      source === 'camera'
+        ? await ImagePicker.launchCameraAsync({ mediaTypes: ['images'], quality: 0.7 })
+        : await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            quality: 0.7,
+          });
+
+    if (result.canceled || !result.assets[0]) return;
+    haptics.selection();
+    setPickedImage(result.assets[0]);
+  };
+
+  const analyzeImage = () => {
+    if (!pickedImage || analyzeFood.isPending) return;
+
+    analyzeFood.mutate(
+      {
+        type: 'image',
+        uri: pickedImage.uri,
+        fileName: pickedImage.fileName ?? 'photo.jpg',
+        mimeType: pickedImage.mimeType ?? 'image/jpeg',
+      },
+      {
+        onSuccess: (result) => {
+          haptics.success();
+          applyAnalysisToDraft(result, 'image');
+        },
+        onError: (error) => {
+          haptics.error();
+          Alert.alert(
+            t('logManual', 'aiErrorTitle'),
+            analyzeErrorMessage(error, t('logManual', 'aiErrorFallback')),
+          );
+        },
+      },
+    );
+  };
+
+  const analyzeSmartText = () => {
+    const description = smartText.trim();
+    if (!description || analyzeFood.isPending) return;
+
+    analyzeFood.mutate(
+      { type: 'text', description },
+      {
+        onSuccess: (result) => {
+          haptics.success();
+          applyAnalysisToDraft(result, 'type');
+        },
+        onError: (error) => {
+          haptics.error();
+          Alert.alert(
+            t('logManual', 'aiErrorTitle'),
+            analyzeErrorMessage(error, t('logManual', 'aiErrorFallback')),
+          );
+        },
+      },
+    );
+  };
 
   const [name, setName] = useState('');
   const [emoji, setEmoji] = useState<string | null>(null);
@@ -156,6 +307,28 @@ export default function ManualEntryScreen() {
         accessibilityLabel={t('common', 'cancel')}
       />
 
+      {captureMode === 'image' ? (
+        aiAvailable ? (
+          <ImageCapturePanel
+            image={pickedImage}
+            isAnalyzing={analyzeFood.isPending}
+            onPick={pickImage}
+            onAnalyze={analyzeImage}
+            onClear={() => setPickedImage(null)}
+          />
+        ) : (
+          <View className="flex-1 justify-center">
+            <EmptyState
+              icon="⚠️"
+              title={t('logManual', 'aiUnavailableTitle')}
+              description={t('logManual', 'aiUnavailableDescription')}
+              actionLabel={isNoSessionReason ? t('logManual', 'aiSignIn') : undefined}
+              onAction={isNoSessionReason ? () => router.push('/sign-in') : undefined}
+            />
+          </View>
+        )
+      ) : (
+        <>
       <View className="relative z-20 flex-row items-center gap-2 px-4 pt-1">
         <TextInput
           value={emoji ?? foodEmojiFor({ name, mealType: suggestedMealType() })}
@@ -225,20 +398,55 @@ export default function ManualEntryScreen() {
         keyboardShouldPersistTaps="handled"
         bottomOffset={24}
       >
-        <Pressable
-          disabled
-          accessibilityRole="button"
-          accessibilityState={{ disabled: true }}
-          className="flex-row items-center gap-2 opacity-40"
-        >
-          <Ionicons name="sparkles-outline" size={16} color={colors.fgSubtle} />
-          <Text variant="caption" tone="subtle" className="flex-1">
-            {t('logManual', 'smartEntry')}
-          </Text>
-          <Text variant="caption" tone="subtle">
-            {t('logManual', 'comingSoon')}
-          </Text>
-        </Pressable>
+        <View className="gap-2">
+          <Pressable
+            onPress={() => setSmartEntryOpen((open) => !open)}
+            accessibilityRole="button"
+            accessibilityState={{ expanded: smartEntryOpen }}
+            className="flex-row items-center gap-2"
+          >
+            <Ionicons name="sparkles-outline" size={16} color={colors.fgSubtle} />
+            <Text variant="caption" tone="subtle" className="flex-1">
+              {t('logManual', 'smartEntry')}
+            </Text>
+            <Ionicons
+              name={smartEntryOpen ? 'chevron-up' : 'chevron-down'}
+              size={16}
+              color={colors.fgSubtle}
+            />
+          </Pressable>
+
+          {smartEntryOpen && !aiAvailable ? (
+            <EmptyState
+              icon="⚠️"
+              title={t('logManual', 'aiUnavailableTitle')}
+              description={t('logManual', 'aiUnavailableDescription')}
+              actionLabel={isNoSessionReason ? t('logManual', 'aiSignIn') : undefined}
+              onAction={isNoSessionReason ? () => router.push('/sign-in') : undefined}
+              className="py-4"
+            />
+          ) : null}
+
+          {smartEntryOpen && aiAvailable ? (
+            <View className="gap-2">
+              <Input
+                value={smartText}
+                onChangeText={setSmartText}
+                placeholder={t('logManual', 'smartEntryPlaceholder')}
+                autoCapitalize="sentences"
+                returnKeyType="done"
+                autoFocus
+              />
+              <Button
+                label={t('logManual', 'smartEntryAnalyze')}
+                onPress={analyzeSmartText}
+                loading={analyzeFood.isPending}
+                disabled={smartText.trim().length === 0}
+                fullWidth
+              />
+            </View>
+          ) : null}
+        </View>
 
         <Field label={t('logManual', 'amountEaten')}>
           <View className="flex-row items-center gap-2">
@@ -313,14 +521,24 @@ export default function ManualEntryScreen() {
           size="lg"
         />
       </KeyboardAwareScrollView>
+        </>
+      )}
 
       <View
         style={{ paddingBottom: insets.bottom + 10 }}
         className="flex-row justify-center gap-8 border-t border-border pt-3"
       >
         <ModeTab label={t('logManual', 'modeVoice')} />
-        <ModeTab label={t('logManual', 'modeImage')} />
-        <ModeTab label={t('logManual', 'modeManual')} active />
+        <ModeTab
+          label={t('logManual', 'modeImage')}
+          active={captureMode === 'image'}
+          onPress={() => setCaptureMode('image')}
+        />
+        <ModeTab
+          label={t('logManual', 'modeManual')}
+          active={captureMode === 'manual'}
+          onPress={() => setCaptureMode('manual')}
+        />
       </View>
     </View>
   );
@@ -391,11 +609,29 @@ function UnitPill({
   );
 }
 
-function ModeTab({ label, active = false }: { label: string; active?: boolean }) {
+function ModeTab({
+  label,
+  active = false,
+  onPress,
+}: {
+  label: string;
+  active?: boolean;
+  /** Omitted for the Voice tab, which isn't built yet — renders inert. */
+  onPress?: () => void;
+}) {
   return (
-    <View
+    <Pressable
+      onPress={
+        onPress
+          ? () => {
+              haptics.selection();
+              onPress();
+            }
+          : undefined
+      }
+      disabled={!onPress}
       accessibilityRole="tab"
-      accessibilityState={{ selected: active, disabled: !active }}
+      accessibilityState={{ selected: active, disabled: !onPress }}
       className="items-center gap-1"
     >
       <Text variant="label" tone={active ? 'brand' : 'subtle'}>
@@ -404,6 +640,76 @@ function ModeTab({ label, active = false }: { label: string; active?: boolean })
       <View
         className={cn('h-0.5 w-6 rounded-full', active ? 'bg-brand' : 'bg-transparent')}
       />
+    </Pressable>
+  );
+}
+
+/** The Image mode's whole-screen content: pick a photo, preview it, analyze. */
+function ImageCapturePanel({
+  image,
+  isAnalyzing,
+  onPick,
+  onAnalyze,
+  onClear,
+}: {
+  image: ImagePicker.ImagePickerAsset | null;
+  isAnalyzing: boolean;
+  onPick: (source: 'camera' | 'library') => void;
+  onAnalyze: () => void;
+  onClear: () => void;
+}) {
+  const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
+
+  return (
+    <View className="flex-1 justify-center gap-6 p-6">
+      {image ? (
+        <View className="gap-4">
+          <Image
+            source={{ uri: image.uri }}
+            className="aspect-square w-full rounded-card"
+            resizeMode="cover"
+          />
+          <Button
+            label={t('logManual', 'aiAnalyzePhoto')}
+            onPress={onAnalyze}
+            loading={isAnalyzing}
+            fullWidth
+            size="lg"
+          />
+          <Button
+            label={t('logManual', 'aiRetakePhoto')}
+            onPress={onClear}
+            variant="secondary"
+            disabled={isAnalyzing}
+            fullWidth
+          />
+        </View>
+      ) : (
+        <View className="gap-4">
+          <View className="items-center gap-2 pb-2">
+            <Ionicons name="camera-outline" size={40} color={colors.fgSubtle} />
+            <Text variant="body" tone="muted" className="text-center">
+              {t('logManual', 'aiImageHint')}
+            </Text>
+          </View>
+          <Button
+            label={t('logManual', 'aiTakePhoto')}
+            onPress={() => onPick('camera')}
+            leading={<Ionicons name="camera" size={18} color="#FFFFFF" />}
+            fullWidth
+            size="lg"
+          />
+          <Button
+            label={t('logManual', 'aiChooseFromLibrary')}
+            onPress={() => onPick('library')}
+            variant="secondary"
+            leading={<Ionicons name="images-outline" size={18} color={colors.fg} />}
+            fullWidth
+          />
+        </View>
+      )}
     </View>
   );
 }

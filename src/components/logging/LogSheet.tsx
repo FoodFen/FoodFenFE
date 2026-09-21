@@ -279,6 +279,15 @@ export function LogSheet() {
                     router.push('/log/manual');
                   }}
                 />
+                <MenuRow
+                  icon="sparkles-outline"
+                  label={t('logSheet', 'aiCapture')}
+                  color={colors.fgMuted}
+                  onPress={() => {
+                    close();
+                    router.push('/log/manual?mode=image');
+                  }}
+                />
               </View>
             ) : null}
           </View>

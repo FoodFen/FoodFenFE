@@ -23,6 +23,12 @@ import type { InputMethod, MealType, Nutrition } from '@/types/models';
 export interface DraftIngredient extends IngredientInput {
   /** Stable list key; ingredients only get database ids when the meal is saved. */
   key: string;
+  /**
+   * 0–1, set when this row came from AI capture. UI-only — `IngredientInput`
+   * (what actually gets persisted) has no such field, so this never reaches
+   * the database.
+   */
+  confidence?: number;
 }
 
 interface DraftState {
@@ -31,12 +37,16 @@ interface DraftState {
   inputMethod: InputMethod;
   loggedOn: DateKey;
   ingredients: DraftIngredient[];
+  /** Set when an AI photo capture produced this draft; null otherwise. */
+  imageUrl: string | null;
 
   /** Begin a new meal, discarding anything half-composed. */
   start: (date: DateKey, mealType: MealType) => void;
   setName: (name: string) => void;
   setMealType: (mealType: MealType) => void;
-  addIngredient: (ingredient: IngredientInput) => void;
+  setInputMethod: (inputMethod: InputMethod) => void;
+  setImageUrl: (imageUrl: string | null) => void;
+  addIngredient: (ingredient: Omit<DraftIngredient, 'key'>) => void;
   removeIngredient: (key: string) => void;
   reset: () => void;
 }
@@ -48,6 +58,7 @@ function emptyDraft() {
     inputMethod: 'type' as InputMethod,
     loggedOn: todayKey(),
     ingredients: [] as DraftIngredient[],
+    imageUrl: null as string | null,
   };
 }
 
@@ -59,6 +70,10 @@ export const useDraftStore = create<DraftState>((set) => ({
   setName: (name) => set({ name }),
 
   setMealType: (mealType) => set({ mealType }),
+
+  setInputMethod: (inputMethod) => set({ inputMethod }),
+
+  setImageUrl: (imageUrl) => set({ imageUrl }),
 
   addIngredient: (ingredient) =>
     set((state) => ({

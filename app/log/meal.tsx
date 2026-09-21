@@ -28,6 +28,9 @@ import type { MealType } from '@/types/models';
  * totals here are computed from the draft as it is edited, so the number the
  * user sees before saving is the number that gets written.
  */
+
+/** Below this, an AI-guessed row gets a flag inviting a second look. */
+const LOW_CONFIDENCE = 0.5;
 export default function MealComposerScreen() {
   const params = useLocalSearchParams<{ date?: string; mealType?: MealType }>();
   const { resolved } = useAppTheme();
@@ -60,6 +63,7 @@ export default function MealComposerScreen() {
         name: draftName(draft.name, draft.ingredients),
         mealType: draft.mealType,
         inputMethod: draft.inputMethod,
+        imageUrl: draft.imageUrl,
         loggedOn: date,
         ingredients: draft.ingredients,
       },
@@ -140,9 +144,19 @@ export default function MealComposerScreen() {
                 className="flex-row items-center gap-3 border-b border-border px-4 py-3"
               >
                 <View className="flex-1 gap-0.5">
-                  <Text variant="body" numberOfLines={1}>
-                    {row.name}
-                  </Text>
+                  <View className="flex-row items-center gap-1.5">
+                    <Text variant="body" numberOfLines={1}>
+                      {row.name}
+                    </Text>
+                    {row.confidence !== undefined && row.confidence < LOW_CONFIDENCE ? (
+                      <Ionicons
+                        name="help-circle-outline"
+                        size={14}
+                        color={colors.warning}
+                        accessibilityLabel={t('logMeal', 'lowConfidenceA11y')}
+                      />
+                    ) : null}
+                  </View>
                   <Text variant="caption" tone="muted">
                     {Math.round(row.quantityG)} g · {row.proteinG}P / {row.carbsG}C /{' '}
                     {row.fatG}F

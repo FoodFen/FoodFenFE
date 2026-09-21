@@ -15,6 +15,7 @@ here for its contract section rather than duplicating it.
 | Email/password auth | [`auth.md`](./auth.md) | none — documents an already-shipped client |
 | AI chat | [`ai-chat.md`](./ai-chat.md) | [`2026-09-19-ai-chat-design.md`](../superpowers/specs/2026-09-19-ai-chat-design.md) |
 | Social sign-in | [`social-sign-in.md`](./social-sign-in.md) | [`2026-09-19-social-sign-in-design.md`](../superpowers/specs/2026-09-19-social-sign-in-design.md) |
+| AI food capture | [`ai-food-capture.md`](./ai-food-capture.md) | none — small enough to document directly in the contract |
 
 If a contract changes after the client is built against it, the change
 starts here, then flows back to a client-side update — never a silent
