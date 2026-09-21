@@ -450,6 +450,8 @@ export const vi = {
     caloriesBurned: 'Calo đã đốt',
     steps: 'Bước chân',
     noWorkouts: 'Chưa có bài tập nào',
+    automaticActivity: 'tự động',
+    reconnectHealth: 'Kết nối lại',
     burnGoal: 'Mục tiêu: {kcal} kcal',
     water: 'Nước',
     waterGoal: 'Mục tiêu: {ml} ml',
@@ -624,6 +626,13 @@ export const vi = {
     allCaloriesHeading: 'Cộng mọi calo',
     allCaloriesDescription:
       'Mỗi buổi tập bạn ghi lại đều được cộng ngược vào ngân sách calo hôm nay, thêm vào mục tiêu của bạn.',
+  },
+
+  healthSync: {
+    heading: 'Đồng bộ bước chân',
+    caption:
+      'Đọc số bước hôm nay từ Health Connect / Apple Health để ước tính thêm calo đã đốt.',
+    permissionDenied: 'Không thể lấy quyền truy cập. Bạn có thể bật lại trong Cài đặt hệ thống.',
   },
 
   tabs: {

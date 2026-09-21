@@ -42,6 +42,12 @@ interface SettingsState {
    * domain data, so it lives here rather than in the quest row itself.
    */
   questAdvanceCounts: Record<string, number>;
+  /**
+   * Opt-in to reading today's step count from Health Connect (Android) /
+   * HealthKit (iOS). Off by default — health data is sensitive, so this is
+   * never requested without the user turning it on first.
+   */
+  healthSyncEnabled: boolean;
 
   setTheme: (theme: ThemePreference) => void;
   setWeightUnit: (unit: WeightUnit) => void;
@@ -57,6 +63,7 @@ interface SettingsState {
    * yesterday never lingers.
    */
   bumpQuestAdvance: (questId: string, activeQuestIds: string[]) => number;
+  setHealthSyncEnabled: (value: boolean) => void;
   completeOnboarding: () => void;
   /** Part of "erase local data" — sends the user back through onboarding. */
   resetOnboarding: () => void;
@@ -76,6 +83,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     preferences.get<DateKey>(StorageKeys.streakCommittedDate) ?? null,
   questAdvanceCounts:
     preferences.get<Record<string, number>>(StorageKeys.questAdvanceCounts) ?? {},
+  healthSyncEnabled: preferences.get<boolean>(StorageKeys.healthSyncEnabled) ?? false,
 
   setTheme: (theme) => {
     preferences.set(StorageKeys.colorScheme, theme);
@@ -140,6 +148,11 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     });
 
     return nextCount;
+  },
+
+  setHealthSyncEnabled: (healthSyncEnabled) => {
+    preferences.set(StorageKeys.healthSyncEnabled, healthSyncEnabled);
+    set({ healthSyncEnabled });
   },
 
   completeOnboarding: () => {

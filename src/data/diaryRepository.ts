@@ -4,6 +4,7 @@ import { EMPTY_NUTRITION, sumNutrition } from '@/lib/nutrition';
 import type { DiaryDay, FoodEntry, Nutrition } from '@/types/models';
 
 import { getEntriesInRange } from './entryRepository';
+import type { ExerciseTotals } from './logRepository';
 import { getExerciseByDay, getWaterByDay } from './logRepository';
 import { getGoalForDate } from './userRepository';
 
@@ -48,7 +49,7 @@ function assembleDays(
   dates: readonly DateKey[],
   entries: FoodEntry[],
   waterByDay: Map<DateKey, number>,
-  exerciseByDay: Map<DateKey, number>,
+  exerciseByDay: Map<DateKey, ExerciseTotals>,
 ): DiaryDay[] {
   const entriesByDay = new Map<DateKey, FoodEntry[]>();
 
@@ -73,7 +74,8 @@ function assembleDays(
           ? { ...EMPTY_NUTRITION }
           : sumNutrition(dayEntries.map(entryNutrition)),
       goal,
-      exerciseKcal: exerciseByDay.get(date) ?? 0,
+      exerciseKcal: exerciseByDay.get(date)?.total ?? 0,
+      addBackEligibleExerciseKcal: exerciseByDay.get(date)?.addBackEligible ?? 0,
       waterMl: waterByDay.get(date) ?? 0,
     };
   });

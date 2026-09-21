@@ -1,6 +1,7 @@
 import {
   ACTIVITY_PRESETS,
   caloriesBurnedForPreset,
+  estimateStepsCalories,
   getActivityPreset,
 } from '../activity';
 
@@ -29,5 +30,24 @@ describe('getActivityPreset', () => {
 
   it('returns undefined for an unknown id', () => {
     expect(getActivityPreset('not-a-real-activity')).toBeUndefined();
+  });
+});
+
+describe('estimateStepsCalories', () => {
+  it('is zero for zero steps', () => {
+    expect(estimateStepsCalories(0, 70)).toBe(0);
+  });
+
+  it('matches the formula: (steps / 100) * 3.5 MET * 3.5 * weightKg / 200', () => {
+    // 1,000 steps at 70 kg: (1000/100) * 3.5 * 3.5 * 70 / 200 = 42.875 -> 43
+    expect(estimateStepsCalories(1000, 70)).toBe(43);
+  });
+
+  it('scales linearly with steps at a fixed weight', () => {
+    expect(estimateStepsCalories(20000, 70)).toBe(estimateStepsCalories(10000, 70) * 2);
+  });
+
+  it('scales linearly with weight at a fixed step count', () => {
+    expect(estimateStepsCalories(10000, 140)).toBe(estimateStepsCalories(10000, 70) * 2);
   });
 });

@@ -81,6 +81,26 @@ describe('getDiaryDay', () => {
     expect(day.exerciseKcal).toBe(320);
   });
 
+  it('excludes ambient steps from the add-back-eligible exercise total, but not from the displayed total', () => {
+    const user = createUser();
+
+    // A deliberate workout — eligible to add back to the eating budget.
+    logRepository.addActivity({
+      userId: user.id,
+      activityType: 'running',
+      caloriesBurned: 320,
+      date: '2026-03-01',
+    });
+    // Ambient movement synced from a health app — the TDEE activity-level
+    // multiplier already assumes this, so it must not also add back.
+    logRepository.upsertHealthSteps(user.id, '2026-03-01', 150, 'google_fit');
+
+    const day = diaryRepository.getDiaryDay(user.id, '2026-03-01');
+
+    expect(day.exerciseKcal).toBe(470);
+    expect(day.addBackEligibleExerciseKcal).toBe(320);
+  });
+
   it('returns an empty but valid day for a date with nothing logged', () => {
     const user = createUser();
 

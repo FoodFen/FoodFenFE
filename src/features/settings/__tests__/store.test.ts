@@ -39,3 +39,15 @@ describe('bumpQuestAdvance', () => {
     });
   });
 });
+
+describe('healthSyncEnabled', () => {
+  it('defaults to off', () => {
+    expect(useSettingsStore.getState().healthSyncEnabled).toBe(false);
+  });
+
+  it('setHealthSyncEnabled flips it and persists', () => {
+    useSettingsStore.getState().setHealthSyncEnabled(true);
+
+    expect(useSettingsStore.getState().healthSyncEnabled).toBe(true);
+  });
+});

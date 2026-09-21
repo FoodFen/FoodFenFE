@@ -59,6 +59,7 @@ function day(date: string, kcals: number[]): DiaryDay {
     },
     goal,
     exerciseKcal: 0,
+    addBackEligibleExerciseKcal: 0,
     waterMl: 0,
   };
 }
@@ -70,6 +71,7 @@ function emptyDay(date: string): DiaryDay {
     totals: { kcal: 0, carbsG: 0, proteinG: 0, fatG: 0 },
     goal,
     exerciseKcal: 0,
+    addBackEligibleExerciseKcal: 0,
     waterMl: 0,
   };
 }

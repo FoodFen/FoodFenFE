@@ -83,11 +83,13 @@ const OWN_PLUGINS: PluginEntry[] = [
       iosUrlScheme: process.env.GOOGLE_IOS_URL_SCHEME ?? 'com.googleusercontent.apps.placeholder',
     },
   ],
+  'react-native-health-connect',
+  '@kingstinct/react-native-healthkit',
   [
     'expo-build-properties',
     {
       ios: { useFrameworks: 'static' },
-      android: { minSdkVersion: 24 },
+      android: { minSdkVersion: 26 },
     },
   ],
 ];
@@ -118,6 +120,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         'FoodFen needs access to your photos so you can attach an existing picture to a meal.',
       NSMicrophoneUsageDescription:
         'FoodFen does not record audio; this permission is required by the camera module.',
+      NSHealthShareUsageDescription:
+        'FoodFen reads your step count so it can estimate the calories you burned walking today.',
     },
   },
 

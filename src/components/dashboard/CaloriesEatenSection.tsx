@@ -32,13 +32,14 @@ export function CaloriesEatenSection({
     (state) => state.profile?.calorieLeftMode ?? 'all_calories',
   );
 
-  // Calories left today: target minus what was eaten, with exercise added
-  // back unless the user is on Smart mode (Settings → Smart mode). Negative
-  // means over.
+  // Calories left today: target minus what was eaten, with eligible exercise
+  // added back unless the user is on Smart mode (Settings → Smart mode).
+  // "Eligible" already excludes ambient movement (steps) — see
+  // DiaryDay.addBackEligibleExerciseKcal. Negative means over.
   const remaining = kcalRemaining(
     day.goal.targetKcal,
     day.totals.kcal,
-    day.exerciseKcal,
+    day.addBackEligibleExerciseKcal,
     calorieLeftMode,
   );
   const isOver = remaining < 0;

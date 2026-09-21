@@ -1,13 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Platform } from 'react-native';
 
 import * as diaryRepository from '@/data/diaryRepository';
 import { getCoinBalance } from '@/data/gamificationRepository';
+import * as logRepository from '@/data/logRepository';
 import { getWeightAsOf } from '@/data/logRepository';
 import { readWithRefresh } from '@/data/sync';
 import { pullDiaryWindow } from '@/features/diary/queries';
 import { useProfileStore } from '@/features/profile/store';
+import { useSettingsStore } from '@/features/settings/store';
+import { estimateStepsCalories } from '@/lib/activity';
 import type { DateKey } from '@/lib/date';
 import { calendarWeek } from '@/lib/date';
+import { getHealthProvider } from '@/lib/health';
 import { queryKeys } from '@/lib/queryClient';
 
 /**
@@ -81,6 +86,48 @@ export function useCoinBalance() {
       return getCoinBalance(userId);
     },
     enabled: userId !== null,
+    retry: false,
+  });
+}
+
+/**
+ * Today's (or a viewed past day's) step count and its estimated calorie
+ * contribution, read from whichever HealthProvider this platform has.
+ *
+ * The read-through write: a successful read is immediately persisted via
+ * `upsertHealthSteps` (idempotent per day, per source — see its own doc
+ * comment) and the diary invalidated, so `exerciseKcal` picks it up the same
+ * way any other logged activity does. Disabled entirely while the user
+ * hasn't opted in via Settings.
+ */
+export function useHealthSteps(date: DateKey) {
+  const userId = useUserId();
+  const profile = useProfileStore((state) => state.profile);
+  const healthSyncEnabled = useSettingsStore((state) => state.healthSyncEnabled);
+  const queryClient = useQueryClient();
+
+  return useQuery({
+    queryKey: queryKeys.health.steps(date),
+    queryFn: async () => {
+      if (!userId || !profile) throw new Error('No local profile yet.');
+
+      const steps = await getHealthProvider().getStepCount(date);
+
+      if (steps === null) return null;
+
+      // Estimate against the weight in force as of this day, not today's —
+      // matches this codebase's history-is-measured-as-of-the-time principle
+      // (see `useWeightAsOf` / `userRepository.ts`).
+      const weightKg = getWeightAsOf(userId, date)?.weight ?? profile.weightCurrent;
+      const kcal = estimateStepsCalories(steps, weightKg);
+      const source = Platform.OS === 'ios' ? 'apple_health' : 'google_fit';
+
+      logRepository.upsertHealthSteps(userId, date, kcal, source);
+      void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
+
+      return { steps, kcal };
+    },
+    enabled: userId !== null && profile !== null && healthSyncEnabled,
     retry: false,
   });
 }

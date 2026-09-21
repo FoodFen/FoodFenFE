@@ -75,3 +75,22 @@ export function caloriesBurnedForPreset(
 ): number {
   return Math.round(preset.kcalPer30Min * (durationMinutes / 30));
 }
+
+/** Steps/minute at moderate-intensity walking pace (Tudor-Locke & Rowe, 2012). */
+const MODERATE_PACE_STEPS_PER_MINUTE = 100;
+/** Compendium of Physical Activities code 17190, "walking, 2.8-3.2 mph, level,
+ * moderate pace, firm surface" — the same primary source cited above for
+ * ACTIVITY_PRESETS. */
+const WALKING_MET = 3.5;
+
+/**
+ * Estimate calories burned from a day's step count, scaled by the user's own
+ * weight rather than a flat reference figure (unlike ACTIVITY_PRESETS, this is
+ * a fresh calculation with no inherited reference-weight assumption to carry).
+ * Rounded to the nearest kcal, same as caloriesBurnedForPreset.
+ */
+export function estimateStepsCalories(steps: number, weightKg: number): number {
+  const minutesWalked = steps / MODERATE_PACE_STEPS_PER_MINUTE;
+
+  return Math.round((minutesWalked * WALKING_MET * 3.5 * weightKg) / 200);
+}
