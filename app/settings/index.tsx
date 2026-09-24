@@ -9,7 +9,7 @@ import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
 import { useDiaryDay, usePendingChanges } from '@/features/diary/queries';
 import { useLogSheetStore } from '@/features/logging/store';
-import { useProfileStore } from '@/features/profile/store';
+import { useIsPremium, useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import type { ThemePreference } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -34,6 +34,7 @@ export default function SettingsScreen() {
   const session = useAuthStore((state) => state.session);
   const signOut = useAuthStore((state) => state.signOut);
   const isSignedIn = session !== null;
+  const isPremium = useIsPremium();
 
   const { data: pendingChanges = 0 } = usePendingChanges();
   const { data: today } = useDiaryDay(todayKey());
@@ -66,7 +67,6 @@ export default function SettingsScreen() {
   if (!user) return null;
 
   const maintenance = Math.round(totalDailyEnergyExpenditure(user));
-  const isPremium = user.subscriptionTier === 'premium';
 
   const genderLabel =
     user.gender === 'male'
@@ -78,7 +78,11 @@ export default function SettingsScreen() {
   const confirmSignOut = () => {
     Alert.alert(t('profile', 'signOut'), t('profile', 'signOutMessage'), [
       { text: t('common', 'cancel'), style: 'cancel' },
-      { text: t('profile', 'signOut'), style: 'destructive', onPress: () => void signOut() },
+      {
+        text: t('profile', 'signOut'),
+        style: 'destructive',
+        onPress: () => void signOut(),
+      },
     ]);
   };
 
@@ -162,6 +166,19 @@ export default function SettingsScreen() {
               {t('profile', 'offlineNotice')}
             </Text>
           </View>
+        )}
+
+        {isPremium ? null : (
+          <Pressable
+            onPress={() => router.push('/premium')}
+            accessibilityRole="button"
+            className="flex-row items-center justify-between border-t border-border pt-3 active:opacity-60"
+          >
+            <Text variant="label" tone="warning">
+              {t('profile', 'upgradeToPremium')}
+            </Text>
+            <Ionicons name="chevron-forward" size={16} color={colors.warning} />
+          </Pressable>
         )}
 
         {pendingChanges > 0 ? (
@@ -277,8 +294,14 @@ export default function SettingsScreen() {
         <Row label={t('profile', 'age')} value={`${ageFromBirthYear(user.birthYear)}`} />
         <Row label={t('profile', 'height')} value={`${user.height} cm`} />
         <Row label={t('profileBodyStats', 'weight')} value={`${user.weightCurrent} kg`} />
-        <Row label={t('onboardingGoal', 'goalWeightLabel')} value={`${user.weightGoal} kg`} />
-        <Row label={t('profileBodyStats', 'activity')} value={t('activityLevel', user.activityLevel)} />
+        <Row
+          label={t('onboardingGoal', 'goalWeightLabel')}
+          value={`${user.weightGoal} kg`}
+        />
+        <Row
+          label={t('profileBodyStats', 'activity')}
+          value={t('activityLevel', user.activityLevel)}
+        />
         <Row label={t('profileBodyStats', 'diet')} value={t('dietType', user.dietType)} />
       </Card>
 
@@ -366,7 +389,11 @@ export default function SettingsScreen() {
         </Card>
       ) : null}
 
-      <Button label={t('profile', 'eraseLocalData')} variant="ghost" onPress={confirmErase} />
+      <Button
+        label={t('profile', 'eraseLocalData')}
+        variant="ghost"
+        onPress={confirmErase}
+      />
     </ScrollScreen>
   );
 }
@@ -392,7 +419,7 @@ function SegmentedControl<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <View className="flex-row gap-1 rounded-xl bg-surface-alt p-1">
+    <View className="flex-row gap-1 rounded-card bg-surface-alt p-1">
       {options.map((option) => {
         const isSelected = option.value === value;
 
@@ -406,7 +433,10 @@ function SegmentedControl<T extends string>({
             accessibilityRole="radio"
             accessibilityState={{ selected: isSelected }}
             className={cn(
-              'h-9 flex-1 items-center justify-center rounded-lg',
+              // One step in from the track's `rounded-card`, matching its `p-1`
+              // inset — a nested pill keeps its own radius smaller than its
+              // container's, or the corners visually clash.
+              'h-9 flex-1 items-center justify-center rounded-xl',
               isSelected && 'bg-surface',
             )}
           >

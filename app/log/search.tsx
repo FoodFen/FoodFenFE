@@ -239,6 +239,8 @@ function PortionStep({
   onBack: () => void;
 }) {
   const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
   const isPremium = useIsPremium();
   const quickLog = useQuickLogFood();
   const finishLogging = usePostLogInterstitial(dismissLogFlow);
@@ -352,8 +354,26 @@ function PortionStep({
               value={`${nutrition.carbsG} g`}
             />
             <Row label={t('onboardingFinalize', 'fat')} value={`${nutrition.fatG} g`} />
-            {isPremium && nutrition.fiberG !== undefined && nutrition.fiberG !== null ? (
-              <Row label={t('entryDetail', 'fiber')} value={`${nutrition.fiberG} g`} />
+            {nutrition.fiberG !== undefined && nutrition.fiberG !== null ? (
+              isPremium ? (
+                <Row label={t('entryDetail', 'fiber')} value={`${nutrition.fiberG} g`} />
+              ) : (
+                <Pressable
+                  onPress={() => router.push('/premium')}
+                  accessibilityRole="button"
+                  className="flex-row items-center justify-between active:opacity-70"
+                >
+                  <Text variant="body" tone="muted">
+                    {t('entryDetail', 'fiber')}
+                  </Text>
+                  <View className="flex-row items-center gap-1.5">
+                    <Ionicons name="lock-closed" size={12} color={colors.brand} />
+                    <Text variant="caption" tone="brand">
+                      {t('common', 'premium')}
+                    </Text>
+                  </View>
+                </Pressable>
+              )
             ) : null}
           </View>
         </Card>

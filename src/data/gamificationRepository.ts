@@ -8,11 +8,13 @@ import { generateLocalId } from '@/lib/id';
 import type {
   CoinReason,
   DiaryDay,
+  PlanType,
   Quest,
   QuestCadence,
   QuestType,
   Streak,
   Subscription,
+  SubscriptionStatus,
   SubscriptionTier,
 } from '@/types/models';
 
@@ -356,4 +358,34 @@ export function resolveTier(
   if (current.endDate !== null && current.endDate < today) return 'free';
 
   return 'premium';
+}
+
+export interface StartSubscriptionInput {
+  planType: PlanType;
+  status: SubscriptionStatus;
+  startDate: DateKey;
+  endDate: DateKey | null;
+  price: number;
+}
+
+/**
+ * Records a purchase, renewal, or plan change as a new row rather than an
+ * update — `getSubscription` already picks the most recent by `startDate`,
+ * so an older row never needs to be touched, just outranked.
+ */
+export function startSubscription(userId: string, input: StartSubscriptionInput): void {
+  db.insert(subscription)
+    .values({
+      id: generateLocalId('subscription'),
+      userId,
+      planType: input.planType,
+      status: input.status,
+      startDate: input.startDate,
+      endDate: input.endDate,
+      price: input.price,
+      remoteId: null,
+      deletedAt: null,
+      ...touch(),
+    })
+    .run();
 }

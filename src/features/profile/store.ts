@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 
+import * as gamification from '@/data/gamificationRepository';
 import * as userRepository from '@/data/userRepository';
 import type { CreateUserInput } from '@/data/userRepository';
 import { eraseDatabase } from '@/db/client';
@@ -87,7 +88,17 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
   },
 }));
 
-/** Premium gates the fiber breakdown and custom ingredient entry. */
+/**
+ * Premium gates the fiber breakdown and custom ingredient entry.
+ *
+ * Derived from `gamification.resolveTier`, not `profile.subscriptionTier`
+ * directly — that flag is the server's copy (mirrored here for when an
+ * account and push sync exist), while the local `subscription` table is
+ * what an on-device purchase actually writes, and the only thing that knows
+ * a plan has expired.
+ */
 export function useIsPremium(): boolean {
-  return useProfileStore((state) => state.profile?.subscriptionTier === 'premium');
+  const userId = useProfileStore((state) => state.profile?.id);
+
+  return userId !== undefined && gamification.resolveTier(userId) === 'premium';
 }

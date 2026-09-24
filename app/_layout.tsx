@@ -213,6 +213,10 @@ function AppShell({ migrated }: { migrated: boolean }) {
             options={{ title: t('entryEdit', 'layoutTitle') }}
           />
           <Stack.Screen name="settings" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="premium"
+            options={{ headerShown: false, presentation: 'modal' }}
+          />
           <Stack.Screen name="shop" options={{ title: t('shop', 'title') }} />
           <Stack.Screen name="streak" options={{ title: t('streak', 'title') }} />
           <Stack.Screen

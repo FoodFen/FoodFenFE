@@ -1,4 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from 'expo-router';
 import { Pressable, View } from 'react-native';
 
 import { Card } from '@/components/ui/Card';
@@ -55,10 +56,10 @@ export function FiberSection({ day }: { day: DiaryDay }) {
         {t('dashboard', 'fiberDailyLevel')}
       </Text>
 
-      {/* TODO: route to the paywall once it exists. */}
       <Pressable
+        onPress={() => router.push('/premium')}
         accessibilityRole="button"
-        className="flex-row items-center justify-center gap-2 border-t border-border pt-3 active:opacity-60"
+        className="flex-row items-center justify-center gap-2 border-t border-border pt-3 active:opacity-70"
       >
         <Ionicons name="lock-closed" size={14} color={colors.brand} />
         <Text variant="label" tone="brand">

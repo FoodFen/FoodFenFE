@@ -230,7 +230,3 @@ export function refreshGoalIfAuto(profile: UserProfile): DailyGoal | undefined {
 
   return writeCalculatedGoal(profile);
 }
-
-export function isPremium(profile: UserProfile | undefined): boolean {
-  return profile?.subscriptionTier === 'premium';
-}

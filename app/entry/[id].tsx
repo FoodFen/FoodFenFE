@@ -106,7 +106,7 @@ export default function EntryDetailScreen() {
               }
               accessibilityRole="button"
               accessibilityLabel={t('entryDetail', 'edit')}
-              className="-mr-2 flex-row items-center gap-1 rounded-lg px-2 py-1 active:bg-surface-alt"
+              className="-mr-2 flex-row items-center gap-1 rounded-card px-2 py-1 active:bg-surface-alt"
             >
               <Ionicons name="pencil" size={13} color={colors.brand} />
               <Text variant="label" tone="brand">
@@ -141,19 +141,26 @@ export default function EntryDetailScreen() {
 
             {entry.fiberG !== null ? (
               isPremium ? (
-                <NutrientRow label={t('entryDetail', 'fiber')} value={`${entry.fiberG} g`} />
+                <NutrientRow
+                  label={t('entryDetail', 'fiber')}
+                  value={`${entry.fiberG} g`}
+                />
               ) : (
-                <View className="flex-row items-center justify-between">
+                <Pressable
+                  onPress={() => router.push('/premium')}
+                  accessibilityRole="button"
+                  className="flex-row items-center justify-between active:opacity-70"
+                >
                   <Text variant="body" tone="muted">
                     {t('entryDetail', 'fiber')}
                   </Text>
                   <View className="flex-row items-center gap-1.5">
-                    <Ionicons name="lock-closed" size={12} color={colors.fgSubtle} />
-                    <Text variant="caption" tone="subtle">
+                    <Ionicons name="lock-closed" size={12} color={colors.brand} />
+                    <Text variant="caption" tone="brand">
                       {t('common', 'premium')}
                     </Text>
                   </View>
-                </View>
+                </Pressable>
               )
             ) : null}
           </View>
@@ -253,7 +260,7 @@ function FeedbackButton({
       accessibilityState={{ selected: active }}
       accessibilityLabel={label}
       className={cn(
-        'h-11 flex-1 flex-row items-center justify-center gap-2 rounded-xl border',
+        'h-11 flex-1 flex-row items-center justify-center gap-2 rounded-card border',
         active ? 'border-brand bg-brand-soft' : 'border-border bg-surface',
       )}
     >

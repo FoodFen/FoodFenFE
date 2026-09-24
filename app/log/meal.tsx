@@ -212,8 +212,26 @@ export default function MealComposerScreen() {
             <TotalRow label={t('onboardingFinalize', 'protein')} value={`${totals.proteinG} g`} />
             <TotalRow label={t('onboardingFinalize', 'carbs')} value={`${totals.carbsG} g`} />
             <TotalRow label={t('onboardingFinalize', 'fat')} value={`${totals.fatG} g`} />
-            {isPremium && totals.fiberG !== undefined && totals.fiberG !== null ? (
-              <TotalRow label={t('entryDetail', 'fiber')} value={`${totals.fiberG} g`} />
+            {totals.fiberG !== undefined && totals.fiberG !== null ? (
+              isPremium ? (
+                <TotalRow label={t('entryDetail', 'fiber')} value={`${totals.fiberG} g`} />
+              ) : (
+                <Pressable
+                  onPress={() => router.push('/premium')}
+                  accessibilityRole="button"
+                  className="flex-row items-center justify-between active:opacity-70"
+                >
+                  <Text variant="body" tone="muted">
+                    {t('entryDetail', 'fiber')}
+                  </Text>
+                  <View className="flex-row items-center gap-1.5">
+                    <Ionicons name="lock-closed" size={12} color={colors.brand} />
+                    <Text variant="caption" tone="brand">
+                      {t('common', 'premium')}
+                    </Text>
+                  </View>
+                </Pressable>
+              )
             ) : null}
           </View>
         </Card>

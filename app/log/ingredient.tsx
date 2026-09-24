@@ -128,7 +128,7 @@ export default function AddIngredientScreen() {
           {isPremium ? (
             <ManualIngredientForm onDone={() => router.back()} />
           ) : (
-            <Card className="gap-2">
+            <Card className="gap-3">
               <View className="flex-row items-center gap-2">
                 <Ionicons name="lock-closed" size={16} color={colors.fgMuted} />
                 <Text variant="heading">{t('logIngredient', 'enterYourOwn')}</Text>
@@ -136,6 +136,12 @@ export default function AddIngredientScreen() {
               <Text variant="body" tone="muted">
                 {t('logIngredient', 'premiumHint')}
               </Text>
+              <Button
+                label={t('profile', 'upgradeToPremium')}
+                onPress={() => router.push('/premium')}
+                variant="secondary"
+                size="sm"
+              />
             </Card>
           )}
         </View>
