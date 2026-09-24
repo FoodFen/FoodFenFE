@@ -36,19 +36,23 @@ export default function PremiumScreen() {
 
   const [selectedPlan, setSelectedPlan] = useState<PlanId>('yearly');
 
+  // VND, matching the backend's current server-set prices (PayOS has no
+  // localized/store pricing to read — see docs/backend-contracts/
+  // premium-entitlements.md). Shown here only as an estimate; the
+  // authoritative amount comes back from `POST /payments/checkout`.
   const monthlyPlan = {
     id: 'monthly' as const,
     label: t('premium', 'monthly'),
-    price: '$4.99',
-    priceValue: 4.99,
+    price: '49.000₫',
+    priceValue: 49_000,
     period: t('premium', 'perMonth'),
     badge: undefined as string | undefined,
   };
   const yearlyPlan = {
     id: 'yearly' as const,
     label: t('premium', 'yearly'),
-    price: '$39.99',
-    priceValue: 39.99,
+    price: '499.000₫',
+    priceValue: 499_000,
     period: t('premium', 'perYear'),
     badge: t('premium', 'bestValue'),
   };

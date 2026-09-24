@@ -40,28 +40,43 @@ export const mealTypeSchema = z.enum(['breakfast', 'lunch', 'dinner', 'snack']);
 export const inputMethodSchema = z.enum(['voice', 'image', 'type', 'manual']);
 export const aiFeedbackSchema = z.enum(['up', 'down']);
 export const activitySourceSchema = z.enum(['manual', 'apple_health', 'google_fit']);
+export const planTypeSchema = z.enum(['monthly', 'annual']);
+export const paymentStatusSchema = z.enum([
+  'pending',
+  'paid',
+  'cancelled',
+  'expired',
+  'failed',
+]);
+export const subscriptionStatusSchema = z.enum(['active', 'canceled', 'expired', 'trial']);
 
 export const userSchema = z.object({
   id: z.number().int(),
   email: z.email(),
   displayName: z.string().nullish(),
-  gender: genderSchema,
-  birthYear: z.number().int(),
+  // Onboarding-collected fields are nullable server-side: a freshly signed-up
+  // account has never pushed its local profile (push sync doesn't exist yet —
+  // `docs/backend-contracts/sync.md`), so this is the normal shape for every
+  // account today, not an edge case. The device's local profile is the actual
+  // source of truth for these regardless (`CLAUDE.md`'s local-first design);
+  // nothing in the client reads them off the server's copy.
+  gender: genderSchema.nullable(),
+  birthYear: z.number().int().nullable(),
   unitSystem: unitSystemSchema,
-  height: z.number().positive(),
-  weightCurrent: z.number().positive(),
-  weightGoal: z.number().positive(),
-  activityLevel: activityLevelSchema,
-  dietType: dietTypeSchema,
+  height: z.number().positive().nullable(),
+  weightCurrent: z.number().positive().nullable(),
+  weightGoal: z.number().positive().nullable(),
+  activityLevel: activityLevelSchema.nullable(),
+  dietType: dietTypeSchema.nullable(),
   calorieCalcMode: calorieCalcModeSchema,
-  calorieLeftMode: calorieLeftModeSchema,
+  calorieLeftMode: calorieLeftModeSchema.nullable(),
   subscriptionTier: subscriptionTierSchema,
-  weeklyRateKg: z.number().nonnegative(),
+  weeklyRateKg: z.number().nonnegative().nullable(),
   createdAt: z.iso.datetime(),
 });
 
 export const dailyGoalSchema = z.object({
-  id: z.number().int(),
+  id: z.string(),
   userId: z.number().int(),
   targetKcal: z.number().int().positive(),
   targetCarbsG: z.number().nonnegative(),
@@ -72,8 +87,8 @@ export const dailyGoalSchema = z.object({
 });
 
 export const ingredientSchema = z.object({
-  id: z.number().int(),
-  foodEntryId: z.number().int(),
+  id: z.string(),
+  foodEntryId: z.string(),
   name: z.string(),
   quantityG: z.number().nonnegative(),
   kcal: z.number().int().nonnegative(),
@@ -84,7 +99,7 @@ export const ingredientSchema = z.object({
 });
 
 export const foodEntrySchema = z.object({
-  id: z.number().int(),
+  id: z.string(),
   userId: z.number().int(),
   name: z.string(),
   inputMethod: inputMethodSchema,
@@ -102,7 +117,7 @@ export const foodEntrySchema = z.object({
 });
 
 export const activityLogSchema = z.object({
-  id: z.number().int(),
+  id: z.string(),
   userId: z.number().int(),
   activityType: z.string(),
   caloriesBurned: z.number().int().nonnegative(),
@@ -112,14 +127,14 @@ export const activityLogSchema = z.object({
 });
 
 export const weightLogSchema = z.object({
-  id: z.number().int(),
+  id: z.string(),
   userId: z.number().int(),
   weight: z.number().positive(),
   recordedAt: dateKeySchema,
 });
 
 export const waterLogSchema = z.object({
-  id: z.number().int(),
+  id: z.string(),
   userId: z.number().int(),
   amountMl: z.number().int().nonnegative(),
   loggedAt: z.iso.datetime(),
@@ -167,6 +182,37 @@ export const aiFoodAnalysisResponseSchema = z.object({
   imageUrl: z.url().nullish(),
 });
 
+export const checkoutResponseSchema = z.object({
+  orderCode: z.number().int(),
+  checkoutUrl: z.url(),
+  qrCode: z.string(),
+  amount: z.number().nonnegative(),
+  planType: planTypeSchema,
+  status: paymentStatusSchema,
+});
+
+export const paymentStatusResponseSchema = z.object({
+  orderCode: z.number().int(),
+  status: paymentStatusSchema,
+  amount: z.number().nonnegative(),
+  planType: planTypeSchema,
+  paidAt: z.iso.datetime().nullish(),
+  createdAt: z.iso.datetime(),
+});
+
+export const subscriptionInfoSchema = z.object({
+  planType: planTypeSchema,
+  status: subscriptionStatusSchema,
+  startDate: dateKeySchema,
+  endDate: dateKeySchema.nullable(),
+  price: z.number().nonnegative(),
+});
+
+export const subscriptionMeResponseSchema = z.object({
+  hasActiveSubscription: z.boolean(),
+  subscription: subscriptionInfoSchema.nullable(),
+});
+
 export type RemoteUser = z.infer<typeof userSchema>;
 export type RemoteDailyGoal = z.infer<typeof dailyGoalSchema>;
 export type RemoteFoodEntry = z.infer<typeof foodEntrySchema>;
@@ -179,3 +225,7 @@ export type RemoteChatMessage = z.infer<typeof chatMessageSchema>;
 export type RemoteChatHistoryResponse = z.infer<typeof chatHistoryResponseSchema>;
 export type RemoteAiIngredient = z.infer<typeof aiIngredientSchema>;
 export type RemoteAiFoodAnalysisResponse = z.infer<typeof aiFoodAnalysisResponseSchema>;
+export type RemoteCheckoutResponse = z.infer<typeof checkoutResponseSchema>;
+export type RemotePaymentStatusResponse = z.infer<typeof paymentStatusResponseSchema>;
+export type RemoteSubscriptionInfo = z.infer<typeof subscriptionInfoSchema>;
+export type RemoteSubscriptionMeResponse = z.infer<typeof subscriptionMeResponseSchema>;

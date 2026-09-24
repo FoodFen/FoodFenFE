@@ -11,6 +11,8 @@ export default function PremiumLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="payment" />
+      <Stack.Screen name="return" />
+      <Stack.Screen name="cancel" />
     </Stack>
   );
 }

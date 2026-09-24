@@ -131,4 +131,9 @@ export const queryKeys = {
     all: ['chat'] as const,
     history: () => [...queryKeys.chat.all, 'history'] as const,
   },
+  premium: {
+    all: ['premium'] as const,
+    tier: () => [...queryKeys.premium.all, 'tier'] as const,
+    payment: (orderCode: number) => [...queryKeys.premium.all, 'payment', orderCode] as const,
+  },
 } as const;

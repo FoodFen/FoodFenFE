@@ -1,86 +1,159 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { onlineManager } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
-import { Alert, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import * as WebBrowser from 'expo-web-browser';
+import { useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, Alert, View } from 'react-native';
 
+import { isApiError } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { Input } from '@/components/ui/Input';
+import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
-import * as gamification from '@/data/gamificationRepository';
-import { useProfileStore } from '@/features/profile/store';
-import { useAppTheme } from '@/hooks/useAppTheme';
+import { canUseRemote } from '@/data/sync';
+import { useAuthStore } from '@/features/auth/store';
+import {
+  useCancelPayment,
+  useCheckout,
+  usePaymentStatus,
+  useRefreshSubscription,
+} from '@/features/premium/queries';
 import { useTranslation } from '@/hooks/useTranslation';
-import { shiftDateKey, todayKey } from '@/lib/date';
+import { env } from '@/lib/env';
 import { haptics } from '@/lib/haptics';
-import { colorsFor } from '@/theme/colors';
 import type { PlanType } from '@/types/models';
 
+type Stage = 'idle' | 'checking-out' | 'awaiting-payment' | 'error';
+
 /**
- * Card details for the plan chosen on the Premium popup.
+ * PayOS checkout for the plan chosen on the Premium popup.
  *
- * There is no payment processor or store IAP wired up yet — subscribing here
- * only writes a local `subscription` row (see `gamificationRepository.
- * startSubscription`) so `resolveTier()` reports Premium; no charge, no
- * receipt. A real purchase (react-native-iap / RevenueCat) and a
- * server-validated receipt have to replace this `setTimeout` before ship —
- * see `docs/backend-contracts/premium-entitlements.md`.
+ * There's no card form here — PayOS is a hosted bank-transfer/VietQR
+ * checkout, not native IAP (see `docs/backend-contracts/
+ * premium-entitlements.md`). This screen starts a checkout, sends the user
+ * to PayOS's page, then polls for the result: PayOS confirms payment to our
+ * backend via a webhook, never to the client directly, so a closed browser
+ * only means the page is gone, not that payment succeeded.
  */
 export default function PremiumPaymentScreen() {
-  const { plan, label, price, priceValue, period } = useLocalSearchParams<{
+  const { plan, label, price, period } = useLocalSearchParams<{
     plan: string;
     label: string;
     price: string;
-    priceValue: string;
     period: string;
   }>();
   const { t } = useTranslation();
-  const { resolved } = useAppTheme();
-  const colors = colorsFor(resolved);
-  const profile = useProfileStore((state) => state.profile);
+  const session = useAuthStore((state) => state.session);
+  const available = canUseRemote();
+  // The one `canUseRemote()` reason worth its own affordance: everything else
+  // about the build/connection is fine, only signing in is missing (mirrors
+  // `app/chat.tsx`'s gating) — redeeming a purchase requires a FoodFend
+  // account so it follows the account, not the device.
+  const isNoSessionReason = env.hasBackend && onlineManager.isOnline() && !session;
 
-  const [cardName, setCardName] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiry, setExpiry] = useState('');
-  const [cvc, setCvc] = useState('');
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [stage, setStage] = useState<Stage>('idle');
+  const [orderCode, setOrderCode] = useState<number | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // Guards against handling the same "left pending" status twice — the
+  // status query can re-render after its effect already fired.
+  const handledStatusRef = useRef(false);
 
-  const canSubmit =
-    cardName.trim().length > 0 &&
-    cardNumber.trim().length >= 12 &&
-    expiry.trim().length >= 4 &&
-    cvc.trim().length >= 3;
+  const checkout = useCheckout();
+  const cancelPayment = useCancelPayment();
+  const refreshSubscription = useRefreshSubscription();
+  const paymentStatus = usePaymentStatus(orderCode, { enabled: stage === 'awaiting-payment' });
 
-  const onSubscribe = () => {
-    if (!profile) return;
+  // A non-"paid" terminal status is rendered straight from the query below
+  // (`pollFailed`) rather than copied into `stage` here — only the "paid"
+  // case needs an effect at all, to call the external `refreshSubscription`
+  // mutation exactly once per checkout.
+  useEffect(() => {
+    if (paymentStatus.data?.status !== 'paid' || handledStatusRef.current) return;
 
-    setIsProcessing(true);
+    handledStatusRef.current = true;
 
-    setTimeout(() => {
-      const startDate = todayKey();
+    refreshSubscription.mutate(undefined, {
+      onSuccess: () => {
+        haptics.success();
+        Alert.alert(
+          t('premiumPayment', 'successTitle'),
+          t('premiumPayment', 'successMessage'),
+          [{ text: t('common', 'done'), onPress: () => router.dismiss() }],
+        );
+      },
+      onError: () => {
+        setStage('error');
+        setErrorMessage(t('common', 'somethingWentWrong'));
+      },
+    });
+  }, [paymentStatus.data?.status, refreshSubscription, t]);
+
+  const pollFailed =
+    stage === 'awaiting-payment' &&
+    paymentStatus.data !== undefined &&
+    paymentStatus.data.status !== 'pending' &&
+    paymentStatus.data.status !== 'paid';
+
+  const onPressCheckout = async () => {
+    setErrorMessage(null);
+    setStage('checking-out');
+    handledStatusRef.current = false;
+
+    try {
       const planType: PlanType = plan === 'yearly' ? 'annual' : 'monthly';
+      const result = await checkout.mutateAsync(planType);
 
-      gamification.startSubscription(profile.id, {
-        planType,
-        status: 'active',
-        // Approximate — a real store receipt carries the actual renewal date.
-        startDate,
-        endDate: shiftDateKey(startDate, planType === 'annual' ? 365 : 30),
-        price: Number(priceValue) || 0,
-      });
+      setOrderCode(result.orderCode);
+      await WebBrowser.openAuthSessionAsync(result.checkoutUrl, 'foodfen://premium/return');
 
-      haptics.success();
-      setIsProcessing(false);
-
-      Alert.alert(
-        t('premiumPayment', 'successTitle'),
-        t('premiumPayment', 'successMessage'),
-        [{ text: t('common', 'done'), onPress: () => router.dismiss() }],
-      );
-    }, 900);
+      setStage('awaiting-payment');
+    } catch (error) {
+      setStage('error');
+      setErrorMessage(isApiError(error) ? error.userMessage : t('common', 'somethingWentWrong'));
+    }
   };
+
+  const onCancelCheckout = () => {
+    if (orderCode !== null) cancelPayment.mutate({ orderCode });
+
+    setStage('idle');
+    setOrderCode(null);
+    handledStatusRef.current = false;
+  };
+
+  const onRetry = () => {
+    setStage('idle');
+    setOrderCode(null);
+    setErrorMessage(null);
+    handledStatusRef.current = false;
+  };
+
+  if (!available) {
+    return (
+      <View className="flex-1 bg-bg">
+        <ScreenHeader
+          title={t('premiumPayment', 'layoutTitle')}
+          icon="arrow-back"
+          onPress={() => router.back()}
+          accessibilityLabel={t('common', 'back')}
+        />
+        {isNoSessionReason ? (
+          <EmptyState
+            icon="🔒"
+            title={t('premiumPayment', 'unavailableTitle')}
+            description={t('premiumPayment', 'unavailableDescription')}
+            actionLabel={t('premiumPayment', 'signIn')}
+            onAction={() => router.push('/sign-in')}
+          />
+        ) : (
+          <ErrorState
+            title={t('premiumPayment', 'unavailableTitle')}
+            description={t('premiumPayment', 'unavailableDescription')}
+          />
+        )}
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 bg-bg">
@@ -91,11 +164,7 @@ export default function PremiumPaymentScreen() {
         accessibilityLabel={t('common', 'back')}
       />
 
-      <KeyboardAwareScrollView
-        contentContainerStyle={{ padding: 16, gap: 16 }}
-        keyboardShouldPersistTaps="handled"
-        bottomOffset={24}
-      >
+      <View className="flex-1 gap-4 p-4">
         <Card className="gap-2">
           <Text variant="caption" tone="muted">
             {t('premiumPayment', 'orderSummary')}
@@ -115,68 +184,50 @@ export default function PremiumPaymentScreen() {
           </View>
         </Card>
 
-        <Card className="gap-4">
-          <View className="flex-row items-center gap-2">
-            <Ionicons name="card-outline" size={16} color={colors.fgMuted} />
-            <Text variant="caption" tone="muted">
-              {t('premiumPayment', 'paymentDetails')}
+        {stage === 'awaiting-payment' && !pollFailed ? (
+          <Card className="items-center gap-3 py-6">
+            <ActivityIndicator />
+            <Text variant="heading" className="text-center">
+              {t('premiumPayment', 'waitingTitle')}
             </Text>
-          </View>
-
-          <Input
-            label={t('premiumPayment', 'cardholderName')}
-            value={cardName}
-            onChangeText={setCardName}
-            autoCapitalize="words"
-            textContentType="name"
+            <Text variant="body" tone="muted" className="text-center">
+              {t('premiumPayment', 'waitingDescription')}
+            </Text>
+            <View className="flex-row gap-3 pt-2">
+              <Button
+                label={t('premiumPayment', 'checkStatus')}
+                variant="secondary"
+                size="sm"
+                onPress={() => void paymentStatus.refetch()}
+              />
+              <Button
+                label={t('common', 'cancel')}
+                variant="ghost"
+                size="sm"
+                onPress={onCancelCheckout}
+              />
+            </View>
+          </Card>
+        ) : stage === 'error' || pollFailed ? (
+          <ErrorState
+            description={errorMessage ?? t('premiumPayment', 'checkoutFailed')}
+            onRetry={onRetry}
           />
-
-          <Input
-            label={t('premiumPayment', 'cardNumber')}
-            value={cardNumber}
-            onChangeText={setCardNumber}
-            keyboardType="number-pad"
-            textContentType="creditCardNumber"
-            maxLength={19}
-          />
-
-          <View className="flex-row gap-3">
-            <Input
-              containerClassName="flex-1"
-              label={t('premiumPayment', 'expiry')}
-              value={expiry}
-              onChangeText={setExpiry}
-              keyboardType="number-pad"
-              placeholder="MM/YY"
-              maxLength={5}
+        ) : (
+          <>
+            <Button
+              label={t('premiumPayment', 'subscribeButton')}
+              onPress={() => void onPressCheckout()}
+              loading={stage === 'checking-out'}
+              fullWidth
+              size="lg"
             />
-            <Input
-              containerClassName="flex-1"
-              label={t('premiumPayment', 'cvc')}
-              value={cvc}
-              onChangeText={setCvc}
-              keyboardType="number-pad"
-              secureTextEntry
-              maxLength={4}
-            />
-          </View>
-        </Card>
-
-        <Button
-          label={t('premiumPayment', 'subscribeButton')
-            .replace('{price}', price ?? '')
-            .replace('{period}', period ?? '')}
-          onPress={onSubscribe}
-          loading={isProcessing}
-          disabled={!canSubmit}
-          fullWidth
-          size="lg"
-        />
-
-        <Text variant="caption" tone="subtle" className="text-center">
-          {t('premiumPayment', 'terms')}
-        </Text>
-      </KeyboardAwareScrollView>
+            <Text variant="caption" tone="subtle" className="text-center">
+              {t('premiumPayment', 'terms')}
+            </Text>
+          </>
+        )}
+      </View>
     </View>
   );
 }

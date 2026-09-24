@@ -42,6 +42,7 @@ const OWN_PLUGINS: PluginEntry[] = [
   'expo-image',
   'expo-secure-store',
   'expo-localization',
+  'expo-web-browser',
   [
     'expo-splash-screen',
     {
