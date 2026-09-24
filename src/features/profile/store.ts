@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import { create } from 'zustand';
 
 import * as gamification from '@/data/gamificationRepository';
@@ -5,6 +6,7 @@ import * as userRepository from '@/data/userRepository';
 import type { CreateUserInput } from '@/data/userRepository';
 import { eraseDatabase } from '@/db/client';
 import { useSettingsStore } from '@/features/settings/store';
+import { queryKeys } from '@/lib/queryClient';
 import type { UserProfile } from '@/types/models';
 
 /**
@@ -96,9 +98,26 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
  * account and push sync exist), while the local `subscription` table is
  * what an on-device purchase actually writes, and the only thing that knows
  * a plan has expired.
+ *
+ * Goes through `useQuery` rather than reading `resolveTier()` straight in a
+ * Zustand selector: `startSubscription()` writes to SQLite directly, so
+ * Zustand has no `set()` call to notify subscribers with, and a screen
+ * already on-screen when a purchase completes would otherwise keep showing
+ * its last-rendered tier forever. `useRefreshSubscription`'s
+ * `invalidateQueries` on `queryKeys.premium.all` is what actually makes a
+ * completed purchase show up — the same pattern `useStreak`/`useActiveQuests`
+ * already use for "a local read that must refresh after a write elsewhere."
  */
 export function useIsPremium(): boolean {
-  const userId = useProfileStore((state) => state.profile?.id);
+  const userId = useProfileStore((state) => state.profile?.id ?? null);
 
-  return userId !== undefined && gamification.resolveTier(userId) === 'premium';
+  const { data } = useQuery({
+    queryKey: queryKeys.premium.tier(),
+    queryFn: () => gamification.resolveTier(userId as string),
+    enabled: userId !== null,
+    refetchOnWindowFocus: true,
+    retry: false,
+  });
+
+  return data === 'premium';
 }
