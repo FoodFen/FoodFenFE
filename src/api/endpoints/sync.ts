@@ -39,7 +39,7 @@ const waterListSchema = z.array(waterLogSchema);
 
 export const syncApi = {
   me: (signal?: AbortSignal): Promise<RemoteUser> =>
-    api.get('users/me', { schema: userSchema, signal }),
+    api.get('auth/me', { schema: userSchema, signal }),
 
   goals: (signal?: AbortSignal): Promise<RemoteDailyGoal[]> =>
     api.get('daily-goals', { schema: dailyGoalListSchema, signal }),

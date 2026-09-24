@@ -10,7 +10,9 @@ import { index, integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core
  * 1. **Text ids, not autoincrement ints.** A local row needs an id the moment
  *    it is created, long before a server exists to assign one. Every table
  *    therefore has a locally generated `id` plus a nullable `remote_id` that
- *    sync fills in with the server's integer key.
+ *    sync fills in with the server's key — a UUID string everywhere except
+ *    `user`, whose server-side table is the one integer-PK exception (see
+ *    `userSyncColumns` below).
  *
  * 2. **Sync columns on every user-owned table.** `updated_at` and `synced_at`
  *    are what make "write locally, push later" possible: a row whose
@@ -26,13 +28,24 @@ import { index, integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core
 
 /** Columns every syncable, user-owned table carries. */
 const syncColumns = {
-  /** The server's integer PK once this row has been pushed. */
-  remoteId: integer('remote_id'),
+  /** The server's UUID once this row has been pushed. */
+  remoteId: text('remote_id'),
   updatedAt: integer('updated_at', { mode: 'timestamp_ms' }).notNull(),
   /** Null, or older than `updated_at`, means "not yet pushed to the server". */
   syncedAt: integer('synced_at', { mode: 'timestamp_ms' }),
   /** Soft delete — a row removed offline still has to be removed server-side. */
   deletedAt: integer('deleted_at', { mode: 'timestamp_ms' }),
+};
+
+/**
+ * Same as `syncColumns`, but for `user` only: the server's `user` table is
+ * the sole exception to UUID primary keys (integer, per the backend's own
+ * convention), so its `remote_id` has to match that instead of the UUID
+ * `remote_id` every other synced table carries.
+ */
+const userSyncColumns = {
+  ...syncColumns,
+  remoteId: integer('remote_id'),
 };
 
 export type Gender = 'male' | 'female' | 'other';
@@ -96,7 +109,7 @@ export const user = sqliteTable('user', {
    */
   weeklyRateKg: real('weekly_rate_kg').notNull().default(0.5),
   createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
-  ...syncColumns,
+  ...userSyncColumns,
 });
 
 /**

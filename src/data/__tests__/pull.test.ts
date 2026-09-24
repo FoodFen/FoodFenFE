@@ -53,7 +53,7 @@ function createUser() {
 
 function remoteGoal(overrides: Partial<RemoteDailyGoal>): RemoteDailyGoal {
   return {
-    id: 501,
+    id: 'goal_501',
     userId: 1,
     targetKcal: 2200,
     targetCarbsG: 250,
@@ -80,7 +80,7 @@ describe('pullDailyGoals', () => {
     const goal = userRepository.getGoalForDate(user.id, '2026-03-10');
 
     expect(goal?.targetKcal).toBe(2200);
-    expect(goal?.remoteId).toBe(501);
+    expect(goal?.remoteId).toBe('goal_501');
   });
 
   it('never overwrites a locally modified row with the same remote id', async () => {
@@ -92,7 +92,7 @@ describe('pullDailyGoals', () => {
     );
 
     // Attach a remote id without marking synced: the row is still dirty.
-    db.update(dailyGoal).set({ remoteId: 501 }).where(eq(dailyGoal.id, local.id)).run();
+    db.update(dailyGoal).set({ remoteId: 'goal_501' }).where(eq(dailyGoal.id, local.id)).run();
 
     mockedSyncApi.goals.mockResolvedValue([remoteGoal({ targetKcal: 9999 })]);
 
@@ -111,7 +111,7 @@ describe('pullDailyGoals', () => {
       '2026-03-10',
     );
 
-    markSynced(dailyGoal, local.id, 501);
+    markSynced(dailyGoal, local.id, 'goal_501');
 
     mockedSyncApi.goals.mockResolvedValue([remoteGoal({ targetKcal: 2500 })]);
 
@@ -126,7 +126,7 @@ describe('pullDailyGoals', () => {
 describe('pullFoodEntries', () => {
   function remoteEntry(overrides: Partial<RemoteFoodEntry>): RemoteFoodEntry {
     return {
-      id: 900,
+      id: 'entry_900',
       userId: 1,
       name: 'Server Salad',
       inputMethod: 'type',
@@ -142,8 +142,8 @@ describe('pullFoodEntries', () => {
       loggedOn: '2026-03-10',
       ingredients: [
         {
-          id: 1,
-          foodEntryId: 900,
+          id: 'ing_1',
+          foodEntryId: 'entry_900',
           name: 'Lettuce',
           quantityG: 100,
           kcal: 20,
@@ -166,7 +166,7 @@ describe('pullFoodEntries', () => {
     const entries = db.select().from(foodEntry).where(eq(foodEntry.userId, user.id)).all();
     expect(entries).toHaveLength(1);
     expect(entries[0]?.name).toBe('Server Salad');
-    expect(entries[0]?.remoteId).toBe(900);
+    expect(entries[0]?.remoteId).toBe('entry_900');
 
     const ingredients = db
       .select()
@@ -200,7 +200,7 @@ describe('pullFoodEntries', () => {
 describe('pullDayLogs', () => {
   function remoteWater(): RemoteWaterLog {
     return {
-      id: 1,
+      id: 'water_1',
       userId: 1,
       amountMl: 250,
       loggedAt: '2026-03-10T08:00:00.000Z',
@@ -210,7 +210,7 @@ describe('pullDayLogs', () => {
 
   function remoteActivity(): RemoteActivityLog {
     return {
-      id: 1,
+      id: 'activity_1',
       userId: 1,
       activityType: 'walking',
       caloriesBurned: 150,
@@ -249,7 +249,7 @@ describe('pulledRowCount', () => {
 
     mockedSyncApi.foodEntries.mockResolvedValue([
       {
-        id: 1,
+        id: 'entry_1',
         userId: 1,
         name: 'Server Meal',
         inputMethod: 'type',

@@ -155,14 +155,23 @@ export function pendingChangeCount(): number {
   }, 0);
 }
 
-/** Marks a row as having reached the server. Used by the future push pass. */
+/**
+ * Marks a row as having reached the server. Used by the future push pass.
+ *
+ * `remoteId` is a UUID string for every table except `user` (an integer,
+ * the server's one exception to UUID primary keys) — typed as `string |
+ * number` here since this function is generic over every synced table.
+ */
 export function markSynced(
   table: (typeof SYNCED_TABLES)[number],
   id: string,
-  remoteId?: number,
+  remoteId?: string | number,
 ): void {
   db.update(table)
-    .set({ syncedAt: new Date(), ...(remoteId === undefined ? {} : { remoteId }) })
+    .set({
+      syncedAt: new Date(),
+      ...(remoteId === undefined ? {} : { remoteId: remoteId as never }),
+    })
     .where(eq(table.id, id))
     .run();
 }

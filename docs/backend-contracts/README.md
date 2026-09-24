@@ -17,6 +17,7 @@ here for its contract section rather than duplicating it.
 | Social sign-in | [`social-sign-in.md`](./social-sign-in.md) | [`2026-09-19-social-sign-in-design.md`](../superpowers/specs/2026-09-19-social-sign-in-design.md) |
 | AI food capture | [`ai-food-capture.md`](./ai-food-capture.md) | none — small enough to document directly in the contract |
 | Premium entitlements | [`premium-entitlements.md`](./premium-entitlements.md) | none — small enough to document directly in the contract |
+| Diary/log sync (pull + push) | [`sync.md`](./sync.md) | none — the design is `CLAUDE.md`'s local-first section and `src/data/sync.ts`'s own doc comment |
 
 If a contract changes after the client is built against it, the change
 starts here, then flows back to a client-side update — never a silent
