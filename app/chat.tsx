@@ -11,9 +11,11 @@ import { canUseRemote } from '@/data/sync';
 import { useAuthStore } from '@/features/auth/store';
 import { CHAT_ASSISTANT, CHAT_USER, toIMessage } from '@/features/chat/mappers';
 import { useChatHistory } from '@/features/chat/queries';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { env } from '@/lib/env';
 import { queryKeys } from '@/lib/queryClient';
+import { chatDarkTheme, chatLightTheme } from '@/theme/chatTheme';
 
 /**
  * The single continuous conversation with the assistant. Gated exactly like
@@ -22,6 +24,7 @@ import { queryKeys } from '@/lib/queryClient';
  */
 export default function ChatScreen() {
   const { t } = useTranslation();
+  const { isDark } = useAppTheme();
   const queryClient = useQueryClient();
   const session = useAuthStore((state) => state.session);
   const available = canUseRemote();
@@ -121,6 +124,10 @@ export default function ChatScreen() {
           isLoading: isFetchingNextPage,
           onPress: fetchNextPage,
         }}
+        colorScheme={isDark ? 'dark' : 'light'}
+        theme={chatLightTheme}
+        darkTheme={chatDarkTheme}
+        messageTextProps={{ markdown: true }}
       />
     </Screen>
   );
