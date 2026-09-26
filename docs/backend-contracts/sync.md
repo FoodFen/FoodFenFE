@@ -247,9 +247,19 @@ Response `200`: the full `User` object.
 
 ### Daily goals
 
-`POST /daily-goals` only — goals are append-only (`CLAUDE.md`: "changing
-today's target never rewrites what last week was measured against"), never
-edited or deleted once created.
+**Correction to an earlier version of this section**, found while wiring
+push: this is upsert-on-`(user, effectiveDate)`, not strictly append-only.
+`userRepository.setGoal()` replaces the existing row for that exact
+`effectiveDate` if one exists — a user tuning their target a few times in
+one sitting gets one row for today, not a paper trail of same-day
+corrections — and only becomes immutable once a later day makes it history.
+That's the actual invariant behind `CLAUDE.md`'s "changing today's target
+never rewrites what **last week** was measured against": past days are
+protected, today is not. `POST /daily-goals` should upsert on
+`(userId, effectiveDate)` — same `clientId` with the same `effectiveDate`
+replaces the existing row's values rather than being treated as a stale
+duplicate; a different `effectiveDate` is always a new row, never touching
+an older one.
 
 Request: `clientId`, `targetKcal`, `targetCarbsG`, `targetProteinG`,
 `targetFatG`, `targetWaterMl`, `effectiveDate`.
