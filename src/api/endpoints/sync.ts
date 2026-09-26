@@ -123,6 +123,9 @@ export interface PushWaterLogInput {
   loggedOn: DateKey;
 }
 
+/** No `clientId` — the `:id` in the URL already identifies the row, same as every other PATCH in this API. */
+export type UpdateWaterLogInput = Omit<PushWaterLogInput, 'clientId'>;
+
 export const syncApi = {
   me: (signal?: AbortSignal): Promise<RemoteUser> =>
     api.get('auth/me', { schema: userSchema, signal }),
@@ -192,6 +195,9 @@ export const syncApi = {
 
   createWaterLog: (input: PushWaterLogInput): Promise<RemoteWaterLog> =>
     api.post('water-logs', input, { schema: waterLogSchema }),
+
+  updateWaterLog: (remoteId: string, input: UpdateWaterLogInput): Promise<RemoteWaterLog> =>
+    api.patch(`water-logs/${remoteId}`, input, { schema: waterLogSchema }),
 
   deleteWaterLog: (remoteId: string): Promise<void> => api.delete(`water-logs/${remoteId}`),
 };

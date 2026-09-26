@@ -228,20 +228,21 @@ async function pushWaterLogs(userId: string): Promise<void> {
         continue;
       }
 
-      if (row.remoteId !== null) {
-        // `setWaterTotal` can shrink an already-synced row in place (the
-        // "tap a cup down" case), but there is no PATCH /water-logs/{id} in
-        // the contract yet. Left dirty on purpose rather than dropped.
-        console.warn('[push] water log has no update endpoint yet, skipping', row.id);
-        continue;
-      }
-
-      const remote = await syncApi.createWaterLog({
-        clientId: row.id,
-        amountMl: row.amountMl,
-        loggedAt: row.loggedAt.toISOString(),
-        loggedOn: row.loggedOn,
-      });
+      // `setWaterTotal` can shrink an already-synced row in place (the "tap
+      // a cup down" case) — PATCH, not POST, once it already has a remoteId.
+      const remote =
+        row.remoteId === null
+          ? await syncApi.createWaterLog({
+              clientId: row.id,
+              amountMl: row.amountMl,
+              loggedAt: row.loggedAt.toISOString(),
+              loggedOn: row.loggedOn,
+            })
+          : await syncApi.updateWaterLog(row.remoteId, {
+              amountMl: row.amountMl,
+              loggedAt: row.loggedAt.toISOString(),
+              loggedOn: row.loggedOn,
+            });
 
       markSynced(waterLog, row.id, remote.id);
       console.warn('[push] water log synced', row.id, '->', remote.id);

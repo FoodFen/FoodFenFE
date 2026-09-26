@@ -36,6 +36,7 @@ jest.mock('@/api/endpoints/sync', () => ({
     updateActivityLog: jest.fn(),
     createWeightLog: jest.fn(),
     createWaterLog: jest.fn(),
+    updateWaterLog: jest.fn(),
     deleteWaterLog: jest.fn(),
   },
 }));
@@ -405,7 +406,7 @@ describe('pushDayLogs', () => {
     expect(waterRow?.syncedAt).not.toBeNull();
   });
 
-  it('leaves an already-synced row dirty when it is edited in place, with no PATCH to call', async () => {
+  it('PATCHes an already-synced row shrunk in place, with no clientId in the body', async () => {
     const localUser = createUser();
     mockedSyncApi.createWaterLog.mockResolvedValue({
       id: 'water_remote_1',
@@ -416,26 +417,34 @@ describe('pushDayLogs', () => {
     });
 
     logRepository.addWater(localUser.id, 500, '2026-03-10');
-    await pushDayLogs(localUser.id); // synced
+    await pushDayLogs(localUser.id); // synced, has a remote id
 
     // Shrinks the already-synced row's amount in place rather than deleting
-    // it outright — the case `sync.md` notes has no backend endpoint yet.
+    // it outright — the "tap a cup down" case.
     logRepository.setWaterTotal(localUser.id, '2026-03-10', 250);
 
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+    mockedSyncApi.updateWaterLog.mockResolvedValue({
+      id: 'water_remote_1',
+      userId: 1,
+      amountMl: 250,
+      loggedAt: new Date().toISOString(),
+      loggedOn: '2026-03-10',
+    });
 
     await pushDayLogs(localUser.id);
 
     expect(mockedSyncApi.createWaterLog).toHaveBeenCalledTimes(1);
-    expect(warnSpy).toHaveBeenCalledWith(
-      expect.stringContaining('no update endpoint'),
-      expect.anything(),
+    expect(mockedSyncApi.updateWaterLog).toHaveBeenCalledWith(
+      'water_remote_1',
+      expect.objectContaining({ amountMl: 250 }),
     );
+    // The :id in the URL already identifies the row — no clientId belongs
+    // in a PATCH body, same convention as every other update endpoint.
+    expect(mockedSyncApi.updateWaterLog.mock.calls[0]?.[1]).not.toHaveProperty('clientId');
 
     const [waterRow] = db.select().from(waterLog).where(eq(waterLog.userId, localUser.id)).all();
-    expect(waterRow?.syncedAt).toBeNull();
-
-    warnSpy.mockRestore();
+    expect(waterRow?.remoteId).toBe('water_remote_1');
+    expect(waterRow?.syncedAt).not.toBeNull();
   });
 
   it('updates an already-synced activity log corrected in place (health steps)', async () => {
