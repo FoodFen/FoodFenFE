@@ -29,6 +29,7 @@ import { connectAuthToApiClient, connectAuthToSync, useAuthStore } from '@/featu
 import { useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { usePushSync } from '@/hooks/usePushSync';
 import { useReactQueryBridge } from '@/hooks/useReactQueryBridge';
 import { useTranslation } from '@/hooks/useTranslation';
 import { createQueryClient, persistOptions, queryKeys } from '@/lib/queryClient';
@@ -147,6 +148,7 @@ function AppShell({ migrated }: { migrated: boolean }) {
   const queryClient = useQueryClient();
 
   useReactQueryBridge();
+  usePushSync();
 
   // Dev-only: fill the last few days so the dashboard has data to render while
   // food logging is unbuilt. The whole effect no-ops in a release build.

@@ -18,17 +18,27 @@ import type {
   RemoteWeightLog,
 } from '@/api/schemas';
 import type { DateKey } from '@/lib/date';
+import type {
+  AiFeedback,
+  ActivitySource,
+  InputMethod,
+  MealType,
+  UserProfile,
+} from '@/types/models';
 
 /**
- * The server-side resources, one per ERD table.
+ * The server-side resources, one per ERD table. See
+ * `docs/backend-contracts/sync.md` for the full wire contract both halves
+ * below are built against.
  *
- * Called only through `readThrough` in `src/data/sync.ts`, which falls back to
- * the device database whenever any of this fails — which, with no backend
- * deployed, is currently always. Defining it now is what lets the offline path
- * be the fallback rather than the only path.
+ * Reads are called through `readWithRefresh` in `src/data/sync.ts`, which
+ * falls back to the device database whenever any of this fails, so an
+ * unreachable server never blocks a screen that already has local data.
  *
- * Writes are absent on purpose: every write is local-first and marked
- * unsynced, and the push pass that drains them is not built yet.
+ * Writes are called through `src/data/push.ts`, one row at a time — not a
+ * batch envelope, per the contract. Every create carries `clientId` (the
+ * row's local id) purely for retry-safe idempotency; it is never the row's
+ * real identity, which stays the server's own `id` once assigned.
  */
 
 const foodEntryListSchema = z.array(foodEntrySchema);
@@ -36,6 +46,82 @@ const dailyGoalListSchema = z.array(dailyGoalSchema);
 const activityListSchema = z.array(activityLogSchema);
 const weightListSchema = z.array(weightLogSchema);
 const waterListSchema = z.array(waterLogSchema);
+
+export type PushUserInput = Pick<
+  UserProfile,
+  | 'displayName'
+  | 'gender'
+  | 'birthYear'
+  | 'unitSystem'
+  | 'height'
+  | 'weightCurrent'
+  | 'weightGoal'
+  | 'activityLevel'
+  | 'dietType'
+  | 'calorieCalcMode'
+  | 'calorieLeftMode'
+  | 'weeklyRateKg'
+>;
+
+export interface PushGoalInput {
+  clientId: string;
+  targetKcal: number;
+  targetCarbsG: number;
+  targetProteinG: number;
+  targetFatG: number;
+  targetWaterMl: number;
+  effectiveDate: DateKey;
+}
+
+export interface PushIngredientInput {
+  clientId: string;
+  name: string;
+  quantityG: number;
+  kcal: number;
+  carbsG: number;
+  proteinG: number;
+  fatG: number;
+  fiberG: number | null;
+}
+
+export interface PushFoodEntryInput {
+  clientId: string;
+  name: string;
+  inputMethod: InputMethod;
+  imageUrl: string | null;
+  totalKcal: number;
+  carbsG: number;
+  proteinG: number;
+  fatG: number;
+  fiberG: number | null;
+  aiFeedback: AiFeedback | null;
+  mealType: MealType;
+  loggedAt: string;
+  loggedOn: DateKey;
+  ingredients: PushIngredientInput[];
+}
+
+export interface PushActivityLogInput {
+  clientId: string;
+  activityType: string;
+  caloriesBurned: number;
+  source: ActivitySource;
+  loggedAt: string;
+  loggedOn: DateKey;
+}
+
+export interface PushWeightLogInput {
+  clientId: string;
+  weight: number;
+  recordedAt: DateKey;
+}
+
+export interface PushWaterLogInput {
+  clientId: string;
+  amountMl: number;
+  loggedAt: string;
+  loggedOn: DateKey;
+}
 
 export const syncApi = {
   me: (signal?: AbortSignal): Promise<RemoteUser> =>
@@ -76,4 +162,36 @@ export const syncApi = {
     signal?: AbortSignal,
   ): Promise<RemoteWeightLog[]> =>
     api.get('weight-logs', { query: { from, to }, schema: weightListSchema, signal }),
+
+  pushUser: (patch: PushUserInput): Promise<RemoteUser> =>
+    api.patch('users/me', patch, { schema: userSchema }),
+
+  /** Upserts on `(userId, effectiveDate)` server-side — always a POST, never a PATCH. */
+  pushGoal: (input: PushGoalInput): Promise<RemoteDailyGoal> =>
+    api.post('daily-goals', input, { schema: dailyGoalSchema }),
+
+  createFoodEntry: (input: PushFoodEntryInput): Promise<RemoteFoodEntry> =>
+    api.post('food-entries', input, { schema: foodEntrySchema }),
+
+  updateFoodEntry: (remoteId: string, input: PushFoodEntryInput): Promise<RemoteFoodEntry> =>
+    api.patch(`food-entries/${remoteId}`, input, { schema: foodEntrySchema }),
+
+  deleteFoodEntry: (remoteId: string): Promise<void> => api.delete(`food-entries/${remoteId}`),
+
+  createActivityLog: (input: PushActivityLogInput): Promise<RemoteActivityLog> =>
+    api.post('activity-logs', input, { schema: activityLogSchema }),
+
+  updateActivityLog: (
+    remoteId: string,
+    input: PushActivityLogInput,
+  ): Promise<RemoteActivityLog> =>
+    api.patch(`activity-logs/${remoteId}`, input, { schema: activityLogSchema }),
+
+  createWeightLog: (input: PushWeightLogInput): Promise<RemoteWeightLog> =>
+    api.post('weight-logs', input, { schema: weightLogSchema }),
+
+  createWaterLog: (input: PushWaterLogInput): Promise<RemoteWaterLog> =>
+    api.post('water-logs', input, { schema: waterLogSchema }),
+
+  deleteWaterLog: (remoteId: string): Promise<void> => api.delete(`water-logs/${remoteId}`),
 };
