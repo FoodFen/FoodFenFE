@@ -1,5 +1,6 @@
 import { OnboardingWizard } from '@/components/onboarding/OnboardingWizard';
 import { useProfileStore } from '@/features/profile/store';
+import { useSettingsStore } from '@/features/settings/store';
 
 /**
  * First run.
@@ -11,14 +12,17 @@ import { useProfileStore } from '@/features/profile/store';
  */
 export default function OnboardingScreen() {
   const createProfile = useProfileStore((state) => state.createProfile);
+  const setMealRemindersEnabled = useSettingsStore((state) => state.setMealRemindersEnabled);
+  const setStreakRemindersEnabled = useSettingsStore(
+    (state) => state.setStreakRemindersEnabled,
+  );
 
   return (
     <OnboardingWizard
       onComplete={(draft) => {
         // dietType isn't collected by this wizard; the schema's own default
         // ('balanced') is what a fresh profile gets until a diet-type step
-        // exists. `notificationsEnabled` isn't a user-table column — the
-        // permission request already happened in NotificationsStep.
+        // exists.
         createProfile({
           gender: draft.gender,
           birthYear: draft.birthYear,
@@ -30,6 +34,14 @@ export default function OnboardingScreen() {
           dietType: 'balanced',
           weeklyRateKg: draft.weeklyRateKg,
         });
+
+        // NotificationsStep's "Enable" already ran the OS permission
+        // request; both reminder categories opt in together on "Enable"
+        // and stay off on "Skip". reconcileNotifications runs on its own
+        // once the new profile appears (app/_layout.tsx), so no need to
+        // call it here.
+        setMealRemindersEnabled(draft.notificationsEnabled);
+        setStreakRemindersEnabled(draft.notificationsEnabled);
         // Not logging `draft`: it's body metrics, and those never go to the
         // console per CLAUDE.md.
       }}
