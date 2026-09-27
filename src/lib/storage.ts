@@ -110,4 +110,6 @@ export const StorageKeys = {
   streakCommittedDate: 'streak-committed-date',
   questAdvanceCounts: 'quest-advance-counts',
   healthSyncEnabled: 'health-sync-enabled',
+  mealRemindersEnabled: 'meal-reminders-enabled',
+  streakRemindersEnabled: 'streak-reminders-enabled',
 } as const;

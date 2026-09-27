@@ -48,6 +48,10 @@ interface SettingsState {
    * never requested without the user turning it on first.
    */
   healthSyncEnabled: boolean;
+  /** Local, adaptive reminder to log a meal around the user's usual time. */
+  mealRemindersEnabled: boolean;
+  /** Local reminder before an active streak breaks for the day. */
+  streakRemindersEnabled: boolean;
 
   setTheme: (theme: ThemePreference) => void;
   setWeightUnit: (unit: WeightUnit) => void;
@@ -64,6 +68,8 @@ interface SettingsState {
    */
   bumpQuestAdvance: (questId: string, activeQuestIds: string[]) => number;
   setHealthSyncEnabled: (value: boolean) => void;
+  setMealRemindersEnabled: (value: boolean) => void;
+  setStreakRemindersEnabled: (value: boolean) => void;
   completeOnboarding: () => void;
   /** Part of "erase local data" — sends the user back through onboarding. */
   resetOnboarding: () => void;
@@ -84,6 +90,10 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   questAdvanceCounts:
     preferences.get<Record<string, number>>(StorageKeys.questAdvanceCounts) ?? {},
   healthSyncEnabled: preferences.get<boolean>(StorageKeys.healthSyncEnabled) ?? false,
+  mealRemindersEnabled:
+    preferences.get<boolean>(StorageKeys.mealRemindersEnabled) ?? false,
+  streakRemindersEnabled:
+    preferences.get<boolean>(StorageKeys.streakRemindersEnabled) ?? false,
 
   setTheme: (theme) => {
     preferences.set(StorageKeys.colorScheme, theme);
@@ -153,6 +163,16 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setHealthSyncEnabled: (healthSyncEnabled) => {
     preferences.set(StorageKeys.healthSyncEnabled, healthSyncEnabled);
     set({ healthSyncEnabled });
+  },
+
+  setMealRemindersEnabled: (mealRemindersEnabled) => {
+    preferences.set(StorageKeys.mealRemindersEnabled, mealRemindersEnabled);
+    set({ mealRemindersEnabled });
+  },
+
+  setStreakRemindersEnabled: (streakRemindersEnabled) => {
+    preferences.set(StorageKeys.streakRemindersEnabled, streakRemindersEnabled);
+    set({ streakRemindersEnabled });
   },
 
   completeOnboarding: () => {

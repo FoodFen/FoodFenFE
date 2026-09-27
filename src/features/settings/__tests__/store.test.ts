@@ -51,3 +51,27 @@ describe('healthSyncEnabled', () => {
     expect(useSettingsStore.getState().healthSyncEnabled).toBe(true);
   });
 });
+
+describe('mealRemindersEnabled', () => {
+  it('defaults to off', () => {
+    expect(useSettingsStore.getState().mealRemindersEnabled).toBe(false);
+  });
+
+  it('setMealRemindersEnabled flips it and persists', () => {
+    useSettingsStore.getState().setMealRemindersEnabled(true);
+
+    expect(useSettingsStore.getState().mealRemindersEnabled).toBe(true);
+  });
+});
+
+describe('streakRemindersEnabled', () => {
+  it('defaults to off', () => {
+    expect(useSettingsStore.getState().streakRemindersEnabled).toBe(false);
+  });
+
+  it('setStreakRemindersEnabled flips it and persists', () => {
+    useSettingsStore.getState().setStreakRemindersEnabled(true);
+
+    expect(useSettingsStore.getState().streakRemindersEnabled).toBe(true);
+  });
+});
