@@ -35,20 +35,24 @@ const STREAK_NUDGE_LEAD_HOURS = 2;
 const STREAK_NUDGE_MIN_HOUR = 17;
 const STREAK_NUDGE_MAX_HOUR = 23;
 
-function atTime(date: Date, time: TimeOfDay): Date {
+/** `time` set on the given date, seconds/ms zeroed. */
+export function atTime(date: Date, time: TimeOfDay): Date {
   return setMilliseconds(setSeconds(setMinutes(setHours(date, time.hour), time.minute), 0), 0);
+}
+
+/** `time` on the day after `now`. */
+export function tomorrowAt(time: TimeOfDay, now: Date = new Date()): Date {
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  return atTime(tomorrow, time);
 }
 
 /** `time` today if that moment hasn't passed yet, else tomorrow. */
 export function nextOccurrence(time: TimeOfDay, now: Date = new Date()): Date {
   const today = atTime(now, time);
 
-  if (today.getTime() > now.getTime()) return today;
-
-  const tomorrow = new Date(now);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  return atTime(tomorrow, time);
+  return today.getTime() > now.getTime() ? today : tomorrowAt(time, now);
 }
 
 /**

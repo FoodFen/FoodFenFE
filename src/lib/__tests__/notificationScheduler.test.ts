@@ -2,12 +2,14 @@
 import * as Notifications from 'expo-notifications';
 
 import {
+  atTime,
   cancel,
   DEFAULT_LAST_LOG_TIME,
   DEFAULT_MEAL_TIMES,
   nextOccurrence,
   scheduleAt,
   streakNudgeTime,
+  tomorrowAt,
 } from '../notificationScheduler';
 
 jest.mock('expo-notifications', () => ({
@@ -29,6 +31,26 @@ describe('nextOccurrence', () => {
     const result = nextOccurrence({ hour: 8, minute: 0 }, now);
 
     expect(result.getTime()).toBe(new Date('2026-03-11T08:00:00').getTime());
+  });
+});
+
+describe('atTime', () => {
+  it('sets the given time on the given date, zeroing seconds/ms', () => {
+    const date = new Date('2026-03-10T00:00:00');
+
+    expect(atTime(date, { hour: 14, minute: 45 }).getTime()).toBe(
+      new Date('2026-03-10T14:45:00').getTime(),
+    );
+  });
+});
+
+describe('tomorrowAt', () => {
+  it('returns the given time on the day after now', () => {
+    const now = new Date('2026-03-10T23:00:00');
+
+    expect(tomorrowAt({ hour: 8, minute: 0 }, now).getTime()).toBe(
+      new Date('2026-03-11T08:00:00').getTime(),
+    );
   });
 });
 

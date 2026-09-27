@@ -4,15 +4,17 @@ import * as gamification from '@/data/gamificationRepository';
 import * as notificationRepository from '@/data/notificationRepository';
 import { useSettingsStore } from '@/features/settings/store';
 import type { DateKey } from '@/lib/date';
-import { todayKey } from '@/lib/date';
+import { shiftDateKey, toDateKey } from '@/lib/date';
 import { translate, type Locale, type Translations } from '@/lib/i18n';
 import {
+  atTime,
   cancel,
   DEFAULT_LAST_LOG_TIME,
   DEFAULT_MEAL_TIMES,
   nextOccurrence,
   scheduleAt,
   streakNudgeTime,
+  tomorrowAt,
 } from '@/lib/notificationScheduler';
 
 type Meal = 'breakfast' | 'lunch' | 'dinner';
@@ -39,14 +41,18 @@ const MEALS: Meal[] = ['breakfast', 'lunch', 'dinner'];
  * and schedules/cancels accordingly. Cheap — a handful of SQLite reads plus
  * at most 4 schedule/cancel calls — so it's safe to call on every trigger
  * point: app boot, after a logging mutation, after a settings toggle flips.
+ *
+ * `now` defaults to the real clock; callers never need to pass it — it
+ * exists so tests can pin every date/time decision below instead of
+ * depending on the wall clock at run time.
  */
-export async function reconcileNotifications(userId: string): Promise<void> {
+export async function reconcileNotifications(userId: string, now: Date = new Date()): Promise<void> {
   const { mealRemindersEnabled, streakRemindersEnabled, locale } = useSettingsStore.getState();
-  const today = todayKey();
+  const today = toDateKey(now);
 
   await Promise.all([
-    ...MEALS.map((meal) => reconcileMeal(userId, today, meal, mealRemindersEnabled, locale)),
-    reconcileStreak(userId, today, streakRemindersEnabled, locale),
+    ...MEALS.map((meal) => reconcileMeal(userId, today, meal, mealRemindersEnabled, locale, now)),
+    reconcileStreak(userId, today, streakRemindersEnabled, locale, now),
   ]);
 }
 
@@ -56,6 +62,7 @@ async function reconcileMeal(
   meal: Meal,
   enabled: boolean,
   locale: Locale,
+  now: Date,
 ): Promise<void> {
   const id = MEAL_IDS[meal];
 
@@ -68,15 +75,17 @@ async function reconcileMeal(
     .getEntriesForDay(userId, today)
     .some((entry) => entry.mealType === meal);
 
-  if (alreadyLogged) {
-    await cancel(id);
-    return;
-  }
-
   const time = notificationRepository.medianMealTime(userId, meal) ?? DEFAULT_MEAL_TIMES[meal];
   const { titleKey, bodyKey } = MEAL_COPY_KEYS[meal];
 
-  await scheduleAt(id, nextOccurrence(time), {
+  // Today's occurrence is already satisfied — pre-schedule tomorrow's
+  // instead of cancelling outright, so the reminder survives even if the
+  // app is never reopened again before then (reconcile only runs at boot,
+  // after a log, or after a settings change — nothing reruns it purely
+  // because midnight passed).
+  const at = alreadyLogged ? tomorrowAt(time, now) : nextOccurrence(time, now);
+
+  await scheduleAt(id, at, {
     title: translate(locale, 'notifications', titleKey),
     body: translate(locale, 'notifications', bodyKey),
   });
@@ -87,6 +96,7 @@ async function reconcileStreak(
   today: DateKey,
   enabled: boolean,
   locale: Locale,
+  now: Date,
 ): Promise<void> {
   if (!enabled) {
     await cancel('streak-risk');
@@ -95,18 +105,43 @@ async function reconcileStreak(
 
   const streak = gamification.getStreak(userId);
 
-  if (!streak || streak.currentStreak === 0 || streak.lastActiveDate === today) {
+  if (!streak || streak.currentStreak === 0) {
     await cancel('streak-risk');
     return;
   }
 
   const lastLogTime = notificationRepository.medianLastLogTime(userId) ?? DEFAULT_LAST_LOG_TIME;
+  const nudgeTime = streakNudgeTime(lastLogTime);
+  const title = translate(locale, 'notifications', 'streakRiskTitle');
+  const body = translate(locale, 'notifications', 'streakRiskBody').replace(
+    '{days}',
+    String(streak.currentStreak),
+  );
 
-  await scheduleAt('streak-risk', nextOccurrence(streakNudgeTime(lastLogTime)), {
-    title: translate(locale, 'notifications', 'streakRiskTitle'),
-    body: translate(locale, 'notifications', 'streakRiskBody').replace(
-      '{days}',
-      String(streak.currentStreak),
-    ),
-  });
+  if (streak.lastActiveDate === today) {
+    // Safe today — pre-schedule tomorrow's nudge for the same reason meal
+    // reminders do: nothing else reruns reconcile purely on day rollover.
+    await scheduleAt('streak-risk', tomorrowAt(nudgeTime, now), { title, body });
+    return;
+  }
+
+  if (streak.lastActiveDate !== shiftDateKey(today, -1)) {
+    // The streak already lapsed (a gap of 2+ days, or no active day at
+    // all). `recordActiveDay` doesn't reset `currentStreak` until the next
+    // log, so a stale row can still report a non-zero streak days after it
+    // actually broke — nudging here would show a false streak length.
+    await cancel('streak-risk');
+    return;
+  }
+
+  const nudgeAt = atTime(now, nudgeTime);
+
+  if (nudgeAt.getTime() <= now.getTime()) {
+    // The lead-time window already passed today — nothing useful left to
+    // warn about before the streak breaks at midnight.
+    await cancel('streak-risk');
+    return;
+  }
+
+  await scheduleAt('streak-risk', nudgeAt, { title, body });
 }
