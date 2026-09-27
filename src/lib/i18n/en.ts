@@ -664,6 +664,25 @@ export const en: DeepPartial<Translations> = {
     permissionDenied: 'Could not get permission. You can re-enable it from system Settings.',
   },
 
+  notifications: {
+    mealRemindersHeading: 'Meal reminders',
+    mealRemindersCaption:
+      "Reminds you to log a meal around your usual time, if it hasn't been logged yet today.",
+    streakRemindersHeading: 'Streak reminders',
+    streakRemindersCaption:
+      "Reminds you before your streak breaks, if you haven't logged anything today.",
+    permissionDenied:
+      'Could not get notification permission. You can turn it on again in system Settings.',
+    mealBreakfastTitle: "Where's breakfast? 🍳",
+    mealBreakfastBody: "You haven't logged breakfast yet today.",
+    mealLunchTitle: 'Had lunch yet? 🍜',
+    mealLunchBody: "You haven't logged lunch yet today.",
+    mealDinnerTitle: 'What about dinner? 🍽️',
+    mealDinnerBody: "You haven't logged dinner yet today.",
+    streakRiskTitle: "🔥 Don't lose your streak",
+    streakRiskBody: "You're on a {days}-day streak — log something before today ends.",
+  },
+
   tabs: {
     home: 'Home',
     achievements: 'Achievements',

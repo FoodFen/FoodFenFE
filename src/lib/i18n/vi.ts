@@ -682,6 +682,24 @@ export const vi = {
     permissionDenied: 'Không thể lấy quyền truy cập. Bạn có thể bật lại trong Cài đặt hệ thống.',
   },
 
+  notifications: {
+    mealRemindersHeading: 'Nhắc giờ ăn',
+    mealRemindersCaption:
+      'Nhắc bạn ghi lại bữa ăn vào khoảng giờ bạn thường ăn, nếu bữa đó chưa được ghi hôm nay.',
+    streakRemindersHeading: 'Nhắc giữ chuỗi ngày',
+    streakRemindersCaption: 'Nhắc bạn trước khi mất chuỗi ngày, nếu hôm nay bạn chưa ghi gì.',
+    permissionDenied:
+      'Không thể lấy quyền thông báo. Bạn có thể bật lại trong Cài đặt hệ thống.',
+    mealBreakfastTitle: 'Bữa sáng của bạn đâu rồi? 🍳',
+    mealBreakfastBody: 'Bạn chưa ghi bữa sáng hôm nay.',
+    mealLunchTitle: 'Đã ăn trưa chưa? 🍜',
+    mealLunchBody: 'Bạn chưa ghi bữa trưa hôm nay.',
+    mealDinnerTitle: 'Bữa tối thì sao? 🍽️',
+    mealDinnerBody: 'Bạn chưa ghi bữa tối hôm nay.',
+    streakRiskTitle: '🔥 Đừng để mất chuỗi ngày của bạn',
+    streakRiskBody: 'Bạn đang giữ chuỗi {days} ngày — ghi lại một thứ gì đó trước khi hôm nay kết thúc.',
+  },
+
   tabs: {
     home: 'Trang chủ',
     achievements: 'Thử thách',
