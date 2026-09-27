@@ -370,7 +370,13 @@ export const vi = {
     chooseEmojiA11y: 'Chọn biểu tượng cảm xúc cho món ăn',
     mealNamePlaceholder: 'ví dụ: Phở bò',
     describeHint:
-      'Mô tả món bạn đã ăn bằng một câu, AI sẽ ước tính thành phần dinh dưỡng. Nhập bằng giọng nói sẽ sớm ra mắt.',
+      'Mô tả món bạn đã ăn bằng một câu — gõ hoặc nhấn micro để nói — AI sẽ ước tính thành phần dinh dưỡng.',
+    describeListening: 'Đang nghe...',
+    describeStartListening: 'Bắt đầu mô tả bằng giọng nói',
+    describeStopListening: 'Dừng ghi âm',
+    describeMicPermissionTitle: 'Cần quyền truy cập micro',
+    describeMicPermissionMessage:
+      'Vui lòng cho phép FoodFen dùng micro và nhận diện giọng nói trong phần cài đặt của thiết bị để dùng tính năng này.',
     smartEntryPlaceholder: 'ví dụ: Một tô phở bò, nhiều rau thơm',
     smartEntryAnalyze: 'Phân tích',
     aiAnalyzePhoto: 'Phân tích ảnh',

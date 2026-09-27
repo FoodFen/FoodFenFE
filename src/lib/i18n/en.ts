@@ -355,7 +355,13 @@ export const en: DeepPartial<Translations> = {
     chooseEmojiA11y: 'Choose an emoji for this food',
     mealNamePlaceholder: 'e.g. Beef pho',
     describeHint:
-      'Describe what you ate in one sentence and AI will estimate the nutrition. Voice input is coming soon.',
+      'Describe what you ate in one sentence — type it, or tap the mic to speak — and AI will estimate the nutrition.',
+    describeListening: 'Listening...',
+    describeStartListening: 'Start describing by voice',
+    describeStopListening: 'Stop recording',
+    describeMicPermissionTitle: 'Microphone access needed',
+    describeMicPermissionMessage:
+      "Allow FoodFen to use the microphone and speech recognition in your device's settings to use this.",
     smartEntryPlaceholder: 'e.g. A bowl of beef pho with extra herbs',
     smartEntryAnalyze: 'Analyze',
     aiAnalyzePhoto: 'Analyze photo',

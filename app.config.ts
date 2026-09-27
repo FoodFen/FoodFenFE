@@ -68,6 +68,15 @@ const OWN_PLUGINS: PluginEntry[] = [
         'FoodFen needs access to your photos so you can attach an existing picture to a meal.',
     },
   ],
+  [
+    'expo-speech-recognition',
+    {
+      microphonePermission:
+        'FoodFen uses the microphone so you can describe a meal by speaking instead of typing.',
+      speechRecognitionPermission:
+        'FoodFen uses speech recognition to turn what you say into text for describing a meal.',
+    },
+  ],
   ['expo-notifications', { color: '#16A34A' }],
   'expo-apple-authentication',
   [

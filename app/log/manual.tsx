@@ -2,6 +2,10 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { onlineManager } from '@tanstack/react-query';
 import * as ImagePicker from 'expo-image-picker';
 import { router, useLocalSearchParams } from 'expo-router';
+import {
+  ExpoSpeechRecognitionModule,
+  useSpeechRecognitionEvent,
+} from 'expo-speech-recognition';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Image, Keyboard, Pressable, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -52,9 +56,10 @@ import type { CatalogFood, InputMethod } from '@/types/models';
  * (`useAnalyzeFood`) and get back itemized ingredient rows, which are pushed
  * into `useDraftStore` and handed off to the meal composer
  * (`app/log/meal.tsx`) for the user to review and save — the AI never writes
- * a `food_entry` directly. Describe covers typing a one-sentence description
- * ("a bowl of beef pho") today; voice input reusing the same tab (speak, then
- * convert to that same text field) isn't built yet.
+ * a `food_entry` directly. Describe covers a one-sentence description
+ * ("a bowl of beef pho") typed or spoken — the mic button fills the same
+ * text field via on-device speech-to-text (`expo-speech-recognition`)
+ * rather than opening a separate flow.
  */
 
 type AmountUnit = 'g' | 'serving';
@@ -683,9 +688,9 @@ function ImageCapturePanel({
 
 /**
  * The Describe mode's whole-screen content: a one-sentence description in,
- * itemized ingredients out. Voice input isn't built yet — speaking would
- * just fill this same text field via speech-to-text, not add a separate
- * flow, so there's nothing here to gate on that today.
+ * itemized ingredients out — typed, or spoken via the trailing mic button,
+ * which fills the same text field through on-device speech-to-text rather
+ * than opening a separate flow.
  */
 function DescribePanel({
   text,
@@ -698,9 +703,69 @@ function DescribePanel({
   onAnalyze: () => void;
   isAnalyzing: boolean;
 }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
+  const [isListening, setIsListening] = useState(false);
+
+  // Tracks the latest `isListening` for the unmount cleanup below without
+  // making that effect re-run (and re-register) on every state change.
+  const isListeningRef = useRef(false);
+  useEffect(() => {
+    isListeningRef.current = isListening;
+  }, [isListening]);
+  useEffect(
+    () => () => {
+      // Switching to the Manual/Image tab mid-sentence must not leave the
+      // mic open in the background.
+      if (isListeningRef.current) ExpoSpeechRecognitionModule.abort();
+    },
+    [],
+  );
+
+  useSpeechRecognitionEvent('result', (event) => {
+    const transcript = event.results[0]?.transcript;
+    if (transcript) onChangeText(transcript);
+  });
+
+  useSpeechRecognitionEvent('end', () => setIsListening(false));
+
+  useSpeechRecognitionEvent('error', (event) => {
+    setIsListening(false);
+
+    if (event.error === 'not-allowed') {
+      Alert.alert(
+        t('logManual', 'describeMicPermissionTitle'),
+        t('logManual', 'describeMicPermissionMessage'),
+      );
+    }
+    // Any other error (no-speech, network, ...) just stops listening
+    // silently — the mic button is right there to try again.
+  });
+
+  const toggleListening = async () => {
+    if (isListening) {
+      ExpoSpeechRecognitionModule.stop();
+      return;
+    }
+
+    const permission = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+
+    if (!permission.granted) {
+      Alert.alert(
+        t('logManual', 'describeMicPermissionTitle'),
+        t('logManual', 'describeMicPermissionMessage'),
+      );
+      return;
+    }
+
+    haptics.selection();
+    setIsListening(true);
+    ExpoSpeechRecognitionModule.start({
+      lang: locale === 'vi' ? 'vi-VN' : 'en-US',
+      interimResults: true,
+    });
+  };
 
   return (
     <View className="flex-1 justify-center gap-6 p-6">
@@ -717,7 +782,29 @@ function DescribePanel({
         autoCapitalize="sentences"
         returnKeyType="done"
         autoFocus
+        trailing={
+          <Pressable
+            onPress={() => void toggleListening()}
+            accessibilityRole="button"
+            accessibilityLabel={t(
+              'logManual',
+              isListening ? 'describeStopListening' : 'describeStartListening',
+            )}
+            hitSlop={8}
+          >
+            <Ionicons
+              name={isListening ? 'stop-circle' : 'mic-outline'}
+              size={22}
+              color={isListening ? colors.danger : colors.brand}
+            />
+          </Pressable>
+        }
       />
+      {isListening ? (
+        <Text variant="caption" tone="brand" className="text-center">
+          {t('logManual', 'describeListening')}
+        </Text>
+      ) : null}
       <Button
         label={t('logManual', 'smartEntryAnalyze')}
         onPress={onAnalyze}
