@@ -17,6 +17,7 @@ import { pullDayLogs, pullFoodEntries } from '@/data/pull';
 import { pendingChangeCount, readWithRefresh } from '@/data/sync';
 import * as userRepository from '@/data/userRepository';
 import { suggestedMealType } from '@/features/diary/selectors';
+import { reconcileNotifications } from '@/features/notifications/reconcile';
 import { useProfileStore } from '@/features/profile/store';
 import type { DateKey } from '@/lib/date';
 import { isFutureDate, lastNDays, todayKey } from '@/lib/date';
@@ -195,6 +196,7 @@ export function useLogMeal() {
       const entry = entryRepository.createEntry({ ...input, userId });
 
       gamification.recordActiveDay(userId, input.loggedOn);
+      void reconcileNotifications(userId);
 
       return entry;
     },
@@ -221,6 +223,7 @@ export function useLogManualEntry() {
       const entry = entryRepository.createManualEntry({ ...input, userId });
 
       gamification.recordActiveDay(userId, input.loggedOn);
+      void reconcileNotifications(userId);
 
       return entry;
     },
@@ -300,6 +303,7 @@ export function useQuickLogFood() {
       });
 
       gamification.recordActiveDay(userId, today);
+      void reconcileNotifications(userId);
 
       return entry;
     },
@@ -356,6 +360,7 @@ export function useAddWater() {
       // UC-20 includes UC-22: logging water counts as "did something today",
       // same as every food-logging mutation.
       gamification.recordActiveDay(userId, date);
+      void reconcileNotifications(userId);
 
       return log;
     },
@@ -377,6 +382,7 @@ export function useSetWaterTotal() {
 
       logRepository.setWaterTotal(userId, date, targetMl);
       gamification.recordActiveDay(userId, date);
+      void reconcileNotifications(userId);
     },
     onSuccess: invalidate,
   });
@@ -428,6 +434,7 @@ export function useLogActivity() {
       const log = logRepository.addActivity({ ...input, userId });
 
       gamification.recordActiveDay(userId, input.date);
+      void reconcileNotifications(userId);
 
       return log;
     },

@@ -26,6 +26,7 @@ import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { clearSeededDays, seedRecentDays } from '@/data/devSeed';
 import { db, enableForeignKeys } from '@/db/client';
 import { connectAuthToApiClient, connectAuthToSync, useAuthStore } from '@/features/auth/store';
+import { reconcileNotifications } from '@/features/notifications/reconcile';
 import { useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -162,6 +163,14 @@ function AppShell({ migrated }: { migrated: boolean }) {
 
     void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
   }, [migrated, devSeedEnabled, profileId, queryClient]);
+
+  // Re-evaluate meal/streak notifications once the profile is available —
+  // covers first boot, and a profile appearing right after onboarding.
+  useEffect(() => {
+    if (!migrated || !profileId) return;
+
+    void reconcileNotifications(profileId);
+  }, [migrated, profileId]);
 
   // The navigator paints the screen background behind our own views during
   // transitions; without this it flashes white in dark mode.
