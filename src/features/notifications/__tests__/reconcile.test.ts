@@ -256,10 +256,58 @@ describe('reconcileNotifications — error handling', () => {
   it('never rejects, even if an internal read throws', async () => {
     const user = createUser();
 
-    jest.spyOn(entryRepository, 'getEntriesForDay').mockImplementation(() => {
+    // `mockImplementationOnce`, not `mockImplementation` — a spy left
+    // throwing forever would leak into every later test in this file that
+    // also spies on `getEntriesForDay`.
+    jest.spyOn(entryRepository, 'getEntriesForDay').mockImplementationOnce(() => {
       throw new Error('boom');
     });
 
     await expect(reconcileNotifications(user.id, NOW)).resolves.toBeUndefined();
+  });
+});
+
+/** Flushes pending microtasks and one macrotask tick. */
+function flush(): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, 0));
+}
+
+describe('reconcileNotifications — overlapping calls', () => {
+  it('serializes overlapping calls so the second does not start until the first fully settles', async () => {
+    const user = createUser();
+
+    // Two logging mutations firing close together both call
+    // reconcileNotifications without awaiting each other. Without
+    // serialization the second call's read could interleave with the
+    // first's still-pending native writes and leave a stale schedule.
+    let releaseFirst: () => void = () => {};
+    const gate = new Promise<void>((resolve) => {
+      releaseFirst = resolve;
+    });
+    let scheduleAtCalls = 0;
+
+    mockedScheduler.scheduleAt.mockImplementation(async () => {
+      scheduleAtCalls += 1;
+      if (scheduleAtCalls === 1) await gate;
+    });
+
+    const getEntriesSpy = jest.spyOn(entryRepository, 'getEntriesForDay');
+
+    const firstCall = reconcileNotifications(user.id, NOW);
+
+    await flush();
+    expect(getEntriesSpy).toHaveBeenCalledTimes(1);
+
+    const secondCall = reconcileNotifications(user.id, NOW);
+
+    await flush();
+    // The first call is still stalled on its very first scheduleAt — the
+    // second call must not have started its own read yet.
+    expect(getEntriesSpy).toHaveBeenCalledTimes(1);
+
+    releaseFirst();
+    await Promise.all([firstCall, secondCall]);
+
+    expect(getEntriesSpy).toHaveBeenCalledTimes(2);
   });
 });

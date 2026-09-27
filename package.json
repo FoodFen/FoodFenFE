@@ -117,7 +117,8 @@
       "/node_modules/",
       "/android/",
       "/ios/",
-      "/.expo/"
+      "/.expo/",
+      "/.claude/"
     ]
   }
 }

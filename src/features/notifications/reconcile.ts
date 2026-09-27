@@ -39,6 +39,14 @@ const MEAL_COPY_KEYS: Record<
 const MEALS: Meal[] = ['breakfast', 'lunch', 'dinner'];
 
 /**
+ * Serializes every call below: two calls fired close together (e.g. two
+ * logging mutations completing near-simultaneously) would otherwise
+ * interleave their reads and native writes and could leave a stale
+ * schedule behind. Each call now fully settles before the next one starts.
+ */
+let reconcileQueue: Promise<void> = Promise.resolve();
+
+/**
  * Re-evaluates both notification categories against today's actual state
  * and schedules/cancels accordingly. Cheap — a handful of SQLite reads plus
  * at most 4 schedule/cancel calls — so it's safe to call on every trigger
@@ -48,7 +56,15 @@ const MEALS: Meal[] = ['breakfast', 'lunch', 'dinner'];
  * exists so tests can pin every date/time decision below instead of
  * depending on the wall clock at run time.
  */
-export async function reconcileNotifications(userId: string, now: Date = new Date()): Promise<void> {
+export function reconcileNotifications(userId: string, now: Date = new Date()): Promise<void> {
+  const run = reconcileQueue.then(() => reconcileOnce(userId, now));
+
+  reconcileQueue = run;
+
+  return run;
+}
+
+async function reconcileOnce(userId: string, now: Date): Promise<void> {
   try {
     const { mealRemindersEnabled, streakRemindersEnabled, locale } = useSettingsStore.getState();
     const today = toDateKey(now);
