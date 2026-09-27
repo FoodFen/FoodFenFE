@@ -1,8 +1,8 @@
 import { onlineManager } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
-import * as WebBrowser from 'expo-web-browser';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, View } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
 
 import { isApiError } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
@@ -30,10 +30,11 @@ type Stage = 'idle' | 'checking-out' | 'awaiting-payment' | 'error';
  *
  * There's no card form here — PayOS is a hosted bank-transfer/VietQR
  * checkout, not native IAP (see `docs/backend-contracts/
- * premium-entitlements.md`). This screen starts a checkout, sends the user
- * to PayOS's page, then polls for the result: PayOS confirms payment to our
- * backend via a webhook, never to the client directly, so a closed browser
- * only means the page is gone, not that payment succeeded.
+ * premium-entitlements.md`). Rather than sending the user to PayOS's hosted
+ * page, this screen renders the checkout's `qrCode` (a VietQR string) inline
+ * and polls for the result: PayOS confirms payment to our backend via a
+ * webhook, never to the client directly, so the QR staying on screen only
+ * means the user hasn't paid yet, not that anything failed.
  */
 export default function PremiumPaymentScreen() {
   const { plan, label, price, period } = useLocalSearchParams<{
@@ -53,6 +54,7 @@ export default function PremiumPaymentScreen() {
 
   const [stage, setStage] = useState<Stage>('idle');
   const [orderCode, setOrderCode] = useState<number | null>(null);
+  const [qrCode, setQrCode] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   // Guards against handling the same "left pending" status twice — the
   // status query can re-render after its effect already fired.
@@ -104,8 +106,7 @@ export default function PremiumPaymentScreen() {
       const result = await checkout.mutateAsync(planType);
 
       setOrderCode(result.orderCode);
-      await WebBrowser.openAuthSessionAsync(result.checkoutUrl, 'foodfen://premium/return');
-
+      setQrCode(result.qrCode);
       setStage('awaiting-payment');
     } catch (error) {
       setStage('error');
@@ -118,12 +119,14 @@ export default function PremiumPaymentScreen() {
 
     setStage('idle');
     setOrderCode(null);
+    setQrCode(null);
     handledStatusRef.current = false;
   };
 
   const onRetry = () => {
     setStage('idle');
     setOrderCode(null);
+    setQrCode(null);
     setErrorMessage(null);
     handledStatusRef.current = false;
   };
@@ -186,7 +189,13 @@ export default function PremiumPaymentScreen() {
 
         {stage === 'awaiting-payment' && !pollFailed ? (
           <Card className="items-center gap-3 py-6">
-            <ActivityIndicator />
+            {qrCode ? (
+              <View className="rounded-card bg-white p-3">
+                <QRCode value={qrCode} size={220} />
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
             <Text variant="heading" className="text-center">
               {t('premiumPayment', 'waitingTitle')}
             </Text>
