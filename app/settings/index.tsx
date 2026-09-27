@@ -1,4 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import * as Notifications from 'expo-notifications';
 import { router, Stack } from 'expo-router';
 import { Alert, Pressable, View } from 'react-native';
 
@@ -9,6 +10,7 @@ import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
 import { useDiaryDay, usePendingChanges } from '@/features/diary/queries';
 import { useLogSheetStore } from '@/features/logging/store';
+import { reconcileNotifications } from '@/features/notifications/reconcile';
 import { useIsPremium, useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import type { ThemePreference } from '@/features/settings/store';
@@ -52,6 +54,12 @@ export default function SettingsScreen() {
   );
   const healthSyncEnabled = useSettingsStore((state) => state.healthSyncEnabled);
   const setHealthSyncEnabled = useSettingsStore((state) => state.setHealthSyncEnabled);
+  const mealRemindersEnabled = useSettingsStore((state) => state.mealRemindersEnabled);
+  const setMealRemindersEnabled = useSettingsStore((state) => state.setMealRemindersEnabled);
+  const streakRemindersEnabled = useSettingsStore((state) => state.streakRemindersEnabled);
+  const setStreakRemindersEnabled = useSettingsStore(
+    (state) => state.setStreakRemindersEnabled,
+  );
 
   const languageOptions: { value: Locale; label: string }[] = [
     { value: 'vi', label: t('profileLanguage', 'vietnamese') },
@@ -98,6 +106,47 @@ export default function SettingsScreen() {
       setHealthSyncEnabled(true);
     } else {
       Alert.alert(t('healthSync', 'heading'), t('healthSync', 'permissionDenied'));
+    }
+  };
+
+  const requestNotificationPermission = async (): Promise<boolean> => {
+    const { granted } = await Notifications.getPermissionsAsync();
+
+    if (granted) return true;
+
+    return (await Notifications.requestPermissionsAsync()).granted;
+  };
+
+  const toggleMealReminders = async (value: boolean) => {
+    if (!value) {
+      setMealRemindersEnabled(false);
+      void reconcileNotifications(user.id);
+      return;
+    }
+
+    if (await requestNotificationPermission()) {
+      setMealRemindersEnabled(true);
+      void reconcileNotifications(user.id);
+    } else {
+      Alert.alert(t('notifications', 'mealRemindersHeading'), t('notifications', 'permissionDenied'));
+    }
+  };
+
+  const toggleStreakReminders = async (value: boolean) => {
+    if (!value) {
+      setStreakRemindersEnabled(false);
+      void reconcileNotifications(user.id);
+      return;
+    }
+
+    if (await requestNotificationPermission()) {
+      setStreakRemindersEnabled(true);
+      void reconcileNotifications(user.id);
+    } else {
+      Alert.alert(
+        t('notifications', 'streakRemindersHeading'),
+        t('notifications', 'permissionDenied'),
+      );
     }
   };
 
@@ -354,6 +403,36 @@ export default function SettingsScreen() {
         />
         <Text variant="caption" tone="subtle">
           {t('healthSync', 'caption')}
+        </Text>
+      </Card>
+
+      <Card className="gap-3">
+        <Text variant="heading">{t('notifications', 'mealRemindersHeading')}</Text>
+        <SegmentedControl
+          options={[
+            { value: 'on' as const, label: t('developer', 'on') },
+            { value: 'off' as const, label: t('developer', 'off') },
+          ]}
+          value={mealRemindersEnabled ? 'on' : 'off'}
+          onChange={(value) => void toggleMealReminders(value === 'on')}
+        />
+        <Text variant="caption" tone="subtle">
+          {t('notifications', 'mealRemindersCaption')}
+        </Text>
+      </Card>
+
+      <Card className="gap-3">
+        <Text variant="heading">{t('notifications', 'streakRemindersHeading')}</Text>
+        <SegmentedControl
+          options={[
+            { value: 'on' as const, label: t('developer', 'on') },
+            { value: 'off' as const, label: t('developer', 'off') },
+          ]}
+          value={streakRemindersEnabled ? 'on' : 'off'}
+          onChange={(value) => void toggleStreakReminders(value === 'on')}
+        />
+        <Text variant="caption" tone="subtle">
+          {t('notifications', 'streakRemindersCaption')}
         </Text>
       </Card>
 
