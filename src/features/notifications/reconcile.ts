@@ -5,6 +5,7 @@ import * as notificationRepository from '@/data/notificationRepository';
 import { useSettingsStore } from '@/features/settings/store';
 import type { DateKey } from '@/lib/date';
 import { shiftDateKey, toDateKey } from '@/lib/date';
+import { env } from '@/lib/env';
 import { translate, type Locale, type Translations } from '@/lib/i18n';
 import {
   atTime,
@@ -16,6 +17,7 @@ import {
   streakNudgeTime,
   tomorrowAt,
 } from '@/lib/notificationScheduler';
+import type { FoodEntry } from '@/types/models';
 
 type Meal = 'breakfast' | 'lunch' | 'dinner';
 
@@ -47,18 +49,28 @@ const MEALS: Meal[] = ['breakfast', 'lunch', 'dinner'];
  * depending on the wall clock at run time.
  */
 export async function reconcileNotifications(userId: string, now: Date = new Date()): Promise<void> {
-  const { mealRemindersEnabled, streakRemindersEnabled, locale } = useSettingsStore.getState();
-  const today = toDateKey(now);
+  try {
+    const { mealRemindersEnabled, streakRemindersEnabled, locale } = useSettingsStore.getState();
+    const today = toDateKey(now);
+    const todaysEntries = entryRepository.getEntriesForDay(userId, today);
 
-  await Promise.all([
-    ...MEALS.map((meal) => reconcileMeal(userId, today, meal, mealRemindersEnabled, locale, now)),
-    reconcileStreak(userId, today, streakRemindersEnabled, locale, now),
-  ]);
+    await Promise.all([
+      ...MEALS.map((meal) =>
+        reconcileMeal(userId, todaysEntries, meal, mealRemindersEnabled, locale, now),
+      ),
+      reconcileStreak(userId, today, streakRemindersEnabled, locale, now),
+    ]);
+  } catch (error) {
+    // Every call site is fire-and-forget (`void reconcileNotifications(...)`)
+    // — an uncaught rejection here would otherwise become an unhandled
+    // promise rejection with nothing to observe it.
+    if (env.isDev) console.warn('[notifications] reconcile failed', error);
+  }
 }
 
 async function reconcileMeal(
   userId: string,
-  today: DateKey,
+  todaysEntries: FoodEntry[],
   meal: Meal,
   enabled: boolean,
   locale: Locale,
@@ -71,9 +83,7 @@ async function reconcileMeal(
     return;
   }
 
-  const alreadyLogged = entryRepository
-    .getEntriesForDay(userId, today)
-    .some((entry) => entry.mealType === meal);
+  const alreadyLogged = todaysEntries.some((entry) => entry.mealType === meal);
 
   const time = notificationRepository.medianMealTime(userId, meal) ?? DEFAULT_MEAL_TIMES[meal];
   const { titleKey, bodyKey } = MEAL_COPY_KEYS[meal];

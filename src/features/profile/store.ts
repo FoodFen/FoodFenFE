@@ -6,6 +6,7 @@ import * as userRepository from '@/data/userRepository';
 import type { CreateUserInput } from '@/data/userRepository';
 import { eraseDatabase } from '@/db/client';
 import { useSettingsStore } from '@/features/settings/store';
+import { cancelAll } from '@/lib/notificationScheduler';
 import { queryKeys } from '@/lib/queryClient';
 import type { UserProfile } from '@/types/models';
 
@@ -84,6 +85,13 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
   eraseAll: () => {
     eraseDatabase();
     useSettingsStore.getState().resetOnboarding();
+    // The erased diary/streak this device knew about is gone — any reminder
+    // already scheduled would otherwise nudge about data that no longer
+    // exists, so both settings go back to off and every pending
+    // notification is cancelled, same as a fresh install.
+    useSettingsStore.getState().setMealRemindersEnabled(false);
+    useSettingsStore.getState().setStreakRemindersEnabled(false);
+    void cancelAll();
     // Still loaded — the tables exist and were just read as empty. Only the
     // profile is gone, which is exactly the state onboarding expects.
     set({ profile: null, isLoaded: true });

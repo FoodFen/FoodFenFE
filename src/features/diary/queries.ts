@@ -312,11 +312,19 @@ export function useQuickLogFood() {
 }
 
 export function useUpdateEntry() {
+  const userId = useUserId();
   const invalidate = useDiaryInvalidation();
 
   return useMutation({
-    mutationFn: async ({ id, patch }: { id: string; patch: UpdateEntryInput }) =>
-      entryRepository.updateEntry(id, patch),
+    mutationFn: async ({ id, patch }: { id: string; patch: UpdateEntryInput }) => {
+      const entry = entryRepository.updateEntry(id, patch);
+
+      // A meal-type change or a move to a different day can flip whether
+      // today's reminder for either meal type should still be pending.
+      if (userId) void reconcileNotifications(userId);
+
+      return entry;
+    },
     onSuccess: invalidate,
   });
 }
@@ -329,20 +337,33 @@ export function useUpdateEntry() {
  * uses `useUpdateEntry` with a rebuilt row instead.
  */
 export function useUpdateManualEntry() {
+  const userId = useUserId();
   const invalidate = useDiaryInvalidation();
 
   return useMutation({
-    mutationFn: async ({ id, patch }: { id: string; patch: UpdateManualEntryInput }) =>
-      entryRepository.updateManualEntry(id, patch),
+    mutationFn: async ({ id, patch }: { id: string; patch: UpdateManualEntryInput }) => {
+      const entry = entryRepository.updateManualEntry(id, patch);
+
+      if (userId) void reconcileNotifications(userId);
+
+      return entry;
+    },
     onSuccess: invalidate,
   });
 }
 
 export function useDeleteEntry() {
+  const userId = useUserId();
   const invalidate = useDiaryInvalidation();
 
   return useMutation({
-    mutationFn: async ({ id }: { id: string }) => entryRepository.deleteEntry(id),
+    mutationFn: async ({ id }: { id: string }) => {
+      entryRepository.deleteEntry(id);
+
+      // Deleting today's only entry for a meal un-satisfies that meal's
+      // reminder — reconcile so it's rescheduled rather than left cancelled.
+      if (userId) void reconcileNotifications(userId);
+    },
     onSuccess: invalidate,
   });
 }

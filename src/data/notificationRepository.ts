@@ -46,7 +46,8 @@ export function medianMealTime(
   mealType: 'breakfast' | 'lunch' | 'dinner',
   days = 14,
 ): TimeOfDay | null {
-  const since = shiftDateKey(todayKey(), -days);
+  // `days` calendar days inclusive of today: today, today-1, ..., today-(days-1).
+  const since = shiftDateKey(todayKey(), -(days - 1));
 
   const rows = db
     .select({ loggedAt: foodEntry.loggedAt })
@@ -72,7 +73,8 @@ export function medianMealTime(
  * distinct days have any data.
  */
 export function medianLastLogTime(userId: string, days = 14): TimeOfDay | null {
-  const since = shiftDateKey(todayKey(), -days);
+  // `days` calendar days inclusive of today: today, today-1, ..., today-(days-1).
+  const since = shiftDateKey(todayKey(), -(days - 1));
 
   const rows = [
     ...db

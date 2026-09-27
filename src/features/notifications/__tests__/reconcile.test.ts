@@ -18,6 +18,16 @@ jest.mock('@/db/client', () => ({
   },
 }));
 
+// `jest.requireActual('@/lib/notificationScheduler')` below pulls in the real
+// expo-notifications module, which otherwise logs an "Expo Go push" warning
+// on import — mocked here purely to keep test output clean.
+jest.mock('expo-notifications', () => ({
+  SchedulableTriggerInputTypes: { DATE: 'date' },
+  scheduleNotificationAsync: jest.fn(async () => 'scheduled-id'),
+  cancelScheduledNotificationAsync: jest.fn(async () => undefined),
+  cancelAllScheduledNotificationsAsync: jest.fn(async () => undefined),
+}));
+
 jest.mock('@/lib/notificationScheduler', () => {
   const actual = jest.requireActual('@/lib/notificationScheduler');
 
@@ -239,5 +249,17 @@ describe('reconcileNotifications — streak-at-risk', () => {
       expect.anything(),
       expect.anything(),
     );
+  });
+});
+
+describe('reconcileNotifications — error handling', () => {
+  it('never rejects, even if an internal read throws', async () => {
+    const user = createUser();
+
+    jest.spyOn(entryRepository, 'getEntriesForDay').mockImplementation(() => {
+      throw new Error('boom');
+    });
+
+    await expect(reconcileNotifications(user.id, NOW)).resolves.toBeUndefined();
   });
 });

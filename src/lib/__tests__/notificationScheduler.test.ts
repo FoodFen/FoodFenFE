@@ -4,6 +4,7 @@ import * as Notifications from 'expo-notifications';
 import {
   atTime,
   cancel,
+  cancelAll,
   DEFAULT_LAST_LOG_TIME,
   DEFAULT_MEAL_TIMES,
   nextOccurrence,
@@ -16,6 +17,7 @@ jest.mock('expo-notifications', () => ({
   SchedulableTriggerInputTypes: { DATE: 'date' },
   scheduleNotificationAsync: jest.fn(async () => 'scheduled-id'),
   cancelScheduledNotificationAsync: jest.fn(async () => undefined),
+  cancelAllScheduledNotificationsAsync: jest.fn(async () => undefined),
 }));
 
 describe('nextOccurrence', () => {
@@ -95,6 +97,14 @@ describe('cancel', () => {
     await cancel('streak-risk');
 
     expect(Notifications.cancelScheduledNotificationAsync).toHaveBeenCalledWith('streak-risk');
+  });
+});
+
+describe('cancelAll', () => {
+  it('delegates to cancelAllScheduledNotificationsAsync', async () => {
+    await cancelAll();
+
+    expect(Notifications.cancelAllScheduledNotificationsAsync).toHaveBeenCalled();
   });
 });
 

@@ -91,3 +91,8 @@ export async function scheduleAt(
 export async function cancel(id: NotificationId): Promise<void> {
   await Notifications.cancelScheduledNotificationAsync(id);
 }
+
+/** Cancels every pending local notification, regardless of category. */
+export async function cancelAll(): Promise<void> {
+  await Notifications.cancelAllScheduledNotificationsAsync();
+}

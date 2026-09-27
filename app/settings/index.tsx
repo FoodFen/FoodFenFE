@@ -83,6 +83,13 @@ export default function SettingsScreen() {
         ? t('onboardingGender', 'female')
         : t('onboardingGender', 'other');
 
+  const handleSetLocale = (nextLocale: Locale) => {
+    setLocale(nextLocale);
+    // A pending notification's title/body were built in the old locale —
+    // re-run so the next one reflects the change.
+    void reconcileNotifications(user.id);
+  };
+
   const confirmSignOut = () => {
     Alert.alert(t('profile', 'signOut'), t('profile', 'signOutMessage'), [
       { text: t('common', 'cancel'), style: 'cancel' },
@@ -356,7 +363,7 @@ export default function SettingsScreen() {
 
       <Card className="gap-3">
         <Text variant="heading">{t('profileLanguage', 'heading')}</Text>
-        <SegmentedControl options={languageOptions} value={locale} onChange={setLocale} />
+        <SegmentedControl options={languageOptions} value={locale} onChange={handleSetLocale} />
       </Card>
 
       <Card className="gap-3">

@@ -140,6 +140,19 @@ describe('medianMealTime', () => {
     // Only 2 live entries remain — below the 3-sample threshold.
     expect(notificationRepository.medianMealTime(user.id, 'lunch')).toBeNull();
   });
+
+  it('spans exactly `days` calendar days, inclusive of today, not days+1', () => {
+    const user = createUser();
+
+    logMealAt(user.id, 'lunch', daysAgo(0), 12, 0);
+    logMealAt(user.id, 'lunch', daysAgo(1), 12, 0);
+    // With `days: 2` the window is [today-1, today] — a day-3 entry existing
+    // is irrelevant; a day-2 entry (one day too old) must already fall
+    // outside it, leaving only 2 live samples, below the 3-sample floor.
+    logMealAt(user.id, 'lunch', daysAgo(2), 12, 0);
+
+    expect(notificationRepository.medianMealTime(user.id, 'lunch', 2)).toBeNull();
+  });
 });
 
 describe('medianLastLogTime', () => {
@@ -150,6 +163,16 @@ describe('medianLastLogTime', () => {
     logMealAt(user.id, 'lunch', daysAgo(1), 12, 0);
 
     expect(notificationRepository.medianLastLogTime(user.id)).toBeNull();
+  });
+
+  it('spans exactly `days` calendar days, inclusive of today, not days+1', () => {
+    const user = createUser();
+
+    logMealAt(user.id, 'lunch', daysAgo(0), 12, 0);
+    logMealAt(user.id, 'lunch', daysAgo(1), 12, 0);
+    logMealAt(user.id, 'lunch', daysAgo(2), 12, 0);
+
+    expect(notificationRepository.medianLastLogTime(user.id, 2)).toBeNull();
   });
 
   it('takes the latest log of each day across food, activity, and water', () => {
