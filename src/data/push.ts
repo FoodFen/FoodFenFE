@@ -3,7 +3,16 @@ import { and, eq, isNull, or, sql } from 'drizzle-orm';
 import { syncApi } from '@/api/endpoints/sync';
 import type { PushActivityLogInput, PushFoodEntryInput } from '@/api/endpoints/sync';
 import { db } from '@/db/client';
-import { activityLog, dailyGoal, foodEntry, ingredient, user, waterLog, weightLog } from '@/db/schema';
+import {
+  activityLog,
+  dailyGoal,
+  foodEntry,
+  ingredient,
+  streak,
+  user,
+  waterLog,
+  weightLog,
+} from '@/db/schema';
 import type { UserProfile } from '@/types/models';
 
 import { markSynced } from './sync';
@@ -79,6 +88,35 @@ export async function pushDailyGoals(userId: string): Promise<void> {
     } catch (error) {
       console.warn('[push] daily goal failed, will retry next sync', row.id, error);
     }
+  }
+}
+
+/** There is at most one dirty streak row per user — a singleton, not a list. */
+export async function pushStreak(userId: string): Promise<void> {
+  const [row] = db
+    .select()
+    .from(streak)
+    .where(
+      and(
+        eq(streak.userId, userId),
+        or(isNull(streak.syncedAt), sql`${streak.updatedAt} > ${streak.syncedAt}`),
+      ),
+    )
+    .all();
+
+  if (!row) return;
+
+  try {
+    const remote = await syncApi.pushStreak({
+      currentStreak: row.currentStreak,
+      longestStreak: row.longestStreak,
+      lastActiveDate: row.lastActiveDate,
+    });
+
+    markSynced(streak, row.id, remote.id);
+    console.warn('[push] streak synced', row.id, '->', remote.id);
+  } catch (error) {
+    console.warn('[push] streak failed, will retry next sync', row.id, error);
   }
 }
 
@@ -297,6 +335,7 @@ export async function pushAll(profile: UserProfile): Promise<void> {
 
   await pushUserProfile(profile);
   await pushDailyGoals(profile.id);
+  await pushStreak(profile.id);
   await pushDayLogs(profile.id);
   await pushFoodEntries(profile.id);
 

@@ -3,16 +3,18 @@ import { eq } from 'drizzle-orm';
 import { syncApi } from '@/api/endpoints/sync';
 import type { RemoteFoodEntry } from '@/api/schemas';
 import { db } from '@/db/client';
-import { activityLog, foodEntry, ingredient, user, waterLog, weightLog } from '@/db/schema';
+import { activityLog, foodEntry, ingredient, streak, user, waterLog, weightLog } from '@/db/schema';
 import type { TestDatabase } from '@/db/testDatabase';
 import { createTestDatabase } from '@/db/testDatabase';
 
 import * as entryRepository from '../entryRepository';
+import * as gamification from '../gamificationRepository';
 import * as logRepository from '../logRepository';
 import {
   pushDailyGoals,
   pushDayLogs,
   pushFoodEntries,
+  pushStreak,
   pushUserProfile,
 } from '../push';
 import * as userRepository from '../userRepository';
@@ -29,6 +31,7 @@ jest.mock('@/api/endpoints/sync', () => ({
   syncApi: {
     pushUser: jest.fn(),
     pushGoal: jest.fn(),
+    pushStreak: jest.fn(),
     createFoodEntry: jest.fn(),
     updateFoodEntry: jest.fn(),
     deleteFoodEntry: jest.fn(),
@@ -134,6 +137,53 @@ describe('pushDailyGoals', () => {
 
     const goal = userRepository.getGoalForDate(localUser.id, '2026-03-10');
     expect(goal?.remoteId).toBe('goal_remote_1');
+  });
+});
+
+describe('pushStreak', () => {
+  it('pushes the account streak row and stores the server id', async () => {
+    const localUser = createUser();
+    mockedSyncApi.pushStreak.mockResolvedValue({
+      id: 'streak_remote_1',
+      userId: 1,
+      currentStreak: 3,
+      longestStreak: 5,
+      lastActiveDate: '2026-03-10',
+    });
+
+    gamification.recordActiveDay(localUser.id, '2026-03-08');
+    gamification.recordActiveDay(localUser.id, '2026-03-09');
+    gamification.recordActiveDay(localUser.id, '2026-03-10');
+
+    await pushStreak(localUser.id);
+
+    expect(mockedSyncApi.pushStreak).toHaveBeenCalledWith(
+      expect.objectContaining({ currentStreak: 3, lastActiveDate: '2026-03-10' }),
+    );
+
+    const [row] = db.select().from(streak).where(eq(streak.userId, localUser.id)).all();
+    expect(row?.remoteId).toBe('streak_remote_1');
+    expect(row?.syncedAt).not.toBeNull();
+  });
+
+  it('does nothing when there is no streak row yet', async () => {
+    const localUser = createUser();
+
+    await pushStreak(localUser.id);
+
+    expect(mockedSyncApi.pushStreak).not.toHaveBeenCalled();
+  });
+
+  it('leaves the row dirty when the request fails', async () => {
+    const localUser = createUser();
+    mockedSyncApi.pushStreak.mockRejectedValue(new Error('network down'));
+
+    gamification.recordActiveDay(localUser.id, '2026-03-10');
+
+    await pushStreak(localUser.id);
+
+    const [row] = db.select().from(streak).where(eq(streak.userId, localUser.id)).all();
+    expect(row?.syncedAt).toBeNull();
   });
 });
 

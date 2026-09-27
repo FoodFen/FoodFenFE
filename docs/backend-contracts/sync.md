@@ -266,6 +266,32 @@ Request: `clientId`, `targetKcal`, `targetCarbsG`, `targetProteinG`,
 
 Response `200`: the full `DailyGoal` object (with server `id`).
 
+### Streak
+
+**New since the last version of this doc.** `streak` carries the same sync
+columns as every other table but was missing from the client's
+`SYNCED_TABLES` list — a client-side oversight this doc used to flag as FYI
+without asking for backend work. Now fixed on the client, so this needs a
+real endpoint.
+
+`recordActiveDay()` maintains exactly one row per account — `currentStreak`,
+`longestStreak`, `lastActiveDate` — incrementally, not derived from
+`food_entry`/`activity_log` history at read time. Without syncing it, two
+devices logging on different days would each keep their own, possibly-wrong
+streak count.
+
+`POST /streak` only — upserts the account's one row, same spirit as daily
+goals but keyed on the account itself rather than `(user, effectiveDate)`,
+since there is exactly one row, ever. No `clientId`: retrying the same
+numbers is already idempotent (upserting identical values twice is a no-op
+either way), so there's no "which one" for an id to disambiguate.
+
+Request: `currentStreak`, `longestStreak`, `lastActiveDate` (`yyyy-MM-dd` or
+`null` — a fresh account has never logged anything).
+
+Response `200`: `{ id, userId, currentStreak, longestStreak, lastActiveDate }`
+(with server `id`, assigned on the first-ever push).
+
 ### Food entries (+ ingredients)
 
 Already exists (`POST /food-entries`, `GET /food-entries/{id}`) —
@@ -333,13 +359,6 @@ purchase | spend | adjustment`), `createdAt`.
   `premium-entitlements.md` already owns that table via `GET
   /subscriptions/me` and the PayOS checkout flow; a generic sync path for
   it would let a client push its own fabricated entitlement.
-- **`streak`** carries the same sync columns as everything else in
-  `src/db/schema.ts` but is **not** in the client's `SYNCED_TABLES` list
-  (`src/data/sync.ts`), so `pendingChangeCount()` never surfaces it and
-  nothing would call a push endpoint for it even if one existed. That
-  looks like a client-side oversight rather than a deliberate exclusion —
-  flagged here as FYI, not something this contract asks the backend to
-  build around.
 
 ## Errors
 

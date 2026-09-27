@@ -86,6 +86,15 @@ export const dailyGoalSchema = z.object({
   effectiveDate: dateKeySchema,
 });
 
+/** A singleton per account, upserted rather than keyed by any date — see `pushGoal` vs `pushStreak`. */
+export const streakSchema = z.object({
+  id: z.string(),
+  userId: z.number().int(),
+  currentStreak: z.number().int().nonnegative(),
+  longestStreak: z.number().int().nonnegative(),
+  lastActiveDate: dateKeySchema.nullable(),
+});
+
 export const ingredientSchema = z.object({
   id: z.string(),
   foodEntryId: z.string(),
@@ -215,6 +224,7 @@ export const subscriptionMeResponseSchema = z.object({
 
 export type RemoteUser = z.infer<typeof userSchema>;
 export type RemoteDailyGoal = z.infer<typeof dailyGoalSchema>;
+export type RemoteStreak = z.infer<typeof streakSchema>;
 export type RemoteFoodEntry = z.infer<typeof foodEntrySchema>;
 export type RemoteIngredient = z.infer<typeof ingredientSchema>;
 export type RemoteActivityLog = z.infer<typeof activityLogSchema>;

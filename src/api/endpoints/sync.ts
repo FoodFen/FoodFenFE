@@ -5,6 +5,7 @@ import {
   activityLogSchema,
   dailyGoalSchema,
   foodEntrySchema,
+  streakSchema,
   userSchema,
   waterLogSchema,
   weightLogSchema,
@@ -13,6 +14,7 @@ import type {
   RemoteActivityLog,
   RemoteDailyGoal,
   RemoteFoodEntry,
+  RemoteStreak,
   RemoteUser,
   RemoteWaterLog,
   RemoteWeightLog,
@@ -71,6 +73,18 @@ export interface PushGoalInput {
   targetFatG: number;
   targetWaterMl: number;
   effectiveDate: DateKey;
+}
+
+/**
+ * No `clientId` — unlike every other pushed resource, a streak is a
+ * singleton per account (there is exactly one row, ever), so there is no
+ * "which one" for an id to disambiguate. Naturally idempotent: pushing the
+ * same numbers twice just upserts to the same result.
+ */
+export interface PushStreakInput {
+  currentStreak: number;
+  longestStreak: number;
+  lastActiveDate: DateKey | null;
 }
 
 export interface PushIngredientInput {
@@ -172,6 +186,10 @@ export const syncApi = {
   /** Upserts on `(userId, effectiveDate)` server-side — always a POST, never a PATCH. */
   pushGoal: (input: PushGoalInput): Promise<RemoteDailyGoal> =>
     api.post('daily-goals', input, { schema: dailyGoalSchema }),
+
+  /** Upserts the account's one streak row — always a POST, never a PATCH. */
+  pushStreak: (input: PushStreakInput): Promise<RemoteStreak> =>
+    api.post('streak', input, { schema: streakSchema }),
 
   createFoodEntry: (input: PushFoodEntryInput): Promise<RemoteFoodEntry> =>
     api.post('food-entries', input, { schema: foodEntrySchema }),
