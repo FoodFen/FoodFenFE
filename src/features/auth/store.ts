@@ -8,6 +8,7 @@ import { authSessionSchema } from '@/api/schemas';
 import type { RemoteAuthSession } from '@/api/schemas';
 import { configureSyncAuth } from '@/data/sync';
 import { getAppleCredential, getGoogleIdToken } from '@/features/auth/social';
+import { env } from '@/lib/env';
 
 /**
  * The optional account session.
@@ -68,7 +69,8 @@ async function readSession(): Promise<AuthSession | null> {
     // A session written by an older app version may no longer parse. Treat it
     // as signed out rather than crashing on launch.
     return parsed.success ? parsed.data : null;
-  } catch {
+  } catch (error) {
+    if (env.isDev) console.warn('[auth] Failed to read stored session; treating as signed out.', error);
     return null;
   }
 }
@@ -131,8 +133,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     await persistSession(null);
 
     if (session) {
-      await authApi.signOut(session.refreshToken).catch(() => {
+      await authApi.signOut(session.refreshToken).catch((error: unknown) => {
         // Best effort — the refresh token expires on its own.
+        if (env.isDev) console.warn('[auth] Sign-out request failed (best effort).', error);
       });
     }
   },
@@ -164,7 +167,8 @@ export function connectAuthToApiClient(): void {
         useAuthStore.setState({ session: next, status: 'authenticated' });
 
         return next.accessToken;
-      } catch {
+      } catch (error) {
+        if (env.isDev) console.warn('[auth] Session refresh failed; signing out.', error);
         return null;
       }
     },

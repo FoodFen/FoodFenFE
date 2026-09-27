@@ -87,7 +87,11 @@ function EditForm({ entry }: { entry: FoodEntry }) {
       numbersEditable &&
       kcal !== null &&
       macrosPresent &&
-      !macrosReconcile(kcal, { carbsG: carbsG ?? 0, proteinG: proteinG ?? 0, fatG: fatG ?? 0 }),
+      !macrosReconcile(kcal, {
+        carbsG: carbsG ?? 0,
+        proteinG: proteinG ?? 0,
+        fatG: fatG ?? 0,
+      }),
     [numbersEditable, kcal, macrosPresent, carbsG, proteinG, fatG],
   );
 
@@ -182,10 +186,10 @@ function EditForm({ entry }: { entry: FoodEntry }) {
             onChangeText={setEmoji}
             selectTextOnFocus
             accessibilityLabel={t('logManual', 'chooseEmojiA11y')}
-            className="h-12 w-12 rounded-lg border border-border bg-surface text-center text-2xl"
+            className="h-12 w-12 rounded-card border border-border bg-surface text-center text-2xl"
           />
           <TextInput
-            className="h-12 flex-1 rounded-lg border border-border bg-surface px-3 font-sans text-base text-fg"
+            className="h-12 flex-1 rounded-card border border-border bg-surface px-3 font-sans text-base text-fg"
             value={name}
             onChangeText={setName}
             placeholder={t('entryEdit', 'name')}
@@ -210,8 +214,10 @@ function EditForm({ entry }: { entry: FoodEntry }) {
               accessibilityRole="radio"
               accessibilityState={{ selected: mealType === m }}
               className={cn(
-                'flex-1 items-center gap-0.5 rounded-xl border py-2',
-                mealType === m ? 'border-brand bg-brand-soft' : 'border-border bg-surface',
+                'flex-1 items-center gap-0.5 rounded-card border py-2',
+                mealType === m
+                  ? 'border-brand bg-brand-soft'
+                  : 'border-border bg-surface',
               )}
             >
               <Text className="text-base">{MEAL_ICONS[m]}</Text>
@@ -244,13 +250,21 @@ function EditForm({ entry }: { entry: FoodEntry }) {
             <Text variant="caption" tone="subtle">
               {t('entryEdit', 'macros')}
             </Text>
-            <MacroRow label={`🌾  ${t('entryEdit', 'carbs')}`} value={carbsG} onChange={setCarbsG} />
+            <MacroRow
+              label={`🌾  ${t('entryEdit', 'carbs')}`}
+              value={carbsG}
+              onChange={setCarbsG}
+            />
             <MacroRow
               label={`🥩  ${t('entryEdit', 'protein')}`}
               value={proteinG}
               onChange={setProteinG}
             />
-            <MacroRow label={`🥑  ${t('entryEdit', 'fat')}`} value={fatG} onChange={setFatG} />
+            <MacroRow
+              label={`🥑  ${t('entryEdit', 'fat')}`}
+              value={fatG}
+              onChange={setFatG}
+            />
             {showWarning ? (
               <Text variant="caption" tone="warning">
                 {t('entryEdit', 'reconcileWarning')}

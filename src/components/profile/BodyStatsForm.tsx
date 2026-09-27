@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import type { Control, FieldErrors } from 'react-hook-form';
 import { Pressable, View } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
@@ -294,13 +298,17 @@ function OptionRow<T extends string | number>({
         accessibilityRole="radio"
         accessibilityState={{ selected: isSelected }}
         className={cn(
-          'flex-row items-center gap-3 rounded-2xl border p-4',
+          'flex-row items-center gap-3 rounded-card border p-4',
           isSelected ? 'border-brand bg-brand-soft' : 'border-transparent bg-surface-alt',
         )}
       >
         {option.icon ? <Text className="text-2xl">{option.icon}</Text> : null}
         <View className="flex-1 gap-0.5">
-          <Text variant="body" tone={isSelected ? 'brand' : 'default'} className="font-semibold">
+          <Text
+            variant="body"
+            tone={isSelected ? 'brand' : 'default'}
+            className="font-semibold"
+          >
             {option.label}
           </Text>
           {option.description ? (

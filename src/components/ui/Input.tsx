@@ -41,7 +41,7 @@ export const Input = forwardRef<TextInput, InputProps>(function Input(
 
       <View
         className={cn(
-          'h-12 flex-row items-center gap-2 rounded-xl border bg-surface px-3',
+          'h-12 flex-row items-center gap-2 rounded-card border bg-surface px-3',
           error ? 'border-danger' : 'border-border',
         )}
       >

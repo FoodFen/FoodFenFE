@@ -36,7 +36,7 @@ export function Skeleton({ className }: SkeletonProps) {
 
   return (
     <Animated.View
-      className={cn('rounded-xl bg-surface-alt', className)}
+      className={cn('rounded-card bg-surface-alt', className)}
       style={style}
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"

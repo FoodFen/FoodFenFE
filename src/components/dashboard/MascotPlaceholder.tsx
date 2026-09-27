@@ -14,7 +14,7 @@ export function MascotPlaceholder({ className }: { className?: string }) {
   return (
     <View
       className={cn(
-        'aspect-square items-center justify-center rounded-2xl border border-dashed border-border bg-surface-alt',
+        'aspect-square items-center justify-center rounded-card border border-dashed border-border bg-surface-alt',
         className,
       )}
       accessibilityElementsHidden

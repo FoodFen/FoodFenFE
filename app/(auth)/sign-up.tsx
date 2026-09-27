@@ -8,6 +8,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { isApiError } from '@/api/errors';
 import { SocialSignInButtons } from '@/components/auth/SocialSignInButtons';
 import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
 import { makeSignUpSchema } from '@/features/auth/schemas';
@@ -71,121 +72,131 @@ export default function SignUpScreen() {
       keyboardShouldPersistTaps="handled"
       bottomOffset={24}
     >
-      <View className="gap-2 pb-6">
-        <Text variant="title">{t('auth', 'createYourAccount')}</Text>
-        <Text variant="body" tone="muted">
-          {t('auth', 'signUpSubtitle')}
-        </Text>
-      </View>
+      <View className="w-full max-w-md flex-1 self-center">
+        <View className="items-center gap-3 pb-8 pt-4">
+          <View className="h-16 w-16 items-center justify-center rounded-full bg-brand-soft">
+            <Text className="text-3xl">🥗</Text>
+          </View>
+          <View className="items-center gap-1">
+            <Text variant="title" className="text-3xl">
+              {t('auth', 'createYourAccount')}
+            </Text>
+            <Text variant="body" tone="muted" className="text-center">
+              {t('auth', 'signUpSubtitle')}
+            </Text>
+          </View>
+        </View>
 
-      <View className="gap-4">
-        <SocialSignInButtons
-          onError={setFormError}
-          onSuccess={() => {
-            if (router.canGoBack()) router.back();
-            else router.replace('/');
-          }}
-        />
+        <View className="gap-4">
+          <SocialSignInButtons
+            onError={setFormError}
+            onSuccess={() => {
+              if (router.canGoBack()) router.back();
+              else router.replace('/');
+            }}
+          />
 
-        <Controller
-          control={control}
-          name="displayName"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label={t('common', 'name')}
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              error={errors.displayName?.message}
-              autoCapitalize="words"
-              autoComplete="name"
-              textContentType="name"
+          <Card className="gap-4">
+            <Controller
+              control={control}
+              name="displayName"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  label={t('common', 'name')}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  error={errors.displayName?.message}
+                  autoCapitalize="words"
+                  autoComplete="name"
+                  textContentType="name"
+                />
+              )}
             />
-          )}
-        />
 
-        <Controller
-          control={control}
-          name="email"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label={t('auth', 'email')}
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              error={errors.email?.message}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-              textContentType="emailAddress"
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  label={t('auth', 'email')}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  error={errors.email?.message}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoComplete="email"
+                  textContentType="emailAddress"
+                />
+              )}
             />
-          )}
-        />
 
-        <Controller
-          control={control}
-          name="password"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label={t('auth', 'password')}
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              error={errors.password?.message}
-              hint={t('auth', 'passwordHint')}
-              secureTextEntry
-              // `newPassword` is what prompts the OS to offer a strong password
-              // and save it to the keychain.
-              autoComplete="new-password"
-              textContentType="newPassword"
+            <Controller
+              control={control}
+              name="password"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  label={t('auth', 'password')}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  error={errors.password?.message}
+                  hint={t('auth', 'passwordHint')}
+                  secureTextEntry
+                  // `newPassword` is what prompts the OS to offer a strong password
+                  // and save it to the keychain.
+                  autoComplete="new-password"
+                  textContentType="newPassword"
+                />
+              )}
             />
-          )}
-        />
 
-        <Controller
-          control={control}
-          name="confirmPassword"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label={t('auth', 'confirmPassword')}
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              error={errors.confirmPassword?.message}
-              secureTextEntry
-              autoComplete="new-password"
-              textContentType="newPassword"
-              returnKeyType="go"
-              onSubmitEditing={() => void onSubmit()}
+            <Controller
+              control={control}
+              name="confirmPassword"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  label={t('auth', 'confirmPassword')}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  error={errors.confirmPassword?.message}
+                  secureTextEntry
+                  autoComplete="new-password"
+                  textContentType="newPassword"
+                  returnKeyType="go"
+                  onSubmitEditing={() => void onSubmit()}
+                />
+              )}
             />
-          )}
-        />
 
-        {formError ? (
-          <Text variant="caption" tone="danger">
-            {formError}
+            {formError ? (
+              <Text variant="caption" tone="danger">
+                {formError}
+              </Text>
+            ) : null}
+
+            <Button
+              label={t('auth', 'createAccountTitle')}
+              onPress={() => void onSubmit()}
+              loading={isSubmitting}
+              fullWidth
+              size="lg"
+            />
+          </Card>
+        </View>
+
+        <View className="mt-auto flex-row justify-center gap-1 pt-8">
+          <Text variant="body" tone="muted">
+            {t('auth', 'alreadyHaveAccount')}
           </Text>
-        ) : null}
-
-        <Button
-          label={t('auth', 'createAccountTitle')}
-          onPress={() => void onSubmit()}
-          loading={isSubmitting}
-          fullWidth
-          size="lg"
-          className="mt-2"
-        />
-      </View>
-
-      <View className="mt-auto flex-row justify-center gap-1 pt-8">
-        <Text variant="body" tone="muted">
-          {t('auth', 'alreadyHaveAccount')}
-        </Text>
-        <Link href="/sign-in" asChild>
-          <Text variant="body" tone="brand" accessibilityRole="link">
-            {t('auth', 'signInTitle')}
-          </Text>
-        </Link>
+          <Link href="/sign-in" asChild>
+            <Text variant="body" tone="brand" accessibilityRole="link">
+              {t('auth', 'signInTitle')}
+            </Text>
+          </Link>
+        </View>
       </View>
     </KeyboardAwareScrollView>
   );

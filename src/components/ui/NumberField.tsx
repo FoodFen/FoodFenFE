@@ -81,7 +81,7 @@ export function NumberField({
   const field = (
     <View
       className={cn(
-        'flex-row items-center gap-1 rounded-lg border border-border bg-surface',
+        'flex-row items-center gap-1 rounded-card border border-border bg-surface',
         compact ? 'h-10 w-20 px-2' : 'h-12 flex-1 px-3',
       )}
     >

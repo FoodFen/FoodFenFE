@@ -37,7 +37,10 @@ export function SocialSignInButtons({
     void AppleAuthentication.isAvailableAsync().then(setAppleAvailable);
   }, []);
 
-  const runProvider = async (provider: 'google' | 'apple', action: () => Promise<void>) => {
+  const runProvider = async (
+    provider: 'google' | 'apple',
+    action: () => Promise<void>,
+  ) => {
     setLoadingProvider(provider);
 
     try {
@@ -59,6 +62,7 @@ export function SocialSignInButtons({
 
       if (sessionAfter !== sessionBefore) onSuccess();
     } catch (error) {
+      console.error(`[auth] ${provider} sign-in failed`, error);
       onError(isApiError(error) ? error.userMessage : t('auth', 'genericError'));
     } finally {
       setLoadingProvider(null);
@@ -74,6 +78,12 @@ export function SocialSignInButtons({
           size={GoogleSigninButton.Size.Wide}
           color={isDark ? GoogleSigninButton.Color.Dark : GoogleSigninButton.Color.Light}
           disabled={loadingProvider === 'google'}
+          // Google's own button defaults to a fixed 312px "wide" size that sits
+          // narrower than every other control on the page. The library composes
+          // this `style` over its recommended size, so overriding just the width
+          // stretches it to match — same official button, same 48pt height, no
+          // hand-styled substitute.
+          style={{ width: '100%' }}
           onPress={() => void runProvider('google', signInWithGoogle)}
         />
       ) : null}
@@ -97,7 +107,7 @@ export function SocialSignInButtons({
         </View>
       ) : null}
 
-      <View className="flex-row items-center gap-3 py-1">
+      <View className="flex-row items-center gap-3">
         <View className="h-px flex-1 bg-border" />
         <Text variant="caption" tone="muted">
           {t('auth', 'orDivider')}

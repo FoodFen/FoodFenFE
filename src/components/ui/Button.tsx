@@ -31,7 +31,10 @@ const VARIANT_TEXT_TONE: Record<ButtonVariant, TextTone> = {
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {
   // 44pt minimum height throughout — the smallest reliable touch target.
-  sm: 'h-11 px-4 rounded-xl',
+  // Same `rounded-card` corner radius at every size — a button's radius
+  // shouldn't change with its height, and it should match the Card/Input
+  // it's usually sitting next to.
+  sm: 'h-11 px-4 rounded-card',
   md: 'h-12 px-5 rounded-card',
   lg: 'h-14 px-6 rounded-card',
 };

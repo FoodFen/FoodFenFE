@@ -362,7 +362,7 @@ function MenuRow({
       disabled={disabled}
       accessibilityRole="button"
       className={cn(
-        'flex-row items-center gap-3 rounded-xl border border-border bg-surface p-4',
+        'flex-row items-center gap-3 rounded-card border border-border bg-surface p-4',
         disabled ? 'opacity-50' : 'active:bg-surface-alt',
       )}
     >

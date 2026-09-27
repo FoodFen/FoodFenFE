@@ -8,6 +8,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { isApiError } from '@/api/errors';
 import { SocialSignInButtons } from '@/components/auth/SocialSignInButtons';
 import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
 import { makeSignInSchema } from '@/features/auth/schemas';
@@ -77,86 +78,95 @@ export default function SignInScreen() {
       keyboardShouldPersistTaps="handled"
       bottomOffset={24}
     >
-      <View className="gap-2 pb-8">
-        <Text className="text-5xl">🥗</Text>
-        <Text variant="title">{t('auth', 'welcomeBack')}</Text>
-        <Text variant="body" tone="muted">
-          {t('auth', 'signInSubtitle')}
-        </Text>
-      </View>
+      <View className="w-full max-w-md flex-1 self-center">
+        <View className="items-center gap-3 pb-8 pt-4">
+          <View className="h-16 w-16 items-center justify-center rounded-full bg-brand-soft">
+            <Text className="text-3xl">🥗</Text>
+          </View>
+          <View className="items-center gap-1">
+            <Text variant="title" className="text-3xl">
+              {t('auth', 'welcomeBack')}
+            </Text>
+            <Text variant="body" tone="muted" className="text-center">
+              {t('auth', 'signInSubtitle')}
+            </Text>
+          </View>
+        </View>
 
-      <View className="gap-4">
-        <SocialSignInButtons
-          onError={setFormError}
-          onSuccess={() => {
-            if (router.canGoBack()) router.back();
-            else router.replace('/');
-          }}
-        />
+        <View className="gap-4">
+          <SocialSignInButtons
+            onError={setFormError}
+            onSuccess={() => {
+              if (router.canGoBack()) router.back();
+              else router.replace('/');
+            }}
+          />
 
-        <Controller
-          control={control}
-          name="email"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label={t('auth', 'email')}
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              error={errors.email?.message}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-              textContentType="emailAddress"
-              returnKeyType="next"
+          <Card className="gap-4">
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  label={t('auth', 'email')}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  error={errors.email?.message}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoComplete="email"
+                  textContentType="emailAddress"
+                  returnKeyType="next"
+                />
+              )}
             />
-          )}
-        />
 
-        <Controller
-          control={control}
-          name="password"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label={t('auth', 'password')}
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              error={errors.password?.message}
-              secureTextEntry
-              autoComplete="current-password"
-              textContentType="password"
-              returnKeyType="go"
-              onSubmitEditing={() => void onSubmit()}
+            <Controller
+              control={control}
+              name="password"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  label={t('auth', 'password')}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  error={errors.password?.message}
+                  secureTextEntry
+                  autoComplete="current-password"
+                  textContentType="password"
+                  returnKeyType="go"
+                  onSubmitEditing={() => void onSubmit()}
+                />
+              )}
             />
-          )}
-        />
 
-        {formError ? (
-          <Text variant="caption" tone="danger">
-            {formError}
+            {formError ? (
+              <Text variant="caption" tone="danger">
+                {formError}
+              </Text>
+            ) : null}
+
+            <Button
+              label={t('auth', 'signInTitle')}
+              onPress={() => void onSubmit()}
+              loading={isSubmitting}
+              fullWidth
+              size="lg"
+            />
+          </Card>
+        </View>
+
+        <View className="mt-auto flex-row justify-center gap-1 pt-8">
+          <Text variant="body" tone="muted">
+            {t('auth', 'newToApp')}
           </Text>
-        ) : null}
-
-        <Button
-          label={t('auth', 'signInTitle')}
-          onPress={() => void onSubmit()}
-          loading={isSubmitting}
-          fullWidth
-          size="lg"
-          className="mt-2"
-        />
-      </View>
-
-      <View className="mt-auto flex-row justify-center gap-1 pt-8">
-        <Text variant="body" tone="muted">
-          {t('auth', 'newToApp')}
-        </Text>
-        <Link href="/sign-up" asChild>
-          <Text variant="body" tone="brand" accessibilityRole="link">
-            {t('auth', 'createAccountLink')}
-          </Text>
-        </Link>
+          <Link href="/sign-up" asChild>
+            <Text variant="body" tone="brand" accessibilityRole="link">
+              {t('auth', 'createAccountLink')}
+            </Text>
+          </Link>
+        </View>
       </View>
     </KeyboardAwareScrollView>
   );

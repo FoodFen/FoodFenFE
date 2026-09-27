@@ -12,8 +12,11 @@
  */
 @layer base {
   :root {
-    /* Brand — the "fen" green */
-    --color-brand: 22 163 74;
+    /* Brand — the "fen" green. Darkened from green-600 (2026-09-21 contrast
+       audit): white text on the old value measured 3.3:1, below WCAG AA's
+       4.5:1; this -700 shade verifies at 5.0:1. Mirror any change here in
+       src/theme/colors.ts. */
+    --color-brand: 21 128 61;
     --color-brand-soft: 220 252 231;
     --color-on-brand: 255 255 255;
 
@@ -26,16 +29,19 @@
     /* Foreground */
     --color-fg: 17 24 39;
     --color-fg-muted: 107 114 128;
-    --color-fg-subtle: 156 163 175;
+    /* Was gray-400 (2.4:1, fails the 3:1 non-text minimum). This clears 3:1
+       with margin but is still below 4.5:1 — icons/decorative/disabled use
+       only, not primary caption text. */
+    --color-fg-subtle: 126 136 150;
 
     /* Macronutrients — kept distinct in both themes, these are data colors */
     --color-protein: 239 68 68;
     --color-carbs: 245 158 11;
     --color-fat: 59 130 246;
 
-    /* Status */
-    --color-success: 22 163 74;
-    --color-warning: 217 119 6;
+    /* Status. warning darkened from amber-600 (3.05:1) to amber-700 (4.8:1). */
+    --color-success: 21 128 61;
+    --color-warning: 180 83 9;
     --color-danger: 220 38 38;
   }
 
