@@ -43,6 +43,7 @@ const OWN_PLUGINS: PluginEntry[] = [
   'expo-secure-store',
   'expo-localization',
   'expo-web-browser',
+  'expo-sqlite',
   [
     'expo-splash-screen',
     {
@@ -163,8 +164,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     apiUrl: process.env.EXPO_PUBLIC_API_URL,
     variant: VARIANT,
     eas: {
-      // Filled in by `eas init`.
-      projectId: process.env.EAS_PROJECT_ID,
+      // From `eas init` — a fixed project identifier, not a secret, so it's
+      // hardcoded rather than read from an env var. `eas init` can only
+      // patch a static app.json automatically; app.config.ts (dynamic
+      // config) needs this pasted in by hand, which is what this is.
+      projectId: '0fbdbbb5-613b-46b5-9e28-c614d47d4e51',
     },
   },
 });
