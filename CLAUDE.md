@@ -76,7 +76,7 @@ The on-device SQLite database is the source of truth. The app is fully usable wi
 - `src/data/sync.ts` is the entire policy, ~170 lines. `readWithRefresh({ pull, read })` optionally refreshes from the server, then **always** answers from local rows — never "remote value, or local on failure". So online and offline take the same code path, and a slow server never produces an error state for data already on disk.
 - `canUseRemote()` requires all three of `env.hasBackend`, a session, and connectivity.
 - Writes are local and immediate. Every insert/update spreads `touch()` (`updatedAt` now, `syncedAt` null); deletes are soft via `touchDeleted()`. "Rows the server hasn't seen" is therefore a query — `pendingChangeCount()`.
-- **Push sync is not built.** The dirty flag, soft deletes, `remote_id` and `markSynced()` all exist; nothing drains them. `src/data/pull.ts` refuses to overwrite a locally modified row, which any push must respect.
+- **Push sync exists** (`src/data/push.ts`, run by `usePushSync()` on mount and app foreground) and drains `pendingChangeCount()`: user profile, daily goals, streak, food entries + ingredients, activity/water/weight logs, quests, and coin transactions. One row at a time per `docs/backend-contracts/sync.md`, no separate retry queue — a failed row just stays dirty and retries on the next run. `subscription` is deliberately excluded from this path; it's server-authoritative via `premium-entitlements.md`'s `GET /subscriptions/me` + PayOS flow, never client-pushed. `src/data/pull.ts` refuses to overwrite a locally modified row, which push respects by construction — still genuinely open: cross-device conflict resolution when both edited the same row offline, and applying a deletion made on another device (pull has no way to see one).
 - `env.apiUrl` is `string | undefined` on purpose. `src/api/client.ts` throws `ApiError('not_configured')` rather than building a bad URL, so a build with no backend reports "accounts unavailable" and everything else works unchanged.
 
 ### Layering
@@ -136,10 +136,8 @@ Where the load-bearing logic lives:
 
 ## Not yet built
 
-- **Push sync.** Reads already refresh from the server; writes queue locally (dirty flag, soft deletes, `remote_id`) and nothing drains them yet.
-- **AI meal capture.** `input_method` covers `voice`/`image`/`type`/`manual` and `ai_feedback` records thumbs up/down, but only the typed and manual paths exist. When the model lands, it should produce ingredient rows and let the existing composer save them; the call belongs on the server, never with a key in the bundle.
+- **AI meal capture — largely built.** `input_method` covers `voice`/`image`/`type`/`manual` and `ai_feedback` records thumbs up/down. Typed, manual, voice (on-device speech-to-text via `expo-speech-recognition` feeding the same text-analysis call), and image (camera/library photo through `app/log/manual.tsx`'s `ImageCapturePanel`) all produce real ingredient rows via `useAnalyzeFood()` and are stored under their correct `input_method`. Barcode scanning is the one capture path with no UI yet — `expo-camera` is installed and permissioned, but there's no scan screen or barcode→catalog lookup.
 - **AI insights.** The Stats tab shows locally computed trends. The AI layer should consume `summarizeTrends()` — small and pre-aggregated — rather than raw entries.
-- **Barcode scanning and photo logging.** `expo-camera`/`expo-image-picker` are installed and permissioned, `food_entry.image_url` is plumbed through — no capture screens yet.
 - **Coin shop.** `app/shop.tsx` is a placeholder `EmptyState`; coin balances already accrue through gamification.
 
 ## Other instructions
