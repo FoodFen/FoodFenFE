@@ -135,6 +135,10 @@ export default function ManualEntryScreen() {
     null,
   );
   const [smartText, setSmartText] = useState('');
+  // Which method actually produced `smartText` — set on every edit, typed or
+  // spoken, so `applyAnalysisToDraft` records the entry under the right one
+  // instead of always attributing it to typing.
+  const [smartTextSource, setSmartTextSource] = useState<InputMethod>('type');
 
   const pickImage = async (source: 'camera' | 'library') => {
     const permission =
@@ -191,7 +195,7 @@ export default function ManualEntryScreen() {
       {
         onSuccess: (result) => {
           haptics.success();
-          applyAnalysisToDraft(result, 'type');
+          applyAnalysisToDraft(result, smartTextSource);
         },
         onError: (error) => {
           haptics.error();
@@ -336,7 +340,14 @@ export default function ManualEntryScreen() {
         aiAvailable ? (
           <DescribePanel
             text={smartText}
-            onChangeText={setSmartText}
+            onChangeText={(value) => {
+              setSmartText(value);
+              setSmartTextSource('type');
+            }}
+            onSpeechResult={(value) => {
+              setSmartText(value);
+              setSmartTextSource('voice');
+            }}
             onAnalyze={analyzeSmartText}
             isAnalyzing={analyzeFood.isPending}
           />
@@ -695,11 +706,13 @@ function ImageCapturePanel({
 function DescribePanel({
   text,
   onChangeText,
+  onSpeechResult,
   onAnalyze,
   isAnalyzing,
 }: {
   text: string;
   onChangeText: (value: string) => void;
+  onSpeechResult: (value: string) => void;
   onAnalyze: () => void;
   isAnalyzing: boolean;
 }) {
@@ -725,7 +738,7 @@ function DescribePanel({
 
   useSpeechRecognitionEvent('result', (event) => {
     const transcript = event.results[0]?.transcript;
-    if (transcript) onChangeText(transcript);
+    if (transcript) onSpeechResult(transcript);
   });
 
   useSpeechRecognitionEvent('end', () => setIsListening(false));
