@@ -32,6 +32,7 @@ import { useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { usePushSync } from '@/hooks/usePushSync';
 import { useReactQueryBridge } from '@/hooks/useReactQueryBridge';
+import { useSubscriptionSync } from '@/hooks/useSubscriptionSync';
 import { useTranslation } from '@/hooks/useTranslation';
 import { createQueryClient, persistOptions, queryKeys } from '@/lib/queryClient';
 import { colorsFor } from '@/theme/colors';
@@ -150,6 +151,7 @@ function AppShell({ migrated }: { migrated: boolean }) {
 
   useReactQueryBridge();
   usePushSync();
+  useSubscriptionSync();
 
   // Dev-only: fill the last few days so the dashboard has data to render while
   // food logging is unbuilt. The whole effect no-ops in a release build.
