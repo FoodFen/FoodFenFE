@@ -41,6 +41,10 @@ function resolveNumber(value: string | undefined, fallback: number): number {
 
 const apiUrl = resolveApiUrl();
 
+if (__DEV__) {
+  console.warn('[env] API URL:', apiUrl ?? '(none configured — offline-only build)');
+}
+
 export const env = {
   apiUrl,
   hasBackend: apiUrl !== undefined,
