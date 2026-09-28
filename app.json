@@ -1,3 +1,8 @@
 {
-  "plugins": ["expo-router", "expo-splash-screen", "expo-font", "expo-image"]
+  "plugins": [
+    "expo-router",
+    "expo-splash-screen",
+    "expo-font",
+    "expo-image"
+  ]
 }
