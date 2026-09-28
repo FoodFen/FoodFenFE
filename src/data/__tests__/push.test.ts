@@ -1,9 +1,19 @@
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 
 import { syncApi } from '@/api/endpoints/sync';
 import type { RemoteFoodEntry } from '@/api/schemas';
 import { db } from '@/db/client';
-import { activityLog, foodEntry, ingredient, streak, user, waterLog, weightLog } from '@/db/schema';
+import {
+  activityLog,
+  coinTransaction,
+  foodEntry,
+  ingredient,
+  quest,
+  streak,
+  user,
+  waterLog,
+  weightLog,
+} from '@/db/schema';
 import type { TestDatabase } from '@/db/testDatabase';
 import { createTestDatabase } from '@/db/testDatabase';
 
@@ -11,9 +21,11 @@ import * as entryRepository from '../entryRepository';
 import * as gamification from '../gamificationRepository';
 import * as logRepository from '../logRepository';
 import {
+  pushCoinTransactions,
   pushDailyGoals,
   pushDayLogs,
   pushFoodEntries,
+  pushQuests,
   pushStreak,
   pushUserProfile,
 } from '../push';
@@ -41,6 +53,9 @@ jest.mock('@/api/endpoints/sync', () => ({
     createWaterLog: jest.fn(),
     updateWaterLog: jest.fn(),
     deleteWaterLog: jest.fn(),
+    createQuest: jest.fn(),
+    updateQuest: jest.fn(),
+    createCoinTransaction: jest.fn(),
   },
 }));
 
@@ -533,5 +548,197 @@ describe('pushDayLogs', () => {
 
     const [activityRow] = db.select().from(activityLog).where(eq(activityLog.userId, localUser.id)).all();
     expect(activityRow?.syncedAt).not.toBeNull();
+  });
+});
+
+describe('pushQuests', () => {
+  it('issues a fresh quest and stores the server id', async () => {
+    const localUser = createUser();
+
+    gamification.ensureDailyQuests(localUser.id, '2026-03-10');
+
+    mockedSyncApi.createQuest.mockResolvedValue({
+      id: 'quest_remote_1',
+      userId: 1,
+      questType: 'log_all_meals',
+      progress: 0,
+      target: 3,
+      rewardCoins: 30,
+      completed: false,
+      cadence: 'daily',
+      completionRatio: 1,
+      questDate: '2026-03-10',
+    });
+
+    await pushQuests(localUser.id);
+
+    expect(mockedSyncApi.createQuest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        questType: 'log_all_meals',
+        target: 3,
+        questDate: '2026-03-10',
+      }),
+    );
+    // Fresh from `ensureDailyQuests` — progress 0, not completed — so there
+    // is nothing for the follow-up PATCH to bring the server up to date on.
+    expect(mockedSyncApi.updateQuest).not.toHaveBeenCalled();
+
+    const [row] = db
+      .select()
+      .from(quest)
+      .where(and(eq(quest.userId, localUser.id), eq(quest.questType, 'log_all_meals')))
+      .all();
+    expect(row?.remoteId).toBe('quest_remote_1');
+    expect(row?.syncedAt).not.toBeNull();
+  });
+
+  it('issues then immediately PATCHes a quest that already progressed before its first push', async () => {
+    const localUser = createUser();
+
+    gamification.ensureDailyQuests(localUser.id, '2026-03-10');
+    gamification.setQuestProgress(localUser.id, 'drink_water', 4, '2026-03-10');
+
+    mockedSyncApi.createQuest.mockResolvedValue({
+      id: 'quest_remote_water',
+      userId: 1,
+      questType: 'drink_water',
+      progress: 0,
+      target: 8,
+      rewardCoins: 20,
+      completed: false,
+      cadence: 'daily',
+      completionRatio: 1,
+      questDate: '2026-03-10',
+    });
+    mockedSyncApi.updateQuest.mockResolvedValue({
+      id: 'quest_remote_water',
+      userId: 1,
+      questType: 'drink_water',
+      progress: 4,
+      target: 8,
+      rewardCoins: 20,
+      completed: false,
+      cadence: 'daily',
+      completionRatio: 1,
+      questDate: '2026-03-10',
+    });
+
+    await pushQuests(localUser.id);
+
+    expect(mockedSyncApi.updateQuest).toHaveBeenCalledWith('quest_remote_water', {
+      progress: 4,
+      completed: false,
+    });
+
+    const [row] = db
+      .select()
+      .from(quest)
+      .where(and(eq(quest.userId, localUser.id), eq(quest.questType, 'drink_water')))
+      .all();
+    expect(row?.remoteId).toBe('quest_remote_water');
+    expect(row?.syncedAt).not.toBeNull();
+  });
+
+  it("PATCHes an already-synced quest's new progress, without re-issuing it", async () => {
+    const localUser = createUser();
+
+    gamification.ensureDailyQuests(localUser.id, '2026-03-10');
+
+    mockedSyncApi.createQuest.mockResolvedValue({
+      id: 'quest_remote_meals',
+      userId: 1,
+      questType: 'log_all_meals',
+      progress: 0,
+      target: 3,
+      rewardCoins: 30,
+      completed: false,
+      cadence: 'daily',
+      completionRatio: 1,
+      questDate: '2026-03-10',
+    });
+
+    await pushQuests(localUser.id); // issued, synced at progress 0
+    mockedSyncApi.createQuest.mockClear();
+
+    gamification.setQuestProgress(localUser.id, 'log_all_meals', 2, '2026-03-10');
+
+    mockedSyncApi.updateQuest.mockResolvedValue({
+      id: 'quest_remote_meals',
+      userId: 1,
+      questType: 'log_all_meals',
+      progress: 2,
+      target: 3,
+      rewardCoins: 30,
+      completed: false,
+      cadence: 'daily',
+      completionRatio: 1,
+      questDate: '2026-03-10',
+    });
+
+    await pushQuests(localUser.id);
+
+    expect(mockedSyncApi.createQuest).not.toHaveBeenCalled();
+    expect(mockedSyncApi.updateQuest).toHaveBeenCalledWith('quest_remote_meals', {
+      progress: 2,
+      completed: false,
+    });
+  });
+
+  it('leaves the row dirty when the request fails', async () => {
+    const localUser = createUser();
+
+    gamification.ensureDailyQuests(localUser.id, '2026-03-10');
+    mockedSyncApi.createQuest.mockRejectedValue(new Error('network down'));
+
+    await pushQuests(localUser.id);
+
+    const rows = db.select().from(quest).where(eq(quest.userId, localUser.id)).all();
+    expect(rows.every((row) => row.syncedAt === null)).toBe(true);
+  });
+});
+
+describe('pushCoinTransactions', () => {
+  it('pushes a dirty coin transaction and stores the server id', async () => {
+    const localUser = createUser();
+
+    gamification.addCoins(localUser.id, 30, 'quest_completed');
+
+    mockedSyncApi.createCoinTransaction.mockResolvedValue({
+      id: 'coin_remote_1',
+      userId: 1,
+      amount: 30,
+      reason: 'quest_completed',
+      createdAt: new Date().toISOString(),
+    });
+
+    await pushCoinTransactions(localUser.id);
+
+    expect(mockedSyncApi.createCoinTransaction).toHaveBeenCalledWith(
+      expect.objectContaining({ amount: 30, reason: 'quest_completed' }),
+    );
+
+    const [row] = db
+      .select()
+      .from(coinTransaction)
+      .where(eq(coinTransaction.userId, localUser.id))
+      .all();
+    expect(row?.remoteId).toBe('coin_remote_1');
+    expect(row?.syncedAt).not.toBeNull();
+  });
+
+  it('leaves the row dirty when the request fails', async () => {
+    const localUser = createUser();
+
+    gamification.addCoins(localUser.id, 30, 'quest_completed');
+    mockedSyncApi.createCoinTransaction.mockRejectedValue(new Error('network down'));
+
+    await pushCoinTransactions(localUser.id);
+
+    const [row] = db
+      .select()
+      .from(coinTransaction)
+      .where(eq(coinTransaction.userId, localUser.id))
+      .all();
+    expect(row?.syncedAt).toBeNull();
   });
 });

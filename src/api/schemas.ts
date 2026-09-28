@@ -49,6 +49,23 @@ export const paymentStatusSchema = z.enum([
   'failed',
 ]);
 export const subscriptionStatusSchema = z.enum(['active', 'canceled', 'expired', 'trial']);
+export const questTypeSchema = z.enum([
+  'log_breakfast',
+  'log_all_meals',
+  'hit_calorie_goal',
+  'hit_protein_goal',
+  'drink_water',
+  'log_weight',
+  'stay_active_week',
+]);
+export const questCadenceSchema = z.enum(['daily', 'weekly']);
+export const coinReasonSchema = z.enum([
+  'quest_completed',
+  'streak_bonus',
+  'purchase',
+  'spend',
+  'adjustment',
+]);
 
 export const userSchema = z.object({
   id: z.number().int(),
@@ -93,6 +110,28 @@ export const streakSchema = z.object({
   currentStreak: z.number().int().nonnegative(),
   longestStreak: z.number().int().nonnegative(),
   lastActiveDate: dateKeySchema.nullable(),
+});
+
+export const questSchema = z.object({
+  id: z.string(),
+  userId: z.number().int(),
+  questType: questTypeSchema,
+  progress: z.number().int().nonnegative(),
+  target: z.number().int().nonnegative(),
+  rewardCoins: z.number().int().nonnegative(),
+  completed: z.boolean(),
+  cadence: questCadenceSchema,
+  completionRatio: z.number().min(0).max(1),
+  questDate: dateKeySchema,
+});
+
+/** Append-only ledger row — never edited or removed once pushed. */
+export const coinTransactionSchema = z.object({
+  id: z.string(),
+  userId: z.number().int(),
+  amount: z.number().int(),
+  reason: coinReasonSchema,
+  createdAt: z.iso.datetime(),
 });
 
 export const ingredientSchema = z.object({
@@ -225,6 +264,8 @@ export const subscriptionMeResponseSchema = z.object({
 export type RemoteUser = z.infer<typeof userSchema>;
 export type RemoteDailyGoal = z.infer<typeof dailyGoalSchema>;
 export type RemoteStreak = z.infer<typeof streakSchema>;
+export type RemoteQuest = z.infer<typeof questSchema>;
+export type RemoteCoinTransaction = z.infer<typeof coinTransactionSchema>;
 export type RemoteFoodEntry = z.infer<typeof foodEntrySchema>;
 export type RemoteIngredient = z.infer<typeof ingredientSchema>;
 export type RemoteActivityLog = z.infer<typeof activityLogSchema>;

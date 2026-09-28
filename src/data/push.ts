@@ -5,9 +5,11 @@ import type { PushActivityLogInput, PushFoodEntryInput } from '@/api/endpoints/s
 import { db } from '@/db/client';
 import {
   activityLog,
+  coinTransaction,
   dailyGoal,
   foodEntry,
   ingredient,
+  quest,
   streak,
   user,
   waterLog,
@@ -325,6 +327,94 @@ export async function pushDayLogs(userId: string): Promise<void> {
 }
 
 /**
+ * A quest is issued once (`POST /quests`, no progress/completed fields — a
+ * fresh quest always starts at 0/false server-side) and then progressed via
+ * `PATCH /quests/{id}` (`docs/backend-contracts/sync.md`). Those are
+ * genuinely two different requests, unlike every other pushed resource
+ * here, which reuses one body shape for create and update.
+ */
+export async function pushQuests(userId: string): Promise<void> {
+  const rows = db
+    .select()
+    .from(quest)
+    .where(
+      and(
+        eq(quest.userId, userId),
+        or(isNull(quest.syncedAt), sql`${quest.updatedAt} > ${quest.syncedAt}`),
+      ),
+    )
+    .all();
+
+  for (const row of rows) {
+    try {
+      let remoteId = row.remoteId;
+
+      if (remoteId === null) {
+        const remote = await syncApi.createQuest({
+          clientId: row.id,
+          questType: row.questType,
+          target: row.target,
+          rewardCoins: row.rewardCoins,
+          cadence: row.cadence,
+          completionRatio: row.completionRatio,
+          questDate: row.questDate,
+        });
+
+        remoteId = remote.id;
+      }
+
+      // Progress can advance locally before a quest's first push ever
+      // completes (e.g. offline for a while) — bring the server up to date
+      // in the same pass rather than waiting for the next progress change.
+      if (row.progress !== 0 || row.completed) {
+        await syncApi.updateQuest(remoteId, {
+          progress: row.progress,
+          completed: row.completed,
+        });
+      }
+
+      markSynced(quest, row.id, remoteId);
+      console.warn('[push] quest synced', row.id, '->', remoteId);
+    } catch (error) {
+      console.warn('[push] quest failed, will retry next sync', row.id, error);
+    }
+  }
+}
+
+/** Append-only ledger — there is no update/delete path, ever, for a coin transaction. */
+export async function pushCoinTransactions(userId: string): Promise<void> {
+  const rows = db
+    .select()
+    .from(coinTransaction)
+    .where(
+      and(
+        eq(coinTransaction.userId, userId),
+        or(
+          isNull(coinTransaction.syncedAt),
+          sql`${coinTransaction.updatedAt} > ${coinTransaction.syncedAt}`,
+        ),
+      ),
+    )
+    .all();
+
+  for (const row of rows) {
+    try {
+      const remote = await syncApi.createCoinTransaction({
+        clientId: row.id,
+        amount: row.amount,
+        reason: row.reason,
+        createdAt: row.createdAt.toISOString(),
+      });
+
+      markSynced(coinTransaction, row.id, remote.id);
+      console.warn('[push] coin transaction synced', row.id, '->', remote.id);
+    } catch (error) {
+      console.warn('[push] coin transaction failed, will retry next sync', row.id, error);
+    }
+  }
+}
+
+/**
  * The one entry point `usePushSync` calls. Food entries run last so a slow
  * AI-derived entry never blocks the smaller, faster resources behind it —
  * nothing here has a cross-resource dependency, so the order is otherwise
@@ -337,6 +427,8 @@ export async function pushAll(profile: UserProfile): Promise<void> {
   await pushDailyGoals(profile.id);
   await pushStreak(profile.id);
   await pushDayLogs(profile.id);
+  await pushQuests(profile.id);
+  await pushCoinTransactions(profile.id);
   await pushFoodEntries(profile.id);
 
   console.warn('[push] done for user', profile.id);
