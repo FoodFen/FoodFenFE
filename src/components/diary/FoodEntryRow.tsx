@@ -3,6 +3,7 @@ import Animated, { FadeIn, FadeOutLeft, LinearTransition } from 'react-native-re
 
 import { Text } from '@/components/ui/Text';
 import { describeIngredients } from '@/features/diary/selectors';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { FoodEntry, InputMethod } from '@/types/models';
 
 /** How the meal was captured, shown as a small provenance marker. */
@@ -37,6 +38,7 @@ export function FoodEntryRow({
   emoji,
   secondaryText,
 }: FoodEntryRowProps) {
+  const { t } = useTranslation();
   const subtitle = secondaryText ?? describeIngredients(entry);
 
   return (
@@ -49,7 +51,7 @@ export function FoodEntryRow({
         onPress={() => onPress?.(entry)}
         onLongPress={() => onLongPress?.(entry)}
         accessibilityRole="button"
-        accessibilityLabel={`${entry.name}, ${entry.totalKcal} calories, ${subtitle}`}
+        accessibilityLabel={`${entry.name}, ${entry.totalKcal} ${t('common', 'calories')}, ${subtitle}`}
         className="flex-row items-center gap-3 px-4 py-3 active:bg-surface-alt"
       >
         <Text className="text-sm">{emoji ?? INPUT_METHOD_ICONS[entry.inputMethod]}</Text>

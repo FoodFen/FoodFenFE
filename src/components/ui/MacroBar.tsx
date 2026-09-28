@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { progressFraction } from '@/lib/nutrition';
 
@@ -7,10 +8,10 @@ import { Text } from './Text';
 
 export type MacroKey = 'proteinG' | 'carbsG' | 'fatG';
 
-const MACRO_LABELS: Record<MacroKey, string> = {
-  proteinG: 'Protein',
-  carbsG: 'Carbs',
-  fatG: 'Fat',
+const MACRO_LABEL_KEY: Record<MacroKey, 'protein' | 'carbs' | 'fat'> = {
+  proteinG: 'protein',
+  carbsG: 'carbs',
+  fatG: 'fat',
 };
 
 /**
@@ -40,6 +41,8 @@ export interface MacroBarProps {
 
 /** One macro's progress toward its daily gram target. */
 export function MacroBar({ macro, value, target, className }: MacroBarProps) {
+  const { t } = useTranslation();
+  const label = t('dashboard', MACRO_LABEL_KEY[macro]);
   const fraction = progressFraction(value, target);
   const isOver = value > target && target > 0;
 
@@ -47,14 +50,12 @@ export function MacroBar({ macro, value, target, className }: MacroBarProps) {
     <View
       className={cn('flex-1 gap-1.5', className)}
       accessibilityRole="progressbar"
-      accessibilityLabel={`${MACRO_LABELS[macro]}: ${Math.round(value)} of ${Math.round(
-        target,
-      )} grams`}
+      accessibilityLabel={`${label}: ${Math.round(value)}/${Math.round(target)} g`}
       accessibilityValue={{ min: 0, max: Math.round(target), now: Math.round(value) }}
     >
       <View className="flex-row items-baseline justify-between">
         <Text variant="caption" className={MACRO_TEXT_CLASSES[macro]}>
-          {MACRO_LABELS[macro]}
+          {label}
         </Text>
         <Text variant="caption" tone={isOver ? 'danger' : 'muted'}>
           {Math.round(value)}/{Math.round(target)} g
