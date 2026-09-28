@@ -1,4 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useQueryClient } from '@tanstack/react-query';
 import * as Notifications from 'expo-notifications';
 import { router, Stack } from 'expo-router';
 import { Alert, Pressable, View } from 'react-native';
@@ -32,6 +33,7 @@ export default function SettingsScreen() {
   const user = useProfileStore((state) => state.profile);
   const saveProfile = useProfileStore((state) => state.saveProfile);
   const eraseLocalData = useProfileStore((state) => state.eraseAll);
+  const queryClient = useQueryClient();
 
   const session = useAuthStore((state) => state.session);
   const signOut = useAuthStore((state) => state.signOut);
@@ -166,6 +168,12 @@ export default function SettingsScreen() {
         onPress: () => {
           haptics.warning();
           eraseLocalData();
+          // Query keys aren't scoped by profile id (there's only ever one
+          // active profile), so a cached result from before this erase --
+          // premium tier, most visibly -- would otherwise get served to the
+          // fresh profile that replaces it, since the persisted cache
+          // survives eraseAll()'s SQLite wipe untouched.
+          queryClient.clear();
         },
       },
     ]);
