@@ -6,12 +6,15 @@ import { pushAll } from '@/data/push';
 import { canUseRemote } from '@/data/sync';
 import { useProfileStore } from '@/features/profile/store';
 
+const PUSH_INTERVAL_MS = 5 * 60 * 1000;
+
 /**
  * Opportunistic push: drains `pendingChangeCount()` to the server whenever
- * the remote path is usable (`canUseRemote()`), on mount and every time the
- * app returns to the foreground. No retry/backoff queue — a row that fails
- * just stays dirty and gets tried again on the next trigger, which is good
- * enough for how infrequently this fires.
+ * the remote path is usable (`canUseRemote()`), on mount, every time the
+ * app returns to the foreground, and every 5 minutes while foregrounded.
+ * No retry/backoff queue — a row that fails just stays dirty and gets
+ * tried again on the next trigger, which is good enough for how
+ * infrequently this fires.
  */
 export function usePushSync(): void {
   const profile = useProfileStore((state) => state.profile);
@@ -34,7 +37,11 @@ export function usePushSync(): void {
     const subscription = AppState.addEventListener('change', (status: AppStateStatus) => {
       if (status === 'active') tryPush();
     });
+    const interval = setInterval(tryPush, PUSH_INTERVAL_MS);
 
-    return () => subscription.remove();
+    return () => {
+      subscription.remove();
+      clearInterval(interval);
+    };
   }, [profile]);
 }

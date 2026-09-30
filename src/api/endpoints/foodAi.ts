@@ -1,6 +1,9 @@
+import { File } from 'expo-file-system';
+
 import { api } from '@/api/client';
 import { aiFoodAnalysisResponseSchema } from '@/api/schemas';
 import type { RemoteAiFoodAnalysisResponse } from '@/api/schemas';
+import { useSettingsStore } from '@/features/settings/store';
 
 /**
  * AI food recognition.
@@ -11,27 +14,35 @@ import type { RemoteAiFoodAnalysisResponse } from '@/api/schemas';
  * used. See `docs/backend-contracts/ai-food-capture.md` for the full wire
  * contract this is built against.
  */
+// A full vision/LLM pass legitimately runs past the app's default 15s
+// request timeout (see docs/backend-contracts/ai-food-capture.md) — without
+// this, a slow-but-successful analysis gets aborted client-side and
+// misread as a failure.
+const AI_ANALYSIS_TIMEOUT_MS = 60_000;
+
 export const foodAiApi = {
-  analyzeImage: (
-    uri: string,
-    fileName: string,
-    mimeType: string,
-  ): Promise<RemoteAiFoodAnalysisResponse> => {
+  analyzeImage: (uri: string, fileName: string): Promise<RemoteAiFoodAnalysisResponse> => {
     const form = new FormData();
-    // React Native's FormData accepts this `{ uri, name, type }` shape for a
-    // file part; the DOM `Blob` type it's cast to here does not describe it.
-    form.append('image', { uri, name: fileName, type: mimeType } as unknown as Blob);
+    // Expo SDK 57's global `fetch` (`expo/fetch`) only accepts a real
+    // Blob-like part (string | Blob | { bytes() }) in FormData — React
+    // Native's classic `{ uri, name, type }` shape throws "Unsupported
+    // FormDataPart implementation". `File` implements that Blob interface.
+    form.append('image', new File(uri), fileName);
+    // So the model responds in the user's language instead of a mix — see
+    // docs/backend-contracts/ai-food-capture.md.
+    form.append('language', useSettingsStore.getState().locale);
 
     return api.post('ai/food/analyze-image', undefined, {
       formData: form,
       schema: aiFoodAnalysisResponseSchema,
+      timeoutMs: AI_ANALYSIS_TIMEOUT_MS,
     });
   },
 
   analyzeText: (description: string): Promise<RemoteAiFoodAnalysisResponse> =>
     api.post(
       'ai/food/analyze-text',
-      { description },
-      { schema: aiFoodAnalysisResponseSchema },
+      { description, language: useSettingsStore.getState().locale },
+      { schema: aiFoodAnalysisResponseSchema, timeoutMs: AI_ANALYSIS_TIMEOUT_MS },
     ),
 };

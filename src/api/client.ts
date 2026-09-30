@@ -177,11 +177,28 @@ export async function parseErrorBody(
   }
 }
 
-async function send(url: string, init: RequestInit): Promise<Response> {
+async function send(
+  url: string,
+  init: RequestInit,
+  timeout: ReturnType<typeof withTimeout>,
+): Promise<Response> {
   try {
     return await fetch(url, init);
   } catch (error) {
+    // Our own AbortController firing surfaces as a real `AbortError` on iOS,
+    // but React Native's Android fetch sometimes rejects a client-aborted
+    // request with a generic `TypeError` instead — indistinguishable here
+    // from a real connectivity failure unless we check the timer ourselves.
+    if (timeout.didTimeout()) {
+      throw new ApiError('timeout', 'The request timed out.', { cause: error });
+    }
+
     if (error instanceof Error && error.name === 'AbortError') throw error;
+
+    // 'network' is a catch-all for whatever `fetch` itself threw — log the
+    // raw error so a real-device repro (e.g. this exact image-upload bug)
+    // shows what actually failed instead of just the generic user message.
+    if (env.isDev) console.error('[api] fetch failed, classified as network:', error);
 
     throw new ApiError('network', 'Unable to reach the server.', { cause: error });
   }
@@ -223,7 +240,7 @@ export async function request<TResponse = void>(
 
   try {
     const token = skipAuth ? null : (authHandlers?.getAccessToken() ?? null);
-    let response = await send(url, buildInit(token));
+    let response = await send(url, buildInit(token), timeout);
 
     // One refresh-and-replay attempt. A second 401 means the new token is bad
     // too, so we stop rather than loop.
@@ -235,7 +252,7 @@ export async function request<TResponse = void>(
         throw new ApiError('unauthorized', 'Session expired.', { status: 401 });
       }
 
-      response = await send(url, buildInit(refreshed));
+      response = await send(url, buildInit(refreshed), timeout);
 
       if (response.status === 401) {
         authHandlers.onSessionExpired();

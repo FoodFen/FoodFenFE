@@ -2,14 +2,15 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 
 import * as diaryRepository from '@/data/diaryRepository';
+import { getEntryCountsByDay } from '@/data/entryRepository';
 import * as gamificationRepository from '@/data/gamificationRepository';
 import { useInterstitialStore } from '@/features/gamification/interstitialStore';
-import { shouldAnnounce } from '@/features/gamification/selectors';
+import { loggingHeatmap, shouldAnnounce } from '@/features/gamification/selectors';
 import type { QuestToastEntry } from '@/features/gamification/toastStore';
 import { useQuestToastStore } from '@/features/gamification/toastStore';
 import { useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
-import { todayKey } from '@/lib/date';
+import { shiftDateKey, todayKey } from '@/lib/date';
 import { queryKeys } from '@/lib/queryClient';
 
 function useUserId(): string | null {
@@ -162,6 +163,26 @@ export function useStreak() {
       if (!userId) throw new Error('No local profile yet.');
 
       return gamificationRepository.getStreak(userId) ?? null;
+    },
+    enabled: userId !== null,
+    retry: false,
+  });
+}
+
+/** `weeks` of daily entry counts, gridded for the streak screen's heatmap. */
+export function useLoggingHeatmap(weeks = 53) {
+  const userId = useUserId();
+
+  return useQuery({
+    queryKey: queryKeys.gamification.heatmap(weeks),
+    queryFn: () => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      const today = todayKey();
+      const from = shiftDateKey(today, -(weeks * 7 - 1));
+      const counts = getEntryCountsByDay(userId, from, today);
+
+      return loggingHeatmap(counts, weeks, today);
     },
     enabled: userId !== null,
     retry: false,

@@ -594,6 +594,9 @@ export const vi = {
     shareMessage: 'Tôi đang duy trì chuỗi {days} ngày trên FoodFen! 🔥',
     commit: 'Tôi cam kết',
     committedToday: 'Bạn đã cam kết hôm nay ✓',
+    heatmapHeading: 'Nỗ lực của bạn',
+    heatmapLess: 'Ít',
+    heatmapMore: 'Nhiều',
   },
 
   insights: {

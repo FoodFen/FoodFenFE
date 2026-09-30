@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, gte, inArray, isNotNull, lte } from 'drizzle-orm';
+import { and, asc, desc, eq, gte, inArray, isNotNull, lte, sql } from 'drizzle-orm';
 
 import { db } from '@/db/client';
 import { foodEntry, ingredient } from '@/db/schema';
@@ -470,4 +470,27 @@ export function getLoggedDays(userId: string, from: DateKey, to: DateKey): DateK
     .all();
 
   return rows.map((row) => row.loggedOn);
+}
+
+/** Entry count per logged day, for the streak heatmap's shading. */
+export function getEntryCountsByDay(
+  userId: string,
+  from: DateKey,
+  to: DateKey,
+): Record<DateKey, number> {
+  const rows = db
+    .select({ loggedOn: foodEntry.loggedOn, count: sql<number>`count(*)` })
+    .from(foodEntry)
+    .where(
+      and(
+        eq(foodEntry.userId, userId),
+        gte(foodEntry.loggedOn, from),
+        lte(foodEntry.loggedOn, to),
+        notDeleted(foodEntry),
+      ),
+    )
+    .groupBy(foodEntry.loggedOn)
+    .all();
+
+  return Object.fromEntries(rows.map((row) => [row.loggedOn, row.count]));
 }

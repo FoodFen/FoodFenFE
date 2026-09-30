@@ -29,16 +29,25 @@ itself is a small client-side addition when that's needed.
 
 ## `POST /ai/food/analyze-image`
 
-Request: `multipart/form-data` with one part:
+Request: `multipart/form-data` with two parts:
 - `image` — the photo file (jpeg/png/heic).
+- `language` — `"vi"` or `"en"`, the app's current UI language (see below).
 
 ## `POST /ai/food/analyze-text`
 
 Request body:
 ```json
-{ "description": "string" }
+{ "description": "string", "language": "vi" | "en" }
 ```
 One sentence describing the meal, e.g. "a bowl of beef pho with extra herbs".
+
+### `language`
+
+The user's current in-app language (`useSettingsStore`'s `locale`, `"vi"` by
+default). `mealName` and every `ingredients[].name` should come back entirely
+in that language — no mixed Vietnamese/English within one response. Added
+because the model was generating mixed-language output with no signal of
+which language to prefer.
 
 ## Response (both endpoints)
 

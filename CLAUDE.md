@@ -66,6 +66,7 @@ No env setup is needed — the app runs fully offline with no `.env` at all. Cop
 - **Auth tokens go in `expo-secure-store`, never MMKV.** MMKV is a plain file, readable on a rooted device or from an unencrypted backup.
 - **Nothing secret in `EXPO_PUBLIC_*`.** It is inlined into the bundle. Any future AI/model call belongs on a server.
 - Versions are pinned to what `expo install` resolves for SDK 57. Add dependencies with `npx expo install`, not `npm install`.
+- **No server-related sync may block the UI, ever.** A background sync call (`pull`, `push`, entitlement refresh, or anything similar added later) must fire-and-forget — kick it off, `.catch()` the failure, and let the *next* read pick up whatever it wrote to SQLite. Never `await` it inline in a `queryFn`, a mount effect, or anything that gates a render or the splash screen. Root cause of a real bug: `readWithRefresh` in `src/data/sync.ts` used to `await pull()` before returning, so every diary/dashboard read blocked on a live network round-trip whenever a server was reachable but slow — the local-first design existed only in the doc comment. Fixed by firing `pull()` without awaiting it. A user-initiated action that must visibly wait on the network (sign-in, checkout, chat send) is not "sync" and is exempt — this rule is about passive background sync only.
 
 ## Architecture
 
@@ -142,4 +143,5 @@ Where the load-bearing logic lives:
 
 ## Other instructions
 
-- Reduce commenting in code, only put comments at the top explaining what this file does in a brief, high-level summary. Do not comment every line or function.
+- Default to zero comments in code. Add one only when the WHY is non-obvious (a hidden constraint, a workaround, a subtle invariant) — never to restate what the code does or narrate a fix/rationale. A brief file-top summary is the only comment that's always fine.
+- Never create a new `.md`/doc file unless explicitly asked. Updating an existing doc (e.g. `docs/backend-contracts/*.md`) when its contract actually changed is fine; adding a new one, a summary, or a planning doc is not.

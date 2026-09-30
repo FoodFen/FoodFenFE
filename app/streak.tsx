@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Stack } from 'expo-router';
 import { Share, View } from 'react-native';
 
+import { StreakHeatmap, StreakHeatmapLegend } from '@/components/gamification/StreakHeatmap';
 import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -9,7 +10,7 @@ import { ErrorState } from '@/components/ui/EmptyState';
 import { ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
-import { useStreak } from '@/features/gamification/queries';
+import { useLoggingHeatmap, useStreak } from '@/features/gamification/queries';
 import { streakDayStatuses } from '@/features/gamification/selectors';
 import { useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -31,6 +32,7 @@ export default function StreakScreen() {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const { data: streak, isPending, error, refetch } = useStreak();
+  const { data: heatmap } = useLoggingHeatmap();
   const streakCommittedDate = useSettingsStore((state) => state.streakCommittedDate);
   const commitToStreak = useSettingsStore((state) => state.commitToStreak);
 
@@ -119,6 +121,17 @@ export default function StreakScreen() {
           ))}
         </View>
       </Card>
+
+      {heatmap ? (
+        <Card className="gap-3">
+          <Text variant="heading">{t('streak', 'heatmapHeading')}</Text>
+          <StreakHeatmap weeks={heatmap} />
+          <StreakHeatmapLegend
+            lessLabel={t('streak', 'heatmapLess')}
+            moreLabel={t('streak', 'heatmapMore')}
+          />
+        </Card>
+      ) : null}
 
       <Card className="flex-row items-center justify-between">
         <Text variant="label" tone="muted">

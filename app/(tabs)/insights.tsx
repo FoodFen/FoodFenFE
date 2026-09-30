@@ -5,7 +5,7 @@ import { CalorieTrendChart } from '@/components/insights/CalorieTrendChart';
 import { WeightTrendChart } from '@/components/insights/WeightTrendChart';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
-import { Screen, ScrollScreen } from '@/components/ui/Screen';
+import { Screen, ScrollScreen, TAB_BAR_CLEARANCE } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useDiaryRange, useWeightHistory } from '@/features/diary/queries';
@@ -86,7 +86,7 @@ export default function InsightsScreen() {
       : null;
 
   return (
-    <ScrollScreen tabBar topInset>
+    <ScrollScreen tabBar topInset contentContainerStyle={{ paddingBottom: 150 }}>
       <Text variant="title" className="pt-2">
         {t('insights', 'title')}
       </Text>
@@ -135,9 +135,9 @@ export default function InsightsScreen() {
                   {weightDelta.direction === 'atGoal'
                     ? t('dashboard', 'weightReached')
                     : t('dashboard', 'weightToGo').replace(
-                        '{delta}',
-                        String(Math.round(weightDelta.deltaKg * 10) / 10),
-                      )}
+                      '{delta}',
+                      String(Math.round(weightDelta.deltaKg * 10) / 10),
+                    )}
                 </Text>
               ) : null}
             </>

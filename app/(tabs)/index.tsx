@@ -45,10 +45,6 @@ export default function DashboardScreen() {
 
   const { data: day, isPending, isRefetching, error, refetch } = useDiaryDay(selectedDate);
 
-  // Self-heal the one edge case where a profile exists but its goal row does
-  // not: recompute it from the profile, which invalidates and lets the day
-  // query succeed on retry. Fires once per idle state — a failed heal falls
-  // through to the error card, whose Retry resets it so it can try again.
   const profile = useProfileStore((state) => state.profile);
   const { mutate: healGoal, reset: resetHeal, isIdle: healIsIdle } = useHealMissingGoal();
 

@@ -75,31 +75,34 @@ export interface ReadOptions<T> {
 }
 
 /**
- * Refresh from the server when possible, then read locally — always.
+ * Read locally — immediately, always — and kick off a server refresh in the
+ * background.
  *
- * The read is deliberately not "remote value, or local on failure". The device
- * database is the thing screens render from, so the remote call's only job is
- * to bring it up to date; whatever happens, the answer is assembled from local
- * rows. That has three consequences worth the arrangement:
+ * The read is deliberately not "remote value, or local on failure", and it is
+ * not "remote value, once it arrives" either: the device database is the
+ * thing screens render from, so a caller never waits on the network to see
+ * its own just-made write. `pull` is fired without being awaited; whatever it
+ * brings back lands in the local database for the *next* read to pick up
+ * (the next mount, the next invalidation, TanStack Query's own refetch-on-
+ * focus). That has three consequences worth the arrangement:
  *
+ *   - a write is reflected on screen the instant it lands locally — sync is a
+ *     background concern, never something the UI blocks on;
  *   - a failed or slow server never produces an error state for data already
  *     on disk;
  *   - online and offline render the exact same code path, so the offline case
- *     cannot rot from disuse;
- *   - remote data joins against local goals, water and activity naturally,
- *     because by read time it is local data too.
+ *     cannot rot from disuse.
  */
 export async function readWithRefresh<T>({ pull, read }: ReadOptions<T>): Promise<T> {
   if (pull && canUseRemote()) {
-    try {
-      await pull();
-    } catch (error) {
+    // Not awaited on purpose — see the doc comment above.
+    pull().catch((error: unknown) => {
       // Deliberately swallowed: falling back to local data is the designed
       // behaviour, not a failure worth showing anyone.
       if (env.isDev) {
-        console.warn('[sync] Pull failed; serving local data instead.', error);
+        console.warn('[sync] Background pull failed; local data stands.', error);
       }
-    }
+    });
   }
 
   return read();

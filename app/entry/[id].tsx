@@ -1,4 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Image } from 'expo-image';
 import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { Alert, Pressable, View } from 'react-native';
 
@@ -8,6 +9,7 @@ import { ErrorState } from '@/components/ui/EmptyState';
 import { ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
+import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import { useDeleteEntry, useEntry, useUpdateEntry } from '@/features/diary/queries';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -53,6 +55,7 @@ export default function EntryDetailScreen() {
   }
 
   const share = macroEnergyShare(entry);
+  const totalG = entry.ingredients.reduce((sum, row) => sum + row.quantityG, 0);
 
   const setFeedback = (feedback: AiFeedback) => {
     haptics.selection();
@@ -89,12 +92,38 @@ export default function EntryDetailScreen() {
       <Stack.Screen options={{ title: entry.name }} />
 
       <ScrollScreen>
-        <View className="gap-1">
-          <Text variant="title">{entry.name}</Text>
-          <Text variant="body" tone="muted">
-            {t('mealType', entry.mealType)} · {formatDiaryDate(entry.loggedOn)}{' '}
-            {t('entryDetail', 'at')} {formatTime(entry.loggedAt)}
-          </Text>
+        <View className="flex-row items-start justify-between gap-4">
+          <View className="flex-1 gap-1">
+            <Text variant="title">{entry.name}</Text>
+            <Text variant="body" tone="muted">
+              {t('mealType', entry.mealType)} · {formatDiaryDate(entry.loggedOn)}{' '}
+              {t('entryDetail', 'at')} {formatTime(entry.loggedAt)}
+            </Text>
+          </View>
+
+          {entry.imageUrl ? (
+            <Image
+              source={{ uri: entry.imageUrl }}
+              accessible={false}
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+              style={{
+                width: 96,
+                height: 96,
+                borderRadius: 16,
+                backgroundColor: colors.surfaceAlt,
+              }}
+              contentFit="cover"
+            />
+          ) : (
+            <View
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+              className="h-24 w-24 items-center justify-center rounded-card bg-surface-alt"
+            >
+              <Text style={{ fontSize: 44 }}>{foodEmojiFor(entry)}</Text>
+            </View>
+          )}
         </View>
 
         <Card className="gap-3">
@@ -116,31 +145,56 @@ export default function EntryDetailScreen() {
           </View>
 
           <View className="flex-row items-baseline justify-between">
-            <Text variant="body" tone="muted">
-              {t('entryDetail', 'total')}
-            </Text>
-            <Text variant="title">{entry.totalKcal.toLocaleString()} kcal</Text>
+            {totalG > 0 ? (
+              <View className="flex-row items-baseline gap-1">
+                <Text variant="title">{Math.round(totalG).toLocaleString()}</Text>
+                <Text variant="body" tone="muted">
+                  g
+                </Text>
+              </View>
+            ) : (
+              <Text variant="body" tone="muted">
+                {t('entryDetail', 'total')}
+              </Text>
+            )}
+            <View className="flex-row items-baseline gap-1">
+              <Text variant="title">{entry.totalKcal.toLocaleString()}</Text>
+              <Text variant="body" tone="muted">
+                kcal
+              </Text>
+            </View>
           </View>
 
-          <View className="gap-2 border-t border-border pt-3">
-            <NutrientRow
-              label={t('onboardingFinalize', 'protein')}
-              value={`${entry.proteinG} g`}
-              percent={share.proteinG}
+          <View className="h-2.5 flex-row overflow-hidden rounded-pill bg-surface-alt">
+            <View className="h-full bg-carbs" style={{ width: `${share.carbsG * 100}%` }} />
+            <View
+              className="h-full bg-protein"
+              style={{ width: `${share.proteinG * 100}%` }}
             />
-            <NutrientRow
-              label={t('onboardingFinalize', 'carbs')}
-              value={`${entry.carbsG} g`}
-              percent={share.carbsG}
-            />
-            <NutrientRow
-              label={t('onboardingFinalize', 'fat')}
-              value={`${entry.fatG} g`}
-              percent={share.fatG}
-            />
+            <View className="h-full bg-fat" style={{ width: `${share.fatG * 100}%` }} />
+          </View>
 
-            {entry.fiberG !== null ? (
-              isPremium ? (
+          <View className="flex-row justify-between">
+            <MacroLegendItem
+              colorClassName="bg-carbs"
+              label={t('onboardingFinalize', 'carbs')}
+              value={`${entry.carbsG}g`}
+            />
+            <MacroLegendItem
+              colorClassName="bg-protein"
+              label={t('onboardingFinalize', 'protein')}
+              value={`${entry.proteinG}g`}
+            />
+            <MacroLegendItem
+              colorClassName="bg-fat"
+              label={t('onboardingFinalize', 'fat')}
+              value={`${entry.fatG}g`}
+            />
+          </View>
+
+          {entry.fiberG !== null ? (
+            <View className="gap-2 border-t border-border pt-3">
+              {isPremium ? (
                 <NutrientRow
                   label={t('entryDetail', 'fiber')}
                   value={`${entry.fiberG} g`}
@@ -161,9 +215,9 @@ export default function EntryDetailScreen() {
                     </Text>
                   </View>
                 </Pressable>
-              )
-            ) : null}
-          </View>
+              )}
+            </View>
+          ) : null}
         </Card>
 
         <Card flush className="overflow-hidden">
@@ -272,30 +326,36 @@ function FeedbackButton({
   );
 }
 
-function NutrientRow({
-  label,
-  value,
-  percent,
-}: {
-  label: string;
-  value: string;
-  /** Share of total energy, 0–1. Shown only for the three macros. */
-  percent?: number;
-}) {
+function NutrientRow({ label, value }: { label: string; value: string }) {
   return (
     <View className="flex-row items-center justify-between">
       <Text variant="body" tone="muted">
         {label}
       </Text>
+      <Text variant="mono">{value}</Text>
+    </View>
+  );
+}
 
-      <View className="flex-row items-baseline gap-2">
-        {percent !== undefined ? (
-          <Text variant="caption" tone="subtle">
-            {Math.round(percent * 100)}%
-          </Text>
-        ) : null}
-        <Text variant="mono">{value}</Text>
+/** One legend entry below the macro share bar: a colored dot, label and gram value. */
+function MacroLegendItem({
+  colorClassName,
+  label,
+  value,
+}: {
+  colorClassName: string;
+  label: string;
+  value: string;
+}) {
+  return (
+    <View className="gap-1">
+      <View className="flex-row items-center gap-1.5">
+        <View className={cn('h-2 w-2 rounded-full', colorClassName)} />
+        <Text variant="caption" tone="muted">
+          {label}
+        </Text>
       </View>
+      <Text variant="body">{value}</Text>
     </View>
   );
 }

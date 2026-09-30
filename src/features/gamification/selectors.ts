@@ -1,5 +1,5 @@
 import type { DateKey } from '@/lib/date';
-import { lastNDays, shiftDateKey, todayKey } from '@/lib/date';
+import { fromDateKey, lastNDays, shiftDateKey, todayKey } from '@/lib/date';
 import type { Quest, QuestType, Streak } from '@/types/models';
 
 /**
@@ -84,6 +84,50 @@ export function streakDayStatuses(
     date,
     active: date >= runStart && date <= lastActiveDate,
   }));
+}
+
+export interface HeatmapCell {
+  date: DateKey;
+  count: number;
+}
+
+/** 0 (no entries) through 4 (heaviest), for the heatmap's cell shading. */
+export function heatmapLevel(count: number): 0 | 1 | 2 | 3 | 4 {
+  if (count <= 0) return 0;
+  if (count === 1) return 1;
+  if (count === 2) return 2;
+  if (count <= 4) return 3;
+  return 4;
+}
+
+/**
+ * `weeks` full Sunday–Saturday columns ending in the week containing `today`,
+ * each 7 cells (`null` outside the requested day range), for a GitHub-style
+ * contribution grid.
+ */
+export function loggingHeatmap(
+  counts: Record<DateKey, number>,
+  weeks = 53,
+  today: DateKey = todayKey(),
+): (HeatmapCell | null)[][] {
+  const totalDays = weeks * 7;
+  const from = shiftDateKey(today, -(totalDays - 1));
+  const leadingPad = fromDateKey(from).getDay();
+
+  const cells: (HeatmapCell | null)[] = Array.from({ length: leadingPad }, () => null);
+
+  for (const date of lastNDays(totalDays, today)) {
+    cells.push({ date, count: counts[date] ?? 0 });
+  }
+
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  const columns: (HeatmapCell | null)[][] = [];
+  for (let i = 0; i < cells.length; i += 7) {
+    columns.push(cells.slice(i, i + 7));
+  }
+
+  return columns;
 }
 
 /**

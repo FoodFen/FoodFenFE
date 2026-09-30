@@ -246,7 +246,7 @@ export function useAnalyzeFood() {
   return useMutation({
     mutationFn: (input: AnalyzeFoodInput) =>
       input.type === 'image'
-        ? foodAiApi.analyzeImage(input.uri, input.fileName, input.mimeType)
+        ? foodAiApi.analyzeImage(input.uri, input.fileName)
         : foodAiApi.analyzeText(input.description),
   });
 }

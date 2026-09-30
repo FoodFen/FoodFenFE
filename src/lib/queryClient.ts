@@ -118,6 +118,8 @@ export const queryKeys = {
     streak: () => [...queryKeys.gamification.all, 'streak'] as const,
     quests: (date: string) => [...queryKeys.gamification.all, 'quests', date] as const,
     coins: () => [...queryKeys.gamification.all, 'coins'] as const,
+    heatmap: (weeks: number) =>
+      [...queryKeys.gamification.all, 'heatmap', weeks] as const,
   },
   health: {
     all: ['health'] as const,

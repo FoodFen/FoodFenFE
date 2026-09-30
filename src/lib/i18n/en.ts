@@ -576,6 +576,9 @@ export const en: DeepPartial<Translations> = {
     shareMessage: "I'm on a {days}-day streak on FoodFen! 🔥",
     commit: "I'm committed",
     committedToday: "You're committed today ✓",
+    heatmapHeading: 'Your effort',
+    heatmapLess: 'Less',
+    heatmapMore: 'More',
   },
 
   insights: {
