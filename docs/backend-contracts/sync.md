@@ -329,27 +329,18 @@ not asking for new work, plus naming the two pieces still missing:
 - `POST /water-logs` — `clientId`, `amountMl`, `loggedAt`, `loggedOn`.
 - `DELETE /water-logs/{id}` — for `removeLastWater` ("undo my last cup").
 
-### Quests
+### Quests and coin transactions — superseded
 
-Not yet documented anywhere; `src/data/gamificationRepository.ts` already
-has live UI (`app/(tabs)/achievements.tsx`, `app/log/interstitial.tsx`,
-`QuestToast`), so this is real current functionality, not speculative.
-
-- `POST /quests` — a fresh daily/weekly set being issued. Body: `clientId`,
-  `questType` (`log_breakfast | log_all_meals | hit_calorie_goal |
-  hit_protein_goal | drink_water | log_weight | stay_active_week`),
-  `target`, `rewardCoins`, `cadence` (`daily | weekly`), `completionRatio`,
-  `questDate`.
-- `PATCH /quests/{id}` — progress updates (`setQuestProgress`) and
-  completion. Body: `progress`, `completed`.
-- No `DELETE`.
-
-### Coin transactions
-
-`POST /coin-transactions` only — an append-only ledger
-(`getCoinBalance` sums it; nothing ever edits or removes a row). Body:
-`clientId`, `amount` (signed), `reason` (`quest_completed | streak_bonus |
-purchase | spend | adjustment`), `createdAt`.
+**No longer part of this contract, as of 2026-09-30.** Quests and coins are
+now server-authoritative (`docs/superpowers/specs/2026-09-30-coins-quests-design.md`
+in the BE repo): the server issues, evaluates and pays quests lazily on
+`GET /quests?date=`, and the client never reports progress or completion —
+there is nothing left to push. `POST /quests`, `PATCH /quests/{id}` and
+`POST /coin-transactions` described in an earlier version of this doc are
+dead; the client stopped calling them (`src/data/push.ts` no longer has
+`pushQuests`/`pushCoinTransactions`). See `premium-entitlements.md`'s
+neighbor doc for the redeem flow (`POST /coins/redeem`) once it's written up
+there, or the BE spec above in the meantime.
 
 ### Explicitly out of scope for this contract
 
@@ -383,8 +374,6 @@ this API:
   many dirty rows at once) as a later optimization — nothing in the current
   client shape requires it, so it's not part of this pass.
 - Rate limiting / abuse prevention on the push endpoints.
-- The quest catalog itself (`DAILY_QUESTS`/`WEEKLY_QUESTS` in
-  `gamificationRepository.ts`) is hardcoded client-side today, with a
-  comment noting it should become "server-driven once a backend exists" —
-  that's a distinct, larger feature (a quest-content endpoint) and not
-  part of this sync contract.
+- ~~The quest catalog itself...~~ Done — see "Quests and coin transactions —
+  superseded" above. The catalog is now a server-side `quest_definitions`
+  table; nothing client-side hardcodes it anymore.

@@ -40,7 +40,8 @@ export const mealTypeSchema = z.enum(['breakfast', 'lunch', 'dinner', 'snack']);
 export const inputMethodSchema = z.enum(['voice', 'image', 'type', 'manual']);
 export const aiFeedbackSchema = z.enum(['up', 'down']);
 export const activitySourceSchema = z.enum(['manual', 'apple_health', 'google_fit']);
-export const planTypeSchema = z.enum(['monthly', 'annual']);
+/** `coin_redeem` — a coin-shop grant (`POST /coins/redeem`), never a checkout `planType` request. */
+export const planTypeSchema = z.enum(['monthly', 'annual', 'coin_redeem']);
 export const paymentStatusSchema = z.enum([
   'pending',
   'paid',
@@ -253,12 +254,36 @@ export const subscriptionInfoSchema = z.object({
   status: subscriptionStatusSchema,
   startDate: dateKeySchema,
   endDate: dateKeySchema.nullable(),
-  price: z.number().nonnegative(),
+  // `POST /coins/redeem` sends this as a decimal string ("0.00"); every other
+  // endpoint sends a number. `coerce` accepts both.
+  price: z.coerce.number().nonnegative(),
 });
 
 export const subscriptionMeResponseSchema = z.object({
   hasActiveSubscription: z.boolean(),
   subscription: subscriptionInfoSchema.nullable(),
+});
+
+/** One quest, as `GET /quests` reports it — no `userId` (inferred from the token). */
+export const questProgressSchema = z.object({
+  id: z.string(),
+  questType: questTypeSchema,
+  cadence: questCadenceSchema,
+  questDate: dateKeySchema,
+  progress: z.number().int().nonnegative(),
+  target: z.number().int().nonnegative(),
+  rewardCoins: z.number().int().nonnegative(),
+  completed: z.boolean(),
+});
+
+export const questsResponseSchema = z.object({
+  balance: z.number().int(),
+  quests: z.array(questProgressSchema),
+});
+
+export const redeemCoinsResponseSchema = z.object({
+  balance: z.number().int(),
+  subscription: subscriptionInfoSchema,
 });
 
 export type RemoteUser = z.infer<typeof userSchema>;
@@ -280,3 +305,6 @@ export type RemoteCheckoutResponse = z.infer<typeof checkoutResponseSchema>;
 export type RemotePaymentStatusResponse = z.infer<typeof paymentStatusResponseSchema>;
 export type RemoteSubscriptionInfo = z.infer<typeof subscriptionInfoSchema>;
 export type RemoteSubscriptionMeResponse = z.infer<typeof subscriptionMeResponseSchema>;
+export type RemoteQuestProgress = z.infer<typeof questProgressSchema>;
+export type RemoteQuestsResponse = z.infer<typeof questsResponseSchema>;
+export type RemoteRedeemCoinsResponse = z.infer<typeof redeemCoinsResponseSchema>;

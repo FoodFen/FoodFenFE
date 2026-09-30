@@ -31,8 +31,8 @@ describe('questTitle', () => {
     expect(questTitle(t, 'drink_water')).toBe('questTitles:drink_water');
   });
 
-  it('falls back to the raw quest type for one the app never issues', () => {
-    expect(questTitle(t, 'log_breakfast' as QuestType)).toBe('log_breakfast');
+  it('falls back to the raw quest type for one the client has no copy for yet', () => {
+    expect(questTitle(t, 'totally_new_quest_type' as QuestType)).toBe('totally_new_quest_type');
   });
 });
 
@@ -57,7 +57,7 @@ describe('questDescription', () => {
   });
 
   it('returns an empty string for a quest type with no description copy', () => {
-    const quest = baseQuest({ questType: 'log_breakfast' as QuestType });
+    const quest = baseQuest({ questType: 'totally_new_quest_type' as QuestType });
 
     expect(questDescription(t, quest)).toBe('');
   });

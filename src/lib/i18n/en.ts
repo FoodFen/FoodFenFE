@@ -491,16 +491,22 @@ export const en: DeepPartial<Translations> = {
   },
 
   questTitles: {
+    log_breakfast: 'Log breakfast',
     log_all_meals: 'Stay consistent',
     hit_calorie_goal: 'Calorie balance',
+    hit_protein_goal: 'Protein goal',
     drink_water: 'Stay hydrated',
+    log_weight: 'Weigh in',
     stay_active_week: 'Keep the streak',
   },
 
   questDescriptions: {
+    log_breakfast: 'Log a breakfast entry today',
     log_all_meals: 'Log meals {target} times today',
     hit_calorie_goal: 'Reach {percent}% of your calorie goal',
+    hit_protein_goal: 'Reach {percent}% of your protein goal',
     drink_water: 'Drink {target} cups of water today',
+    log_weight: 'Log your weight today',
     stay_active_week: 'Stay active {target} days this week',
   },
 
@@ -523,8 +529,16 @@ export const en: DeepPartial<Translations> = {
 
   shop: {
     title: 'Shop',
-    emptyTitle: 'Shop coming soon',
-    emptyDescription: 'Spend your reward points on items — coming soon.',
+    balanceLabel: 'Your coins',
+    premiumBundlesHeading: 'Redeem for Premium',
+    bundleTitle: '{days}-day Premium',
+    bundleCost: '{cost} coins',
+    redeemButton: 'Redeem',
+    insufficientCoins: 'Not enough coins',
+    redeemConfirmTitle: 'Redeem {days} days of Premium?',
+    redeemConfirmMessage: 'This spends {cost} coins from your balance.',
+    redeemSuccessTitle: 'Premium unlocked',
+    redeemSuccessMessage: "You've got {days} more days of Premium.",
   },
 
   premium: {

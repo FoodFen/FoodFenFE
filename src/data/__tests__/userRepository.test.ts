@@ -155,7 +155,7 @@ describe('streaks', () => {
   });
 });
 
-describe('coins and quests', () => {
+describe('coins', () => {
   it('sums the ledger rather than storing a balance', () => {
     const { user } = userRepository.createLocalUser(input);
 
@@ -163,25 +163,6 @@ describe('coins and quests', () => {
     gamification.addCoins(user.id, -20, 'spend');
 
     expect(gamification.getCoinBalance(user.id)).toBe(30);
-  });
-
-  it('issues the day’s quests only once', () => {
-    const { user } = userRepository.createLocalUser(input);
-
-    const first = gamification.ensureDailyQuests(user.id, '2026-03-01');
-    const second = gamification.ensureDailyQuests(user.id, '2026-03-01');
-
-    expect(second.map((quest) => quest.id)).toEqual(first.map((quest) => quest.id));
-  });
-
-  it('awards a quest reward exactly once, however often progress is reported', () => {
-    const { user } = userRepository.createLocalUser(input);
-
-    gamification.ensureDailyQuests(user.id, '2026-03-01');
-    gamification.setQuestProgress(user.id, 'drink_water', 8, '2026-03-01');
-    gamification.setQuestProgress(user.id, 'drink_water', 9, '2026-03-01');
-
-    expect(gamification.getCoinBalance(user.id)).toBe(20);
   });
 });
 

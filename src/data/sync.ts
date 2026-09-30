@@ -4,11 +4,9 @@ import { and, eq, isNull, or, sql } from 'drizzle-orm';
 import { db } from '@/db/client';
 import {
   activityLog,
-  coinTransaction,
   dailyGoal,
   foodEntry,
   ingredient,
-  quest,
   streak,
   subscription,
   user,
@@ -127,7 +125,14 @@ export function touchDeleted(now: Date = new Date()): {
   return { ...touch(now), deletedAt: now };
 }
 
-/** Every table that carries sync columns, for counting pending work. */
+/**
+ * Every table that carries sync columns and is actually pushed, for counting
+ * pending work. `quest`/`coin_transaction` are deliberately excluded: both
+ * are now a read-through cache of server-authoritative state
+ * (`gamificationRepository.ts`'s `pullQuests`/`redeemCoinsForPremium`), never
+ * pushed, so counting their local writes as "pending" would show a badge that
+ * never resolves.
+ */
 const SYNCED_TABLES = [
   user,
   dailyGoal,
@@ -137,8 +142,6 @@ const SYNCED_TABLES = [
   weightLog,
   waterLog,
   streak,
-  quest,
-  coinTransaction,
   subscription,
 ] as const;
 

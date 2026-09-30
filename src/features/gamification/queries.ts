@@ -1,9 +1,9 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 
-import * as diaryRepository from '@/data/diaryRepository';
 import { getEntryCountsByDay } from '@/data/entryRepository';
 import * as gamificationRepository from '@/data/gamificationRepository';
+import { readWithRefresh } from '@/data/sync';
 import { useInterstitialStore } from '@/features/gamification/interstitialStore';
 import { loggingHeatmap, shouldAnnounce } from '@/features/gamification/selectors';
 import type { QuestToastEntry } from '@/features/gamification/toastStore';
@@ -59,6 +59,13 @@ export function dismissLogFlow(): void {
  * exactly once, ever (`seenQuestTypes`); every log after that just shows a
  * small toast with whatever progressed, so the mechanic is taught once and
  * then gets out of the way.
+ *
+ * Quest completion is server-side now (`gamificationRepository.pullQuests`),
+ * so it is a network round-trip — and per CLAUDE.md, server sync may never
+ * block the UI. `leave()` therefore always fires immediately; the pull runs
+ * in the background, and whatever it reports (toast, or the full-screen
+ * interstitial for a quest type seen for the first time) surfaces once it
+ * resolves, a beat after the caller has already moved on.
  */
 export function usePostLogInterstitial(leave: () => void = () => {}) {
   const userId = useUserId();
@@ -71,82 +78,77 @@ export function usePostLogInterstitial(leave: () => void = () => {}) {
   const queryClient = useQueryClient();
 
   return () => {
-    // Getting back to the caller must never depend on quest evaluation or the
-    // toast succeeding — both are decorative. Whatever goes wrong below, the
-    // catch below still calls `leave()`; a second call is harmless if the
-    // first one already ran.
-    try {
-      if (!userId) {
-        leave();
-        return;
-      }
-
-      const day = diaryRepository.getDiaryDay(userId, todayKey());
-      const before = gamificationRepository.getActiveQuests(
-        userId,
-        day.date,
-        day.goal.targetKcal,
-      );
-      const progressBefore = new Map(before.map((q) => [q.id, q.progress]));
-
-      const quests = gamificationRepository.evaluateQuestProgress(userId, day);
-
-      void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.all });
-
-      if (hideChallengeProgress) {
-        leave();
-        return;
-      }
-
-      const unseenTypes = quests
-        .map((q) => q.questType)
-        .filter((type) => !seenQuestTypes.includes(type));
-
-      if (unseenTypes.length > 0) {
-        markQuestTypesSeen(quests.map((q) => q.questType));
-        present(quests, leave);
-        router.push('/log/interstitial');
-        return;
-      }
-
+    if (!userId) {
       leave();
-
-      // A quest that's already completed never changes again (`setQuestProgress`
-      // no-ops once `completed`), so "progress went up" is exactly "this action
-      // moved it" — no separate before/after completion diff needed.
-      const activeQuestIds = quests.map((q) => q.id);
-      const advanced = quests.filter((q) => q.progress > (progressBefore.get(q.id) ?? 0));
-
-      const entries: QuestToastEntry[] = [];
-
-      for (const quest of advanced) {
-        const count = bumpQuestAdvance(quest.id, activeQuestIds);
-
-        if (shouldAnnounce(count, quest.completed)) {
-          entries.push({ quest, completed: quest.completed });
-        }
-      }
-
-      if (entries.length > 0) showToast(entries);
-    } catch (error) {
-      console.error('[usePostLogInterstitial] failed, leaving anyway', error);
-      leave();
+      return;
     }
+
+    const today = todayKey();
+    const before = gamificationRepository.getActiveQuests(userId, today);
+    const progressBefore = new Map(before.map((q) => [q.id, q.progress]));
+
+    leave();
+
+    gamificationRepository
+      .pullQuests(userId, today)
+      .then((quests) => {
+        void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.all });
+
+        if (hideChallengeProgress) return;
+
+        const unseenTypes = quests
+          .map((q) => q.questType)
+          .filter((type) => !seenQuestTypes.includes(type));
+
+        if (unseenTypes.length > 0) {
+          markQuestTypesSeen(quests.map((q) => q.questType));
+          // `leave` already ran above — the interstitial's own dismiss has
+          // nothing further of the caller's to close.
+          present(quests, () => {});
+          router.push('/log/interstitial');
+          return;
+        }
+
+        // A quest that's already completed never changes again server-side,
+        // so "progress went up" is exactly "this action moved it" — no
+        // separate before/after completion diff needed.
+        const activeQuestIds = quests.map((q) => q.id);
+        const advanced = quests.filter((q) => q.progress > (progressBefore.get(q.id) ?? 0));
+
+        const entries: QuestToastEntry[] = [];
+
+        for (const quest of advanced) {
+          const count = bumpQuestAdvance(quest.id, activeQuestIds);
+
+          if (shouldAnnounce(count, quest.completed)) {
+            entries.push({ quest, completed: quest.completed });
+          }
+        }
+
+        if (entries.length > 0) showToast(entries);
+      })
+      .catch((error: unknown) => {
+        console.error('[usePostLogInterstitial] quest pull failed', error);
+      });
   };
 }
 
 /** Every quest active right now — today's daily set plus this week's weekly set (UC-23). */
 export function useActiveQuests() {
   const userId = useUserId();
+  const today = todayKey();
 
   return useQuery({
-    queryKey: queryKeys.gamification.quests(todayKey()),
+    queryKey: queryKeys.gamification.quests(today),
     queryFn: () => {
       if (!userId) throw new Error('No local profile yet.');
 
-      const day = diaryRepository.getDiaryDay(userId, todayKey());
-
-      return gamificationRepository.evaluateQuestProgress(userId, day);
+      return readWithRefresh({
+        pull: async () => {
+          await gamificationRepository.pullQuests(userId, today);
+        },
+        read: () => gamificationRepository.getActiveQuests(userId, today),
+      });
     },
     enabled: userId !== null,
     retry: false,
@@ -166,6 +168,24 @@ export function useStreak() {
     },
     enabled: userId !== null,
     retry: false,
+  });
+}
+
+/** Spend coins on a shop bundle; refreshes the balance and the premium tier on success. */
+export function useRedeemCoins() {
+  const userId = useUserId();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (bundleId: string) => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      await gamificationRepository.redeemCoinsForPremium(userId, bundleId);
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.coins() });
+      void queryClient.invalidateQueries({ queryKey: queryKeys.premium.all });
+    },
   });
 }
 

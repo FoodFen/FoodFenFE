@@ -1,5 +1,7 @@
+import { gamificationApi } from '@/api/endpoints/gamification';
 import { createTestDatabase } from '@/db/testDatabase';
 import type { TestDatabase } from '@/db/testDatabase';
+import { shiftDateKey, todayKey } from '@/lib/date';
 
 import * as gamification from '../gamificationRepository';
 import * as userRepository from '../userRepository';
@@ -11,6 +13,15 @@ jest.mock('@/db/client', () => ({
     return mockDb;
   },
 }));
+
+jest.mock('@/api/endpoints/gamification', () => ({
+  gamificationApi: {
+    quests: jest.fn(),
+    redeemCoins: jest.fn(),
+  },
+}));
+
+const mockedGamificationApi = jest.mocked(gamificationApi);
 
 const input = {
   gender: 'male' as const,
@@ -29,6 +40,7 @@ function createUser() {
 
 beforeEach(() => {
   mockDb = createTestDatabase();
+  jest.clearAllMocks();
 });
 
 describe('recordActiveDay (UC-24b)', () => {
@@ -66,61 +78,134 @@ describe('recordActiveDay (UC-24b)', () => {
   });
 });
 
-describe('setQuestProgress completionRatio', () => {
-  it('completes before progress reaches target when the ratio is below 1', () => {
+describe('pullQuests', () => {
+  it('caches the server rows and reconciles the coin balance', async () => {
     const user = createUser();
+    const today = todayKey();
 
-    gamification.ensureDailyQuests(user.id, '2026-03-01', 2000);
-    // hit_calorie_goal's completionRatio is 0.9 — 1800/2000 = 0.9, exactly the threshold.
-    const updated = gamification.setQuestProgress(
-      user.id,
-      'hit_calorie_goal',
-      1800,
-      '2026-03-01',
-    );
+    mockedGamificationApi.quests.mockResolvedValue({
+      balance: 20,
+      quests: [
+        {
+          id: 'remote_quest_1',
+          questType: 'log_all_meals',
+          cadence: 'daily',
+          questDate: today,
+          progress: 3,
+          target: 3,
+          rewardCoins: 20,
+          completed: true,
+        },
+      ],
+    });
 
-    expect(updated?.completed).toBe(true);
-    expect(gamification.getCoinBalance(user.id)).toBe(50);
+    const quests = await gamification.pullQuests(user.id, today);
+
+    expect(mockedGamificationApi.quests).toHaveBeenCalledWith(today);
+    expect(quests).toHaveLength(1);
+    expect(quests[0]?.completed).toBe(true);
+    expect(gamification.getCoinBalance(user.id)).toBe(20);
   });
 
-  it('does not complete below the ratio', () => {
+  it('updates an already-cached quest in place on a later pull, by remote id', async () => {
     const user = createUser();
+    const today = todayKey();
 
-    gamification.ensureDailyQuests(user.id, '2026-03-01', 2000);
-    const updated = gamification.setQuestProgress(
-      user.id,
-      'hit_calorie_goal',
-      1000,
-      '2026-03-01',
-    );
+    mockedGamificationApi.quests.mockResolvedValue({
+      balance: 0,
+      quests: [
+        {
+          id: 'remote_quest_1',
+          questType: 'drink_water',
+          cadence: 'daily',
+          questDate: today,
+          progress: 2,
+          target: 8,
+          rewardCoins: 10,
+          completed: false,
+        },
+      ],
+    });
+    await gamification.pullQuests(user.id, today);
 
-    expect(updated?.completed).toBe(false);
-    expect(gamification.getCoinBalance(user.id)).toBe(0);
+    mockedGamificationApi.quests.mockResolvedValue({
+      balance: 10,
+      quests: [
+        {
+          id: 'remote_quest_1',
+          questType: 'drink_water',
+          cadence: 'daily',
+          questDate: today,
+          progress: 8,
+          target: 8,
+          rewardCoins: 10,
+          completed: true,
+        },
+      ],
+    });
+    const quests = await gamification.pullQuests(user.id, today);
+
+    // Still one row — the second pull updated it in place rather than inserting a duplicate.
+    expect(quests).toHaveLength(1);
+    expect(quests[0]?.progress).toBe(8);
+    expect(gamification.getCoinBalance(user.id)).toBe(10);
   });
 });
 
-describe('ensureWeeklyQuests', () => {
-  it('issues the weekly set once per week, not once per day', () => {
-    const user = createUser();
-
-    // Monday of that week.
-    const first = gamification.ensureWeeklyQuests(user.id, '2026-03-02');
-    const second = gamification.ensureWeeklyQuests(user.id, '2026-03-02');
-
-    expect(second.map((row) => row.id)).toEqual(first.map((row) => row.id));
+describe('redeemCoinsForPremium', () => {
+  const remoteSubscription = (endDate: string) => ({
+    planType: 'coin_redeem' as const,
+    status: 'active' as const,
+    startDate: todayKey(),
+    endDate,
+    price: 0,
   });
 
-  it('does not collide with a daily quest issued on the same date', () => {
+  it('writes the balance and subscription the server returns', async () => {
+    const user = createUser();
+    mockedGamificationApi.redeemCoins.mockResolvedValue({
+      balance: 0,
+      subscription: remoteSubscription(shiftDateKey(todayKey(), 10)),
+    });
+
+    await gamification.redeemCoinsForPremium(user.id, '10day');
+
+    expect(mockedGamificationApi.redeemCoins).toHaveBeenCalledWith(10);
+    expect(gamification.getCoinBalance(user.id)).toBe(0);
+    const sub = gamification.getSubscription(user.id);
+    expect(sub?.planType).toBe('coin_redeem');
+    expect(sub?.endDate).toBe(shiftDateKey(todayKey(), 10));
+  });
+
+  it('reconciles to the server balance rather than computing a local spend', async () => {
+    const user = createUser();
+    gamification.addCoins(user.id, 1000, 'adjustment'); // stale local balance
+
+    mockedGamificationApi.redeemCoins.mockResolvedValue({
+      balance: 400,
+      subscription: remoteSubscription(shiftDateKey(todayKey(), 10)),
+    });
+
+    await gamification.redeemCoinsForPremium(user.id, '10day');
+
+    expect(gamification.getCoinBalance(user.id)).toBe(400);
+  });
+
+  it('writes nothing locally when the server rejects the redemption', async () => {
+    const user = createUser();
+    gamification.addCoins(user.id, 100, 'adjustment');
+    mockedGamificationApi.redeemCoins.mockRejectedValue(new Error('insufficient coins'));
+
+    await expect(gamification.redeemCoinsForPremium(user.id, '10day')).rejects.toThrow();
+
+    expect(gamification.getCoinBalance(user.id)).toBe(100);
+    expect(gamification.getSubscription(user.id)).toBeUndefined();
+  });
+
+  it('rejects an unknown bundle id without calling the server', async () => {
     const user = createUser();
 
-    gamification.ensureDailyQuests(user.id, '2026-03-02');
-    const weekly = gamification.ensureWeeklyQuests(user.id, '2026-03-02');
-
-    expect(weekly).toHaveLength(1);
-    expect(weekly[0]?.questType).toBe('stay_active_week');
-
-    // The daily set is still intact — sharing a questDate did not merge them.
-    const daily = gamification.getActiveQuests(user.id, '2026-03-02');
-    expect(daily.filter((row) => row.cadence === 'daily')).toHaveLength(3);
+    await expect(gamification.redeemCoinsForPremium(user.id, 'nope')).rejects.toThrow();
+    expect(mockedGamificationApi.redeemCoins).not.toHaveBeenCalled();
   });
 });

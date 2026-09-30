@@ -1,5 +1,7 @@
 import { and, desc, eq, sql } from 'drizzle-orm';
 
+import { gamificationApi } from '@/api/endpoints/gamification';
+import type { RemoteQuestProgress } from '@/api/schemas';
 import { db } from '@/db/client';
 import { coinTransaction, quest, streak, subscription } from '@/db/schema';
 import type { DateKey } from '@/lib/date';
@@ -7,11 +9,8 @@ import { calendarWeek, shiftDateKey, todayKey } from '@/lib/date';
 import { generateLocalId } from '@/lib/id';
 import type {
   CoinReason,
-  DiaryDay,
   PlanType,
   Quest,
-  QuestCadence,
-  QuestType,
   Streak,
   Subscription,
   SubscriptionStatus,
@@ -20,16 +19,15 @@ import type {
 
 import { notDeleted, touch } from './sync';
 
-/** Same as `GLASS_ML` in `src/features/dashboard/constants.ts` — `src/data/`
- * cannot import from `src/features/`, so the figure is mirrored, not shared. */
-const WATER_CUP_ML = 250;
-
 /**
  * Streaks, quests, coins and subscription state.
  *
- * The data layer only. Nothing in the UI reads these yet — they are here so
- * the schema is complete and the rules live somewhere testable, rather than
- * being invented later alongside the screens that show them.
+ * Quest progress and coin balance are server-authoritative
+ * (`docs/superpowers/specs/2026-09-30-coins-quests-design.md`, BE repo): the
+ * server issues, evaluates and pays quests lazily on `GET /quests?date=`; the
+ * client never reports progress or completion. `quest`/`coin_transaction`
+ * rows here are a read-through cache of that response, written by
+ * `pullQuests`/`redeemCoinsForPremium`, never by local computation.
  */
 
 export function getStreak(userId: string): Streak | undefined {
@@ -89,57 +87,6 @@ export function recordActiveDay(userId: string, date: DateKey = todayKey()): Str
   return updated;
 }
 
-export interface QuestDefinition {
-  questType: QuestType;
-  cadence: QuestCadence;
-  /**
-   * The displayed denominator. For `hit_calorie_goal` this is a placeholder —
-   * `ensureDailyQuests` resolves the real figure from that day's goal instead,
-   * since the target varies per user and can drift day to day.
-   */
-  target: number;
-  /** Fraction of `target` that counts as complete. `1` = the simple case. */
-  completionRatio: number;
-  rewardCoins: number;
-}
-
-/** The daily quest set. Server-driven once a backend exists. */
-export const DAILY_QUESTS: QuestDefinition[] = [
-  {
-    questType: 'log_all_meals',
-    cadence: 'daily',
-    target: 3,
-    completionRatio: 1,
-    rewardCoins: 30,
-  },
-  // "Reach 90% of your calorie goal" (UC-22) — target is resolved per day below.
-  {
-    questType: 'hit_calorie_goal',
-    cadence: 'daily',
-    target: 2000,
-    completionRatio: 0.9,
-    rewardCoins: 50,
-  },
-  {
-    questType: 'drink_water',
-    cadence: 'daily',
-    target: 8,
-    completionRatio: 1,
-    rewardCoins: 20,
-  },
-];
-
-/** The weekly quest set — issued once per calendar week, not once per day. */
-export const WEEKLY_QUESTS: QuestDefinition[] = [
-  {
-    questType: 'stay_active_week',
-    cadence: 'weekly',
-    target: 5,
-    completionRatio: 1,
-    rewardCoins: 40,
-  },
-];
-
 export function getQuests(userId: string, date: DateKey = todayKey()): Quest[] {
   return db
     .select()
@@ -148,160 +95,67 @@ export function getQuests(userId: string, date: DateKey = todayKey()): Quest[] {
     .all();
 }
 
-function insertQuests(
-  userId: string,
-  date: DateKey,
-  definitions: QuestDefinition[],
-  targetFor: (definition: QuestDefinition) => number,
-): Quest[] {
-  const rows: Quest[] = definitions.map((definition) => ({
-    id: generateLocalId('quest'),
-    userId,
-    questType: definition.questType,
-    progress: 0,
-    target: targetFor(definition),
-    rewardCoins: definition.rewardCoins,
-    completed: false,
-    cadence: definition.cadence,
-    completionRatio: definition.completionRatio,
-    questDate: date,
-    remoteId: null,
-    deletedAt: null,
-    ...touch(),
-  }));
-
-  db.insert(quest).values(rows).run();
-
-  return rows;
-}
-
-/**
- * Issue the day's quests, once. Safe to call on every app open.
- *
- * `hit_calorie_goal`'s target is resolved from `targetKcal` when given (the
- * caller already has the day's goal from `useDiaryDay`) — falling back to the
- * definition's placeholder only if it genuinely isn't available yet.
- */
-export function ensureDailyQuests(
-  userId: string,
-  date: DateKey = todayKey(),
-  targetKcal?: number,
-): Quest[] {
-  const existing = getQuests(userId, date).filter((row) => row.cadence === 'daily');
-
-  if (existing.length > 0) return existing;
-
-  return insertQuests(userId, date, DAILY_QUESTS, (definition) =>
-    definition.questType === 'hit_calorie_goal' && targetKcal
-      ? targetKcal
-      : definition.target,
-  );
-}
-
-/** Issue this week's quests, once per week rather than once per day. */
-export function ensureWeeklyQuests(userId: string, weekStart: DateKey): Quest[] {
-  const existing = getQuests(userId, weekStart).filter((row) => row.cadence === 'weekly');
-
-  if (existing.length > 0) return existing;
-
-  return insertQuests(
-    userId,
-    weekStart,
-    WEEKLY_QUESTS,
-    (definition) => definition.target,
-  );
-}
-
-/** Every quest active right now: today's daily set plus this week's weekly set. */
-export function getActiveQuests(
-  userId: string,
-  today: DateKey = todayKey(),
-  targetKcal?: number,
-): Quest[] {
-  const daily = ensureDailyQuests(userId, today, targetKcal);
+/** Every quest active right now, from the local cache: today's daily set plus this week's weekly set. */
+export function getActiveQuests(userId: string, today: DateKey = todayKey()): Quest[] {
   const weekStart = calendarWeek(today)[0] ?? today;
-  const weekly = ensureWeeklyQuests(userId, weekStart);
+  const daily = getQuests(userId, today).filter((row) => row.cadence === 'daily');
+  const weekly = getQuests(userId, weekStart).filter((row) => row.cadence === 'weekly');
 
   return [...daily, ...weekly];
 }
 
-/**
- * Move a quest forward, awarding its coins the first time it completes.
- *
- * The completion check is inside this function rather than the caller's so the
- * reward can only ever be granted once, no matter how often progress is
- * reported.
- */
-export function setQuestProgress(
-  userId: string,
-  questType: QuestType,
-  progress: number,
-  date: DateKey = todayKey(),
-): Quest | undefined {
-  const existing = getQuests(userId, date).find((row) => row.questType === questType);
+function upsertQuest(userId: string, remote: RemoteQuestProgress): void {
+  const existing = db
+    .select()
+    .from(quest)
+    .where(and(eq(quest.userId, userId), eq(quest.remoteId, remote.id)))
+    .limit(1)
+    .all()[0];
 
-  if (!existing || existing.completed) return existing;
-
-  // Not always `progress >= target` — a quest's own `completionRatio` (e.g. 0.9
-  // for "reach 90% of your calorie goal") decides how much of `target` counts.
-  const completed = progress / existing.target >= existing.completionRatio;
-
-  const updated: Quest = {
-    ...existing,
-    progress: Math.min(progress, existing.target),
-    completed,
+  const values = {
+    questType: remote.questType,
+    progress: remote.progress,
+    target: remote.target,
+    rewardCoins: remote.rewardCoins,
+    completed: remote.completed,
+    cadence: remote.cadence,
+    // Not returned by the server — it already applied its own ratio and sent
+    // `completed` directly. Kept at 1 (the NOT NULL column's simple-case
+    // default) since nothing here recomputes completion from it anymore.
+    completionRatio: 1,
+    questDate: remote.questDate,
+    remoteId: remote.id,
+    deletedAt: null,
     ...touch(),
   };
 
-  db.update(quest).set(updated).where(eq(quest.id, existing.id)).run();
-
-  if (completed) {
-    addCoins(userId, existing.rewardCoins, 'quest_completed');
+  if (existing) {
+    db.update(quest).set(values).where(eq(quest.id, existing.id)).run();
+  } else {
+    db.insert(quest).values({ id: generateLocalId('quest'), userId, ...values }).run();
   }
+}
 
-  return updated;
+/** Reconciles the local coin ledger's sum to the server's authoritative balance. */
+function reconcileCoinBalance(userId: string, serverBalance: number): void {
+  const delta = serverBalance - getCoinBalance(userId);
+
+  if (delta !== 0) addCoins(userId, delta, 'adjustment');
 }
 
 /**
- * Recompute every active quest's live progress and persist it — the "each bar
- * reads live from UC-11's aggregation"/"reads from STREAK" mapping in UC-22.
- *
- * Called right after a log completes (food, activity or water — UC-22's
- * trigger list), so the post-log interstitial and the challenges screen never
- * show stale numbers. Returns the updated rows so a caller doesn't need a
- * second read to display them immediately.
+ * Pulls that day's quests — the server lazily issues, evaluates and pays them
+ * on this call, which is the only place coins are earned. Never awaited by a
+ * screen directly — called from `readWithRefresh`/in the background after a
+ * log, same non-blocking rule as every other server read in this app.
  */
-export function evaluateQuestProgress(userId: string, day: DiaryDay): Quest[] {
-  const active = getActiveQuests(userId, day.date, day.goal.targetKcal);
+export async function pullQuests(userId: string, date: DateKey): Promise<Quest[]> {
+  const { balance, quests } = await gamificationApi.quests(date);
 
-  return active
-    .map((row) =>
-      setQuestProgress(
-        userId,
-        row.questType,
-        liveProgress(row, userId, day),
-        row.questDate,
-      ),
-    )
-    .filter((row): row is Quest => row !== undefined);
-}
+  for (const remote of quests) upsertQuest(userId, remote);
+  reconcileCoinBalance(userId, balance);
 
-function liveProgress(row: Quest, userId: string, day: DiaryDay): number {
-  switch (row.questType) {
-    case 'log_all_meals':
-      return day.entries.length;
-    case 'hit_calorie_goal':
-      return day.totals.kcal;
-    case 'drink_water':
-      return Math.floor(day.waterMl / WATER_CUP_ML);
-    case 'stay_active_week':
-      return getStreak(userId)?.currentStreak ?? 0;
-    default:
-      // log_breakfast / hit_protein_goal / log_weight — defined in the
-      // schema, not in DAILY_QUESTS/WEEKLY_QUESTS, so never issued or
-      // evaluated by this pass. Leave whatever progress they already have.
-      return row.progress;
-  }
+  return getActiveQuests(userId, date);
 }
 
 export function addCoins(userId: string, amount: number, reason: CoinReason): void {
@@ -335,7 +189,9 @@ export function getSubscription(userId: string): Subscription | undefined {
     .select()
     .from(subscription)
     .where(and(eq(subscription.userId, userId), notDeleted(subscription)))
-    .orderBy(desc(subscription.startDate))
+    // `updatedAt` breaks ties when two rows share a `startDate` — same-day
+    // stacked redemptions/renewals, which `startDate` alone can't order.
+    .orderBy(desc(subscription.startDate), desc(subscription.updatedAt))
     .limit(1)
     .all()[0];
 }
@@ -358,6 +214,41 @@ export function resolveTier(
   if (current.endDate !== null && current.endDate < today) return 'free';
 
   return 'premium';
+}
+
+export interface CoinShopBundle {
+  id: string;
+  days: number;
+  coinCost: number;
+}
+
+/** Coin cost is roughly a week of fully-cleared daily quests per redeemed week. */
+export const COIN_SHOP_BUNDLES: CoinShopBundle[] = [
+  { id: '10day', days: 10, coinCost: 600 },
+  { id: '30day', days: 30, coinCost: 1500 },
+];
+
+/**
+ * Spend coins for a premium bundle — server-authoritative: `POST
+ * /coins/redeem` validates the balance, extends/starts the account's one
+ * subscription row, and returns both. A 409 `ApiError` means insufficient
+ * coins; the caller (`useRedeemCoins`) surfaces that.
+ */
+export async function redeemCoinsForPremium(userId: string, bundleId: string): Promise<void> {
+  const bundle = COIN_SHOP_BUNDLES.find((row) => row.id === bundleId);
+  if (!bundle) throw new Error(`Unknown coin shop bundle: ${bundleId}`);
+
+  const { balance, subscription: remote } = await gamificationApi.redeemCoins(bundle.days);
+
+  reconcileCoinBalance(userId, balance);
+
+  startSubscription(userId, {
+    planType: remote.planType,
+    status: remote.status,
+    startDate: remote.startDate,
+    endDate: remote.endDate,
+    price: remote.price,
+  });
 }
 
 export interface StartSubscriptionInput {

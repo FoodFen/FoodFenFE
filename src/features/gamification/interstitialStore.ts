@@ -5,9 +5,10 @@ import type { Quest } from '@/types/models';
 /**
  * The post-log challenge interstitial's open state (UC-22).
  *
- * Mirrors `useLogSheetStore`'s shape. The quests shown are computed once by
- * `evaluateQuestProgress` right before `present()` is called, so the screen
- * itself never has to fetch or recompute — just render what it was given.
+ * Mirrors `useLogSheetStore`'s shape. The quests shown are whatever the
+ * server returned from the background `pullQuests` call that led to
+ * `present()`, so the screen itself never has to fetch or recompute — just
+ * render what it was given.
  *
  * `leave` is how the *caller* gets back to where it started once the
  * interstitial's own Continue button is pressed. It has to travel with the

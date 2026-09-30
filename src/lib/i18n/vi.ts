@@ -508,16 +508,22 @@ export const vi = {
   },
 
   questTitles: {
+    log_breakfast: 'Ghi bữa sáng',
     log_all_meals: 'Duy trì thói quen',
     hit_calorie_goal: 'Cân bằng calo',
+    hit_protein_goal: 'Mục tiêu đạm',
     drink_water: 'Uống đủ nước',
+    log_weight: 'Cân nặng',
     stay_active_week: 'Giữ chuỗi ngày',
   },
 
   questDescriptions: {
+    log_breakfast: 'Ghi bữa sáng hôm nay',
     log_all_meals: 'Ghi {target} bữa ăn hôm nay',
     hit_calorie_goal: 'Đạt {percent}% mục tiêu calo của bạn',
+    hit_protein_goal: 'Đạt {percent}% mục tiêu đạm của bạn',
     drink_water: 'Uống {target} cốc nước hôm nay',
+    log_weight: 'Ghi cân nặng hôm nay',
     stay_active_week: 'Hoạt động {target} ngày trong tuần này',
   },
 
@@ -540,8 +546,16 @@ export const vi = {
 
   shop: {
     title: 'Cửa hàng',
-    emptyTitle: 'Cửa hàng sắp ra mắt',
-    emptyDescription: 'Dùng điểm thưởng để mở khóa vật phẩm — sắp có.',
+    balanceLabel: 'Số xu của bạn',
+    premiumBundlesHeading: 'Đổi lấy Premium',
+    bundleTitle: 'Premium {days} ngày',
+    bundleCost: '{cost} xu',
+    redeemButton: 'Đổi',
+    insufficientCoins: 'Không đủ xu',
+    redeemConfirmTitle: 'Đổi {days} ngày Premium?',
+    redeemConfirmMessage: 'Thao tác này sẽ trừ {cost} xu.',
+    redeemSuccessTitle: 'Đã mở khóa Premium',
+    redeemSuccessMessage: 'Bạn có thêm {days} ngày Premium.',
   },
 
   premium: {

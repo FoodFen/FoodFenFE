@@ -357,7 +357,8 @@ export const coinTransaction = sqliteTable(
   (table) => [index('coin_transaction_user_idx').on(table.userId)],
 );
 
-export type PlanType = 'monthly' | 'annual';
+/** `coin_redeem` is a coin-shop grant (`redeemCoinsForPremium`), not a PayOS purchase. */
+export type PlanType = 'monthly' | 'annual' | 'coin_redeem';
 export type SubscriptionStatus = 'active' | 'canceled' | 'expired' | 'trial';
 
 export const subscription = sqliteTable('subscription', {

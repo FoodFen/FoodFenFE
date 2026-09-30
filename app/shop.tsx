@@ -1,21 +1,107 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Stack } from 'expo-router';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 
-import { EmptyState } from '@/components/ui/EmptyState';
+import { isApiError } from '@/api/errors';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { ScrollScreen } from '@/components/ui/Screen';
+import { Text } from '@/components/ui/Text';
+import { COIN_SHOP_BUNDLES } from '@/data/gamificationRepository';
+import { useCoinBalance } from '@/features/dashboard/queries';
+import { useRedeemCoins } from '@/features/gamification/queries';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
+import { haptics } from '@/lib/haptics';
+import { colorsFor } from '@/theme/colors';
 
-/** Placeholder for the coin shop reached from the dashboard header. */
+/** Spend earned coins for Premium days — the counterpart to the PayOS `app/premium` flow. */
 export default function ShopScreen() {
   const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
+  const { data: balance = 0 } = useCoinBalance();
+  const redeem = useRedeemCoins();
+
+  const confirmRedeem = (bundleId: string, days: number, coinCost: number) => {
+    if (balance < coinCost) {
+      Alert.alert(t('shop', 'insufficientCoins'));
+      return;
+    }
+
+    haptics.selection();
+    Alert.alert(
+      t('shop', 'redeemConfirmTitle').replace('{days}', String(days)),
+      t('shop', 'redeemConfirmMessage').replace('{cost}', String(coinCost)),
+      [
+        { text: t('common', 'cancel'), style: 'cancel' },
+        {
+          text: t('shop', 'redeemButton'),
+          onPress: () => {
+            redeem.mutate(bundleId, {
+              onSuccess: () => {
+                haptics.success();
+                Alert.alert(
+                  t('shop', 'redeemSuccessTitle'),
+                  t('shop', 'redeemSuccessMessage').replace('{days}', String(days)),
+                );
+              },
+              onError: (error) => {
+                haptics.error();
+                Alert.alert(
+                  isApiError(error) && error.status === 409
+                    ? t('shop', 'insufficientCoins')
+                    : t('common', 'somethingWentWrong'),
+                );
+              },
+            });
+          },
+        },
+      ],
+    );
+  };
 
   return (
-    <View className="flex-1 bg-bg">
+    <ScrollScreen>
       <Stack.Screen options={{ title: t('shop', 'title') }} />
-      <EmptyState
-        icon="🛍️"
-        title={t('shop', 'emptyTitle')}
-        description={t('shop', 'emptyDescription')}
-      />
-    </View>
+
+      <Card className="flex-row items-center justify-between">
+        <Text variant="body" tone="muted">
+          {t('shop', 'balanceLabel')}
+        </Text>
+        <View className="flex-row items-center gap-1.5">
+          <Ionicons name="sparkles" size={18} color={colors.warning} />
+          <Text variant="heading">{balance.toLocaleString()}</Text>
+        </View>
+      </Card>
+
+      <Text variant="label" tone="muted">
+        {t('shop', 'premiumBundlesHeading')}
+      </Text>
+
+      {COIN_SHOP_BUNDLES.map((bundle) => {
+        const affordable = balance >= bundle.coinCost;
+
+        return (
+          <Card key={bundle.id} className="flex-row items-center justify-between gap-3">
+            <View className="gap-0.5">
+              <Text variant="label">
+                {t('shop', 'bundleTitle').replace('{days}', String(bundle.days))}
+              </Text>
+              <Text variant="caption" tone="muted">
+                {t('shop', 'bundleCost').replace('{cost}', String(bundle.coinCost))}
+              </Text>
+            </View>
+
+            <Button
+              label={t('shop', 'redeemButton')}
+              onPress={() => confirmRedeem(bundle.id, bundle.days, bundle.coinCost)}
+              disabled={!affordable || redeem.isPending}
+              size="sm"
+            />
+          </Card>
+        );
+      })}
+    </ScrollScreen>
   );
 }

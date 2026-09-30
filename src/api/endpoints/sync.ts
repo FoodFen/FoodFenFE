@@ -3,10 +3,8 @@ import { z } from 'zod';
 import { api } from '@/api/client';
 import {
   activityLogSchema,
-  coinTransactionSchema,
   dailyGoalSchema,
   foodEntrySchema,
-  questSchema,
   streakSchema,
   userSchema,
   waterLogSchema,
@@ -14,10 +12,8 @@ import {
 } from '@/api/schemas';
 import type {
   RemoteActivityLog,
-  RemoteCoinTransaction,
   RemoteDailyGoal,
   RemoteFoodEntry,
-  RemoteQuest,
   RemoteStreak,
   RemoteUser,
   RemoteWaterLog,
@@ -27,11 +23,8 @@ import type { DateKey } from '@/lib/date';
 import type {
   AiFeedback,
   ActivitySource,
-  CoinReason,
   InputMethod,
   MealType,
-  QuestCadence,
-  QuestType,
   UserProfile,
 } from '@/types/models';
 
@@ -147,30 +140,6 @@ export interface PushWaterLogInput {
 /** No `clientId` — the `:id` in the URL already identifies the row, same as every other PATCH in this API. */
 export type UpdateWaterLogInput = Omit<PushWaterLogInput, 'clientId'>;
 
-export interface PushQuestInput {
-  clientId: string;
-  questType: QuestType;
-  target: number;
-  rewardCoins: number;
-  cadence: QuestCadence;
-  completionRatio: number;
-  questDate: DateKey;
-}
-
-/** No `clientId` — the `:id` in the URL already identifies the row. */
-export interface UpdateQuestInput {
-  progress: number;
-  completed: boolean;
-}
-
-/** Append-only — there is no update/delete for a coin transaction. */
-export interface PushCoinTransactionInput {
-  clientId: string;
-  amount: number;
-  reason: CoinReason;
-  createdAt: string;
-}
-
 export const syncApi = {
   me: (signal?: AbortSignal): Promise<RemoteUser> =>
     api.get('auth/me', { schema: userSchema, signal }),
@@ -249,14 +218,4 @@ export const syncApi = {
     api.patch(`water-logs/${remoteId}`, input, { schema: waterLogSchema }),
 
   deleteWaterLog: (remoteId: string): Promise<void> => api.delete(`water-logs/${remoteId}`),
-
-  createQuest: (input: PushQuestInput): Promise<RemoteQuest> =>
-    api.post('quests', input, { schema: questSchema }),
-
-  updateQuest: (remoteId: string, input: UpdateQuestInput): Promise<RemoteQuest> =>
-    api.patch(`quests/${remoteId}`, input, { schema: questSchema }),
-
-  /** Append-only — there is no update/delete endpoint for a coin transaction. */
-  createCoinTransaction: (input: PushCoinTransactionInput): Promise<RemoteCoinTransaction> =>
-    api.post('coin-transactions', input, { schema: coinTransactionSchema }),
 };
