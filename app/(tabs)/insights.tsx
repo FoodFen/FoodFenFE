@@ -5,7 +5,7 @@ import { CalorieTrendChart } from '@/components/insights/CalorieTrendChart';
 import { WeightTrendChart } from '@/components/insights/WeightTrendChart';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
-import { Screen, ScrollScreen, TAB_BAR_CLEARANCE } from '@/components/ui/Screen';
+import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useDiaryRange, useWeightHistory } from '@/features/diary/queries';

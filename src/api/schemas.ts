@@ -231,6 +231,19 @@ export const aiFoodAnalysisResponseSchema = z.object({
   imageUrl: z.url().nullish(),
 });
 
+const aiQuotaSlotSchema = z.object({
+  limit: z.number().int(),
+  remaining: z.number().int(),
+});
+
+/** Free-trial tries left per input method; slots are null when `unlimited`. */
+export const aiQuotaResponseSchema = z.object({
+  unlimited: z.boolean(),
+  image: aiQuotaSlotSchema.nullable(),
+  text: aiQuotaSlotSchema.nullable(),
+  voice: aiQuotaSlotSchema.nullable(),
+});
+
 export const checkoutResponseSchema = z.object({
   orderCode: z.number().int(),
   checkoutUrl: z.url(),
@@ -301,6 +314,7 @@ export type RemoteChatMessage = z.infer<typeof chatMessageSchema>;
 export type RemoteChatHistoryResponse = z.infer<typeof chatHistoryResponseSchema>;
 export type RemoteAiIngredient = z.infer<typeof aiIngredientSchema>;
 export type RemoteAiFoodAnalysisResponse = z.infer<typeof aiFoodAnalysisResponseSchema>;
+export type RemoteAiQuotaResponse = z.infer<typeof aiQuotaResponseSchema>;
 export type RemoteCheckoutResponse = z.infer<typeof checkoutResponseSchema>;
 export type RemotePaymentStatusResponse = z.infer<typeof paymentStatusResponseSchema>;
 export type RemoteSubscriptionInfo = z.infer<typeof subscriptionInfoSchema>;

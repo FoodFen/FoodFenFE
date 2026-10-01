@@ -144,4 +144,5 @@ Where the load-bearing logic lives:
 ## Other instructions
 
 - Default to zero comments in code. Add one only when the WHY is non-obvious (a hidden constraint, a workaround, a subtle invariant) — never to restate what the code does or narrate a fix/rationale. A brief file-top summary is the only comment that's always fine.
+- **DO NOT PUT COMMENTS IN TEST FILES.** No comments of any kind in `*.test.ts(x)` or `__tests__/` files, not even a file-top summary. Express intent through the test names.
 - Never create a new `.md`/doc file unless explicitly asked. Updating an existing doc (e.g. `docs/backend-contracts/*.md`) when its contract actually changed is fine; adding a new one, a summary, or a planning doc is not.

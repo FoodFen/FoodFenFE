@@ -233,7 +233,7 @@ export function useLogManualEntry() {
 
 export type AnalyzeFoodInput =
   | { type: 'image'; uri: string; fileName: string; mimeType: string }
-  | { type: 'text'; description: string };
+  | { type: 'text'; description: string; inputMethod?: 'text' | 'voice' };
 
 /**
  * Send a photo or a typed sentence to the backend AI and get back a
@@ -243,11 +243,24 @@ export type AnalyzeFoodInput =
  * ingredient source.
  */
 export function useAnalyzeFood() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (input: AnalyzeFoodInput) =>
       input.type === 'image'
         ? foodAiApi.analyzeImage(input.uri, input.fileName)
-        : foodAiApi.analyzeText(input.description),
+        : foodAiApi.analyzeText(input.description, input.inputMethod),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: queryKeys.aiQuota }),
+  });
+}
+
+/** Free AI tries left per input method; `unlimited` for Premium. */
+export function useAiQuota(enabled: boolean) {
+  return useQuery({
+    queryKey: queryKeys.aiQuota,
+    queryFn: foodAiApi.getQuota,
+    enabled,
+    retry: false,
   });
 }
 

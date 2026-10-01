@@ -13,6 +13,7 @@ export type ApiErrorKind =
   | 'not_found' // 404
   | 'validation' // 422 / 400 with field errors.
   | 'rate_limited' // 429
+  | 'trial_exhausted' // Free AI trials used up — body code `ai_trial_exhausted`.
   | 'server' // 5xx
   | 'parse' // Response body was not the shape we expected.
   | 'canceled' // Caller aborted the request.
@@ -72,6 +73,8 @@ export class ApiError extends Error {
         return this.message || 'Please check the highlighted fields.';
       case 'rate_limited':
         return 'Too many requests. Please wait a moment and try again.';
+      case 'trial_exhausted':
+        return 'You have used your free AI tries. Upgrade to Premium to keep going.';
       case 'server':
         return 'Something went wrong on our side. Please try again shortly.';
       case 'canceled':

@@ -20,11 +20,10 @@ import { Input } from '@/components/ui/Input';
 import { NumberField } from '@/components/ui/NumberField';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
-import { canUseRemote } from '@/data/sync';
-import { useAuthStore } from '@/features/auth/store';
 import { useDraftStore } from '@/features/diary/draftStore';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import {
+  useAiQuota,
   useAnalyzeFood,
   useCatalogSearch,
   useLogManualEntry,
@@ -121,12 +120,33 @@ export default function ManualEntryScreen() {
   const finishLogging = usePostLogInterstitial(dismissLogFlow);
   const analyzeFood = useAnalyzeFood();
 
-  const session = useAuthStore((state) => state.session);
-  const aiAvailable = canUseRemote();
-  // The one `canUseRemote()` reason worth its own affordance: everything else
-  // about the build/connection is fine, only signing in is missing (mirrors
-  // `app/chat.tsx`'s gating).
-  const isNoSessionReason = env.hasBackend && onlineManager.isOnline() && !session;
+  // No session needed: signed-out users get a few free AI tries, counted
+  // server-side by device id. Running out routes to Premium (see `onAiError`).
+  const aiAvailable = env.hasBackend && onlineManager.isOnline();
+
+  const quota = useAiQuota(aiAvailable).data;
+  const imageTriesLeft =
+    quota && !quota.unlimited && quota.image
+      ? t('logManual', 'aiTriesLeft').replace('{n}', String(quota.image.remaining))
+      : null;
+  const describeTriesLeft =
+    quota && !quota.unlimited && quota.text && quota.voice
+      ? t('logManual', 'aiTriesLeftDescribe')
+          .replace('{typed}', String(quota.text.remaining))
+          .replace('{voice}', String(quota.voice.remaining))
+      : null;
+
+  const onAiError = (error: unknown) => {
+    haptics.error();
+    if (error instanceof ApiError && error.kind === 'trial_exhausted') {
+      router.push('/premium');
+      return;
+    }
+    Alert.alert(
+      t('logManual', 'aiErrorTitle'),
+      analyzeErrorMessage(error, t('logManual', 'aiErrorFallback')),
+    );
+  };
 
   const [captureMode, setCaptureMode] = useState<CaptureMode>(
     params.mode === 'image' ? 'image' : 'manual',
@@ -175,13 +195,7 @@ export default function ManualEntryScreen() {
           haptics.success();
           applyAnalysisToDraft(result, 'image');
         },
-        onError: (error) => {
-          haptics.error();
-          Alert.alert(
-            t('logManual', 'aiErrorTitle'),
-            analyzeErrorMessage(error, t('logManual', 'aiErrorFallback')),
-          );
-        },
+        onError: onAiError,
       },
     );
   };
@@ -191,19 +205,17 @@ export default function ManualEntryScreen() {
     if (!description || analyzeFood.isPending) return;
 
     analyzeFood.mutate(
-      { type: 'text', description },
+      {
+        type: 'text',
+        description,
+        inputMethod: smartTextSource === 'voice' ? 'voice' : 'text',
+      },
       {
         onSuccess: (result) => {
           haptics.success();
           applyAnalysisToDraft(result, smartTextSource);
         },
-        onError: (error) => {
-          haptics.error();
-          Alert.alert(
-            t('logManual', 'aiErrorTitle'),
-            analyzeErrorMessage(error, t('logManual', 'aiErrorFallback')),
-          );
-        },
+        onError: onAiError,
       },
     );
   };
@@ -321,6 +333,7 @@ export default function ManualEntryScreen() {
           <ImageCapturePanel
             image={pickedImage}
             isAnalyzing={analyzeFood.isPending}
+            triesLeft={imageTriesLeft}
             onPick={pickImage}
             onAnalyze={analyzeImage}
             onClear={() => setPickedImage(null)}
@@ -331,8 +344,6 @@ export default function ManualEntryScreen() {
               icon="⚠️"
               title={t('logManual', 'aiUnavailableTitle')}
               description={t('logManual', 'aiUnavailableDescription')}
-              actionLabel={isNoSessionReason ? t('logManual', 'aiSignIn') : undefined}
-              onAction={isNoSessionReason ? () => router.push('/sign-in') : undefined}
             />
           </View>
         )
@@ -350,6 +361,7 @@ export default function ManualEntryScreen() {
             }}
             onAnalyze={analyzeSmartText}
             isAnalyzing={analyzeFood.isPending}
+            triesLeft={describeTriesLeft}
           />
         ) : (
           <View className="flex-1 justify-center">
@@ -357,8 +369,6 @@ export default function ManualEntryScreen() {
               icon="⚠️"
               title={t('logManual', 'aiUnavailableTitle')}
               description={t('logManual', 'aiUnavailableDescription')}
-              actionLabel={isNoSessionReason ? t('logManual', 'aiSignIn') : undefined}
-              onAction={isNoSessionReason ? () => router.push('/sign-in') : undefined}
             />
           </View>
         )
@@ -631,12 +641,14 @@ function ModeTab({
 function ImageCapturePanel({
   image,
   isAnalyzing,
+  triesLeft,
   onPick,
   onAnalyze,
   onClear,
 }: {
   image: ImagePicker.ImagePickerAsset | null;
   isAnalyzing: boolean;
+  triesLeft: string | null;
   onPick: (source: 'camera' | 'library') => void;
   onAnalyze: () => void;
   onClear: () => void;
@@ -647,6 +659,11 @@ function ImageCapturePanel({
 
   return (
     <View className="flex-1 justify-center gap-6 p-6">
+      {triesLeft ? (
+        <Text variant="caption" tone="muted" className="text-center">
+          {triesLeft}
+        </Text>
+      ) : null}
       {image ? (
         <View className="gap-4">
           <Image
@@ -709,12 +726,14 @@ function DescribePanel({
   onSpeechResult,
   onAnalyze,
   isAnalyzing,
+  triesLeft,
 }: {
   text: string;
   onChangeText: (value: string) => void;
   onSpeechResult: (value: string) => void;
   onAnalyze: () => void;
   isAnalyzing: boolean;
+  triesLeft: string | null;
 }) {
   const { t, locale } = useTranslation();
   const { resolved } = useAppTheme();
@@ -816,6 +835,11 @@ function DescribePanel({
       {isListening ? (
         <Text variant="caption" tone="brand" className="text-center">
           {t('logManual', 'describeListening')}
+        </Text>
+      ) : null}
+      {triesLeft ? (
+        <Text variant="caption" tone="muted" className="text-center">
+          {triesLeft}
         </Text>
       ) : null}
       <Button

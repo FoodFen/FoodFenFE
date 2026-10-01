@@ -133,6 +133,7 @@ export const queryKeys = {
     all: ['chat'] as const,
     history: () => [...queryKeys.chat.all, 'history'] as const,
   },
+  aiQuota: ['ai-quota'] as const,
   premium: {
     all: ['premium'] as const,
     tier: () => [...queryKeys.premium.all, 'tier'] as const,

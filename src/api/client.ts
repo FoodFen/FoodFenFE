@@ -84,6 +84,8 @@ export interface RequestOptions<TResponse> {
   schema?: ZodType<TResponse>;
   /** Skips the Authorization header — for sign-in and sign-up. */
   skipAuth?: boolean;
+  /** Extra request headers, e.g. `X-Device-Id`. */
+  headers?: Record<string, string>;
   signal?: AbortSignal;
   timeoutMs?: number;
 }
@@ -154,9 +156,10 @@ function withTimeout(
  */
 export async function parseErrorBody(
   response: Response,
-): Promise<{ message?: string; fieldErrors?: Record<string, string> }> {
+): Promise<{ message?: string; code?: string; fieldErrors?: Record<string, string> }> {
   try {
     const body = (await response.json()) as {
+      code?: string;
       message?: string;
       error?: string;
       errors?: Record<string, string | string[]>;
@@ -171,7 +174,7 @@ export async function parseErrorBody(
         )
       : undefined;
 
-    return { message: body.message ?? body.error, fieldErrors };
+    return { message: body.message ?? body.error, code: body.code, fieldErrors };
   } catch {
     return {};
   }
@@ -215,6 +218,7 @@ export async function request<TResponse = void>(
     query,
     schema,
     skipAuth = false,
+    headers: extraHeaders,
     signal,
     timeoutMs = env.apiTimeoutMs,
   } = options;
@@ -223,7 +227,7 @@ export async function request<TResponse = void>(
   const timeout = withTimeout(signal, timeoutMs);
 
   const buildInit = (token: string | null): RequestInit => {
-    const headers: Record<string, string> = { Accept: 'application/json' };
+    const headers: Record<string, string> = { Accept: 'application/json', ...extraHeaders };
 
     // Let fetch set the multipart boundary itself — overriding Content-Type
     // on a FormData body produces an unparseable request.
@@ -261,10 +265,10 @@ export async function request<TResponse = void>(
     }
 
     if (!response.ok) {
-      const { message, fieldErrors } = await parseErrorBody(response);
+      const { message, code, fieldErrors } = await parseErrorBody(response);
 
       throw new ApiError(
-        statusToKind(response.status),
+        code === 'ai_trial_exhausted' ? 'trial_exhausted' : statusToKind(response.status),
         message ?? `Request failed with status ${response.status}.`,
         { status: response.status, fieldErrors },
       );

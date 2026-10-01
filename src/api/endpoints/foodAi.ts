@@ -1,8 +1,9 @@
 import { File } from 'expo-file-system';
 
 import { api } from '@/api/client';
-import { aiFoodAnalysisResponseSchema } from '@/api/schemas';
-import type { RemoteAiFoodAnalysisResponse } from '@/api/schemas';
+import { getDeviceId } from '@/api/deviceId';
+import { aiFoodAnalysisResponseSchema, aiQuotaResponseSchema } from '@/api/schemas';
+import type { RemoteAiFoodAnalysisResponse, RemoteAiQuotaResponse } from '@/api/schemas';
 import { useSettingsStore } from '@/features/settings/store';
 
 /**
@@ -20,8 +21,13 @@ import { useSettingsStore } from '@/features/settings/store';
 // misread as a failure.
 const AI_ANALYSIS_TIMEOUT_MS = 60_000;
 
+const deviceHeaders = async () => ({ 'X-Device-Id': await getDeviceId() });
+
 export const foodAiApi = {
-  analyzeImage: (uri: string, fileName: string): Promise<RemoteAiFoodAnalysisResponse> => {
+  analyzeImage: async (
+    uri: string,
+    fileName: string,
+  ): Promise<RemoteAiFoodAnalysisResponse> => {
     const form = new FormData();
     // Expo SDK 57's global `fetch` (`expo/fetch`) only accepts a real
     // Blob-like part (string | Blob | { bytes() }) in FormData — React
@@ -34,15 +40,29 @@ export const foodAiApi = {
 
     return api.post('ai/food/analyze-image', undefined, {
       formData: form,
+      headers: await deviceHeaders(),
       schema: aiFoodAnalysisResponseSchema,
       timeoutMs: AI_ANALYSIS_TIMEOUT_MS,
     });
   },
 
-  analyzeText: (description: string): Promise<RemoteAiFoodAnalysisResponse> =>
+  getQuota: async (): Promise<RemoteAiQuotaResponse> =>
+    api.get('ai/food/quota', {
+      headers: await deviceHeaders(),
+      schema: aiQuotaResponseSchema,
+    }),
+
+  analyzeText: async (
+    description: string,
+    inputMethod: 'text' | 'voice' = 'text',
+  ): Promise<RemoteAiFoodAnalysisResponse> =>
     api.post(
       'ai/food/analyze-text',
-      { description, language: useSettingsStore.getState().locale },
-      { schema: aiFoodAnalysisResponseSchema, timeoutMs: AI_ANALYSIS_TIMEOUT_MS },
+      { description, language: useSettingsStore.getState().locale, inputMethod },
+      {
+        headers: await deviceHeaders(),
+        schema: aiFoodAnalysisResponseSchema,
+        timeoutMs: AI_ANALYSIS_TIMEOUT_MS,
+      },
     ),
 };

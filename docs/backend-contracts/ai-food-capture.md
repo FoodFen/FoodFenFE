@@ -17,15 +17,34 @@ the AI response is never written to the diary directly. See
 
 ## Auth
 
-Identical to every other authenticated endpoint in this API: `Authorization:
-Bearer <accessToken>`, standard 401 on an expired/invalid token (the client
-already retries once after a token refresh).
+`Authorization: Bearer <accessToken>` is optional. The client always sends
+`X-Device-Id` (an opaque 1–64 char string kept in the keychain), signed in or
+not. A signed-out caller is identified by that header alone; 401 only when
+both it and a valid Bearer are missing, or the Bearer is invalid (the client
+retries once after a token refresh).
 
-Both endpoints are free for every signed-in user in this pass — there is no
-Premium check on the client. If a paid tier should be enforced later, a 403
-with `kind: 'forbidden'` is enough; the client already turns that into a
-generic "you don't have access to that" message, and gating the entry point
-itself is a small client-side addition when that's needed.
+### Free trial
+
+3 lifetime successful analyses per input method — `image`, `text`, `voice`
+(analyze-text takes `inputMethod: "text" | "voice"`, default `"text"`) — no
+reset. Applies to signed-out and signed-in free users; Premium is unlimited.
+Quota key is the device while signed out; once signed in, the higher of the
+device and account counts. Only a successful, non-empty analysis consumes a
+trial.
+
+Exhausted: `403` with `{ "message", "code": "ai_trial_exhausted",
+"inputMethod" }`. The client matches on `code` (kind `trial_exhausted`) and
+opens the Premium screen; checkout itself still requires sign-in. `402` stays
+the existing `premium_required` response.
+
+`GET /ai/food/quota` (same identity rules):
+`{ "unlimited": false, "image": {"limit":3,"remaining":2}, "text": {...}, "voice": {...} }`;
+Premium is `{ "unlimited": true, "image": null, "text": null, "voice": null }`.
+The Image and Describe panels in `app/log/manual.tsx` read it to show "free
+tries left", and refetch it after every analysis.
+
+Anonymous calls are limited to 30/hour per IP (429, uncoded body), counted on
+every attempt including 403s.
 
 ## `POST /ai/food/analyze-image`
 
