@@ -25,21 +25,24 @@ retries once after a token refresh).
 
 ### Free trial
 
-3 lifetime successful analyses per input method — `image`, `text`, `voice`
-(analyze-text takes `inputMethod: "text" | "voice"`, default `"text"`) — no
-reset. Applies to signed-out and signed-in free users; Premium is unlimited.
+3 successful analyses per input method per day — `image`, `text`, `voice`
+(analyze-text takes `inputMethod: "text" | "voice"`, default `"text"`). A day
+is a fixed calendar day in Asia/Ho_Chi_Minh (UTC+7); counts reset at midnight
+there. Applies to signed-out and signed-in free users; Premium is unlimited.
 Quota key is the device while signed out; once signed in, the higher of the
-device and account counts. Only a successful, non-empty analysis consumes a
-trial.
+device and account counts for the same day. Only a successful, non-empty
+analysis consumes a trial.
 
 Exhausted: `403` with `{ "message", "code": "ai_trial_exhausted",
-"inputMethod" }`. The client matches on `code` (kind `trial_exhausted`) and
+"inputMethod", "resetsAt" }` (`resetsAt` is ISO 8601 with a +07:00 offset, e.g.
+`2026-10-02T00:00:00+07:00`). The client matches on `code` (kind `trial_exhausted`) and
 opens the Premium screen; checkout itself still requires sign-in. `402` stays
 the existing `premium_required` response.
 
 `GET /ai/food/quota` (same identity rules):
-`{ "unlimited": false, "image": {"limit":3,"remaining":2}, "text": {...}, "voice": {...} }`;
-Premium is `{ "unlimited": true, "image": null, "text": null, "voice": null }`.
+`{ "unlimited": false, "resetsAt": "...", "image": {"limit":3,"remaining":2}, "text": {...}, "voice": {...} }`
+(`remaining` is today's count); Premium is
+`{ "unlimited": true, "resetsAt": null, "image": null, "text": null, "voice": null }`.
 The Image and Describe panels in `app/log/manual.tsx` read it to show "free
 tries left", and refetch it after every analysis.
 
