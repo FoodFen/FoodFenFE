@@ -2,8 +2,10 @@ import { create } from 'zustand';
 
 import type { IngredientInput } from '@/data/entryRepository';
 import { suggestedMealType } from '@/features/diary/selectors';
+import { useSettingsStore } from '@/features/settings/store';
 import type { DateKey } from '@/lib/date';
 import { todayKey } from '@/lib/date';
+import { translate } from '@/lib/i18n';
 import { generateLocalId } from '@/lib/id';
 import { sumNutrition } from '@/lib/nutrition';
 import type { InputMethod, MealType, Nutrition } from '@/types/models';
@@ -114,11 +116,16 @@ export function draftName(name: string, ingredients: readonly DraftIngredient[])
   const trimmed = name.trim();
   if (trimmed) return trimmed;
 
-  if (ingredients.length === 0) return 'Meal';
+  const { locale } = useSettingsStore.getState();
+  const fallback = translate(locale, 'common', 'mealFallback');
+
+  if (ingredients.length === 0) return fallback;
 
   const [first, second] = ingredients;
 
-  if (ingredients.length === 1 || !second) return first?.name ?? 'Meal';
+  if (ingredients.length === 1 || !second) return first?.name ?? fallback;
 
-  return `${first?.name} + ${ingredients.length - 1} more`;
+  return translate(locale, 'common', 'moreIngredients')
+    .replace('{name}', first?.name ?? fallback)
+    .replace('{n}', String(ingredients.length - 1));
 }

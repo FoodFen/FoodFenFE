@@ -12,6 +12,10 @@ import {
   startOfWeek,
   subDays,
 } from 'date-fns';
+import { enUS, vi } from 'date-fns/locale';
+
+import { useSettingsStore } from '@/features/settings/store';
+import { translate } from '@/lib/i18n';
 
 /**
  * Diary dates.
@@ -42,19 +46,22 @@ export function shiftDateKey(key: DateKey, days: number): DateKey {
   return toDateKey(addDays(fromDateKey(key), days));
 }
 
+const dateFnsLocale = () => (useSettingsStore.getState().locale === 'vi' ? vi : enUS);
+
 /** "Today" / "Yesterday" / "Mon, 3 Mar" — the diary header label. */
 export function formatDiaryDate(key: DateKey): string {
   const date = fromDateKey(key);
+  const { locale } = useSettingsStore.getState();
 
-  if (isToday(date)) return 'Today';
-  if (isYesterday(date)) return 'Yesterday';
+  if (isToday(date)) return translate(locale, 'common', 'today');
+  if (isYesterday(date)) return translate(locale, 'common', 'yesterday');
 
-  return format(date, 'EEE, d MMM');
+  return format(date, 'EEE, d MMM', { locale: dateFnsLocale() });
 }
 
 /** Short weekday initial, for the horizontal date strip. */
 export function formatWeekdayInitial(key: DateKey): string {
-  return format(fromDateKey(key), 'EEEEE');
+  return format(fromDateKey(key), 'EEEEE', { locale: dateFnsLocale() });
 }
 
 export function formatDayOfMonth(key: DateKey): string {

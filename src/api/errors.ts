@@ -1,3 +1,6 @@
+import { useSettingsStore } from '@/features/settings/store';
+import { translate } from '@/lib/i18n';
+
 /**
  * Every failure the API layer can produce, as one discriminated type.
  *
@@ -56,33 +59,10 @@ export class ApiError extends Error {
 
   /** A message safe to show the user — never leaks internals. */
   get userMessage(): string {
-    switch (this.kind) {
-      case 'not_configured':
-        return 'Accounts are not available in this build. Your diary works offline without one.';
-      case 'network':
-        return 'No connection. Your changes are saved and will sync when you are back online.';
-      case 'timeout':
-        return 'That took too long. Please try again.';
-      case 'unauthorized':
-        return 'Your session has expired. Please sign in again.';
-      case 'forbidden':
-        return 'You do not have access to that.';
-      case 'not_found':
-        return 'We could not find that.';
-      case 'validation':
-        return this.message || 'Please check the highlighted fields.';
-      case 'rate_limited':
-        return 'Too many requests. Please wait a moment and try again.';
-      case 'trial_exhausted':
-        return 'You have used your free AI tries. Upgrade to Premium to keep going.';
-      case 'server':
-        return 'Something went wrong on our side. Please try again shortly.';
-      case 'canceled':
-        return 'Request canceled.';
-      case 'parse':
-      case 'unknown':
-        return 'Something went wrong. Please try again.';
-    }
+    const { locale } = useSettingsStore.getState();
+    const key = this.kind === 'parse' || this.kind === 'unknown' ? 'generic' : this.kind;
+
+    return (this.kind === 'validation' && this.message) || translate(locale, 'apiError', key);
   }
 }
 

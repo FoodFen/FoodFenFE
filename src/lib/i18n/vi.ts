@@ -32,6 +32,27 @@ export const vi = {
     water: 'Nước',
     somethingWentWrong: 'Đã có lỗi xảy ra',
     pleaseTryAgain: 'Vui lòng thử lại.',
+    today: 'Hôm nay',
+    yesterday: 'Hôm qua',
+    mealFallback: 'Món ăn',
+    moreIngredients: '{name} + {n} món khác',
+  },
+
+  apiError: {
+    not_configured:
+      'Bản dựng này chưa hỗ trợ tài khoản. Nhật ký của bạn vẫn dùng được khi ngoại tuyến.',
+    network:
+      'Không có kết nối. Thay đổi của bạn đã được lưu và sẽ đồng bộ khi có mạng trở lại.',
+    timeout: 'Mất quá nhiều thời gian. Vui lòng thử lại.',
+    unauthorized: 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',
+    forbidden: 'Bạn không có quyền truy cập mục này.',
+    not_found: 'Không tìm thấy nội dung này.',
+    validation: 'Vui lòng kiểm tra các trường được đánh dấu.',
+    rate_limited: 'Quá nhiều yêu cầu. Vui lòng đợi một lát rồi thử lại.',
+    trial_exhausted: 'Bạn đã dùng hết lượt AI miễn phí. Nâng cấp Premium để tiếp tục.',
+    server: 'Máy chủ gặp sự cố. Vui lòng thử lại sau.',
+    canceled: 'Yêu cầu đã bị hủy.',
+    generic: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
   },
 
   onboardingGender: {

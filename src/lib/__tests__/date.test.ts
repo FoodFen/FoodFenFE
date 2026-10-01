@@ -1,3 +1,5 @@
+import { useSettingsStore } from '@/features/settings/store';
+
 import {
   calendarWeek,
   daysUntil,
@@ -36,10 +38,12 @@ describe('shiftDateKey', () => {
 describe('formatDiaryDate', () => {
   beforeEach(() => {
     jest.useFakeTimers().setSystemTime(new Date(2026, 2, 2, 9, 0));
+    useSettingsStore.setState({ locale: 'en' });
   });
 
   afterEach(() => {
     jest.useRealTimers();
+    useSettingsStore.setState({ locale: 'vi' });
   });
 
   it('labels today and yesterday specially', () => {
@@ -50,12 +54,33 @@ describe('formatDiaryDate', () => {
   it('falls back to a weekday/day/month label otherwise', () => {
     expect(formatDiaryDate('2026-02-25')).toBe('Wed, 25 Feb');
   });
+
+  it('translates labels when the locale is Vietnamese', () => {
+    useSettingsStore.setState({ locale: 'vi' });
+
+    expect(formatDiaryDate(MONDAY)).toBe('Hôm nay');
+    expect(formatDiaryDate('2026-03-01')).toBe('Hôm qua');
+    expect(formatDiaryDate('2026-02-25')).toContain('25');
+    expect(formatDiaryDate('2026-02-25')).not.toContain('Wed');
+  });
 });
 
 describe('formatWeekdayInitial / formatDayOfMonth', () => {
+  afterEach(() => {
+    useSettingsStore.setState({ locale: 'vi' });
+  });
+
   it('reads the local calendar day, not the UTC one', () => {
+    useSettingsStore.setState({ locale: 'en' });
+
     expect(formatWeekdayInitial(MONDAY)).toBe('M');
     expect(formatDayOfMonth(MONDAY)).toBe('2');
+  });
+
+  it('uses the Vietnamese weekday initial when the locale is Vietnamese', () => {
+    useSettingsStore.setState({ locale: 'vi' });
+
+    expect(formatWeekdayInitial(MONDAY)).toBe('T2');
   });
 });
 

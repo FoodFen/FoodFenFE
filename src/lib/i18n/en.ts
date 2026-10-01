@@ -30,6 +30,26 @@ export const en: DeepPartial<Translations> = {
     water: 'Water',
     somethingWentWrong: 'Something went wrong',
     pleaseTryAgain: 'Please try again.',
+    today: 'Today',
+    yesterday: 'Yesterday',
+    mealFallback: 'Meal',
+    moreIngredients: '{name} + {n} more',
+  },
+
+  apiError: {
+    not_configured:
+      'Accounts are not available in this build. Your diary works offline without one.',
+    network: 'No connection. Your changes are saved and will sync when you are back online.',
+    timeout: 'That took too long. Please try again.',
+    unauthorized: 'Your session has expired. Please sign in again.',
+    forbidden: 'You do not have access to that.',
+    not_found: 'We could not find that.',
+    validation: 'Please check the highlighted fields.',
+    rate_limited: 'Too many requests. Please wait a moment and try again.',
+    trial_exhausted: 'You have used your free AI tries. Upgrade to Premium to keep going.',
+    server: 'Something went wrong on our side. Please try again shortly.',
+    canceled: 'Request canceled.',
+    generic: 'Something went wrong. Please try again.',
   },
 
   onboardingGender: {

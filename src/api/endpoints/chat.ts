@@ -82,7 +82,7 @@ export async function streamChatReply(
   try {
     url = buildUrl('chat/messages', undefined);
   } catch (error) {
-    fail(error instanceof ApiError ? error.userMessage : 'Something went wrong.');
+    fail(error instanceof ApiError ? error.userMessage : new ApiError('unknown', '').userMessage);
     return;
   }
 
