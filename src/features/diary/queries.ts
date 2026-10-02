@@ -255,9 +255,9 @@ export function useAnalyzeFood() {
 }
 
 /** Free AI tries left per input method; `unlimited` for Premium. */
-export function useAiQuota(enabled: boolean) {
+export function useAiQuota(enabled: boolean, signedIn: boolean) {
   return useQuery({
-    queryKey: queryKeys.aiQuota,
+    queryKey: [...queryKeys.aiQuota, signedIn],
     queryFn: foodAiApi.getQuota,
     enabled,
     retry: false,

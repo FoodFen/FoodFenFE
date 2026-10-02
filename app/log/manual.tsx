@@ -20,6 +20,7 @@ import { Input } from '@/components/ui/Input';
 import { NumberField } from '@/components/ui/NumberField';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
+import { useAuthStore } from '@/features/auth/store';
 import { useDraftStore } from '@/features/diary/draftStore';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import {
@@ -124,7 +125,8 @@ export default function ManualEntryScreen() {
   // server-side by device id. Running out routes to Premium (see `onAiError`).
   const aiAvailable = env.hasBackend && onlineManager.isOnline();
 
-  const quota = useAiQuota(aiAvailable).data;
+  const signedIn = useAuthStore((state) => state.session !== null);
+  const quota = useAiQuota(aiAvailable, signedIn).data;
   const imageTriesLeft =
     quota && !quota.unlimited && quota.image
       ? t('logManual', 'aiTriesLeft').replace('{n}', String(quota.image.remaining))
@@ -139,7 +141,14 @@ export default function ManualEntryScreen() {
   const onAiError = (error: unknown) => {
     haptics.error();
     if (error instanceof ApiError && error.kind === 'trial_exhausted') {
-      router.push('/premium');
+      if (signedIn) {
+        router.push('/premium');
+        return;
+      }
+      Alert.alert(t('logManual', 'aiGuestLimitTitle'), t('logManual', 'aiGuestLimitBody'), [
+        { text: t('common', 'cancel'), style: 'cancel' },
+        { text: t('logManual', 'aiGuestLimitSignIn'), onPress: () => router.push('/sign-in') },
+      ]);
       return;
     }
     Alert.alert(
