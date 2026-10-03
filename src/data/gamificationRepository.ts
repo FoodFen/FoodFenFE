@@ -137,7 +137,7 @@ function upsertQuest(userId: string, remote: RemoteQuestProgress): void {
 }
 
 /** Reconciles the local coin ledger's sum to the server's authoritative balance. */
-function reconcileCoinBalance(userId: string, serverBalance: number): void {
+export function reconcileCoinBalance(userId: string, serverBalance: number): void {
   const delta = serverBalance - getCoinBalance(userId);
 
   if (delta !== 0) addCoins(userId, delta, 'adjustment');
