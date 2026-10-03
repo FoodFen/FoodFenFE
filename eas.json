@@ -17,8 +17,12 @@
         "APP_VARIANT": "development",
         "EXPO_PUBLIC_API_URL": "http://localhost:4000"
       },
-      "android": { "buildType": "apk" },
-      "ios": { "simulator": true }
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
+      }
     },
     "preview": {
       "extends": "base",
@@ -26,9 +30,13 @@
       "channel": "preview",
       "env": {
         "APP_VARIANT": "preview",
-        "EXPO_PUBLIC_API_URL": "https://foodfenbe.onrender.com"
+        "EXPO_PUBLIC_API_URL": "https://foodfenbe.onrender.com",
+        "EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID": "873433543786-o87gut9tlr68v2bpg186e0th5ge5ticl.apps.googleusercontent.com",
+        "EXPO_PUBLIC_API_TIMEOUT_MS": "15000"
       },
-      "android": { "buildType": "apk" }
+      "android": {
+        "buildType": "apk"
+      }
     },
     "production": {
       "extends": "base",

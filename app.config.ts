@@ -28,14 +28,6 @@ function pluginName(entry: PluginEntry): string {
   return Array.isArray(entry) ? String(entry[0]) : String(entry);
 }
 
-/**
- * Config plugins this file configures explicitly.
- *
- * `expo install` auto-registers plugins by appending them to `app.json`. Those
- * are merged in below rather than replaced, so a plugin added by a future
- * `expo install` is never silently dropped — while anything configured here
- * still wins over the bare auto-registered entry.
- */
 const OWN_PLUGINS: PluginEntry[] = [
   'expo-router',
   'expo-font',
@@ -83,14 +75,6 @@ const OWN_PLUGINS: PluginEntry[] = [
   [
     '@react-native-google-signin/google-signin',
     {
-      // The reversed form of the iOS OAuth client ID from Google Cloud
-      // Console (e.g. "com.googleusercontent.apps.1234567890-abc"). The
-      // fallback is a syntactically-valid placeholder (it starts with
-      // "com.googleusercontent.apps." as the plugin's validation requires),
-      // not a real working value — it exists only so config resolution
-      // doesn't throw when no real Google Cloud project exists yet. Google
-      // sign-in on iOS will not work until it's replaced with the real
-      // value; this does not block building or running the app otherwise.
       iosUrlScheme: process.env.GOOGLE_IOS_URL_SCHEME ?? 'com.googleusercontent.apps.placeholder',
     },
   ],
@@ -117,14 +101,20 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   platforms: ['ios', 'android'],
   assetBundlePatterns: ['**/*'],
 
+  // --- EAS Update Configuration Added Here ---
+  updates: {
+    url: 'https://u.expo.dev/0fbdbbb5-613b-46b5-9e28-c614d47d4e51',
+  },
+  runtimeVersion: {
+    policy: 'appVersion',
+  },
+  // -------------------------------------------
+
   ios: {
     bundleIdentifier: BUNDLE_ID,
     supportsTablet: true,
     usesAppleSignIn: true,
     infoPlist: {
-      // Required so `expo-camera` / `expo-image-picker` can be used to log
-      // meals from a photo. iOS rejects builds that use these APIs without
-      // a purpose string.
       NSCameraUsageDescription:
         'FoodFen uses the camera so you can log a meal by taking a photo of it.',
       NSPhotoLibraryUsageDescription:
@@ -164,10 +154,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     apiUrl: process.env.EXPO_PUBLIC_API_URL,
     variant: VARIANT,
     eas: {
-      // From `eas init` — a fixed project identifier, not a secret, so it's
-      // hardcoded rather than read from an env var. `eas init` can only
-      // patch a static app.json automatically; app.config.ts (dynamic
-      // config) needs this pasted in by hand, which is what this is.
       projectId: '0fbdbbb5-613b-46b5-9e28-c614d47d4e51',
     },
   },
