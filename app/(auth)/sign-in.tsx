@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, router } from 'expo-router';
+import { Link } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
+import { announceAndLeave } from '@/features/auth/announceAndLeave';
 import { makeSignInSchema } from '@/features/auth/schemas';
 import type { SignInValues } from '@/features/auth/schemas';
 import { useAuthStore } from '@/features/auth/store';
@@ -42,8 +43,11 @@ export default function SignInScreen() {
       // Back to wherever this was opened from — Profile, normally. The root
       // layout's guard keys on the local profile, not on being signed in, so
       // nothing swaps the stack on our behalf.
-      if (router.canGoBack()) router.back();
-      else router.replace('/');
+      announceAndLeave(
+        t('auth', 'signInSuccessTitle'),
+        t('auth', 'signInSuccessMessage'),
+        t('common', 'done'),
+      );
     } catch (error) {
       if (isApiError(error)) {
         // Map field-level errors from the server onto the right inputs.
@@ -96,10 +100,13 @@ export default function SignInScreen() {
         <View className="gap-4">
           <SocialSignInButtons
             onError={setFormError}
-            onSuccess={() => {
-              if (router.canGoBack()) router.back();
-              else router.replace('/');
-            }}
+            onSuccess={() =>
+              announceAndLeave(
+                t('auth', 'signInSuccessTitle'),
+                t('auth', 'signInSuccessMessage'),
+                t('common', 'done'),
+              )
+            }
           />
 
           <Card className="gap-4">

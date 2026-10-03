@@ -21,6 +21,7 @@ import { NumberField } from '@/components/ui/NumberField';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
+import { isAiQuotaSpent } from '@/features/diary/aiQuota';
 import { useDraftStore } from '@/features/diary/draftStore';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import {
@@ -65,6 +66,13 @@ import type { CatalogFood, InputMethod } from '@/types/models';
 type AmountUnit = 'g' | 'serving';
 type CaptureMode = 'manual' | 'image' | 'describe';
 const MAX_SUGGESTIONS = 8;
+const IMAGE_TIP_KEYS = ['imageTip1', 'imageTip2', 'imageTip3'] as const;
+const DESCRIBE_EXAMPLE_KEYS = [
+  'describeExample1',
+  'describeExample2',
+  'describeExample3',
+  'describeExample4',
+] as const;
 
 /** A failed AI call surfaces the same way every other API failure does. */
 function analyzeErrorMessage(error: unknown, fallback: string): string {
@@ -127,28 +135,13 @@ export default function ManualEntryScreen() {
 
   const signedIn = useAuthStore((state) => state.session !== null);
   const quota = useAiQuota(aiAvailable, signedIn).data;
-  const imageTriesLeft =
-    quota && !quota.unlimited && quota.image
-      ? t('logManual', 'aiTriesLeft').replace('{n}', String(quota.image.remaining))
-      : null;
-  const describeTriesLeft =
-    quota && !quota.unlimited && quota.text && quota.voice
-      ? t('logManual', 'aiTriesLeftDescribe')
-          .replace('{typed}', String(quota.text.remaining))
-          .replace('{voice}', String(quota.voice.remaining))
-      : null;
+
+  const showLimitReached = () => router.push('/premium');
 
   const onAiError = (error: unknown) => {
     haptics.error();
     if (error instanceof ApiError && error.kind === 'trial_exhausted') {
-      if (signedIn) {
-        router.push('/premium');
-        return;
-      }
-      Alert.alert(t('logManual', 'aiGuestLimitTitle'), t('logManual', 'aiGuestLimitBody'), [
-        { text: t('common', 'cancel'), style: 'cancel' },
-        { text: t('logManual', 'aiGuestLimitSignIn'), onPress: () => router.push('/sign-in') },
-      ]);
+      showLimitReached();
       return;
     }
     Alert.alert(
@@ -169,7 +162,19 @@ export default function ManualEntryScreen() {
   // instead of always attributing it to typing.
   const [smartTextSource, setSmartTextSource] = useState<InputMethod>('type');
 
+  // Known-empty quota never reaches the network; the server stays the authority
+  // when the cached quota is missing or stale (see `onAiError`).
+  const imageLimited = isAiQuotaSpent(quota, 'image');
+  const describeLimited = isAiQuotaSpent(
+    quota,
+    smartTextSource === 'voice' ? 'voice' : 'text',
+  );
+
   const pickImage = async (source: 'camera' | 'library') => {
+    if (imageLimited) {
+      showLimitReached();
+      return;
+    }
     const permission =
       source === 'camera'
         ? await ImagePicker.requestCameraPermissionsAsync()
@@ -191,6 +196,10 @@ export default function ManualEntryScreen() {
 
   const analyzeImage = () => {
     if (!pickedImage || analyzeFood.isPending) return;
+    if (imageLimited) {
+      showLimitReached();
+      return;
+    }
 
     analyzeFood.mutate(
       {
@@ -211,7 +220,12 @@ export default function ManualEntryScreen() {
 
   const analyzeSmartText = () => {
     const description = smartText.trim();
-    if (!description || analyzeFood.isPending) return;
+    if (analyzeFood.isPending) return;
+    if (describeLimited) {
+      showLimitReached();
+      return;
+    }
+    if (!description) return;
 
     analyzeFood.mutate(
       {
@@ -342,7 +356,6 @@ export default function ManualEntryScreen() {
           <ImageCapturePanel
             image={pickedImage}
             isAnalyzing={analyzeFood.isPending}
-            triesLeft={imageTriesLeft}
             onPick={pickImage}
             onAnalyze={analyzeImage}
             onClear={() => setPickedImage(null)}
@@ -370,7 +383,6 @@ export default function ManualEntryScreen() {
             }}
             onAnalyze={analyzeSmartText}
             isAnalyzing={analyzeFood.isPending}
-            triesLeft={describeTriesLeft}
           />
         ) : (
           <View className="flex-1 justify-center">
@@ -646,18 +658,33 @@ function ModeTab({
   );
 }
 
+/** Renders `**marked**` spans in the brand color. */
+function Highlighted({ text }: { text: string }) {
+  return (
+    <Text variant="caption" tone="muted">
+      {text.split('**').map((part, i) =>
+        i % 2 === 1 ? (
+          <Text key={i} variant="caption" tone="brand" className="font-bold">
+            {part}
+          </Text>
+        ) : (
+          part
+        ),
+      )}
+    </Text>
+  );
+}
+
 /** The Image mode's whole-screen content: pick a photo, preview it, analyze. */
 function ImageCapturePanel({
   image,
   isAnalyzing,
-  triesLeft,
   onPick,
   onAnalyze,
   onClear,
 }: {
   image: ImagePicker.ImagePickerAsset | null;
   isAnalyzing: boolean;
-  triesLeft: string | null;
   onPick: (source: 'camera' | 'library') => void;
   onAnalyze: () => void;
   onClear: () => void;
@@ -668,11 +695,6 @@ function ImageCapturePanel({
 
   return (
     <View className="flex-1 justify-center gap-6 p-6">
-      {triesLeft ? (
-        <Text variant="caption" tone="muted" className="text-center">
-          {triesLeft}
-        </Text>
-      ) : null}
       {image ? (
         <View className="gap-4">
           <Image
@@ -702,6 +724,11 @@ function ImageCapturePanel({
             <Text variant="body" tone="muted" className="text-center">
               {t('logManual', 'aiImageHint')}
             </Text>
+          </View>
+          <View className="gap-1.5 rounded-card border border-border bg-surface px-3 py-2.5">
+            {IMAGE_TIP_KEYS.map((key) => (
+              <Highlighted key={key} text={t('logManual', key)} />
+            ))}
           </View>
           <Button
             label={t('logManual', 'aiTakePhoto')}
@@ -735,14 +762,12 @@ function DescribePanel({
   onSpeechResult,
   onAnalyze,
   isAnalyzing,
-  triesLeft,
 }: {
   text: string;
   onChangeText: (value: string) => void;
   onSpeechResult: (value: string) => void;
   onAnalyze: () => void;
   isAnalyzing: boolean;
-  triesLeft: string | null;
 }) {
   const { t, locale } = useTranslation();
   const { resolved } = useAppTheme();
@@ -809,7 +834,12 @@ function DescribePanel({
   };
 
   return (
-    <View className="flex-1 justify-center gap-6 p-6">
+    <KeyboardAwareScrollView
+      className="flex-1"
+      contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', gap: 24, padding: 24 }}
+      keyboardShouldPersistTaps="handled"
+      bottomOffset={24}
+    >
       <View className="items-center gap-2 pb-2">
         <Ionicons name="sparkles-outline" size={40} color={colors.fgSubtle} />
         <Text variant="body" tone="muted" className="text-center">
@@ -846,11 +876,27 @@ function DescribePanel({
           {t('logManual', 'describeListening')}
         </Text>
       ) : null}
-      {triesLeft ? (
-        <Text variant="caption" tone="muted" className="text-center">
-          {triesLeft}
+      <View className="gap-2">
+        <Text variant="caption" tone="subtle">
+          {t('logManual', 'describeExamplesTitle')}
         </Text>
-      ) : null}
+        {DESCRIBE_EXAMPLE_KEYS.map((key) => {
+          const example = t('logManual', key);
+          return (
+            <Pressable
+              key={key}
+              onPress={() => {
+                haptics.selection();
+                onChangeText(example.replaceAll('**', ''));
+              }}
+              accessibilityRole="button"
+              className="rounded-card border border-border bg-surface px-3 py-2.5 active:bg-surface-alt"
+            >
+              <Highlighted text={example} />
+            </Pressable>
+          );
+        })}
+      </View>
       <Button
         label={t('logManual', 'smartEntryAnalyze')}
         onPress={onAnalyze}
@@ -859,6 +905,6 @@ function DescribePanel({
         fullWidth
         size="lg"
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 }

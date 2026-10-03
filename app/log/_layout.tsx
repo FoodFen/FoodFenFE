@@ -1,6 +1,9 @@
 import { Stack } from 'expo-router';
 
+import { useAuthStore } from '@/features/auth/store';
+import { useAiQuota } from '@/features/diary/queries';
 import { useTranslation } from '@/hooks/useTranslation';
+import { env } from '@/lib/env';
 
 /**
  * The logging flow, presented as a modal stack from the root layout.
@@ -10,6 +13,8 @@ import { useTranslation } from '@/hooks/useTranslation';
  */
 export default function LogLayout() {
   const { t } = useTranslation();
+  const signedIn = useAuthStore((state) => state.session !== null);
+  useAiQuota(env.hasBackend, signedIn);
 
   return (
     <Stack screenOptions={{ headerShadowVisible: false }}>
