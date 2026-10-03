@@ -10,10 +10,10 @@ import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useDiaryRange, useWeightHistory } from '@/features/diary/queries';
 import { averageByMeal, summarizeTrends } from '@/features/insights/trends';
-import { useProfileStore } from '@/features/profile/store';
+import { useIsPremium, useProfileStore } from '@/features/profile/store';
 import { useTranslation } from '@/hooks/useTranslation';
 import { todayKey } from '@/lib/date';
-import { weightGoalDelta } from '@/lib/nutrition';
+import { fiberTargetG, weightGoalDelta } from '@/lib/nutrition';
 import { MEAL_TYPES } from '@/types/models';
 
 const WINDOW_DAYS = 7;
@@ -31,6 +31,7 @@ export default function InsightsScreen() {
   const { data, isPending, error, refetch } = useDiaryRange(WINDOW_DAYS);
   const weightHistory = useWeightHistory(WEIGHT_WINDOW_DAYS);
   const profile = useProfileStore((state) => state.profile);
+  const isPremium = useIsPremium();
 
   const summary = useMemo(() => (data ? summarizeTrends(data) : null), [data]);
   const perMeal = useMemo(() => (data ? averageByMeal(data) : null), [data]);
@@ -177,6 +178,32 @@ export default function InsightsScreen() {
           </View>
         ))}
       </Card>
+
+      {isPremium ? (
+        <Card className="gap-1">
+          <Text variant="heading">{t('insights', 'averageFiberHeading')}</Text>
+          {summary.averageFiberG === null ? (
+            <Text variant="body" tone="muted">
+              {t('insights', 'fiberNoData')}
+            </Text>
+          ) : (
+            <>
+              <Text variant="title">{summary.averageFiberG} g</Text>
+              <Text variant="body" tone="muted">
+                {t('insights', 'fiberVsGoal').replace(
+                  '{goal}',
+                  String(fiberTargetG(summary.averageKcal - summary.averageDelta)),
+                )}
+              </Text>
+              <Text variant="caption" tone="subtle">
+                {t('insights', 'fiberDaysKnown')
+                  .replace('{known}', String(summary.fiberDaysKnown))
+                  .replace('{logged}', String(summary.daysLogged))}
+              </Text>
+            </>
+          )}
+        </Card>
+      ) : null}
 
       {perMeal ? (
         <Card className="gap-3">

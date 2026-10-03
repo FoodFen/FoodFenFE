@@ -20,6 +20,10 @@ export interface TrendSummary {
   averageMacros: Macros;
   /** Mean share of energy from each macro, as 0–1 fractions. */
   averageMacroShare: Macros;
+  /** Mean over logged days that have a fiber figure; `null` when none do — unknown is not zero. */
+  averageFiberG: number | null;
+  /** Logged days that contributed to `averageFiberG`. */
+  fiberDaysKnown: number;
   /** Mean daily calories minus mean daily target. Negative is a deficit. */
   averageDelta: number;
   /** Consecutive logged days ending at the most recent day in the window. */
@@ -48,9 +52,15 @@ export function summarizeTrends(days: readonly DiaryDay[]): TrendSummary {
     fatG: round1(mean(logged.map((day) => day.totals.fatG))),
   };
 
+  const fiberValues = logged.flatMap((day) =>
+    day.totals.fiberG === undefined || day.totals.fiberG === null ? [] : [day.totals.fiberG],
+  );
+
   return {
     daysLogged: logged.length,
     totalDays: ordered.length,
+    averageFiberG: fiberValues.length === 0 ? null : round1(mean(fiberValues)),
+    fiberDaysKnown: fiberValues.length,
     averageKcal: Math.round(mean(logged.map((day) => day.totals.kcal))),
     averageMacros,
     averageMacroShare: macroEnergyShare(averageMacros),

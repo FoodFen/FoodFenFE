@@ -5,6 +5,7 @@ import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Card } from '@/components/ui/Card';
 import { MacroBarGroup } from '@/components/ui/MacroBar';
 import { Text } from '@/components/ui/Text';
+import { useIsPremium } from '@/features/profile/store';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import type { DiaryDay } from '@/types/models';
@@ -20,6 +21,7 @@ import { MascotPlaceholder } from './MascotPlaceholder';
  */
 export function SummaryCard({ day }: { day: DiaryDay }) {
   const { t } = useTranslation();
+  const isPremium = useIsPremium();
   const [width, setWidth] = useState(0);
   const [page, setPage] = useState(0);
 
@@ -68,7 +70,16 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
             <View className="flex-row gap-4">
               <MascotPlaceholder className="w-28" />
               <View className="flex-1 justify-center gap-2">
-                <StatRow icon="🌾" label={t('dashboard', 'fiber')} value="—" unit="g" />
+                <StatRow
+                  icon="🌾"
+                  label={t('dashboard', 'fiber')}
+                  value={
+                    isPremium && day.totals.fiberG !== undefined && day.totals.fiberG !== null
+                      ? Math.round(day.totals.fiberG)
+                      : '—'
+                  }
+                  unit="g"
+                />
                 <StatRow icon="🍬" label={t('dashboard', 'sugar')} value="—" unit="g" />
                 <StatRow icon="🧂" label={t('dashboard', 'sodium')} value="—" unit="mg" />
               </View>

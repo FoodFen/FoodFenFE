@@ -55,6 +55,7 @@ export default function MealComposerScreen() {
   }, []);
 
   const totals = useMemo(() => draftTotals(draft.ingredients), [draft.ingredients]);
+  const hasMissingFiber = draft.ingredients.some((row) => row.fiberG == null);
   const canSave = draft.ingredients.length > 0 && !logMeal.isPending;
 
   const save = () => {
@@ -161,6 +162,11 @@ export default function MealComposerScreen() {
                     {Math.round(row.quantityG)} g · {row.proteinG}P / {row.carbsG}C /{' '}
                     {row.fatG}F
                   </Text>
+                  {isPremium && (row.fiberG === undefined || row.fiberG === null) ? (
+                    <Text variant="caption" tone="subtle">
+                      {t('logMeal', 'fiberMissing')}
+                    </Text>
+                  ) : null}
                 </View>
 
                 <Text variant="mono" tone="muted">
@@ -212,11 +218,17 @@ export default function MealComposerScreen() {
             <TotalRow label={t('onboardingFinalize', 'protein')} value={`${totals.proteinG} g`} />
             <TotalRow label={t('onboardingFinalize', 'carbs')} value={`${totals.carbsG} g`} />
             <TotalRow label={t('onboardingFinalize', 'fat')} value={`${totals.fatG} g`} />
-            {totals.fiberG !== undefined && totals.fiberG !== null ? (
-              isPremium ? (
-                <TotalRow label={t('entryDetail', 'fiber')} value={`${totals.fiberG} g`} />
-              ) : (
-                <Pressable
+            {isPremium ? (
+              <TotalRow
+                label={t('entryDetail', 'fiber')}
+                value={
+                  totals.fiberG === undefined || totals.fiberG === null
+                    ? '—'
+                    : `${totals.fiberG} g${hasMissingFiber ? '+' : ''}`
+                }
+              />
+            ) : totals.fiberG !== undefined && totals.fiberG !== null ? (
+              <Pressable
                   onPress={() => router.push('/premium')}
                   accessibilityRole="button"
                   className="flex-row items-center justify-between active:opacity-70"
@@ -230,8 +242,7 @@ export default function MealComposerScreen() {
                       {t('common', 'premium')}
                     </Text>
                   </View>
-                </Pressable>
-              )
+              </Pressable>
             ) : null}
           </View>
         </Card>

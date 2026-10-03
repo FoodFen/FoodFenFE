@@ -3,10 +3,12 @@ import { router } from 'expo-router';
 import { Pressable, View } from 'react-native';
 
 import { Card } from '@/components/ui/Card';
+import { ProgressRing } from '@/components/ui/ProgressRing';
 import { Text } from '@/components/ui/Text';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
+import { fiberTargetG, progressFraction } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 import type { DiaryDay } from '@/types/models';
 
@@ -24,19 +26,45 @@ export function FiberSection({ day }: { day: DiaryDay }) {
   const isPremium = useIsPremium();
 
   if (isPremium) {
+    const fiberG = day.totals.fiberG;
+    const targetG = fiberTargetG(day.goal.targetKcal);
+
     return (
-      <Card className="gap-2">
-        <Text variant="caption" tone="muted">
-          {t('dashboard', 'fiber')}
-        </Text>
-        <View className="flex-row items-baseline gap-1">
-          <Text variant="display" className="text-4xl">
-            {Math.round(day.totals.fiberG ?? 0)}
+      <Card className="flex-row items-center justify-between gap-4">
+        <View className="flex-1 gap-1">
+          <Text variant="caption" tone="muted">
+            {t('dashboard', 'fiber')}
           </Text>
-          <Text variant="body" tone="muted">
-            g
+          {fiberG === undefined || fiberG === null ? (
+            <Text variant="body" tone="subtle">
+              {t('dashboard', 'fiberNoData')}
+            </Text>
+          ) : (
+            <View className="flex-row items-baseline gap-1">
+              <Text variant="display" className="text-4xl">
+                {Math.round(fiberG)}
+              </Text>
+              <Text variant="body" tone="muted">
+                g
+              </Text>
+            </View>
+          )}
+          <Text variant="caption" tone="subtle">
+            {t('dashboard', 'fiberGoal').replace('{g}', String(targetG))}
           </Text>
         </View>
+
+        <ProgressRing
+          progress={progressFraction(fiberG ?? 0, targetG)}
+          size={64}
+          strokeWidth={8}
+        >
+          <Text variant="caption" tone="muted">
+            {fiberG === undefined || fiberG === null
+              ? '—'
+              : `${Math.round(progressFraction(fiberG, targetG) * 100)}%`}
+          </Text>
+        </ProgressRing>
       </Card>
     );
   }

@@ -376,6 +376,17 @@ export function progressFraction(consumed: number, target: number): number {
   return Math.min(Math.max(consumed / target, 0), 1);
 }
 
+/** Adequate-intake guideline (IOM): 14 g of fiber per 1000 kcal eaten. */
+const FIBER_G_PER_1000_KCAL = 14;
+
+/**
+ * Daily fiber target, derived from the kcal target rather than stored — the
+ * server has no fiber goal. Rounded to a whole gram.
+ */
+export function fiberTargetG(targetKcal: number): number {
+  return Math.round((Math.max(targetKcal, 0) / 1000) * FIBER_G_PER_1000_KCAL);
+}
+
 /**
  * Energy the macros imply, via the Atwater factors (4 kcal/g carbs and
  * protein, 9 kcal/g fat). Rounded to a whole kcal.
