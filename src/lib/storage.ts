@@ -92,7 +92,8 @@ export const preferences = jsonAccessors(preferencesStore);
  * The diary, the food catalog, and the local profile — the app's actual data,
  * source-of-truth while there is no backend. See `src/data/` for the
  * repositories built on top of this. Cleared only by an explicit
- * "erase local data" action, never by sign-out.
+ * "erase local data" action or by a different account signing in
+ * (`claimLocalData`), never by sign-out.
  */
 export const localData = jsonAccessors(localDataStore);
 
@@ -103,6 +104,7 @@ export const StorageKeys = {
   colorScheme: 'color-scheme',
   locale: 'locale',
   onboardingComplete: 'onboarding-complete',
+  accountOwnerId: 'account-owner-id',
   queryCache: 'react-query-cache',
   devSeed: 'dev-seed-enabled',
   hideChallengeProgress: 'hide-challenge-progress',

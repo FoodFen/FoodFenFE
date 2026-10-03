@@ -53,6 +53,13 @@ const queryClient = createQueryClient();
 connectAuthToApiClient();
 connectAuthToSync();
 
+// Cached tier/diary/quest results belong to the previous account.
+useAuthStore.subscribe((state, prev) => {
+  if (prev.status !== 'loading' && state.session?.user.id !== prev.session?.user.id) {
+    void queryClient.resetQueries();
+  }
+});
+
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
     Inter_400Regular,

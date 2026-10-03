@@ -209,3 +209,53 @@ describe('redeemCoinsForPremium', () => {
     expect(mockedGamificationApi.redeemCoins).not.toHaveBeenCalled();
   });
 });
+
+describe('clearAccountState', () => {
+  function startPremium(userId: string) {
+    gamification.startSubscription(userId, {
+      planType: 'coin_redeem',
+      status: 'active',
+      startDate: todayKey(),
+      endDate: shiftDateKey(todayKey(), 10),
+      price: 0,
+    });
+  }
+
+  it('drops premium back to free', () => {
+    const user = createUser();
+    startPremium(user.id);
+
+    gamification.clearAccountState(user.id);
+
+    expect(gamification.resolveTier(user.id)).toBe('free');
+  });
+
+  it('zeroes the coin balance and removes cached quests', () => {
+    const user = createUser();
+    gamification.addCoins(user.id, 500, 'adjustment');
+
+    gamification.clearAccountState(user.id);
+
+    expect(gamification.getCoinBalance(user.id)).toBe(0);
+    expect(gamification.getActiveQuests(user.id)).toEqual([]);
+  });
+
+  it('keeps the streak, which is the user’s own data', () => {
+    const user = createUser();
+    gamification.recordActiveDay(user.id, todayKey());
+
+    gamification.clearAccountState(user.id);
+
+    expect(gamification.getStreak(user.id)?.currentStreak).toBe(1);
+  });
+
+  it('lets a later subscription row restore premium', () => {
+    const user = createUser();
+    startPremium(user.id);
+    gamification.clearAccountState(user.id);
+
+    startPremium(user.id);
+
+    expect(gamification.resolveTier(user.id)).toBe('premium');
+  });
+});

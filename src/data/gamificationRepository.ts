@@ -17,7 +17,7 @@ import type {
   SubscriptionTier,
 } from '@/types/models';
 
-import { notDeleted, touch } from './sync';
+import { notDeleted, touch, touchDeleted } from './sync';
 
 /**
  * Streaks, quests, coins and subscription state.
@@ -249,6 +249,24 @@ export async function redeemCoinsForPremium(userId: string, bundleId: string): P
     endDate: remote.endDate,
     price: remote.price,
   });
+}
+
+/**
+ * Sign-out wipes the entitlement: the rows came from the account, so they
+ * must not outlive its session. Sign-in re-pulls them via `GET /subscriptions/me`.
+ */
+export function clearSubscriptions(userId: string): void {
+  db.update(subscription)
+    .set(touchDeleted())
+    .where(and(eq(subscription.userId, userId), notDeleted(subscription)))
+    .run();
+}
+
+/** Quests and coins are a read-through cache of the account (see file header), so they leave with it. */
+export function clearAccountState(userId: string): void {
+  clearSubscriptions(userId);
+  db.delete(quest).where(eq(quest.userId, userId)).run();
+  db.delete(coinTransaction).where(eq(coinTransaction.userId, userId)).run();
 }
 
 export interface StartSubscriptionInput {

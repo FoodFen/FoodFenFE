@@ -6,9 +6,12 @@ import { authApi } from '@/api/endpoints/auth';
 import type { SignInPayload, SignUpPayload } from '@/api/endpoints/auth';
 import { authSessionSchema } from '@/api/schemas';
 import type { RemoteAuthSession } from '@/api/schemas';
+import { clearAccountState } from '@/data/gamificationRepository';
 import { configureSyncAuth } from '@/data/sync';
 import { getAppleCredential, getGoogleIdToken } from '@/features/auth/social';
+import { useProfileStore } from '@/features/profile/store';
 import { env } from '@/lib/env';
+import { preferences, StorageKeys } from '@/lib/storage';
 
 /**
  * The optional account session.
@@ -75,6 +78,25 @@ async function readSession(): Promise<AuthSession | null> {
   }
 }
 
+/**
+ * Local data belongs to whichever account first signed in on this device (a
+ * guest's data is claimed by their first sign-in). A different account must not
+ * inherit it — it would also be pushed to that account's server record.
+ */
+function claimLocalData(accountId: number): void {
+  const owner = preferences.get<number>(StorageKeys.accountOwnerId);
+
+  if (owner !== undefined && owner !== accountId) useProfileStore.getState().eraseAll();
+
+  preferences.set(StorageKeys.accountOwnerId, accountId);
+}
+
+async function adoptSession(session: AuthSession): Promise<void> {
+  claimLocalData(session.user.id);
+  await persistSession(session);
+  useAuthStore.setState({ session, status: 'authenticated' });
+}
+
 export const useAuthStore = create<AuthState>((set, get) => ({
   status: 'loading',
   session: null,
@@ -86,46 +108,39 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   signIn: async (payload) => {
-    const session = await authApi.signIn(payload);
-
-    await persistSession(session);
-    set({ session, status: 'authenticated' });
+    await adoptSession(await authApi.signIn(payload));
   },
 
   signUp: async (payload) => {
-    const session = await authApi.signUp(payload);
-
-    await persistSession(session);
-    set({ session, status: 'authenticated' });
+    await adoptSession(await authApi.signUp(payload));
   },
 
   signInWithGoogle: async () => {
     const idToken = await getGoogleIdToken();
     if (!idToken) return; // User cancelled — not an error.
 
-    const session = await authApi.socialSignIn({ provider: 'google', idToken });
-
-    await persistSession(session);
-    set({ session, status: 'authenticated' });
+    await adoptSession(await authApi.socialSignIn({ provider: 'google', idToken }));
   },
 
   signInWithApple: async () => {
     const credential = await getAppleCredential();
     if (!credential) return; // User cancelled — not an error.
 
-    const session = await authApi.socialSignIn({
-      provider: 'apple',
-      idToken: credential.identityToken,
-      fullName: credential.fullName,
-      email: credential.email,
-    });
-
-    await persistSession(session);
-    set({ session, status: 'authenticated' });
+    await adoptSession(
+      await authApi.socialSignIn({
+        provider: 'apple',
+        idToken: credential.identityToken,
+        fullName: credential.fullName,
+        email: credential.email,
+      }),
+    );
   },
 
   signOut: async () => {
     const { session } = get();
+    const profileId = useProfileStore.getState().profile?.id;
+
+    if (profileId) clearAccountState(profileId);
 
     // Clear locally first: if the server call fails the user is still signed
     // out on this device, which is what they asked for.
