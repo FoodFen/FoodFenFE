@@ -299,6 +299,46 @@ export const redeemCoinsResponseSchema = z.object({
   subscription: subscriptionInfoSchema,
 });
 
+export const quizAnswerResultSchema = z.object({
+  questionId: z.string(),
+  selectedOptionId: z.string(),
+  correctOptionId: z.string(),
+  correct: z.boolean(),
+  explanation: z.string(),
+});
+
+export const quizResultSchema = z.object({
+  quizId: z.string(),
+  correctCount: z.number().int().nonnegative(),
+  total: z.number().int().positive(),
+  answers: z.array(quizAnswerResultSchema),
+  coinsEarned: z.number().int().nonnegative(),
+  balance: z.number().int(),
+  coinsRemainingToday: z.number().int().nonnegative().nullable(),
+});
+
+export const quizSchema = z.object({
+  id: z.string(),
+  kind: z.enum(['daily', 'practice']),
+  topic: z.string().nullable(),
+  date: dateKeySchema,
+  coinsPerCorrect: z.number().int().nonnegative(),
+  coinsRemainingToday: z.number().int().nonnegative().nullable(),
+  status: z.enum(['available', 'completed']),
+  result: quizResultSchema.nullable(),
+  questions: z.array(
+    z.object({
+      id: z.string(),
+      text: z.string(),
+      options: z.array(z.object({ id: z.string(), text: z.string() })),
+    }),
+  ),
+});
+
+export const quizTopicsResponseSchema = z.object({
+  topics: z.array(z.object({ id: z.string(), label: z.string() })),
+});
+
 export type RemoteUser = z.infer<typeof userSchema>;
 export type RemoteDailyGoal = z.infer<typeof dailyGoalSchema>;
 export type RemoteStreak = z.infer<typeof streakSchema>;
@@ -322,3 +362,6 @@ export type RemoteSubscriptionMeResponse = z.infer<typeof subscriptionMeResponse
 export type RemoteQuestProgress = z.infer<typeof questProgressSchema>;
 export type RemoteQuestsResponse = z.infer<typeof questsResponseSchema>;
 export type RemoteRedeemCoinsResponse = z.infer<typeof redeemCoinsResponseSchema>;
+export type RemoteQuiz = z.infer<typeof quizSchema>;
+export type RemoteQuizResult = z.infer<typeof quizResultSchema>;
+export type RemoteQuizTopic = z.infer<typeof quizTopicsResponseSchema>['topics'][number];
