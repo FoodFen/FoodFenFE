@@ -139,4 +139,11 @@ export const queryKeys = {
     tier: () => [...queryKeys.premium.all, 'tier'] as const,
     payment: (orderCode: number) => [...queryKeys.premium.all, 'payment', orderCode] as const,
   },
+  quiz: {
+    all: ['quiz'] as const,
+    topics: () => [...queryKeys.quiz.all, 'topics'] as const,
+    dailyAll: () => [...queryKeys.quiz.all, 'daily'] as const,
+    daily: (date: string) => [...queryKeys.quiz.dailyAll(), date] as const,
+    byId: (id: string) => [...queryKeys.quiz.all, 'byId', id] as const,
+  },
 } as const;
