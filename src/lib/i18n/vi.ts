@@ -573,7 +573,7 @@ export const vi = {
   quiz: {
     title: 'Quiz dinh dưỡng',
     cardTitle: 'Quiz hôm nay',
-    cardCta: 'Trả lời 5 câu, nhận xu',
+    cardCta: 'Trả lời câu hỏi hôm nay, nhận xu',
     cardPerCorrect: '+{coins} xu mỗi câu đúng',
     cardDone: 'Đã hoàn thành hôm nay',
     dailyHeading: 'Quiz hôm nay',

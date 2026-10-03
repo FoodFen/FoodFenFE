@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { quizApi } from '@/api/endpoints/quiz';
 import type { QuizSubmitAnswer } from '@/api/endpoints/quiz';
-import { isApiError } from '@/api/errors';
+import { ApiError, isApiError } from '@/api/errors';
 import type { RemoteQuiz } from '@/api/schemas';
 import { reconcileCoinBalance } from '@/data/gamificationRepository';
 import { useAuthStore } from '@/features/auth/store';
@@ -22,6 +22,21 @@ export function useQuizAvailable(): boolean {
 }
 
 /**
+ * A response that lands after the account changed belongs to the previous
+ * account; dropping it keeps its balance and results out of the next one.
+ */
+async function forCurrentAccount<T>(run: () => Promise<T>): Promise<T> {
+  const accountId = useAuthStore.getState().session?.user.id;
+  const value = await run();
+
+  if (useAuthStore.getState().session?.user.id !== accountId) {
+    throw new ApiError('canceled', 'The session changed during the request.');
+  }
+
+  return value;
+}
+
+/**
  * Today's daily quiz. Also seeds the by-id cache so opening it doesn't
  * refetch the questions it just returned.
  */
@@ -32,7 +47,7 @@ export function useDailyQuiz(date: DateKey) {
   return useQuery({
     queryKey: queryKeys.quiz.daily(date),
     queryFn: async ({ signal }) => {
-      const quiz = await quizApi.daily(date, signal);
+      const quiz = await forCurrentAccount(() => quizApi.daily(date, signal));
       queryClient.setQueryData(queryKeys.quiz.byId(quiz.id), quiz);
 
       return quiz;
@@ -49,12 +64,14 @@ export function useDailyQuiz(date: DateKey) {
  */
 export function useQuiz(id: string) {
   const userId = useUserId();
+  const available = useQuizAvailable();
   const queryClient = useQueryClient();
 
   return useQuery({
     queryKey: queryKeys.quiz.byId(id),
+    enabled: available,
     queryFn: async ({ signal }) => {
-      const quiz = await quizApi.byId(id, signal);
+      const quiz = await forCurrentAccount(() => quizApi.byId(id, signal));
 
       if (userId && quiz.result) {
         reconcileCoinBalance(userId, quiz.result.balance);
@@ -102,7 +119,7 @@ export function useSubmitQuiz() {
 
   return useMutation({
     mutationFn: ({ quizId, answers }: { quizId: string; answers: QuizSubmitAnswer[] }) =>
-      quizApi.submit(quizId, answers),
+      forCurrentAccount(() => quizApi.submit(quizId, answers)),
     onSuccess: (result) => {
       if (userId) reconcileCoinBalance(userId, result.balance);
 

@@ -1,10 +1,11 @@
 import { router } from 'expo-router';
 import { View } from 'react-native';
 
+import { isApiError } from '@/api/errors';
+import { QuizSignInPrompt } from '@/components/quiz/QuizSignInPrompt';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { EmptyState } from '@/components/ui/EmptyState';
-import { Screen, ScrollScreen } from '@/components/ui/Screen';
+import { ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useDailyQuiz, useQuizAvailable } from '@/features/quiz/queries';
@@ -16,18 +17,7 @@ export default function QuizHubScreen() {
   const available = useQuizAvailable();
   const { data: daily, isPending, fetchStatus, error, refetch } = useDailyQuiz(todayKey());
 
-  if (!available) {
-    return (
-      <Screen>
-        <EmptyState
-          icon="🔒"
-          title={t('quiz', 'needsSignIn')}
-          actionLabel={t('quiz', 'signIn')}
-          onAction={() => router.push('/sign-in')}
-        />
-      </Screen>
-    );
-  }
+  if (!available) return <QuizSignInPrompt />;
 
   return (
     <ScrollScreen>
@@ -60,7 +50,7 @@ export default function QuizHubScreen() {
         ) : (
           <>
             <Text variant="body" tone="danger">
-              {error instanceof Error ? error.message : t('quiz', 'loadError')}
+              {isApiError(error) ? error.userMessage : t('quiz', 'loadError')}
             </Text>
             <Button
               label={t('common', 'retry')}

@@ -4,7 +4,9 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
 import { Alert, Pressable, View } from 'react-native';
 
+import { isApiError } from '@/api/errors';
 import type { RemoteQuiz, RemoteQuizResult } from '@/api/schemas';
+import { QuizSignInPrompt } from '@/components/quiz/QuizSignInPrompt';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
@@ -12,7 +14,7 @@ import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
-import { useQuiz, useSubmitQuiz } from '@/features/quiz/queries';
+import { useQuiz, useQuizAvailable, useSubmitQuiz } from '@/features/quiz/queries';
 import { useQuizStore } from '@/features/quiz/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -23,7 +25,10 @@ import { colorsFor } from '@/theme/colors';
 export default function QuizScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useTranslation();
+  const available = useQuizAvailable();
   const { data: quiz, isPending, fetchStatus, error, refetch } = useQuiz(id);
+
+  if (!available) return <QuizSignInPrompt />;
 
   if (isPending) {
     return fetchStatus === 'paused' ? (
@@ -53,6 +58,10 @@ export default function QuizScreen() {
   }
 
   return <QuizTake quiz={quiz} />;
+}
+
+function isAlreadySubmitted(error: unknown): boolean {
+  return isApiError(error) && error.status === 409;
 }
 
 function QuizTake({ quiz }: { quiz: RemoteQuiz }) {
@@ -95,7 +104,9 @@ function QuizTake({ quiz }: { quiz: RemoteQuiz }) {
       },
       {
         onSuccess: () => haptics.success(),
-        onError: () => haptics.error(),
+        onError: (error) => {
+          if (!isAlreadySubmitted(error)) haptics.error();
+        },
       },
     );
   };
@@ -108,6 +119,14 @@ function QuizTake({ quiz }: { quiz: RemoteQuiz }) {
           .replace('{total}', String(total))}
       </Text>
       <ProgressBar progress={(index + 1) / total} />
+
+      {quiz.kind === 'practice' && quiz.coinsRemainingToday !== null ? (
+        <Text variant="caption" tone="muted">
+          {quiz.coinsRemainingToday === 0
+            ? t('quiz', 'capReached')
+            : t('quiz', 'capRemaining').replace('{coins}', String(quiz.coinsRemainingToday))}
+        </Text>
+      ) : null}
 
       <Text variant="heading">{question.text}</Text>
 
@@ -135,7 +154,7 @@ function QuizTake({ quiz }: { quiz: RemoteQuiz }) {
         })}
       </View>
 
-      {submit.isError ? (
+      {submit.isError && !isAlreadySubmitted(submit.error) ? (
         <Text variant="caption" tone="danger">
           {t('quiz', 'submitError')}
         </Text>

@@ -555,7 +555,7 @@ export const en: DeepPartial<Translations> = {
   quiz: {
     title: 'Nutrition quiz',
     cardTitle: "Today's quiz",
-    cardCta: 'Answer 5 questions, earn coins',
+    cardCta: "Answer today's questions, earn coins",
     cardPerCorrect: '+{coins} coins per correct answer',
     cardDone: 'Completed today',
     dailyHeading: "Today's quiz",

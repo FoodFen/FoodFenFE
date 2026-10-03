@@ -3,12 +3,13 @@ import { onlineManager } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { Alert, Pressable } from 'react-native';
 
+import { QuizSignInPrompt } from '@/components/quiz/QuizSignInPrompt';
 import { Card } from '@/components/ui/Card';
 import { ErrorState } from '@/components/ui/EmptyState';
 import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
-import { useQuizTopics, useStartPractice } from '@/features/quiz/queries';
+import { useQuizAvailable, useQuizTopics, useStartPractice } from '@/features/quiz/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { todayKey } from '@/lib/date';
@@ -18,8 +19,11 @@ export default function PracticeTopicsScreen() {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
+  const available = useQuizAvailable();
   const { data, isPending, fetchStatus, error, refetch } = useQuizTopics();
   const start = useStartPractice();
+
+  if (!available) return <QuizSignInPrompt />;
 
   if (isPending) {
     return (
