@@ -12,7 +12,8 @@
       "kcal": 230,
       "carbsG": 34,
       "proteinG": 8,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -51,7 +52,8 @@
       "kcal": 210,
       "carbsG": 36,
       "proteinG": 6,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 2
     },
     "servings": [
       {
@@ -90,7 +92,8 @@
       "kcal": 235,
       "carbsG": 33,
       "proteinG": 9,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -129,7 +132,8 @@
       "kcal": 120,
       "carbsG": 20,
       "proteinG": 3,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -168,7 +172,8 @@
       "kcal": 130,
       "carbsG": 24,
       "proteinG": 3,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -207,7 +212,8 @@
       "kcal": 140,
       "carbsG": 18,
       "proteinG": 5,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -246,7 +252,8 @@
       "kcal": 200,
       "carbsG": 28,
       "proteinG": 5,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 1.3
     },
     "servings": [
       {
@@ -320,7 +327,8 @@
       "kcal": 120,
       "carbsG": 17,
       "proteinG": 5,
-      "fatG": 3.5
+      "fatG": 3.5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -359,7 +367,8 @@
       "kcal": 140,
       "carbsG": 16,
       "proteinG": 7,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -398,7 +407,8 @@
       "kcal": 135,
       "carbsG": 16,
       "proteinG": 6.5,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -437,7 +447,8 @@
       "kcal": 120,
       "carbsG": 16,
       "proteinG": 4,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -476,7 +487,8 @@
       "kcal": 110,
       "carbsG": 15,
       "proteinG": 3.5,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -515,7 +527,8 @@
       "kcal": 150,
       "carbsG": 20,
       "proteinG": 4.5,
-      "fatG": 5.5
+      "fatG": 5.5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -554,7 +567,8 @@
       "kcal": 170,
       "carbsG": 28,
       "proteinG": 4,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -633,7 +647,8 @@
       "kcal": 170,
       "carbsG": 16,
       "proteinG": 5,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -707,7 +722,8 @@
       "kcal": 320,
       "carbsG": 38,
       "proteinG": 10,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 1.8
     },
     "servings": [
       {
@@ -746,7 +762,8 @@
       "kcal": 110,
       "carbsG": 18,
       "proteinG": 3.5,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -859,7 +876,8 @@
       "kcal": 200,
       "carbsG": 30,
       "proteinG": 4.5,
-      "fatG": 6.5
+      "fatG": 6.5,
+      "fiberG": 1.3
     },
     "servings": [
       {
@@ -898,7 +916,8 @@
       "kcal": 280,
       "carbsG": 50,
       "proteinG": 6,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -937,7 +956,8 @@
       "kcal": 230,
       "carbsG": 33,
       "proteinG": 5,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -976,7 +996,8 @@
       "kcal": 260,
       "carbsG": 30,
       "proteinG": 9,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -1015,7 +1036,8 @@
       "kcal": 270,
       "carbsG": 48,
       "proteinG": 7,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -1054,7 +1076,8 @@
       "kcal": 330,
       "carbsG": 45,
       "proteinG": 9,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -1093,7 +1116,8 @@
       "kcal": 110,
       "carbsG": 18,
       "proteinG": 4,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -1132,7 +1156,8 @@
       "kcal": 160,
       "carbsG": 16,
       "proteinG": 6,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -1328,7 +1353,8 @@
       "kcal": 150,
       "carbsG": 20,
       "proteinG": 6,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -1367,7 +1393,8 @@
       "kcal": 200,
       "carbsG": 10,
       "proteinG": 13,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -1407,7 +1434,8 @@
       "kcal": 190,
       "carbsG": 15,
       "proteinG": 11,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -1447,7 +1475,8 @@
       "kcal": 260,
       "carbsG": 6,
       "proteinG": 19,
-      "fatG": 18
+      "fatG": 18,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -1486,7 +1515,8 @@
       "kcal": 250,
       "carbsG": 8,
       "proteinG": 18,
-      "fatG": 16
+      "fatG": 16,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -1525,7 +1555,8 @@
       "kcal": 180,
       "carbsG": 13,
       "proteinG": 12,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -1565,7 +1596,8 @@
       "kcal": 270,
       "carbsG": 24,
       "proteinG": 9,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -1605,7 +1637,8 @@
       "kcal": 270,
       "carbsG": 24,
       "proteinG": 9,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -1644,7 +1677,8 @@
       "kcal": 200,
       "carbsG": 6,
       "proteinG": 15,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -1683,7 +1717,8 @@
       "kcal": 215,
       "carbsG": 3,
       "proteinG": 18,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -1722,7 +1757,8 @@
       "kcal": 190,
       "carbsG": 5,
       "proteinG": 16,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -1761,7 +1797,8 @@
       "kcal": 190,
       "carbsG": 4,
       "proteinG": 17,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -1923,7 +1960,8 @@
       "kcal": 200,
       "carbsG": 24,
       "proteinG": 9,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -1963,7 +2001,8 @@
       "kcal": 190,
       "carbsG": 9,
       "proteinG": 13,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -2002,7 +2041,8 @@
       "kcal": 280,
       "carbsG": 8,
       "proteinG": 45,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -2041,7 +2081,8 @@
       "kcal": 350,
       "carbsG": 12,
       "proteinG": 50,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -2200,7 +2241,8 @@
       "kcal": 450,
       "carbsG": 6,
       "proteinG": 18,
-      "fatG": 40
+      "fatG": 40,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -2239,7 +2281,8 @@
       "kcal": 460,
       "carbsG": 6,
       "proteinG": 18,
-      "fatG": 42
+      "fatG": 42,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -2278,7 +2321,8 @@
       "kcal": 180,
       "carbsG": 6,
       "proteinG": 13,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -2317,7 +2361,8 @@
       "kcal": 240,
       "carbsG": 12,
       "proteinG": 12,
-      "fatG": 16
+      "fatG": 16,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -2356,7 +2401,8 @@
       "kcal": 210,
       "carbsG": 9,
       "proteinG": 14,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -2395,7 +2441,8 @@
       "kcal": 220,
       "carbsG": 8,
       "proteinG": 14,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -2434,7 +2481,8 @@
       "kcal": 260,
       "carbsG": 24,
       "proteinG": 9,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -2473,7 +2521,8 @@
       "kcal": 150,
       "carbsG": 6,
       "proteinG": 14,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -2512,7 +2561,8 @@
       "kcal": 100,
       "carbsG": 5,
       "proteinG": 16,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -2551,7 +2601,8 @@
       "kcal": 130,
       "carbsG": 8,
       "proteinG": 10,
-      "fatG": 6.5
+      "fatG": 6.5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -2590,7 +2641,8 @@
       "kcal": 300,
       "carbsG": 25,
       "proteinG": 12,
-      "fatG": 17
+      "fatG": 17,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -2629,7 +2681,8 @@
       "kcal": 250,
       "carbsG": 30,
       "proteinG": 5,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -2705,7 +2758,8 @@
       "kcal": 210,
       "carbsG": 22,
       "proteinG": 10,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -2744,7 +2798,8 @@
       "kcal": 190,
       "carbsG": 15,
       "proteinG": 11,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -2783,7 +2838,8 @@
       "kcal": 180,
       "carbsG": 2,
       "proteinG": 12,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -2822,7 +2878,8 @@
       "kcal": 160,
       "carbsG": 1,
       "proteinG": 13,
-      "fatG": 11.5
+      "fatG": 11.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -2861,7 +2918,8 @@
       "kcal": 180,
       "carbsG": 1.5,
       "proteinG": 14,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -2901,7 +2959,8 @@
       "kcal": 190,
       "carbsG": 6,
       "proteinG": 12,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -2981,7 +3040,8 @@
       "kcal": 270,
       "carbsG": 8,
       "proteinG": 11,
-      "fatG": 22
+      "fatG": 22,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3020,7 +3080,8 @@
       "kcal": 260,
       "carbsG": 6,
       "proteinG": 12,
-      "fatG": 21
+      "fatG": 21,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3059,7 +3120,8 @@
       "kcal": 260,
       "carbsG": 35,
       "proteinG": 8,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 1.8
     },
     "servings": [
       {
@@ -3098,7 +3160,8 @@
       "kcal": 330,
       "carbsG": 50,
       "proteinG": 7,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -3137,7 +3200,8 @@
       "kcal": 150,
       "carbsG": 16,
       "proteinG": 7,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -3176,7 +3240,8 @@
       "kcal": 250,
       "carbsG": 31,
       "proteinG": 10,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 1.8
     },
     "servings": [
       {
@@ -3215,7 +3280,8 @@
       "kcal": 255,
       "carbsG": 33,
       "proteinG": 10,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 1.7
     },
     "servings": [
       {
@@ -3254,7 +3320,8 @@
       "kcal": 255,
       "carbsG": 34,
       "proteinG": 9,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 1.7
     },
     "servings": [
       {
@@ -3293,7 +3360,8 @@
       "kcal": 200,
       "carbsG": 14,
       "proteinG": 10,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -3332,7 +3400,8 @@
       "kcal": 210,
       "carbsG": 15,
       "proteinG": 9,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -3371,7 +3440,8 @@
       "kcal": 240,
       "carbsG": 33,
       "proteinG": 10,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 1.7
     },
     "servings": [
       {
@@ -3410,7 +3480,8 @@
       "kcal": 285,
       "carbsG": 31,
       "proteinG": 9,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 1.6
     },
     "servings": [
       {
@@ -3449,7 +3520,8 @@
       "kcal": 300,
       "carbsG": 38,
       "proteinG": 11,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 1.7
     },
     "servings": [
       {
@@ -3528,7 +3600,8 @@
       "kcal": 275,
       "carbsG": 33,
       "proteinG": 8,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 1.8
     },
     "servings": [
       {
@@ -3567,7 +3640,8 @@
       "kcal": 320,
       "carbsG": 38,
       "proteinG": 8,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 1.9
     },
     "servings": [
       {
@@ -3606,7 +3680,8 @@
       "kcal": 265,
       "carbsG": 31,
       "proteinG": 10,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 1.7
     },
     "servings": [
       {
@@ -3646,7 +3721,8 @@
       "kcal": 260,
       "carbsG": 33,
       "proteinG": 9,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 1.8
     },
     "servings": [
       {
@@ -3686,7 +3762,8 @@
       "kcal": 260,
       "carbsG": 32,
       "proteinG": 10,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 1.8
     },
     "servings": [
       {
@@ -3725,7 +3802,8 @@
       "kcal": 250,
       "carbsG": 32,
       "proteinG": 9,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 1.6
     },
     "servings": [
       {
@@ -3764,7 +3842,8 @@
       "kcal": 240,
       "carbsG": 32,
       "proteinG": 9,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -3803,7 +3882,8 @@
       "kcal": 275,
       "carbsG": 33,
       "proteinG": 9,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 1.7
     },
     "servings": [
       {
@@ -3877,7 +3957,8 @@
       "kcal": 130,
       "carbsG": 18,
       "proteinG": 6,
-      "fatG": 3.5
+      "fatG": 3.5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -3916,7 +3997,8 @@
       "kcal": 130,
       "carbsG": 14,
       "proteinG": 8,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -3955,7 +4037,8 @@
       "kcal": 140,
       "carbsG": 14,
       "proteinG": 9,
-      "fatG": 5.5
+      "fatG": 5.5,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -3994,7 +4077,8 @@
       "kcal": 115,
       "carbsG": 15,
       "proteinG": 7,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4033,7 +4117,8 @@
       "kcal": 140,
       "carbsG": 14,
       "proteinG": 9,
-      "fatG": 5.5
+      "fatG": 5.5,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4072,7 +4157,8 @@
       "kcal": 120,
       "carbsG": 17,
       "proteinG": 6,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -4111,7 +4197,8 @@
       "kcal": 200,
       "carbsG": 16,
       "proteinG": 9,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -4150,7 +4237,8 @@
       "kcal": 120,
       "carbsG": 15,
       "proteinG": 8,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4189,7 +4277,8 @@
       "kcal": 95,
       "carbsG": 11,
       "proteinG": 6,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4228,7 +4317,8 @@
       "kcal": 120,
       "carbsG": 15,
       "proteinG": 6,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4267,7 +4357,8 @@
       "kcal": 130,
       "carbsG": 17,
       "proteinG": 6,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -4346,7 +4437,8 @@
       "kcal": 120,
       "carbsG": 16,
       "proteinG": 6.5,
-      "fatG": 3.5
+      "fatG": 3.5,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -4385,7 +4477,8 @@
       "kcal": 135,
       "carbsG": 17,
       "proteinG": 7,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -4424,7 +4517,8 @@
       "kcal": 100,
       "carbsG": 14,
       "proteinG": 6,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4463,7 +4557,8 @@
       "kcal": 150,
       "carbsG": 22,
       "proteinG": 6,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -4502,7 +4597,8 @@
       "kcal": 160,
       "carbsG": 20,
       "proteinG": 6,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -4541,7 +4637,8 @@
       "kcal": 180,
       "carbsG": 22,
       "proteinG": 6,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -4581,7 +4678,8 @@
       "kcal": 447,
       "carbsG": 61,
       "proteinG": 9.4,
-      "fatG": 17.6
+      "fatG": 17.6,
+      "fiberG": 2
     },
     "servings": [
       {
@@ -4621,7 +4719,8 @@
       "kcal": 165,
       "carbsG": 17,
       "proteinG": 8,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -4660,7 +4759,8 @@
       "kcal": 190,
       "carbsG": 20,
       "proteinG": 7,
-      "fatG": 9.5
+      "fatG": 9.5,
+      "fiberG": 1.3
     },
     "servings": [
       {
@@ -4699,7 +4799,8 @@
       "kcal": 150,
       "carbsG": 17,
       "proteinG": 8,
-      "fatG": 5.5
+      "fatG": 5.5,
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -4738,7 +4839,8 @@
       "kcal": 150,
       "carbsG": 19,
       "proteinG": 7,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -4777,7 +4879,8 @@
       "kcal": 150,
       "carbsG": 22,
       "proteinG": 5,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4816,7 +4919,8 @@
       "kcal": 150,
       "carbsG": 19,
       "proteinG": 6,
-      "fatG": 5.5
+      "fatG": 5.5,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -4855,7 +4959,8 @@
       "kcal": 155,
       "carbsG": 18,
       "proteinG": 7,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -4894,7 +4999,8 @@
       "kcal": 160,
       "carbsG": 18,
       "proteinG": 7,
-      "fatG": 6.5
+      "fatG": 6.5,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -4933,7 +5039,8 @@
       "kcal": 150,
       "carbsG": 20,
       "proteinG": 7,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4972,7 +5079,8 @@
       "kcal": 200,
       "carbsG": 40,
       "proteinG": 2.5,
-      "fatG": 3.5
+      "fatG": 3.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -5051,7 +5159,8 @@
       "kcal": 220,
       "carbsG": 38,
       "proteinG": 2,
-      "fatG": 6.5
+      "fatG": 6.5,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -5128,7 +5237,8 @@
       "kcal": 160,
       "carbsG": 20,
       "proteinG": 4,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -5600,7 +5710,8 @@
       "kcal": 140,
       "carbsG": 18,
       "proteinG": 3,
-      "fatG": 6.5
+      "fatG": 6.5,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -5679,7 +5790,8 @@
       "kcal": 120,
       "carbsG": 22,
       "proteinG": 1.8,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -5758,7 +5870,8 @@
       "kcal": 160,
       "carbsG": 34,
       "proteinG": 2.5,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -5797,7 +5910,8 @@
       "kcal": 200,
       "carbsG": 24,
       "proteinG": 3.5,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -5876,7 +5990,8 @@
       "kcal": 210,
       "carbsG": 32,
       "proteinG": 3.5,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -5950,7 +6065,8 @@
       "kcal": 90,
       "carbsG": 15,
       "proteinG": 0.8,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -6061,7 +6177,8 @@
       "kcal": 100,
       "carbsG": 16,
       "proteinG": 2.8,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -6100,7 +6217,8 @@
       "kcal": 100,
       "carbsG": 15,
       "proteinG": 3,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -6179,7 +6297,8 @@
       "kcal": 110,
       "carbsG": 19,
       "proteinG": 2.8,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -6218,7 +6337,8 @@
       "kcal": 45,
       "carbsG": 6,
       "proteinG": 2.5,
-      "fatG": 1.3
+      "fatG": 1.3,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -6257,7 +6377,8 @@
       "kcal": 55,
       "carbsG": 9,
       "proteinG": 2.3,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -6296,7 +6417,8 @@
       "kcal": 290,
       "carbsG": 3,
       "proteinG": 18,
-      "fatG": 23
+      "fatG": 23,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -6335,7 +6457,8 @@
       "kcal": 140,
       "carbsG": 4,
       "proteinG": 20,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -6444,7 +6567,8 @@
       "kcal": 220,
       "carbsG": 3,
       "proteinG": 18,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -6483,7 +6607,8 @@
       "kcal": 190,
       "carbsG": 1,
       "proteinG": 22,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -6522,7 +6647,8 @@
       "kcal": 180,
       "carbsG": 6,
       "proteinG": 16,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -6561,7 +6687,8 @@
       "kcal": 175,
       "carbsG": 22,
       "proteinG": 9,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -6600,7 +6727,8 @@
       "kcal": 250,
       "carbsG": 12,
       "proteinG": 18,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -6639,7 +6767,8 @@
       "kcal": 200,
       "carbsG": 3,
       "proteinG": 24,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -6678,7 +6807,8 @@
       "kcal": 280,
       "carbsG": 20,
       "proteinG": 17,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -6717,7 +6847,8 @@
       "kcal": 220,
       "carbsG": 2,
       "proteinG": 23,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -6756,7 +6887,8 @@
       "kcal": 260,
       "carbsG": 14,
       "proteinG": 19,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -6795,7 +6927,8 @@
       "kcal": 270,
       "carbsG": 15,
       "proteinG": 18,
-      "fatG": 16
+      "fatG": 16,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -6834,7 +6967,8 @@
       "kcal": 270,
       "carbsG": 22,
       "proteinG": 16,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -6873,7 +7007,8 @@
       "kcal": 250,
       "carbsG": 22,
       "proteinG": 13,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -6912,7 +7047,8 @@
       "kcal": 245,
       "carbsG": 24,
       "proteinG": 13,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -6951,7 +7087,8 @@
       "kcal": 330,
       "carbsG": 2,
       "proteinG": 20,
-      "fatG": 27
+      "fatG": 27,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -6989,7 +7126,8 @@
       "kcal": 250,
       "carbsG": 22,
       "proteinG": 9,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -7174,7 +7312,8 @@
       "kcal": 220,
       "carbsG": 18,
       "proteinG": 14,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -7213,7 +7352,8 @@
       "kcal": 130,
       "carbsG": 4,
       "proteinG": 22,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -7252,7 +7392,8 @@
       "kcal": 260,
       "carbsG": 2,
       "proteinG": 17,
-      "fatG": 21
+      "fatG": 21,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -7290,7 +7431,8 @@
       "kcal": 260,
       "carbsG": 30,
       "proteinG": 11,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 2.3
     },
     "servings": [
       {
@@ -7328,7 +7470,8 @@
       "kcal": 260,
       "carbsG": 5,
       "proteinG": 20,
-      "fatG": 18
+      "fatG": 18,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -7367,7 +7510,8 @@
       "kcal": 240,
       "carbsG": 6,
       "proteinG": 22,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -7406,7 +7550,8 @@
       "kcal": 240,
       "carbsG": 20,
       "proteinG": 12,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -7445,7 +7590,8 @@
       "kcal": 110,
       "carbsG": 1,
       "proteinG": 22,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -7484,7 +7630,8 @@
       "kcal": 240,
       "carbsG": 3,
       "proteinG": 20,
-      "fatG": 16
+      "fatG": 16,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -7523,7 +7670,8 @@
       "kcal": 300,
       "carbsG": 1,
       "proteinG": 19,
-      "fatG": 24
+      "fatG": 24,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -7562,7 +7710,8 @@
       "kcal": 165,
       "carbsG": 19,
       "proteinG": 10,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -7601,7 +7750,8 @@
       "kcal": 160,
       "carbsG": 20,
       "proteinG": 9,
-      "fatG": 5.5
+      "fatG": 5.5,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -7640,7 +7790,8 @@
       "kcal": 160,
       "carbsG": 21,
       "proteinG": 8,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -7679,7 +7830,8 @@
       "kcal": 160,
       "carbsG": 22,
       "proteinG": 8,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -7758,7 +7910,8 @@
       "kcal": 230,
       "carbsG": 30,
       "proteinG": 6,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -7797,7 +7950,8 @@
       "kcal": 165,
       "carbsG": 22,
       "proteinG": 6.5,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -7836,7 +7990,8 @@
       "kcal": 165,
       "carbsG": 22,
       "proteinG": 6,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -7875,7 +8030,8 @@
       "kcal": 160,
       "carbsG": 22,
       "proteinG": 7,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -7914,7 +8070,8 @@
       "kcal": 165,
       "carbsG": 22,
       "proteinG": 6,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -7954,7 +8111,8 @@
       "kcal": 150,
       "carbsG": 24,
       "proteinG": 4.5,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -7994,7 +8152,8 @@
       "kcal": 175,
       "carbsG": 22,
       "proteinG": 9,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8033,7 +8192,8 @@
       "kcal": 160,
       "carbsG": 21,
       "proteinG": 9,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -8072,7 +8232,8 @@
       "kcal": 165,
       "carbsG": 21,
       "proteinG": 10,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8111,7 +8272,8 @@
       "kcal": 185,
       "carbsG": 21,
       "proteinG": 9,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8150,7 +8312,8 @@
       "kcal": 155,
       "carbsG": 22,
       "proteinG": 9,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8189,7 +8352,8 @@
       "kcal": 175,
       "carbsG": 20,
       "proteinG": 9,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8268,7 +8432,8 @@
       "kcal": 190,
       "carbsG": 19,
       "proteinG": 8,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8307,7 +8472,8 @@
       "kcal": 140,
       "carbsG": 28,
       "proteinG": 3,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8346,7 +8512,8 @@
       "kcal": 155,
       "carbsG": 21,
       "proteinG": 7,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -8385,7 +8552,8 @@
       "kcal": 165,
       "carbsG": 20,
       "proteinG": 9.5,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8424,7 +8592,8 @@
       "kcal": 180,
       "carbsG": 21,
       "proteinG": 9,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -8463,7 +8632,8 @@
       "kcal": 170,
       "carbsG": 23,
       "proteinG": 8,
-      "fatG": 5.5
+      "fatG": 5.5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -8502,7 +8672,8 @@
       "kcal": 160,
       "carbsG": 21,
       "proteinG": 8,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8541,7 +8712,8 @@
       "kcal": 165,
       "carbsG": 20,
       "proteinG": 9,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8581,7 +8753,8 @@
       "kcal": 165,
       "carbsG": 19,
       "proteinG": 10,
-      "fatG": 6.5
+      "fatG": 6.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -8621,7 +8794,8 @@
       "kcal": 165,
       "carbsG": 19,
       "proteinG": 9.5,
-      "fatG": 6.5
+      "fatG": 6.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8660,7 +8834,8 @@
       "kcal": 175,
       "carbsG": 20,
       "proteinG": 8,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8699,7 +8874,8 @@
       "kcal": 130,
       "carbsG": 28,
       "proteinG": 2.7,
-      "fatG": 0.3
+      "fatG": 0.3,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8738,7 +8914,8 @@
       "kcal": 150,
       "carbsG": 20,
       "proteinG": 7,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -8777,7 +8954,8 @@
       "kcal": 180,
       "carbsG": 19,
       "proteinG": 9,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8856,7 +9034,8 @@
       "kcal": 190,
       "carbsG": 30,
       "proteinG": 7,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -8895,7 +9074,8 @@
       "kcal": 190,
       "carbsG": 34,
       "proteinG": 4,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -8934,7 +9114,8 @@
       "kcal": 200,
       "carbsG": 30,
       "proteinG": 6,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -9013,7 +9194,8 @@
       "kcal": 200,
       "carbsG": 30,
       "proteinG": 7,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -9092,7 +9274,8 @@
       "kcal": 200,
       "carbsG": 34,
       "proteinG": 5,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -9131,7 +9314,8 @@
       "kcal": 62,
       "carbsG": 9,
       "proteinG": 1.6,
-      "fatG": 1.9
+      "fatG": 1.9,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9170,7 +9354,8 @@
       "kcal": 60,
       "carbsG": 9,
       "proteinG": 1.5,
-      "fatG": 1.8
+      "fatG": 1.8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9209,7 +9394,8 @@
       "kcal": 43,
       "carbsG": 10,
       "proteinG": 0.5,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9248,7 +9434,8 @@
       "kcal": 30,
       "carbsG": 7,
       "proteinG": 0.4,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9287,7 +9474,8 @@
       "kcal": 90,
       "carbsG": 11,
       "proteinG": 1,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -9326,7 +9514,8 @@
       "kcal": 9,
       "carbsG": 2,
       "proteinG": 0.2,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9365,7 +9554,8 @@
       "kcal": 65,
       "carbsG": 9,
       "proteinG": 1.3,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9404,7 +9594,8 @@
       "kcal": 48,
       "carbsG": 8,
       "proteinG": 1,
-      "fatG": 1.2
+      "fatG": 1.2,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9443,7 +9634,8 @@
       "kcal": 130,
       "carbsG": 12,
       "proteinG": 3,
-      "fatG": 7.5
+      "fatG": 7.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9481,7 +9673,8 @@
       "kcal": 40,
       "carbsG": 3.5,
       "proteinG": 2,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9560,7 +9753,8 @@
       "kcal": 42,
       "carbsG": 10.6,
       "proteinG": 0,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9600,7 +9794,8 @@
       "kcal": 62,
       "carbsG": 11.5,
       "proteinG": 1,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9639,7 +9834,8 @@
       "kcal": 50,
       "carbsG": 4.5,
       "proteinG": 2.6,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9678,7 +9874,8 @@
       "kcal": 15,
       "carbsG": 3.8,
       "proteinG": 0.2,
-      "fatG": 0.1
+      "fatG": 0.1,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -9717,7 +9914,8 @@
       "kcal": 20,
       "carbsG": 4.5,
       "proteinG": 0.5,
-      "fatG": 0.2
+      "fatG": 0.2,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9796,7 +9994,8 @@
       "kcal": 45,
       "carbsG": 10.5,
       "proteinG": 0.7,
-      "fatG": 0.2
+      "fatG": 0.2,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -9835,7 +10034,8 @@
       "kcal": 32,
       "carbsG": 8,
       "proteinG": 0.6,
-      "fatG": 0.1
+      "fatG": 0.1,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -9874,7 +10074,8 @@
       "kcal": 60,
       "carbsG": 15,
       "proteinG": 0.4,
-      "fatG": 0.1
+      "fatG": 0.1,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -9908,7 +10109,8 @@
       "kcal": 42,
       "carbsG": 10,
       "proteinG": 0.6,
-      "fatG": 0.3
+      "fatG": 0.3,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -9947,7 +10149,8 @@
       "kcal": 46,
       "carbsG": 11,
       "proteinG": 0.1,
-      "fatG": 0.1
+      "fatG": 0.1,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -9986,7 +10189,8 @@
       "kcal": 55,
       "carbsG": 14,
       "proteinG": 0.1,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10026,7 +10230,8 @@
       "kcal": 42,
       "carbsG": 10.6,
       "proteinG": 0,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10066,7 +10271,8 @@
       "kcal": 30,
       "carbsG": 7.5,
       "proteinG": 0.1,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10105,7 +10311,8 @@
       "kcal": 45,
       "carbsG": 11,
       "proteinG": 0,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10144,7 +10351,8 @@
       "kcal": 35,
       "carbsG": 8,
       "proteinG": 0.6,
-      "fatG": 0.2
+      "fatG": 0.2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -10183,7 +10391,8 @@
       "kcal": 60,
       "carbsG": 11,
       "proteinG": 2,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -10302,7 +10511,8 @@
       "kcal": 100,
       "carbsG": 21,
       "proteinG": 1.3,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -10421,7 +10631,8 @@
       "kcal": 35,
       "carbsG": 9,
       "proteinG": 0.1,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10460,7 +10671,8 @@
       "kcal": 60,
       "carbsG": 10,
       "proteinG": 1.8,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -10499,7 +10711,8 @@
       "kcal": 70,
       "carbsG": 13,
       "proteinG": 2.5,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10538,7 +10751,8 @@
       "kcal": 45,
       "carbsG": 5,
       "proteinG": 3,
-      "fatG": 1.8
+      "fatG": 1.8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -10577,7 +10791,8 @@
       "kcal": 62,
       "carbsG": 4.8,
       "proteinG": 3.2,
-      "fatG": 3.3
+      "fatG": 3.3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10616,7 +10831,8 @@
       "kcal": 15,
       "carbsG": 3.8,
       "proteinG": 0.1,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -10655,7 +10871,8 @@
       "kcal": 25,
       "carbsG": 6.3,
       "proteinG": 0,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10694,7 +10911,8 @@
       "kcal": 30,
       "carbsG": 7.5,
       "proteinG": 0.1,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10733,7 +10951,8 @@
       "kcal": 32,
       "carbsG": 8,
       "proteinG": 0.1,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10772,7 +10991,8 @@
       "kcal": 42,
       "carbsG": 10.5,
       "proteinG": 0.2,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10811,7 +11031,8 @@
       "kcal": 40,
       "carbsG": 10,
       "proteinG": 0.2,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10850,7 +11071,8 @@
       "kcal": 30,
       "carbsG": 7.5,
       "proteinG": 0.1,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10889,7 +11111,8 @@
       "kcal": 60,
       "carbsG": 11,
       "proteinG": 1,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10928,7 +11151,8 @@
       "kcal": 68,
       "carbsG": 12.5,
       "proteinG": 1.2,
-      "fatG": 1.6
+      "fatG": 1.6,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -10967,7 +11191,8 @@
       "kcal": 72,
       "carbsG": 13.5,
       "proteinG": 1.3,
-      "fatG": 1.6
+      "fatG": 1.6,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11008,7 +11233,8 @@
       "kcal": 75,
       "carbsG": 14,
       "proteinG": 1,
-      "fatG": 1.8
+      "fatG": 1.8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11049,7 +11275,8 @@
       "kcal": 35,
       "carbsG": 9,
       "proteinG": 0.1,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11088,7 +11315,8 @@
       "kcal": 43,
       "carbsG": 11,
       "proteinG": 0.2,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11128,7 +11356,8 @@
       "kcal": 43,
       "carbsG": 11,
       "proteinG": 0,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11168,7 +11397,8 @@
       "kcal": 65,
       "carbsG": 15,
       "proteinG": 1.1,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11207,7 +11437,8 @@
       "kcal": 150,
       "carbsG": 4,
       "proteinG": 16,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11246,7 +11477,8 @@
       "kcal": 200,
       "carbsG": 6,
       "proteinG": 19,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11285,7 +11517,8 @@
       "kcal": 160,
       "carbsG": 5,
       "proteinG": 18,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11324,7 +11557,8 @@
       "kcal": 160,
       "carbsG": 3,
       "proteinG": 20,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11363,7 +11597,8 @@
       "kcal": 180,
       "carbsG": 2,
       "proteinG": 22,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11402,7 +11637,8 @@
       "kcal": 170,
       "carbsG": 3,
       "proteinG": 20,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11441,7 +11677,8 @@
       "kcal": 20,
       "carbsG": 3,
       "proteinG": 1.2,
-      "fatG": 0.5
+      "fatG": 0.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -11520,7 +11757,8 @@
       "kcal": 45,
       "carbsG": 5,
       "proteinG": 4,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -11559,7 +11797,8 @@
       "kcal": 45,
       "carbsG": 5,
       "proteinG": 4.5,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -11719,7 +11958,8 @@
       "kcal": 140,
       "carbsG": 2,
       "proteinG": 14,
-      "fatG": 8.5
+      "fatG": 8.5,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -11759,7 +11999,8 @@
       "kcal": 170,
       "carbsG": 3,
       "proteinG": 13,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -11798,7 +12039,8 @@
       "kcal": 190,
       "carbsG": 6,
       "proteinG": 11,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -11837,7 +12079,8 @@
       "kcal": 160,
       "carbsG": 6,
       "proteinG": 10,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -11876,7 +12119,8 @@
       "kcal": 120,
       "carbsG": 7,
       "proteinG": 8,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -11915,7 +12159,8 @@
       "kcal": 190,
       "carbsG": 5,
       "proteinG": 19,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -11954,7 +12199,8 @@
       "kcal": 180,
       "carbsG": 6,
       "proteinG": 20,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -11993,7 +12239,8 @@
       "kcal": 185,
       "carbsG": 6,
       "proteinG": 20,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12032,7 +12279,8 @@
       "kcal": 180,
       "carbsG": 0,
       "proteinG": 24,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12071,7 +12319,8 @@
       "kcal": 190,
       "carbsG": 6,
       "proteinG": 19,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -12110,7 +12359,8 @@
       "kcal": 250,
       "carbsG": 1,
       "proteinG": 16,
-      "fatG": 20
+      "fatG": 20,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12149,7 +12399,8 @@
       "kcal": 150,
       "carbsG": 6,
       "proteinG": 15,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -12188,7 +12439,8 @@
       "kcal": 120,
       "carbsG": 6,
       "proteinG": 16,
-      "fatG": 3.5
+      "fatG": 3.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -12227,7 +12479,8 @@
       "kcal": 300,
       "carbsG": 4,
       "proteinG": 12,
-      "fatG": 26
+      "fatG": 26,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12267,7 +12520,8 @@
       "kcal": 380,
       "carbsG": 6,
       "proteinG": 55,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -12307,7 +12561,8 @@
       "kcal": 260,
       "carbsG": 10,
       "proteinG": 17,
-      "fatG": 17
+      "fatG": 17,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12346,7 +12601,8 @@
       "kcal": 230,
       "carbsG": 14,
       "proteinG": 15,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -12385,7 +12641,8 @@
       "kcal": 260,
       "carbsG": 6,
       "proteinG": 16,
-      "fatG": 19
+      "fatG": 19,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -12424,7 +12681,8 @@
       "kcal": 250,
       "carbsG": 5,
       "proteinG": 15,
-      "fatG": 19
+      "fatG": 19,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12463,7 +12721,8 @@
       "kcal": 260,
       "carbsG": 0,
       "proteinG": 17,
-      "fatG": 21
+      "fatG": 21,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12502,7 +12761,8 @@
       "kcal": 280,
       "carbsG": 6,
       "proteinG": 18,
-      "fatG": 21
+      "fatG": 21,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12541,7 +12801,8 @@
       "kcal": 150,
       "carbsG": 6,
       "proteinG": 16,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12580,7 +12841,8 @@
       "kcal": 120,
       "carbsG": 8,
       "proteinG": 17,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12619,7 +12881,8 @@
       "kcal": 180,
       "carbsG": 2,
       "proteinG": 12,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12658,7 +12921,8 @@
       "kcal": 200,
       "carbsG": 2.5,
       "proteinG": 13,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -12697,7 +12961,8 @@
       "kcal": 195,
       "carbsG": 3,
       "proteinG": 13,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -12737,7 +13002,8 @@
       "kcal": 155,
       "carbsG": 1.1,
       "proteinG": 13,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12772,7 +13038,8 @@
       "kcal": 170,
       "carbsG": 1,
       "proteinG": 12,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12811,7 +13078,8 @@
       "kcal": 88,
       "carbsG": 13,
       "proteinG": 6,
-      "fatG": 1.8
+      "fatG": 1.8,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -12850,7 +13118,8 @@
       "kcal": 92,
       "carbsG": 13,
       "proteinG": 5.5,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -12889,7 +13158,8 @@
       "kcal": 90,
       "carbsG": 13,
       "proteinG": 5.5,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -12928,7 +13198,8 @@
       "kcal": 100,
       "carbsG": 13,
       "proteinG": 5,
-      "fatG": 3.5
+      "fatG": 3.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -12967,7 +13238,8 @@
       "kcal": 110,
       "carbsG": 7,
       "proteinG": 9,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -13006,7 +13278,8 @@
       "kcal": 95,
       "carbsG": 11,
       "proteinG": 6.5,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13050,7 +13323,8 @@
       "kcal": 80,
       "carbsG": 10,
       "proteinG": 6,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13089,7 +13363,8 @@
       "kcal": 120,
       "carbsG": 14,
       "proteinG": 7,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13128,7 +13403,8 @@
       "kcal": 82,
       "carbsG": 10,
       "proteinG": 6,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13167,7 +13443,8 @@
       "kcal": 90,
       "carbsG": 11,
       "proteinG": 5,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13206,7 +13483,8 @@
       "kcal": 92,
       "carbsG": 11,
       "proteinG": 5.5,
-      "fatG": 3.2
+      "fatG": 3.2,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13245,7 +13523,8 @@
       "kcal": 105,
       "carbsG": 11,
       "proteinG": 5,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -13284,7 +13563,8 @@
       "kcal": 82,
       "carbsG": 9,
       "proteinG": 6,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -13323,7 +13603,8 @@
       "kcal": 90,
       "carbsG": 9,
       "proteinG": 6.5,
-      "fatG": 3.5
+      "fatG": 3.5,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -13362,7 +13643,8 @@
       "kcal": 82,
       "carbsG": 11,
       "proteinG": 5,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13401,7 +13683,8 @@
       "kcal": 82,
       "carbsG": 10,
       "proteinG": 5.5,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13440,7 +13723,8 @@
       "kcal": 70,
       "carbsG": 10,
       "proteinG": 4,
-      "fatG": 1.8
+      "fatG": 1.8,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13479,7 +13763,8 @@
       "kcal": 80,
       "carbsG": 9,
       "proteinG": 5,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13518,7 +13803,8 @@
       "kcal": 88,
       "carbsG": 10,
       "proteinG": 5.5,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13557,7 +13843,8 @@
       "kcal": 88,
       "carbsG": 12,
       "proteinG": 5,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13596,7 +13883,8 @@
       "kcal": 78,
       "carbsG": 10,
       "proteinG": 5.5,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13635,7 +13923,8 @@
       "kcal": 75,
       "carbsG": 11,
       "proteinG": 3.5,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -13674,7 +13963,8 @@
       "kcal": 150,
       "carbsG": 20,
       "proteinG": 8,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -13713,7 +14003,8 @@
       "kcal": 55,
       "carbsG": 8,
       "proteinG": 4,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -13752,7 +14043,8 @@
       "kcal": 60,
       "carbsG": 7,
       "proteinG": 5,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -13791,7 +14083,8 @@
       "kcal": 55,
       "carbsG": 8,
       "proteinG": 3.5,
-      "fatG": 1.2
+      "fatG": 1.2,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -13830,7 +14123,8 @@
       "kcal": 58,
       "carbsG": 8,
       "proteinG": 4,
-      "fatG": 1.2
+      "fatG": 1.2,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -13869,7 +14163,8 @@
       "kcal": 70,
       "carbsG": 9,
       "proteinG": 4.5,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -13908,7 +14203,8 @@
       "kcal": 60,
       "carbsG": 9,
       "proteinG": 2.5,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -13947,7 +14243,8 @@
       "kcal": 47,
       "carbsG": 9,
       "proteinG": 1,
-      "fatG": 0.3
+      "fatG": 0.3,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -13986,7 +14283,8 @@
       "kcal": 65,
       "carbsG": 8,
       "proteinG": 4,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -14025,7 +14323,8 @@
       "kcal": 100,
       "carbsG": 12,
       "proteinG": 6.5,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -14064,7 +14363,8 @@
       "kcal": 80,
       "carbsG": 12,
       "proteinG": 4,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -14103,7 +14403,8 @@
       "kcal": 85,
       "carbsG": 12,
       "proteinG": 6,
-      "fatG": 1.8
+      "fatG": 1.8,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -14142,7 +14443,8 @@
       "kcal": 90,
       "carbsG": 12,
       "proteinG": 6,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -14181,7 +14483,8 @@
       "kcal": 105,
       "carbsG": 12,
       "proteinG": 6,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -14220,7 +14523,8 @@
       "kcal": 75,
       "carbsG": 4,
       "proteinG": 8,
-      "fatG": 3.5
+      "fatG": 3.5,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -14259,7 +14563,8 @@
       "kcal": 65,
       "carbsG": 4,
       "proteinG": 7,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -14298,7 +14603,8 @@
       "kcal": 70,
       "carbsG": 3,
       "proteinG": 8,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -14337,7 +14643,8 @@
       "kcal": 70,
       "carbsG": 5,
       "proteinG": 7,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -14376,7 +14683,8 @@
       "kcal": 65,
       "carbsG": 5,
       "proteinG": 6,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -14415,7 +14723,8 @@
       "kcal": 100,
       "carbsG": 10,
       "proteinG": 8,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -14454,7 +14763,8 @@
       "kcal": 95,
       "carbsG": 13,
       "proteinG": 5.5,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -14493,7 +14803,8 @@
       "kcal": 110,
       "carbsG": 13,
       "proteinG": 6.5,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -14532,7 +14843,8 @@
       "kcal": 110,
       "carbsG": 13,
       "proteinG": 7,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -14571,7 +14883,8 @@
       "kcal": 112,
       "carbsG": 13,
       "proteinG": 7,
-      "fatG": 4.2
+      "fatG": 4.2,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -14610,7 +14923,8 @@
       "kcal": 115,
       "carbsG": 12,
       "proteinG": 7.5,
-      "fatG": 4.5
+      "fatG": 4.5,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -14649,7 +14963,8 @@
       "kcal": 78,
       "carbsG": 11,
       "proteinG": 5,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -14688,7 +15003,8 @@
       "kcal": 70,
       "carbsG": 10,
       "proteinG": 5,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -14727,7 +15043,8 @@
       "kcal": 85,
       "carbsG": 11,
       "proteinG": 6,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -14766,7 +15083,8 @@
       "kcal": 90,
       "carbsG": 10,
       "proteinG": 6.5,
-      "fatG": 3.5
+      "fatG": 3.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -14805,7 +15123,8 @@
       "kcal": 130,
       "carbsG": 6,
       "proteinG": 9,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -14845,7 +15164,8 @@
       "kcal": 88,
       "carbsG": 12,
       "proteinG": 5.5,
-      "fatG": 1.8
+      "fatG": 1.8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -14890,7 +15210,8 @@
       "kcal": 88,
       "carbsG": 12,
       "proteinG": 5.5,
-      "fatG": 1.8
+      "fatG": 1.8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -14929,7 +15250,8 @@
       "kcal": 92,
       "carbsG": 12.5,
       "proteinG": 6,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -15008,7 +15330,8 @@
       "kcal": 85,
       "carbsG": 12,
       "proteinG": 5.5,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -15047,7 +15370,8 @@
       "kcal": 105,
       "carbsG": 11,
       "proteinG": 6.5,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -15086,7 +15410,8 @@
       "kcal": 150,
       "carbsG": 16,
       "proteinG": 7,
-      "fatG": 6.5
+      "fatG": 6.5,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -15125,7 +15450,8 @@
       "kcal": 60,
       "carbsG": 7,
       "proteinG": 4.5,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -15199,7 +15525,8 @@
       "kcal": 65,
       "carbsG": 7,
       "proteinG": 5,
-      "fatG": 2
+      "fatG": 2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -15238,7 +15565,8 @@
       "kcal": 82,
       "carbsG": 2,
       "proteinG": 15,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -15272,7 +15600,8 @@
       "kcal": 340,
       "carbsG": 76,
       "proteinG": 8,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 2.5
     },
     "servings": [
       {
@@ -15496,7 +15825,8 @@
       "kcal": 110,
       "carbsG": 25,
       "proteinG": 2,
-      "fatG": 0.3
+      "fatG": 0.3,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -15572,7 +15902,8 @@
       "kcal": 330,
       "carbsG": 80,
       "proteinG": 5,
-      "fatG": 0.5
+      "fatG": 0.5,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -15612,7 +15943,8 @@
       "kcal": 200,
       "carbsG": 0,
       "proteinG": 30,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -15648,7 +15980,8 @@
       "kcal": 130,
       "carbsG": 0,
       "proteinG": 21,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -15940,7 +16273,8 @@
       "kcal": 717,
       "carbsG": 0.1,
       "proteinG": 0.9,
-      "fatG": 81
+      "fatG": 81,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16082,7 +16416,8 @@
       "kcal": 381,
       "carbsG": 91,
       "proteinG": 0.3,
-      "fatG": 0.1
+      "fatG": 0.1,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -16118,7 +16453,8 @@
       "kcal": 360,
       "carbsG": 78,
       "proteinG": 8,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -16299,7 +16635,8 @@
       "kcal": 0,
       "carbsG": 0,
       "proteinG": 0,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16335,7 +16672,8 @@
       "kcal": 110,
       "carbsG": 25,
       "proteinG": 2,
-      "fatG": 0.2
+      "fatG": 0.2,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -16375,7 +16713,8 @@
       "kcal": 130,
       "carbsG": 0,
       "proteinG": 16,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16451,7 +16790,8 @@
       "kcal": 231,
       "carbsG": 0,
       "proteinG": 25,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16486,7 +16826,8 @@
       "kcal": 208,
       "carbsG": 0,
       "proteinG": 20,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16520,7 +16861,8 @@
       "kcal": 335,
       "carbsG": 0,
       "proteinG": 62,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16555,7 +16897,8 @@
       "kcal": 97,
       "carbsG": 0,
       "proteinG": 20,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16591,7 +16934,8 @@
       "kcal": 208,
       "carbsG": 0,
       "proteinG": 25,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16627,7 +16971,8 @@
       "kcal": 130,
       "carbsG": 0,
       "proteinG": 23,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16663,7 +17008,8 @@
       "kcal": 116,
       "carbsG": 0,
       "proteinG": 26,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16699,7 +17045,8 @@
       "kcal": 110,
       "carbsG": 0,
       "proteinG": 20,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16736,7 +17083,8 @@
       "kcal": 96,
       "carbsG": 0,
       "proteinG": 20,
-      "fatG": 1.7
+      "fatG": 1.7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16844,7 +17192,8 @@
       "kcal": 262,
       "carbsG": 0,
       "proteinG": 24,
-      "fatG": 18
+      "fatG": 18,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16878,7 +17227,8 @@
       "kcal": 205,
       "carbsG": 0,
       "proteinG": 19,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -16949,7 +17299,8 @@
       "kcal": 105,
       "carbsG": 0,
       "proteinG": 18,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17129,7 +17480,8 @@
       "kcal": 290,
       "carbsG": 0,
       "proteinG": 27,
-      "fatG": 19
+      "fatG": 19,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17163,7 +17515,8 @@
       "kcal": 203,
       "carbsG": 0,
       "proteinG": 18,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17198,7 +17551,8 @@
       "kcal": 150,
       "carbsG": 3,
       "proteinG": 18,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17233,7 +17587,8 @@
       "kcal": 215,
       "carbsG": 0.2,
       "proteinG": 19,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17269,7 +17624,8 @@
       "kcal": 230,
       "carbsG": 0,
       "proteinG": 19,
-      "fatG": 17
+      "fatG": 17,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17375,7 +17731,8 @@
       "kcal": 130,
       "carbsG": 28,
       "proteinG": 2.7,
-      "fatG": 0.3
+      "fatG": 0.3,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -17522,7 +17879,8 @@
       "kcal": 97,
       "carbsG": 0,
       "proteinG": 19,
-      "fatG": 1.5
+      "fatG": 1.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17596,7 +17954,8 @@
       "kcal": 450,
       "carbsG": 0,
       "proteinG": 20,
-      "fatG": 40
+      "fatG": 40,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17631,7 +17990,8 @@
       "kcal": 290,
       "carbsG": 0,
       "proteinG": 30,
-      "fatG": 19
+      "fatG": 19,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17666,7 +18026,8 @@
       "kcal": 884,
       "carbsG": 0,
       "proteinG": 0,
-      "fatG": 100
+      "fatG": 100,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17886,7 +18247,8 @@
       "kcal": 892,
       "carbsG": 0,
       "proteinG": 0,
-      "fatG": 100
+      "fatG": 100,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -17994,7 +18356,8 @@
       "kcal": 51,
       "carbsG": 11,
       "proteinG": 1.4,
-      "fatG": 0.3
+      "fatG": 0.3,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -18141,7 +18504,8 @@
       "kcal": 884,
       "carbsG": 0,
       "proteinG": 0,
-      "fatG": 100
+      "fatG": 100,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -18249,7 +18613,8 @@
       "kcal": 884,
       "carbsG": 0,
       "proteinG": 0,
-      "fatG": 100
+      "fatG": 100,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -18506,7 +18871,8 @@
       "kcal": 73,
       "carbsG": 0,
       "proteinG": 16,
-      "fatG": 0.3
+      "fatG": 0.3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -18541,7 +18907,8 @@
       "kcal": 210,
       "carbsG": 0,
       "proteinG": 17,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -18575,7 +18942,8 @@
       "kcal": 209,
       "carbsG": 0,
       "proteinG": 26,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -18609,7 +18977,8 @@
       "kcal": 400,
       "carbsG": 100,
       "proteinG": 0,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -18648,7 +19017,8 @@
       "kcal": 380,
       "carbsG": 98,
       "proteinG": 0,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -18682,7 +19052,8 @@
       "kcal": 167,
       "carbsG": 1,
       "proteinG": 24,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -18716,7 +19087,8 @@
       "kcal": 134,
       "carbsG": 3,
       "proteinG": 21,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -18902,7 +19274,8 @@
       "kcal": 155,
       "carbsG": 0,
       "proteinG": 19,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -18938,7 +19311,8 @@
       "kcal": 87,
       "carbsG": 0,
       "proteinG": 18,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -19011,7 +19385,8 @@
       "kcal": 145,
       "carbsG": 1.5,
       "proteinG": 21,
-      "fatG": 5.5
+      "fatG": 5.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -19047,7 +19422,8 @@
       "kcal": 4,
       "carbsG": 0,
       "proteinG": 0,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -19438,7 +19814,8 @@
       "kcal": 200,
       "carbsG": 20,
       "proteinG": 12,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -19512,7 +19889,8 @@
       "kcal": 68,
       "carbsG": 4,
       "proteinG": 7,
-      "fatG": 2.5
+      "fatG": 2.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -19547,7 +19925,8 @@
       "kcal": 110,
       "carbsG": 25,
       "proteinG": 1.8,
-      "fatG": 0.2
+      "fatG": 0.2,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -19586,7 +19965,8 @@
       "kcal": 198,
       "carbsG": 4.6,
       "proteinG": 2.4,
-      "fatG": 19
+      "fatG": 19,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -19621,7 +20001,8 @@
       "kcal": 340,
       "carbsG": 3,
       "proteinG": 2.8,
-      "fatG": 36
+      "fatG": 36,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -19913,7 +20294,8 @@
       "kcal": 322,
       "carbsG": 3.6,
       "proteinG": 16,
-      "fatG": 27
+      "fatG": 27,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -19947,7 +20329,8 @@
       "kcal": 52,
       "carbsG": 0.7,
       "proteinG": 11,
-      "fatG": 0.2
+      "fatG": 0.2,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -19981,7 +20364,8 @@
       "kcal": 236,
       "carbsG": 0,
       "proteinG": 24,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -20015,7 +20399,8 @@
       "kcal": 184,
       "carbsG": 0,
       "proteinG": 18,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -20119,7 +20504,8 @@
       "kcal": 304,
       "carbsG": 82,
       "proteinG": 0.3,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -20154,7 +20540,8 @@
       "kcal": 680,
       "carbsG": 0.6,
       "proteinG": 1,
-      "fatG": 75
+      "fatG": 75,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -20263,7 +20650,8 @@
       "kcal": 350,
       "carbsG": 68,
       "proteinG": 12,
-      "fatG": 4
+      "fatG": 4,
+      "fiberG": 3
     },
     "servings": [
       {
@@ -20421,7 +20809,8 @@
       "kcal": 902,
       "carbsG": 0,
       "proteinG": 0,
-      "fatG": 100
+      "fatG": 100,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -20532,7 +20921,8 @@
       "kcal": 92,
       "carbsG": 3,
       "proteinG": 15,
-      "fatG": 1.4
+      "fatG": 1.4,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -20572,7 +20962,8 @@
       "kcal": 0,
       "carbsG": 0,
       "proteinG": 0,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -20607,7 +20998,8 @@
       "kcal": 250,
       "carbsG": 0,
       "proteinG": 25,
-      "fatG": 16
+      "fatG": 16,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -20642,7 +21034,8 @@
       "kcal": 180,
       "carbsG": 0,
       "proteinG": 18,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -20855,7 +21248,8 @@
       "kcal": 86,
       "carbsG": 3,
       "proteinG": 15,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21040,7 +21434,8 @@
       "kcal": 200,
       "carbsG": 6,
       "proteinG": 2,
-      "fatG": 20
+      "fatG": 20,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -21081,7 +21476,8 @@
       "kcal": 15,
       "carbsG": 0.9,
       "proteinG": 2,
-      "fatG": 0.5
+      "fatG": 0.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21117,7 +21513,8 @@
       "kcal": 35,
       "carbsG": 4,
       "proteinG": 6,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21157,7 +21554,8 @@
       "kcal": 90,
       "carbsG": 2,
       "proteinG": 16,
-      "fatG": 1.4
+      "fatG": 1.4,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21297,7 +21695,8 @@
       "kcal": 403,
       "carbsG": 3.4,
       "proteinG": 23,
-      "fatG": 33
+      "fatG": 33,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21331,7 +21730,8 @@
       "kcal": 342,
       "carbsG": 4.1,
       "proteinG": 6,
-      "fatG": 34
+      "fatG": 34,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21366,7 +21766,8 @@
       "kcal": 280,
       "carbsG": 6,
       "proteinG": 14,
-      "fatG": 22
+      "fatG": 22,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21401,7 +21802,8 @@
       "kcal": 280,
       "carbsG": 3.1,
       "proteinG": 28,
-      "fatG": 17
+      "fatG": 17,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21435,7 +21837,8 @@
       "kcal": 431,
       "carbsG": 4,
       "proteinG": 38,
-      "fatG": 29
+      "fatG": 29,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21617,7 +22020,8 @@
       "kcal": 260,
       "carbsG": 67,
       "proteinG": 0,
-      "fatG": 0.1
+      "fatG": 0.1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21652,7 +22056,8 @@
       "kcal": 88,
       "carbsG": 3,
       "proteinG": 17,
-      "fatG": 0.8
+      "fatG": 0.8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21688,7 +22093,8 @@
       "kcal": 80,
       "carbsG": 4,
       "proteinG": 12,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21799,7 +22205,8 @@
       "kcal": 89,
       "carbsG": 16,
       "proteinG": 5.9,
-      "fatG": 0
+      "fatG": 0,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -21871,7 +22278,8 @@
       "kcal": 59,
       "carbsG": 3.6,
       "proteinG": 10,
-      "fatG": 0.4
+      "fatG": 0.4,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21907,7 +22315,8 @@
       "kcal": 61,
       "carbsG": 4.7,
       "proteinG": 3.5,
-      "fatG": 3.3
+      "fatG": 3.3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21942,7 +22351,8 @@
       "kcal": 320,
       "carbsG": 54,
       "proteinG": 8,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -21982,7 +22392,8 @@
       "kcal": 34,
       "carbsG": 5,
       "proteinG": 3.4,
-      "fatG": 0.1
+      "fatG": 0.1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22018,7 +22429,8 @@
       "kcal": 61,
       "carbsG": 4.8,
       "proteinG": 3.2,
-      "fatG": 3.3
+      "fatG": 3.3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22053,7 +22465,8 @@
       "kcal": 290,
       "carbsG": 0,
       "proteinG": 25,
-      "fatG": 21
+      "fatG": 21,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22088,7 +22501,8 @@
       "kcal": 220,
       "carbsG": 0,
       "proteinG": 17,
-      "fatG": 17
+      "fatG": 17,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22159,7 +22573,8 @@
       "kcal": 234,
       "carbsG": 1,
       "proteinG": 18,
-      "fatG": 17
+      "fatG": 17,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22228,7 +22643,8 @@
       "kcal": 230,
       "carbsG": 0,
       "proteinG": 30,
-      "fatG": 12
+      "fatG": 12,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22265,7 +22681,8 @@
       "kcal": 145,
       "carbsG": 0,
       "proteinG": 21,
-      "fatG": 6
+      "fatG": 6,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22303,7 +22720,8 @@
       "kcal": 95,
       "carbsG": 15,
       "proteinG": 8,
-      "fatG": 0.5
+      "fatG": 0.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22339,7 +22757,8 @@
       "kcal": 175,
       "carbsG": 0,
       "proteinG": 22,
-      "fatG": 9
+      "fatG": 9,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22379,7 +22798,8 @@
       "kcal": 210,
       "carbsG": 0,
       "proteinG": 29,
-      "fatG": 10
+      "fatG": 10,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22415,7 +22835,8 @@
       "kcal": 130,
       "carbsG": 0,
       "proteinG": 21,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22451,7 +22872,8 @@
       "kcal": 250,
       "carbsG": 0,
       "proteinG": 26,
-      "fatG": 15
+      "fatG": 15,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22487,7 +22909,8 @@
       "kcal": 254,
       "carbsG": 0,
       "proteinG": 17,
-      "fatG": 20
+      "fatG": 20,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22522,7 +22945,8 @@
       "kcal": 83,
       "carbsG": 0,
       "proteinG": 17,
-      "fatG": 1
+      "fatG": 1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22556,7 +22980,8 @@
       "kcal": 258,
       "carbsG": 0,
       "proteinG": 25,
-      "fatG": 17
+      "fatG": 17,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22591,7 +23016,8 @@
       "kcal": 195,
       "carbsG": 0,
       "proteinG": 18,
-      "fatG": 13
+      "fatG": 13,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22626,7 +23052,8 @@
       "kcal": 165,
       "carbsG": 0,
       "proteinG": 25,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22666,7 +23093,8 @@
       "kcal": 143,
       "carbsG": 0,
       "proteinG": 17,
-      "fatG": 8
+      "fatG": 8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22701,7 +23129,8 @@
       "kcal": 290,
       "carbsG": 0,
       "proteinG": 17,
-      "fatG": 25
+      "fatG": 25,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22741,7 +23170,8 @@
       "kcal": 300,
       "carbsG": 0,
       "proteinG": 26,
-      "fatG": 21
+      "fatG": 21,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22777,7 +23207,8 @@
       "kcal": 260,
       "carbsG": 0,
       "proteinG": 17,
-      "fatG": 21
+      "fatG": 21,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22812,7 +23243,8 @@
       "kcal": 150,
       "carbsG": 0,
       "proteinG": 21,
-      "fatG": 7
+      "fatG": 7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22851,7 +23283,8 @@
       "kcal": 337,
       "carbsG": 0,
       "proteinG": 19,
-      "fatG": 28
+      "fatG": 28,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22885,7 +23318,8 @@
       "kcal": 540,
       "carbsG": 1.4,
       "proteinG": 37,
-      "fatG": 42
+      "fatG": 42,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -22992,7 +23426,8 @@
       "kcal": 85,
       "carbsG": 0.9,
       "proteinG": 20,
-      "fatG": 0.5
+      "fatG": 0.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -23032,7 +23467,8 @@
       "kcal": 290,
       "carbsG": 3,
       "proteinG": 62,
-      "fatG": 3
+      "fatG": 3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -23067,7 +23503,8 @@
       "kcal": 158,
       "carbsG": 0.4,
       "proteinG": 13,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -23102,7 +23539,8 @@
       "kcal": 155,
       "carbsG": 1.1,
       "proteinG": 13,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -23141,7 +23579,8 @@
       "kcal": 185,
       "carbsG": 1.5,
       "proteinG": 13,
-      "fatG": 14
+      "fatG": 14,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -23329,7 +23768,8 @@
       "kcal": 165,
       "carbsG": 0,
       "proteinG": 31,
-      "fatG": 3.6
+      "fatG": 3.6,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -23364,7 +23804,8 @@
       "kcal": 120,
       "carbsG": 0,
       "proteinG": 23,
-      "fatG": 2.6
+      "fatG": 2.6,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -23398,7 +23839,8 @@
       "kcal": 201,
       "carbsG": 0,
       "proteinG": 24,
-      "fatG": 11
+      "fatG": 11,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -23433,7 +23875,8 @@
       "kcal": 400,
       "carbsG": 8,
       "proteinG": 80,
-      "fatG": 5
+      "fatG": 5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -23504,7 +23947,8 @@
       "kcal": 53,
       "carbsG": 5,
       "proteinG": 8,
-      "fatG": 0.6
+      "fatG": 0.6,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -23539,7 +23983,8 @@
       "kcal": 170,
       "carbsG": 37,
       "proteinG": 3.5,
-      "fatG": 0.5
+      "fatG": 0.5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -23579,7 +24024,8 @@
       "kcal": 300,
       "carbsG": 3,
       "proteinG": 12,
-      "fatG": 27
+      "fatG": 27,
+      "fiberG": 0
     },
     "servings": [
       {
