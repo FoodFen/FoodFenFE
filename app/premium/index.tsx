@@ -1,12 +1,14 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/ui/Button';
 import { Text } from '@/components/ui/Text';
+import { useAuthStore } from '@/features/auth/store';
+import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
@@ -36,6 +38,14 @@ export default function PremiumScreen() {
 
   const [selectedPlan, setSelectedPlan] = useState<PlanId>('yearly');
 
+  // Read once on mount: while the payment screen sits on top, this screen
+  // stays mounted and `isPremium` flips — that must not trigger a redirect.
+  const wasPremium = useRef(useIsPremium());
+
+  useEffect(() => {
+    if (wasPremium.current) router.replace('/premium/welcome');
+  }, []);
+
   // VND, matching the backend's current server-set prices (PayOS has no
   // localized/store pricing to read — see docs/backend-contracts/
   // premium-entitlements.md). Shown here only as an estimate; the
@@ -61,18 +71,24 @@ export default function PremiumScreen() {
   const benefits: {
     icon: keyof typeof Ionicons.glyphMap;
     titleKey: keyof Translations['premium'];
-    bodyKey: keyof Translations['premium'];
   }[] = [
-    { icon: 'leaf-outline', titleKey: 'benefitFiberTitle', bodyKey: 'benefitFiberBody' },
-    { icon: 'create-outline', titleKey: 'benefitCustomTitle', bodyKey: 'benefitCustomBody' },
-    { icon: 'sparkles-outline', titleKey: 'benefitEarlyTitle', bodyKey: 'benefitEarlyBody' },
-    { icon: 'heart-outline', titleKey: 'benefitSupportTitle', bodyKey: 'benefitSupportBody' },
+    { icon: 'scan-outline', titleKey: 'benefitAiTitle' },
+    { icon: 'leaf-outline', titleKey: 'benefitFiberTitle' },
+    { icon: 'create-outline', titleKey: 'benefitCustomTitle' },
+    { icon: 'sparkles-outline', titleKey: 'benefitEarlyTitle' },
+    { icon: 'heart-outline', titleKey: 'benefitSupportTitle' },
   ];
 
   const selected = selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan;
 
+  const signedIn = useAuthStore((state) => state.session !== null);
+
   const goToPayment = () => {
     haptics.selection();
+    if (!signedIn) {
+      router.push('/sign-in');
+      return;
+    }
     router.push({
       pathname: '/premium/payment',
       params: {
@@ -118,23 +134,17 @@ export default function PremiumScreen() {
             <Text variant="title" className="text-center text-3xl">
               {t('premium', 'heroTitle')}
             </Text>
-            <Text variant="body" tone="muted" className="text-center">
-              {t('premium', 'heroSubtitle')}
-            </Text>
           </View>
 
-          <View className="gap-4">
+          <View className="gap-3">
             {benefits.map((benefit) => (
-              <View key={benefit.titleKey} className="flex-row items-start gap-3">
+              <View key={benefit.titleKey} className="flex-row items-center gap-3">
                 <View className="h-10 w-10 items-center justify-center rounded-full bg-brand-soft">
                   <Ionicons name={benefit.icon} size={18} color={colors.brand} />
                 </View>
-                <View className="flex-1 gap-0.5 pt-1">
-                  <Text variant="label">{t('premium', benefit.titleKey)}</Text>
-                  <Text variant="caption" tone="muted">
-                    {t('premium', benefit.bodyKey)}
-                  </Text>
-                </View>
+                <Text variant="label" className="flex-1">
+                  {t('premium', benefit.titleKey)}
+                </Text>
               </View>
             ))}
           </View>

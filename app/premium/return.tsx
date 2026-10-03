@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect } from 'react';
-import { ActivityIndicator, Alert, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 import { Text } from '@/components/ui/Text';
 import { useRefreshSubscription } from '@/features/premium/queries';
@@ -24,12 +24,11 @@ export default function PremiumReturnScreen() {
     refreshSubscription.mutate(undefined, {
       onSuccess: (result) => {
         if (result.hasActiveSubscription) {
-          Alert.alert(
-            t('premiumPayment', 'successTitle'),
-            t('premiumPayment', 'successMessage'),
-          );
+          router.dismissAll();
+          router.replace('/premium/welcome');
+        } else {
+          router.dismiss();
         }
-        router.dismiss();
       },
       onError: () => router.dismiss(),
     });

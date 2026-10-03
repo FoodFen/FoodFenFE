@@ -185,6 +185,7 @@ export function useRedeemCoins() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.coins() });
       void queryClient.invalidateQueries({ queryKey: queryKeys.premium.all });
+      void queryClient.invalidateQueries({ queryKey: queryKeys.aiQuota });
     },
   });
 }

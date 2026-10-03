@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import { Alert, View } from 'react-native';
 
 import { isApiError } from '@/api/errors';
@@ -41,10 +41,7 @@ export default function ShopScreen() {
             redeem.mutate(bundleId, {
               onSuccess: () => {
                 haptics.success();
-                Alert.alert(
-                  t('shop', 'redeemSuccessTitle'),
-                  t('shop', 'redeemSuccessMessage').replace('{days}', String(days)),
-                );
+                router.push('/premium/welcome');
               },
               onError: (error) => {
                 haptics.error();

@@ -1,7 +1,7 @@
 import { onlineManager } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
 import { isApiError } from '@/api/errors';
@@ -77,11 +77,8 @@ export default function PremiumPaymentScreen() {
     refreshSubscription.mutate(undefined, {
       onSuccess: () => {
         haptics.success();
-        Alert.alert(
-          t('premiumPayment', 'successTitle'),
-          t('premiumPayment', 'successMessage'),
-          [{ text: t('common', 'done'), onPress: () => router.dismiss() }],
-        );
+        router.dismissAll();
+        router.replace('/premium/welcome');
       },
       onError: () => {
         setStage('error');

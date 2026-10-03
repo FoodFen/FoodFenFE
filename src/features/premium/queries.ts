@@ -7,6 +7,17 @@ import { useProfileStore } from '@/features/profile/store';
 import { queryKeys } from '@/lib/queryClient';
 import type { PlanType } from '@/types/models';
 
+/** When the current Premium runs out — `null` for no subscription or one with no end date. */
+export function usePremiumEndDate() {
+  const userId = useProfileStore((state) => state.profile?.id ?? null);
+
+  return useQuery({
+    queryKey: [...queryKeys.premium.all, 'endDate'],
+    queryFn: () => gamification.getSubscription(userId as string)?.endDate ?? null,
+    enabled: userId !== null,
+  });
+}
+
 /** Starts a PayOS checkout for one plan. */
 export function useCheckout() {
   return useMutation({
@@ -53,14 +64,16 @@ export function useRefreshSubscription() {
     mutationFn: async () => {
       const result = await subscriptionsApi.getMe();
 
-      if (userId && result.subscription) {
-        gamification.startSubscription(userId, result.subscription);
+      if (userId) {
+        if (result.subscription) gamification.startSubscription(userId, result.subscription);
+        else gamification.clearSubscriptions(userId);
       }
 
       return result;
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: queryKeys.premium.all });
+      void queryClient.invalidateQueries({ queryKey: queryKeys.aiQuota });
     },
   });
 }

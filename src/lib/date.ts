@@ -59,6 +59,11 @@ export function formatDiaryDate(key: DateKey): string {
   return format(date, 'EEE, d MMM', { locale: dateFnsLocale() });
 }
 
+/** "3 Mar 2026" — a full calendar date, for things that outlive a week. */
+export function formatLongDate(key: DateKey): string {
+  return format(fromDateKey(key), 'd MMM yyyy', { locale: dateFnsLocale() });
+}
+
 /** Short weekday initial, for the horizontal date strip. */
 export function formatWeekdayInitial(key: DateKey): string {
   return format(fromDateKey(key), 'EEEEE', { locale: dateFnsLocale() });
