@@ -11,6 +11,7 @@ import { SummaryCard } from '@/components/dashboard/SummaryCard';
 import { WaterSection } from '@/components/dashboard/WaterSection';
 import { WeekStrip } from '@/components/dashboard/WeekStrip';
 import { WeightSection } from '@/components/dashboard/WeightSection';
+import { QuizCard } from '@/components/quiz/QuizCard';
 import { ErrorState } from '@/components/ui/EmptyState';
 import { Screen, ScrollScreen, TAB_BAR_CLEARANCE } from '@/components/ui/Screen';
 import { DiaryDaySkeleton } from '@/components/ui/Skeleton';
@@ -94,6 +95,7 @@ export default function DashboardScreen() {
           }
         >
           <SummaryCard day={day} />
+          <QuizCard />
           <CaloriesEatenSection day={day} onOpenEntries={() => setEntriesOpen(true)} />
           <CaloriesBurnedSection day={day} />
           <WaterSection day={day} />

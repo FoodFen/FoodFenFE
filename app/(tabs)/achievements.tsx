@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { Pressable, View } from 'react-native';
 
+import { QuizCard } from '@/components/quiz/QuizCard';
 import { Card } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
 import { ProgressBar } from '@/components/ui/ProgressBar';
@@ -78,6 +79,7 @@ export default function AchievementsScreen() {
       </Text>
 
       <StreakSummaryCard currentStreak={streak?.currentStreak ?? 0} />
+      <QuizCard />
 
       {daily.length > 0 ? (
         <View className="gap-3">
