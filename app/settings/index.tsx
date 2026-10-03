@@ -9,7 +9,7 @@ import { Card } from '@/components/ui/Card';
 import { ScrollScreen } from '@/components/ui/Screen';
 import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
-import { useDiaryDay, usePendingChanges } from '@/features/diary/queries';
+import { useDiaryDay } from '@/features/diary/queries';
 import { useLogSheetStore } from '@/features/logging/store';
 import { reconcileNotifications } from '@/features/notifications/reconcile';
 import { useIsPremium, useProfileStore } from '@/features/profile/store';
@@ -40,7 +40,6 @@ export default function SettingsScreen() {
   const isSignedIn = session !== null;
   const isPremium = useIsPremium();
 
-  const { data: pendingChanges = 0 } = usePendingChanges();
   const { data: today } = useDiaryDay(todayKey());
   const presentLogSheet = useLogSheetStore((state) => state.present);
 
@@ -186,11 +185,13 @@ export default function SettingsScreen() {
       <Card className="gap-3">
         <View className="flex-row items-center gap-3">
           <View className="h-14 w-14 items-center justify-center rounded-full bg-brand-soft">
-            <Text variant="heading" tone="brand">
-              {(session?.user.displayName ?? session?.user.email ?? 'G')
-                .charAt(0)
-                .toUpperCase()}
-            </Text>
+            {isSignedIn ? (
+              <Text variant="heading" tone="brand">
+                {(session.user.displayName ?? session.user.email).charAt(0).toUpperCase()}
+              </Text>
+            ) : (
+              <Ionicons name="person" size={24} color={colors.brand} />
+            )}
           </View>
 
           <View className="flex-1 gap-0.5">
@@ -208,52 +209,36 @@ export default function SettingsScreen() {
                 </View>
               ) : null}
             </View>
-            <Text variant="caption" tone="muted" numberOfLines={1}>
-              {isSignedIn ? session.user.email : t('profile', 'trackingOffline')}
-            </Text>
+            {isSignedIn ? (
+              <Text variant="caption" tone="muted" numberOfLines={1}>
+                {session.user.email}
+              </Text>
+            ) : null}
           </View>
         </View>
 
         {isSignedIn ? null : (
-          <View className="gap-2 border-t border-border pt-3">
-            <Pressable
-              onPress={() => router.push('/sign-in')}
-              accessibilityRole="button"
-              className="flex-row items-center justify-between active:opacity-60"
-            >
-              <Text variant="label" tone="brand">
-                {t('profile', 'signInToSync')}
-              </Text>
-              <Ionicons name="chevron-forward" size={16} color={colors.brand} />
-            </Pressable>
-            <Text variant="caption" tone="subtle">
-              {t('profile', 'offlineNotice')}
-            </Text>
-          </View>
+          <Button
+            label={t('profile', 'signInToSync')}
+            onPress={() => router.push('/sign-in')}
+            leading={<Ionicons name="log-in-outline" size={18} color={colors.onBrand} />}
+            fullWidth
+          />
         )}
 
         {isPremium ? null : (
           <Pressable
             onPress={() => router.push('/premium')}
             accessibilityRole="button"
-            className="flex-row items-center justify-between border-t border-border pt-3 active:opacity-60"
+            className="flex-row items-center gap-3 rounded-card bg-warning/15 px-3 py-3 active:opacity-70"
           >
-            <Text variant="label" tone="warning">
+            <Ionicons name="star" size={18} color={colors.warning} />
+            <Text variant="label" tone="warning" className="flex-1">
               {t('profile', 'upgradeToPremium')}
             </Text>
             <Ionicons name="chevron-forward" size={16} color={colors.warning} />
           </Pressable>
         )}
-
-        {pendingChanges > 0 ? (
-          <View className="flex-row items-center gap-2 border-t border-border pt-3">
-            <Ionicons name="cloud-offline-outline" size={16} color={colors.fgMuted} />
-            <Text variant="caption" tone="muted">
-              {pendingChanges} {t('profile', pendingChanges === 1 ? 'change' : 'changes')}{' '}
-              {t('profile', 'savedOnDeviceOnly')}
-            </Text>
-          </View>
-        ) : null}
       </Card>
 
       <Card className="gap-3">
