@@ -49,12 +49,17 @@ export function useDailyQuiz(date: DateKey) {
  */
 export function useQuiz(id: string) {
   const userId = useUserId();
+  const queryClient = useQueryClient();
 
   return useQuery({
     queryKey: queryKeys.quiz.byId(id),
     queryFn: async ({ signal }) => {
       const quiz = await quizApi.byId(id, signal);
-      if (userId && quiz.result) reconcileCoinBalance(userId, quiz.result.balance);
+
+      if (userId && quiz.result) {
+        reconcileCoinBalance(userId, quiz.result.balance);
+        void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.coins() });
+      }
 
       return quiz;
     },

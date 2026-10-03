@@ -1,6 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { onlineManager } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Alert, Pressable } from 'react-native';
 
 import { Card } from '@/components/ui/Card';
 import { ErrorState } from '@/components/ui/EmptyState';
@@ -52,15 +53,20 @@ export default function PracticeTopicsScreen() {
           key={topic.id}
           disabled={start.isPending}
           accessibilityRole="button"
-          onPress={() =>
+          onPress={() => {
+            if (!onlineManager.isOnline()) {
+              Alert.alert(t('quiz', 'needsConnection'));
+              return;
+            }
+
             start.mutate(
               { topic: topic.id, date: todayKey() },
               {
                 onSuccess: (quiz) =>
                   router.replace({ pathname: '/quiz/[id]', params: { id: quiz.id } }),
               },
-            )
-          }
+            );
+          }}
         >
           <Card className="flex-row items-center justify-between active:bg-surface-alt">
             <Text variant="label">{topic.label}</Text>

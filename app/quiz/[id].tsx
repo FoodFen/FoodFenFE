@@ -1,7 +1,8 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { onlineManager } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
-import { Pressable, View } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
 
 import type { RemoteQuiz, RemoteQuizResult } from '@/api/schemas';
 import { Button } from '@/components/ui/Button';
@@ -78,6 +79,11 @@ function QuizTake({ quiz }: { quiz: RemoteQuiz }) {
   const allAnswered = quiz.questions.every((q) => answers[q.id] !== undefined);
 
   const onSubmit = () => {
+    if (!onlineManager.isOnline()) {
+      Alert.alert(t('quiz', 'needsConnection'));
+      return;
+    }
+
     submit.mutate(
       {
         quizId: quiz.id,
