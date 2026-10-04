@@ -1,62 +1,10 @@
 import type { DateKey } from '@/lib/date';
 import { fromDateKey, lastNDays, shiftDateKey, todayKey } from '@/lib/date';
-import type { Quest, QuestType, Streak } from '@/types/models';
+import type { Quest, Streak } from '@/types/models';
 
-/**
- * Display copy for a quest, shared by the post-log interstitial and the
- * challenges screen. All 7 `QuestType` values are server-seeded now
- * (`docs/superpowers/specs/2026-09-30-coins-quests-design.md`, BE repo), so
- * every case is handled — the `default` branches only guard a future quest
- * type the client hasn't shipped copy for yet.
- */
-
-type Translate = (
-  namespace: 'questTitles' | 'questDescriptions',
-  key: QuestType,
-) => string;
-
-export function questTitle(t: Translate, questType: QuestType): string {
-  switch (questType) {
-    case 'log_breakfast':
-    case 'log_all_meals':
-    case 'hit_calorie_goal':
-    case 'hit_protein_goal':
-    case 'drink_water':
-    case 'log_weight':
-    case 'stay_active_week':
-      return t('questTitles', questType);
-    default:
-      return questType;
-  }
-}
-
-export function questDescription(t: Translate, quest: Quest): string {
-  switch (quest.questType) {
-    case 'log_breakfast':
-    case 'log_all_meals':
-    case 'drink_water':
-    case 'log_weight':
-    case 'stay_active_week':
-      return t('questDescriptions', quest.questType).replace(
-        '{target}',
-        String(quest.target),
-      );
-    case 'hit_calorie_goal':
-    case 'hit_protein_goal':
-      return t('questDescriptions', quest.questType).replace(
-        '{percent}',
-        String(Math.round(quest.completionRatio * 100)),
-      );
-    default:
-      return '';
-  }
-}
-
-const PERCENT_QUESTS: QuestType[] = ['hit_calorie_goal', 'hit_protein_goal', 'drink_water'];
-
-/** The goal quests measure percent of a daily goal, not a count, so "0/100" reads wrong. */
+/** Goal quests are a percent of a daily goal, not a count, so "0/100" would read wrong. */
 export function questProgressLabel(quest: Quest): string {
-  return PERCENT_QUESTS.includes(quest.questType)
+  return quest.unit === 'percent'
     ? `${quest.progress}%`
     : `${quest.progress}/${quest.target}`;
 }

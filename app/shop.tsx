@@ -7,9 +7,8 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ScrollScreen } from '@/components/ui/Screen';
 import { Text } from '@/components/ui/Text';
-import { COIN_SHOP_BUNDLES } from '@/data/gamificationRepository';
 import { useCoinBalance } from '@/features/dashboard/queries';
-import { useRedeemCoins } from '@/features/gamification/queries';
+import { useCoinBundles, useRedeemCoins } from '@/features/gamification/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { haptics } from '@/lib/haptics';
@@ -22,8 +21,9 @@ export default function ShopScreen() {
   const colors = colorsFor(resolved);
   const { data: balance = 0 } = useCoinBalance();
   const redeem = useRedeemCoins();
+  const { data: bundleData, isPending, fetchStatus } = useCoinBundles();
 
-  const confirmRedeem = (bundleId: string, days: number, coinCost: number) => {
+  const confirmRedeem = (days: number, coinCost: number) => {
     if (balance < coinCost) {
       Alert.alert(t('shop', 'insufficientCoins'));
       return;
@@ -38,7 +38,7 @@ export default function ShopScreen() {
         {
           text: t('shop', 'redeemButton'),
           onPress: () => {
-            redeem.mutate(bundleId, {
+            redeem.mutate(days, {
               onSuccess: () => {
                 haptics.success();
                 router.push('/premium/welcome');
@@ -76,7 +76,7 @@ export default function ShopScreen() {
         {t('shop', 'premiumBundlesHeading')}
       </Text>
 
-      {COIN_SHOP_BUNDLES.map((bundle) => {
+      {bundleData?.bundles.map((bundle) => {
         const affordable = balance >= bundle.coinCost;
 
         return (
@@ -92,13 +92,21 @@ export default function ShopScreen() {
 
             <Button
               label={t('shop', 'redeemButton')}
-              onPress={() => confirmRedeem(bundle.id, bundle.days, bundle.coinCost)}
+              onPress={() => confirmRedeem(bundle.days, bundle.coinCost)}
               disabled={!affordable || redeem.isPending}
               size="sm"
             />
           </Card>
         );
       })}
+
+      {bundleData ? null : (
+        <Text variant="body" tone="muted">
+          {isPending && fetchStatus === 'fetching'
+            ? t('shop', 'loading')
+            : t('shop', 'needsConnection')}
+        </Text>
+      )}
     </ScrollScreen>
   );
 }

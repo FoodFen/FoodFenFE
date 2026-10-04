@@ -521,26 +521,6 @@ export const vi = {
     ringColorsRow: 'Giải thích màu vòng tròn',
   },
 
-  questTitles: {
-    log_breakfast: 'Ghi bữa sáng',
-    log_all_meals: 'Duy trì thói quen',
-    hit_calorie_goal: 'Cân bằng calo',
-    hit_protein_goal: 'Mục tiêu đạm',
-    drink_water: 'Uống đủ nước',
-    log_weight: 'Cân nặng',
-    stay_active_week: 'Giữ chuỗi ngày',
-  },
-
-  questDescriptions: {
-    log_breakfast: 'Ghi bữa sáng hôm nay',
-    log_all_meals: 'Ghi {target} bữa ăn hôm nay',
-    hit_calorie_goal: 'Đạt {percent}% mục tiêu calo của bạn',
-    hit_protein_goal: 'Đạt {percent}% mục tiêu đạm của bạn',
-    drink_water: 'Uống đủ {target}% mục tiêu nước hôm nay',
-    log_weight: 'Ghi cân nặng hôm nay',
-    stay_active_week: 'Hoạt động {target} ngày trong tuần này',
-  },
-
   interstitial: {
     title: 'Tiến triển ngon lành!',
     continue: 'Tiếp tục',
@@ -566,6 +546,8 @@ export const vi = {
     bundleCost: '{cost} xu',
     redeemButton: 'Đổi',
     insufficientCoins: 'Chưa đủ xu',
+    loading: 'Đang tải các gói đổi…',
+    needsConnection: 'Hãy mở mạng để tải các gói đổi.',
     redeemConfirmTitle: 'Đổi {days} ngày Premium?',
     redeemConfirmMessage: 'Bạn sẽ dùng {cost} xu để đổi gói này.',
   },
@@ -614,6 +596,8 @@ export const vi = {
     perMonth: '/tháng',
     perYear: '/năm',
     bestValue: 'Tiết kiệm nhất',
+    pricesLoading: 'Đang tải bảng giá…',
+    pricesNeedConnection: 'Hãy mở mạng để xem bảng giá.',
     continueButton: 'Tiếp tục',
     finePrint: 'Hủy bất cứ lúc nào.',
   },

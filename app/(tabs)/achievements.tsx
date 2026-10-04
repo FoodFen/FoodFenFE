@@ -10,11 +10,7 @@ import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useActiveQuests, useStreak } from '@/features/gamification/queries';
-import {
-  questDescription,
-  questProgressLabel,
-  questTitle,
-} from '@/features/gamification/selectors';
+import { questProgressLabel } from '@/features/gamification/selectors';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { calendarWeek, daysUntil, todayKey } from '@/lib/date';
@@ -145,13 +141,13 @@ function ChallengeRow({ quest, daysLeft }: { quest: Quest; daysLeft: number }) {
   return (
     <Card className="gap-2">
       <View className="flex-row items-baseline justify-between">
-        <Text variant="heading">{questTitle(t, quest.questType)}</Text>
+        <Text variant="heading">{quest.title}</Text>
         <Text variant="caption" tone="brand">
           +{quest.rewardCoins}
         </Text>
       </View>
       <Text variant="body" tone="muted">
-        {questDescription(t, quest)}
+        {quest.description}
       </Text>
       <ProgressBar progress={progressFraction(quest.progress, quest.target)} />
       <View className="flex-row items-center justify-between">

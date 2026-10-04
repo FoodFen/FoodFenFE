@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 
+import { gamificationApi } from '@/api/endpoints/gamification';
 import { getEntryCountsByDay } from '@/data/entryRepository';
 import * as gamificationRepository from '@/data/gamificationRepository';
 import { readWithRefresh } from '@/data/sync';
+import { useAuthStore } from '@/features/auth/store';
 import { useInterstitialStore } from '@/features/gamification/interstitialStore';
 import { loggingHeatmap, shouldAnnounce } from '@/features/gamification/selectors';
 import type { QuestToastEntry } from '@/features/gamification/toastStore';
@@ -11,6 +13,7 @@ import { useQuestToastStore } from '@/features/gamification/toastStore';
 import { useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import { shiftDateKey, todayKey } from '@/lib/date';
+import { env } from '@/lib/env';
 import { queryKeys } from '@/lib/queryClient';
 
 function useUserId(): string | null {
@@ -69,6 +72,7 @@ export function dismissLogFlow(): void {
  */
 export function usePostLogInterstitial(leave: () => void = () => {}) {
   const userId = useUserId();
+  const locale = useSettingsStore((state) => state.locale);
   const hideChallengeProgress = useSettingsStore((state) => state.hideChallengeProgress);
   const seenQuestTypes = useSettingsStore((state) => state.seenQuestTypes);
   const markQuestTypesSeen = useSettingsStore((state) => state.markQuestTypesSeen);
@@ -90,7 +94,7 @@ export function usePostLogInterstitial(leave: () => void = () => {}) {
     leave();
 
     gamificationRepository
-      .pullQuests(userId, today)
+      .pullQuests(userId, today, locale)
       .then((quests) => {
         void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.all });
 
@@ -136,16 +140,17 @@ export function usePostLogInterstitial(leave: () => void = () => {}) {
 /** Every quest active right now — today's daily set plus this week's weekly set (UC-23). */
 export function useActiveQuests() {
   const userId = useUserId();
+  const locale = useSettingsStore((state) => state.locale);
   const today = todayKey();
 
   return useQuery({
-    queryKey: queryKeys.gamification.quests(today),
+    queryKey: [...queryKeys.gamification.quests(today), locale],
     queryFn: () => {
       if (!userId) throw new Error('No local profile yet.');
 
       return readWithRefresh({
         pull: async () => {
-          await gamificationRepository.pullQuests(userId, today);
+          await gamificationRepository.pullQuests(userId, today, locale);
         },
         read: () => gamificationRepository.getActiveQuests(userId, today),
       });
@@ -171,16 +176,28 @@ export function useStreak() {
   });
 }
 
+/** The coin shop's bundles — durations and prices are the server's, so there is nothing to show offline. */
+export function useCoinBundles() {
+  const signedIn = useAuthStore((state) => state.session !== null);
+
+  return useQuery({
+    queryKey: queryKeys.gamification.bundles(),
+    queryFn: ({ signal }) => gamificationApi.bundles(signal),
+    enabled: signedIn && env.hasBackend,
+    retry: false,
+  });
+}
+
 /** Spend coins on a shop bundle; refreshes the balance and the premium tier on success. */
 export function useRedeemCoins() {
   const userId = useUserId();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (bundleId: string) => {
+    mutationFn: async (days: number) => {
       if (!userId) throw new Error('No local profile yet.');
 
-      await gamificationRepository.redeemCoinsForPremium(userId, bundleId);
+      await gamificationRepository.redeemCoinsForPremium(userId, days);
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.coins() });

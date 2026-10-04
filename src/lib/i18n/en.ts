@@ -503,26 +503,6 @@ export const en: DeepPartial<Translations> = {
     ringColorsRow: 'Ring colors explained',
   },
 
-  questTitles: {
-    log_breakfast: 'Log breakfast',
-    log_all_meals: 'Stay consistent',
-    hit_calorie_goal: 'Calorie balance',
-    hit_protein_goal: 'Protein goal',
-    drink_water: 'Stay hydrated',
-    log_weight: 'Weigh in',
-    stay_active_week: 'Keep the streak',
-  },
-
-  questDescriptions: {
-    log_breakfast: 'Log a breakfast entry today',
-    log_all_meals: 'Log meals {target} times today',
-    hit_calorie_goal: 'Reach {percent}% of your calorie goal',
-    hit_protein_goal: 'Reach {percent}% of your protein goal',
-    drink_water: 'Drink {target}% of your water goal today',
-    log_weight: 'Log your weight today',
-    stay_active_week: 'Stay active {target} days this week',
-  },
-
   interstitial: {
     title: "That's tasty progress!",
     continue: 'Continue',
@@ -548,6 +528,8 @@ export const en: DeepPartial<Translations> = {
     bundleCost: '{cost} coins',
     redeemButton: 'Redeem',
     insufficientCoins: 'Not enough coins yet',
+    loading: 'Loading bundles…',
+    needsConnection: 'Turn on your connection to load the bundles.',
     redeemConfirmTitle: 'Redeem {days} days of Premium?',
     redeemConfirmMessage: 'This will cost {cost} coins.',
   },
@@ -595,6 +577,8 @@ export const en: DeepPartial<Translations> = {
     yearly: 'Yearly',
     perMonth: '/month',
     perYear: '/year',
+    pricesLoading: 'Loading prices…',
+    pricesNeedConnection: 'Turn on your connection to see prices.',
     bestValue: 'Best value',
     continueButton: 'Continue',
     finePrint: 'Cancel anytime.',

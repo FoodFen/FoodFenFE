@@ -95,13 +95,16 @@ describe('pullQuests', () => {
           target: 3,
           rewardCoins: 20,
           completed: true,
+          unit: 'count' as const,
+          title: 'Quest',
+          description: 'Do the thing',
         },
       ],
     });
 
-    const quests = await gamification.pullQuests(user.id, today);
+    const quests = await gamification.pullQuests(user.id, today, 'vi');
 
-    expect(mockedGamificationApi.quests).toHaveBeenCalledWith(today);
+    expect(mockedGamificationApi.quests).toHaveBeenCalledWith(today, 'vi');
     expect(quests).toHaveLength(1);
     expect(quests[0]?.completed).toBe(true);
     expect(gamification.getCoinBalance(user.id)).toBe(20);
@@ -123,10 +126,13 @@ describe('pullQuests', () => {
           target: 8,
           rewardCoins: 10,
           completed: false,
+          unit: 'count' as const,
+          title: 'Quest',
+          description: 'Do the thing',
         },
       ],
     });
-    await gamification.pullQuests(user.id, today);
+    await gamification.pullQuests(user.id, today, 'vi');
 
     mockedGamificationApi.quests.mockResolvedValue({
       balance: 10,
@@ -140,10 +146,13 @@ describe('pullQuests', () => {
           target: 8,
           rewardCoins: 10,
           completed: true,
+          unit: 'count' as const,
+          title: 'Quest',
+          description: 'Do the thing',
         },
       ],
     });
-    const quests = await gamification.pullQuests(user.id, today);
+    const quests = await gamification.pullQuests(user.id, today, 'vi');
 
     // Still one row — the second pull updated it in place rather than inserting a duplicate.
     expect(quests).toHaveLength(1);
@@ -168,7 +177,7 @@ describe('redeemCoinsForPremium', () => {
       subscription: remoteSubscription(shiftDateKey(todayKey(), 10)),
     });
 
-    await gamification.redeemCoinsForPremium(user.id, '10day');
+    await gamification.redeemCoinsForPremium(user.id, 10);
 
     expect(mockedGamificationApi.redeemCoins).toHaveBeenCalledWith(10);
     expect(gamification.getCoinBalance(user.id)).toBe(0);
@@ -186,7 +195,7 @@ describe('redeemCoinsForPremium', () => {
       subscription: remoteSubscription(shiftDateKey(todayKey(), 10)),
     });
 
-    await gamification.redeemCoinsForPremium(user.id, '10day');
+    await gamification.redeemCoinsForPremium(user.id, 10);
 
     expect(gamification.getCoinBalance(user.id)).toBe(400);
   });
@@ -196,17 +205,10 @@ describe('redeemCoinsForPremium', () => {
     gamification.addCoins(user.id, 100, 'adjustment');
     mockedGamificationApi.redeemCoins.mockRejectedValue(new Error('insufficient coins'));
 
-    await expect(gamification.redeemCoinsForPremium(user.id, '10day')).rejects.toThrow();
+    await expect(gamification.redeemCoinsForPremium(user.id, 10)).rejects.toThrow();
 
     expect(gamification.getCoinBalance(user.id)).toBe(100);
     expect(gamification.getSubscription(user.id)).toBeUndefined();
-  });
-
-  it('rejects an unknown bundle id without calling the server', async () => {
-    const user = createUser();
-
-    await expect(gamification.redeemCoinsForPremium(user.id, 'nope')).rejects.toThrow();
-    expect(mockedGamificationApi.redeemCoins).not.toHaveBeenCalled();
   });
 });
 

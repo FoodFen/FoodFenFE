@@ -118,6 +118,7 @@ export const queryKeys = {
     streak: () => [...queryKeys.gamification.all, 'streak'] as const,
     quests: (date: string) => [...queryKeys.gamification.all, 'quests', date] as const,
     coins: () => [...queryKeys.gamification.all, 'coins'] as const,
+    bundles: () => [...queryKeys.gamification.all, 'bundles'] as const,
     heatmap: (weeks: number) =>
       [...queryKeys.gamification.all, 'heatmap', weeks] as const,
   },
@@ -137,6 +138,7 @@ export const queryKeys = {
   premium: {
     all: ['premium'] as const,
     tier: () => [...queryKeys.premium.all, 'tier'] as const,
+    plans: () => [...queryKeys.premium.all, 'plans'] as const,
     payment: (orderCode: number) => [...queryKeys.premium.all, 'payment', orderCode] as const,
   },
   quiz: {

@@ -302,6 +302,8 @@ export type QuestType =
 
 export type QuestCadence = 'daily' | 'weekly';
 
+export type QuestUnit = 'count' | 'percent';
+
 export const quest = sqliteTable(
   'quest',
   {
@@ -328,6 +330,14 @@ export const quest = sqliteTable(
      * previous, simpler behavior: complete only at `progress >= target`.
      */
     completionRatio: real('completion_ratio').notNull().default(1),
+    /**
+     * Extension: display fields the server owns and sends with each quest,
+     * cached with it so the screen renders offline. `unit` says whether
+     * `progress`/`target` count things or are a percent of a daily goal.
+     */
+    unit: text('unit').$type<QuestUnit>().notNull().default('count'),
+    title: text('title').notNull().default(''),
+    description: text('description').notNull().default(''),
     /**
      * `yyyy-MM-dd` — the day a daily quest is issued for, or the Monday a
      * weekly quest's week starts on.

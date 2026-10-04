@@ -8,6 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/ui/Button';
 import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
+import { usePaymentPlans } from '@/features/premium/queries';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -23,6 +24,11 @@ const HERO_IMAGE_URL =
   'https://images.pexels.com/photos/3297807/pexels-photo-3297807.jpeg?auto=compress&cs=tinysrgb&w=1200';
 
 type PlanId = 'monthly' | 'yearly';
+
+/** 49000 → "49.000₫" — grouped by hand, since Hermes' Intl support varies by platform. */
+function formatVnd(amount: number): string {
+  return `${String(amount).replace(/\B(?=(\d{3})+(?!\d))/g, '.')}₫`;
+}
 
 /**
  * The Premium upsell popup. Reachable today from Settings → Upgrade to
@@ -46,27 +52,26 @@ export default function PremiumScreen() {
     if (wasPremium.current) router.replace('/premium/welcome');
   }, []);
 
-  // VND, matching the backend's current server-set prices (PayOS has no
-  // localized/store pricing to read — see docs/backend-contracts/
-  // premium-entitlements.md). Shown here only as an estimate; the
-  // authoritative amount comes back from `POST /payments/checkout`.
-  const monthlyPlan = {
-    id: 'monthly' as const,
-    label: t('premium', 'monthly'),
-    price: '49.000₫',
-    priceValue: 49_000,
-    period: t('premium', 'perMonth'),
-    badge: undefined as string | undefined,
-  };
-  const yearlyPlan = {
-    id: 'yearly' as const,
-    label: t('premium', 'yearly'),
-    price: '499.000₫',
-    priceValue: 499_000,
-    period: t('premium', 'perYear'),
-    badge: t('premium', 'bestValue'),
-  };
-  const plans = [monthlyPlan, yearlyPlan];
+  const { data: planData, isPending, fetchStatus } = usePaymentPlans();
+
+  const plans = [
+    { id: 'monthly' as const, planType: 'monthly' as const },
+    { id: 'yearly' as const, planType: 'annual' as const },
+  ].flatMap(({ id, planType }) => {
+    const priceVnd = planData?.plans.find((plan) => plan.planType === planType)?.priceVnd;
+    if (priceVnd === undefined) return [];
+
+    return [
+      {
+        id,
+        label: t('premium', id),
+        price: formatVnd(priceVnd),
+        priceValue: priceVnd,
+        period: t('premium', id === 'monthly' ? 'perMonth' : 'perYear'),
+        badge: id === 'yearly' ? t('premium', 'bestValue') : undefined,
+      },
+    ];
+  });
 
   const benefits: {
     icon: keyof typeof Ionicons.glyphMap;
@@ -79,7 +84,7 @@ export default function PremiumScreen() {
     { icon: 'heart-outline', titleKey: 'benefitSupportTitle' },
   ];
 
-  const selected = selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan;
+  const selected = plans.find((plan) => plan.id === selectedPlan) ?? plans[0];
 
   const signedIn = useAuthStore((state) => state.session !== null);
 
@@ -89,6 +94,7 @@ export default function PremiumScreen() {
       router.push('/sign-in');
       return;
     }
+    if (!selected) return;
     router.push({
       pathname: '/premium/payment',
       params: {
@@ -150,6 +156,13 @@ export default function PremiumScreen() {
           </View>
 
           <View className="gap-3">
+            {plans.length === 0 ? (
+              <Text variant="body" tone="muted" className="text-center">
+                {isPending && fetchStatus === 'fetching'
+                  ? t('premium', 'pricesLoading')
+                  : t('premium', 'pricesNeedConnection')}
+              </Text>
+            ) : null}
             {plans.map((plan) => {
               const isSelected = plan.id === selectedPlan;
 
@@ -200,7 +213,13 @@ export default function PremiumScreen() {
         className="gap-2 border-t border-border bg-surface px-5 pt-4"
         style={{ paddingBottom: insets.bottom + 16 }}
       >
-        <Button label={t('premium', 'continueButton')} onPress={goToPayment} fullWidth size="lg" />
+        <Button
+          label={t('premium', 'continueButton')}
+          onPress={goToPayment}
+          disabled={signedIn && !selected}
+          fullWidth
+          size="lg"
+        />
         <Text variant="caption" tone="subtle" className="text-center">
           {t('premium', 'finePrint')}
         </Text>

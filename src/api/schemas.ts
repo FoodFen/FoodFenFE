@@ -288,6 +288,28 @@ export const questProgressSchema = z.object({
   rewardCoins: z.number().int().nonnegative(),
   completed: z.boolean(),
   completionRatio: z.number().min(0).max(1).optional(),
+  unit: z.enum(['count', 'percent']),
+  title: z.string(),
+  description: z.string(),
+});
+
+export const coinBundlesResponseSchema = z.object({
+  bundles: z.array(
+    z.object({
+      id: z.string(),
+      days: z.number().int().positive(),
+      coinCost: z.number().int().nonnegative(),
+    }),
+  ),
+});
+
+export const paymentPlansResponseSchema = z.object({
+  plans: z.array(
+    z.object({
+      planType: planTypeSchema,
+      priceVnd: z.number().int().nonnegative(),
+    }),
+  ),
 });
 
 // A quest of a type this app version doesn't know is skipped on its own, so a
@@ -371,6 +393,8 @@ export type RemoteSubscriptionMeResponse = z.infer<typeof subscriptionMeResponse
 export type RemoteQuestProgress = z.infer<typeof questProgressSchema>;
 export type RemoteQuestsResponse = z.infer<typeof questsResponseSchema>;
 export type RemoteRedeemCoinsResponse = z.infer<typeof redeemCoinsResponseSchema>;
+export type RemoteCoinBundle = z.infer<typeof coinBundlesResponseSchema>['bundles'][number];
+export type RemotePaymentPlan = z.infer<typeof paymentPlansResponseSchema>['plans'][number];
 export type RemoteQuiz = z.infer<typeof quizSchema>;
 export type RemoteQuizResult = z.infer<typeof quizResultSchema>;
 export type RemoteQuizTopic = z.infer<typeof quizTopicsResponseSchema>['topics'][number];

@@ -3,7 +3,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { paymentsApi } from '@/api/endpoints/payments';
 import { subscriptionsApi } from '@/api/endpoints/subscriptions';
 import * as gamification from '@/data/gamificationRepository';
+import { useAuthStore } from '@/features/auth/store';
 import { useProfileStore } from '@/features/profile/store';
+import { env } from '@/lib/env';
 import { queryKeys } from '@/lib/queryClient';
 import type { PlanType } from '@/types/models';
 
@@ -15,6 +17,18 @@ export function usePremiumEndDate() {
     queryKey: [...queryKeys.premium.all, 'endDate'],
     queryFn: () => gamification.getSubscription(userId as string)?.endDate ?? null,
     enabled: userId !== null,
+  });
+}
+
+/** The plans on sale and their VND prices — the server's, so there is nothing to show offline. */
+export function usePaymentPlans() {
+  const signedIn = useAuthStore((state) => state.session !== null);
+
+  return useQuery({
+    queryKey: queryKeys.premium.plans(),
+    queryFn: ({ signal }) => paymentsApi.plans(signal),
+    enabled: signedIn && env.hasBackend,
+    retry: false,
   });
 }
 

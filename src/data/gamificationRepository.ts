@@ -6,6 +6,7 @@ import { db } from '@/db/client';
 import { coinTransaction, quest, streak, subscription } from '@/db/schema';
 import type { DateKey } from '@/lib/date';
 import { calendarWeek, shiftDateKey, todayKey } from '@/lib/date';
+import type { Locale } from '@/lib/i18n';
 import { generateLocalId } from '@/lib/id';
 import type {
   CoinReason,
@@ -122,6 +123,9 @@ function upsertQuest(userId: string, remote: RemoteQuestProgress): void {
     // Display only: the server already applied the ratio and sent `completed`.
     // Older servers omit it, so 1 (the column's default) stands in.
     completionRatio: remote.completionRatio ?? 1,
+    unit: remote.unit,
+    title: remote.title,
+    description: remote.description,
     questDate: remote.questDate,
     remoteId: remote.id,
     deletedAt: null,
@@ -148,8 +152,12 @@ export function reconcileCoinBalance(userId: string, serverBalance: number): voi
  * screen directly — called from `readWithRefresh`/in the background after a
  * log, same non-blocking rule as every other server read in this app.
  */
-export async function pullQuests(userId: string, date: DateKey): Promise<Quest[]> {
-  const { balance, quests } = await gamificationApi.quests(date);
+export async function pullQuests(
+  userId: string,
+  date: DateKey,
+  language: Locale,
+): Promise<Quest[]> {
+  const { balance, quests } = await gamificationApi.quests(date, language);
 
   for (const remote of quests) upsertQuest(userId, remote);
   reconcileCoinBalance(userId, balance);
@@ -215,29 +223,14 @@ export function resolveTier(
   return 'premium';
 }
 
-export interface CoinShopBundle {
-  id: string;
-  days: number;
-  coinCost: number;
-}
-
-/** Coin cost is roughly a week of fully-cleared daily quests per redeemed week. */
-export const COIN_SHOP_BUNDLES: CoinShopBundle[] = [
-  { id: '10day', days: 10, coinCost: 600 },
-  { id: '30day', days: 30, coinCost: 1500 },
-];
-
 /**
- * Spend coins for a premium bundle — server-authoritative: `POST
- * /coins/redeem` validates the balance, extends/starts the account's one
- * subscription row, and returns both. A 409 `ApiError` means insufficient
- * coins; the caller (`useRedeemCoins`) surfaces that.
+ * Spend coins for `days` of Premium — server-authoritative: `POST
+ * /coins/redeem` prices the bundle, validates the balance, extends/starts the
+ * account's one subscription row, and returns both. A 409 `ApiError` means
+ * insufficient coins; the caller (`useRedeemCoins`) surfaces that.
  */
-export async function redeemCoinsForPremium(userId: string, bundleId: string): Promise<void> {
-  const bundle = COIN_SHOP_BUNDLES.find((row) => row.id === bundleId);
-  if (!bundle) throw new Error(`Unknown coin shop bundle: ${bundleId}`);
-
-  const { balance, subscription: remote } = await gamificationApi.redeemCoins(bundle.days);
+export async function redeemCoinsForPremium(userId: string, days: number): Promise<void> {
+  const { balance, subscription: remote } = await gamificationApi.redeemCoins(days);
 
   reconcileCoinBalance(userId, balance);
 

@@ -1,5 +1,9 @@
 import { api } from '@/api/client';
-import { checkoutResponseSchema, paymentStatusResponseSchema } from '@/api/schemas';
+import {
+  checkoutResponseSchema,
+  paymentPlansResponseSchema,
+  paymentStatusResponseSchema,
+} from '@/api/schemas';
 import type { RemoteCheckoutResponse, RemotePaymentStatusResponse } from '@/api/schemas';
 import type { PlanType } from '@/types/models';
 
@@ -10,6 +14,10 @@ import type { PlanType } from '@/types/models';
  * server-side webhook rather than a push to the client.
  */
 export const paymentsApi = {
+  /** The plans on sale and what each costs, in VND — the same prices checkout charges. */
+  plans: (signal?: AbortSignal) =>
+    api.get('payments/plans', { schema: paymentPlansResponseSchema, signal }),
+
   checkout: (planType: PlanType): Promise<RemoteCheckoutResponse> =>
     api.post('payments/checkout', { planType }, { schema: checkoutResponseSchema }),
 
