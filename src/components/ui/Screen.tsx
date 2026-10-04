@@ -17,15 +17,16 @@ import { cn } from '@/lib/cn';
  *
  * The pill (not the 56pt/`h-14` log button beside it) is the taller of the
  * two: `h-11` (44pt) tab buttons plus `py-2` padding (16pt) plus its 1pt
- * border ≈ 62pt. Add the 10pt it sits off the safe area and ~30pt to
- * breathe: 62 + 10 + 30 = 102, rounded up. Mirrors the geometry in
+ * border ≈ 62pt. Add the 10pt it sits off the safe area and ~64pt to
+ * breathe, so the last card scrolls comfortably clear of the bar rather than
+ * ending just above it: 62 + 10 + 64 = 136. Mirrors the geometry in
  * `FloatingTabBar` — change both together.
  *
  * The bar is drawn by the tabs navigator as a sibling *over* the scene, so
  * anything a `(tabs)` screen puts at its own bottom edge is hidden underneath
  * it unless that screen reserves this much.
  */
-export const TAB_BAR_CLEARANCE = 104;
+export const TAB_BAR_CLEARANCE = 136;
 
 export interface ScreenProps extends ViewProps {
   className?: string;

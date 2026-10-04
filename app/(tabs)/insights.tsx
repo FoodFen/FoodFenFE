@@ -87,7 +87,7 @@ export default function InsightsScreen() {
       : null;
 
   return (
-    <ScrollScreen tabBar topInset contentContainerStyle={{ paddingBottom: 150 }}>
+    <ScrollScreen tabBar topInset>
       <Text variant="title" className="pt-2">
         {t('insights', 'title')}
       </Text>
