@@ -8,6 +8,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { WeightWheels } from '@/components/logging/WeightWheels';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
@@ -31,6 +32,14 @@ const ACTIVITY_ICONS: Record<ActivityLevel, string> = {
   active: '🚴',
   very_active: '🏋️',
 };
+
+const DEFAULT_WEIGHT_TENTHS = 600;
+
+function toTenths(value: unknown): number {
+  const kg = Number(value);
+
+  return Number.isFinite(kg) && kg > 0 ? Math.round(kg * 10) : DEFAULT_WEIGHT_TENTHS;
+}
 
 export interface BodyStatsFormProps {
   control: Control<BodyStatsValues>;
@@ -123,31 +132,42 @@ export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
         <Controller
           control={control}
           name="weightCurrent"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label={t('profileBodyStats', 'currentKg')}
-              value={String(value ?? '')}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              error={errors.weightCurrent?.message}
-              keyboardType="decimal-pad"
-            />
+          render={({ field: { onChange, value } }) => (
+            <Field label={t('profileBodyStats', 'currentKg')}>
+              <WeightWheels
+                unit="kg"
+                tenths={toTenths(value)}
+                onChange={(tenths) => onChange(tenths / 10)}
+              />
+              {errors.weightCurrent?.message ? (
+                <Text variant="caption" tone="danger">
+                  {errors.weightCurrent.message}
+                </Text>
+              ) : null}
+            </Field>
           )}
         />
 
         <Controller
           control={control}
           name="weightGoal"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label={t('profileBodyStats', 'goalKg')}
-              value={String(value ?? '')}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              error={errors.weightGoal?.message}
-              hint={t('profileBodyStats', 'goalHint')}
-              keyboardType="decimal-pad"
-            />
+          render={({ field: { onChange, value } }) => (
+            <Field label={t('profileBodyStats', 'goalKg')}>
+              <WeightWheels
+                unit="kg"
+                tenths={toTenths(value)}
+                onChange={(tenths) => onChange(tenths / 10)}
+              />
+              {errors.weightGoal?.message ? (
+                <Text variant="caption" tone="danger">
+                  {errors.weightGoal.message}
+                </Text>
+              ) : (
+                <Text variant="caption" tone="subtle">
+                  {t('profileBodyStats', 'goalHint')}
+                </Text>
+              )}
+            </Field>
           )}
         />
 

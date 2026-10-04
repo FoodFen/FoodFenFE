@@ -67,8 +67,8 @@ function isAlreadySubmitted(error: unknown): boolean {
 function QuizTake({ quiz }: { quiz: RemoteQuiz }) {
   const { t } = useTranslation();
   const quizId = useQuizStore((state) => state.quizId);
-  const answers = useQuizStore((state) => state.answers);
-  const index = useQuizStore((state) => state.index);
+  const storedAnswers = useQuizStore((state) => state.answers);
+  const storedIndex = useQuizStore((state) => state.index);
   const begin = useQuizStore((state) => state.begin);
   const select = useQuizStore((state) => state.select);
   const next = useQuizStore((state) => state.next);
@@ -79,10 +79,13 @@ function QuizTake({ quiz }: { quiz: RemoteQuiz }) {
     begin(quiz.id);
   }, [quiz.id, begin]);
 
+  const isCurrent = quizId === quiz.id;
+  const answers = isCurrent ? storedAnswers : {};
+  const index = isCurrent ? storedIndex : 0;
   const total = quiz.questions.length;
   const question = quiz.questions[index];
 
-  if (quizId !== quiz.id || !question) return null;
+  if (!question) return null;
 
   const isLast = index === total - 1;
   const allAnswered = quiz.questions.every((q) => answers[q.id] !== undefined);
