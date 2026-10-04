@@ -38,6 +38,7 @@ export function WheelPicker<T extends string | number>({
     <QuidoneWheelPicker
       data={data}
       value={value}
+      onValueChanging={({ item }) => onChange(item.value)}
       onValueChanged={({ item }) => onChange(item.value)}
       itemHeight={itemHeight}
       visibleItemCount={visibleItemCount}

@@ -55,7 +55,7 @@ export function WeightSection({ day }: { day: DiaryDay }) {
   return (
     <MetricSection
       title={t('dashboard', 'weight')}
-      value={displayWeight}
+      value={String(displayWeight)}
       unit={weightUnit}
       onAdd={() => present('weight')}
     >
