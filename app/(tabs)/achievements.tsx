@@ -1,15 +1,22 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { Pressable, View } from 'react-native';
+import type { ReactNode } from 'react';
+import { Pressable, RefreshControl, View } from 'react-native';
 
 import { QuizCard } from '@/components/quiz/QuizCard';
 import { Card } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { Screen, ScrollScreen } from '@/components/ui/Screen';
+import { ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
-import { useActiveQuests, useStreak } from '@/features/gamification/queries';
+import { useAuthStore } from '@/features/auth/store';
+import {
+  useActiveQuests,
+  useQuestsPull,
+  useRefreshQuests,
+  useStreak,
+} from '@/features/gamification/queries';
 import { questProgressLabel } from '@/features/gamification/selectors';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -29,51 +36,96 @@ export default function AchievementsScreen() {
   const { t } = useTranslation();
   const { data: quests, isPending, error, refetch } = useActiveQuests();
   const { data: streak } = useStreak();
+  const sync = useQuestsPull();
+  const refreshQuests = useRefreshQuests();
+  const signedIn = useAuthStore((state) => state.session !== null);
+  const { resolved } = useAppTheme();
+  const noQuests = !quests || quests.length === 0;
+  const refreshControl = (
+    <RefreshControl
+      refreshing={sync.isRefetching}
+      onRefresh={() => void refreshQuests()}
+      tintColor={colorsFor(resolved).fgMuted}
+    />
+  );
 
-  if (isPending) {
-    return (
-      <ScrollScreen tabBar topInset>
-        <Skeleton className="h-10 w-40" />
-        <Skeleton className="h-24 rounded-card" />
-        <Skeleton className="h-24 rounded-card" />
-      </ScrollScreen>
-    );
-  }
-
-  if (error) {
-    return (
-      <Screen tabBar topInset>
-        <ErrorState
-          description={
-            error instanceof Error ? error.message : t('common', 'pleaseTryAgain')
-          }
-          onRetry={() => void refetch()}
-        />
-      </Screen>
-    );
-  }
-
-  if (!quests || quests.length === 0) {
-    return (
-      <Screen tabBar topInset>
-        <Text variant="title" className="px-4 pt-2">
-          {t('achievements', 'title')}
-        </Text>
-        <EmptyState
-          icon="🏅"
-          title={t('achievements', 'emptyTitle')}
-          description={t('achievements', 'emptyDescription')}
-        />
-      </Screen>
-    );
-  }
-
-  const daily = quests.filter((q) => q.cadence === 'daily');
-  const weekly = quests.filter((q) => q.cadence === 'weekly');
   const weekEnd = calendarWeek(todayKey())[6] ?? todayKey();
+  const daily = quests?.filter((q) => q.cadence === 'daily') ?? [];
+  const weekly = quests?.filter((q) => q.cadence === 'weekly') ?? [];
+
+  let questSection: ReactNode;
+
+  if (isPending || (noQuests && sync.fetchStatus === 'fetching')) {
+    questSection = (
+      <>
+        <Skeleton className="h-24 rounded-card" />
+        <Skeleton className="h-24 rounded-card" />
+      </>
+    );
+  } else if (error) {
+    questSection = (
+      <ErrorState
+        description={error instanceof Error ? error.message : t('common', 'pleaseTryAgain')}
+        onRetry={() => void refetch()}
+      />
+    );
+  } else if (noQuests && !signedIn) {
+    questSection = (
+      <EmptyState
+        icon="🔒"
+        title={t('achievements', 'signInTitle')}
+        description={t('achievements', 'signInDescription')}
+        actionLabel={t('achievements', 'signIn')}
+        onAction={() => router.push('/sign-in')}
+      />
+    );
+  } else if (noQuests && sync.isError) {
+    questSection = (
+      <ErrorState
+        description={t('achievements', 'emptyDescription')}
+        onRetry={() => void refreshQuests()}
+      />
+    );
+  } else if (noQuests) {
+    questSection = (
+      <EmptyState
+        icon="🏅"
+        title={t('achievements', 'emptyTitle')}
+        description={t('achievements', 'emptyDescription')}
+        actionLabel={t('common', 'retry')}
+        onAction={() => void refreshQuests()}
+      />
+    );
+  } else {
+    questSection = (
+      <>
+        {daily.length > 0 ? (
+          <View className="gap-3">
+            <Text variant="heading">{t('achievements', 'dailyHeading')}</Text>
+            {daily.map((quest) => (
+              <ChallengeRow key={quest.id} quest={quest} daysLeft={0} />
+            ))}
+          </View>
+        ) : null}
+
+        {weekly.length > 0 ? (
+          <View className="gap-3">
+            <Text variant="heading">{t('achievements', 'weeklyHeading')}</Text>
+            {weekly.map((quest) => (
+              <ChallengeRow
+                key={quest.id}
+                quest={quest}
+                daysLeft={Math.max(daysUntil(weekEnd), 0)}
+              />
+            ))}
+          </View>
+        ) : null}
+      </>
+    );
+  }
 
   return (
-    <ScrollScreen tabBar topInset>
+    <ScrollScreen tabBar topInset refreshControl={refreshControl}>
       <Text variant="title" className="pt-2">
         {t('achievements', 'title')}
       </Text>
@@ -81,27 +133,7 @@ export default function AchievementsScreen() {
       <StreakSummaryCard currentStreak={streak?.currentStreak ?? 0} />
       <QuizCard />
 
-      {daily.length > 0 ? (
-        <View className="gap-3">
-          <Text variant="heading">{t('achievements', 'dailyHeading')}</Text>
-          {daily.map((quest) => (
-            <ChallengeRow key={quest.id} quest={quest} daysLeft={0} />
-          ))}
-        </View>
-      ) : null}
-
-      {weekly.length > 0 ? (
-        <View className="gap-3">
-          <Text variant="heading">{t('achievements', 'weeklyHeading')}</Text>
-          {weekly.map((quest) => (
-            <ChallengeRow
-              key={quest.id}
-              quest={quest}
-              daysLeft={Math.max(daysUntil(weekEnd), 0)}
-            />
-          ))}
-        </View>
-      ) : null}
+      {questSection}
     </ScrollScreen>
   );
 }

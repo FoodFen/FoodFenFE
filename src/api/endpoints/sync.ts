@@ -144,8 +144,15 @@ export const syncApi = {
   me: (signal?: AbortSignal): Promise<RemoteUser> =>
     api.get('auth/me', { schema: userSchema, signal }),
 
-  goals: (signal?: AbortSignal): Promise<RemoteDailyGoal[]> =>
-    api.get('daily-goals', { schema: dailyGoalListSchema, signal }),
+  /** `accessToken` is for the sign-in moment, before the session is in the auth store. */
+  goals: (signal?: AbortSignal, accessToken?: string): Promise<RemoteDailyGoal[]> =>
+    api.get('daily-goals', {
+      schema: dailyGoalListSchema,
+      signal,
+      ...(accessToken
+        ? { skipAuth: true, headers: { Authorization: `Bearer ${accessToken}` } }
+        : {}),
+    }),
 
   /** Every entry in an inclusive day range, ingredients included. */
   foodEntries: (

@@ -10,7 +10,10 @@ export function announceAndLeave(title: string, message: string, doneLabel: stri
     {
       text: doneLabel,
       onPress: () => {
-        if (router.canGoBack()) router.back();
+        const canGoBack = router.canGoBack();
+        console.warn('[auth] leave', { canGoBack });
+
+        if (canGoBack) router.back();
         else router.replace('/');
       },
     },

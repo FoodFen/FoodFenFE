@@ -119,6 +119,7 @@ export const queryKeys = {
     quests: (date: string) => [...queryKeys.gamification.all, 'quests', date] as const,
     coins: () => [...queryKeys.gamification.all, 'coins'] as const,
     bundles: () => [...queryKeys.gamification.all, 'bundles'] as const,
+    questSync: (date: string, locale: string) => ['questSync', date, locale] as const,
     heatmap: (weeks: number) =>
       [...queryKeys.gamification.all, 'heatmap', weeks] as const,
   },

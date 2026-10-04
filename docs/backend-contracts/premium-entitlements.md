@@ -68,8 +68,9 @@ against it. Consequences worth knowing before implementing the client side:
   `GET /subscriptions/me` is keyed on the account, not a local receipt.
 - **Currency is VND only**, server-priced (`PAYOS_MONTHLY_PRICE_VND` /
   `PAYOS_ANNUAL_PRICE_VND` — currently 49,000 / 499,000). There is no
-  per-store localized pricing to read; the price the checkout endpoint
-  returns is the price to show.
+  per-store localized pricing to read; show the price `GET /payments/plans`
+  returns (below). The paywall fetches it on every open — nothing is
+  hard-coded client-side.
 - **The payment itself happens outside the app's normal request/response
   cycle.** `POST /payments/checkout` only starts a PayOS checkout — it
   returns a `checkoutUrl` (open in an in-app browser/WebView) and a
@@ -91,11 +92,103 @@ against it. Consequences worth knowing before implementing the client side:
 
 ## Auth
 
-Identical to every other authenticated endpoint: `Authorization: Bearer
+`GET /payments/plans` and `GET /coins/bundles` are public; everything else
+below is identical to every other authenticated endpoint: `Authorization: Bearer
 <accessToken>`, standard `401` handling (client retries once after a token
 refresh, same as everywhere else) — **except** `POST /payments/webhook`,
 which PayOS calls directly with no bearer token at all (it's verified by a
 PayOS signature server-side instead). The client never calls that endpoint.
+
+## `GET /payments/plans`
+
+**Public** — no token needed (a stray or invalid `Authorization` header is
+ignored, never a `401`). The prices the paywall shows.
+
+Response `200`:
+```json
+{
+  "plans": [
+    { "planType": "monthly", "priceVnd": 49000 },
+    { "planType": "annual", "priceVnd": 499000 }
+  ]
+}
+```
+
+- Always exactly two rows, `monthly` then `annual`. `coin_redeem` is never
+  listed (not purchasable; `POST /payments/checkout` rejects it with `422`).
+- `priceVnd` — whole VND integer, never null. Global: no user, locale or
+  promo input. It is the same number checkout charges; changing it is a
+  backend config change, not a data edit.
+- No `Cache-Control`/`ETag` — every call is a full `200`, so the client
+  refetches on each paywall open and keeps the last answer on-device.
+- Errors: only generic `5xx`.
+
+## `GET /coins/bundles`
+
+**Public** — no token needed. The coin shop's redeemable bundles;
+`POST /coins/redeem` itself still needs a bearer token.
+
+Response `200`:
+```json
+{
+  "bundles": [
+    { "id": "uuid", "days": 10, "coinCost": 600 },
+    { "id": "uuid", "days": 30, "coinCost": 1500 }
+  ]
+}
+```
+
+- Active rows only, sorted by `days` ascending. The list is data, so count
+  and values can change without an app release — render whatever comes
+  back.
+- `POST /coins/redeem` takes `{ "days": N }` where `N` matches a bundle's
+  `days` (not its `id`); `409` means the balance is too low.
+- Errors: only generic `5xx`.
+
+## `GET /quests?date=YYYY-MM-DD&language=vi|en`
+
+**Bearer required.** Signed-out → `401` (`{ "message": "…" }`, treat the
+text as non-stable). `date` is the client's local day and is required
+(`422` if missing or invalid). `language` is `vi` (default when omitted) or
+`en`; any other value is a `422`, not a silent fallback.
+
+Reading has side effects: it lazily issues the day's quests, re-measures
+progress from the diary rows already synced to the server, and pays coins on
+the request that first completes a quest. Refreshing on every open is
+idempotent (a quest pays out once).
+
+Response `200`:
+```json
+{
+  "balance": 1250,
+  "quests": [
+    {
+      "id": "uuid",
+      "questType": "drink_water",
+      "cadence": "daily",
+      "questDate": "2026-10-04",
+      "progress": 60,
+      "target": 100,
+      "rewardCoins": 20,
+      "completed": false,
+      "completionRatio": 0.8,
+      "unit": "percent",
+      "title": "string",
+      "description": "string"
+    }
+  ]
+}
+```
+
+- `title` / `description` — non-null, localized by `language`.
+- `unit` — `"percent"` for `hit_calorie_goal`, `hit_protein_goal`,
+  `drink_water` (progress and target are percent of the user's goal);
+  `"count"` for the rest.
+- A weekly quest's `questDate` is that week's Monday. A quest counts as
+  `completed` once `progress >= target * completionRatio`, so a completed
+  quest can show `progress < target`.
+- Ordered by `questType` alphabetically, not by reward. New quest types can
+  appear without an app release.
 
 ## `POST /payments/checkout`
 

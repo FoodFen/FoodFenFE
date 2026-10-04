@@ -4,7 +4,6 @@ import { router } from 'expo-router';
 import { gamificationApi } from '@/api/endpoints/gamification';
 import { getEntryCountsByDay } from '@/data/entryRepository';
 import * as gamificationRepository from '@/data/gamificationRepository';
-import { readWithRefresh } from '@/data/sync';
 import { useAuthStore } from '@/features/auth/store';
 import { useInterstitialStore } from '@/features/gamification/interstitialStore';
 import { loggingHeatmap, shouldAnnounce } from '@/features/gamification/selectors';
@@ -15,6 +14,7 @@ import { useSettingsStore } from '@/features/settings/store';
 import { shiftDateKey, todayKey } from '@/lib/date';
 import { env } from '@/lib/env';
 import { queryKeys } from '@/lib/queryClient';
+import { StorageKeys, cache } from '@/lib/storage';
 
 function useUserId(): string | null {
   return useProfileStore((state) => state.profile?.id ?? null);
@@ -79,10 +79,11 @@ export function usePostLogInterstitial(leave: () => void = () => {}) {
   const bumpQuestAdvance = useSettingsStore((state) => state.bumpQuestAdvance);
   const present = useInterstitialStore((state) => state.present);
   const showToast = useQuestToastStore((state) => state.show);
+  const signedIn = useAuthStore((state) => state.session !== null);
   const queryClient = useQueryClient();
 
   return () => {
-    if (!userId) {
+    if (!userId || !signedIn) {
       leave();
       return;
     }
@@ -148,16 +149,56 @@ export function useActiveQuests() {
     queryFn: () => {
       if (!userId) throw new Error('No local profile yet.');
 
-      return readWithRefresh({
-        pull: async () => {
-          await gamificationRepository.pullQuests(userId, today, locale);
-        },
-        read: () => gamificationRepository.getActiveQuests(userId, today),
-      });
+      return gamificationRepository.getActiveQuests(userId, today);
     },
     enabled: userId !== null,
     retry: false,
   });
+}
+
+/**
+ * Refreshes today's quests (with their copy in the current language) from the
+ * server. Mounted in the tabs layout so it runs in the background from the
+ * moment the app opens; `useRefreshQuests` re-triggers it. Separate from
+ * `useActiveQuests` so screens render from disk at once and use this only for
+ * the skeleton / error states.
+ */
+export function useQuestsPull() {
+  const userId = useUserId();
+  const locale = useSettingsStore((state) => state.locale);
+  const signedIn = useAuthStore((state) => state.session !== null);
+  const queryClient = useQueryClient();
+  const today = todayKey();
+
+  return useQuery({
+    queryKey: queryKeys.gamification.questSync(today, locale),
+    queryFn: async () => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      await gamificationRepository.pullQuests(userId, today, locale);
+      void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.quests(today) });
+
+      return true;
+    },
+    enabled: userId !== null && signedIn && env.hasBackend,
+    staleTime: 30_000,
+    // NetInfo can report "offline" for a reachable dev backend; without this a
+    // retry would sit paused forever instead of trying the request.
+    networkMode: 'always',
+    retry: false,
+  });
+}
+
+/** Re-runs the quest pull now (no-op while it is already in flight or disabled). */
+export function useRefreshQuests() {
+  const queryClient = useQueryClient();
+  const locale = useSettingsStore((state) => state.locale);
+
+  return () =>
+    queryClient.invalidateQueries(
+      { queryKey: queryKeys.gamification.questSync(todayKey(), locale) },
+      { cancelRefetch: false },
+    );
 }
 
 /** The logging streak — current run, longest run, and the day it last advanced. */
@@ -176,14 +217,23 @@ export function useStreak() {
   });
 }
 
-/** The coin shop's bundles — durations and prices are the server's, so there is nothing to show offline. */
-export function useCoinBundles() {
-  const signedIn = useAuthStore((state) => state.session !== null);
+type CoinBundles = Awaited<ReturnType<typeof gamificationApi.bundles>>;
 
-  return useQuery({
+/** The coin shop's bundles. Refetched on every open; the last answer is kept on-device and shown while it loads. */
+export function useCoinBundles() {
+  return useQuery<CoinBundles>({
     queryKey: queryKeys.gamification.bundles(),
-    queryFn: ({ signal }) => gamificationApi.bundles(signal),
-    enabled: signedIn && env.hasBackend,
+    queryFn: async ({ signal }) => {
+      const bundles = await gamificationApi.bundles(signal);
+      cache.set(StorageKeys.coinBundles, bundles);
+
+      return bundles;
+    },
+    initialData: () => cache.get<CoinBundles>(StorageKeys.coinBundles),
+    initialDataUpdatedAt: 0,
+    staleTime: 0,
+    refetchOnMount: 'always',
+    enabled: env.hasBackend,
     retry: false,
   });
 }

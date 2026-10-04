@@ -3,10 +3,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { paymentsApi } from '@/api/endpoints/payments';
 import { subscriptionsApi } from '@/api/endpoints/subscriptions';
 import * as gamification from '@/data/gamificationRepository';
-import { useAuthStore } from '@/features/auth/store';
 import { useProfileStore } from '@/features/profile/store';
 import { env } from '@/lib/env';
 import { queryKeys } from '@/lib/queryClient';
+import { StorageKeys, cache } from '@/lib/storage';
 import type { PlanType } from '@/types/models';
 
 /** When the current Premium runs out — `null` for no subscription or one with no end date. */
@@ -20,14 +20,23 @@ export function usePremiumEndDate() {
   });
 }
 
-/** The plans on sale and their VND prices — the server's, so there is nothing to show offline. */
-export function usePaymentPlans() {
-  const signedIn = useAuthStore((state) => state.session !== null);
+type PaymentPlans = Awaited<ReturnType<typeof paymentsApi.plans>>;
 
-  return useQuery({
+/** The plans on sale and their VND prices. Refetched on every open; the last answer is kept on-device and shown while it loads. */
+export function usePaymentPlans() {
+  return useQuery<PaymentPlans>({
     queryKey: queryKeys.premium.plans(),
-    queryFn: ({ signal }) => paymentsApi.plans(signal),
-    enabled: signedIn && env.hasBackend,
+    queryFn: async ({ signal }) => {
+      const plans = await paymentsApi.plans(signal);
+      cache.set(StorageKeys.paymentPlans, plans);
+
+      return plans;
+    },
+    initialData: () => cache.get<PaymentPlans>(StorageKeys.paymentPlans),
+    initialDataUpdatedAt: 0,
+    staleTime: 0,
+    refetchOnMount: 'always',
+    enabled: env.hasBackend,
     retry: false,
   });
 }

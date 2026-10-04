@@ -4,10 +4,13 @@ import { create } from 'zustand';
 import { configureAuth } from '@/api/client';
 import { authApi } from '@/api/endpoints/auth';
 import type { SignInPayload, SignUpPayload } from '@/api/endpoints/auth';
+import { syncApi } from '@/api/endpoints/sync';
 import { authSessionSchema } from '@/api/schemas';
-import type { RemoteAuthSession } from '@/api/schemas';
+import type { RemoteAuthSession, RemoteDailyGoal, RemoteUser } from '@/api/schemas';
 import { clearAccountState } from '@/data/gamificationRepository';
+import { applyDailyGoals } from '@/data/pull';
 import { configureSyncAuth } from '@/data/sync';
+import * as userRepository from '@/data/userRepository';
 import { getAppleCredential, getGoogleIdToken } from '@/features/auth/social';
 import { useProfileStore } from '@/features/profile/store';
 import { env } from '@/lib/env';
@@ -73,7 +76,11 @@ async function readSession(): Promise<AuthSession | null> {
     // as signed out rather than crashing on launch.
     return parsed.success ? parsed.data : null;
   } catch (error) {
-    if (env.isDev) console.warn('[auth] Failed to read stored session; treating as signed out.', error);
+    if (env.isDev)
+      console.warn(
+        '[auth] Failed to read stored session; treating as signed out.',
+        error,
+      );
     return null;
   }
 }
@@ -83,18 +90,74 @@ async function readSession(): Promise<AuthSession | null> {
  * guest's data is claimed by their first sign-in). A different account must not
  * inherit it — it would also be pushed to that account's server record.
  */
-function claimLocalData(accountId: number): void {
+function ownedByAnotherAccount(accountId: number): boolean {
   const owner = preferences.get<number>(StorageKeys.accountOwnerId);
 
-  if (owner !== undefined && owner !== accountId) useProfileStore.getState().eraseAll();
+  return owner !== undefined && owner !== accountId;
+}
 
-  preferences.set(StorageKeys.accountOwnerId, accountId);
+/**
+ * Erase (for a different account) and restore the profile in one synchronous
+ * step. The local profile is never null in between, so the root route guards
+ * don't flip and rebuild the navigation stack under the sign-in screen — which
+ * left its "Done" button with nowhere to go.
+ */
+function swapLocalData(
+  remote: RemoteUser,
+  goals: RemoteDailyGoal[] | null,
+  erase: boolean,
+): void {
+  if (erase) useProfileStore.getState().eraseAll();
+  preferences.set(StorageKeys.accountOwnerId, remote.id);
+
+  if (!goals) return;
+
+  const restored = userRepository.restoreLocalUser(remote);
+  console.warn(
+    '[auth] restore profile',
+    restored ? restored.id : 'not restorable',
+    'goals',
+    goals.length,
+  );
+  if (!restored) return;
+
+  applyDailyGoals(restored.id, goals);
+  if (!userRepository.getGoalForDate(restored.id))
+    userRepository.writeCalculatedGoal(restored);
+
+  useProfileStore.getState().refresh();
 }
 
 async function adoptSession(session: AuthSession): Promise<void> {
-  claimLocalData(session.user.id);
+  const erase = ownedByAnotherAccount(session.user.id);
+  const needsRestore =
+    (erase || !useProfileStore.getState().profile) &&
+    userRepository.canRestoreLocalUser(session.user);
+
+  console.warn('[auth] adopt session', {
+    account: session.user.id,
+    erase,
+    hasProfile: Boolean(useProfileStore.getState().profile),
+    needsRestore,
+  });
+
+  let goals: RemoteDailyGoal[] | null = null;
+
+  if (needsRestore) {
+    try {
+      goals = await syncApi.goals(undefined, session.accessToken);
+    } catch (error) {
+      if (env.isDev) console.warn('[auth] Goal fetch at sign-in failed.', error);
+      goals = [];
+    }
+  }
+
+  swapLocalData(session.user, goals, erase);
   await persistSession(session);
   useAuthStore.setState({ session, status: 'authenticated' });
+  console.warn('[auth] session adopted', {
+    profile: useProfileStore.getState().profile?.id ?? null,
+  });
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -150,7 +213,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     if (session) {
       await authApi.signOut(session.refreshToken).catch((error: unknown) => {
         // Best effort — the refresh token expires on its own.
-        if (env.isDev) console.warn('[auth] Sign-out request failed (best effort).', error);
+        if (env.isDev)
+          console.warn('[auth] Sign-out request failed (best effort).', error);
       });
     }
   },

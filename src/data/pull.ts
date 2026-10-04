@@ -47,8 +47,10 @@ function syncedNow(): { updatedAt: Date; syncedAt: Date } {
 }
 
 export async function pullDailyGoals(userId: string): Promise<void> {
-  const remote = await syncApi.goals();
+  applyDailyGoals(userId, await syncApi.goals());
+}
 
+export function applyDailyGoals(userId: string, remote: RemoteDailyGoal[]): void {
   for (const row of remote) {
     upsertDailyGoal(userId, row);
   }

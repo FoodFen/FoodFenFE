@@ -29,6 +29,7 @@ import { connectAuthToApiClient, connectAuthToSync, useAuthStore } from '@/featu
 import { reconcileNotifications } from '@/features/notifications/reconcile';
 import { useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
+import { useAccountHydration } from '@/hooks/useAccountHydration';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { usePushSync } from '@/hooks/usePushSync';
 import { useReactQueryBridge } from '@/hooks/useReactQueryBridge';
@@ -159,6 +160,7 @@ function AppShell({ migrated }: { migrated: boolean }) {
 
   useReactQueryBridge();
   usePushSync();
+  useAccountHydration();
   useSubscriptionSync();
 
   // Dev-only: fill the last few days so the dashboard has data to render while

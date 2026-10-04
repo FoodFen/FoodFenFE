@@ -517,7 +517,10 @@ export const en: DeepPartial<Translations> = {
     daysLeft: '{days}d left',
     todayLeft: 'Ends today',
     emptyTitle: "Couldn't load your quests",
-    emptyDescription: 'Turn on your connection to load your quests.',
+    emptyDescription: 'Check your connection and try again later.',
+    signInTitle: 'Sign in to see your quests',
+    signInDescription: 'Quests and coin rewards are tied to your account.',
+    signIn: 'Sign in',
   },
 
   shop: {
@@ -528,10 +531,9 @@ export const en: DeepPartial<Translations> = {
     bundleCost: '{cost} coins',
     redeemButton: 'Redeem',
     insufficientCoins: 'Not enough coins yet',
-    loading: 'Loading bundles…',
-    needsConnection: 'Turn on your connection to load the bundles.',
     redeemConfirmTitle: 'Redeem {days} days of Premium?',
     redeemConfirmMessage: 'This will cost {cost} coins.',
+    bundlesError: "Couldn't load the bundles. Check your connection and try again.",
   },
 
   quiz: {
@@ -577,8 +579,7 @@ export const en: DeepPartial<Translations> = {
     yearly: 'Yearly',
     perMonth: '/month',
     perYear: '/year',
-    pricesLoading: 'Loading prices…',
-    pricesNeedConnection: 'Turn on your connection to see prices.',
+    pricesError: "Couldn't load prices. Check your connection and try again.",
     bestValue: 'Best value',
     continueButton: 'Continue',
     finePrint: 'Cancel anytime.',

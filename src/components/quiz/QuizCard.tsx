@@ -4,25 +4,26 @@ import { Pressable, View } from 'react-native';
 
 import { Card } from '@/components/ui/Card';
 import { Text } from '@/components/ui/Text';
-import { useDailyQuiz, useQuizAvailable } from '@/features/quiz/queries';
+import { useDailyQuiz } from '@/features/quiz/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { todayKey } from '@/lib/date';
+import { env } from '@/lib/env';
 import { colorsFor } from '@/theme/colors';
 
 /**
  * Entry to the quiz hub, shared by the Dashboard and Achievements. Renders
  * from whatever the daily-quiz query has cached and never waits on it; hidden
- * entirely when there is no account to pay coins into.
+ * only in a build with no backend. Signed out, it still shows and the hub
+ * it opens asks the user to sign in.
  */
 export function QuizCard() {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
-  const available = useQuizAvailable();
   const { data: daily } = useDailyQuiz(todayKey());
 
-  if (!available) return null;
+  if (!env.hasBackend) return null;
 
   const subtitle =
     daily?.status === 'completed'

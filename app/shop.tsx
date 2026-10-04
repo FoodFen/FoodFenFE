@@ -6,6 +6,7 @@ import { isApiError } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ScrollScreen } from '@/components/ui/Screen';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useCoinBalance } from '@/features/dashboard/queries';
 import { useCoinBundles, useRedeemCoins } from '@/features/gamification/queries';
@@ -21,7 +22,10 @@ export default function ShopScreen() {
   const colors = colorsFor(resolved);
   const { data: balance = 0 } = useCoinBalance();
   const redeem = useRedeemCoins();
-  const { data: bundleData, isPending, fetchStatus } = useCoinBundles();
+  const { data: bundleData, isError, fetchStatus, refetch } = useCoinBundles();
+  const bundles = bundleData?.bundles ?? [];
+  const loadingBundles = bundles.length === 0 && fetchStatus === 'fetching';
+  const bundlesFailed = !loadingBundles && (isError || bundles.length === 0);
 
   const confirmRedeem = (days: number, coinCost: number) => {
     if (balance < coinCost) {
@@ -76,7 +80,28 @@ export default function ShopScreen() {
         {t('shop', 'premiumBundlesHeading')}
       </Text>
 
-      {bundleData?.bundles.map((bundle) => {
+      {loadingBundles ? (
+        <>
+          <Skeleton className="h-[76px]" />
+          <Skeleton className="h-[76px]" />
+        </>
+      ) : null}
+
+      {bundlesFailed ? (
+        <View className="items-center gap-2">
+          <Text variant="body" tone="muted" className="text-center">
+            {t('shop', 'bundlesError')}
+          </Text>
+          <Button
+            label={t('common', 'retry')}
+            variant="secondary"
+            size="sm"
+            onPress={() => void refetch()}
+          />
+        </View>
+      ) : null}
+
+      {bundles.map((bundle) => {
         const affordable = balance >= bundle.coinCost;
 
         return (
@@ -100,13 +125,6 @@ export default function ShopScreen() {
         );
       })}
 
-      {bundleData ? null : (
-        <Text variant="body" tone="muted">
-          {isPending && fetchStatus === 'fetching'
-            ? t('shop', 'loading')
-            : t('shop', 'needsConnection')}
-        </Text>
-      )}
     </ScrollScreen>
   );
 }

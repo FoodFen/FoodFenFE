@@ -1,8 +1,11 @@
 // `Tabs` re-exported from `expo-router` is deprecated in SDK 57; `js-tabs` is
 // the JS tab navigator's own entry point.
+import { usePathname } from 'expo-router';
 import { Tabs } from 'expo-router/js-tabs';
+import { useEffect } from 'react';
 
 import { FloatingTabBar } from '@/components/navigation/FloatingTabBar';
+import { useQuestsPull, useRefreshQuests } from '@/features/gamification/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { colorsFor } from '@/theme/colors';
@@ -17,6 +20,14 @@ export default function TabsLayout() {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
+
+  useQuestsPull();
+  const pathname = usePathname();
+  const refreshQuests = useRefreshQuests();
+  useEffect(() => {
+    void refreshQuests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- refreshQuests is a fresh closure every render; only a tab change should re-trigger
+  }, [pathname]);
 
   return (
     <Tabs

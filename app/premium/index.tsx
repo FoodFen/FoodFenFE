@@ -6,6 +6,7 @@ import { Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/ui/Button';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
 import { usePaymentPlans } from '@/features/premium/queries';
@@ -52,7 +53,7 @@ export default function PremiumScreen() {
     if (wasPremium.current) router.replace('/premium/welcome');
   }, []);
 
-  const { data: planData, isPending, fetchStatus } = usePaymentPlans();
+  const { data: planData, isError, fetchStatus, refetch } = usePaymentPlans();
 
   const plans = [
     { id: 'monthly' as const, planType: 'monthly' as const },
@@ -72,6 +73,8 @@ export default function PremiumScreen() {
       },
     ];
   });
+  const loadingPlans = plans.length === 0 && fetchStatus === 'fetching';
+  const plansFailed = !loadingPlans && (isError || plans.length === 0);
 
   const benefits: {
     icon: keyof typeof Ionicons.glyphMap;
@@ -156,12 +159,24 @@ export default function PremiumScreen() {
           </View>
 
           <View className="gap-3">
-            {plans.length === 0 ? (
-              <Text variant="body" tone="muted" className="text-center">
-                {isPending && fetchStatus === 'fetching'
-                  ? t('premium', 'pricesLoading')
-                  : t('premium', 'pricesNeedConnection')}
-              </Text>
+            {loadingPlans ? (
+              <>
+                <Skeleton className="h-[74px]" />
+                <Skeleton className="h-[74px]" />
+              </>
+            ) : null}
+            {plansFailed ? (
+              <View className="items-center gap-2">
+                <Text variant="body" tone="muted" className="text-center">
+                  {t('premium', 'pricesError')}
+                </Text>
+                <Button
+                  label={t('common', 'retry')}
+                  variant="secondary"
+                  size="sm"
+                  onPress={() => void refetch()}
+                />
+              </View>
             ) : null}
             {plans.map((plan) => {
               const isSelected = plan.id === selectedPlan;

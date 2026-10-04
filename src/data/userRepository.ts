@@ -1,5 +1,6 @@
 import { and, asc, desc, eq, lte } from 'drizzle-orm';
 
+import type { RemoteUser } from '@/api/schemas';
 import { db } from '@/db/client';
 import { dailyGoal, user } from '@/db/schema';
 import type { DateKey } from '@/lib/date';
@@ -81,6 +82,74 @@ export function createLocalUser(input: CreateUserInput): {
 
     return { user: row, goal };
   });
+}
+
+/**
+ * Rebuild the local profile from an account's server record — the sign-in
+ * path on a device with no local data, where onboarding would only ask for
+ * what the account already holds. Returns undefined when the account never
+ * pushed a complete profile, so onboarding still has to run.
+ *
+ * Writes no goal: the caller pulls the account's goal history first and only
+ * falls back to a calculated one, since a dirty calculated goal for today
+ * would overwrite the server's on the next push.
+ */
+export function canRestoreLocalUser(remote: RemoteUser): boolean {
+  return [
+    remote.gender,
+    remote.birthYear,
+    remote.height,
+    remote.weightCurrent,
+    remote.weightGoal,
+    remote.activityLevel,
+    remote.dietType,
+  ].every((value) => value !== null && value !== undefined);
+}
+
+export function restoreLocalUser(remote: RemoteUser): UserProfile | undefined {
+  const { gender, birthYear, height, weightCurrent, weightGoal, activityLevel, dietType } =
+    remote;
+
+  if (
+    gender === null ||
+    birthYear === null ||
+    height === null ||
+    weightCurrent === null ||
+    weightGoal === null ||
+    activityLevel === null ||
+    dietType === null
+  ) {
+    return undefined;
+  }
+
+  const now = new Date();
+
+  const row = {
+    id: generateLocalId('user'),
+    email: remote.email,
+    displayName: remote.displayName ?? null,
+    gender,
+    birthYear,
+    unitSystem: remote.unitSystem,
+    height,
+    weightCurrent,
+    weightGoal,
+    activityLevel,
+    dietType,
+    calorieCalcMode: remote.calorieCalcMode,
+    calorieLeftMode: remote.calorieLeftMode ?? ('all_calories' as const),
+    subscriptionTier: remote.subscriptionTier,
+    weeklyRateKg: remote.weeklyRateKg ?? 0.5,
+    createdAt: new Date(remote.createdAt),
+    remoteId: remote.id,
+    deletedAt: null,
+    updatedAt: now,
+    syncedAt: now,
+  };
+
+  db.insert(user).values(row).run();
+
+  return row;
 }
 
 export function updateLocalUser(

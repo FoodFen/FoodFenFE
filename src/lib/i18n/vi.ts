@@ -535,7 +535,10 @@ export const vi = {
     daysLeft: 'Còn {days} ngày',
     todayLeft: 'Hết hạn hôm nay',
     emptyTitle: 'Chưa tải được nhiệm vụ',
-    emptyDescription: 'Hãy mở mạng để tải nhiệm vụ của bạn.',
+    emptyDescription: 'Bạn hãy kiểm tra kết nối rồi thử lại sau nhé.',
+    signInTitle: 'Đăng nhập để xem nhiệm vụ',
+    signInDescription: 'Nhiệm vụ và xu thưởng gắn với tài khoản của bạn.',
+    signIn: 'Đăng nhập',
   },
 
   shop: {
@@ -546,10 +549,9 @@ export const vi = {
     bundleCost: '{cost} xu',
     redeemButton: 'Đổi',
     insufficientCoins: 'Chưa đủ xu',
-    loading: 'Đang tải các gói đổi…',
-    needsConnection: 'Hãy mở mạng để tải các gói đổi.',
     redeemConfirmTitle: 'Đổi {days} ngày Premium?',
     redeemConfirmMessage: 'Bạn sẽ dùng {cost} xu để đổi gói này.',
+    bundlesError: 'Không tải được các gói đổi. Bạn kiểm tra kết nối mạng rồi thử lại nhé.',
   },
 
   quiz: {
@@ -595,9 +597,8 @@ export const vi = {
     yearly: 'Hàng năm',
     perMonth: '/tháng',
     perYear: '/năm',
+    pricesError: 'Không tải được bảng giá. Bạn kiểm tra kết nối mạng rồi thử lại nhé.',
     bestValue: 'Tiết kiệm nhất',
-    pricesLoading: 'Đang tải bảng giá…',
-    pricesNeedConnection: 'Hãy mở mạng để xem bảng giá.',
     continueButton: 'Tiếp tục',
     finePrint: 'Hủy bất cứ lúc nào.',
   },
