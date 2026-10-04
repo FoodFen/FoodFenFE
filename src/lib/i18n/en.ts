@@ -518,7 +518,7 @@ export const en: DeepPartial<Translations> = {
     log_all_meals: 'Log meals {target} times today',
     hit_calorie_goal: 'Reach {percent}% of your calorie goal',
     hit_protein_goal: 'Reach {percent}% of your protein goal',
-    drink_water: 'Drink {target} cups of water today',
+    drink_water: 'Drink {target}% of your water goal today',
     log_weight: 'Log your weight today',
     stay_active_week: 'Stay active {target} days this week',
   },

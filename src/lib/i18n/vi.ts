@@ -536,7 +536,7 @@ export const vi = {
     log_all_meals: 'Ghi {target} bữa ăn hôm nay',
     hit_calorie_goal: 'Đạt {percent}% mục tiêu calo của bạn',
     hit_protein_goal: 'Đạt {percent}% mục tiêu đạm của bạn',
-    drink_water: 'Uống {target} cốc nước hôm nay',
+    drink_water: 'Uống đủ {target}% mục tiêu nước hôm nay',
     log_weight: 'Ghi cân nặng hôm nay',
     stay_active_week: 'Hoạt động {target} ngày trong tuần này',
   },

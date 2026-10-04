@@ -96,24 +96,24 @@ export function usePostLogInterstitial(leave: () => void = () => {}) {
 
         if (hideChallengeProgress) return;
 
-        const unseenTypes = quests
-          .map((q) => q.questType)
-          .filter((type) => !seenQuestTypes.includes(type));
-
-        if (unseenTypes.length > 0) {
-          markQuestTypesSeen(quests.map((q) => q.questType));
-          // `leave` already ran above — the interstitial's own dismiss has
-          // nothing further of the caller's to close.
-          present(quests, () => {});
-          router.push('/log/interstitial');
-          return;
-        }
-
         // A quest that's already completed never changes again server-side,
         // so "progress went up" is exactly "this action moved it" — no
         // separate before/after completion diff needed.
         const activeQuestIds = quests.map((q) => q.id);
         const advanced = quests.filter((q) => q.progress > (progressBefore.get(q.id) ?? 0));
+
+        const unseenTypes = advanced
+          .map((q) => q.questType)
+          .filter((type) => !seenQuestTypes.includes(type));
+
+        if (unseenTypes.length > 0) {
+          markQuestTypesSeen(advanced.map((q) => q.questType));
+          // `leave` already ran above — the interstitial's own dismiss has
+          // nothing further of the caller's to close.
+          present(advanced, () => {});
+          router.push('/log/interstitial');
+          return;
+        }
 
         const entries: QuestToastEntry[] = [];
 

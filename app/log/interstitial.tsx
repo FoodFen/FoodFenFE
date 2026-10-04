@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import Animated, { BounceIn, FadeInDown, ZoomIn } from 'react-native-reanimated';
 
 import { Button } from '@/components/ui/Button';
@@ -47,8 +47,12 @@ export default function InterstitialScreen() {
   };
 
   return (
-    <View className="flex-1 justify-between bg-bg p-4">
-      <View className="gap-4 pt-6">
+    <View className="flex-1 bg-bg p-4">
+      <ScrollView
+        className="flex-1"
+        contentContainerClassName="gap-4 pb-4 pt-6"
+        showsVerticalScrollIndicator={false}
+      >
         <Animated.View entering={ZoomIn.duration(300)}>
           <Text variant="title" className="text-center">
             {t('interstitial', 'title')}
@@ -83,7 +87,7 @@ export default function InterstitialScreen() {
             </Card>
           </Animated.View>
         ))}
-      </View>
+      </ScrollView>
 
       <View className="gap-2 pb-4">
         <Button
