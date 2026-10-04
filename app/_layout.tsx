@@ -39,8 +39,8 @@ import { colorsFor } from '@/theme/colors';
 
 import migrations from '../drizzle/migrations';
 
-// Hold the splash until fonts, migrations and the stored session are all
-// resolved, so the first frame is the real one.
+// Hold the splash until fonts, migrations, the stored session and the first
+// profile read are all resolved, so the first frame is the real one.
 void SplashScreen.preventAutoHideAsync();
 
 // Created once, outside the component: a new QueryClient on every render would
@@ -74,6 +74,7 @@ export default function RootLayout() {
 
   const hydrateAuth = useAuthStore((state) => state.hydrate);
   const refreshProfile = useProfileStore((state) => state.refresh);
+  const profileLoaded = useProfileStore((state) => state.isLoaded);
   const [sessionChecked, setSessionChecked] = useState(false);
 
   useEffect(() => {
@@ -96,7 +97,7 @@ export default function RootLayout() {
   const ready =
     (fontsLoaded || Boolean(fontError)) &&
     sessionChecked &&
-    (migrated || Boolean(migrationError));
+    (Boolean(migrationError) || (migrated && profileLoaded));
 
   useEffect(() => {
     if (ready) void SplashScreen.hideAsync();
