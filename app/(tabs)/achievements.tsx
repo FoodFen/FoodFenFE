@@ -117,8 +117,9 @@ function StreakSummaryCard({ currentStreak }: { currentStreak: number }) {
       onPress={() => router.push('/streak')}
       accessibilityRole="button"
       accessibilityLabel={t('streak', 'viewStreak')}
+      className="active:opacity-70"
     >
-      <Card className="flex-row items-center gap-3 active:bg-surface-alt">
+      <Card className="flex-row items-center gap-3">
         <Ionicons name="flame" size={22} color={colors.warning} />
         <View className="flex-1">
           <Text variant="label">

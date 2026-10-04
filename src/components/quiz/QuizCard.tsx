@@ -36,8 +36,9 @@ export function QuizCard() {
       onPress={() => router.push('/quiz')}
       accessibilityRole="button"
       accessibilityLabel={t('quiz', 'cardTitle')}
+      className="active:opacity-70"
     >
-      <Card className="flex-row items-center gap-3 active:bg-surface-alt">
+      <Card className="flex-row items-center gap-3">
         <Ionicons name="school" size={22} color={colors.brand} />
         <View className="flex-1">
           <Text variant="label">{t('quiz', 'cardTitle')}</Text>

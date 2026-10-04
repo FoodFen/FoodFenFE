@@ -57,6 +57,7 @@ export default function PracticeTopicsScreen() {
           key={topic.id}
           disabled={start.isPending}
           accessibilityRole="button"
+          className="active:opacity-70"
           onPress={() => {
             if (!onlineManager.isOnline()) {
               Alert.alert(t('quiz', 'needsConnection'));
@@ -72,7 +73,7 @@ export default function PracticeTopicsScreen() {
             );
           }}
         >
-          <Card className="flex-row items-center justify-between active:bg-surface-alt">
+          <Card className="flex-row items-center justify-between">
             <Text variant="label">{topic.label}</Text>
             <Ionicons name="chevron-forward" size={18} color={colors.fgSubtle} />
           </Card>
