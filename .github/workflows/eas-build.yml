@@ -1,6 +1,9 @@
 name: EAS Build
 
 on:
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', '**/*.md']
   workflow_dispatch:
     inputs:
       platform:
@@ -30,4 +33,4 @@ jobs:
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
-      - run: eas build --platform ${{ inputs.platform }} --profile ${{ inputs.profile }} --non-interactive --no-wait
+      - run: eas build --platform ${{ inputs.platform || 'android' }} --profile ${{ inputs.profile || 'preview' }} --non-interactive --no-wait
