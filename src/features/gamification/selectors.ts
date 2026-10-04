@@ -52,6 +52,15 @@ export function questDescription(t: Translate, quest: Quest): string {
   }
 }
 
+const PERCENT_QUESTS: QuestType[] = ['hit_calorie_goal', 'hit_protein_goal', 'drink_water'];
+
+/** The goal quests measure percent of a daily goal, not a count, so "0/100" reads wrong. */
+export function questProgressLabel(quest: Quest): string {
+  return PERCENT_QUESTS.includes(quest.questType)
+    ? `${quest.progress}%`
+    : `${quest.progress}/${quest.target}`;
+}
+
 export interface StreakDay {
   date: DateKey;
   active: boolean;

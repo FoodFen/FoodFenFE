@@ -16,7 +16,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Card } from '@/components/ui/Card';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Text } from '@/components/ui/Text';
-import { questDescription, questTitle } from '@/features/gamification/selectors';
+import {
+  questDescription,
+  questProgressLabel,
+  questTitle,
+} from '@/features/gamification/selectors';
 import type { QuestToastEntry } from '@/features/gamification/toastStore';
 import { useQuestToastStore } from '@/features/gamification/toastStore';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -171,7 +175,7 @@ function ToastRow({
       />
 
       <Text variant="caption" tone="subtle">
-        {quest.progress}/{quest.target}
+        {questProgressLabel(quest)}
       </Text>
     </View>
   );

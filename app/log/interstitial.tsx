@@ -7,7 +7,11 @@ import { Card } from '@/components/ui/Card';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Text } from '@/components/ui/Text';
 import { useInterstitialStore } from '@/features/gamification/interstitialStore';
-import { questDescription, questTitle } from '@/features/gamification/selectors';
+import {
+  questDescription,
+  questProgressLabel,
+  questTitle,
+} from '@/features/gamification/selectors';
 import { useSettingsStore } from '@/features/settings/store';
 import { useTranslation } from '@/hooks/useTranslation';
 import { progressFraction } from '@/lib/nutrition';
@@ -82,7 +86,7 @@ export default function InterstitialScreen() {
               </Text>
               <ProgressBar progress={progressFraction(quest.progress, quest.target)} />
               <Text variant="caption" tone="subtle">
-                {quest.progress}/{quest.target}
+                {questProgressLabel(quest)}
               </Text>
             </Card>
           </Animated.View>

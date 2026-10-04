@@ -119,10 +119,9 @@ function upsertQuest(userId: string, remote: RemoteQuestProgress): void {
     rewardCoins: remote.rewardCoins,
     completed: remote.completed,
     cadence: remote.cadence,
-    // Not returned by the server — it already applied its own ratio and sent
-    // `completed` directly. Kept at 1 (the NOT NULL column's simple-case
-    // default) since nothing here recomputes completion from it anymore.
-    completionRatio: 1,
+    // Display only: the server already applied the ratio and sent `completed`.
+    // Older servers omit it, so 1 (the column's default) stands in.
+    completionRatio: remote.completionRatio ?? 1,
     questDate: remote.questDate,
     remoteId: remote.id,
     deletedAt: null,

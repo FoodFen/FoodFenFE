@@ -287,6 +287,7 @@ export const questProgressSchema = z.object({
   target: z.number().int().nonnegative(),
   rewardCoins: z.number().int().nonnegative(),
   completed: z.boolean(),
+  completionRatio: z.number().min(0).max(1).optional(),
 });
 
 export const questsResponseSchema = z.object({

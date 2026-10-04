@@ -10,7 +10,11 @@ import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useActiveQuests, useStreak } from '@/features/gamification/queries';
-import { questDescription, questTitle } from '@/features/gamification/selectors';
+import {
+  questDescription,
+  questProgressLabel,
+  questTitle,
+} from '@/features/gamification/selectors';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { calendarWeek, daysUntil, todayKey } from '@/lib/date';
@@ -152,7 +156,7 @@ function ChallengeRow({ quest, daysLeft }: { quest: Quest; daysLeft: number }) {
       <ProgressBar progress={progressFraction(quest.progress, quest.target)} />
       <View className="flex-row items-center justify-between">
         <Text variant="caption" tone="subtle">
-          {quest.progress}/{quest.target}
+          {questProgressLabel(quest)}
         </Text>
         <Text variant="caption" tone="subtle">
           {daysLeft <= 0
