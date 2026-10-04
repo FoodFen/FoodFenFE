@@ -6,12 +6,13 @@ import { useEffect, useRef, useState } from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { WeightWheels } from '@/components/logging/WeightWheels';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { SheetScrim } from '@/components/ui/SheetScrim';
 import { Text } from '@/components/ui/Text';
 import { WheelPicker } from '@/components/ui/WheelPicker';
 import { GLASS_ML } from '@/features/dashboard/constants';
+import { useWeightAsOf } from '@/features/dashboard/queries';
 import {
   useAddWater,
   useDiaryDay,
@@ -20,6 +21,7 @@ import {
 } from '@/features/diary/queries';
 import { usePostLogInterstitial } from '@/features/gamification/queries';
 import { useLogSheetStore } from '@/features/logging/store';
+import { useProfileStore } from '@/features/profile/store';
 import { units, useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -64,7 +66,7 @@ export function LogSheet() {
 
   const sheetRef = useRef<BottomSheetMethods>(null);
 
-  const [weightText, setWeightText] = useState('');
+  const [weightTenths, setWeightTenths] = useState<number | null>(null);
   const [amountMl, setAmountMl] = useState<number>(DEFAULT_WATER_ML);
   const [error, setError] = useState<string | null>(null);
 
@@ -73,6 +75,12 @@ export function LogSheet() {
   const setWaterGoal = useSetWaterGoal();
   const finishLogging = usePostLogInterstitial();
   const { data: today } = useDiaryDay(todayKey());
+  const { data: lastWeight } = useWeightAsOf(todayKey());
+  const profileWeightKg = useProfileStore((state) => state.profile?.weightCurrent);
+
+  const startKg = lastWeight?.weight ?? profileWeightKg ?? 60;
+  const shownTenths =
+    weightTenths ?? Math.round(units.weightFromKg(startKg, weightUnit) * 10);
 
   useEffect(() => {
     if (open) sheetRef.current?.present();
@@ -81,7 +89,7 @@ export function LogSheet() {
 
   function close() {
     dismiss();
-    setWeightText('');
+    setWeightTenths(null);
     setAmountMl(DEFAULT_WATER_ML);
     setError(null);
   }
@@ -99,21 +107,9 @@ export function LogSheet() {
   function submitWeight() {
     if (logWeight.isPending) return;
 
-    const typed = Number(weightText.replace(',', '.'));
-
-    if (!Number.isFinite(typed) || typed <= 0) {
-      setError(t('logSheet', 'weightError'));
-      return;
-    }
-
     // Canonical storage is always kg (UC-18) — convert whatever unit the
-    // device is set to before validating and saving.
-    const kg = units.weightToKg(typed, weightUnit);
-
-    if (kg > 500) {
-      setError(t('logSheet', 'weightError'));
-      return;
-    }
+    // device is set to before saving.
+    const kg = units.weightToKg(shownTenths / 10, weightUnit);
 
     logWeight.mutate(
       { weight: kg, date: todayKey() },
@@ -207,15 +203,20 @@ export function LogSheet() {
             ) : null}
 
             {focus === 'weight' ? (
-              <View className="gap-3">
-                <Input
-                  label={t('logSheet', 'weightLabel').replace('{unit}', weightUnit)}
-                  value={weightText}
-                  onChangeText={setWeightText}
-                  keyboardType="decimal-pad"
-                  error={error ?? undefined}
-                  autoFocus
+              <View className="items-center gap-3">
+                <Text variant="label" tone="muted">
+                  {t('logSheet', 'weightLabel').replace('{unit}', weightUnit)}
+                </Text>
+                <WeightWheels
+                  unit={weightUnit}
+                  tenths={shownTenths}
+                  onChange={setWeightTenths}
                 />
+                {error ? (
+                  <Text variant="caption" tone="danger">
+                    {error}
+                  </Text>
+                ) : null}
                 <Button
                   label={t('logSheet', 'save')}
                   onPress={submitWeight}
