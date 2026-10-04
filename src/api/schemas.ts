@@ -290,9 +290,17 @@ export const questProgressSchema = z.object({
   completionRatio: z.number().min(0).max(1).optional(),
 });
 
+// A quest of a type this app version doesn't know is skipped on its own, so a
+// new server-side quest type can't fail the whole response.
 export const questsResponseSchema = z.object({
   balance: z.number().int(),
-  quests: z.array(questProgressSchema),
+  quests: z.array(z.unknown()).transform((items) =>
+    items.flatMap((item) => {
+      const parsed = questProgressSchema.safeParse(item);
+
+      return parsed.success ? [parsed.data] : [];
+    }),
+  ),
 });
 
 export const redeemCoinsResponseSchema = z.object({

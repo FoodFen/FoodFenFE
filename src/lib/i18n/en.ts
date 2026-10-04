@@ -536,8 +536,8 @@ export const en: DeepPartial<Translations> = {
     weeklyHeading: 'Weekly',
     daysLeft: '{days}d left',
     todayLeft: 'Ends today',
-    emptyTitle: 'Achievements coming soon',
-    emptyDescription: 'Streaks, quests and badges will show up here.',
+    emptyTitle: "Couldn't load your quests",
+    emptyDescription: 'Turn on your connection to load your quests.',
   },
 
   shop: {

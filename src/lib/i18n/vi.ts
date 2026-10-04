@@ -554,8 +554,8 @@ export const vi = {
     weeklyHeading: 'Hằng tuần',
     daysLeft: 'Còn {days} ngày',
     todayLeft: 'Hết hạn hôm nay',
-    emptyTitle: 'Thành tích sắp ra mắt',
-    emptyDescription: 'Chuỗi ngày, nhiệm vụ và huy hiệu sẽ có mặt ở đây.',
+    emptyTitle: 'Chưa tải được nhiệm vụ',
+    emptyDescription: 'Hãy mở mạng để tải nhiệm vụ của bạn.',
   },
 
   shop: {
