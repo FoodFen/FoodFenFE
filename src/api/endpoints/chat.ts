@@ -11,6 +11,7 @@ import {
 import { ApiError, statusToKind } from '@/api/errors';
 import { chatHistoryResponseSchema, chatMessageSchema } from '@/api/schemas';
 import type { RemoteChatHistoryResponse, RemoteChatMessage } from '@/api/schemas';
+import { todayKey } from '@/lib/date';
 
 import { parseSseFrames } from '../sse';
 
@@ -54,7 +55,7 @@ function sendChatRequest(url: string, message: string, token: string | null, sig
       Accept: 'text/event-stream',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
-    body: JSON.stringify({ message }),
+    body: JSON.stringify({ message, date: todayKey() }),
     signal,
   });
 }

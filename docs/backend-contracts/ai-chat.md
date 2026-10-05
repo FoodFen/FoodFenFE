@@ -44,10 +44,17 @@ Sends one user message and streams the assistant's reply.
 
 Request body:
 ```json
-{ "message": "string" }
+{ "message": "string", "date": "YYYY-MM-DD" }
 ```
 
-No other fields — v1 sends no diary/profile/context data.
+- `message` — required, at most 2000 characters.
+- `date` — optional; the user's local calendar day, same convention as
+  `loggedOn` on food entries and `GET /quests?date=`. The server grounds the
+  reply in the user's own data (profile, goal in force, that day's meals,
+  7-day totals) and uses `date` as "today". Omitted → the server falls back
+  to the Vietnam (UTC+7) day; the client always sends it. Must be between
+  `2000-01-01` and `9998-12-31`; malformed or out of range → `422` with the
+  usual failure body.
 
 Response: `200`, `Content-Type: text/event-stream`, body is a sequence of
 frames in the standard SSE wire format (`event: <name>\ndata: <json>\n\n`,
