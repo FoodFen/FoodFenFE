@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Opus never writes code
+
+If the running model is Opus, it may only brainstorm, plan, explore, review and edit docs/plans. It must never write or edit code itself. Any coding task is delegated to a subagent running on Haiku or Sonnet (the Agent tool's `model: "haiku" | "sonnet"`), and Opus reviews the result.
+
 ## Scope discipline — the top rule
 
 Do exactly what was asked. Nothing upstream, nothing downstream, nothing adjacent, even when the next step is obvious. Violating this is a worse failure than a bug.
