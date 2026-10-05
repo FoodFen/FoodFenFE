@@ -1,10 +1,13 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { onlineManager } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { Linking, Pressable, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
 import { isApiError } from '@/api/errors';
+import type { PaymentProvider, RemoteCheckoutResponse } from '@/api/schemas';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
@@ -15,26 +18,46 @@ import { useAuthStore } from '@/features/auth/store';
 import {
   useCancelPayment,
   useCheckout,
+  usePaymentPlans,
   usePaymentStatus,
   useRefreshSubscription,
 } from '@/features/premium/queries';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
+import { cn } from '@/lib/cn';
 import { env } from '@/lib/env';
 import { haptics } from '@/lib/haptics';
+import { colorsFor } from '@/theme/colors';
 import type { PlanType } from '@/types/models';
 
 type Stage = 'idle' | 'checking-out' | 'awaiting-payment' | 'error';
 
+// Must match the backend's MOMO_REDIRECT_URL so the in-app browser closes itself on return.
+const RETURN_URL = 'foodfen://premium/return';
+
+const METHOD_LABEL = { payos: 'methodPayos', momo: 'methodMomo' } as const;
+const PAY_LABEL = { payos: 'subscribeButton', momo: 'payWithMomo' } as const;
+
+/** MoMo's app if installed, otherwise its web checkout, which redirects back to RETURN_URL. */
+async function openMomo(order: RemoteCheckoutResponse) {
+  const opened = order.deeplink
+    ? await Linking.openURL(order.deeplink).then(
+        () => true,
+        () => false,
+      )
+    : false;
+
+  if (!opened) await WebBrowser.openAuthSessionAsync(order.checkoutUrl, RETURN_URL);
+}
+
 /**
- * PayOS checkout for the plan chosen on the Premium popup.
+ * Checkout for the plan chosen on the Premium popup, through PayOS or MoMo.
  *
- * There's no card form here — PayOS is a hosted bank-transfer/VietQR
- * checkout, not native IAP (see `docs/backend-contracts/
- * premium-entitlements.md`). Rather than sending the user to PayOS's hosted
- * page, this screen renders the checkout's `qrCode` (a VietQR string) inline
- * and polls for the result: PayOS confirms payment to our backend via a
- * webhook, never to the client directly, so the QR staying on screen only
- * means the user hasn't paid yet, not that anything failed.
+ * Neither is native IAP (see `docs/backend-contracts/premium-entitlements.md`).
+ * PayOS renders the checkout's VietQR `qrCode` inline; MoMo hands off to the
+ * MoMo app. Either way the gateway confirms payment to our backend via a
+ * webhook, never to the client, so this screen polls until the status leaves
+ * "pending" — and, while mounted, it alone navigates to the welcome screen.
  */
 export default function PremiumPaymentScreen() {
   const { plan, label, price, period } = useLocalSearchParams<{
@@ -44,6 +67,8 @@ export default function PremiumPaymentScreen() {
     period: string;
   }>();
   const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
   const session = useAuthStore((state) => state.session);
   const available = canUseRemote();
   // The one `canUseRemote()` reason worth its own affordance: everything else
@@ -52,9 +77,17 @@ export default function PremiumPaymentScreen() {
   // account so it follows the account, not the device.
   const isNoSessionReason = env.hasBackend && onlineManager.isOnline() && !session;
 
+  const { data: planData } = usePaymentPlans();
+  // A paywall cached by an older build has no `providers`.
+  const providers: PaymentProvider[] = planData?.providers ?? ['payos'];
+  const [chosenProvider, setChosenProvider] = useState<PaymentProvider | null>(null);
+  const provider =
+    chosenProvider && providers.includes(chosenProvider)
+      ? chosenProvider
+      : (providers[0] ?? 'payos');
+
   const [stage, setStage] = useState<Stage>('idle');
-  const [orderCode, setOrderCode] = useState<number | null>(null);
-  const [qrCode, setQrCode] = useState<string | null>(null);
+  const [order, setOrder] = useState<RemoteCheckoutResponse | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   // Guards against handling the same "left pending" status twice — the
   // status query can re-render after its effect already fired.
@@ -63,7 +96,9 @@ export default function PremiumPaymentScreen() {
   const checkout = useCheckout();
   const cancelPayment = useCancelPayment();
   const refreshSubscription = useRefreshSubscription();
-  const paymentStatus = usePaymentStatus(orderCode, { enabled: stage === 'awaiting-payment' });
+  const paymentStatus = usePaymentStatus(order?.orderCode ?? null, {
+    enabled: stage === 'awaiting-payment',
+  });
 
   // A non-"paid" terminal status is rendered straight from the query below
   // (`pollFailed`) rather than copied into `stage` here — only the "paid"
@@ -100,11 +135,11 @@ export default function PremiumPaymentScreen() {
 
     try {
       const planType: PlanType = plan === 'yearly' ? 'annual' : 'monthly';
-      const result = await checkout.mutateAsync(planType);
+      const result = await checkout.mutateAsync({ planType, provider });
 
-      setOrderCode(result.orderCode);
-      setQrCode(result.qrCode);
+      setOrder(result);
       setStage('awaiting-payment');
+      if (result.provider === 'momo') void openMomo(result);
     } catch (error) {
       setStage('error');
       setErrorMessage(isApiError(error) ? error.userMessage : t('common', 'somethingWentWrong'));
@@ -112,18 +147,16 @@ export default function PremiumPaymentScreen() {
   };
 
   const onCancelCheckout = () => {
-    if (orderCode !== null) cancelPayment.mutate({ orderCode });
+    if (order) cancelPayment.mutate({ orderCode: order.orderCode });
 
     setStage('idle');
-    setOrderCode(null);
-    setQrCode(null);
+    setOrder(null);
     handledStatusRef.current = false;
   };
 
   const onRetry = () => {
     setStage('idle');
-    setOrderCode(null);
-    setQrCode(null);
+    setOrder(null);
     setErrorMessage(null);
     handledStatusRef.current = false;
   };
@@ -155,6 +188,8 @@ export default function PremiumPaymentScreen() {
     );
   }
 
+  const isMomo = order?.provider === 'momo';
+
   return (
     <View className="flex-1 bg-bg">
       <ScreenHeader
@@ -184,21 +219,26 @@ export default function PremiumPaymentScreen() {
           </View>
         </Card>
 
-        {stage === 'awaiting-payment' && !pollFailed ? (
+        {stage === 'awaiting-payment' && order && !pollFailed ? (
           <Card className="items-center gap-3 py-6">
-            {qrCode ? (
+            {order.qrCode ? (
               <View className="rounded-card bg-white p-3">
-                <QRCode value={qrCode} size={220} />
+                <QRCode value={order.qrCode} size={220} />
               </View>
-            ) : (
-              <ActivityIndicator />
-            )}
+            ) : null}
             <Text variant="heading" className="text-center">
-              {t('premiumPayment', 'waitingTitle')}
+              {t('premiumPayment', isMomo ? 'momoWaitingTitle' : 'waitingTitle')}
             </Text>
             <Text variant="body" tone="muted" className="text-center">
-              {t('premiumPayment', 'waitingDescription')}
+              {t('premiumPayment', isMomo ? 'momoWaitingDescription' : 'waitingDescription')}
             </Text>
+            {isMomo ? (
+              <Button
+                label={t('premiumPayment', 'openMomoAgain')}
+                onPress={() => void openMomo(order)}
+                size="sm"
+              />
+            ) : null}
             <View className="flex-row gap-3 pt-2">
               <Button
                 label={t('premiumPayment', 'checkStatus')}
@@ -221,8 +261,41 @@ export default function PremiumPaymentScreen() {
           />
         ) : (
           <>
+            {providers.length > 1 ? (
+              <View className="gap-2">
+                <Text variant="caption" tone="muted">
+                  {t('premiumPayment', 'methodTitle')}
+                </Text>
+                {providers.map((option) => {
+                  const isSelected = option === provider;
+
+                  return (
+                    <Pressable
+                      key={option}
+                      onPress={() => {
+                        haptics.selection();
+                        setChosenProvider(option);
+                      }}
+                      accessibilityRole="radio"
+                      accessibilityState={{ selected: isSelected }}
+                      className={cn(
+                        'flex-row items-center justify-between rounded-card border-2 bg-surface p-4',
+                        isSelected ? 'border-brand' : 'border-border',
+                      )}
+                    >
+                      <Text variant="label">{t('premiumPayment', METHOD_LABEL[option])}</Text>
+                      <Ionicons
+                        name={isSelected ? 'checkmark-circle' : 'ellipse-outline'}
+                        size={22}
+                        color={isSelected ? colors.brand : colors.fgSubtle}
+                      />
+                    </Pressable>
+                  );
+                })}
+              </View>
+            ) : null}
             <Button
-              label={t('premiumPayment', 'subscribeButton')}
+              label={t('premiumPayment', PAY_LABEL[provider])}
               onPress={() => void onPressCheckout()}
               loading={stage === 'checking-out'}
               fullWidth
