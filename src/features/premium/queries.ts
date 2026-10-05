@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { paymentsApi } from '@/api/endpoints/payments';
 import { subscriptionsApi } from '@/api/endpoints/subscriptions';
+import type { PaymentProvider } from '@/api/schemas';
 import * as gamification from '@/data/gamificationRepository';
 import { useProfileStore } from '@/features/profile/store';
 import { env } from '@/lib/env';
@@ -41,10 +42,11 @@ export function usePaymentPlans() {
   });
 }
 
-/** Starts a PayOS checkout for one plan. */
+/** Starts a checkout for one plan through the chosen provider. */
 export function useCheckout() {
   return useMutation({
-    mutationFn: (planType: PlanType) => paymentsApi.checkout(planType),
+    mutationFn: ({ planType, provider }: { planType: PlanType; provider: PaymentProvider }) =>
+      paymentsApi.checkout(planType, provider),
   });
 }
 

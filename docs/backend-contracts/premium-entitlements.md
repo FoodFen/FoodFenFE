@@ -90,14 +90,21 @@ against it. Consequences worth knowing before implementing the client side:
   success, since a `returnUrl` hit only means the checkout page closed, not
   that PayOS's webhook has necessarily been processed yet.
 
+**MoMo is a second, optional provider** (spec
+`docs/superpowers/specs/2026-10-05-momo-payment-design.md`). The user picks the
+method; MoMo hands off to the MoMo app via `deeplink` and redirects back to
+`foodfen://premium/return`. Status polling, cancel and `GET /subscriptions/me`
+work the same for both.
+
 ## Auth
 
 `GET /payments/plans` and `GET /coins/bundles` are public; everything else
 below is identical to every other authenticated endpoint: `Authorization: Bearer
 <accessToken>`, standard `401` handling (client retries once after a token
-refresh, same as everywhere else) — **except** `POST /payments/webhook`,
-which PayOS calls directly with no bearer token at all (it's verified by a
-PayOS signature server-side instead). The client never calls that endpoint.
+refresh, same as everywhere else) — **except** `POST /payments/webhook` (PayOS) and
+`POST /payments/webhook/momo` (MoMo IPN, answers `204`), which the gateways
+call directly, verified by their own signatures. The client never calls
+either endpoint.
 
 ## `GET /payments/plans`
 
@@ -110,12 +117,15 @@ Response `200`:
   "plans": [
     { "planType": "monthly", "priceVnd": 49000 },
     { "planType": "annual", "priceVnd": 499000 }
-  ]
+  ],
+  "providers": ["payos", "momo"]
 }
 ```
 
 - Always exactly two rows, `monthly` then `annual`. `coin_redeem` is never
   listed (not purchasable; `POST /payments/checkout` rejects it with `422`).
+- `providers` — the methods enabled server-side, in display order. A provider
+  is listed only when configured. Clients must ignore values they don't know.
 - `priceVnd` — whole VND integer, never null. Global: no user, locale or
   promo input. It is the same number checkout charges; changing it is a
   backend config change, not a data edit.
@@ -192,19 +202,24 @@ Response `200`:
 
 ## `POST /payments/checkout`
 
-Starts a PayOS checkout for one plan.
+Starts a checkout for one plan.
 
 Request:
 ```json
-{ "planType": "monthly" | "annual" }
+{ "planType": "monthly" | "annual", "provider": "payos" | "momo" }
 ```
+
+`provider` defaults to `"payos"` when omitted; a provider that isn't enabled
+→ `422`.
 
 Response `200`:
 ```json
 {
   "orderCode": 0,
+  "provider": "payos" | "momo",
   "checkoutUrl": "string",
-  "qrCode": "string",
+  "qrCode": "string | null",
+  "deeplink": "string | null",
   "amount": 0,
   "planType": "monthly" | "annual",
   "status": "pending"
@@ -213,10 +228,13 @@ Response `200`:
 
 - `orderCode` — a numeric id for this checkout attempt. Use it to poll
   `GET /payments/{orderCode}` below.
-- `checkoutUrl` — PayOS's hosted payment page. Open it (in-app browser or
-  WebView); this is where the user actually authorizes the bank transfer.
-- `qrCode` — the same payment encoded as a VietQR string, for a "scan with
-  your bank app" affordance alongside/instead of `checkoutUrl`.
+- `checkoutUrl` — the provider's hosted page (PayOS checkout, or MoMo's
+  `payUrl`). Open it (in-app browser or WebView); this is where the user
+  actually authorizes the payment.
+- `qrCode` — PayOS only; `null` for MoMo. The same payment encoded as a VietQR
+  string, for a "scan with your bank app" affordance alongside/instead of
+  `checkoutUrl`.
+- `deeplink` — MoMo only: opens the MoMo app with the order prefilled.
 - `amount` — VND, server-priced (see above). Always freshly created as
   `"pending"`; there is no draft/resume state.
 
@@ -254,7 +272,8 @@ Request:
 Response `200`: same shape as `GET /payments/{orderCode}`, now with
 `status: "cancelled"`. `400` if the checkout isn't `"pending"` anymore
 (already paid, already cancelled, etc.) — `404` for the same ownership case
-as above.
+as above. For MoMo this only marks the row `cancelled`; MoMo has no cancel API
+for an unpaid order (it expires on MoMo's side).
 
 ## `GET /subscriptions/me`
 

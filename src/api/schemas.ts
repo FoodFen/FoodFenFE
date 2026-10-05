@@ -49,6 +49,7 @@ export const paymentStatusSchema = z.enum([
   'expired',
   'failed',
 ]);
+export const paymentProviderSchema = z.enum(['payos', 'momo']);
 export const subscriptionStatusSchema = z.enum(['active', 'canceled', 'expired', 'trial']);
 export const questTypeSchema = z.enum([
   'log_breakfast',
@@ -246,8 +247,10 @@ export const aiQuotaResponseSchema = z.object({
 
 export const checkoutResponseSchema = z.object({
   orderCode: z.number().int(),
+  provider: paymentProviderSchema.default('payos'),
   checkoutUrl: z.url(),
-  qrCode: z.string(),
+  qrCode: z.string().nullable(),
+  deeplink: z.string().nullish(),
   amount: z.number().nonnegative(),
   planType: planTypeSchema,
   status: paymentStatusSchema,
@@ -310,6 +313,16 @@ export const paymentPlansResponseSchema = z.object({
       priceVnd: z.number().int().nonnegative(),
     }),
   ),
+  // Unknown providers are dropped, not rejected: a backend that adds one must not break this build's paywall.
+  providers: z
+    .array(z.string())
+    .default(['payos'])
+    .transform((list) =>
+      list.flatMap((value) => {
+        const parsed = paymentProviderSchema.safeParse(value);
+        return parsed.success ? [parsed.data] : [];
+      }),
+    ),
 });
 
 // A quest of a type this app version doesn't know is skipped on its own, so a
@@ -387,6 +400,7 @@ export type RemoteAiIngredient = z.infer<typeof aiIngredientSchema>;
 export type RemoteAiFoodAnalysisResponse = z.infer<typeof aiFoodAnalysisResponseSchema>;
 export type RemoteAiQuotaResponse = z.infer<typeof aiQuotaResponseSchema>;
 export type RemoteCheckoutResponse = z.infer<typeof checkoutResponseSchema>;
+export type PaymentProvider = z.infer<typeof paymentProviderSchema>;
 export type RemotePaymentStatusResponse = z.infer<typeof paymentStatusResponseSchema>;
 export type RemoteSubscriptionInfo = z.infer<typeof subscriptionInfoSchema>;
 export type RemoteSubscriptionMeResponse = z.infer<typeof subscriptionMeResponseSchema>;

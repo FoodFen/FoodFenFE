@@ -4,11 +4,15 @@ import {
   paymentPlansResponseSchema,
   paymentStatusResponseSchema,
 } from '@/api/schemas';
-import type { RemoteCheckoutResponse, RemotePaymentStatusResponse } from '@/api/schemas';
+import type {
+  PaymentProvider,
+  RemoteCheckoutResponse,
+  RemotePaymentStatusResponse,
+} from '@/api/schemas';
 import type { PlanType } from '@/types/models';
 
 /**
- * PayOS checkout — VietQR/bank-transfer, not native Apple/Google IAP. See
+ * PayOS (VietQR) or MoMo checkout — not native Apple/Google IAP. See
  * `docs/backend-contracts/premium-entitlements.md` for the full wire
  * contract this is built against, including why completion arrives via a
  * server-side webhook rather than a push to the client.
@@ -18,8 +22,8 @@ export const paymentsApi = {
   plans: (signal?: AbortSignal) =>
     api.get('payments/plans', { schema: paymentPlansResponseSchema, signal }),
 
-  checkout: (planType: PlanType): Promise<RemoteCheckoutResponse> =>
-    api.post('payments/checkout', { planType }, { schema: checkoutResponseSchema }),
+  checkout: (planType: PlanType, provider: PaymentProvider): Promise<RemoteCheckoutResponse> =>
+    api.post('payments/checkout', { planType, provider }, { schema: checkoutResponseSchema }),
 
   getStatus: (orderCode: number): Promise<RemotePaymentStatusResponse> =>
     api.get(`payments/${orderCode}`, { schema: paymentStatusResponseSchema }),
