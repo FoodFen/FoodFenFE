@@ -4,6 +4,8 @@ import { router } from 'expo-router';
 import { gamificationApi } from '@/api/endpoints/gamification';
 import { getEntryCountsByDay } from '@/data/entryRepository';
 import * as gamificationRepository from '@/data/gamificationRepository';
+import { pushAll } from '@/data/push';
+import { canUseRemote } from '@/data/sync';
 import { useAuthStore } from '@/features/auth/store';
 import { useInterstitialStore } from '@/features/gamification/interstitialStore';
 import { loggingHeatmap, shouldAnnounce } from '@/features/gamification/selectors';
@@ -15,6 +17,7 @@ import { shiftDateKey, todayKey } from '@/lib/date';
 import { env } from '@/lib/env';
 import { queryKeys } from '@/lib/queryClient';
 import { StorageKeys, cache } from '@/lib/storage';
+import type { Quest } from '@/types/models';
 
 function useUserId(): string | null {
   return useProfileStore((state) => state.profile?.id ?? null);
@@ -37,6 +40,41 @@ function useUserId(): string | null {
  */
 export function dismissLogFlow(): void {
   router.dismiss();
+}
+
+const announcedCompletions = new Set<string>();
+
+/**
+ * True the first time a quest's completion is announced this session. The
+ * post-log check and the background pull can both observe the same completion
+ * (whichever lands first), and the user must see it once, not twice.
+ */
+function claimCompletion(questId: string): boolean {
+  if (announcedCompletions.has(questId)) return false;
+
+  announcedCompletions.add(questId);
+
+  return true;
+}
+
+/**
+ * Toast for quests that completed in a pull nobody was waiting on — a push
+ * that landed late (an offline log syncing later, or the post-log push losing
+ * the race with a foreground one). A quest absent from `before` is the first
+ * sync after sign-in/restore, not a fresh completion, so it stays silent.
+ */
+function announceBackgroundCompletions(quests: Quest[], before: Map<string, Quest>): void {
+  if (useSettingsStore.getState().hideChallengeProgress) return;
+
+  const entries: QuestToastEntry[] = quests
+    .filter((q) => {
+      const prev = before.get(q.id);
+
+      return prev !== undefined && !prev.completed && q.completed && claimCompletion(q.id);
+    })
+    .map((quest) => ({ quest, completed: true }));
+
+  if (entries.length > 0) useQuestToastStore.getState().show(entries);
 }
 
 /**
@@ -65,54 +103,62 @@ export function dismissLogFlow(): void {
  *
  * Quest completion is server-side now (`gamificationRepository.pullQuests`),
  * so it is a network round-trip — and per CLAUDE.md, server sync may never
- * block the UI. `leave()` therefore always fires immediately; the pull runs
- * in the background, and whatever it reports (toast, or the full-screen
+ * block the UI. `leave()` therefore always fires immediately; the push+pull
+ * runs in the background, and whatever it reports (toast, or the full-screen
  * interstitial for a quest type seen for the first time) surfaces once it
  * resolves, a beat after the caller has already moved on.
  */
 export function usePostLogInterstitial(leave: () => void = () => {}) {
-  const userId = useUserId();
+  const profile = useProfileStore((state) => state.profile);
+  const userId = profile?.id ?? null;
   const locale = useSettingsStore((state) => state.locale);
-  const hideChallengeProgress = useSettingsStore((state) => state.hideChallengeProgress);
-  const seenQuestTypes = useSettingsStore((state) => state.seenQuestTypes);
-  const markQuestTypesSeen = useSettingsStore((state) => state.markQuestTypesSeen);
-  const bumpQuestAdvance = useSettingsStore((state) => state.bumpQuestAdvance);
   const present = useInterstitialStore((state) => state.present);
   const showToast = useQuestToastStore((state) => state.show);
   const signedIn = useAuthStore((state) => state.session !== null);
   const queryClient = useQueryClient();
 
   return () => {
-    if (!userId || !signedIn) {
+    if (!profile || !userId || !signedIn || !canUseRemote()) {
       leave();
       return;
     }
 
     const today = todayKey();
-    const before = gamificationRepository.getActiveQuests(userId, today);
-    const progressBefore = new Map(before.map((q) => [q.id, q.progress]));
+    const questsBefore = new Map(
+      gamificationRepository.getActiveQuests(userId, today).map((q) => [q.id, q]),
+    );
 
     leave();
 
-    gamificationRepository
-      .pullQuests(userId, today, locale)
+    // The server scores quests from the rows it has been sent, so the new log
+    // must be pushed before the pull or the pull reports the old progress.
+    pushAll(profile)
+      .then(() => gamificationRepository.pullQuests(userId, today, locale))
       .then((quests) => {
         void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.all });
 
-        if (hideChallengeProgress) return;
+        // Read at resolve time, not render time: this fires seconds after the
+        // log, by which point the closed-over settings can be stale.
+        const settings = useSettingsStore.getState();
 
-        // A quest that's already completed never changes again server-side,
-        // so "progress went up" is exactly "this action moved it" — no
-        // separate before/after completion diff needed.
+        if (settings.hideChallengeProgress) return;
+
+        // Completion can flip without progress moving (a ratio quest, or the
+        // server settling it), so completion is diffed separately.
         const activeQuestIds = quests.map((q) => q.id);
-        const advanced = quests.filter((q) => q.progress > (progressBefore.get(q.id) ?? 0));
+        const advanced = quests.filter((q) => {
+          const prev = questsBefore.get(q.id);
+
+          return q.progress > (prev?.progress ?? 0) || (q.completed && !prev?.completed);
+        });
 
         const unseenTypes = advanced
           .map((q) => q.questType)
-          .filter((type) => !seenQuestTypes.includes(type));
+          .filter((type) => !settings.seenQuestTypes.includes(type));
 
         if (unseenTypes.length > 0) {
-          markQuestTypesSeen(advanced.map((q) => q.questType));
+          for (const quest of advanced) if (quest.completed) claimCompletion(quest.id);
+          settings.markQuestTypesSeen(advanced.map((q) => q.questType));
           // `leave` already ran above — the interstitial's own dismiss has
           // nothing further of the caller's to close.
           present(advanced, () => {});
@@ -123,7 +169,9 @@ export function usePostLogInterstitial(leave: () => void = () => {}) {
         const entries: QuestToastEntry[] = [];
 
         for (const quest of advanced) {
-          const count = bumpQuestAdvance(quest.id, activeQuestIds);
+          const count = settings.bumpQuestAdvance(quest.id, activeQuestIds);
+
+          if (quest.completed && !claimCompletion(quest.id)) continue;
 
           if (shouldAnnounce(count, quest.completed)) {
             entries.push({ quest, completed: quest.completed });
@@ -175,8 +223,14 @@ export function useQuestsPull() {
     queryFn: async () => {
       if (!userId) throw new Error('No local profile yet.');
 
-      await gamificationRepository.pullQuests(userId, today, locale);
+      const questsBefore = new Map(
+        gamificationRepository.getActiveQuests(userId, today).map((q) => [q.id, q]),
+      );
+
+      const quests = await gamificationRepository.pullQuests(userId, today, locale);
       void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.quests(today) });
+
+      announceBackgroundCompletions(quests, questsBefore);
 
       return true;
     },

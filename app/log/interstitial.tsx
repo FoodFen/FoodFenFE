@@ -7,10 +7,9 @@ import { Card } from '@/components/ui/Card';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Text } from '@/components/ui/Text';
 import { useInterstitialStore } from '@/features/gamification/interstitialStore';
-import { questProgressLabel } from '@/features/gamification/selectors';
+import { questProgressFraction, questProgressLabel } from '@/features/gamification/selectors';
 import { useSettingsStore } from '@/features/settings/store';
 import { useTranslation } from '@/hooks/useTranslation';
-import { progressFraction } from '@/lib/nutrition';
 
 /**
  * The post-log challenge interstitial (UC-22).
@@ -80,7 +79,7 @@ export default function InterstitialScreen() {
               <Text variant="body" tone="muted">
                 {quest.description}
               </Text>
-              <ProgressBar progress={progressFraction(quest.progress, quest.target)} />
+              <ProgressBar progress={questProgressFraction(quest)} />
               <Text variant="caption" tone="subtle">
                 {questProgressLabel(quest)}
               </Text>

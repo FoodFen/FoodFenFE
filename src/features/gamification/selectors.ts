@@ -1,12 +1,26 @@
 import type { DateKey } from '@/lib/date';
 import { fromDateKey, lastNDays, shiftDateKey, todayKey } from '@/lib/date';
+import { progressFraction } from '@/lib/nutrition';
 import type { Quest, Streak } from '@/types/models';
+
+/**
+ * What the UI shows as progress: the server's `completed` flag wins over the
+ * raw numbers, because it applies the quest's `completionRatio` — a completed
+ * quest can sit at `progress < target` (e.g. 80/100) and must still read as done.
+ */
+function displayProgress(quest: Quest): number {
+  return quest.completed ? Math.max(quest.progress, quest.target) : quest.progress;
+}
+
+export function questProgressFraction(quest: Quest): number {
+  return progressFraction(displayProgress(quest), quest.target);
+}
 
 /** Goal quests are a percent of a daily goal, not a count, so "0/100" would read wrong. */
 export function questProgressLabel(quest: Quest): string {
-  return quest.unit === 'percent'
-    ? `${quest.progress}%`
-    : `${quest.progress}/${quest.target}`;
+  const progress = displayProgress(quest);
+
+  return quest.unit === 'percent' ? `${progress}%` : `${progress}/${quest.target}`;
 }
 
 export interface StreakDay {

@@ -17,20 +17,18 @@ import {
   useRefreshQuests,
   useStreak,
 } from '@/features/gamification/queries';
-import { questProgressLabel } from '@/features/gamification/selectors';
+import { questProgressFraction, questProgressLabel } from '@/features/gamification/selectors';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { calendarWeek, daysUntil, todayKey } from '@/lib/date';
-import { progressFraction } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 import type { Quest } from '@/types/models';
 
 /**
  * The Daily/Weekly challenges screen (UC-23).
  *
- * `useActiveQuests` already recomputes live progress on every read (the same
- * query-time-aggregation pattern as the diary), so this screen never shows a
- * number staler than whatever was last logged.
+ * `useActiveQuests` reads the on-device cache of the server's quests;
+ * `useQuestsPull` refreshes that cache in the background.
  */
 export default function AchievementsScreen() {
   const { t } = useTranslation();
@@ -169,11 +167,20 @@ function StreakSummaryCard({ currentStreak }: { currentStreak: number }) {
 
 function ChallengeRow({ quest, daysLeft }: { quest: Quest; daysLeft: number }) {
   const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
 
   return (
     <Card className="gap-2">
-      <View className="flex-row items-baseline justify-between">
-        <Text variant="heading">{quest.title}</Text>
+      <View className="flex-row items-center justify-between gap-2">
+        <View className="flex-1 flex-row items-center gap-2">
+          {quest.completed ? (
+            <Ionicons name="checkmark-circle" size={20} color={colors.brand} />
+          ) : null}
+          <Text variant="heading" numberOfLines={1} className="flex-1">
+            {quest.title}
+          </Text>
+        </View>
         <Text variant="caption" tone="brand">
           +{quest.rewardCoins}
         </Text>
@@ -181,7 +188,10 @@ function ChallengeRow({ quest, daysLeft }: { quest: Quest; daysLeft: number }) {
       <Text variant="body" tone="muted">
         {quest.description}
       </Text>
-      <ProgressBar progress={progressFraction(quest.progress, quest.target)} />
+      <ProgressBar
+        progress={questProgressFraction(quest)}
+        color={quest.completed ? colors.brand : undefined}
+      />
       <View className="flex-row items-center justify-between">
         <Text variant="caption" tone="subtle">
           {questProgressLabel(quest)}

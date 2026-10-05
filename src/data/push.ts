@@ -330,7 +330,7 @@ export async function pushDayLogs(userId: string): Promise<void> {
  * nothing here has a cross-resource dependency, so the order is otherwise
  * arbitrary.
  */
-export async function pushAll(profile: UserProfile): Promise<void> {
+async function runPushAll(profile: UserProfile): Promise<void> {
   console.warn('[push] starting for user', profile.id);
 
   await pushUserProfile(profile);
@@ -340,4 +340,19 @@ export async function pushAll(profile: UserProfile): Promise<void> {
   await pushFoodEntries(profile.id);
 
   console.warn('[push] done for user', profile.id);
+}
+
+let pushTail: Promise<void> = Promise.resolve();
+
+/**
+ * Serialized: the post-log quest check and `usePushSync` both call this, and two
+ * concurrent runs would read the same dirty rows and POST them twice. Queuing
+ * (rather than joining an in-flight run) also guarantees a caller's push covers
+ * every write made before it called.
+ */
+export function pushAll(profile: UserProfile): Promise<void> {
+  const run = pushTail.then(() => runPushAll(profile));
+  pushTail = run.catch(() => {});
+
+  return run;
 }

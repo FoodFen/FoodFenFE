@@ -1,4 +1,4 @@
-import { and, desc, eq, sql } from 'drizzle-orm';
+import { and, desc, eq, inArray, sql } from 'drizzle-orm';
 
 import { gamificationApi } from '@/api/endpoints/gamification';
 import type { RemoteQuestProgress } from '@/api/schemas';
@@ -139,6 +139,31 @@ function upsertQuest(userId: string, remote: RemoteQuestProgress): void {
   }
 }
 
+/**
+ * Drops cached quests the server no longer lists for a date it just answered
+ * for, so a re-issued or removed quest can't linger as a ghost row. Scoped to
+ * the dates present in the response: an empty answer says nothing about which
+ * date it was for, so it never wipes the cache.
+ */
+function pruneStaleQuests(userId: string, remotes: RemoteQuestProgress[]): void {
+  const dates = [...new Set(remotes.map((remote) => remote.questDate))];
+  const liveIds = new Set(remotes.map((remote) => remote.id));
+
+  if (dates.length === 0) return;
+
+  const cached = db
+    .select()
+    .from(quest)
+    .where(and(eq(quest.userId, userId), inArray(quest.questDate, dates)))
+    .all();
+
+  for (const row of cached) {
+    if (!row.remoteId || !liveIds.has(row.remoteId)) {
+      db.delete(quest).where(eq(quest.id, row.id)).run();
+    }
+  }
+}
+
 /** Reconciles the local coin ledger's sum to the server's authoritative balance. */
 export function reconcileCoinBalance(userId: string, serverBalance: number): void {
   const delta = serverBalance - getCoinBalance(userId);
@@ -160,6 +185,7 @@ export async function pullQuests(
   const { balance, quests } = await gamificationApi.quests(date, language);
 
   for (const remote of quests) upsertQuest(userId, remote);
+  pruneStaleQuests(userId, quests);
   reconcileCoinBalance(userId, balance);
 
   return getActiveQuests(userId, date);

@@ -16,12 +16,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Card } from '@/components/ui/Card';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Text } from '@/components/ui/Text';
-import { questProgressLabel } from '@/features/gamification/selectors';
+import { questProgressFraction, questProgressLabel } from '@/features/gamification/selectors';
 import type { QuestToastEntry } from '@/features/gamification/toastStore';
 import { useQuestToastStore } from '@/features/gamification/toastStore';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
-import { progressFraction } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 
 const PROGRESS_HIDE_MS = 2600;
@@ -166,7 +165,7 @@ function ToastRow({
       </Text>
 
       <ProgressBar
-        progress={progressFraction(quest.progress, quest.target)}
+        progress={questProgressFraction(quest)}
         color={completed ? colors.brand : undefined}
       />
 
