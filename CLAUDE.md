@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 If the running model is Opus, it may only brainstorm, plan, explore, review and edit docs/plans. It must never write or edit code itself. Any coding task is delegated to a subagent running on Haiku or Sonnet (the Agent tool's `model: "haiku" | "sonnet"`), and Opus reviews the result.
 
+## Other repos belong to their own sessions
+
+Never write to another repo (e.g. `../FoodFenBE`) when a Claude session is already working there. That rules out code, git branches/checkouts and commits, by you or by a subagent you dispatch. Reading it is fine. To get something done there, message that session (`ListAgents` → `SendMessage`). If no session is running in that repo, stop and tell the user instead of writing to it yourself.
+
 ## Scope discipline — the top rule
 
 Do exactly what was asked. Nothing upstream, nothing downstream, nothing adjacent, even when the next step is obvious. Violating this is a worse failure than a bug.
