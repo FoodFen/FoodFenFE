@@ -7,7 +7,6 @@ import * as gamification from '@/data/gamificationRepository';
 import { useProfileStore } from '@/features/profile/store';
 import { env } from '@/lib/env';
 import { queryKeys } from '@/lib/queryClient';
-import { StorageKeys, cache } from '@/lib/storage';
 import type { PlanType } from '@/types/models';
 
 /** When the current Premium runs out — `null` for no subscription or one with no end date. */
@@ -23,19 +22,11 @@ export function usePremiumEndDate() {
 
 type PaymentPlans = Awaited<ReturnType<typeof paymentsApi.plans>>;
 
-/** The plans on sale and their VND prices. Refetched on every open; the last answer is kept on-device and shown while it loads. */
+/** The plans on sale and their VND prices. Refetched on every open; the query client's persister shows the last answer while it loads. */
 export function usePaymentPlans() {
   return useQuery<PaymentPlans>({
     queryKey: queryKeys.premium.plans(),
-    queryFn: async ({ signal }) => {
-      const plans = await paymentsApi.plans(signal);
-      cache.set(StorageKeys.paymentPlans, plans);
-
-      return plans;
-    },
-    initialData: () => cache.get<PaymentPlans>(StorageKeys.paymentPlans),
-    initialDataUpdatedAt: 0,
-    staleTime: 0,
+    queryFn: ({ signal }) => paymentsApi.plans(signal),
     refetchOnMount: 'always',
     enabled: env.hasBackend,
     retry: false,

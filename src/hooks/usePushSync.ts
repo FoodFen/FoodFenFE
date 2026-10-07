@@ -17,7 +17,7 @@ const PUSH_AFTER_WRITE_MS = 1500;
  * the remote path is usable (`canUseRemote()`), on mount, every time the
  * app returns to the foreground, every 5 minutes while foregrounded, and
  * shortly after any mutation succeeds (debounced, so a burst of edits is one
- * push). A trigger that lands mid-push is replayed when that push ends.
+ * push). A trigger that lands mid-push queues behind it (`pushAll` serializes runs).
  * No retry/backoff queue — a row that fails just stays dirty and gets
  * tried again on the next trigger, which is good enough for how
  * infrequently this fires.
@@ -34,30 +34,14 @@ export function usePushSync(): void {
     refreshQuestsRef.current = refreshQuests;
   });
   const queryClient = useQueryClient();
-  const pushingRef = useRef(false);
-  const rerunRef = useRef(false);
 
   useEffect(() => {
     const tryPush = () => {
       if (!profile || !canUseRemote()) return;
 
-      if (pushingRef.current) {
-        rerunRef.current = true;
-        return;
-      }
-
-      pushingRef.current = true;
       console.warn('[push] trigger fired for user', profile.id);
 
-      void pushAll(profile).finally(() => {
-        pushingRef.current = false;
-        void refreshQuestsRef.current();
-
-        if (rerunRef.current) {
-          rerunRef.current = false;
-          tryPush();
-        }
-      });
+      void pushAll(profile).finally(() => void refreshQuestsRef.current());
     };
 
     let writeTimer: ReturnType<typeof setTimeout> | undefined;

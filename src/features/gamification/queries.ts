@@ -16,7 +16,6 @@ import { useSettingsStore } from '@/features/settings/store';
 import { shiftDateKey, todayKey } from '@/lib/date';
 import { env } from '@/lib/env';
 import { queryKeys } from '@/lib/queryClient';
-import { StorageKeys, cache } from '@/lib/storage';
 import type { Quest } from '@/types/models';
 
 function useUserId(): string | null {
@@ -229,6 +228,7 @@ export function useQuestsPull() {
 
       const quests = await gamificationRepository.pullQuests(userId, today, locale);
       void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.quests(today) });
+      void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.coins() });
 
       announceBackgroundCompletions(quests, questsBefore);
 
@@ -273,19 +273,11 @@ export function useStreak() {
 
 type CoinBundles = Awaited<ReturnType<typeof gamificationApi.bundles>>;
 
-/** The coin shop's bundles. Refetched on every open; the last answer is kept on-device and shown while it loads. */
+/** The coin shop's bundles. Refetched on every open; the query client's persister shows the last answer while it loads. */
 export function useCoinBundles() {
   return useQuery<CoinBundles>({
     queryKey: queryKeys.gamification.bundles(),
-    queryFn: async ({ signal }) => {
-      const bundles = await gamificationApi.bundles(signal);
-      cache.set(StorageKeys.coinBundles, bundles);
-
-      return bundles;
-    },
-    initialData: () => cache.get<CoinBundles>(StorageKeys.coinBundles),
-    initialDataUpdatedAt: 0,
-    staleTime: 0,
+    queryFn: ({ signal }) => gamificationApi.bundles(signal),
     refetchOnMount: 'always',
     enabled: env.hasBackend,
     retry: false,

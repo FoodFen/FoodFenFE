@@ -106,6 +106,7 @@ function swapLocalData(
   remote: RemoteUser,
   goals: RemoteDailyGoal[] | null,
   erase: boolean,
+  goalsFetchFailed: boolean,
 ): void {
   if (erase) useProfileStore.getState().eraseAll();
   preferences.set(StorageKeys.accountOwnerId, remote.id);
@@ -122,8 +123,12 @@ function swapLocalData(
   if (!restored) return;
 
   applyDailyGoals(restored.id, goals);
-  if (!userRepository.getGoalForDate(restored.id))
-    userRepository.writeCalculatedGoal(restored);
+  if (!userRepository.getGoalForDate(restored.id)) {
+    const fallback = userRepository.writeCalculatedGoal(restored);
+
+    // The diary can't render without a goal, but a guess must never overwrite the account's real one.
+    if (goalsFetchFailed) userRepository.markGoalSynced(fallback.id);
+  }
 
   useProfileStore.getState().refresh();
 }
@@ -142,6 +147,7 @@ async function adoptSession(session: AuthSession): Promise<void> {
   });
 
   let goals: RemoteDailyGoal[] | null = null;
+  let goalsFetchFailed = false;
 
   if (needsRestore) {
     try {
@@ -149,10 +155,11 @@ async function adoptSession(session: AuthSession): Promise<void> {
     } catch (error) {
       if (env.isDev) console.warn('[auth] Goal fetch at sign-in failed.', error);
       goals = [];
+      goalsFetchFailed = true;
     }
   }
 
-  swapLocalData(session.user, goals, erase);
+  swapLocalData(session.user, goals, erase, goalsFetchFailed);
   await persistSession(session);
   useAuthStore.setState({ session, status: 'authenticated' });
   console.warn('[auth] session adopted', {

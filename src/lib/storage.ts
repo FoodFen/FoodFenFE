@@ -106,8 +106,6 @@ export const StorageKeys = {
   onboardingComplete: 'onboarding-complete',
   accountOwnerId: 'account-owner-id',
   queryCache: 'react-query-cache',
-  paymentPlans: 'payment-plans',
-  coinBundles: 'coin-bundles',
   devSeed: 'dev-seed-enabled',
   hideChallengeProgress: 'hide-challenge-progress',
   seenQuestTypes: 'seen-quest-types',

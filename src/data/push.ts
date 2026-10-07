@@ -16,6 +16,7 @@ import {
 import type { UserProfile } from '@/types/models';
 
 import { markSynced } from './sync';
+import { getLocalUser } from './userRepository';
 
 /**
  * Draining `pendingChangeCount()` to the server — the push half of
@@ -330,7 +331,12 @@ export async function pushDayLogs(userId: string): Promise<void> {
  * nothing here has a cross-resource dependency, so the order is otherwise
  * arbitrary.
  */
-async function runPushAll(profile: UserProfile): Promise<void> {
+async function runPushAll(queued: UserProfile): Promise<void> {
+  // The caller's snapshot may predate edits made while this run waited its turn.
+  const profile = getLocalUser();
+
+  if (!profile || profile.id !== queued.id) return;
+
   console.warn('[push] starting for user', profile.id);
 
   await pushUserProfile(profile);

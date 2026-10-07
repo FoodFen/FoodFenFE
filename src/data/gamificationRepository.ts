@@ -142,11 +142,14 @@ function upsertQuest(userId: string, remote: RemoteQuestProgress): void {
 /**
  * Drops cached quests the server no longer lists for a date it just answered
  * for, so a re-issued or removed quest can't linger as a ghost row. Scoped to
- * the dates present in the response: an empty answer says nothing about which
- * date it was for, so it never wipes the cache.
+ * the (cadence, date) pairs present in the response: a weekly quest is dated
+ * the week's Monday, so its date alone says nothing about that day's dailies,
+ * and an empty answer says nothing about which pair it was for, so it never
+ * wipes the cache.
  */
 function pruneStaleQuests(userId: string, remotes: RemoteQuestProgress[]): void {
   const dates = [...new Set(remotes.map((remote) => remote.questDate))];
+  const answered = new Set(remotes.map((remote) => `${remote.cadence}|${remote.questDate}`));
   const liveIds = new Set(remotes.map((remote) => remote.id));
 
   if (dates.length === 0) return;
@@ -158,6 +161,8 @@ function pruneStaleQuests(userId: string, remotes: RemoteQuestProgress[]): void 
     .all();
 
   for (const row of cached) {
+    if (!answered.has(`${row.cadence}|${row.questDate}`)) continue;
+
     if (!row.remoteId || !liveIds.has(row.remoteId)) {
       db.delete(quest).where(eq(quest.id, row.id)).run();
     }

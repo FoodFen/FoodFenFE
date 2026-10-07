@@ -616,6 +616,7 @@ export const vi = {
     momoWaitingTitle: 'Hoàn tất thanh toán trên MoMo',
     momoWaitingDescription: 'Thanh toán xong bạn quay lại đây, app sẽ tự xác nhận.',
     openMomoAgain: 'Mở lại MoMo',
+    openCheckoutAgain: 'Mở lại trang thanh toán',
     waitingTitle: 'Đang chờ xác nhận thanh toán',
     waitingDescription: 'Sau khi thanh toán xong trên PayOS, có thể mất một lúc mới được xác nhận.',
     checkStatus: 'Kiểm tra lại',

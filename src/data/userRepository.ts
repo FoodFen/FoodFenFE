@@ -10,7 +10,7 @@ import { calculateTargets } from '@/lib/nutrition';
 import type { DailyGoal, UserProfile } from '@/types/models';
 
 import { getLatestWeight } from './logRepository';
-import { notDeleted, touch } from './sync';
+import { markSynced, notDeleted, touch } from './sync';
 
 /**
  * The user row and their goal history.
@@ -284,6 +284,11 @@ export function writeCalculatedGoal(
     latestWeight === undefined ? profile : { ...profile, weightCurrent: latestWeight };
 
   return setGoal(profile.id, calculateTargets(resolved, now), effectiveDate);
+}
+
+/** Stops push from sending a goal row the server must not receive. */
+export function markGoalSynced(goalId: string): void {
+  markSynced(dailyGoal, goalId);
 }
 
 /**

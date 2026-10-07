@@ -1,4 +1,4 @@
-import { and, eq, isNotNull, sql } from 'drizzle-orm';
+import { and, eq, isNotNull, isNull, sql } from 'drizzle-orm';
 
 import { syncApi } from '@/api/endpoints/sync';
 import type {
@@ -30,9 +30,8 @@ import { generateLocalId } from '@/lib/id';
  * The rule that matters: **a locally modified row is never overwritten.** If
  * `synced_at` is null or older than `updated_at`, the device holds an edit the
  * server has not seen, and taking the server's version would silently discard
- * something the user typed. Those rows are skipped here and belong to the push
- * pass instead, which does not exist yet — so today this is a one-way refresh
- * of rows the device has not touched.
+ * something the user typed. Those rows are skipped here and left to the push
+ * pass (`push.ts`), which sends them up and marks them synced.
  */
 
 /** True when the local row holds an edit the server has not received. */
@@ -51,6 +50,20 @@ export async function pullDailyGoals(userId: string): Promise<void> {
 }
 
 export function applyDailyGoals(userId: string, remote: RemoteDailyGoal[]): void {
+  if (remote.length > 0) {
+    // Sign-in fallback goals: never pushed (no remoteId) and never edited. Hard delete, since a soft-deleted row is dirty and would be pushed.
+    db.delete(dailyGoal)
+      .where(
+        and(
+          eq(dailyGoal.userId, userId),
+          isNull(dailyGoal.remoteId),
+          isNotNull(dailyGoal.syncedAt),
+          sql`${dailyGoal.updatedAt} <= ${dailyGoal.syncedAt}`,
+        ),
+      )
+      .run();
+  }
+
   for (const row of remote) {
     upsertDailyGoal(userId, row);
   }

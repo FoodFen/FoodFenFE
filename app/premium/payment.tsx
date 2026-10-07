@@ -38,8 +38,8 @@ const RETURN_URL = 'foodfen://premium/return';
 const METHOD_LABEL = { payos: 'methodPayos', momo: 'methodMomo' } as const;
 const PAY_LABEL = { payos: 'subscribeButton', momo: 'payWithMomo' } as const;
 
-/** MoMo's app if installed, otherwise its web checkout, which redirects back to RETURN_URL. */
-async function openMomo(order: RemoteCheckoutResponse) {
+/** The provider's app if the order has a deeplink that opens, otherwise its web checkout, which redirects back to RETURN_URL. */
+async function openCheckout(order: RemoteCheckoutResponse) {
   const opened = order.deeplink
     ? await Linking.openURL(order.deeplink).then(
         () => true,
@@ -47,7 +47,7 @@ async function openMomo(order: RemoteCheckoutResponse) {
       )
     : false;
 
-  if (!opened) await WebBrowser.openAuthSessionAsync(order.checkoutUrl, RETURN_URL);
+  if (!opened) await WebBrowser.openAuthSessionAsync(order.checkoutUrl, RETURN_URL).catch(() => {});
 }
 
 /**
@@ -78,7 +78,6 @@ export default function PremiumPaymentScreen() {
   const isNoSessionReason = env.hasBackend && onlineManager.isOnline() && !session;
 
   const { data: planData } = usePaymentPlans();
-  // A paywall cached by an older build has no `providers`.
   const providers: PaymentProvider[] = planData?.providers ?? ['payos'];
   const [chosenProvider, setChosenProvider] = useState<PaymentProvider | null>(null);
   const provider =
@@ -139,7 +138,7 @@ export default function PremiumPaymentScreen() {
 
       setOrder(result);
       setStage('awaiting-payment');
-      if (result.provider === 'momo') void openMomo(result);
+      if (result.provider === 'momo' || !result.qrCode) void openCheckout(result);
     } catch (error) {
       setStage('error');
       setErrorMessage(isApiError(error) ? error.userMessage : t('common', 'somethingWentWrong'));
@@ -232,10 +231,10 @@ export default function PremiumPaymentScreen() {
             <Text variant="body" tone="muted" className="text-center">
               {t('premiumPayment', isMomo ? 'momoWaitingDescription' : 'waitingDescription')}
             </Text>
-            {isMomo ? (
+            {!order.qrCode ? (
               <Button
-                label={t('premiumPayment', 'openMomoAgain')}
-                onPress={() => void openMomo(order)}
+                label={t('premiumPayment', isMomo ? 'openMomoAgain' : 'openCheckoutAgain')}
+                onPress={() => void openCheckout(order)}
                 size="sm"
               />
             ) : null}

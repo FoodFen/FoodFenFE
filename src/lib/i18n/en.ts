@@ -598,6 +598,7 @@ export const en: DeepPartial<Translations> = {
     momoWaitingTitle: 'Finish paying in MoMo',
     momoWaitingDescription: 'Come back here when you’re done — we’ll confirm it automatically.',
     openMomoAgain: 'Open MoMo again',
+    openCheckoutAgain: 'Open payment page again',
     waitingTitle: 'Waiting for payment confirmation',
     waitingDescription: 'Once you’re done on PayOS, it can take a moment to confirm.',
     checkStatus: 'Check again',

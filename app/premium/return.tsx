@@ -10,22 +10,16 @@ import { useTranslation } from '@/hooks/useTranslation';
  * Deep-link landing for `foodfen://premium/return` — where PayOS and MoMo
  * send the user after checkout.
  *
- * When it lands on top of an open payment screen, that screen is already
- * polling and owns navigation, so this just steps back to it. Only on a cold
- * launch (nothing to go back to) does it re-check entitlement itself — and
- * even then it doesn't assume success: a redirect only means the checkout
- * page closed, not that the webhook has necessarily been processed yet.
+ * Re-checks entitlement and doesn't assume success: a redirect only means the
+ * checkout page closed, not that the webhook has necessarily been processed
+ * yet. Without an active subscription it dismisses back to the payment
+ * screen, which keeps polling.
  */
 export default function PremiumReturnScreen() {
   const { t } = useTranslation();
   const refreshSubscription = useRefreshSubscription();
 
   useEffect(() => {
-    if (router.canGoBack()) {
-      router.back();
-      return;
-    }
-
     refreshSubscription.mutate(undefined, {
       onSuccess: (result) => {
         if (result.hasActiveSubscription) {

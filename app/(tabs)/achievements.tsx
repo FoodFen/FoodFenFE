@@ -1,5 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
+import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { Pressable, RefreshControl, View } from 'react-native';
 
@@ -38,11 +39,15 @@ export default function AchievementsScreen() {
   const refreshQuests = useRefreshQuests();
   const signedIn = useAuthStore((state) => state.session !== null);
   const { resolved } = useAppTheme();
+  const [pulling, setPulling] = useState(false);
   const noQuests = !quests || quests.length === 0;
   const refreshControl = (
     <RefreshControl
-      refreshing={sync.isRefetching}
-      onRefresh={() => void refreshQuests()}
+      refreshing={pulling}
+      onRefresh={() => {
+        setPulling(true);
+        void refreshQuests().finally(() => setPulling(false));
+      }}
       tintColor={colorsFor(resolved).fgMuted}
     />
   );
