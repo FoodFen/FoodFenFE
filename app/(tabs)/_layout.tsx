@@ -9,7 +9,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { colorsFor } from '@/theme/colors';
 
 /**
- * Three destinations — the dashboard, achievements, and stats — drawn by the
+ * Four destinations — the dashboard, achievements, dishes, and stats — drawn by the
  * custom floating bar. Logging is not a tab: the bar's green button pushes the
  * meal modal and returns you to wherever you were. The header shortcuts to the
  * shop and settings live on the dashboard, not here.
@@ -34,6 +34,7 @@ export default function TabsLayout() {
         name="achievements"
         options={{ title: t('tabs', 'achievements') }}
       />
+      <Tabs.Screen name="dishes" options={{ title: t('tabs', 'dishes') }} />
       <Tabs.Screen name="insights" options={{ title: t('tabs', 'insights') }} />
     </Tabs>
   );
