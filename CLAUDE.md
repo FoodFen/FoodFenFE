@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 If the running model is Opus, it may only brainstorm, plan, explore, review and edit docs/plans. It must never write or edit code itself. Any coding task is delegated to a subagent running on Haiku or Sonnet (the Agent tool's `model: "haiku" | "sonnet"`), and Opus reviews the result.
 
+**Spec → code, no plan by default.** A feature gets a written spec (decisions, contract, files to touch, tests) and goes straight to the subagent, which writes its own tests and code from it. Write an implementation plan only when the work is split across several subagents, and then as a short task list (task, files, dependencies) — **never code in a plan**: a plan with full code is the implementation written twice, in Opus tokens. This overrides the superpowers `brainstorming` → `writing-plans` handoff.
+
 ## Other repos belong to their own sessions
 
 Never write to another repo (e.g. `../FoodFenBE`) when a Claude session is already working there. That rules out code, git branches/checkouts and commits, by you or by a subagent you dispatch. Reading it is fine. To get something done there, message that session (`ListAgents` → `SendMessage`). If no session is running in that repo, stop and tell the user instead of writing to it yourself.
