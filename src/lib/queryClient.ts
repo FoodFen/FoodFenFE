@@ -142,6 +142,11 @@ export const queryKeys = {
     plans: () => [...queryKeys.premium.all, 'plans'] as const,
     payment: (orderCode: number) => [...queryKeys.premium.all, 'payment', orderCode] as const,
   },
+  dishes: {
+    all: ['dishes'] as const,
+    list: (date: string) => [...queryKeys.dishes.all, 'list', date] as const,
+    restaurant: (id: string) => [...queryKeys.dishes.all, 'restaurant', id] as const,
+  },
   quiz: {
     all: ['quiz'] as const,
     topics: () => [...queryKeys.quiz.all, 'topics'] as const,
