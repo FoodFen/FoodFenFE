@@ -3,10 +3,13 @@ import { Alert } from 'react-native';
 
 import { dishesApi } from '@/api/endpoints/dishes';
 import type { RemoteDish } from '@/api/schemas';
+import { pushAll } from '@/data/push';
+import { canUseRemote } from '@/data/sync';
 import { useAuthStore } from '@/features/auth/store';
 import { useLogManualEntry } from '@/features/diary/queries';
 import { suggestedMealType } from '@/features/diary/selectors';
 import { dishToManualEntry } from '@/features/dishes/mappers';
+import { useProfileStore } from '@/features/profile/store';
 import { useTranslation } from '@/hooks/useTranslation';
 import type { DateKey } from '@/lib/date';
 import { todayKey } from '@/lib/date';
@@ -22,10 +25,18 @@ export function useDishesAvailable(): boolean {
 
 export function useDishes(date: DateKey) {
   const available = useDishesAvailable();
+  const profile = useProfileStore((state) => state.profile);
 
   return useQuery({
     queryKey: queryKeys.dishes.list(date),
-    queryFn: ({ signal }) => dishesApi.list(date, signal),
+    queryFn: async ({ signal }) => {
+      // The server computes remainingKcal/fits from the rows it has been sent,
+      // so push local diary changes first. Best-effort: offline or a failed
+      // push must not stop the list from loading.
+      if (profile && canUseRemote()) await pushAll(profile).catch(() => {});
+
+      return dishesApi.list(date, signal);
+    },
     enabled: available,
     retry: false,
   });
