@@ -142,6 +142,8 @@ Where the load-bearing logic lives:
 - Body metrics and health data are sensitive: never log them, never send them to analytics unless asked.
 - Where kcal/macro arithmetic rounds or converts units, say so in a comment.
 - Gamification and paywall logic changes often for growth experiments, so it should be togglable in isolation — but build that structure only when building that logic, never preemptively.
+- **Fetched data never leaves a blank screen.** Wherever data that has to come from the network is displayed and nothing is cached yet, render a `Skeleton` (`src/components/ui/Skeleton.tsx`) shaped like the content it replaces — never empty space, never a bare spinner. A screen showing server data also gets pull-to-refresh: a `RefreshControl` on its `ScrollScreen`, as in `app/(tabs)/dishes.tsx`.
+- **Icons come from `@expo/vector-icons`, never emoji.** Ionicons first (`@expo/vector-icons/Ionicons`), MaterialCommunityIcons only when Ionicons has no fitting glyph. The one exception is a food entry's own stored `emoji` (user/AI content, not UI chrome).
 - Styling is NativeWind `className` against semantic tokens (`bg-surface`, `text-fg-muted`, `text-protein`) defined once per theme in `global.css`. No `dark:` variants for ordinary work. `src/theme/colors.ts` mirrors the same palette in JS for SVG fill/stroke, the navigator theme and the status bar — change both together. Reach for inline `style={{}}` only when the value is computed at runtime.
 
 ### Tests
