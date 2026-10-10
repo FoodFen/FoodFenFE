@@ -1,4 +1,7 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useState } from 'react';
+import type { ReactNode } from 'react';
 import { ScrollView, View } from 'react-native';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 
@@ -6,8 +9,10 @@ import { Card } from '@/components/ui/Card';
 import { MacroBarGroup } from '@/components/ui/MacroBar';
 import { Text } from '@/components/ui/Text';
 import { useIsPremium } from '@/features/profile/store';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
+import { colorsFor } from '@/theme/colors';
 import type { DiaryDay } from '@/types/models';
 
 import { MascotPlaceholder } from './MascotPlaceholder';
@@ -21,7 +26,10 @@ import { MascotPlaceholder } from './MascotPlaceholder';
  */
 export function SummaryCard({ day }: { day: DiaryDay }) {
   const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
   const isPremium = useIsPremium();
+  const iconSize = 18;
   const [width, setWidth] = useState(0);
   const [page, setPage] = useState(0);
 
@@ -44,9 +52,39 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
             <View className="flex-row gap-4">
               <MascotPlaceholder className="w-28" />
               <View className="flex-1 justify-center gap-2">
-                <StatRow icon="🏆" label={t('dashboard', 'target')} value={day.goal.targetKcal} />
-                <StatRow icon="🍴" label={t('dashboard', 'consumed')} value={day.totals.kcal} />
-                <StatRow icon="🔥" label={t('dashboard', 'burned')} value={day.exerciseKcal} />
+                <StatRow
+                  icon={
+                    <Ionicons
+                      name="flag-outline"
+                      size={iconSize}
+                      color={colors.fgMuted}
+                    />
+                  }
+                  label={t('dashboard', 'target')}
+                  value={day.goal.targetKcal}
+                />
+                <StatRow
+                  icon={
+                    <Ionicons
+                      name="restaurant-outline"
+                      size={iconSize}
+                      color={colors.fgMuted}
+                    />
+                  }
+                  label={t('dashboard', 'consumed')}
+                  value={day.totals.kcal}
+                />
+                <StatRow
+                  icon={
+                    <Ionicons
+                      name="flame-outline"
+                      size={iconSize}
+                      color={colors.fgMuted}
+                    />
+                  }
+                  label={t('dashboard', 'burned')}
+                  value={day.exerciseKcal}
+                />
               </View>
             </View>
 
@@ -71,7 +109,13 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
               <MascotPlaceholder className="w-28" />
               <View className="flex-1 justify-center gap-2">
                 <StatRow
-                  icon="🌾"
+                  icon={
+                    <Ionicons
+                      name="leaf-outline"
+                      size={iconSize}
+                      color={colors.fgMuted}
+                    />
+                  }
                   label={t('dashboard', 'fiber')}
                   value={
                     isPremium && day.totals.fiberG !== undefined && day.totals.fiberG !== null
@@ -80,8 +124,30 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
                   }
                   unit="g"
                 />
-                <StatRow icon="🍬" label={t('dashboard', 'sugar')} value="—" unit="g" />
-                <StatRow icon="🧂" label={t('dashboard', 'sodium')} value="—" unit="mg" />
+                <StatRow
+                  icon={
+                    <MaterialCommunityIcons
+                      name="candy-outline"
+                      size={iconSize}
+                      color={colors.fgMuted}
+                    />
+                  }
+                  label={t('dashboard', 'sugar')}
+                  value="—"
+                  unit="g"
+                />
+                <StatRow
+                  icon={
+                    <MaterialCommunityIcons
+                      name="shaker-outline"
+                      size={iconSize}
+                      color={colors.fgMuted}
+                    />
+                  }
+                  label={t('dashboard', 'sodium')}
+                  value="—"
+                  unit="mg"
+                />
               </View>
             </View>
 
@@ -115,14 +181,14 @@ function StatRow({
   value,
   unit = 'kcal',
 }: {
-  icon: string;
+  icon: ReactNode;
   label: string;
   value: string | number;
   unit?: string;
 }) {
   return (
     <View className="flex-row items-center gap-2">
-      <Text className="text-base">{icon}</Text>
+      {icon}
       <View className="flex-1">
         <Text variant="caption" tone="muted">
           {label}

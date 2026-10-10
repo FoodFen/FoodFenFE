@@ -363,7 +363,7 @@ export default function ManualEntryScreen() {
         ) : (
           <View className="flex-1 justify-center">
             <EmptyState
-              icon="⚠️"
+              icon="alert-circle-outline"
               title={t('logManual', 'aiUnavailableTitle')}
               description={t('logManual', 'aiUnavailableDescription')}
             />
@@ -387,7 +387,7 @@ export default function ManualEntryScreen() {
         ) : (
           <View className="flex-1 justify-center">
             <EmptyState
-              icon="⚠️"
+              icon="alert-circle-outline"
               title={t('logManual', 'aiUnavailableTitle')}
               description={t('logManual', 'aiUnavailableDescription')}
             />
@@ -512,17 +512,20 @@ export default function ManualEntryScreen() {
                 {t('logManual', 'macros')}
               </Text>
               <MacroRow
-                label={`🌾  ${t('logManual', 'carbs')}`}
+                dotClassName="bg-carbs"
+                label={t('logManual', 'carbs')}
                 value={carbsG}
                 onChange={setCarbsG}
               />
               <MacroRow
-                label={`🥩  ${t('logManual', 'protein')}`}
+                dotClassName="bg-protein"
+                label={t('logManual', 'protein')}
                 value={proteinG}
                 onChange={setProteinG}
               />
               <MacroRow
-                label={`🥑  ${t('logManual', 'fat')}`}
+                dotClassName="bg-fat"
+                label={t('logManual', 'fat')}
                 value={fatG}
                 onChange={setFatG}
               />
@@ -577,16 +580,21 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function MacroRow({
   label,
+  dotClassName,
   value,
   onChange,
 }: {
   label: string;
+  dotClassName: string;
   value: number | null;
   onChange: (v: number | null) => void;
 }) {
   return (
     <View className="flex-row items-center justify-between py-1.5">
-      <Text variant="body">{label}</Text>
+      <View className="flex-row items-center gap-2">
+        <View className={cn('h-2.5 w-2.5 rounded-pill', dotClassName)} />
+        <Text variant="body">{label}</Text>
+      </View>
       <NumberField
         compact
         value={value}

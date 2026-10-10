@@ -1,3 +1,5 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
+import type { ReactNode } from 'react';
 import { View } from 'react-native';
 
 import { OptionList } from '@/components/profile/BodyStatsForm';
@@ -13,10 +15,10 @@ export interface GenderStepProps {
 export function GenderStep({ value, onChange }: GenderStepProps) {
   const { t } = useTranslation();
 
-  const options: { value: Gender; label: string; icon: string }[] = [
-    { value: 'male', label: t('onboardingGender', 'male'), icon: '♂️' },
-    { value: 'female', label: t('onboardingGender', 'female'), icon: '♀️' },
-    { value: 'other', label: t('onboardingGender', 'preferNotToAnswer'), icon: '🙂' },
+  const options: { value: Gender; label: string; icon: (color: string) => ReactNode }[] = [
+    { value: 'male', label: t('onboardingGender', 'male'), icon: (color) => <Ionicons name="male" size={24} color={color} /> },
+    { value: 'female', label: t('onboardingGender', 'female'), icon: (color) => <Ionicons name="female" size={24} color={color} /> },
+    { value: 'other', label: t('onboardingGender', 'preferNotToAnswer'), icon: (color) => <Ionicons name="person-outline" size={24} color={color} /> },
   ];
 
   return (

@@ -1,17 +1,24 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
+import type { ComponentProps } from 'react';
 import { Pressable, View } from 'react-native';
 import Animated, { FadeIn, FadeOutLeft, LinearTransition } from 'react-native-reanimated';
 
 import { Text } from '@/components/ui/Text';
 import { describeIngredients } from '@/features/diary/selectors';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
+import { colorsFor } from '@/theme/colors';
 import type { FoodEntry, InputMethod } from '@/types/models';
 
 /** How the meal was captured, shown as a small provenance marker. */
-const INPUT_METHOD_ICONS: Record<InputMethod, string> = {
-  voice: '🎙️',
-  image: '📷',
-  type: '⌨️',
-  manual: '✏️',
+const INPUT_METHOD_ICONS: Record<
+  InputMethod,
+  ComponentProps<typeof Ionicons>['name']
+> = {
+  voice: 'mic-outline',
+  image: 'camera-outline',
+  type: 'keypad-outline',
+  manual: 'create-outline',
 };
 
 export interface FoodEntryRowProps {
@@ -39,6 +46,8 @@ export function FoodEntryRow({
   secondaryText,
 }: FoodEntryRowProps) {
   const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
   const subtitle = secondaryText ?? describeIngredients(entry);
 
   return (
@@ -54,7 +63,15 @@ export function FoodEntryRow({
         accessibilityLabel={`${entry.name}, ${entry.totalKcal} ${t('common', 'calories')}, ${subtitle}`}
         className="flex-row items-center gap-3 px-4 py-3 active:bg-surface-alt"
       >
-        <Text className="text-sm">{emoji ?? INPUT_METHOD_ICONS[entry.inputMethod]}</Text>
+        {emoji ? (
+          <Text className="text-sm">{emoji}</Text>
+        ) : (
+          <Ionicons
+            name={INPUT_METHOD_ICONS[entry.inputMethod]}
+            size={16}
+            color={colors.fgMuted}
+          />
+        )}
 
         <View className="flex-1 gap-0.5">
           <Text variant="body" numberOfLines={1}>

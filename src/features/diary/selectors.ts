@@ -1,3 +1,6 @@
+import type Ionicons from '@expo/vector-icons/Ionicons';
+import type { ComponentProps } from 'react';
+
 import { EMPTY_NUTRITION, sumNutrition } from '@/lib/nutrition';
 import type { DiaryDay, FoodEntry, MealType, Nutrition } from '@/types/models';
 import { MEAL_TYPES } from '@/types/models';
@@ -10,11 +13,11 @@ export interface MealGroup {
   totals: Nutrition;
 }
 
-export const MEAL_ICONS: Record<MealType, string> = {
-  breakfast: '🌅',
-  lunch: '🥗',
-  dinner: '🍽️',
-  snack: '🍎',
+export const MEAL_ICONS: Record<MealType, ComponentProps<typeof Ionicons>['name']> = {
+  breakfast: 'sunny-outline',
+  lunch: 'restaurant-outline',
+  dinner: 'moon-outline',
+  snack: 'nutrition-outline',
 };
 
 export function entryNutrition(entry: FoodEntry): Nutrition {

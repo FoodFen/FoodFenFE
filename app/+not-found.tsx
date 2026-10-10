@@ -10,7 +10,7 @@ export default function NotFoundScreen() {
   return (
     <Screen className="justify-center">
       <EmptyState
-        icon="🧭"
+        icon="compass-outline"
         title={t('notFound', 'title')}
         description={t('notFound', 'description')}
         actionLabel={t('notFound', 'action')}

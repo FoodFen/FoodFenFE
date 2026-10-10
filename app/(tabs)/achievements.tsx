@@ -75,7 +75,7 @@ export default function AchievementsScreen() {
   } else if (noQuests && !signedIn) {
     questSection = (
       <EmptyState
-        icon="🔒"
+        icon="lock-closed-outline"
         title={t('achievements', 'signInTitle')}
         description={t('achievements', 'signInDescription')}
         actionLabel={t('achievements', 'signIn')}
@@ -92,7 +92,7 @@ export default function AchievementsScreen() {
   } else if (noQuests) {
     questSection = (
       <EmptyState
-        icon="🏅"
+        icon="medal-outline"
         title={t('achievements', 'emptyTitle')}
         description={t('achievements', 'emptyDescription')}
         actionLabel={t('common', 'retry')}
