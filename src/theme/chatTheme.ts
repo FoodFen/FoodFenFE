@@ -10,6 +10,8 @@ import { colorsFor } from './colors';
  * library's own defaults and read fine against any bubble color, so they're
  * left alone rather than reconstructed as ad-hoc rgba strings.
  */
+export const CHAT_AVATAR_SIZE = 28;
+
 function chatThemeFor(scheme: 'light' | 'dark'): PartialChatTheme {
   const colors = colorsFor(scheme);
 
@@ -17,7 +19,7 @@ function chatThemeFor(scheme: 'light' | 'dark'): PartialChatTheme {
     colors: {
       accent: colors.brand,
       background: colors.bg,
-      incomingBubble: colors.surfaceAlt,
+      incomingBubble: colors.surface,
       outgoingBubble: colors.brand,
       incomingText: colors.fg,
       outgoingText: colors.onBrand,
@@ -28,10 +30,18 @@ function chatThemeFor(scheme: 'light' | 'dark'): PartialChatTheme {
       inputBarBackground: colors.surface,
       inputText: colors.fg,
       placeholder: colors.fgSubtle,
-      dayPillText: colors.onBrand,
+      dayPillBackground: colors.surfaceAlt,
+      dayPillText: colors.fgMuted,
+      outgoingMeta: colors.onBrand,
+      ticksSent: colors.onBrand,
+      ticksRead: colors.onBrand,
       surface: colors.surface,
       reactionBackground: colors.surfaceAlt,
+      inputFieldBorder: colors.border,
     },
+    radii: { bubble: 20, bubbleGrouped: 6, inputField: 22 },
+    spacing: { bubblePaddingH: 16, bubblePaddingV: 8 },
+    avatar: { size: CHAT_AVATAR_SIZE },
   };
 }
 
