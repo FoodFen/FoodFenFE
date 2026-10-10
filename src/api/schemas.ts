@@ -425,6 +425,10 @@ const dishFields = {
 
 export const dishListSchema = z.object({
   remainingKcal: z.number().nullable(),
+  nextCursor: z
+    .string()
+    .nullish()
+    .transform((value) => value ?? null),
   dishes: z.array(
     z.object({
       ...dishFields,

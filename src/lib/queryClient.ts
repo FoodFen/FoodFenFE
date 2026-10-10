@@ -2,6 +2,7 @@ import { QueryClient, defaultShouldDehydrateQuery } from '@tanstack/react-query'
 import type { Query } from '@tanstack/react-query';
 import type { Persister } from '@tanstack/react-query-persist-client';
 
+import type { DishFilters } from '@/api/endpoints/dishes';
 import { isApiError } from '@/api/errors';
 
 import { StorageKeys, cache } from './storage';
@@ -144,7 +145,10 @@ export const queryKeys = {
   },
   dishes: {
     all: ['dishes'] as const,
-    list: (date: string) => [...queryKeys.dishes.all, 'list', date] as const,
+    list: (date: string, filters: DishFilters = {}, limit?: number) =>
+      [...queryKeys.dishes.all, 'list', date, filters, limit] as const,
+    infinite: (date: string, filters: DishFilters = {}) =>
+      [...queryKeys.dishes.all, 'infinite', date, filters] as const,
     restaurant: (id: string) => [...queryKeys.dishes.all, 'restaurant', id] as const,
   },
   quiz: {
