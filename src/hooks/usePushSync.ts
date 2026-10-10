@@ -8,6 +8,7 @@ import { canUseRemote } from '@/data/sync';
 import { useAuthStore } from '@/features/auth/store';
 import { useRefreshQuests } from '@/features/gamification/queries';
 import { useProfileStore } from '@/features/profile/store';
+import { queryKeys } from '@/lib/queryClient';
 
 const PUSH_INTERVAL_MS = 5 * 60 * 1000;
 const PUSH_AFTER_WRITE_MS = 1500;
@@ -22,8 +23,9 @@ const PUSH_AFTER_WRITE_MS = 1500;
  * tried again on the next trigger, which is good enough for how
  * infrequently this fires.
  *
- * Signing in re-runs it at once, and every push ends by re-pulling the quests:
- * the server measures quest progress from the rows it has been sent.
+ * Signing in re-runs it at once, and every push ends by re-pulling the quests
+ * and refetching the dish list: the server measures quest progress and dish
+ * fit from the rows it has been sent.
  */
 export function usePushSync(): void {
   const profile = useProfileStore((state) => state.profile);
@@ -41,7 +43,10 @@ export function usePushSync(): void {
 
       console.warn('[push] trigger fired for user', profile.id);
 
-      void pushAll(profile).finally(() => void refreshQuestsRef.current());
+      void pushAll(profile).finally(() => {
+        void refreshQuestsRef.current();
+        void queryClient.invalidateQueries({ queryKey: queryKeys.dishes.all });
+      });
     };
 
     let writeTimer: ReturnType<typeof setTimeout> | undefined;

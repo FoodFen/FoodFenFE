@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 
-import type { DateKey } from '@/lib/date';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n';
 import { StorageKeys, preferences } from '@/lib/storage';
 import type { QuestType } from '@/types/models';
@@ -33,8 +32,6 @@ interface SettingsState {
    * already seen gets a lightweight toast instead (UC-22's two-tier rule).
    */
   seenQuestTypes: QuestType[];
-  /** The day the user last tapped "I'm committed" on the streak screen, or null. */
-  streakCommittedDate: DateKey | null;
   /**
    * How many times each active quest's progress has moved, keyed by quest id.
    * Drives the toast's own throttle (first advance, then every other one, and
@@ -60,7 +57,6 @@ interface SettingsState {
   setDevSeedEnabled: (value: boolean) => void;
   setHideChallengeProgress: (value: boolean) => void;
   markQuestTypesSeen: (types: QuestType[]) => void;
-  commitToStreak: (date: DateKey) => void;
   /**
    * Record another advance for `questId` and return the new count. Prunes any
    * counter not in `activeQuestIds` first, so a counter for a quest reissued
@@ -85,8 +81,6 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   hideChallengeProgress:
     preferences.get<boolean>(StorageKeys.hideChallengeProgress) ?? false,
   seenQuestTypes: preferences.get<QuestType[]>(StorageKeys.seenQuestTypes) ?? [],
-  streakCommittedDate:
-    preferences.get<DateKey>(StorageKeys.streakCommittedDate) ?? null,
   questAdvanceCounts:
     preferences.get<Record<string, number>>(StorageKeys.questAdvanceCounts) ?? {},
   healthSyncEnabled: preferences.get<boolean>(StorageKeys.healthSyncEnabled) ?? false,
@@ -131,11 +125,6 @@ export const useSettingsStore = create<SettingsState>((set) => ({
       preferences.set(StorageKeys.seenQuestTypes, seenQuestTypes);
       return { seenQuestTypes };
     });
-  },
-
-  commitToStreak: (streakCommittedDate) => {
-    preferences.set(StorageKeys.streakCommittedDate, streakCommittedDate);
-    set({ streakCommittedDate });
   },
 
   bumpQuestAdvance: (questId, activeQuestIds) => {

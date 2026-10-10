@@ -63,7 +63,7 @@ export default function InsightsScreen() {
     return (
       <Screen tabBar topInset>
         <EmptyState
-          icon="📊"
+          icon="stats-chart-outline"
           title={t('insights', 'emptyTitle')}
           description={t('insights', 'emptyDescription')}
         />

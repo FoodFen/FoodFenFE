@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import type { ReactNode } from 'react';
 import { PanResponder, View } from 'react-native';
 
-import { Text } from '@/components/ui/Text';
 import { cn } from '@/lib/cn';
 
 export interface PaceSliderProps {
@@ -9,8 +9,8 @@ export interface PaceSliderProps {
   max: number;
   value: number;
   onChange: (value: number) => void;
-  leftIcon: string;
-  rightIcon: string;
+  leftIcon: ReactNode;
+  rightIcon: ReactNode;
   /** Which semantic color the fill and thumb ring use at the current value. */
   tone: 'success' | 'warning';
 }
@@ -57,7 +57,7 @@ export function PaceSlider({
 
   return (
     <View className="w-full flex-row items-center gap-3">
-      <Text className="text-2xl">{leftIcon}</Text>
+      {leftIcon}
 
       <View
         className="relative flex-1 justify-center"
@@ -84,7 +84,7 @@ export function PaceSlider({
         />
       </View>
 
-      <Text className="text-2xl">{rightIcon}</Text>
+      {rightIcon}
     </View>
   );
 }

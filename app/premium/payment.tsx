@@ -171,7 +171,7 @@ export default function PremiumPaymentScreen() {
         />
         {isNoSessionReason ? (
           <EmptyState
-            icon="🔒"
+            icon="lock-closed-outline"
             title={t('premiumPayment', 'unavailableTitle')}
             description={t('premiumPayment', 'unavailableDescription')}
             actionLabel={t('premiumPayment', 'signIn')}

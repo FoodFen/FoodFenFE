@@ -162,7 +162,7 @@ export default function SearchFoodScreen() {
 
         {showResults && results.length === 0 && !search.isFetching ? (
           <EmptyState
-            icon="🔍"
+            icon="search-outline"
             title={t('logSearch', 'noMatches')}
             description={t('logSearch', 'noMatchesDescription').replace(
               '{query}',

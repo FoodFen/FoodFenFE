@@ -1,3 +1,4 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Alert, Pressable, TextInput, View } from 'react-native';
@@ -220,7 +221,11 @@ function EditForm({ entry }: { entry: FoodEntry }) {
                   : 'border-border bg-surface',
               )}
             >
-              <Text className="text-base">{MEAL_ICONS[m]}</Text>
+              <Ionicons
+                name={MEAL_ICONS[m]}
+                size={18}
+                color={mealType === m ? colors.brand : colors.fgMuted}
+              />
               <Text variant="caption" tone={mealType === m ? 'brand' : 'muted'}>
                 {t('mealType', m)}
               </Text>
@@ -251,17 +256,20 @@ function EditForm({ entry }: { entry: FoodEntry }) {
               {t('entryEdit', 'macros')}
             </Text>
             <MacroRow
-              label={`🌾  ${t('entryEdit', 'carbs')}`}
+              dotClassName="bg-carbs"
+              label={t('entryEdit', 'carbs')}
               value={carbsG}
               onChange={setCarbsG}
             />
             <MacroRow
-              label={`🥩  ${t('entryEdit', 'protein')}`}
+              dotClassName="bg-protein"
+              label={t('entryEdit', 'protein')}
               value={proteinG}
               onChange={setProteinG}
             />
             <MacroRow
-              label={`🥑  ${t('entryEdit', 'fat')}`}
+              dotClassName="bg-fat"
+              label={t('entryEdit', 'fat')}
               value={fatG}
               onChange={setFatG}
             />
@@ -292,16 +300,21 @@ function EditForm({ entry }: { entry: FoodEntry }) {
 
 function MacroRow({
   label,
+  dotClassName,
   value,
   onChange,
 }: {
   label: string;
+  dotClassName: string;
   value: number | null;
   onChange: (v: number | null) => void;
 }) {
   return (
     <View className="flex-row items-center justify-between py-1.5">
-      <Text variant="body">{label}</Text>
+      <View className="flex-row items-center gap-2">
+        <View className={cn('h-2.5 w-2.5 rounded-pill', dotClassName)} />
+        <Text variant="body">{label}</Text>
+      </View>
       <NumberField
         compact
         value={value}

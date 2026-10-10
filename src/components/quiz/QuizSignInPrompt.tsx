@@ -10,7 +10,7 @@ export function QuizSignInPrompt() {
   return (
     <Screen>
       <EmptyState
-        icon="🔒"
+        icon="lock-closed-outline"
         title={t('quiz', 'needsSignIn')}
         actionLabel={t('quiz', 'signIn')}
         onAction={() => router.push('/sign-in')}

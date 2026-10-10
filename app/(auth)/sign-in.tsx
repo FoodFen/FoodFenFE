@@ -1,3 +1,4 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'expo-router';
 import { useMemo, useState } from 'react';
@@ -15,11 +16,15 @@ import { announceAndLeave } from '@/features/auth/announceAndLeave';
 import { makeSignInSchema } from '@/features/auth/schemas';
 import type { SignInValues } from '@/features/auth/schemas';
 import { useAuthStore } from '@/features/auth/store';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
+import { colorsFor } from '@/theme/colors';
 
 export default function SignInScreen() {
   const signIn = useAuthStore((state) => state.signIn);
   const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
   const schema = useMemo(() => makeSignInSchema(t), [t]);
 
   /** Errors that belong to the request rather than a single field. */
@@ -85,7 +90,7 @@ export default function SignInScreen() {
       <View className="w-full max-w-md flex-1 self-center">
         <View className="items-center gap-3 pb-8 pt-4">
           <View className="h-16 w-16 items-center justify-center rounded-full bg-brand-soft">
-            <Text className="text-3xl">🥗</Text>
+            <Ionicons name="nutrition" size={32} color={colors.brand} />
           </View>
           <View className="items-center gap-1">
             <Text variant="title" className="text-3xl">

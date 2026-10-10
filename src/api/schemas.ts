@@ -409,6 +409,59 @@ export type RemoteQuestsResponse = z.infer<typeof questsResponseSchema>;
 export type RemoteRedeemCoinsResponse = z.infer<typeof redeemCoinsResponseSchema>;
 export type RemoteCoinBundle = z.infer<typeof coinBundlesResponseSchema>['bundles'][number];
 export type RemotePaymentPlan = z.infer<typeof paymentPlansResponseSchema>['plans'][number];
+const dishFields = {
+  id: z.string(),
+  name: z.string(),
+  description: z.string().nullable(),
+  imageUrl: z.string().nullable(),
+  price: z.number().int(),
+  servingG: z.number(),
+  kcal: z.number(),
+  proteinG: z.number(),
+  carbsG: z.number(),
+  fatG: z.number(),
+  fiberG: z.number().nullable(),
+};
+
+export const dishListSchema = z.object({
+  remainingKcal: z.number().nullable(),
+  nextCursor: z
+    .string()
+    .nullish()
+    .transform((value) => value ?? null),
+  dishes: z.array(
+    z.object({
+      ...dishFields,
+      fits: z.boolean(),
+      restaurant: z.object({
+        id: z.string(),
+        name: z.string(),
+        address: z.string(),
+        latitude: z.number(),
+        longitude: z.number(),
+      }),
+    }),
+  ),
+});
+
+export const publicRestaurantSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string().nullable(),
+  address: z.string(),
+  phone: z.string().nullable(),
+  openingHours: z.string().nullable(),
+  latitude: z.number(),
+  longitude: z.number(),
+  imageUrl: z.string().nullable(),
+  dishes: z.array(z.object(dishFields)),
+});
+
+export type RemoteDish = z.infer<typeof publicRestaurantSchema>['dishes'][number];
+export type RemoteDishList = z.infer<typeof dishListSchema>;
+export type RemoteListedDish = RemoteDishList['dishes'][number];
+export type RemotePublicRestaurant = z.infer<typeof publicRestaurantSchema>;
+
 export type RemoteQuiz = z.infer<typeof quizSchema>;
 export type RemoteQuizResult = z.infer<typeof quizResultSchema>;
 export type RemoteQuizTopic = z.infer<typeof quizTopicsResponseSchema>['topics'][number];

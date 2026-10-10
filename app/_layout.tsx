@@ -244,6 +244,11 @@ function AppShell({ migrated }: { migrated: boolean }) {
           <Stack.Screen name="streak" options={{ title: t('streak', 'title') }} />
           <Stack.Screen name="quiz" options={{ headerShown: false }} />
           <Stack.Screen
+            name="restaurant/[id]"
+            options={{ title: t('dishes', 'restaurantTitle') }}
+          />
+          <Stack.Screen name="dish-list" options={{ title: t('dishes', 'allTitle') }} />
+          <Stack.Screen
             name="chat"
             options={{ title: t('chat', 'layoutTitle'), presentation: 'modal' }}
           />

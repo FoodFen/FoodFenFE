@@ -46,18 +46,21 @@
   }
 
   .dark:root {
+    /* Surfaces are pure neutral grey (no tint). Separation comes from the hairline border
+       (border/surface 1.9, surface/bg 1.05).
+       All secondary text ≥ 4.5:1 (fg-subtle on surface-alt 5.4, fg-muted on surface 7.4). */
     --color-brand: 74 222 128;
     --color-brand-soft: 22 45 32;
     --color-on-brand: 5 46 22;
 
     --color-bg: 9 9 11;
-    --color-surface: 24 24 27;
-    --color-surface-alt: 39 39 42;
-    --color-border: 63 63 70;
+    --color-surface: 17 17 17;
+    --color-surface-alt: 28 28 28;
+    --color-border: 67 67 67;
 
     --color-fg: 250 250 250;
     --color-fg-muted: 161 161 170;
-    --color-fg-subtle: 113 113 122;
+    --color-fg-subtle: 144 144 153;
 
     --color-protein: 248 113 113;
     --color-carbs: 251 191 36;

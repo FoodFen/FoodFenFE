@@ -1,4 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { router } from 'expo-router';
 import { ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -40,7 +41,7 @@ export default function PremiumWelcomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View className="items-center gap-3 pb-8">
-          <Text className="text-6xl">🎉</Text>
+          <MaterialCommunityIcons name="party-popper" size={64} color={colors.brand} />
           <Text variant="title" className="text-center text-3xl">
             {t('premiumWelcome', 'title')}
           </Text>

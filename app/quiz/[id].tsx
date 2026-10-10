@@ -33,7 +33,7 @@ export default function QuizScreen() {
   if (isPending) {
     return fetchStatus === 'paused' ? (
       <Screen>
-        <EmptyState icon="📡" title={t('quiz', 'needsConnection')} />
+        <EmptyState icon="cloud-offline-outline" title={t('quiz', 'needsConnection')} />
       </Screen>
     ) : (
       <ScrollScreen>

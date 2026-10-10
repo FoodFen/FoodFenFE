@@ -26,6 +26,7 @@ type IconName = keyof typeof Ionicons.glyphMap;
 const TAB_ICONS: Record<string, { active: IconName; inactive: IconName }> = {
   index: { active: 'home', inactive: 'home-outline' },
   achievements: { active: 'star', inactive: 'star-outline' },
+  dishes: { active: 'restaurant', inactive: 'restaurant-outline' },
   insights: { active: 'stats-chart', inactive: 'stats-chart-outline' },
 };
 

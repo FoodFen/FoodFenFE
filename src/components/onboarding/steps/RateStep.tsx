@@ -1,10 +1,14 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { View } from 'react-native';
 
 import { PaceSlider } from '@/components/onboarding/PaceSlider';
 import { Text } from '@/components/ui/Text';
 import { units } from '@/features/settings/store';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { goalDirection } from '@/lib/nutrition';
+import { colorsFor } from '@/theme/colors';
 import type { UnitSystem } from '@/types/models';
 
 /**
@@ -63,6 +67,8 @@ export function RateStep({
   weightGoal,
 }: RateStepProps) {
   const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
   const unit = unitSystem === 'imperial' ? 'lb' : 'kg';
   const isGain = goalDirection({ weightCurrent, weightGoal }) === 'gain';
 
@@ -94,7 +100,11 @@ export function RateStep({
       </View>
 
       <View className="items-center gap-1">
-        <Text className="text-3xl">{isGain ? '📈' : '📉'}</Text>
+        <Ionicons
+          name={isGain ? 'trending-up' : 'trending-down'}
+          size={32}
+          color={colors.brand}
+        />
         <Text variant="title" className="text-3xl">
           {paceLabel}
         </Text>
@@ -108,8 +118,8 @@ export function RateStep({
         max={MAX_RATE_KG}
         value={value}
         onChange={onChange}
-        leftIcon="🐢"
-        rightIcon="🐇"
+        leftIcon={<MaterialCommunityIcons name="tortoise" size={28} color={colors.fgMuted} />}
+        rightIcon={<MaterialCommunityIcons name="rabbit" size={28} color={colors.fgMuted} />}
         tone={ZONE_TONE[zone]}
       />
 

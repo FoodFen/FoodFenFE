@@ -1,4 +1,7 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import { Controller } from 'react-hook-form';
 import type { Control, FieldErrors } from 'react-hook-form';
 import { Pressable, View } from 'react-native';
@@ -13,10 +16,12 @@ import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
 import type { BodyStatsValues } from '@/features/profile/schemas';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { haptics } from '@/lib/haptics';
 import { ACTIVITY_LABELS, DIET_LABELS } from '@/lib/nutrition';
+import { colorsFor } from '@/theme/colors';
 import type { ActivityLevel, DietType, Gender } from '@/types/models';
 
 // Only used to enumerate each enum's values — the *display* label comes from
@@ -25,12 +30,12 @@ const ACTIVITY_OPTIONS = Object.keys(ACTIVITY_LABELS) as ActivityLevel[];
 const DIET_OPTIONS = Object.keys(DIET_LABELS) as DietType[];
 const RATE_OPTIONS = [0, 0.25, 0.5, 0.75, 1];
 
-const ACTIVITY_ICONS: Record<ActivityLevel, string> = {
-  sedentary: '🛋️',
-  light: '👟',
-  moderate: '⚽',
-  active: '🚴',
-  very_active: '🏋️',
+const ACTIVITY_ICONS: Record<ActivityLevel, (color: string) => ReactNode> = {
+  sedentary: (color) => <MaterialCommunityIcons name="sofa-outline" size={24} color={color} />,
+  light: (color) => <Ionicons name="walk-outline" size={24} color={color} />,
+  moderate: (color) => <Ionicons name="football-outline" size={24} color={color} />,
+  active: (color) => <Ionicons name="bicycle-outline" size={24} color={color} />,
+  very_active: (color) => <MaterialCommunityIcons name="weight-lifter" size={24} color={color} />,
 };
 
 const DEFAULT_WEIGHT_TENTHS = 600;
@@ -254,8 +259,8 @@ export interface Option<T extends string | number> {
   label: string;
   /** A muted caption under the label. */
   description?: string;
-  /** An emoji rendered to the left of the label. */
-  icon?: string;
+  /** Renders the icon left of the label, tinted with the row's current colour. */
+  icon?: (color: string) => ReactNode;
 }
 
 /**
@@ -296,6 +301,8 @@ function OptionRow<T extends string | number>({
   isSelected: boolean;
   onPress: () => void;
 }) {
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
   const [pressed, setPressed] = useState(false);
   const scale = useSharedValue(1);
 
@@ -322,7 +329,7 @@ function OptionRow<T extends string | number>({
           isSelected ? 'border-brand bg-brand-soft' : 'border-transparent bg-surface-alt',
         )}
       >
-        {option.icon ? <Text className="text-2xl">{option.icon}</Text> : null}
+        {option.icon ? option.icon(isSelected ? colors.brand : colors.fgMuted) : null}
         <View className="flex-1 gap-0.5">
           <Text
             variant="body"

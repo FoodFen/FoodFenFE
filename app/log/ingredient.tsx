@@ -107,7 +107,7 @@ export default function AddIngredientScreen() {
 
         {debouncedQuery.trim().length >= 2 && (search.data ?? []).length === 0 ? (
           <EmptyState
-            icon="🔍"
+            icon="search-outline"
             title={t('logIngredient', 'noMatches')}
             description={t('logIngredient', 'noMatchesDescription').replace(
               '{query}',

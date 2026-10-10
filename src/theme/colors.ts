@@ -48,13 +48,13 @@ export const palette = {
     onBrand: '#052E16',
 
     bg: '#09090B',
-    surface: '#18181B',
-    surfaceAlt: '#27272A',
-    border: '#3F3F46',
+    surface: '#111111',
+    surfaceAlt: '#1C1C1C',
+    border: '#434343',
 
     fg: '#FAFAFA',
     fgMuted: '#A1A1AA',
-    fgSubtle: '#71717A',
+    fgSubtle: '#909099',
 
     protein: '#F87171',
     carbs: '#FBBF24',
