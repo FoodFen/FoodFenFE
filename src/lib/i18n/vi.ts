@@ -779,6 +779,7 @@ export const vi = {
     restaurantLoadError: 'Không tải được nhà hàng này.',
     directions: 'Chỉ đường',
     call: 'Gọi',
+    notAvailable: 'Chưa có',
     menu: 'Thực đơn',
     menuCount: '{n} món',
     searchPlaceholder: 'Tìm món hoặc nhà hàng',

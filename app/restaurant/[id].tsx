@@ -146,15 +146,24 @@ export default function RestaurantScreen() {
                   {restaurant.phone}
                 </Text>
               </Pressable>
-            ) : null}
-            {restaurant.openingHours ? (
+            ) : (
               <View className="min-h-11 flex-row items-center gap-3">
-                <Ionicons name="time-outline" size={18} color={colors.fgMuted} />
-                <Text variant="body" className="flex-1">
-                  {restaurant.openingHours}
+                <Ionicons name="call-outline" size={18} color={colors.fgMuted} />
+                <Text variant="body" tone="muted" className="flex-1">
+                  {t('dishes', 'notAvailable')}
                 </Text>
               </View>
-            ) : null}
+            )}
+            <View className="min-h-11 flex-row items-center gap-3">
+              <Ionicons name="time-outline" size={18} color={colors.fgMuted} />
+              <Text
+                variant="body"
+                tone={restaurant.openingHours ? undefined : 'muted'}
+                className="flex-1"
+              >
+                {restaurant.openingHours ?? t('dishes', 'notAvailable')}
+              </Text>
+            </View>
           </View>
         </View>
 

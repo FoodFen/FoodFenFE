@@ -762,6 +762,7 @@ export const en: DeepPartial<Translations> = {
     restaurantLoadError: 'Could not load this restaurant.',
     directions: 'Directions',
     call: 'Call',
+    notAvailable: 'Not available',
     menu: 'Menu',
     menuCount: '{n} dishes',
     searchPlaceholder: 'Search dishes or restaurants',
