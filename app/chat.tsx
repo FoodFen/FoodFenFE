@@ -46,6 +46,7 @@ export default function ChatScreen() {
   const { messages, append, setMessages, startStream, isStreaming } =
     useStreamingMessages<IMessage>();
   const [freshIds] = useState<FreshIds>(() => new Set());
+  const [pendingIds] = useState(() => new Set<string | number>());
 
   // `useChatHistory` pages are newest-first, and within a page messages are
   // newest-first too (design spec), so this flattened array is already in
@@ -57,26 +58,43 @@ export default function ChatScreen() {
     [data],
   );
 
-  // Seed history as pages arrive, re-seeding only messages not already
-  // present by id. A plain length/tail-diff isn't safe here: a second page
-  // from `fetchNextPage` does grow the flattened array at its tail, but
-  // `onDone`'s `invalidateQueries` below can also cause page 0 itself to be
-  // refetched with the just-completed exchange inserted at its *head* (this
-  // page is newest-first) — a tail-slice would then re-seed already-live
-  // messages as if they were new, duplicating them. Comparing ids against
-  // the current list via `setMessages`'s functional form is correct
-  // regardless of where growth actually lands. Newly-seeded messages are
-  // always older than anything already in the list, so they are appended to
-  // its end directly via `setMessages` rather than `append()`, which always
-  // prepends its argument as the newest message.
+  // Seed history as pages arrive. Messages dedupe by id (a plain tail-diff is
+  // unsafe: `onDone`'s `invalidateQueries` can refetch page 0 with the new
+  // exchange at its *head*). Exception: the `done` frame returns only the
+  // assistant message, never the user message's server id, so our own pending
+  // sends are replaced in place by their persisted copy (matched by text,
+  // oldest first). Anything else new is older than what is shown, so it goes
+  // to the end of the list — via `setMessages`, since `append()` prepends.
+  // Replaced ids stay in `pendingIds` but are inert (nothing matches them any
+  // more); the updater must not delete them since React may run it twice.
   useEffect(() => {
     setMessages((prev) => {
       const existingIds = new Set(prev.map((message) => message._id));
-      const newlySeeded = historyMessages.filter((message) => !existingIds.has(message._id));
+      const next = [...prev];
+      let changed = false;
 
-      return newlySeeded.length === 0 ? prev : [...prev, ...newlySeeded];
+      for (const message of historyMessages) {
+        if (existingIds.has(message._id)) continue;
+        changed = true;
+
+        let pendingIndex = -1;
+        if (message.user._id === CHAT_USER._id) {
+          for (let i = next.length - 1; i >= 0; i--) {
+            const local = next[i];
+            if (local && pendingIds.has(local._id) && local.text === message.text) {
+              pendingIndex = i;
+              break;
+            }
+          }
+        }
+
+        if (pendingIndex >= 0) next[pendingIndex] = message;
+        else next.push(message);
+      }
+
+      return changed ? next : prev;
     });
-  }, [historyMessages, setMessages]);
+  }, [historyMessages, pendingIds, setMessages]);
 
   const onSend = useCallback(
     (newMessages: IMessage[] = []) => {
@@ -87,6 +105,7 @@ export default function ChatScreen() {
       append(outgoing);
       const stream = startStream({ user: CHAT_ASSISTANT });
       freshIds.add(outgoing._id);
+      pendingIds.add(outgoing._id);
       freshIds.add(stream.id);
 
       void streamChatReply(outgoing.text, {
@@ -100,7 +119,7 @@ export default function ChatScreen() {
         onError: (message) => stream.done({ text: message }),
       });
     },
-    [append, startStream, freshIds, queryClient],
+    [append, startStream, freshIds, pendingIds, queryClient],
   );
 
   const sendSuggestion = useCallback(
