@@ -12,16 +12,15 @@ import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useLoggingHeatmap, useStreak } from '@/features/gamification/queries';
 import { streakDayStatuses } from '@/features/gamification/selectors';
-import { useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
-import { formatWeekdayInitial, todayKey } from '@/lib/date';
+import { formatWeekdayInitial } from '@/lib/date';
 import { haptics } from '@/lib/haptics';
 import { colorsFor } from '@/theme/colors';
 
 /**
  * The day-streak detail screen (UC-24b's "real app" extra): the current run,
- * a 7-day row, a share action, and a once-a-day commitment tap.
+ * a 7-day row, and a share action.
  *
  * Reached from the achievements screen's streak summary card. Streak state
  * lives in `STREAK` already — this screen only reads and displays it; nothing
@@ -33,10 +32,6 @@ export default function StreakScreen() {
   const colors = colorsFor(resolved);
   const { data: streak, isPending, error, refetch } = useStreak();
   const { data: heatmap } = useLoggingHeatmap();
-  const streakCommittedDate = useSettingsStore((state) => state.streakCommittedDate);
-  const commitToStreak = useSettingsStore((state) => state.commitToStreak);
-
-  const committedToday = streakCommittedDate === todayKey();
 
   if (isPending) {
     return (
@@ -70,11 +65,6 @@ export default function StreakScreen() {
     void Share.share({
       message: t('streak', 'shareMessage').replace('{days}', String(currentStreak)),
     });
-  };
-
-  const commit = () => {
-    haptics.success();
-    commitToStreak(todayKey());
   };
 
   return (
@@ -142,22 +132,13 @@ export default function StreakScreen() {
         </Text>
       </Card>
 
-      <View className="gap-2">
-        <Button
-          label={committedToday ? t('streak', 'committedToday') : t('streak', 'commit')}
-          onPress={commit}
-          disabled={committedToday}
-          fullWidth
-          size="lg"
-        />
-        <Button
-          label={t('streak', 'share')}
-          onPress={share}
-          variant="secondary"
-          leading={<Ionicons name="share-social-outline" size={18} color={colors.fg} />}
-          fullWidth
-        />
-      </View>
+      <Button
+        label={t('streak', 'share')}
+        onPress={share}
+        variant="secondary"
+        leading={<Ionicons name="share-social-outline" size={18} color={colors.fg} />}
+        fullWidth
+      />
     </ScrollScreen>
   );
 }

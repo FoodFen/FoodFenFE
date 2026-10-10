@@ -109,7 +109,6 @@ export const StorageKeys = {
   devSeed: 'dev-seed-enabled',
   hideChallengeProgress: 'hide-challenge-progress',
   seenQuestTypes: 'seen-quest-types',
-  streakCommittedDate: 'streak-committed-date',
   questAdvanceCounts: 'quest-advance-counts',
   healthSyncEnabled: 'health-sync-enabled',
   mealRemindersEnabled: 'meal-reminders-enabled',
