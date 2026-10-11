@@ -1,7 +1,6 @@
 import { Chat, useStreamingMessages } from '@kesha-antonov/react-native-chat';
-import type { IMessage } from '@kesha-antonov/react-native-chat';
 import { useQueryClient, onlineManager } from '@tanstack/react-query';
-import { Stack, router } from 'expo-router';
+import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { streamChatReply } from '@/api/endpoints/chat';
@@ -16,6 +15,7 @@ import { Screen } from '@/components/ui/Screen';
 import { canUseRemote } from '@/data/sync';
 import { useAuthStore } from '@/features/auth/store';
 import { CHAT_ASSISTANT, CHAT_USER, toIMessage } from '@/features/chat/mappers';
+import type { ChatIMessage } from '@/features/chat/mappers';
 import { useChatHistory } from '@/features/chat/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -33,6 +33,7 @@ export default function ChatScreen() {
   const { t } = useTranslation();
   const { isDark } = useAppTheme();
   const queryClient = useQueryClient();
+  const { draft } = useLocalSearchParams<{ draft?: string }>();
   const session = useAuthStore((state) => state.session);
   const available = canUseRemote();
   // The one reason among the three `canUseRemote()` checks worth a distinct
@@ -44,7 +45,7 @@ export default function ChatScreen() {
     enabled: available,
   });
   const { messages, append, setMessages, startStream, isStreaming } =
-    useStreamingMessages<IMessage>();
+    useStreamingMessages<ChatIMessage>();
   const [freshIds] = useState<FreshIds>(() => new Set());
   const [pendingIds] = useState(() => new Set<string | number>());
 
@@ -97,7 +98,7 @@ export default function ChatScreen() {
   }, [historyMessages, pendingIds, setMessages]);
 
   const onSend = useCallback(
-    (newMessages: IMessage[] = []) => {
+    (newMessages: ChatIMessage[] = []) => {
       const outgoing = newMessages[0];
       if (!outgoing) return;
 
@@ -169,6 +170,8 @@ export default function ChatScreen() {
         onSend={onSend}
         user={CHAT_USER}
         labels={{ placeholder: t('chat', 'inputPlaceholder') }}
+        initialText={draft}
+        textInputProps={draft ? { autoFocus: true } : undefined}
         enableGestureHandlerRootView={false}
         loadEarlierMessagesProps={{
           isAvailable: hasNextPage,

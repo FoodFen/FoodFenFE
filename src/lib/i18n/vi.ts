@@ -799,6 +799,15 @@ export const vi = {
     confirmAdd: 'Thêm',
     confirmLeft: 'Còn lại sau khi thêm: {kcal} kcal',
     confirmOver: 'Món này sẽ làm bạn vượt {kcal} kcal',
+    reasonFillsProtein: 'Hợp phần đạm còn thiếu',
+    reasonExceeds: 'Có thể vượt chỉ tiêu {items}',
+    exceedsKcal: 'kcal',
+    exceedsCarbs: 'tinh bột',
+    exceedsFat: 'chất béo',
+    dietVegetarian: 'Chay',
+    dietVegan: 'Thuần chay',
+    suggestForMe: 'Gợi ý cho tôi',
+    suggestPrefix: 'Gợi ý món cho tôi: ',
   },
 
   developer: {

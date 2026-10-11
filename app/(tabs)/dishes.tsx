@@ -13,6 +13,7 @@ import {
 import type { DishFilters } from '@/api/endpoints/dishes';
 import { isApiError } from '@/api/errors';
 import { DishRow } from '@/components/dishes/DishRow';
+import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
 import { Screen, ScrollScreen } from '@/components/ui/Screen';
@@ -174,6 +175,15 @@ export default function DishesScreen() {
         )}
       </Card>
 
+      <Button
+        label={t('dishes', 'suggestForMe')}
+        variant="secondary"
+        leading={<Ionicons name="sparkles" size={18} color={colors.brand} />}
+        onPress={() =>
+          router.push({ pathname: '/chat', params: { draft: t('dishes', 'suggestPrefix') } })
+        }
+      />
+
       {sections.map((section) =>
         section.key === 'all' && section.query.data?.dishes.length === 0 ? (
           <EmptyState
@@ -276,6 +286,7 @@ function DishSection({
                   })
                 }
                 overKcal={overKcal(dish, remainingKcal)}
+                reasons={dish.reasons}
                 onAdd={() => add.request(dish, remainingKcal)}
                 adding={add.isAdding(dish.id)}
                 added={add.isAdded(dish.id)}

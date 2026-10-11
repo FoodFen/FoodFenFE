@@ -1,6 +1,6 @@
 import type { IMessage } from '@kesha-antonov/react-native-chat';
 
-import type { RemoteChatMessage } from '@/api/schemas';
+import type { RemoteChatDish, RemoteChatMessage } from '@/api/schemas';
 
 /**
  * Fixed participants — this is always a one-on-one conversation with the
@@ -10,11 +10,14 @@ import type { RemoteChatMessage } from '@/api/schemas';
 export const CHAT_USER = { _id: 'user' };
 export const CHAT_ASSISTANT = { _id: 'assistant' };
 
-export function toIMessage(message: RemoteChatMessage): IMessage {
+export type ChatIMessage = IMessage & { dishes?: RemoteChatDish[] };
+
+export function toIMessage(message: RemoteChatMessage): ChatIMessage {
   return {
     _id: message.id,
     text: message.content,
     createdAt: new Date(message.createdAt),
     user: message.role === 'user' ? CHAT_USER : CHAT_ASSISTANT,
+    dishes: message.dishes,
   };
 }

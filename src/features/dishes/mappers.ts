@@ -52,3 +52,23 @@ export function formatVnd(amount: number): string {
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}₫`;
 }
+
+const EXCEED_CODES = {
+  exceeds_kcal: 'kcal',
+  exceeds_carbs: 'carbs',
+  exceeds_fat: 'fat',
+} as const;
+
+export type ExceededNutrient = (typeof EXCEED_CODES)[keyof typeof EXCEED_CODES];
+
+/** Unknown reason codes are ignored on purpose: the server may add more. */
+export function describeReasons(reasons: string[]): {
+  fillsProtein: boolean;
+  exceeds: ExceededNutrient[];
+} {
+  const exceeds: ExceededNutrient[] = [];
+  for (const code of reasons) {
+    if (Object.hasOwn(EXCEED_CODES, code)) exceeds.push(EXCEED_CODES[code as keyof typeof EXCEED_CODES]);
+  }
+  return { fillsProtein: reasons.includes('fills_protein'), exceeds };
+}

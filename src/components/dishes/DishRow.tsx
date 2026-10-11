@@ -5,7 +5,7 @@ import { ActivityIndicator, Pressable, View } from 'react-native';
 import type { RemoteDish } from '@/api/schemas';
 import { Card } from '@/components/ui/Card';
 import { Text } from '@/components/ui/Text';
-import { formatVnd } from '@/features/dishes/mappers';
+import { describeReasons, formatVnd } from '@/features/dishes/mappers';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { colorsFor } from '@/theme/colors';
@@ -21,6 +21,7 @@ export interface DishRowProps {
   added?: boolean;
   /** Whole kcal this dish exceeds today's remaining budget by; shown when `fits` is false. */
   overKcal?: number;
+  reasons?: string[];
 }
 
 export function DishRow({
@@ -32,6 +33,7 @@ export function DishRow({
   adding,
   added,
   overKcal,
+  reasons,
 }: DishRowProps) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
@@ -43,6 +45,16 @@ export function DishRow({
     { grams: Math.round(dish.carbsG), label: t('dashboard', 'carbs'), tone: 'text-carbs' },
     { grams: Math.round(dish.fatG), label: t('dashboard', 'fat'), tone: 'text-fat' },
   ];
+
+  const { fillsProtein, exceeds } = describeReasons(reasons ?? []);
+  const exceedLabels = {
+    kcal: t('dishes', 'exceedsKcal'),
+    carbs: t('dishes', 'exceedsCarbs'),
+    fat: t('dishes', 'exceedsFat'),
+  };
+  const exceedsNote = exceeds.length
+    ? t('dishes', 'reasonExceeds').replace('{items}', exceeds.map((e) => exceedLabels[e]).join(', '))
+    : null;
 
   return (
     <Card flush className="overflow-hidden">
@@ -75,6 +87,15 @@ export function DishRow({
           </View>
         ) : null}
 
+        {dish.dietTag !== 'none' ? (
+          <View className="absolute right-0 top-0 m-3 flex-row items-center gap-1 rounded-pill bg-surface px-2.5 py-1">
+            <Ionicons name="leaf" size={14} color={colors.brand} />
+            <Text variant="caption" tone="brand" className="font-medium">
+              {t('dishes', dish.dietTag === 'vegan' ? 'dietVegan' : 'dietVegetarian')}
+            </Text>
+          </View>
+        ) : null}
+
         <View className="gap-2 p-4">
           <Text variant="label" numberOfLines={2}>
             {dish.name}
@@ -85,6 +106,24 @@ export function DishRow({
               <Ionicons name="storefront-outline" size={14} color={colors.fgMuted} />
               <Text variant="caption" tone="muted" className="flex-1" numberOfLines={1}>
                 {restaurantName}
+              </Text>
+            </View>
+          ) : null}
+
+          {fillsProtein ? (
+            <View className="flex-row items-center gap-1">
+              <Ionicons name="checkmark-circle-outline" size={14} color={colors.brand} />
+              <Text variant="caption" tone="brand" className="flex-1" numberOfLines={1}>
+                {t('dishes', 'reasonFillsProtein')}
+              </Text>
+            </View>
+          ) : null}
+
+          {exceedsNote ? (
+            <View className="flex-row items-center gap-1">
+              <Ionicons name="alert-circle-outline" size={14} color={colors.warning} />
+              <Text variant="caption" tone="warning" className="flex-1" numberOfLines={1}>
+                {exceedsNote}
               </Text>
             </View>
           ) : null}

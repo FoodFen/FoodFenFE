@@ -781,6 +781,15 @@ export const en: DeepPartial<Translations> = {
     confirmAdd: 'Add',
     confirmLeft: '{kcal} kcal left after this',
     confirmOver: 'This puts you {kcal} kcal over',
+    reasonFillsProtein: 'Fills your missing protein',
+    reasonExceeds: 'May exceed your {items} target',
+    exceedsKcal: 'kcal',
+    exceedsCarbs: 'carbs',
+    exceedsFat: 'fat',
+    dietVegetarian: 'Vegetarian',
+    dietVegan: 'Vegan',
+    suggestForMe: 'Suggest for me',
+    suggestPrefix: 'Suggest a dish for me: ',
   },
 
   developer: {

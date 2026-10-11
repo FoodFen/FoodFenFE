@@ -171,6 +171,7 @@ export default function DishListScreen() {
               })
             }
             overKcal={overKcal(dish, data.remainingKcal)}
+            reasons={dish.reasons}
             onAdd={() => add.request(dish, data.remainingKcal)}
             adding={add.isAdding(dish.id)}
             added={add.isAdded(dish.id)}

@@ -1,7 +1,5 @@
 import { Bubble } from '@kesha-antonov/react-native-chat';
-import type { Chat } from '@kesha-antonov/react-native-chat';
 import { useEffect, useMemo, useState } from 'react';
-import type { ComponentProps } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, {
   interpolate,
@@ -11,7 +9,9 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 
+import { ChatDishCards } from '@/components/chat/ChatDishCards';
 import { TypingDots } from '@/components/chat/TypingDots';
+import type { ChatIMessage } from '@/features/chat/mappers';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { colorsFor } from '@/theme/colors';
 
@@ -23,7 +23,7 @@ import { colorsFor } from '@/theme/colors';
  * `freshIds` animate, so history and "load earlier" never do.
  */
 
-type BubbleProps = Parameters<NonNullable<ComponentProps<typeof Chat>['renderBubble']>>[0];
+type BubbleProps = Parameters<typeof Bubble<ChatIMessage>>[0];
 
 export type FreshIds = Set<string | number>;
 
@@ -77,6 +77,9 @@ export function ChatBubble({ freshIds, ...bubbleProps }: BubbleProps & { freshId
       ) : (
         <Bubble {...bubbleProps} wrapperStyle={wrapperStyle} />
       )}
+      {!outgoing && !waiting && currentMessage.dishes?.length ? (
+        <ChatDishCards dishes={currentMessage.dishes} />
+      ) : null}
     </Animated.View>
   );
 }
