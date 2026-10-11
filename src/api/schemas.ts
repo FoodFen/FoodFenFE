@@ -199,6 +199,37 @@ export const authSessionSchema = z.object({
   user: userSchema,
 });
 
+// `.catch` so a server that omits dietTag, or sends a future value, never fails a whole dish list.
+const dishDietTagSchema = z.enum(['none', 'vegetarian', 'vegan']).catch('none');
+
+const dishFields = {
+  id: z.string(),
+  name: z.string(),
+  description: z.string().nullable(),
+  imageUrl: z.string().nullable(),
+  price: z.number().int(),
+  servingG: z.number(),
+  kcal: z.number(),
+  proteinG: z.number(),
+  carbsG: z.number(),
+  fatG: z.number(),
+  fiberG: z.number().nullable(),
+  dietTag: dishDietTagSchema,
+};
+
+const dishRestaurantSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  address: z.string(),
+  latitude: z.number(),
+  longitude: z.number(),
+});
+
+export const chatDishSchema = z.object({
+  ...dishFields,
+  restaurant: dishRestaurantSchema,
+});
+
 export const chatRoleSchema = z.enum(['user', 'assistant']);
 
 export const chatMessageSchema = z.object({
@@ -206,6 +237,7 @@ export const chatMessageSchema = z.object({
   role: chatRoleSchema,
   content: z.string(),
   createdAt: z.iso.datetime(),
+  dishes: z.array(chatDishSchema).default([]),
 });
 
 export const chatHistoryResponseSchema = z.object({
@@ -409,20 +441,6 @@ export type RemoteQuestsResponse = z.infer<typeof questsResponseSchema>;
 export type RemoteRedeemCoinsResponse = z.infer<typeof redeemCoinsResponseSchema>;
 export type RemoteCoinBundle = z.infer<typeof coinBundlesResponseSchema>['bundles'][number];
 export type RemotePaymentPlan = z.infer<typeof paymentPlansResponseSchema>['plans'][number];
-const dishFields = {
-  id: z.string(),
-  name: z.string(),
-  description: z.string().nullable(),
-  imageUrl: z.string().nullable(),
-  price: z.number().int(),
-  servingG: z.number(),
-  kcal: z.number(),
-  proteinG: z.number(),
-  carbsG: z.number(),
-  fatG: z.number(),
-  fiberG: z.number().nullable(),
-};
-
 export const dishListSchema = z.object({
   remainingKcal: z.number().nullable(),
   nextCursor: z
@@ -430,16 +448,9 @@ export const dishListSchema = z.object({
     .nullish()
     .transform((value) => value ?? null),
   dishes: z.array(
-    z.object({
-      ...dishFields,
+    chatDishSchema.extend({
       fits: z.boolean(),
-      restaurant: z.object({
-        id: z.string(),
-        name: z.string(),
-        address: z.string(),
-        latitude: z.number(),
-        longitude: z.number(),
-      }),
+      reasons: z.array(z.string()).default([]),
     }),
   ),
 });
@@ -457,6 +468,8 @@ export const publicRestaurantSchema = z.object({
   dishes: z.array(z.object(dishFields)),
 });
 
+export type DishDietTag = z.infer<typeof dishDietTagSchema>;
+export type RemoteChatDish = z.infer<typeof chatDishSchema>;
 export type RemoteDish = z.infer<typeof publicRestaurantSchema>['dishes'][number];
 export type RemoteDishList = z.infer<typeof dishListSchema>;
 export type RemoteListedDish = RemoteDishList['dishes'][number];

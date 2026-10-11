@@ -31,12 +31,30 @@ Response `200`:
       "id": "string",
       "role": "user" | "assistant",
       "content": "string",
-      "createdAt": "ISO 8601 string"
+      "createdAt": "ISO 8601 string",
+      "dishes": ["ChatDish"]
     }
   ],
   "nextCursor": "string | null"
 }
 ```
+
+### `dishes` (dish cards)
+
+Every message carries `dishes: ChatDish[]`. It is always present, and `[]` on
+ordinary messages. It appears here and in the `done` frame.
+
+- `ChatDish` = `Dish` (incl. `dietTag`) + `restaurant {id, name, address,
+  latitude, longitude}`. This is `ListedDish` from `dishes.md` **without
+  `fits`/`reasons`**, so an old card in history never claims to fit today.
+- Render the cards under the assistant bubble, at most 5. Tapping one opens
+  the same restaurant detail screen as a dish-tab tap
+  (`GET /restaurants/{restaurant.id}`).
+- Cards in history are hydrated from current data. A dish that is no longer
+  public just disappears from the list.
+- The client never parses the assistant's text for dishes. The server strips
+  its internal dish markers before streaming and validates every dish
+  (exists, public, matches the user's diet).
 
 ## `POST /chat/messages`
 
@@ -70,8 +88,10 @@ either LF or CRLF line endings — the client accepts both):
   canonical — e.g. if any server-side post-processing altered the final
   text).
   ```json
-  { "message": { "id": "string", "role": "assistant", "content": "string", "createdAt": "ISO 8601 string" } }
+  { "message": { "id": "string", "role": "assistant", "content": "string", "createdAt": "ISO 8601 string", "dishes": ["ChatDish"] } }
   ```
+  `dishes` as in `GET /chat/messages` above. `token` frames are unchanged
+  and never contain dish markers.
 - `event: error` — sent instead of `done` if generation fails after
   streaming has already started (so a plain HTTP error status is no longer
   possible). Carries a user-safe message.
@@ -84,6 +104,14 @@ validation, server error), respond with a normal non-200 status and the same
 error body shape every other endpoint in this API already uses (`message`
 and/or `errors`) rather than a stream — the client reads this real body and
 surfaces it to the user; a placeholder message is not a substitute.
+
+## Dish suggestions from the dish tab
+
+No dedicated endpoint. The dish tab's "Gợi ý cho tôi" button lets the user
+type a wish ("đồ nước, không cay", "dưới 50k"), opens this chat screen and
+sends it as a normal `POST /chat/messages` (prefixed e.g. "Gợi ý món cho tôi:
+…", with the usual `date`). The server gives Fen the ranked catalog on every
+turn, so asking "tối nay ăn gì?" directly in chat also returns cards.
 
 ## Left to the backend session's own judgment
 

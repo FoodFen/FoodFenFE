@@ -7,6 +7,7 @@ describe('toIMessage', () => {
       role: 'user',
       content: 'How much protein is in an egg?',
       createdAt: '2026-01-01T00:00:00.000Z',
+      dishes: [],
     });
 
     expect(result._id).toBe('1');
@@ -21,6 +22,7 @@ describe('toIMessage', () => {
       role: 'assistant',
       content: 'About 6 grams.',
       createdAt: '2026-01-01T00:00:01.000Z',
+      dishes: [],
     });
 
     expect(result.user).toEqual(CHAT_ASSISTANT);
