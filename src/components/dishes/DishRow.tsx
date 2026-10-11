@@ -73,9 +73,9 @@ export function DishRow({
 
         {fits ? (
           <View className="absolute left-0 top-0 m-3 flex-row items-center gap-1 rounded-pill bg-brand px-2.5 py-1">
-            <Ionicons name="checkmark" size={14} color={colors.onBrand} />
+            <Ionicons name={exceeds.length > 0 ? 'sparkles' : 'checkmark'} size={14} color={colors.onBrand} />
             <Text variant="caption" tone="onBrand" className="font-medium">
-              {t('dishes', 'fits')}
+              {t('dishes', exceeds.length > 0 ? 'suggested' : 'fits')}
             </Text>
           </View>
         ) : overKcal !== undefined ? (

@@ -750,6 +750,7 @@ export const en: DeepPartial<Translations> = {
     overGoal: 'You are over your calorie goal today',
     noGoalHint: 'Set a calorie goal to see which dishes fit you.',
     fits: 'Fits',
+    suggested: 'Suggested',
     addToDiary: 'Add to diary',
     emptyTitle: 'No dishes yet',
     emptyDescription: 'Dishes from partner restaurants will show up here.',

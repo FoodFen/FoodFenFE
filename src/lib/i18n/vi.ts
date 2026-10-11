@@ -767,6 +767,7 @@ export const vi = {
     overGoal: 'Hôm nay bạn đã vượt mục tiêu calo',
     noGoalHint: 'Đặt mục tiêu calo để xem món nào vừa với bạn.',
     fits: 'Vừa bữa',
+    suggested: 'Gợi ý',
     addToDiary: 'Thêm vào nhật ký',
     emptyTitle: 'Chưa có món ăn nào',
     emptyDescription: 'Các món từ nhà hàng đối tác sẽ hiện ở đây.',
