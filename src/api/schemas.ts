@@ -441,18 +441,19 @@ export type RemoteQuestsResponse = z.infer<typeof questsResponseSchema>;
 export type RemoteRedeemCoinsResponse = z.infer<typeof redeemCoinsResponseSchema>;
 export type RemoteCoinBundle = z.infer<typeof coinBundlesResponseSchema>['bundles'][number];
 export type RemotePaymentPlan = z.infer<typeof paymentPlansResponseSchema>['plans'][number];
+const listedDishSchema = chatDishSchema.extend({
+  fits: z.boolean(),
+  reasons: z.array(z.string()).default([]),
+});
+
 export const dishListSchema = z.object({
   remainingKcal: z.number().nullable(),
   nextCursor: z
     .string()
     .nullish()
     .transform((value) => value ?? null),
-  dishes: z.array(
-    chatDishSchema.extend({
-      fits: z.boolean(),
-      reasons: z.array(z.string()).default([]),
-    }),
-  ),
+  dishes: z.array(listedDishSchema),
+  featured: z.array(listedDishSchema).default([]),
 });
 
 export const publicRestaurantSchema = z.object({

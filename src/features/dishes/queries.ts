@@ -54,7 +54,11 @@ export function useInfiniteDishes(date: DateKey, filters: DishFilters = {}) {
         .flatMap((page) => page.dishes)
         .filter((dish) => !seen.has(dish.id) && seen.add(dish.id));
 
-      return { remainingKcal: data.pages[0]?.remainingKcal ?? null, dishes };
+      return {
+        remainingKcal: data.pages[0]?.remainingKcal ?? null,
+        dishes,
+        featured: data.pages[0]?.featured ?? [],
+      };
     },
     enabled: available,
     placeholderData: keepPreviousData,

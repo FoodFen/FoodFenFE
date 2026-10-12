@@ -12,6 +12,7 @@ import {
 
 import type { DishFilters } from '@/api/endpoints/dishes';
 import { isApiError } from '@/api/errors';
+import type { RemoteListedDish } from '@/api/schemas';
 import { DishRow } from '@/components/dishes/DishRow';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -184,6 +185,10 @@ export default function DishesScreen() {
         }
       />
 
+      {data.featured.length > 0 && (
+        <SponsoredSection dishes={data.featured} remainingKcal={remainingKcal} add={add} />
+      )}
+
       {sections.map((section) =>
         section.key === 'all' && section.query.data?.dishes.length === 0 ? (
           <EmptyState
@@ -264,36 +269,7 @@ function DishSection({
       </View>
 
       {dishes ? (
-        <FlatList
-          horizontal
-          className="-mx-4 grow-0"
-          contentContainerClassName="gap-3 px-4"
-          data={dishes}
-          keyExtractor={(dish) => dish.id}
-          snapToInterval={itemWidth + CARD_GAP}
-          decelerationRate="fast"
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item: dish }) => (
-            <View style={{ width: itemWidth }}>
-              <DishRow
-                dish={dish}
-                restaurantName={dish.restaurant.name}
-                fits={dish.fits}
-                onPress={() =>
-                  router.push({
-                    pathname: '/restaurant/[id]',
-                    params: { id: dish.restaurant.id },
-                  })
-                }
-                overKcal={overKcal(dish, remainingKcal)}
-                reasons={dish.reasons}
-                onAdd={() => add.request(dish, remainingKcal)}
-                adding={add.isAdding(dish.id)}
-                added={add.isAdded(dish.id)}
-              />
-            </View>
-          )}
-        />
+        <DishCarousel dishes={dishes} remainingKcal={remainingKcal} add={add} />
       ) : (
         <View className="flex-row gap-3">
           {[0, 1].map((i) => (
@@ -304,5 +280,77 @@ function DishSection({
         </View>
       )}
     </View>
+  );
+}
+
+function SponsoredSection({
+  dishes,
+  remainingKcal,
+  add,
+}: {
+  dishes: RemoteListedDish[];
+  remainingKcal: number | null;
+  add: ReturnType<typeof useConfirmAddDish>;
+}) {
+  const { t } = useTranslation();
+  const { resolved } = useAppTheme();
+
+  return (
+    <View className="gap-3">
+      <View className="flex-row items-center gap-2">
+        <Ionicons name="megaphone-outline" size={18} color={colorsFor(resolved).fgMuted} />
+        <Text variant="heading">{t('dishes', 'sectionSponsored')}</Text>
+      </View>
+      <DishCarousel dishes={dishes} remainingKcal={remainingKcal} add={add} sponsored />
+    </View>
+  );
+}
+
+function DishCarousel({
+  dishes,
+  remainingKcal,
+  add,
+  sponsored,
+}: {
+  dishes: RemoteListedDish[];
+  remainingKcal: number | null;
+  add: ReturnType<typeof useConfirmAddDish>;
+  sponsored?: boolean;
+}) {
+  const { width } = useWindowDimensions();
+  const itemWidth = Math.round(width * 0.75);
+
+  return (
+    <FlatList
+      horizontal
+      className="-mx-4 grow-0"
+      contentContainerClassName="gap-3 px-4"
+      data={dishes}
+      keyExtractor={(dish) => dish.id}
+      snapToInterval={itemWidth + CARD_GAP}
+      decelerationRate="fast"
+      showsHorizontalScrollIndicator={false}
+      renderItem={({ item: dish }) => (
+        <View style={{ width: itemWidth }}>
+          <DishRow
+            dish={dish}
+            restaurantName={dish.restaurant.name}
+            fits={dish.fits}
+            onPress={() =>
+              router.push({
+                pathname: '/restaurant/[id]',
+                params: { id: dish.restaurant.id },
+              })
+            }
+            overKcal={overKcal(dish, remainingKcal)}
+            reasons={dish.reasons}
+            onAdd={() => add.request(dish, remainingKcal)}
+            adding={add.isAdding(dish.id)}
+            added={add.isAdded(dish.id)}
+            sponsored={sponsored}
+          />
+        </View>
+      )}
+    />
   );
 }

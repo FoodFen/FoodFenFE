@@ -87,6 +87,7 @@ Response `200`:
 {
   "remainingKcal": "int | null",
   "dishes": ["ListedDish"],
+  "featured": ["ListedDish"],
   "nextCursor": "string | null"
 }
 ```
@@ -94,6 +95,22 @@ Response `200`:
 - `remainingKcal` = the goal in force on `date` minus that day's logged kcal.
   `null` when no goal is in force. Filters never change it.
 - Order: rank first, then filter, then page. The client must not re-sort.
+
+### `featured` (paid placement)
+
+Source: FoodFenBE `docs/superpowers/specs/2026-10-12-paid-placement-design.md`.
+
+- Sponsored dishes for a "Được tài trợ" section above the list. At most 3,
+  one per restaurant, already in display order; `fits` is always `true`.
+- Non-empty only on the **first page** (no `cursor`); later pages send `[]`.
+  Also `[]` when no goal is in force or no sponsored dish fits the user.
+- Picked from the same filtered, ranked list, so `q` and filters narrow it too.
+- Older servers omit the field: treat missing as `[]`.
+- The client shows it as its own section, clearly labelled as sponsored, and
+  hides that section when empty. It does **not** de-duplicate: a featured dish
+  also appears at its natural rank in `dishes`, which carry no sponsor label.
+  Money never changes the health-ranked list.
+- Never shown in chat.
 
 ### Ranking
 

@@ -13,6 +13,7 @@ import {
 
 import type { DishFilters } from '@/api/endpoints/dishes';
 import { isApiError } from '@/api/errors';
+import type { RemoteListedDish } from '@/api/schemas';
 import { DishRow } from '@/components/dishes/DishRow';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
 import { Screen } from '@/components/ui/Screen';
@@ -136,6 +137,26 @@ export default function DishListScreen() {
       );
     }
 
+    const renderDish = (dish: RemoteListedDish, sponsored?: boolean) => (
+      <DishRow
+        dish={dish}
+        restaurantName={dish.restaurant.name}
+        fits={dish.fits}
+        onPress={() =>
+          router.push({
+            pathname: '/restaurant/[id]',
+            params: { id: dish.restaurant.id },
+          })
+        }
+        overKcal={overKcal(dish, data.remainingKcal)}
+        reasons={dish.reasons}
+        onAdd={() => add.request(dish, data.remainingKcal)}
+        adding={add.isAdding(dish.id)}
+        added={add.isAdded(dish.id)}
+        sponsored={sponsored}
+      />
+    );
+
     return (
       <FlatList
         data={data.dishes}
@@ -159,24 +180,21 @@ export default function DishListScreen() {
         ListFooterComponent={
           isFetchingNextPage ? <ActivityIndicator color={colors.fgMuted} /> : null
         }
-        renderItem={({ item: dish }) => (
-          <DishRow
-            dish={dish}
-            restaurantName={dish.restaurant.name}
-            fits={dish.fits}
-            onPress={() =>
-              router.push({
-                pathname: '/restaurant/[id]',
-                params: { id: dish.restaurant.id },
-              })
-            }
-            overKcal={overKcal(dish, data.remainingKcal)}
-            reasons={dish.reasons}
-            onAdd={() => add.request(dish, data.remainingKcal)}
-            adding={add.isAdding(dish.id)}
-            added={add.isAdded(dish.id)}
-          />
-        )}
+        ListHeaderComponent={
+          data.featured.length > 0 ? (
+            <View className="gap-4">
+              <View className="flex-row items-center gap-2">
+                <Ionicons name="megaphone-outline" size={18} color={colors.fgMuted} />
+                <Text variant="heading">{t('dishes', 'sectionSponsored')}</Text>
+              </View>
+              {data.featured.map((dish) => (
+                <View key={dish.id}>{renderDish(dish, true)}</View>
+              ))}
+              <Text variant="heading">{t('dishes', 'sectionAll')}</Text>
+            </View>
+          ) : null
+        }
+        renderItem={({ item: dish }) => renderDish(dish)}
       />
     );
   };

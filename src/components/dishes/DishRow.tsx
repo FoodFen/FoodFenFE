@@ -22,6 +22,7 @@ export interface DishRowProps {
   /** Whole kcal this dish exceeds today's remaining budget by; shown when `fits` is false. */
   overKcal?: number;
   reasons?: string[];
+  sponsored?: boolean;
 }
 
 export function DishRow({
@@ -34,6 +35,7 @@ export function DishRow({
   added,
   overKcal,
   reasons,
+  sponsored,
 }: DishRowProps) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
@@ -97,6 +99,15 @@ export function DishRow({
         ) : null}
 
         <View className="gap-2 p-4">
+          {sponsored ? (
+            <View className="flex-row items-center gap-1 self-start rounded-pill bg-surface-alt px-2.5 py-1">
+              <Ionicons name="megaphone-outline" size={14} color={colors.fgMuted} />
+              <Text variant="caption" tone="muted" className="font-medium">
+                {t('dishes', 'sponsoredBadge')}
+              </Text>
+            </View>
+          ) : null}
+
           <Text variant="label" numberOfLines={2}>
             {dish.name}
           </Text>
