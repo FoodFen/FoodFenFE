@@ -1,6 +1,9 @@
 # Onboarding UI wizard — implementation plan (UI only)
 
-Status: planning only, nothing implemented yet.
+Status: implemented (f081c0b wizard UI, then 1faf62a plan results + profile save
+and c349c7e notification permission, which went past this plan's UI-only scope).
+Kept as the record of the original plan; the code
+(`src/components/onboarding/OnboardingWizard.tsx`) is the source of truth.
 
 Scope for this plan: **UI shell + input collection only.** No schema,
 migration, repository, or `createProfile` wiring. No BMI/results/loading

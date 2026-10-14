@@ -240,9 +240,12 @@ Response `200`:
 
 ## `GET /payments/{orderCode}`
 
-Reads a checkout's current status, reconciling with PayOS if it's still
-`"pending"` locally (covers a webhook that hasn't arrived yet) — this is the
-endpoint to poll after sending the user to `checkoutUrl`.
+Reads a checkout's current status, reconciling with the payment's own
+provider (PayOS or MoMo) if it's still `"pending"` or `"cancelled"` locally
+(covers a webhook that hasn't arrived yet) — this is the endpoint to poll
+after sending the user to `checkoutUrl`. A locally cancelled checkout that the
+provider later confirms as paid (by this poll or by the webhook) still flips to
+`"paid"` and grants Premium: the money was taken.
 
 Response `200`:
 ```json
@@ -273,7 +276,8 @@ Response `200`: same shape as `GET /payments/{orderCode}`, now with
 `status: "cancelled"`. `400` if the checkout isn't `"pending"` anymore
 (already paid, already cancelled, etc.) — `404` for the same ownership case
 as above. For MoMo this only marks the row `cancelled`; MoMo has no cancel API
-for an unpaid order (it expires on MoMo's side).
+for an unpaid order (it expires on MoMo's side), so a user who pays anyway
+still gets Premium (see `GET /payments/{orderCode}` above).
 
 ## `GET /subscriptions/me`
 

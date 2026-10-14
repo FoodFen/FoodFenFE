@@ -39,8 +39,8 @@ server is an accelerator and a backup, never a requirement. Concretely:
   `updated_at`.
 - **Pull never overwrites a dirty row.** `src/data/pull.ts`'s `isDirty()`
   check skips any local row with an unsynced edit rather than clobbering it
-  with the server's version. That row is push's job once push exists —
-  today it just sits unsynced until the user edits it again or push lands.
+  with the server's version. That row is push's job (`src/data/push.ts`),
+  which sends it up and marks it synced.
 
 ## ID types — read this before implementing anything below
 
@@ -51,16 +51,9 @@ backend's own UUID-PK convention (confirmed directly with that session —
 `user` is the sole integer-PK exception), **every `remoteId`/`id` in this
 contract is a string (UUID), except `User.id`, which stays an integer.**
 
-This contract is written assuming that type is correct throughout. It is
-**not yet correct in the client code this contract otherwise describes**:
-`src/db/schema.ts`'s `remoteId: integer('remote_id')` and every non-user `id:
-z.number().int()` in `src/api/schemas.ts` (`foodEntrySchema`,
-`ingredientSchema`, `dailyGoalSchema`, `activityLogSchema`,
-`weightLogSchema`, `waterLogSchema`) still say integer. That's a client-side
-fix to land before or alongside whatever the backend session builds from
-this doc — flagged here rather than silently assumed away, since a session
-building the backend from this file would otherwise reasonably expect the
-client already matches it.
+The client matches this: `src/db/schema.ts` stores `remoteId` as
+`text('remote_id')`, and every non-user `id` in `src/api/schemas.ts` is
+`z.string()`; only `userSchema.id` is an integer.
 
 ## Auth
 
@@ -82,19 +75,21 @@ on another device is never reconciled on this one today. That's a real gap,
 explicitly out of scope for this pass (see "Left to the backend session's
 own judgment").
 
-### `GET /users/me`
+### `GET /auth/me`
 
 Response `200`: the `User` object exactly as `auth.md` defines it. Used to
 refresh the client's copy of body stats/preferences/`subscriptionTier`
-without re-authenticating. (Already specified in `auth.md`; repeated here
-only because `src/data/pull.ts` doesn't currently call it — `syncApi.me()`
-exists but is unused. Worth knowing the client has this gap too.)
+without re-authenticating. (Already specified in `auth.md`; there is no
+`GET /users/me`, only `PATCH /users/me` for push. `src/data/pull.ts`
+doesn't call it: `syncApi.me()` exists but is unused, and on sign-in the
+profile is restored from the session's `user` instead —
+`src/features/auth/store.ts`.)
 
 Verified live against a fresh sign-up: `gender`, `birthYear`, `height`,
 `weightCurrent`, `weightGoal`, `activityLevel`, `dietType`,
-`calorieLeftMode`, `weeklyRateKg` all come back `null` before that profile
-data has ever been pushed — which, since push doesn't exist yet, is every
-account today, not an edge case. `userSchema` (`src/api/schemas.ts`) now
+`calorieLeftMode`, `weeklyRateKg` all come back `null` until the profile
+has been pushed (`PATCH /users/me`), so an account that never finished
+onboarding on a signed-in device has them all `null`. `userSchema` (`src/api/schemas.ts`) now
 accepts `null` on all of those; it previously required them, which failed
 validation on literally the first real account tested against it. Nothing
 in the client reads these fields off the server's copy anyway (the local
@@ -294,20 +289,19 @@ Response `200`: `{ id, userId, currentStreak, longestStreak, lastActiveDate }`
 
 ### Food entries (+ ingredients)
 
-Already exists (`POST /food-entries`, `GET /food-entries/{id}`) —
-this section is confirming the shape against the rest of this contract,
-not asking for new work, plus naming the two pieces still missing:
+All built on the backend (`POST`, `GET /food-entries/{id}`, `PATCH`,
+`DELETE`); this section confirms the shape against the rest of this contract:
 
 - `POST /food-entries` — request: `clientId` + every `FoodEntry` field
   from the `GET` shape above except `id`/`userId`, with `ingredients` as an
   array of `{ clientId, name, quantityG, kcal, carbsG, proteinG, fatG,
   fiberG }` (no ingredient-level id needed on create).
-- `PATCH /food-entries/{id}` *(not yet built, per your message)* — same
+- `PATCH /food-entries/{id}` — same
   body shape, for `updateEntry`/`updateManualEntry`'s local edits after
   initial creation. `ingredients` is again the complete, replacing set —
   mirror pull's "delete then re-insert" semantics rather than diffing, so
   the two directions stay symmetric.
-- `DELETE /food-entries/{id}` *(not yet built)* — soft delete, for
+- `DELETE /food-entries/{id}` — soft delete, for
   `deleteEntry`.
 
 ### Activity logs

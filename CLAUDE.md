@@ -154,7 +154,6 @@ Where the load-bearing logic lives:
 
 - **AI meal capture — largely built.** `input_method` covers `voice`/`image`/`type`/`manual` and `ai_feedback` records thumbs up/down. Typed, manual, voice (on-device speech-to-text via `expo-speech-recognition` feeding the same text-analysis call), and image (camera/library photo through `app/log/manual.tsx`'s `ImageCapturePanel`) all produce real ingredient rows via `useAnalyzeFood()` and are stored under their correct `input_method`. Barcode scanning is the one capture path with no UI yet — `expo-camera` is installed and permissioned, but there's no scan screen or barcode→catalog lookup.
 - **AI insights.** The Stats tab shows locally computed trends. The AI layer should consume `summarizeTrends()` — small and pre-aggregated — rather than raw entries.
-- **Coin shop.** `app/shop.tsx` is a placeholder `EmptyState`; coin balances already accrue through gamification.
 
 ## Other instructions
 

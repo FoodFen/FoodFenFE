@@ -90,8 +90,7 @@ Change the schema, then `npm run db:generate` to emit a migration. Migrations ru
 
 ## Not yet built
 
-- **Push sync.** Reads already refresh from the server; writes queue locally and nothing drains them.
-- **AI meal capture.** `input_method` covers `voice`/`image`/`type`/`manual` and `ai_feedback` records thumbs up/down, but only the typed and manual paths exist. When the model lands, it should produce ingredient rows and let the existing composer save them; the call belongs on the server, never with a key in the bundle.
+- **Barcode scanning.** `expo-camera` is installed and permissioned, but there is no scan screen or barcode→catalog lookup. Every other capture path (typed, manual, voice, photo) is built.
 - **AI insights.** The Insights tab shows locally computed trends. The AI layer should consume `summarizeTrends()` — small and pre-aggregated — rather than raw entries.
-- **Gamification UI.** Streaks, quests, coins and subscriptions have schema, repositories and tested rules, but no screens. Streaks already advance when a meal is logged.
-- **Barcode scanning and photo logging.** `expo-camera` and `expo-image-picker` are installed and permissioned; `food_entry.image_url` is plumbed through. No screens yet.
+
+Push sync (`src/data/push.ts`), the gamification screens (streak, quests, quiz, coin shop) and Premium checkout (PayOS and MoMo) are built; `CLAUDE.md` has the details.
