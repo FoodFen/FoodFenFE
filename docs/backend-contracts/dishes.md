@@ -102,6 +102,8 @@ Source: FoodFenBE `docs/superpowers/specs/2026-10-12-paid-placement-design.md`.
 
 - Sponsored dishes for a "Được tài trợ" section above the list. At most 3,
   one per restaurant, already in display order; `fits` is always `true`.
+  Only dishes within `remainingKcal` (+10% tolerance) qualify, never the
+  over-budget top-up ones from "Ranking" below.
 - Non-empty only on the **first page** (no `cursor`); later pages send `[]`.
   Also `[]` when no goal is in force or no sponsored dish fits the user.
 - Picked from the same filtered, ranked list, so `q` and filters narrow it too.

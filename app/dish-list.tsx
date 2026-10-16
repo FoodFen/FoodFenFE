@@ -14,6 +14,7 @@ import {
 import type { DishFilters } from '@/api/endpoints/dishes';
 import { isApiError } from '@/api/errors';
 import type { RemoteListedDish } from '@/api/schemas';
+import { AddDishSheet } from '@/components/dishes/AddDishSheet';
 import { DishRow } from '@/components/dishes/DishRow';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
 import { Screen } from '@/components/ui/Screen';
@@ -214,7 +215,7 @@ export default function DishListScreen() {
             returnKeyType="search"
             maxLength={100}
             accessibilityLabel={t('dishes', 'searchPlaceholder')}
-            className="h-full flex-1 font-sans text-base text-fg"
+            className="h-full flex-1 font-sans text-[14px] text-fg"
           />
           {query.length > 0 ? (
             <Pressable
@@ -231,7 +232,7 @@ export default function DishListScreen() {
 
       <ScrollView
         horizontal
-        className="grow-0"
+        className="grow-0 shrink-0"
         contentContainerClassName="gap-2 px-4 pb-2"
         showsHorizontalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
@@ -256,6 +257,7 @@ export default function DishListScreen() {
       </ScrollView>
 
       {body()}
+      <AddDishSheet dish={add.adjusting} onClose={add.closeAdjust} onAdd={add.addWithMeal} />
     </Screen>
   );
 }

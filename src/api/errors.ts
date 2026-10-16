@@ -62,7 +62,7 @@ export class ApiError extends Error {
     const { locale } = useSettingsStore.getState();
     const key = this.kind === 'parse' || this.kind === 'unknown' ? 'generic' : this.kind;
 
-    return (this.kind === 'validation' && this.message) || translate(locale, 'apiError', key);
+    return translate(locale, 'apiError', key);
   }
 }
 
@@ -79,4 +79,8 @@ export function statusToKind(status: number): ApiErrorKind {
 
 export function isApiError(error: unknown): error is ApiError {
   return error instanceof ApiError;
+}
+
+export function userErrorMessage(error: unknown, fallback: string): string {
+  return isApiError(error) ? error.userMessage : fallback;
 }

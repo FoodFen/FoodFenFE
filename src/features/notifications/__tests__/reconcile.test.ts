@@ -4,7 +4,7 @@ import * as gamification from '@/data/gamificationRepository';
 import * as userRepository from '@/data/userRepository';
 import { createTestDatabase } from '@/db/testDatabase';
 import type { TestDatabase } from '@/db/testDatabase';
-import { useSettingsStore } from '@/features/settings/store';
+import { defaultMealReminders, useSettingsStore } from '@/features/settings/store';
 import { shiftDateKey, toDateKey } from '@/lib/date';
 import * as scheduler from '@/lib/notificationScheduler';
 
@@ -22,7 +22,8 @@ jest.mock('@/db/client', () => ({
 // expo-notifications module, which otherwise logs an "Expo Go push" warning
 // on import — mocked here purely to keep test output clean.
 jest.mock('expo-notifications', () => ({
-  SchedulableTriggerInputTypes: { DATE: 'date' },
+  SchedulableTriggerInputTypes: { DATE: 'date', DAILY: 'daily' },
+  getAllScheduledNotificationsAsync: jest.fn(async () => []),
   scheduleNotificationAsync: jest.fn(async () => 'scheduled-id'),
   cancelScheduledNotificationAsync: jest.fn(async () => undefined),
   cancelAllScheduledNotificationsAsync: jest.fn(async () => undefined),
@@ -67,7 +68,10 @@ function createUser() {
 beforeEach(() => {
   mockDb = createTestDatabase();
   jest.clearAllMocks();
-  useSettingsStore.setState({ mealRemindersEnabled: true, streakRemindersEnabled: true });
+  useSettingsStore.setState({
+    reminders: defaultMealReminders(true),
+    streakRemindersEnabled: true,
+  });
 });
 
 describe('reconcileNotifications — meal reminders', () => {
@@ -139,10 +143,10 @@ describe('reconcileNotifications — meal reminders', () => {
     expect(scheduledAt.getMinutes()).toBe(mockedScheduler.DEFAULT_MEAL_TIMES.breakfast.minute);
   });
 
-  it('cancels all three meal reminders when mealRemindersEnabled is off', async () => {
+  it('cancels all three meal reminders when every meal reminder is disabled', async () => {
     const user = createUser();
 
-    useSettingsStore.setState({ mealRemindersEnabled: false });
+    useSettingsStore.setState({ reminders: defaultMealReminders(false) });
 
     await reconcileNotifications(user.id, NOW);
 

@@ -33,7 +33,6 @@ export default function SignInScreen() {
   const {
     control,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting },
   } = useForm<SignInValues>({
     resolver: zodResolver(schema),
@@ -55,15 +54,6 @@ export default function SignInScreen() {
       );
     } catch (error) {
       if (isApiError(error)) {
-        // Map field-level errors from the server onto the right inputs.
-        if (error.fieldErrors) {
-          for (const [field, message] of Object.entries(error.fieldErrors)) {
-            if (field === 'email' || field === 'password') {
-              setError(field, { message });
-            }
-          }
-        }
-
         setFormError(
           error.kind === 'unauthorized'
             ? t('auth', 'invalidCredentials')

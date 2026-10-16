@@ -1,6 +1,6 @@
 import { OnboardingWizard } from '@/components/onboarding/OnboardingWizard';
 import { useProfileStore } from '@/features/profile/store';
-import { useSettingsStore } from '@/features/settings/store';
+import { MEAL_REMINDER_IDS, useSettingsStore } from '@/features/settings/store';
 
 /**
  * First run.
@@ -12,7 +12,7 @@ import { useSettingsStore } from '@/features/settings/store';
  */
 export default function OnboardingScreen() {
   const createProfile = useProfileStore((state) => state.createProfile);
-  const setMealRemindersEnabled = useSettingsStore((state) => state.setMealRemindersEnabled);
+  const setReminderEnabled = useSettingsStore((state) => state.setReminderEnabled);
   const setStreakRemindersEnabled = useSettingsStore(
     (state) => state.setStreakRemindersEnabled,
   );
@@ -40,7 +40,7 @@ export default function OnboardingScreen() {
         // and stay off on "Skip". reconcileNotifications runs on its own
         // once the new profile appears (app/_layout.tsx), so no need to
         // call it here.
-        setMealRemindersEnabled(draft.notificationsEnabled);
+        MEAL_REMINDER_IDS.forEach((id) => setReminderEnabled(id, draft.notificationsEnabled));
         setStreakRemindersEnabled(draft.notificationsEnabled);
         // Not logging `draft`: it's body metrics, and those never go to the
         // console per CLAUDE.md.

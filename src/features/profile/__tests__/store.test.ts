@@ -1,5 +1,5 @@
 import { eraseDatabase } from '@/db/client';
-import { useSettingsStore } from '@/features/settings/store';
+import { defaultMealReminders, useSettingsStore } from '@/features/settings/store';
 import { cancelAll } from '@/lib/notificationScheduler';
 
 import { useProfileStore } from '../store';
@@ -17,7 +17,10 @@ jest.mock('@/lib/notificationScheduler', () => ({
 
 beforeEach(() => {
   jest.clearAllMocks();
-  useSettingsStore.setState({ mealRemindersEnabled: true, streakRemindersEnabled: true });
+  useSettingsStore.setState({
+    reminders: defaultMealReminders(true),
+    streakRemindersEnabled: true,
+  });
 });
 
 describe('eraseAll', () => {
@@ -30,7 +33,7 @@ describe('eraseAll', () => {
   it('turns both reminder settings back off', () => {
     useProfileStore.getState().eraseAll();
 
-    expect(useSettingsStore.getState().mealRemindersEnabled).toBe(false);
+    expect(useSettingsStore.getState().reminders.some((r) => r.enabled)).toBe(false);
     expect(useSettingsStore.getState().streakRemindersEnabled).toBe(false);
   });
 

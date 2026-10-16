@@ -1,6 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQueryClient } from '@tanstack/react-query';
-import * as Notifications from 'expo-notifications';
 import { router, Stack } from 'expo-router';
 import { Alert, Pressable, View } from 'react-native';
 
@@ -11,6 +10,7 @@ import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
 import { useDiaryDay } from '@/features/diary/queries';
 import { useLogSheetStore } from '@/features/logging/store';
+import { requestNotificationPermission } from '@/features/notifications/permission';
 import { reconcileNotifications } from '@/features/notifications/reconcile';
 import { useIsPremium, useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
@@ -55,8 +55,6 @@ export default function SettingsScreen() {
   );
   const healthSyncEnabled = useSettingsStore((state) => state.healthSyncEnabled);
   const setHealthSyncEnabled = useSettingsStore((state) => state.setHealthSyncEnabled);
-  const mealRemindersEnabled = useSettingsStore((state) => state.mealRemindersEnabled);
-  const setMealRemindersEnabled = useSettingsStore((state) => state.setMealRemindersEnabled);
   const streakRemindersEnabled = useSettingsStore((state) => state.streakRemindersEnabled);
   const setStreakRemindersEnabled = useSettingsStore(
     (state) => state.setStreakRemindersEnabled,
@@ -114,29 +112,6 @@ export default function SettingsScreen() {
       setHealthSyncEnabled(true);
     } else {
       Alert.alert(t('healthSync', 'heading'), t('healthSync', 'permissionDenied'));
-    }
-  };
-
-  const requestNotificationPermission = async (): Promise<boolean> => {
-    const { granted } = await Notifications.getPermissionsAsync();
-
-    if (granted) return true;
-
-    return (await Notifications.requestPermissionsAsync()).granted;
-  };
-
-  const toggleMealReminders = async (value: boolean) => {
-    if (!value) {
-      setMealRemindersEnabled(false);
-      void reconcileNotifications(user.id);
-      return;
-    }
-
-    if (await requestNotificationPermission()) {
-      setMealRemindersEnabled(true);
-      void reconcileNotifications(user.id);
-    } else {
-      Alert.alert(t('notifications', 'mealRemindersHeading'), t('notifications', 'permissionDenied'));
     }
   };
 
@@ -406,19 +381,15 @@ export default function SettingsScreen() {
         </Text>
       </Card>
 
-      <Card className="gap-3">
-        <Text variant="heading">{t('notifications', 'mealRemindersHeading')}</Text>
-        <SegmentedControl
-          options={[
-            { value: 'on' as const, label: t('developer', 'on') },
-            { value: 'off' as const, label: t('developer', 'off') },
-          ]}
-          value={mealRemindersEnabled ? 'on' : 'off'}
-          onChange={(value) => void toggleMealReminders(value === 'on')}
-        />
-        <Text variant="caption" tone="subtle">
-          {t('notifications', 'mealRemindersCaption')}
-        </Text>
+      <Card flush>
+        <Pressable
+          onPress={() => router.push('/settings/reminders')}
+          accessibilityRole="button"
+          className="flex-row items-center justify-between px-4 py-4 active:bg-surface-alt"
+        >
+          <Text variant="label">{t('notifications', 'manageReminders')}</Text>
+          <Ionicons name="chevron-forward" size={16} color={colors.fgMuted} />
+        </Pressable>
       </Card>
 
       <Card className="gap-3">

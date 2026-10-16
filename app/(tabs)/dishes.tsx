@@ -13,6 +13,7 @@ import {
 import type { DishFilters } from '@/api/endpoints/dishes';
 import { isApiError } from '@/api/errors';
 import type { RemoteListedDish } from '@/api/schemas';
+import { AddDishSheet } from '@/components/dishes/AddDishSheet';
 import { DishRow } from '@/components/dishes/DishRow';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -119,96 +120,104 @@ export default function DishesScreen() {
   const { remainingKcal } = data;
 
   return (
-    <ScrollScreen
-      tabBar
-      topInset
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={() => void onRefresh()}
-          tintColor={colors.fgMuted}
-        />
-      }
-    >
-      <View className="flex-row items-center gap-3">
-        <Pressable
-          onPress={openList}
-          accessibilityRole="button"
-          accessibilityLabel={t('dishes', 'searchPlaceholder')}
-          className="h-12 flex-1 flex-row items-center gap-2 rounded-card bg-surface-alt px-3"
-        >
-          <Ionicons name="search" size={18} color={colors.fgSubtle} />
-          <Text variant="body" tone="subtle" numberOfLines={1} className="flex-1">
-            {t('dishes', 'searchPlaceholder')}
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={openList}
-          accessibilityRole="button"
-          accessibilityLabel={t('dishes', 'filters')}
-          className="h-12 w-12 items-center justify-center rounded-card bg-surface-alt"
-        >
-          <Ionicons name="options-outline" size={22} color={colors.fgMuted} />
-        </Pressable>
-      </View>
-
-      <Card className="gap-1 border-0 bg-brand-soft">
-        {remainingKcal === null ? (
-          <Text variant="body" tone="muted">
-            {t('dishes', 'noGoalHint')}
-          </Text>
-        ) : remainingKcal > 0 ? (
-          <>
-            <Text variant="caption" tone="muted">
-              {t('dishes', 'remainingLabel')}
-            </Text>
-            <View className="flex-row items-baseline gap-2">
-              <Text variant="display">{remainingKcal.toLocaleString()}</Text>
-              <Text variant="label" tone="muted">
-                kcal
-              </Text>
-            </View>
-          </>
-        ) : (
-          <Text variant="heading" tone="warning">
-            {t('dishes', 'overGoal')}
-          </Text>
-        )}
-      </Card>
-
-      <Button
-        label={t('dishes', 'suggestForMe')}
-        variant="secondary"
-        leading={<Ionicons name="sparkles" size={18} color={colors.brand} />}
-        onPress={() =>
-          router.push({ pathname: '/chat', params: { draft: t('dishes', 'suggestPrefix') } })
+    <>
+      <ScrollScreen
+        tabBar
+        topInset
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => void onRefresh()}
+            tintColor={colors.fgMuted}
+          />
         }
+      >
+        <View className="flex-row items-center gap-3">
+          <Pressable
+            onPress={openList}
+            accessibilityRole="button"
+            accessibilityLabel={t('dishes', 'searchPlaceholder')}
+            className="h-12 flex-1 flex-row items-center gap-2 rounded-card bg-surface-alt px-3"
+          >
+            <Ionicons name="search" size={18} color={colors.fgSubtle} />
+            <Text variant="body" tone="subtle" numberOfLines={1} className="flex-1">
+              {t('dishes', 'searchPlaceholder')}
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={openList}
+            accessibilityRole="button"
+            accessibilityLabel={t('dishes', 'filters')}
+            className="h-12 w-12 items-center justify-center rounded-card bg-surface-alt"
+          >
+            <Ionicons name="options-outline" size={22} color={colors.fgMuted} />
+          </Pressable>
+        </View>
+
+        <Card className="gap-1 border-0 bg-brand-soft">
+          {remainingKcal === null ? (
+            <Text variant="body" tone="muted">
+              {t('dishes', 'noGoalHint')}
+            </Text>
+          ) : remainingKcal > 0 ? (
+            <>
+              <Text variant="caption" tone="muted">
+                {t('dishes', 'remainingLabel')}
+              </Text>
+              <View className="flex-row items-baseline gap-2">
+                <Text variant="display">{remainingKcal.toLocaleString()}</Text>
+                <Text variant="label" tone="muted">
+                  kcal
+                </Text>
+              </View>
+            </>
+          ) : (
+            <Text variant="heading" tone="warning">
+              {t('dishes', 'overGoal')}
+            </Text>
+          )}
+        </Card>
+
+        <Button
+          label={t('dishes', 'suggestForMe')}
+          variant="secondary"
+          leading={<Ionicons name="sparkles" size={18} color={colors.brand} />}
+          onPress={() =>
+            router.push({ pathname: '/chat', params: { draft: t('dishes', 'suggestPrefix') } })
+          }
+        />
+
+        {data.featured.length > 0 && (
+          <SponsoredSection dishes={data.featured} remainingKcal={remainingKcal} add={add} />
+        )}
+
+        {sections.map((section) =>
+          section.key === 'all' && section.query.data?.dishes.length === 0 ? (
+            <EmptyState
+              key={section.key}
+              icon="restaurant-outline"
+              title={t('dishes', 'emptyTitle')}
+              description={t('dishes', 'emptyDescription')}
+            />
+          ) : (
+            <DishSection
+              key={section.key}
+              title={section.title}
+              filters={section.filters}
+              query={section.query}
+              remainingKcal={remainingKcal}
+              add={add}
+            />
+          )
+        )}
+      </ScrollScreen>
+      <AddDishSheet
+        dish={add.adjusting}
+        onClose={add.closeAdjust}
+        onAdd={add.addWithMeal}
+        tabBar
       />
-
-      {data.featured.length > 0 && (
-        <SponsoredSection dishes={data.featured} remainingKcal={remainingKcal} add={add} />
-      )}
-
-      {sections.map((section) =>
-        section.key === 'all' && section.query.data?.dishes.length === 0 ? (
-          <EmptyState
-            key={section.key}
-            icon="restaurant-outline"
-            title={t('dishes', 'emptyTitle')}
-            description={t('dishes', 'emptyDescription')}
-          />
-        ) : (
-          <DishSection
-            key={section.key}
-            title={section.title}
-            filters={section.filters}
-            query={section.query}
-            remainingKcal={remainingKcal}
-            add={add}
-          />
-        )
-      )}
-    </ScrollScreen>
+    </>
   );
 }
 

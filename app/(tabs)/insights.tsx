@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { View } from 'react-native';
 
+import { userErrorMessage } from '@/api/errors';
 import { CalorieTrendChart } from '@/components/insights/CalorieTrendChart';
 import { WeightTrendChart } from '@/components/insights/WeightTrendChart';
 import { Card, CardHeader } from '@/components/ui/Card';
@@ -51,7 +52,7 @@ export default function InsightsScreen() {
       <Screen tabBar topInset>
         <ErrorState
           description={
-            error instanceof Error ? error.message : t('common', 'pleaseTryAgain')
+            userErrorMessage(error, t('common', 'pleaseTryAgain'))
           }
           onRetry={() => void refetch()}
         />

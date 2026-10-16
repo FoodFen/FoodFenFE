@@ -154,11 +154,14 @@ export async function streamChatReply(
 
           settled = true;
           if (result.success) handlers.onDone(result.data);
-          else handlers.onError('The server returned an unexpected reply.');
+          else {
+            handlers.onError(
+              new ApiError('parse', 'The server returned an unexpected reply.').userMessage,
+            );
+          }
           return;
         } else if (frame.event === 'error') {
-          const parsed = JSON.parse(frame.data) as { message: string };
-          fail(parsed.message);
+          fail(new ApiError('server', 'The assistant could not reply.').userMessage);
           return;
         }
       }

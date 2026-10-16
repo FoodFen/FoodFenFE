@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { userErrorMessage } from '@/api/errors';
 import { CaloriesBurnedSection } from '@/components/dashboard/CaloriesBurnedSection';
 import { CaloriesEatenSection } from '@/components/dashboard/CaloriesEatenSection';
 import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
@@ -75,7 +76,7 @@ export default function DashboardScreen() {
         <View style={{ paddingBottom: TAB_BAR_CLEARANCE }}>
           <ErrorState
             description={
-              error instanceof Error ? error.message : t('dashboard', 'dayLoadError')
+              userErrorMessage(error, t('dashboard', 'dayLoadError'))
             }
             onRetry={() => {
               resetHeal();

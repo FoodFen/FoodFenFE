@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { Pressable, RefreshControl, View } from 'react-native';
 
+import { userErrorMessage } from '@/api/errors';
 import { QuizCard } from '@/components/quiz/QuizCard';
 import { Card } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
@@ -68,7 +69,7 @@ export default function AchievementsScreen() {
   } else if (error) {
     questSection = (
       <ErrorState
-        description={error instanceof Error ? error.message : t('common', 'pleaseTryAgain')}
+        description={userErrorMessage(error, t('common', 'pleaseTryAgain'))}
         onRetry={() => void refetch()}
       />
     );

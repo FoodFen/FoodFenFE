@@ -209,6 +209,7 @@ function AppShell({ migrated }: { migrated: boolean }) {
       <Stack
         screenOptions={{
           headerShadowVisible: false,
+          headerBackButtonDisplayMode: 'minimal',
           headerStyle: { backgroundColor: colors.bg },
           headerTintColor: colors.fg,
           contentStyle: { backgroundColor: colors.bg },

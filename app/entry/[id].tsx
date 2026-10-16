@@ -3,6 +3,7 @@ import { Image } from 'expo-image';
 import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { Alert, Pressable, View } from 'react-native';
 
+import { userErrorMessage } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ErrorState } from '@/components/ui/EmptyState';
@@ -47,7 +48,7 @@ export default function EntryDetailScreen() {
     return (
       <ErrorState
         description={
-          error instanceof Error ? error.message : t('entryDetail', 'loadError')
+          userErrorMessage(error, t('entryDetail', 'loadError'))
         }
         onRetry={() => void refetch()}
       />

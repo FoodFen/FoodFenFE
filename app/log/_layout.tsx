@@ -17,7 +17,7 @@ export default function LogLayout() {
   useAiQuota(env.hasBackend, signedIn);
 
   return (
-    <Stack screenOptions={{ headerShadowVisible: false }}>
+    <Stack screenOptions={{ headerShadowVisible: false, headerBackButtonDisplayMode: 'minimal' }}>
       <Stack.Screen name="meal" options={{ title: t('logMeal', 'layoutTitle') }} />
       <Stack.Screen
         name="ingredient"

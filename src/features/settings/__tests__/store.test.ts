@@ -52,15 +52,15 @@ describe('healthSyncEnabled', () => {
   });
 });
 
-describe('mealRemindersEnabled', () => {
+describe('meal reminders', () => {
   it('defaults to off', () => {
-    expect(useSettingsStore.getState().mealRemindersEnabled).toBe(false);
+    expect(useSettingsStore.getState().reminders.some((r) => r.enabled)).toBe(false);
   });
 
-  it('setMealRemindersEnabled flips it and persists', () => {
-    useSettingsStore.getState().setMealRemindersEnabled(true);
+  it('setReminderEnabled flips one and persists', () => {
+    useSettingsStore.getState().setReminderEnabled('meal-breakfast', true);
 
-    expect(useSettingsStore.getState().mealRemindersEnabled).toBe(true);
+    expect(useSettingsStore.getState().reminders[0]?.enabled).toBe(true);
   });
 });
 

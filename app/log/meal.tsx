@@ -4,12 +4,14 @@ import { useEffect, useMemo } from 'react';
 import { Alert, Pressable, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
+import { userErrorMessage } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
 import { draftName, draftTotals, useDraftStore } from '@/features/diary/draftStore';
 import { useLogMeal } from '@/features/diary/queries';
+import { usePostLogInterstitial } from '@/features/gamification/queries';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -40,6 +42,7 @@ export default function MealComposerScreen() {
 
   const draft = useDraftStore();
   const logMeal = useLogMeal();
+  const finishLogging = usePostLogInterstitial(() => router.dismissAll());
 
   const date = params.date ?? todayKey();
 
@@ -72,14 +75,13 @@ export default function MealComposerScreen() {
         onSuccess: () => {
           haptics.success();
           draft.reset();
-          // Dismiss the whole logging stack, not just this screen.
-          router.dismissAll();
+          finishLogging();
         },
         onError: (error) => {
           haptics.error();
           Alert.alert(
             t('logMeal', 'saveErrorTitle'),
-            error instanceof Error ? error.message : t('logMeal', 'saveErrorFallback'),
+            userErrorMessage(error, t('logMeal', 'saveErrorFallback')),
           );
         },
       },

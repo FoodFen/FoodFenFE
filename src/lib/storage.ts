@@ -113,4 +113,5 @@ export const StorageKeys = {
   healthSyncEnabled: 'health-sync-enabled',
   mealRemindersEnabled: 'meal-reminders-enabled',
   streakRemindersEnabled: 'streak-reminders-enabled',
+  reminders: 'reminders',
 } as const;

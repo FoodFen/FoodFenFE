@@ -87,9 +87,9 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
     useSettingsStore.getState().resetOnboarding();
     // The erased diary/streak this device knew about is gone — any reminder
     // already scheduled would otherwise nudge about data that no longer
-    // exists, so both settings go back to off and every pending
+    // exists, so reminders go back to the disabled defaults and every pending
     // notification is cancelled, same as a fresh install.
-    useSettingsStore.getState().setMealRemindersEnabled(false);
+    useSettingsStore.getState().resetReminders();
     useSettingsStore.getState().setStreakRemindersEnabled(false);
     void cancelAll();
     // Still loaded — the tables exist and were just read as empty. Only the

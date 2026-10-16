@@ -6,8 +6,9 @@ import { Text } from '@/components/ui/Text';
 import { useTranslation } from '@/hooks/useTranslation';
 
 /**
- * Hero shown in place of an empty conversation: a glowing avatar, a prompt,
- * and three suggestion chips that stagger in and send on tap.
+ * Intro at the top of the conversation, scrolling away with the history: a
+ * glowing avatar, a prompt, and three suggestion chips that stagger in and
+ * send on tap.
  */
 
 const SUGGESTION_KEYS = ['suggestion1', 'suggestion2', 'suggestion3'] as const;

@@ -31,7 +31,6 @@ export default function SignUpScreen() {
   const {
     control,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting },
   } = useForm<SignUpValues>({
     resolver: zodResolver(schema),
@@ -58,10 +57,6 @@ export default function SignUpScreen() {
       );
     } catch (error) {
       if (isApiError(error)) {
-        if (error.fieldErrors?.email) {
-          setError('email', { message: error.fieldErrors.email });
-        }
-
         setFormError(error.userMessage);
       } else {
         setFormError(t('auth', 'genericError'));

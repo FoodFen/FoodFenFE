@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Stack } from 'expo-router';
 import { Share, View } from 'react-native';
 
+import { userErrorMessage } from '@/api/errors';
 import { StreakHeatmap, StreakHeatmapLegend } from '@/components/gamification/StreakHeatmap';
 import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 import { Button } from '@/components/ui/Button';
@@ -49,7 +50,7 @@ export default function StreakScreen() {
         <Stack.Screen options={{ title: t('streak', 'title') }} />
         <ErrorState
           description={
-            error instanceof Error ? error.message : t('common', 'pleaseTryAgain')
+            userErrorMessage(error, t('common', 'pleaseTryAgain'))
           }
           onRetry={() => void refetch()}
         />

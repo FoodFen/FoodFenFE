@@ -4,6 +4,7 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { Linking, Pressable, RefreshControl, View } from 'react-native';
 
 import { isApiError } from '@/api/errors';
+import { AddDishSheet } from '@/components/dishes/AddDishSheet';
 import { DishRow } from '@/components/dishes/DishRow';
 import { Button } from '@/components/ui/Button';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
@@ -88,130 +89,133 @@ export default function RestaurantScreen() {
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${restaurant.latitude},${restaurant.longitude}`;
 
   return (
-    <ScrollScreen
-      refreshControl={
-        <RefreshControl
-          refreshing={isRefetching}
-          onRefresh={() => void refetch()}
-          tintColor={colors.fgMuted}
-        />
-      }
-    >
-      <Stack.Screen options={{ title: restaurant.name }} />
+    <>
+      <ScrollScreen
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetching}
+            onRefresh={() => void refetch()}
+            tintColor={colors.fgMuted}
+          />
+        }
+      >
+        <Stack.Screen options={{ title: restaurant.name }} />
 
-      {restaurant.imageUrl ? (
-        <Image
-          source={{ uri: restaurant.imageUrl }}
-          className="-mx-4 -mt-4 h-56"
-          contentFit="cover"
-        />
-      ) : (
-        <View className="-mx-4 -mt-4 h-56 items-center justify-center bg-surface-alt">
-          <Ionicons name="restaurant-outline" size={48} color={colors.fgSubtle} />
-        </View>
-      )}
+        {restaurant.imageUrl ? (
+          <Image
+            source={{ uri: restaurant.imageUrl }}
+            className="-mx-4 -mt-4 h-56"
+            contentFit="cover"
+          />
+        ) : (
+          <View className="-mx-4 -mt-4 h-56 items-center justify-center bg-surface-alt">
+            <Ionicons name="restaurant-outline" size={48} color={colors.fgSubtle} />
+          </View>
+        )}
 
-      <View className="gap-6">
-        <View className="gap-3">
-          <View className="gap-1">
-            <Text variant="title">{restaurant.name}</Text>
-            {restaurant.description ? (
-              <Text tone="muted" numberOfLines={3}>
-                {restaurant.description}
-              </Text>
+        <View className="gap-6">
+          <View className="gap-3">
+            <View className="gap-1">
+              <Text variant="title">{restaurant.name}</Text>
+              {restaurant.description ? (
+                <Text tone="muted" numberOfLines={3}>
+                  {restaurant.description}
+                </Text>
+              ) : null}
+            </View>
+
+            <View className="gap-1">
+              <Pressable
+                onPress={() => void Linking.openURL(mapsUrl)}
+                accessibilityRole="link"
+                accessibilityLabel={`${t('dishes', 'directions')}: ${restaurant.address}`}
+                className="min-h-11 flex-row items-center gap-3"
+              >
+                <Ionicons name="location-outline" size={18} color={colors.fgMuted} />
+                <Text variant="body" className="flex-1">
+                  {restaurant.address}
+                </Text>
+              </Pressable>
+              {restaurant.phone ? (
+                <Pressable
+                  onPress={() => void Linking.openURL(`tel:${restaurant.phone}`)}
+                  accessibilityRole="link"
+                  accessibilityLabel={`${t('dishes', 'call')}: ${restaurant.phone}`}
+                  className="min-h-11 flex-row items-center gap-3"
+                >
+                  <Ionicons name="call-outline" size={18} color={colors.fgMuted} />
+                  <Text variant="body" className="flex-1">
+                    {restaurant.phone}
+                  </Text>
+                </Pressable>
+              ) : (
+                <View className="min-h-11 flex-row items-center gap-3">
+                  <Ionicons name="call-outline" size={18} color={colors.fgMuted} />
+                  <Text variant="body" tone="muted" className="flex-1">
+                    {t('dishes', 'notAvailable')}
+                  </Text>
+                </View>
+              )}
+              <View className="min-h-11 flex-row items-center gap-3">
+                <Ionicons name="time-outline" size={18} color={colors.fgMuted} />
+                <Text
+                  variant="body"
+                  tone={restaurant.openingHours ? undefined : 'muted'}
+                  className="flex-1"
+                >
+                  {restaurant.openingHours ?? t('dishes', 'notAvailable')}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View className="flex-row gap-3">
+            <Button
+              label={t('dishes', 'directions')}
+              className="flex-1"
+              leading={<Ionicons name="navigate" size={18} color={colors.onBrand} />}
+              onPress={() => void Linking.openURL(mapsUrl)}
+            />
+            {restaurant.phone ? (
+              <Button
+                label={t('dishes', 'call')}
+                variant="secondary"
+                className="flex-1"
+                leading={<Ionicons name="call" size={18} color={colors.fg} />}
+                onPress={() => void Linking.openURL(`tel:${restaurant.phone}`)}
+              />
             ) : null}
           </View>
 
-          <View className="gap-1">
-            <Pressable
-              onPress={() => void Linking.openURL(mapsUrl)}
-              accessibilityRole="link"
-              accessibilityLabel={`${t('dishes', 'directions')}: ${restaurant.address}`}
-              className="min-h-11 flex-row items-center gap-3"
-            >
-              <Ionicons name="location-outline" size={18} color={colors.fgMuted} />
-              <Text variant="body" className="flex-1">
-                {restaurant.address}
+          <View className="gap-3">
+            <View className="flex-row items-baseline justify-between">
+              <Text variant="heading">{t('dishes', 'menu')}</Text>
+              <Text variant="caption" tone="muted">
+                {t('dishes', 'menuCount').replace('{n}', String(restaurant.dishes.length))}
               </Text>
-            </Pressable>
-            {restaurant.phone ? (
-              <Pressable
-                onPress={() => void Linking.openURL(`tel:${restaurant.phone}`)}
-                accessibilityRole="link"
-                accessibilityLabel={`${t('dishes', 'call')}: ${restaurant.phone}`}
-                className="min-h-11 flex-row items-center gap-3"
-              >
-                <Ionicons name="call-outline" size={18} color={colors.fgMuted} />
-                <Text variant="body" className="flex-1">
-                  {restaurant.phone}
-                </Text>
-              </Pressable>
-            ) : (
-              <View className="min-h-11 flex-row items-center gap-3">
-                <Ionicons name="call-outline" size={18} color={colors.fgMuted} />
-                <Text variant="body" tone="muted" className="flex-1">
-                  {t('dishes', 'notAvailable')}
-                </Text>
-              </View>
-            )}
-            <View className="min-h-11 flex-row items-center gap-3">
-              <Ionicons name="time-outline" size={18} color={colors.fgMuted} />
-              <Text
-                variant="body"
-                tone={restaurant.openingHours ? undefined : 'muted'}
-                className="flex-1"
-              >
-                {restaurant.openingHours ?? t('dishes', 'notAvailable')}
-              </Text>
+            </View>
+            <View className="gap-4">
+              {restaurant.dishes.map((dish) => {
+                const fits = remainingKcal !== null && dish.kcal <= remainingKcal;
+                const listed = { ...dish, fits };
+
+                return (
+                  <DishRow
+                    key={dish.id}
+                    dish={dish}
+                    fits={fits}
+                    overKcal={overKcal(listed, remainingKcal)}
+                    onAdd={() => add.request(listed, remainingKcal)}
+                    adding={add.isAdding(dish.id)}
+                    added={add.isAdded(dish.id)}
+                  />
+                );
+              })}
             </View>
           </View>
         </View>
-
-        <View className="flex-row gap-3">
-          <Button
-            label={t('dishes', 'directions')}
-            className="flex-1"
-            leading={<Ionicons name="navigate" size={18} color={colors.onBrand} />}
-            onPress={() => void Linking.openURL(mapsUrl)}
-          />
-          {restaurant.phone ? (
-            <Button
-              label={t('dishes', 'call')}
-              variant="secondary"
-              className="flex-1"
-              leading={<Ionicons name="call" size={18} color={colors.fg} />}
-              onPress={() => void Linking.openURL(`tel:${restaurant.phone}`)}
-            />
-          ) : null}
-        </View>
-
-        <View className="gap-3">
-          <View className="flex-row items-baseline justify-between">
-            <Text variant="heading">{t('dishes', 'menu')}</Text>
-            <Text variant="caption" tone="muted">
-              {t('dishes', 'menuCount').replace('{n}', String(restaurant.dishes.length))}
-            </Text>
-          </View>
-          <View className="gap-4">
-            {restaurant.dishes.map((dish) => {
-              const fits = remainingKcal !== null && dish.kcal <= remainingKcal;
-              const listed = { ...dish, fits };
-
-              return (
-                <DishRow
-                  key={dish.id}
-                  dish={dish}
-                  fits={fits}
-                  overKcal={overKcal(listed, remainingKcal)}
-                  onAdd={() => add.request(listed, remainingKcal)}
-                  adding={add.isAdding(dish.id)}
-                  added={add.isAdded(dish.id)}
-                />
-              );
-            })}
-          </View>
-        </View>
-      </View>
-    </ScrollScreen>
+      </ScrollScreen>
+      <AddDishSheet dish={add.adjusting} onClose={add.closeAdjust} onAdd={add.addWithMeal} />
+    </>
   );
 }

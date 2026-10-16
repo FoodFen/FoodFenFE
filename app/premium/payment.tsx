@@ -3,7 +3,7 @@ import { onlineManager } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
 import { useEffect, useRef, useState } from 'react';
-import { Linking, Pressable, View } from 'react-native';
+import { ActivityIndicator, Linking, Pressable, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
 import { isApiError } from '@/api/errors';
@@ -224,7 +224,9 @@ export default function PremiumPaymentScreen() {
               <View className="rounded-card bg-white p-3">
                 <QRCode value={order.qrCode} size={220} />
               </View>
-            ) : null}
+            ) : (
+              <ActivityIndicator color={colors.brand} />
+            )}
             <Text variant="heading" className="text-center">
               {t('premiumPayment', isMomo ? 'momoWaitingTitle' : 'waitingTitle')}
             </Text>
@@ -267,6 +269,7 @@ export default function PremiumPaymentScreen() {
                 </Text>
                 {providers.map((option) => {
                   const isSelected = option === provider;
+                  const isDisabled = stage === 'checking-out';
 
                   return (
                     <Pressable
@@ -276,10 +279,12 @@ export default function PremiumPaymentScreen() {
                         setChosenProvider(option);
                       }}
                       accessibilityRole="radio"
-                      accessibilityState={{ selected: isSelected }}
+                      disabled={isDisabled}
+                      accessibilityState={{ selected: isSelected, disabled: isDisabled }}
                       className={cn(
                         'flex-row items-center justify-between rounded-card border-2 bg-surface p-4',
                         isSelected ? 'border-brand' : 'border-border',
+                        isDisabled && 'opacity-50',
                       )}
                     >
                       <Text variant="label">{t('premiumPayment', METHOD_LABEL[option])}</Text>

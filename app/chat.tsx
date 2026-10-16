@@ -1,4 +1,4 @@
-import { Chat, useStreamingMessages } from '@kesha-antonov/react-native-chat';
+import { Chat, LoadEarlierMessages, useStreamingMessages } from '@kesha-antonov/react-native-chat';
 import { useQueryClient, onlineManager } from '@tanstack/react-query';
 import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -141,6 +141,20 @@ export default function ChatScreen() {
     [isStreaming],
   );
 
+  // The list is inverted, so the footer is the visual top: the intro scrolls
+  // away with the history instead of being swapped out on the first send.
+  const listProps = useMemo(() => {
+    let footer = null;
+    if (hasNextPage) {
+      footer = (
+        <LoadEarlierMessages isAvailable isLoading={isFetchingNextPage} onPress={fetchNextPage} />
+      );
+    } else if (!isLoading) {
+      footer = <ChatEmpty onSuggest={sendSuggestion} />;
+    }
+    return { ListFooterComponent: footer };
+  }, [hasNextPage, isFetchingNextPage, isLoading, fetchNextPage, sendSuggestion]);
+
   if (!available) {
     return (
       <Screen>
@@ -173,11 +187,7 @@ export default function ChatScreen() {
         initialText={draft}
         textInputProps={draft ? { autoFocus: true } : undefined}
         enableGestureHandlerRootView={false}
-        loadEarlierMessagesProps={{
-          isAvailable: hasNextPage,
-          isLoading: isFetchingNextPage,
-          onPress: fetchNextPage,
-        }}
+        keyboardAvoidingViewProps={{ automaticOffset: true, keyboardVerticalOffset: 0 }}
         colorScheme={isDark ? 'dark' : 'light'}
         theme={chatLightTheme}
         darkTheme={chatDarkTheme}
@@ -185,7 +195,7 @@ export default function ChatScreen() {
         renderBubble={(props) => <ChatBubble {...props} freshIds={freshIds} />}
         renderAvatar={() => <AiAvatar size={CHAT_AVATAR_SIZE} />}
         renderSend={(props) => <ChatSendButton {...props} />}
-        renderChatEmpty={() => (isLoading ? null : <ChatEmpty onSuggest={sendSuggestion} />)}
+        listProps={listProps}
       />
     </Screen>
   );

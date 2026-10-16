@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Alert, Pressable, ScrollView, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
+import { userErrorMessage } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -267,7 +268,7 @@ function PortionStep({
           haptics.error();
           Alert.alert(
             t('logSearch', 'addErrorTitle'),
-            error instanceof Error ? error.message : t('logMeal', 'saveErrorFallback'),
+            userErrorMessage(error, t('logMeal', 'saveErrorFallback')),
           );
         },
       },

@@ -86,7 +86,7 @@ export function NumberField({
       )}
     >
       <TextInput
-        className="h-full flex-1 py-0 text-right font-sans text-base text-fg"
+        className="h-full flex-1 py-0 text-right font-sans text-[14px] text-fg"
         value={display}
         onChangeText={setDraft}
         onFocus={() => setDraft(value === null ? '' : format(value))}

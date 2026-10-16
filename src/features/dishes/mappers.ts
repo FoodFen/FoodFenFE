@@ -35,15 +35,16 @@ export function dishToManualEntry(
   };
 }
 
-/** Whole kcal over what is left today; undefined when it fits or the user has no goal. */
+/** Whole kcal the dish exceeds what is left today by; undefined when it is within budget or the user has no goal. Independent of the server's `fits` (suggested) flag. */
 export function overKcal(
-  dish: Pick<RemoteDish, 'kcal'> & { fits: boolean },
+  dish: Pick<RemoteDish, 'kcal'>,
   remainingKcal: number | null,
 ): number | undefined {
-  if (remainingKcal === null || dish.fits) return undefined;
+  if (remainingKcal === null) return undefined;
 
   // Display rounding only: whole kcal, with an overspent day counted from zero.
-  return Math.round(dish.kcal - Math.max(remainingKcal, 0));
+  const over = Math.round(dish.kcal - Math.max(remainingKcal, 0));
+  return over > 0 ? over : undefined;
 }
 
 /** `45000` → `45.000₫`. Hand-rolled: Hermes' `Intl` locale data is not guaranteed. */

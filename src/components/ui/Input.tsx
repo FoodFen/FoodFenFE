@@ -49,7 +49,7 @@ export const Input = forwardRef<TextInput, InputProps>(function Input(
 
         <TextInput
           ref={ref}
-          className={cn('h-full flex-1 font-sans text-base text-fg', className)}
+          className={cn('h-full flex-1 font-sans text-[14px] text-fg', className)}
           placeholderTextColor={colors.fgSubtle}
           // Never let the OS "improve" a food name or an email address.
           autoCorrect={false}

@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Alert, Pressable, TextInput, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
+import { userErrorMessage } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
 import { ErrorState } from '@/components/ui/EmptyState';
 import { NumberField } from '@/components/ui/NumberField';
@@ -46,7 +47,7 @@ export default function EditEntryScreen() {
   if (error || !entry) {
     return (
       <ErrorState
-        description={error instanceof Error ? error.message : t('entryEdit', 'loadError')}
+        description={userErrorMessage(error, t('entryEdit', 'loadError'))}
         onRetry={() => void refetch()}
       />
     );
@@ -107,7 +108,7 @@ function EditForm({ entry }: { entry: FoodEntry }) {
     haptics.error();
     Alert.alert(
       t('entryEdit', 'saveErrorTitle'),
-      err instanceof Error ? err.message : t('entryEdit', 'saveErrorFallback'),
+      userErrorMessage(err, t('entryEdit', 'saveErrorFallback')),
     );
   };
 
@@ -187,10 +188,10 @@ function EditForm({ entry }: { entry: FoodEntry }) {
             onChangeText={setEmoji}
             selectTextOnFocus
             accessibilityLabel={t('logManual', 'chooseEmojiA11y')}
-            className="h-12 w-12 rounded-card border border-border bg-surface text-center text-2xl"
+            className="h-12 w-12 rounded-card border border-border bg-surface text-center text-[21px]"
           />
           <TextInput
-            className="h-12 flex-1 rounded-card border border-border bg-surface px-3 font-sans text-base text-fg"
+            className="h-12 flex-1 rounded-card border border-border bg-surface px-3 font-sans text-[14px] text-fg"
             value={name}
             onChangeText={setName}
             placeholder={t('entryEdit', 'name')}

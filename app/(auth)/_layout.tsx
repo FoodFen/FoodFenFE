@@ -13,7 +13,7 @@ export default function AuthLayout() {
   const { t } = useTranslation();
 
   return (
-    <Stack screenOptions={{ headerShadowVisible: false }}>
+    <Stack screenOptions={{ headerShadowVisible: false, headerBackButtonDisplayMode: 'minimal' }}>
       <Stack.Screen name="sign-in" options={{ title: t('auth', 'signInTitle') }} />
       <Stack.Screen name="sign-up" options={{ title: t('auth', 'createAccountTitle') }} />
     </Stack>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Alert, Pressable, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
+import { userErrorMessage } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { NumberField } from '@/components/ui/NumberField';
@@ -154,7 +155,7 @@ function DurationStep({
           haptics.error();
           Alert.alert(
             t('logActivity', 'saveErrorTitle'),
-            error instanceof Error ? error.message : t('logMeal', 'saveErrorFallback'),
+            userErrorMessage(error, t('logMeal', 'saveErrorFallback')),
           );
         },
       },

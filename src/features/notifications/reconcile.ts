@@ -3,6 +3,7 @@ import * as entryRepository from '@/data/entryRepository';
 import * as gamification from '@/data/gamificationRepository';
 import * as notificationRepository from '@/data/notificationRepository';
 import { useSettingsStore } from '@/features/settings/store';
+import type { CustomReminder, MealReminder } from '@/features/settings/store';
 import type { DateKey } from '@/lib/date';
 import { shiftDateKey, toDateKey } from '@/lib/date';
 import { env } from '@/lib/env';
@@ -10,10 +11,12 @@ import { translate, type Locale, type Translations } from '@/lib/i18n';
 import {
   atTime,
   cancel,
+  cancelOrphanedCustom,
   DEFAULT_LAST_LOG_TIME,
   DEFAULT_MEAL_TIMES,
   nextOccurrence,
   scheduleAt,
+  scheduleDaily,
   streakNudgeTime,
   tomorrowAt,
 } from '@/lib/notificationScheduler';
@@ -21,13 +24,7 @@ import type { FoodEntry } from '@/types/models';
 
 type Meal = 'breakfast' | 'lunch' | 'dinner';
 
-const MEAL_IDS: Record<Meal, 'meal-breakfast' | 'meal-lunch' | 'meal-dinner'> = {
-  breakfast: 'meal-breakfast',
-  lunch: 'meal-lunch',
-  dinner: 'meal-dinner',
-};
-
-const MEAL_COPY_KEYS: Record<
+export const MEAL_COPY_KEYS: Record<
   Meal,
   { titleKey: keyof Translations['notifications']; bodyKey: keyof Translations['notifications'] }
 > = {
@@ -35,8 +32,6 @@ const MEAL_COPY_KEYS: Record<
   lunch: { titleKey: 'mealLunchTitle', bodyKey: 'mealLunchBody' },
   dinner: { titleKey: 'mealDinnerTitle', bodyKey: 'mealDinnerBody' },
 };
-
-const MEALS: Meal[] = ['breakfast', 'lunch', 'dinner'];
 
 /**
  * Serializes every call below: two calls fired close together (e.g. two
@@ -66,13 +61,18 @@ export function reconcileNotifications(userId: string, now: Date = new Date()): 
 
 async function reconcileOnce(userId: string, now: Date): Promise<void> {
   try {
-    const { mealRemindersEnabled, streakRemindersEnabled, locale } = useSettingsStore.getState();
+    const { reminders, streakRemindersEnabled, locale } = useSettingsStore.getState();
     const today = toDateKey(now);
     const todaysEntries = entryRepository.getEntriesForDay(userId, today);
 
     await Promise.all([
-      ...MEALS.map((meal) =>
-        reconcileMeal(userId, todaysEntries, meal, mealRemindersEnabled, locale, now),
+      ...reminders.map((reminder) =>
+        reminder.kind === 'meal'
+          ? reconcileMeal(userId, todaysEntries, reminder, locale, now)
+          : reconcileCustom(reminder),
+      ),
+      cancelOrphanedCustom(
+        new Set(reminders.filter((r) => r.kind === 'custom' && r.enabled).map((r) => r.id)),
       ),
       reconcileStreak(userId, today, streakRemindersEnabled, locale, now),
     ]);
@@ -87,21 +87,23 @@ async function reconcileOnce(userId: string, now: Date): Promise<void> {
 async function reconcileMeal(
   userId: string,
   todaysEntries: FoodEntry[],
-  meal: Meal,
-  enabled: boolean,
+  reminder: MealReminder,
   locale: Locale,
   now: Date,
 ): Promise<void> {
-  const id = MEAL_IDS[meal];
+  const { id, meal } = reminder;
 
-  if (!enabled) {
+  if (!reminder.enabled) {
     await cancel(id);
     return;
   }
 
   const alreadyLogged = todaysEntries.some((entry) => entry.mealType === meal);
 
-  const time = notificationRepository.medianMealTime(userId, meal) ?? DEFAULT_MEAL_TIMES[meal];
+  const time =
+    reminder.time ??
+    notificationRepository.medianMealTime(userId, meal) ??
+    DEFAULT_MEAL_TIMES[meal];
   const { titleKey, bodyKey } = MEAL_COPY_KEYS[meal];
 
   // Today's occurrence is already satisfied — pre-schedule tomorrow's
@@ -112,9 +114,18 @@ async function reconcileMeal(
   const at = alreadyLogged ? tomorrowAt(time, now) : nextOccurrence(time, now);
 
   await scheduleAt(id, at, {
-    title: translate(locale, 'notifications', titleKey),
-    body: translate(locale, 'notifications', bodyKey),
+    title: reminder.title ?? translate(locale, 'notifications', titleKey),
+    body: reminder.body ?? translate(locale, 'notifications', bodyKey),
   });
+}
+
+async function reconcileCustom(reminder: CustomReminder): Promise<void> {
+  if (!reminder.enabled) {
+    await cancel(reminder.id);
+    return;
+  }
+
+  await scheduleDaily(reminder.id, reminder.time, { title: reminder.title, body: reminder.body });
 }
 
 async function reconcileStreak(

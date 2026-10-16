@@ -88,6 +88,7 @@ export function StepScreen({
 
       <KeyboardAwareScrollView
         className="flex-1"
+        alwaysBounceVertical={false}
         contentContainerStyle={{
           padding: 16,
           paddingTop: centerContent ? 16 : 48,

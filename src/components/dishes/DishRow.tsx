@@ -19,7 +19,7 @@ export interface DishRowProps {
   onAdd: () => void;
   adding?: boolean;
   added?: boolean;
-  /** Whole kcal this dish exceeds today's remaining budget by; shown when `fits` is false. */
+  /** Whole kcal this dish exceeds today's remaining budget by; shown whenever set, independent of `fits`. */
   overKcal?: number;
   reasons?: string[];
   sponsored?: boolean;
@@ -73,19 +73,24 @@ export function DishRow({
           </View>
         )}
 
-        {fits ? (
-          <View className="absolute left-0 top-0 m-3 flex-row items-center gap-1 rounded-pill bg-brand px-2.5 py-1">
-            <Ionicons name={exceeds.length > 0 ? 'sparkles' : 'checkmark'} size={14} color={colors.onBrand} />
-            <Text variant="caption" tone="onBrand" className="font-medium">
-              {t('dishes', exceeds.length > 0 ? 'suggested' : 'fits')}
-            </Text>
-          </View>
-        ) : overKcal !== undefined ? (
-          <View className="absolute left-0 top-0 m-3 flex-row items-center gap-1 rounded-pill bg-warning px-2.5 py-1">
-            <Ionicons name="alert-circle" size={14} color={colors.onBrand} />
-            <Text variant="caption" tone="onBrand" className="font-medium">
-              {t('dishes', 'overBy').replace('{kcal}', String(overKcal))}
-            </Text>
+        {fits || overKcal !== undefined ? (
+          <View className="absolute left-0 top-0 m-3 items-start gap-1">
+            {fits ? (
+              <View className="flex-row items-center gap-1 rounded-pill bg-brand px-2.5 py-1">
+                <Ionicons name={exceeds.length > 0 ? 'sparkles' : 'checkmark'} size={14} color={colors.onBrand} />
+                <Text variant="caption" tone="onBrand" className="font-medium">
+                  {t('dishes', exceeds.length > 0 ? 'suggested' : 'fits')}
+                </Text>
+              </View>
+            ) : null}
+            {overKcal !== undefined ? (
+              <View className="flex-row items-center gap-1 rounded-pill bg-warning px-2.5 py-1">
+                <Ionicons name="alert-circle" size={14} color={colors.onBrand} />
+                <Text variant="caption" tone="onBrand" className="font-medium">
+                  {t('dishes', 'overBy').replace('{kcal}', String(overKcal))}
+                </Text>
+              </View>
+            ) : null}
           </View>
         ) : null}
 

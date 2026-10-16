@@ -3,10 +3,10 @@ import { setHours, setMilliseconds, setMinutes, setSeconds } from 'date-fns';
 import * as Notifications from 'expo-notifications';
 
 /**
- * Local, adaptive scheduling for meal and streak reminders. Every trigger is
- * a one-shot date, never a repeating one — the target time itself shifts
- * day to day as the user's logging history changes, so a repeating trigger
- * would go stale.
+ * Local, adaptive scheduling for meal and streak reminders. Those triggers are
+ * one-shot dates, never repeating — the target time itself shifts day to day
+ * as the user's logging history changes, so a repeating trigger would go
+ * stale. User-made custom reminders sit at a fixed time and repeat daily.
  */
 
 export interface TimeOfDay {
@@ -14,7 +14,12 @@ export interface TimeOfDay {
   minute: number;
 }
 
-export type NotificationId = 'meal-breakfast' | 'meal-lunch' | 'meal-dinner' | 'streak-risk';
+export type NotificationId =
+  | 'meal-breakfast'
+  | 'meal-lunch'
+  | 'meal-dinner'
+  | 'streak-risk'
+  | `custom-${string}`;
 
 /** Fixed fallback used until 3+ days of real history exist for that meal. */
 export const DEFAULT_MEAL_TIMES: Record<'breakfast' | 'lunch' | 'dinner', TimeOfDay> = {
@@ -86,6 +91,36 @@ export async function scheduleAt(
     content,
     trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: at },
   });
+}
+
+export async function scheduleDaily(
+  id: NotificationId,
+  time: TimeOfDay,
+  content: { title: string; body: string },
+): Promise<void> {
+  await cancel(id);
+
+  await Notifications.scheduleNotificationAsync({
+    identifier: id,
+    content,
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.DAILY,
+      hour: time.hour,
+      minute: time.minute,
+    },
+  });
+}
+
+/** Cancels pending `custom-*` notifications whose id isn't in `keep` (deleted or disabled reminders). */
+export async function cancelOrphanedCustom(keep: ReadonlySet<string>): Promise<void> {
+  const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+
+  await Promise.all(
+    scheduled
+      .map((item) => item.identifier)
+      .filter((id) => id.startsWith('custom-') && !keep.has(id))
+      .map((id) => Notifications.cancelScheduledNotificationAsync(id)),
+  );
 }
 
 export async function cancel(id: NotificationId): Promise<void> {

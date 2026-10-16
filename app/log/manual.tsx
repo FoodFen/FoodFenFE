@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ApiError } from '@/api/errors';
+import { ApiError, userErrorMessage } from '@/api/errors';
 import type { RemoteAiFoodAnalysisResponse } from '@/api/schemas';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -73,11 +73,6 @@ const DESCRIBE_EXAMPLE_KEYS = [
   'describeExample3',
   'describeExample4',
 ] as const;
-
-/** A failed AI call surfaces the same way every other API failure does. */
-function analyzeErrorMessage(error: unknown, fallback: string): string {
-  return error instanceof ApiError ? error.userMessage : fallback;
-}
 
 /**
  * Seed a fresh meal draft from an AI analysis and hand off to the composer.
@@ -146,7 +141,7 @@ export default function ManualEntryScreen() {
     }
     Alert.alert(
       t('logManual', 'aiErrorTitle'),
-      analyzeErrorMessage(error, t('logManual', 'aiErrorFallback')),
+      userErrorMessage(error, t('logManual', 'aiErrorFallback')),
     );
   };
 
@@ -335,7 +330,7 @@ export default function ManualEntryScreen() {
           haptics.error();
           Alert.alert(
             t('logManual', 'saveErrorTitle'),
-            error instanceof Error ? error.message : t('logManual', 'saveErrorFallback'),
+            userErrorMessage(error, t('logManual', 'saveErrorFallback')),
           );
         },
       },
@@ -401,11 +396,11 @@ export default function ManualEntryScreen() {
               onChangeText={(next) => setEmoji(next)}
               selectTextOnFocus
               accessibilityLabel={t('logManual', 'chooseEmojiA11y')}
-              className="h-11 w-11 rounded-card border border-border bg-surface text-center text-2xl"
+              className="h-11 w-11 rounded-card border border-border bg-surface text-center text-[21px]"
             />
 
             <TextInput
-              className="flex-1 font-bold font-sans text-3xl text-fg"
+              className="flex-1 font-bold font-sans text-[26.25px] text-fg"
               value={name}
               onChangeText={setName}
               onFocus={() => {

@@ -740,8 +740,6 @@ export const vi = {
   },
 
   notifications: {
-    mealRemindersHeading: 'Nhắc giờ ăn',
-    mealRemindersCaption: 'Nhắc nhẹ nếu bạn chưa ghi bữa ăn.',
     streakRemindersHeading: 'Nhắc giữ chuỗi ngày',
     streakRemindersCaption: 'Nhắc bạn trước khi chuỗi ngày kết thúc.',
     permissionDenied: 'Mình chưa được phép gửi thông báo. Bạn bật trong Cài đặt nhé.',
@@ -753,6 +751,18 @@ export const vi = {
     mealDinnerBody: 'Nhớ ghi bữa tối hôm nay nhé.',
     streakRiskTitle: '🔥 Chuỗi ngày sắp đứt rồi',
     streakRiskBody: 'Bạn đang giữ chuỗi {days} ngày — ghi một món trước khi hết hôm nay để giữ lửa nhé.',
+    manageReminders: 'Quản lý nhắc nhở',
+    editReminder: 'Sửa nhắc nhở',
+    addReminder: 'Thêm nhắc nhở',
+    automaticTime: 'Tự động',
+    automaticTimeHint: 'Tự động (theo thói quen của bạn)',
+    resetToAutomatic: 'Đặt lại về tự động',
+    timeLabel: 'Giờ nhắc',
+    titleLabel: 'Tiêu đề',
+    bodyLabel: 'Nội dung',
+    titleRequired: 'Bạn nhập tiêu đề nhé.',
+    deleteReminder: 'Xóa nhắc nhở',
+    deleteReminderMessage: 'Nhắc nhở này sẽ bị xóa hẳn.',
   },
 
   tabs: {
@@ -797,9 +807,11 @@ export const vi = {
     filters: 'Bộ lọc',
     overBy: 'Vượt {kcal} kcal',
     noFitNote:
-      'Chưa có món nào vừa với {kcal} kcal còn lại hôm nay. Các món nhẹ nhất ở mục bên dưới.',
+      'Còn {kcal} kcal hôm nay nhưng chưa có món nào hợp chế độ ăn của bạn. Các món khác ở mục bên dưới.',
     confirmTitle: 'Thêm vào nhật ký?',
     confirmAdd: 'Thêm',
+    adjust: 'Tinh chỉnh',
+    adjustTitle: 'Tinh chỉnh món',
     confirmLeft: 'Còn lại sau khi thêm: {kcal} kcal',
     confirmOver: 'Món này sẽ làm bạn vượt {kcal} kcal',
     reasonFillsProtein: 'Hợp phần đạm còn thiếu',
