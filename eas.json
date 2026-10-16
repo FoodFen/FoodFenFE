@@ -39,6 +39,13 @@
         "buildType": "apk"
       }
     },
+    "sideload": {
+      "extends": "preview",
+      "ios": {
+        "withoutCredentials": true,
+        "config": "sideload-ios.yml"
+      }
+    },
     "production": {
       "extends": "base",
       "channel": "production",

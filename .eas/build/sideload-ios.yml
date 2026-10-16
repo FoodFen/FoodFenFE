@@ -1,0 +1,44 @@
+# Unsigned iOS device build -> .ipa for Sideloadly/AltStore, which re-sign it with the user's Apple ID.
+# The .app is ad-hoc signed with only the HealthKit entitlement so Sideloadly can read and keep it.
+build:
+  name: Unsigned iOS IPA (sideload)
+  steps:
+    - eas/checkout
+    - eas/install_node_modules
+    - eas/prebuild
+    - run:
+        name: Install pods
+        working_directory: ./ios
+        command: pod install
+    - run:
+        name: Build .app, ad-hoc sign with HealthKit entitlement, package .ipa
+        command: |
+          set -eo pipefail
+          WS=$(basename ios/*.xcworkspace .xcworkspace)
+          xcodebuild -workspace "ios/$WS.xcworkspace" -scheme "$WS" -configuration Release \
+            -sdk iphoneos -destination generic/platform=iOS -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" | tail -n 200
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/*.app Payload/
+          cat > sideload.entitlements <<'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>com.apple.developer.healthkit</key>
+            <true/>
+            <key>com.apple.developer.healthkit.access</key>
+            <array/>
+          </dict>
+          </plist>
+          EOF
+          APP=$(echo Payload/*.app)
+          find "$APP" -depth -mindepth 2 \( -name '*.framework' -o -name '*.dylib' -o -name '*.appex' \) -print0 | xargs -0 codesign --force --sign -
+          codesign --force --sign - --entitlements sideload.entitlements "$APP"
+          codesign -d --entitlements - "$APP"
+          zip -qry FoodFen-unsigned.ipa Payload
+    - eas/upload_artifact:
+        name: Upload .ipa
+        inputs:
+          type: application-archive
+          path: FoodFen-unsigned.ipa
