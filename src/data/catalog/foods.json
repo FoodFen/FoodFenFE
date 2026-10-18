@@ -7,13 +7,15 @@
       "steamed pork bun"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:1009",
+    "verified": true,
     "per100g": {
-      "kcal": 230,
-      "carbsG": 34,
-      "proteinG": 8,
-      "fatG": 7,
-      "fiberG": 1
+      "kcal": 219,
+      "carbsG": 47.5,
+      "proteinG": 6.1,
+      "fatG": 0.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -47,13 +49,14 @@
       "plain steamed bun"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 210,
-      "carbsG": 36,
-      "proteinG": 6,
-      "fatG": 4.5,
-      "fiberG": 2
+      "kcal": 195,
+      "carbsG": 33.7,
+      "proteinG": 6.1,
+      "fatG": 4,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -87,13 +90,14 @@
       "char siu steamed bun"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 235,
-      "carbsG": 33,
-      "proteinG": 9,
-      "fatG": 8,
-      "fiberG": 0.9
+      "kcal": 205,
+      "carbsG": 32.7,
+      "proteinG": 7.5,
+      "fatG": 4.9,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -127,13 +131,14 @@
       "steamed rice cakes"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 20,
-      "proteinG": 3,
-      "fatG": 3,
-      "fiberG": 0.4
+      "kcal": 148,
+      "carbsG": 21.4,
+      "proteinG": 3.8,
+      "fatG": 5.2,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -167,13 +172,14 @@
       "clear tapioca dumplings"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 24,
-      "proteinG": 3,
-      "fatG": 2.5,
-      "fiberG": 0.5
+      "kcal": 163,
+      "carbsG": 25.8,
+      "proteinG": 4.9,
+      "fatG": 4.4,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -207,13 +213,14 @@
       "mini rice pancakes"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 140,
-      "carbsG": 18,
-      "proteinG": 5,
-      "fatG": 5,
-      "fiberG": 0.5
+      "kcal": 170,
+      "carbsG": 22,
+      "proteinG": 4.8,
+      "fatG": 7,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -247,13 +254,14 @@
       "square sticky rice cake"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 28,
-      "proteinG": 5,
-      "fatG": 7,
-      "fiberG": 1.3
+      "kcal": 201,
+      "carbsG": 31.2,
+      "proteinG": 8.5,
+      "fatG": 4.7,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -324,13 +332,14 @@
       "steamed rice rolls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 17,
-      "proteinG": 5,
-      "fatG": 3.5,
-      "fiberG": 0.6
+      "kcal": 108,
+      "carbsG": 17.8,
+      "proteinG": 3.8,
+      "fatG": 2.4,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -364,13 +373,14 @@
       "steamed rice rolls with pork sausage"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 140,
-      "carbsG": 16,
-      "proteinG": 7,
-      "fatG": 5,
-      "fiberG": 0.6
+      "kcal": 101,
+      "carbsG": 13.7,
+      "proteinG": 5.9,
+      "fatG": 2.6,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -404,13 +414,14 @@
       "steamed rice rolls with egg"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 135,
-      "carbsG": 16,
-      "proteinG": 6.5,
-      "fatG": 5,
-      "fiberG": 0.5
+      "kcal": 130,
+      "carbsG": 14.1,
+      "proteinG": 5.2,
+      "fatG": 5.8,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -444,13 +455,14 @@
       "savory steamed rice cake"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 16,
-      "proteinG": 4,
-      "fatG": 4.5,
-      "fiberG": 0.6
+      "kcal": 85,
+      "carbsG": 9.9,
+      "proteinG": 3.8,
+      "fatG": 3.3,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -484,13 +496,14 @@
       "warm rice pudding with pork"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 15,
-      "proteinG": 3.5,
-      "fatG": 4,
-      "fiberG": 0.5
+      "kcal": 77,
+      "carbsG": 7.6,
+      "proteinG": 3.4,
+      "fatG": 3.7,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -524,13 +537,14 @@
       "pyramid rice dumpling"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 20,
-      "proteinG": 4.5,
-      "fatG": 5.5,
-      "fiberG": 0.6
+      "kcal": 145,
+      "carbsG": 21.6,
+      "proteinG": 4.1,
+      "fatG": 4.6,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -564,12 +578,13 @@
       "glutinous rice dumplings"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 170,
-      "carbsG": 28,
-      "proteinG": 4,
-      "fatG": 4.5,
+      "kcal": 191,
+      "carbsG": 35.4,
+      "proteinG": 5.4,
+      "fatG": 3.1,
       "fiberG": 1
     },
     "servings": [
@@ -604,12 +619,13 @@
       "baked cassava cake"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 42,
-      "proteinG": 3,
-      "fatG": 8,
+      "kcal": 234,
+      "carbsG": 41.5,
+      "proteinG": 2.2,
+      "fatG": 6.6,
       "fiberG": 1.5
     },
     "servings": [
@@ -644,13 +660,14 @@
       "mini savory pancakes"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 170,
-      "carbsG": 16,
-      "proteinG": 5,
-      "fatG": 9,
-      "fiberG": 0.7
+      "kcal": 198,
+      "carbsG": 20.6,
+      "proteinG": 4.2,
+      "fatG": 11,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -721,13 +738,14 @@
       "grilled banh mi with chili salt"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 320,
-      "carbsG": 38,
-      "proteinG": 10,
-      "fatG": 14,
-      "fiberG": 1.8
+      "kcal": 321,
+      "carbsG": 37.8,
+      "proteinG": 8,
+      "fatG": 15.3,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -761,13 +779,14 @@
       "flat steamed rice dumpling"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 18,
-      "proteinG": 3.5,
-      "fatG": 2.5,
-      "fiberG": 0.5
+      "kcal": 126,
+      "carbsG": 18.8,
+      "proteinG": 4.6,
+      "fatG": 3.6,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -879,13 +898,14 @@
       "cylindrical sticky rice cake"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 30,
-      "proteinG": 4.5,
-      "fatG": 6.5,
-      "fiberG": 1.3
+      "kcal": 197,
+      "carbsG": 31.4,
+      "proteinG": 8.1,
+      "fatG": 4.3,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -919,13 +939,14 @@
       "rice paper with dipping sauce"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 280,
-      "carbsG": 50,
-      "proteinG": 6,
-      "fatG": 6,
-      "fiberG": 1
+      "kcal": 261,
+      "carbsG": 42.6,
+      "proteinG": 4.7,
+      "fatG": 8,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -959,13 +980,14 @@
       "rice paper rolls with butter"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 230,
-      "carbsG": 33,
-      "proteinG": 5,
-      "fatG": 9,
-      "fiberG": 1.2
+      "kcal": 173,
+      "carbsG": 13,
+      "proteinG": 6.8,
+      "fatG": 10.4,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -999,13 +1021,14 @@
       "vietnamese pizza"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 30,
-      "proteinG": 9,
-      "fatG": 11,
-      "fiberG": 1.5
+      "kcal": 282,
+      "carbsG": 11.7,
+      "proteinG": 13.1,
+      "fatG": 20.2,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -1039,13 +1062,14 @@
       "soft rice paper rolls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 270,
-      "carbsG": 48,
-      "proteinG": 7,
-      "fatG": 5,
-      "fiberG": 1
+      "kcal": 206,
+      "carbsG": 31.1,
+      "proteinG": 6.8,
+      "fatG": 6,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -1079,13 +1103,14 @@
       "rice paper salad"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 330,
-      "carbsG": 45,
-      "proteinG": 9,
-      "fatG": 13,
-      "fiberG": 1.5
+      "kcal": 240,
+      "carbsG": 26.3,
+      "proteinG": 9.1,
+      "fatG": 10.9,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -1119,13 +1144,14 @@
       "steamed rice sheets"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 18,
-      "proteinG": 4,
-      "fatG": 2.5,
-      "fiberG": 0.4
+      "kcal": 112,
+      "carbsG": 22.3,
+      "proteinG": 1.9,
+      "fatG": 1.6,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -1159,13 +1185,14 @@
       "crispy stuffed pancake"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 16,
-      "proteinG": 6,
-      "fatG": 8,
-      "fiberG": 1.2
+      "kcal": 183,
+      "carbsG": 14,
+      "proteinG": 6.8,
+      "fatG": 11.1,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -1199,13 +1226,15 @@
       "boiled corn"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:1023",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 23,
-      "proteinG": 3.5,
-      "fatG": 1.3,
-      "fiberG": 2.8
+      "kcal": 167,
+      "carbsG": 32.9,
+      "proteinG": 3.9,
+      "fatG": 2.2,
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -1239,13 +1268,14 @@
       "grilled corn"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 25,
-      "proteinG": 3.5,
-      "fatG": 2,
-      "fiberG": 2.8
+      "kcal": 217,
+      "carbsG": 37.4,
+      "proteinG": 3.9,
+      "fatG": 5.7,
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -1318,13 +1348,14 @@
       "stir-fried corn"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 22,
-      "proteinG": 3.5,
-      "fatG": 6,
-      "fiberG": 2.5
+      "kcal": 188,
+      "carbsG": 24.5,
+      "proteinG": 4.3,
+      "fatG": 8.1,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -1358,13 +1389,14 @@
       "shredded pork skin rolls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 20,
-      "proteinG": 6,
-      "fatG": 4.5,
-      "fiberG": 1
+      "kcal": 102,
+      "carbsG": 14.6,
+      "proteinG": 7.4,
+      "fatG": 1.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -1398,13 +1430,14 @@
       "fried beef balls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 10,
-      "proteinG": 13,
-      "fatG": 12,
-      "fiberG": 0.5
+      "kcal": 228,
+      "carbsG": 15.9,
+      "proteinG": 12.6,
+      "fatG": 12.6,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -1439,13 +1472,14 @@
       "fish ball"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 15,
-      "proteinG": 11,
-      "fatG": 10,
-      "fiberG": 0.4
+      "kcal": 195,
+      "carbsG": 18.6,
+      "proteinG": 10.5,
+      "fatG": 8.7,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -1480,13 +1514,14 @@
       "fried chicken wings"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 6,
-      "proteinG": 19,
-      "fatG": 18,
-      "fiberG": 0.3
+      "kcal": 254,
+      "carbsG": 5.4,
+      "proteinG": 15.7,
+      "fatG": 18.3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -1520,13 +1555,14 @@
       "fish sauce fried chicken wings"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 8,
-      "proteinG": 18,
-      "fatG": 16,
-      "fiberG": 0.2
+      "kcal": 255,
+      "carbsG": 11.3,
+      "proteinG": 15.1,
+      "fatG": 16.2,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -1560,13 +1596,14 @@
       "fish cake balls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 13,
-      "proteinG": 12,
-      "fatG": 9,
-      "fiberG": 0.3
+      "kcal": 116,
+      "carbsG": 15.5,
+      "proteinG": 11.6,
+      "fatG": 0.8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -1601,13 +1638,14 @@
       "egg rolls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 270,
-      "carbsG": 24,
-      "proteinG": 9,
-      "fatG": 15,
-      "fiberG": 1
+      "kcal": 271,
+      "carbsG": 18.2,
+      "proteinG": 6.9,
+      "fatG": 18.9,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -1642,13 +1680,14 @@
       "lacy net fried spring rolls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 270,
-      "carbsG": 24,
-      "proteinG": 9,
-      "fatG": 15,
-      "fiberG": 1.2
+      "kcal": 311,
+      "carbsG": 18,
+      "proteinG": 7.2,
+      "fatG": 23.4,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -1682,13 +1721,14 @@
       "squid cake"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 6,
-      "proteinG": 15,
-      "fatG": 13,
-      "fiberG": 0.2
+      "kcal": 184,
+      "carbsG": 0,
+      "proteinG": 15.8,
+      "fatG": 13.4,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -1722,11 +1762,12 @@
       "grilled chicken feet"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 215,
-      "carbsG": 3,
-      "proteinG": 18,
+      "kcal": 227,
+      "carbsG": 3.1,
+      "proteinG": 18.6,
       "fatG": 15,
       "fiberG": 0
     },
@@ -1762,13 +1803,14 @@
       "boneless chicken feet salad"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 5,
-      "proteinG": 16,
-      "fatG": 12,
-      "fiberG": 0
+      "kcal": 204,
+      "carbsG": 4.3,
+      "proteinG": 17,
+      "fatG": 12.7,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -1802,13 +1844,14 @@
       "chicken feet with lemongrass and kumquat"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 4,
-      "proteinG": 17,
-      "fatG": 12,
-      "fiberG": 0.1
+      "kcal": 212,
+      "carbsG": 3,
+      "proteinG": 18.2,
+      "fatG": 13.6,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -1842,13 +1885,14 @@
       "shaken ambarella with chili salt"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 75,
-      "carbsG": 18,
-      "proteinG": 1,
-      "fatG": 0.2,
-      "fiberG": 2
+      "kcal": 79,
+      "carbsG": 17.4,
+      "proteinG": 2.4,
+      "fatG": 0.1,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -1883,13 +1927,14 @@
       "summer rolls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 17,
-      "proteinG": 7,
-      "fatG": 3,
-      "fiberG": 1
+      "kcal": 107,
+      "carbsG": 12.3,
+      "proteinG": 5.9,
+      "fatG": 3.8,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -1924,13 +1969,14 @@
       "shrimp and pork fresh spring rolls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 16,
-      "proteinG": 8,
-      "fatG": 3.5,
-      "fiberG": 1
+      "kcal": 111,
+      "carbsG": 11.4,
+      "proteinG": 7,
+      "fatG": 4.2,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -1965,13 +2011,14 @@
       "har gow"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 24,
-      "proteinG": 9,
-      "fatG": 8,
-      "fiberG": 0.6
+      "kcal": 177,
+      "carbsG": 22.4,
+      "proteinG": 8.9,
+      "fatG": 5.8,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -2006,13 +2053,14 @@
       "balut with tamarind sauce"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 9,
-      "proteinG": 13,
-      "fatG": 12,
-      "fiberG": 0.5
+      "kcal": 218,
+      "carbsG": 7.9,
+      "proteinG": 11.5,
+      "fatG": 15.6,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -2088,13 +2136,14 @@
       "dried shredded chicken with lime leaf"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 350,
-      "carbsG": 12,
-      "proteinG": 50,
-      "fatG": 11,
-      "fiberG": 0.3
+      "kcal": 390,
+      "carbsG": 12.6,
+      "proteinG": 63.7,
+      "fatG": 7.4,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -2128,13 +2177,14 @@
       "sweet potato balls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 40,
-      "proteinG": 2.5,
-      "fatG": 9,
-      "fiberG": 2.5
+      "kcal": 284,
+      "carbsG": 43.4,
+      "proteinG": 3.3,
+      "fatG": 10.8,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -2168,13 +2218,14 @@
       "fried taro"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 220,
-      "carbsG": 33,
-      "proteinG": 2.5,
-      "fatG": 9,
-      "fiberG": 2.8
+      "kcal": 219,
+      "carbsG": 29.9,
+      "proteinG": 1.8,
+      "fatG": 10.2,
+      "fiberG": 1.4
     },
     "servings": [
       {
@@ -2208,13 +2259,14 @@
       "french fries"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 290,
-      "carbsG": 38,
-      "proteinG": 3.5,
-      "fatG": 14,
-      "fiberG": 3.5
+      "kcal": 284,
+      "carbsG": 39.7,
+      "proteinG": 3.8,
+      "fatG": 12.2,
+      "fiberG": 1.9
     },
     "servings": [
       {
@@ -2290,12 +2342,14 @@
       "fried chinese sausage"
     ],
     "category": "an-vat",
-    "source": "label",
+    "source": "nin",
+    "sourceRef": "nin:7071",
+    "verified": true,
     "per100g": {
-      "kcal": 460,
-      "carbsG": 6,
-      "proteinG": 18,
-      "fatG": 42,
+      "kcal": 585,
+      "carbsG": 1.7,
+      "proteinG": 20.8,
+      "fatG": 55,
       "fiberG": 0
     },
     "servings": [
@@ -2372,13 +2426,14 @@
       "fried fermented pork"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
       "kcal": 240,
-      "carbsG": 12,
-      "proteinG": 12,
-      "fatG": 16,
-      "fiberG": 0.6
+      "carbsG": 13.2,
+      "proteinG": 18.2,
+      "fatG": 12.7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -2412,13 +2467,14 @@
       "hue lemongrass pork skewer"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 210,
-      "carbsG": 9,
-      "proteinG": 14,
-      "fatG": 13,
-      "fiberG": 0.4
+      "kcal": 209,
+      "carbsG": 6.8,
+      "proteinG": 18.1,
+      "fatG": 12.1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -2452,13 +2508,14 @@
       "grilled pork sausage skewer"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 220,
-      "carbsG": 8,
-      "proteinG": 14,
-      "fatG": 14,
-      "fiberG": 0.4
+      "kcal": 204,
+      "carbsG": 8.6,
+      "proteinG": 15.9,
+      "fatG": 11.8,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -2492,13 +2549,14 @@
       "fried spring rolls (north)"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 24,
-      "proteinG": 9,
-      "fatG": 14,
-      "fiberG": 1
+      "kcal": 276,
+      "carbsG": 18.9,
+      "proteinG": 7.4,
+      "fatG": 19,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -2532,13 +2590,14 @@
       "stuffed apple snails"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 6,
-      "proteinG": 14,
-      "fatG": 8,
-      "fiberG": 0.4
+      "kcal": 159,
+      "carbsG": 2.5,
+      "proteinG": 13.4,
+      "fatG": 10.6,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -2572,13 +2631,14 @@
       "sweet snail"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 100,
-      "carbsG": 5,
-      "proteinG": 16,
-      "fatG": 1.5,
-      "fiberG": 0
+      "kcal": 83,
+      "carbsG": 5.1,
+      "proteinG": 13.9,
+      "fatG": 0.8,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -2612,13 +2672,14 @@
       "snails stir-fried in coconut milk"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 8,
-      "proteinG": 10,
-      "fatG": 6.5,
-      "fiberG": 0.6
+      "kcal": 137,
+      "carbsG": 8.1,
+      "proteinG": 9.2,
+      "fatG": 7.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -2652,13 +2713,15 @@
       "mozzarella sticks"
     ],
     "category": "an-vat",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:169015",
+    "verified": true,
     "per100g": {
-      "kcal": 300,
-      "carbsG": 25,
-      "proteinG": 12,
-      "fatG": 17,
-      "fiberG": 0.5
+      "kcal": 325,
+      "carbsG": 25.1,
+      "proteinG": 14.8,
+      "fatG": 18.3,
+      "fiberG": 2
     },
     "servings": [
       {
@@ -2692,13 +2755,14 @@
       "quang ngai corn spring rolls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 30,
-      "proteinG": 5,
-      "fatG": 12,
-      "fiberG": 1
+      "kcal": 271,
+      "carbsG": 23.1,
+      "proteinG": 4.6,
+      "fatG": 17.8,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -2771,13 +2835,14 @@
       "wonton dumplings"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 210,
-      "carbsG": 22,
-      "proteinG": 10,
-      "fatG": 9,
-      "fiberG": 0.6
+      "kcal": 219,
+      "carbsG": 20.8,
+      "proteinG": 11,
+      "fatG": 10.2,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -2811,12 +2876,13 @@
       "fried shrimp balls"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 15,
+      "kcal": 187,
+      "carbsG": 16.3,
       "proteinG": 11,
-      "fatG": 10,
+      "fatG": 8.7,
       "fiberG": 0.4
     },
     "servings": [
@@ -2851,13 +2917,14 @@
       "fried quail eggs"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 2,
+      "kcal": 216,
+      "carbsG": 0.4,
       "proteinG": 12,
-      "fatG": 14,
-      "fiberG": 0.2
+      "fatG": 18.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -2891,12 +2958,14 @@
       "quail balut"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:9007",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 1,
-      "proteinG": 13,
-      "fatG": 11.5,
+      "kcal": 154,
+      "carbsG": 0.4,
+      "proteinG": 13.1,
+      "fatG": 11.1,
       "fiberG": 0
     },
     "servings": [
@@ -2974,13 +3043,14 @@
       "siu mai"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
+      "kcal": 196,
       "carbsG": 6,
-      "proteinG": 12,
-      "fatG": 13,
-      "fiberG": 0.5
+      "proteinG": 12.2,
+      "fatG": 13.6,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -3015,13 +3085,14 @@
       "shaken mango with chili salt"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 22,
-      "proteinG": 1,
-      "fatG": 0.3,
-      "fiberG": 1.8
+      "kcal": 80,
+      "carbsG": 19,
+      "proteinG": 1.6,
+      "fatG": 0.4,
+      "fiberG": 1.7
     },
     "servings": [
       {
@@ -3055,13 +3126,14 @@
       "fried sausage"
     ],
     "category": "an-vat",
-    "source": "label",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 270,
-      "carbsG": 8,
-      "proteinG": 11,
-      "fatG": 22,
-      "fiberG": 0.3
+      "kcal": 287,
+      "carbsG": 0.3,
+      "proteinG": 12.4,
+      "fatG": 25.9,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -3095,13 +3167,14 @@
       "grilled sausage"
     ],
     "category": "an-vat",
-    "source": "label",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 6,
-      "proteinG": 12,
-      "fatG": 21,
-      "fiberG": 0.3
+      "kcal": 269,
+      "carbsG": 0.3,
+      "proteinG": 12.8,
+      "fatG": 23.7,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -3135,13 +3208,14 @@
       "shredded pork skin banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 35,
-      "proteinG": 8,
-      "fatG": 9,
-      "fiberG": 1.8
+      "kcal": 219,
+      "carbsG": 28.7,
+      "proteinG": 10.1,
+      "fatG": 7.1,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3175,13 +3249,14 @@
       "butter and sugar baguette"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 330,
-      "carbsG": 50,
-      "proteinG": 7,
-      "fatG": 12,
-      "fiberG": 1.5
+      "kcal": 308,
+      "carbsG": 51.9,
+      "proteinG": 6.5,
+      "fatG": 8.2,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -3215,13 +3290,14 @@
       "banh mi with beef stew"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 16,
-      "proteinG": 7,
-      "fatG": 6,
-      "fiberG": 0.8
+      "kcal": 154,
+      "carbsG": 14.7,
+      "proteinG": 9.3,
+      "fatG": 6.4,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -3255,13 +3331,14 @@
       "sardine banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 31,
-      "proteinG": 10,
-      "fatG": 9,
-      "fiberG": 1.8
+      "kcal": 205,
+      "carbsG": 25,
+      "proteinG": 10.8,
+      "fatG": 6.8,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3295,13 +3372,14 @@
       "fish cake banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 255,
-      "carbsG": 33,
-      "proteinG": 10,
-      "fatG": 9,
-      "fiberG": 1.7
+      "kcal": 224,
+      "carbsG": 27,
+      "proteinG": 9.8,
+      "fatG": 8.5,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3335,13 +3413,14 @@
       "pork sausage banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 255,
-      "carbsG": 34,
-      "proteinG": 9,
-      "fatG": 9,
-      "fiberG": 1.7
+      "kcal": 216,
+      "carbsG": 27,
+      "proteinG": 9.5,
+      "fatG": 7.7,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3375,13 +3454,14 @@
       "banh mi with pan-fried eggs and pate"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 14,
-      "proteinG": 10,
-      "fatG": 12,
-      "fiberG": 0.9
+      "kcal": 249,
+      "carbsG": 16.1,
+      "proteinG": 13.7,
+      "fatG": 14.5,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -3415,13 +3495,14 @@
       "pan of fried eggs with baguette"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 210,
-      "carbsG": 15,
-      "proteinG": 9,
-      "fatG": 13,
-      "fiberG": 0.9
+      "kcal": 236,
+      "carbsG": 17.6,
+      "proteinG": 11.3,
+      "fatG": 13.4,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -3455,13 +3536,14 @@
       "chicken banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 240,
-      "carbsG": 33,
-      "proteinG": 10,
-      "fatG": 7,
-      "fiberG": 1.7
+      "kcal": 239,
+      "carbsG": 25.3,
+      "proteinG": 11.6,
+      "fatG": 10.2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3495,13 +3577,14 @@
       "roast pork banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 285,
-      "carbsG": 31,
-      "proteinG": 9,
-      "fatG": 13,
-      "fiberG": 1.6
+      "kcal": 270,
+      "carbsG": 24.5,
+      "proteinG": 12.7,
+      "fatG": 13.4,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3535,13 +3618,14 @@
       "cheese banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 300,
-      "carbsG": 38,
-      "proteinG": 11,
-      "fatG": 12,
-      "fiberG": 1.7
+      "kcal": 312,
+      "carbsG": 30,
+      "proteinG": 11.9,
+      "fatG": 16.1,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -3617,13 +3701,14 @@
       "pate banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 275,
-      "carbsG": 33,
-      "proteinG": 8,
-      "fatG": 12,
-      "fiberG": 1.8
+      "kcal": 248,
+      "carbsG": 32.6,
+      "proteinG": 6.9,
+      "fatG": 10,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3657,13 +3742,14 @@
       "thin crispy breadstick banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 320,
-      "carbsG": 38,
-      "proteinG": 8,
-      "fatG": 15,
-      "fiberG": 1.9
+      "kcal": 278,
+      "carbsG": 39.5,
+      "proteinG": 7.2,
+      "fatG": 10.1,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -3697,13 +3783,14 @@
       "combination banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 265,
-      "carbsG": 31,
-      "proteinG": 10,
-      "fatG": 11,
-      "fiberG": 1.7
+      "kcal": 267,
+      "carbsG": 24.8,
+      "proteinG": 11.3,
+      "fatG": 13.6,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3738,13 +3825,14 @@
       "banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 33,
-      "proteinG": 9,
-      "fatG": 10,
-      "fiberG": 1.8
+      "kcal": 250,
+      "carbsG": 25.8,
+      "proteinG": 10.2,
+      "fatG": 11.7,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3779,13 +3867,14 @@
       "grilled pork banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 32,
-      "proteinG": 10,
-      "fatG": 10,
-      "fiberG": 1.8
+      "kcal": 282,
+      "carbsG": 26.7,
+      "proteinG": 10.9,
+      "fatG": 14.6,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3819,13 +3908,14 @@
       "fried egg banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 32,
-      "proteinG": 9,
-      "fatG": 10,
-      "fiberG": 1.6
+      "kcal": 217,
+      "carbsG": 25.3,
+      "proteinG": 8.1,
+      "fatG": 9.2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3859,13 +3949,14 @@
       "pork meatball banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 240,
-      "carbsG": 32,
-      "proteinG": 9,
-      "fatG": 9,
-      "fiberG": 1.5
+      "kcal": 221,
+      "carbsG": 25.4,
+      "proteinG": 8.6,
+      "fatG": 9.4,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -3899,13 +3990,14 @@
       "sausage banh mi"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 275,
-      "carbsG": 33,
-      "proteinG": 9,
-      "fatG": 12,
-      "fiberG": 1.7
+      "kcal": 277,
+      "carbsG": 26.1,
+      "proteinG": 9.9,
+      "fatG": 14.8,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -3939,13 +4031,14 @@
       "ham and cheese sandwich"
     ],
     "category": "banh-mi",
-    "source": "generic",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 28,
-      "proteinG": 12,
-      "fatG": 10,
-      "fiberG": 2
+      "kcal": 248,
+      "carbsG": 24.2,
+      "proteinG": 12.9,
+      "fatG": 10.8,
+      "fiberG": 1.6
     },
     "servings": [
       {
@@ -3974,13 +4067,14 @@
       "rice noodle rolls"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 18,
-      "proteinG": 6,
-      "fatG": 3.5,
-      "fiberG": 0.6
+      "kcal": 133,
+      "carbsG": 16.2,
+      "proteinG": 7.4,
+      "fatG": 4.2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -4014,13 +4108,14 @@
       "stir-fried beef vermicelli"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 14,
-      "proteinG": 8,
-      "fatG": 4.5,
-      "fiberG": 1
+      "kcal": 133,
+      "carbsG": 14.4,
+      "proteinG": 7.5,
+      "fatG": 4.9,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -4054,13 +4149,14 @@
       "grilled pork with noodles"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
       "kcal": 140,
-      "carbsG": 14,
-      "proteinG": 9,
-      "fatG": 5.5,
-      "fiberG": 0.9
+      "carbsG": 13,
+      "proteinG": 6.3,
+      "fatG": 6.9,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -4094,13 +4190,14 @@
       "dry fish cake vermicelli"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 115,
-      "carbsG": 15,
-      "proteinG": 7,
-      "fatG": 3,
-      "fiberG": 0.9
+      "kcal": 118,
+      "carbsG": 16,
+      "proteinG": 6.2,
+      "fatG": 3.2,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -4134,13 +4231,14 @@
       "hanoi grilled pork noodles"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 140,
-      "carbsG": 14,
-      "proteinG": 9,
-      "fatG": 5.5,
-      "fiberG": 0.9
+      "kcal": 145,
+      "carbsG": 12.4,
+      "proteinG": 6.8,
+      "fatG": 7.6,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -4174,13 +4272,14 @@
       "vermicelli rolls with shrimp and pork"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 17,
-      "proteinG": 6,
-      "fatG": 2.5,
-      "fiberG": 1
+      "kcal": 135,
+      "carbsG": 15.8,
+      "proteinG": 7.7,
+      "fatG": 4.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -4214,13 +4313,14 @@
       "vermicelli with tofu and shrimp paste"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 16,
-      "proteinG": 9,
-      "fatG": 11,
-      "fiberG": 1.2
+      "kcal": 155,
+      "carbsG": 10.5,
+      "proteinG": 7.7,
+      "fatG": 9.1,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -4254,13 +4354,14 @@
       "grilled chicken vermicelli bowl"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 15,
-      "proteinG": 8,
-      "fatG": 3,
-      "fiberG": 0.9
+      "kcal": 153,
+      "carbsG": 15.5,
+      "proteinG": 8.2,
+      "fatG": 6.4,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -4294,13 +4395,14 @@
       "fermented fish noodle"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 95,
-      "carbsG": 11,
-      "proteinG": 6,
-      "fatG": 3,
-      "fiberG": 0.9
+      "kcal": 102,
+      "carbsG": 11.8,
+      "proteinG": 5.5,
+      "fatG": 3.7,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -4334,13 +4436,14 @@
       "vermicelli with anchovy sauce"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 15,
-      "proteinG": 6,
-      "fatG": 4,
-      "fiberG": 0.9
+      "kcal": 125,
+      "carbsG": 16.1,
+      "proteinG": 5,
+      "fatG": 4.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -4374,13 +4477,14 @@
       "spring roll vermicelli bowl"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 17,
-      "proteinG": 6,
-      "fatG": 4.5,
-      "fiberG": 1
+      "kcal": 161,
+      "carbsG": 15.5,
+      "proteinG": 6.8,
+      "fatG": 8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -4414,13 +4518,14 @@
       "vegetarian crab-style noodle soup"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 80,
-      "carbsG": 12,
-      "proteinG": 3,
-      "fatG": 2.5,
-      "fiberG": 1
+      "kcal": 89,
+      "carbsG": 11.8,
+      "proteinG": 3.4,
+      "fatG": 3.1,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -4454,13 +4559,14 @@
       "grilled pork vermicelli bowl"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 16,
-      "proteinG": 6.5,
-      "fatG": 3.5,
-      "fiberG": 1
+      "kcal": 145,
+      "carbsG": 15.3,
+      "proteinG": 5.8,
+      "fatG": 6.7,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -4494,13 +4600,14 @@
       "grilled pork and spring roll vermicelli"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 135,
-      "carbsG": 17,
-      "proteinG": 7,
-      "fatG": 4.5,
-      "fiberG": 1
+      "kcal": 164,
+      "carbsG": 16,
+      "proteinG": 6.7,
+      "fatG": 8.1,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -4534,13 +4641,14 @@
       "shrimp vermicelli bowl"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 100,
-      "carbsG": 14,
-      "proteinG": 6,
-      "fatG": 2.5,
-      "fiberG": 0.9
+      "kcal": 123,
+      "carbsG": 14.3,
+      "proteinG": 6.7,
+      "fatG": 4.3,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -4574,13 +4682,14 @@
       "dry rice noodles"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
       "kcal": 150,
-      "carbsG": 22,
-      "proteinG": 6,
-      "fatG": 4,
-      "fiberG": 0.8
+      "carbsG": 18.6,
+      "proteinG": 7.1,
+      "fatG": 5.3,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -4614,13 +4723,14 @@
       "stir-fried rice noodles"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 20,
-      "proteinG": 6,
-      "fatG": 6,
-      "fiberG": 1
+      "kcal": 157,
+      "carbsG": 17.2,
+      "proteinG": 7.5,
+      "fatG": 6.5,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -4654,13 +4764,14 @@
       "mixed egg noodles"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 22,
-      "proteinG": 6,
-      "fatG": 7,
-      "fiberG": 1
+      "kcal": 137,
+      "carbsG": 16.2,
+      "proteinG": 7,
+      "fatG": 4.9,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4695,13 +4806,14 @@
       "mi goreng"
     ],
     "category": "bun-tron",
-    "source": "label",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 447,
-      "carbsG": 61,
-      "proteinG": 9.4,
-      "fatG": 17.6,
-      "fiberG": 2
+      "kcal": 404,
+      "carbsG": 60.3,
+      "proteinG": 9,
+      "fatG": 14,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -4736,13 +4848,14 @@
       "beef chow mein"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 165,
-      "carbsG": 17,
-      "proteinG": 8,
-      "fatG": 7,
-      "fiberG": 1.2
+      "kcal": 142,
+      "carbsG": 13.4,
+      "proteinG": 8.3,
+      "fatG": 6.1,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4776,13 +4889,14 @@
       "crispy fried noodles"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 20,
-      "proteinG": 7,
-      "fatG": 9.5,
-      "fiberG": 1.3
+      "kcal": 203,
+      "carbsG": 16.7,
+      "proteinG": 9.2,
+      "fatG": 11.5,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4816,13 +4930,14 @@
       "seafood fried noodles"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 17,
-      "proteinG": 8,
-      "fatG": 5.5,
-      "fiberG": 1.1
+      "kcal": 134,
+      "carbsG": 13.8,
+      "proteinG": 7.6,
+      "fatG": 5.4,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -4856,13 +4971,14 @@
       "spaghetti bolognese"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 19,
-      "proteinG": 7,
+      "kcal": 157,
+      "carbsG": 18.4,
+      "proteinG": 9.1,
       "fatG": 5,
-      "fiberG": 1.5
+      "fiberG": 1.3
     },
     "servings": [
       {
@@ -4896,13 +5012,14 @@
       "mixed glass noodles"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 22,
-      "proteinG": 5,
-      "fatG": 4.5,
-      "fiberG": 0.9
+      "kcal": 136,
+      "carbsG": 17.3,
+      "proteinG": 4.9,
+      "fatG": 5.2,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -4936,13 +5053,14 @@
       "stir-fried glass noodles with crab"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 19,
-      "proteinG": 6,
-      "fatG": 5.5,
-      "fiberG": 0.8
+      "kcal": 127,
+      "carbsG": 14.9,
+      "proteinG": 4.7,
+      "fatG": 5.4,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -4976,13 +5094,14 @@
       "stir-fried glass noodles with chicken giblets"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 155,
-      "carbsG": 18,
-      "proteinG": 7,
-      "fatG": 6,
-      "fiberG": 0.8
+      "kcal": 127,
+      "carbsG": 14.1,
+      "proteinG": 5.3,
+      "fatG": 5.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -5016,13 +5135,14 @@
       "macaroni stir-fried with beef"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 18,
-      "proteinG": 7,
-      "fatG": 6.5,
-      "fiberG": 1.5
+      "kcal": 154,
+      "carbsG": 17.1,
+      "proteinG": 9.3,
+      "fatG": 5.2,
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -5056,13 +5176,14 @@
       "dry mixed pho"
     ],
     "category": "bun-tron",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 20,
-      "proteinG": 7,
-      "fatG": 4.5,
-      "fiberG": 0.9
+      "kcal": 154,
+      "carbsG": 19.1,
+      "proteinG": 7.7,
+      "fatG": 5.2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -5096,13 +5217,14 @@
       "honeycomb cake"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 40,
-      "proteinG": 2.5,
-      "fatG": 3.5,
-      "fiberG": 0.4
+      "kcal": 190,
+      "carbsG": 40.3,
+      "proteinG": 1.8,
+      "fatG": 2.6,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -5136,13 +5258,14 @@
       "baked banana cake"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 32,
-      "proteinG": 2.5,
-      "fatG": 5,
-      "fiberG": 1.2
+      "kcal": 173,
+      "carbsG": 32.9,
+      "proteinG": 2.9,
+      "fatG": 3.5,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -5176,13 +5299,14 @@
       "steamed layer cake"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 220,
-      "carbsG": 38,
-      "proteinG": 2,
-      "fatG": 6.5,
-      "fiberG": 0.8
+      "kcal": 223,
+      "carbsG": 42.8,
+      "proteinG": 5.1,
+      "fatG": 3.7,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -5256,12 +5380,13 @@
       "creme caramel"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 20,
-      "proteinG": 4,
-      "fatG": 7,
+      "kcal": 153,
+      "carbsG": 18.4,
+      "proteinG": 6.6,
+      "fatG": 6,
       "fiberG": 0
     },
     "servings": [
@@ -5373,13 +5498,14 @@
       "sweet potato and taro dessert"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 135,
-      "carbsG": 23,
-      "proteinG": 2,
-      "fatG": 4,
-      "fiberG": 1.8
+      "kcal": 146,
+      "carbsG": 28.1,
+      "proteinG": 0.9,
+      "fatG": 3.5,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -5413,13 +5539,14 @@
       "three-color dessert"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 24,
-      "proteinG": 2.5,
-      "fatG": 3,
-      "fiberG": 1.8
+      "kcal": 128,
+      "carbsG": 21.3,
+      "proteinG": 3.8,
+      "fatG": 3.3,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -5453,13 +5580,14 @@
       "corn pudding"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 23,
-      "proteinG": 2,
-      "fatG": 1.5,
-      "fiberG": 1.5
+      "kcal": 111,
+      "carbsG": 20.3,
+      "proteinG": 1.2,
+      "fatG": 3,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -5493,13 +5621,14 @@
       "pomelo sweet soup"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
       "kcal": 115,
-      "carbsG": 24,
-      "proteinG": 2,
-      "fatG": 1.5,
-      "fiberG": 1
+      "carbsG": 20.1,
+      "proteinG": 2.7,
+      "fatG": 2.8,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -5533,13 +5662,14 @@
       "banana in coconut milk"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 22,
+      "kcal": 138,
+      "carbsG": 21.4,
       "proteinG": 1.5,
-      "fatG": 4.5,
-      "fiberG": 1.5
+      "fatG": 5.5,
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -5573,13 +5703,14 @@
       "red bean sweet soup"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 22,
-      "proteinG": 3,
-      "fatG": 1.5,
-      "fiberG": 2.5
+      "kcal": 102,
+      "carbsG": 19.5,
+      "proteinG": 2.5,
+      "fatG": 1.8,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -5613,13 +5744,14 @@
       "mung bean sweet soup"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 115,
-      "carbsG": 22,
+      "kcal": 112,
+      "carbsG": 19.4,
       "proteinG": 3.5,
-      "fatG": 1.8,
-      "fiberG": 2.2
+      "fatG": 2.5,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -5653,13 +5785,14 @@
       "lotus seed sweet soup"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 100,
-      "carbsG": 22,
-      "proteinG": 2.5,
-      "fatG": 0.5,
-      "fiberG": 1.5
+      "kcal": 91,
+      "carbsG": 19.9,
+      "proteinG": 2.3,
+      "fatG": 0.3,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -5693,13 +5826,14 @@
       "taro sweet soup"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 24,
-      "proteinG": 1.8,
-      "fatG": 3.5,
-      "fiberG": 1.5
+      "kcal": 127,
+      "carbsG": 22.7,
+      "proteinG": 0.9,
+      "fatG": 3.9,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -5733,13 +5867,14 @@
       "panna cotta sweet soup"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 140,
-      "carbsG": 18,
-      "proteinG": 3,
-      "fatG": 6.5,
-      "fiberG": 0.2
+      "kcal": 129,
+      "carbsG": 17.5,
+      "proteinG": 2.6,
+      "fatG": 5.6,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -5773,13 +5908,14 @@
       "durian sweet soup"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 22,
-      "proteinG": 2.5,
-      "fatG": 6,
-      "fiberG": 1.5
+      "kcal": 149,
+      "carbsG": 24.4,
+      "proteinG": 2.6,
+      "fatG": 4.9,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -5813,13 +5949,14 @@
       "thai style fruit dessert"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 22,
-      "proteinG": 1.8,
-      "fatG": 3,
-      "fiberG": 1
+      "kcal": 105,
+      "carbsG": 15,
+      "proteinG": 0.8,
+      "fatG": 5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -5853,13 +5990,14 @@
       "mixed sweet soup"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 24,
-      "proteinG": 2.5,
-      "fatG": 3,
-      "fiberG": 1.8
+      "kcal": 136,
+      "carbsG": 22.7,
+      "proteinG": 3.3,
+      "fatG": 3.8,
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -5893,13 +6031,14 @@
       "glutinous rice balls in ginger syrup"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 34,
-      "proteinG": 2.5,
-      "fatG": 2,
-      "fiberG": 1.2
+      "kcal": 177,
+      "carbsG": 34.9,
+      "proteinG": 3.8,
+      "fatG": 2.6,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -5933,13 +6072,15 @@
       "ice cream"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "usda",
+    "sourceRef": "usda:167575",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 24,
+      "kcal": 207,
+      "carbsG": 23.6,
       "proteinG": 3.5,
-      "fatG": 10,
-      "fiberG": 0
+      "fatG": 11,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -5973,13 +6114,14 @@
       "frozen banana"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 24,
-      "proteinG": 1.8,
-      "fatG": 5.5,
-      "fiberG": 1.2
+      "kcal": 168,
+      "carbsG": 21.8,
+      "proteinG": 3.2,
+      "fatG": 7.8,
+      "fiberG": 1.3
     },
     "servings": [
       {
@@ -6013,13 +6155,14 @@
       "ice cream with sticky rice"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 210,
-      "carbsG": 32,
-      "proteinG": 3.5,
-      "fatG": 8,
-      "fiberG": 0.5
+      "kcal": 186,
+      "carbsG": 26.8,
+      "proteinG": 3.3,
+      "fatG": 7.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -6090,13 +6233,14 @@
       "coconut jelly"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 15,
-      "proteinG": 0.8,
-      "fatG": 3,
-      "fiberG": 0.5
+      "kcal": 93,
+      "carbsG": 12.8,
+      "proteinG": 0.7,
+      "fatG": 4.7,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -6206,12 +6350,13 @@
       "iced yogurt"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 100,
-      "carbsG": 16,
-      "proteinG": 2.8,
-      "fatG": 2.5,
+      "kcal": 94,
+      "carbsG": 12.8,
+      "proteinG": 3,
+      "fatG": 3.4,
       "fiberG": 0
     },
     "servings": [
@@ -6246,12 +6391,13 @@
       "frozen set yogurt"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 100,
-      "carbsG": 15,
-      "proteinG": 3,
-      "fatG": 3,
+      "kcal": 102,
+      "carbsG": 11.5,
+      "proteinG": 4,
+      "fatG": 4.5,
       "fiberG": 0
     },
     "servings": [
@@ -6286,13 +6432,14 @@
       "yogurt with black sticky rice"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 22,
-      "proteinG": 3.5,
+      "kcal": 110,
+      "carbsG": 17,
+      "proteinG": 3.7,
       "fatG": 3,
-      "fiberG": 1
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -6326,13 +6473,14 @@
       "yogurt with tapioca pearls"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 19,
-      "proteinG": 2.8,
-      "fatG": 2.5,
-      "fiberG": 0.1
+      "kcal": 101,
+      "carbsG": 17.1,
+      "proteinG": 2.4,
+      "fatG": 2.6,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -6408,12 +6556,13 @@
       "silken tofu in ginger syrup"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 55,
-      "carbsG": 9,
-      "proteinG": 2.3,
-      "fatG": 1,
+      "kcal": 66,
+      "carbsG": 8.1,
+      "proteinG": 4.3,
+      "fatG": 2.2,
       "fiberG": 0.2
     },
     "servings": [
@@ -6448,13 +6597,14 @@
       "grilled pork belly"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 290,
-      "carbsG": 3,
-      "proteinG": 18,
-      "fatG": 23,
-      "fiberG": 0
+      "kcal": 324,
+      "carbsG": 4.8,
+      "proteinG": 19.6,
+      "fatG": 25.1,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -6488,13 +6638,14 @@
       "grilled octopus"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 140,
-      "carbsG": 4,
+      "kcal": 145,
+      "carbsG": 6.1,
       "proteinG": 20,
-      "fatG": 4.5,
-      "fiberG": 0
+      "fatG": 3.9,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -6600,13 +6751,14 @@
       "grilled beef in betel leaf"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 220,
-      "carbsG": 3,
-      "proteinG": 18,
-      "fatG": 15,
-      "fiberG": 0.3
+      "kcal": 204,
+      "carbsG": 4.9,
+      "proteinG": 17.6,
+      "fatG": 12.6,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -6640,13 +6792,14 @@
       "grilled fish"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 1,
-      "proteinG": 22,
-      "fatG": 11,
-      "fiberG": 0
+      "kcal": 201,
+      "carbsG": 0.1,
+      "proteinG": 20,
+      "fatG": 13.3,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -6680,13 +6833,14 @@
       "hanoi turmeric fish with dill"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 6,
-      "proteinG": 16,
-      "fatG": 10,
-      "fiberG": 0.3
+      "kcal": 159,
+      "carbsG": 1.5,
+      "proteinG": 11.7,
+      "fatG": 11.8,
+      "fiberG": 1.4
     },
     "servings": [
       {
@@ -6720,13 +6874,14 @@
       "spicy sauce chicken rice"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 175,
-      "carbsG": 22,
-      "proteinG": 9,
+      "kcal": 164,
+      "carbsG": 20.8,
+      "proteinG": 6.7,
       "fatG": 6,
-      "fiberG": 0.4
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -6760,13 +6915,15 @@
       "fried chicken drumstick"
     ],
     "category": "chien-nuong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:173611",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 12,
-      "proteinG": 18,
-      "fatG": 14,
-      "fiberG": 0.3
+      "kcal": 245,
+      "carbsG": 1.6,
+      "proteinG": 27,
+      "fatG": 13.7,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -6800,12 +6957,13 @@
       "grilled chicken"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
+      "kcal": 248,
       "carbsG": 3,
-      "proteinG": 24,
-      "fatG": 10,
+      "proteinG": 25.6,
+      "fatG": 14,
       "fiberG": 0
     },
     "servings": [
@@ -6840,13 +6998,15 @@
       "popcorn chicken"
     ],
     "category": "chien-nuong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:170718",
+    "verified": true,
     "per100g": {
-      "kcal": 280,
-      "carbsG": 20,
-      "proteinG": 17,
-      "fatG": 15,
-      "fiberG": 0.8
+      "kcal": 307,
+      "carbsG": 14.9,
+      "proteinG": 15.9,
+      "fatG": 20.4,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -6880,12 +7040,13 @@
       "roast chicken"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 220,
-      "carbsG": 2,
-      "proteinG": 23,
-      "fatG": 13,
+      "kcal": 251,
+      "carbsG": 2.7,
+      "proteinG": 26,
+      "fatG": 14.3,
       "fiberG": 0
     },
     "servings": [
@@ -6920,12 +7081,14 @@
       "fried chicken"
     ],
     "category": "chien-nuong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:170757",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 14,
-      "proteinG": 19,
-      "fatG": 14,
+      "kcal": 267,
+      "carbsG": 7.6,
+      "proteinG": 21.1,
+      "fatG": 16.9,
       "fiberG": 0.5
     },
     "servings": [
@@ -6960,13 +7123,15 @@
       "spicy fried chicken"
     ],
     "category": "chien-nuong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:170359",
+    "verified": true,
     "per100g": {
-      "kcal": 270,
-      "carbsG": 15,
-      "proteinG": 18,
-      "fatG": 16,
-      "fiberG": 0.6
+      "kcal": 274,
+      "carbsG": 8.7,
+      "proteinG": 19.2,
+      "fatG": 18.1,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -7000,13 +7165,14 @@
       "korean fried chicken"
     ],
     "category": "chien-nuong",
-    "source": "label",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 270,
-      "carbsG": 22,
-      "proteinG": 16,
-      "fatG": 13,
-      "fiberG": 0.3
+      "kcal": 277,
+      "carbsG": 19.5,
+      "proteinG": 12.8,
+      "fatG": 16.4,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -7040,13 +7206,15 @@
       "beef burger"
     ],
     "category": "chien-nuong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:170710",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 22,
-      "proteinG": 13,
-      "fatG": 12,
-      "fiberG": 1.5
+      "kcal": 256,
+      "carbsG": 22.1,
+      "proteinG": 15.7,
+      "fatG": 11.6,
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -7080,13 +7248,15 @@
       "chicken burger"
     ],
     "category": "chien-nuong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:170295",
+    "verified": true,
     "per100g": {
-      "kcal": 245,
-      "carbsG": 24,
-      "proteinG": 13,
-      "fatG": 11,
-      "fiberG": 1.5
+      "kcal": 250,
+      "carbsG": 20.9,
+      "proteinG": 16.3,
+      "fatG": 11.2,
+      "fiberG": 1.4
     },
     "servings": [
       {
@@ -7120,12 +7290,13 @@
       "roast pork"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 330,
-      "carbsG": 2,
-      "proteinG": 20,
-      "fatG": 27,
+      "kcal": 319,
+      "carbsG": 2.9,
+      "proteinG": 21.2,
+      "fatG": 24.7,
       "fiberG": 0
     },
     "servings": [
@@ -7159,13 +7330,14 @@
       "hotdog"
     ],
     "category": "chien-nuong",
-    "source": "label",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 22,
-      "proteinG": 9,
-      "fatG": 14,
-      "fiberG": 1
+      "kcal": 265,
+      "carbsG": 24.8,
+      "proteinG": 8.5,
+      "fatG": 14.5,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -7233,13 +7405,15 @@
       "fast food fries"
     ],
     "category": "chien-nuong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:170698",
+    "verified": true,
     "per100g": {
-      "kcal": 310,
-      "carbsG": 40,
-      "proteinG": 3.5,
-      "fatG": 15,
-      "fiberG": 3.5
+      "kcal": 312,
+      "carbsG": 41.4,
+      "proteinG": 3.4,
+      "fatG": 14.7,
+      "fiberG": 3.8
     },
     "servings": [
       {
@@ -7349,13 +7523,14 @@
       "fried calamari"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 220,
-      "carbsG": 18,
-      "proteinG": 14,
-      "fatG": 11,
-      "fiberG": 0.5
+      "kcal": 201,
+      "carbsG": 11,
+      "proteinG": 13.6,
+      "fatG": 11.4,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -7389,13 +7564,14 @@
       "grilled squid"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 4,
-      "proteinG": 22,
-      "fatG": 3,
-      "fiberG": 0
+      "kcal": 135,
+      "carbsG": 3.2,
+      "proteinG": 20.6,
+      "fatG": 4.5,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -7429,13 +7605,14 @@
       "grilled beef udder"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 2,
-      "proteinG": 17,
-      "fatG": 21,
-      "fiberG": 1.5
+      "kcal": 243,
+      "carbsG": 4.6,
+      "proteinG": 19,
+      "fatG": 16.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -7468,13 +7645,15 @@
       "pizza"
     ],
     "category": "chien-nuong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:170317",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 30,
-      "proteinG": 11,
-      "fatG": 10,
-      "fiberG": 2.3
+      "kcal": 268,
+      "carbsG": 29,
+      "proteinG": 10.4,
+      "fatG": 12.3,
+      "fiberG": 2.2
     },
     "servings": [
       {
@@ -7507,12 +7686,13 @@
       "grilled pork ribs"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 5,
-      "proteinG": 20,
-      "fatG": 18,
+      "kcal": 259,
+      "carbsG": 7,
+      "proteinG": 20.6,
+      "fatG": 16.5,
       "fiberG": 0
     },
     "servings": [
@@ -7547,12 +7727,13 @@
       "grilled pork (bbq)"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 240,
-      "carbsG": 6,
-      "proteinG": 22,
-      "fatG": 14,
+      "kcal": 215,
+      "carbsG": 7.3,
+      "proteinG": 18,
+      "fatG": 12.7,
       "fiberG": 0.1
     },
     "servings": [
@@ -7587,13 +7768,14 @@
       "fried breaded shrimp"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 240,
-      "carbsG": 20,
-      "proteinG": 12,
-      "fatG": 12,
-      "fiberG": 0.6
+      "kcal": 233,
+      "carbsG": 19,
+      "proteinG": 13.5,
+      "fatG": 11.5,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -7627,12 +7809,13 @@
       "grilled shrimp"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 1,
-      "proteinG": 22,
-      "fatG": 2,
+      "kcal": 130,
+      "carbsG": 1.5,
+      "proteinG": 19.8,
+      "fatG": 5,
       "fiberG": 0
     },
     "servings": [
@@ -7667,12 +7850,13 @@
       "grilled duck"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 240,
-      "carbsG": 3,
-      "proteinG": 20,
-      "fatG": 16,
+      "kcal": 333,
+      "carbsG": 2.7,
+      "proteinG": 18.2,
+      "fatG": 27,
       "fiberG": 0
     },
     "servings": [
@@ -7707,12 +7891,13 @@
       "roast duck"
     ],
     "category": "chien-nuong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 300,
-      "carbsG": 1,
-      "proteinG": 19,
-      "fatG": 24,
+      "kcal": 336,
+      "carbsG": 5.4,
+      "proteinG": 17.8,
+      "fatG": 26.5,
       "fiberG": 0
     },
     "servings": [
@@ -7747,13 +7932,14 @@
       "shaking beef rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 165,
-      "carbsG": 19,
-      "proteinG": 10,
-      "fatG": 6,
-      "fiberG": 0.8
+      "kcal": 134,
+      "carbsG": 15.2,
+      "proteinG": 7.6,
+      "fatG": 4.6,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -7787,13 +7973,14 @@
       "stir-fried beef rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 20,
-      "proteinG": 9,
-      "fatG": 5.5,
-      "fiberG": 0.7
+      "kcal": 130,
+      "carbsG": 15.2,
+      "proteinG": 7.4,
+      "fatG": 4.2,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -7827,13 +8014,14 @@
       "rice with clay pot basa fish"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 21,
-      "proteinG": 8,
-      "fatG": 5,
-      "fiberG": 0.4
+      "kcal": 128,
+      "carbsG": 18.2,
+      "proteinG": 8.6,
+      "fatG": 2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -7867,13 +8055,14 @@
       "rice with caramelized fish"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 22,
-      "proteinG": 8,
-      "fatG": 4.5,
-      "fiberG": 0.4
+      "kcal": 132,
+      "carbsG": 18.2,
+      "proteinG": 7.9,
+      "fatG": 2.8,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -7907,13 +8096,14 @@
       "vegetarian rice plate"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 140,
-      "carbsG": 22,
-      "proteinG": 4,
-      "fatG": 4,
-      "fiberG": 2
+      "kcal": 125,
+      "carbsG": 16.4,
+      "proteinG": 4.8,
+      "fatG": 4.2,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -7947,13 +8137,14 @@
       "crispy rice with caramel dip"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 230,
-      "carbsG": 30,
-      "proteinG": 6,
-      "fatG": 10,
-      "fiberG": 1.5
+      "kcal": 285,
+      "carbsG": 29.6,
+      "proteinG": 8.3,
+      "fatG": 14.8,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -7987,13 +8178,14 @@
       "salted fish fried rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 165,
-      "carbsG": 22,
-      "proteinG": 6.5,
+      "kcal": 155,
+      "carbsG": 18.2,
+      "proteinG": 6.3,
       "fatG": 6,
-      "fiberG": 0.6
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8027,13 +8219,14 @@
       "yangzhou fried rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 165,
-      "carbsG": 22,
-      "proteinG": 6,
-      "fatG": 6,
-      "fiberG": 0.8
+      "kcal": 189,
+      "carbsG": 17.5,
+      "proteinG": 7.6,
+      "fatG": 9.6,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8067,13 +8260,14 @@
       "seafood fried rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 22,
-      "proteinG": 7,
-      "fatG": 5,
-      "fiberG": 0.6
+      "kcal": 151,
+      "carbsG": 17.8,
+      "proteinG": 7.2,
+      "fatG": 5.4,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8107,13 +8301,14 @@
       "egg fried rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 165,
-      "carbsG": 22,
-      "proteinG": 6,
-      "fatG": 6,
-      "fiberG": 0.5
+      "kcal": 167,
+      "carbsG": 18.8,
+      "proteinG": 5.6,
+      "fatG": 7.5,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8148,13 +8343,14 @@
       "vietnamese gimbap"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 24,
-      "proteinG": 4.5,
-      "fatG": 4,
-      "fiberG": 1
+      "kcal": 143,
+      "carbsG": 15.5,
+      "proteinG": 5.3,
+      "fatG": 6.5,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8189,13 +8385,14 @@
       "hainanese chicken rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 175,
-      "carbsG": 22,
-      "proteinG": 9,
-      "fatG": 6,
-      "fiberG": 0.4
+      "kcal": 173,
+      "carbsG": 14.5,
+      "proteinG": 8.8,
+      "fatG": 8.6,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8229,13 +8426,14 @@
       "rice with ginger braised chicken"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 21,
-      "proteinG": 9,
-      "fatG": 5,
-      "fiberG": 0.5
+      "kcal": 167,
+      "carbsG": 17.8,
+      "proteinG": 9.3,
+      "fatG": 6.3,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8269,13 +8467,14 @@
       "grilled chicken rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 165,
-      "carbsG": 21,
-      "proteinG": 10,
-      "fatG": 5,
-      "fiberG": 0.4
+      "kcal": 185,
+      "carbsG": 19,
+      "proteinG": 10.4,
+      "fatG": 7.3,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8309,13 +8508,14 @@
       "salted egg chicken rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 185,
-      "carbsG": 21,
-      "proteinG": 9,
-      "fatG": 8,
-      "fiberG": 0.4
+      "kcal": 217,
+      "carbsG": 17.9,
+      "proteinG": 9.8,
+      "fatG": 11.6,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -8349,12 +8549,13 @@
       "shredded chicken rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 155,
-      "carbsG": 22,
-      "proteinG": 9,
-      "fatG": 4,
+      "kcal": 162,
+      "carbsG": 16.9,
+      "proteinG": 8.8,
+      "fatG": 6.3,
       "fiberG": 0.4
     },
     "servings": [
@@ -8389,13 +8590,14 @@
       "crispy fried chicken rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 175,
-      "carbsG": 20,
-      "proteinG": 9,
-      "fatG": 7,
-      "fiberG": 0.4
+      "kcal": 195,
+      "carbsG": 17.2,
+      "proteinG": 9.8,
+      "fatG": 9.4,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8471,13 +8673,14 @@
       "roast pork rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 19,
-      "proteinG": 8,
-      "fatG": 10,
-      "fiberG": 0.4
+      "kcal": 185,
+      "carbsG": 17.8,
+      "proteinG": 8.7,
+      "fatG": 8.5,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8511,12 +8714,13 @@
       "clay pot rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 140,
-      "carbsG": 28,
-      "proteinG": 3,
-      "fatG": 2,
+      "kcal": 156,
+      "carbsG": 18.2,
+      "proteinG": 5.6,
+      "fatG": 6.5,
       "fiberG": 0.4
     },
     "servings": [
@@ -8551,13 +8755,14 @@
       "fried rice with pickled mustard and beef"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 155,
-      "carbsG": 21,
-      "proteinG": 7,
-      "fatG": 5,
-      "fiberG": 0.7
+      "kcal": 151,
+      "carbsG": 18.2,
+      "proteinG": 6.6,
+      "fatG": 5.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -8591,13 +8796,14 @@
       "grilled pork rib rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
       "kcal": 165,
       "carbsG": 20,
-      "proteinG": 9.5,
-      "fatG": 6,
-      "fiberG": 0.4
+      "proteinG": 7.8,
+      "fatG": 5.7,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8631,13 +8837,14 @@
       "rice with sticky glazed pork ribs"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 21,
-      "proteinG": 9,
-      "fatG": 8,
-      "fiberG": 0.5
+      "kcal": 158,
+      "carbsG": 17.8,
+      "proteinG": 7.3,
+      "fatG": 6.1,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8671,13 +8878,14 @@
       "sweet and sour pork rib rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 170,
-      "carbsG": 23,
-      "proteinG": 8,
-      "fatG": 5.5,
-      "fiberG": 0.6
+      "kcal": 161,
+      "carbsG": 19.5,
+      "proteinG": 7,
+      "fatG": 5.9,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -8711,12 +8919,13 @@
       "broken rice with egg loaf"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 21,
-      "proteinG": 8,
-      "fatG": 5,
+      "kcal": 151,
+      "carbsG": 19.9,
+      "proteinG": 4.9,
+      "fatG": 5.5,
       "fiberG": 0.4
     },
     "servings": [
@@ -8751,13 +8960,14 @@
       "broken rice with grilled pork chop"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 165,
+      "kcal": 162,
       "carbsG": 20,
-      "proteinG": 9,
-      "fatG": 6,
-      "fiberG": 0.4
+      "proteinG": 7.5,
+      "fatG": 5.5,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8792,13 +9002,14 @@
       "shredded skin and egg loaf"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 165,
-      "carbsG": 19,
-      "proteinG": 10,
-      "fatG": 6.5,
-      "fiberG": 0.5
+      "kcal": 177,
+      "carbsG": 17.7,
+      "proteinG": 9.5,
+      "fatG": 7.4,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8833,13 +9044,14 @@
       "broken rice with pork chop and fried egg"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 165,
-      "carbsG": 19,
-      "proteinG": 9.5,
-      "fatG": 6.5,
-      "fiberG": 0.4
+      "kcal": 167,
+      "carbsG": 18.1,
+      "proteinG": 8,
+      "fatG": 6.8,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8873,13 +9085,14 @@
       "rice with braised pork and eggs"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 175,
-      "carbsG": 20,
-      "proteinG": 8,
-      "fatG": 8,
-      "fiberG": 0.4
+      "kcal": 164,
+      "carbsG": 17.6,
+      "proteinG": 7,
+      "fatG": 7,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8955,13 +9168,14 @@
       "office lunch box"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 20,
-      "proteinG": 7,
-      "fatG": 4.5,
-      "fiberG": 0.8
+      "kcal": 161,
+      "carbsG": 15.2,
+      "proteinG": 6.3,
+      "fatG": 8.1,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -8995,13 +9209,14 @@
       "roast duck rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 19,
-      "proteinG": 9,
-      "fatG": 9,
-      "fiberG": 0.4
+      "kcal": 184,
+      "carbsG": 18.1,
+      "proteinG": 7.4,
+      "fatG": 8.7,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -9035,13 +9250,14 @@
       "mung bean sticky rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 185,
-      "carbsG": 34,
-      "proteinG": 5.5,
-      "fatG": 3,
-      "fiberG": 1.8
+      "kcal": 193,
+      "carbsG": 33.6,
+      "proteinG": 6.1,
+      "fatG": 3.8,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -9075,13 +9291,14 @@
       "chicken sticky rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 30,
-      "proteinG": 7,
-      "fatG": 4.5,
-      "fiberG": 0.7
+      "kcal": 195,
+      "carbsG": 22.6,
+      "proteinG": 9.5,
+      "fatG": 7.5,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -9115,13 +9332,14 @@
       "gac fruit sticky rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 34,
-      "proteinG": 4,
-      "fatG": 4,
-      "fiberG": 0.8
+      "kcal": 193,
+      "carbsG": 36.7,
+      "proteinG": 3.9,
+      "fatG": 3.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -9155,13 +9373,14 @@
       "mugwort sticky rice dumpling"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 30,
-      "proteinG": 6,
-      "fatG": 6,
-      "fiberG": 1.2
+      "kcal": 180,
+      "carbsG": 27.3,
+      "proteinG": 6.5,
+      "fatG": 5,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -9195,13 +9414,14 @@
       "peanut sticky rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 33,
-      "proteinG": 6,
-      "fatG": 4,
-      "fiberG": 1.5
+      "kcal": 225,
+      "carbsG": 34.4,
+      "proteinG": 7,
+      "fatG": 6.7,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -9235,13 +9455,14 @@
       "savory sticky rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 30,
-      "proteinG": 7,
-      "fatG": 6,
-      "fiberG": 0.8
+      "kcal": 201,
+      "carbsG": 22.5,
+      "proteinG": 9,
+      "fatG": 8.3,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -9275,13 +9496,14 @@
       "corn sticky rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 34,
-      "proteinG": 4,
-      "fatG": 3,
-      "fiberG": 1.6
+      "kcal": 182,
+      "carbsG": 30.8,
+      "proteinG": 3.3,
+      "fatG": 5.1,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -9315,13 +9537,14 @@
       "sticky rice with mung bean and fried shallot"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 34,
-      "proteinG": 5,
-      "fatG": 5,
-      "fiberG": 1.2
+      "kcal": 194,
+      "carbsG": 29.5,
+      "proteinG": 4.9,
+      "fatG": 6.3,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -9355,12 +9578,13 @@
       "hot milky coffee"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 62,
-      "carbsG": 9,
-      "proteinG": 1.6,
-      "fatG": 1.9,
+      "kcal": 73,
+      "carbsG": 9.8,
+      "proteinG": 2.4,
+      "fatG": 2.6,
       "fiberG": 0
     },
     "servings": [
@@ -9395,12 +9619,13 @@
       "milky iced coffee"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 9,
-      "proteinG": 1.5,
-      "fatG": 1.8,
+      "kcal": 74,
+      "carbsG": 10.2,
+      "proteinG": 2.4,
+      "fatG": 2.6,
       "fiberG": 0
     },
     "servings": [
@@ -9435,10 +9660,12 @@
       "beer"
     ],
     "category": "do-uong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:168746",
+    "verified": true,
     "per100g": {
       "kcal": 43,
-      "carbsG": 10,
+      "carbsG": 3.6,
       "proteinG": 0.5,
       "fatG": 0,
       "fiberG": 0
@@ -9475,11 +9702,13 @@
       "draft beer"
     ],
     "category": "do-uong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:168749",
+    "verified": true,
     "per100g": {
-      "kcal": 30,
-      "carbsG": 7,
-      "proteinG": 0.4,
+      "kcal": 29,
+      "carbsG": 1.6,
+      "proteinG": 0.2,
       "fatG": 0,
       "fiberG": 0
     },
@@ -9515,13 +9744,14 @@
       "coconut coffee"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 11,
-      "proteinG": 1,
-      "fatG": 4.5,
-      "fiberG": 0.2
+      "kcal": 93,
+      "carbsG": 10.2,
+      "proteinG": 1.2,
+      "fatG": 5.7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -9555,11 +9785,12 @@
       "iced black coffee"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 9,
-      "carbsG": 2,
-      "proteinG": 0.2,
+      "kcal": 11,
+      "carbsG": 2.7,
+      "proteinG": 0.1,
       "fatG": 0,
       "fiberG": 0
     },
@@ -9595,12 +9826,13 @@
       "salted coffee"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 65,
-      "carbsG": 9,
-      "proteinG": 1.3,
-      "fatG": 2.5,
+      "kcal": 77,
+      "carbsG": 6.5,
+      "proteinG": 1.6,
+      "fatG": 5,
       "fiberG": 0
     },
     "servings": [
@@ -9635,12 +9867,13 @@
       "iced coffee with milk"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 48,
-      "carbsG": 8,
-      "proteinG": 1,
-      "fatG": 1.2,
+      "kcal": 51,
+      "carbsG": 8.4,
+      "proteinG": 1.3,
+      "fatG": 1.3,
       "fiberG": 0
     },
     "servings": [
@@ -9675,12 +9908,13 @@
       "egg coffee"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 12,
-      "proteinG": 3,
-      "fatG": 7.5,
+      "kcal": 172,
+      "carbsG": 16,
+      "proteinG": 4.1,
+      "fatG": 10.1,
       "fiberG": 0
     },
     "servings": [
@@ -9714,12 +9948,13 @@
       "cappuccino"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 40,
-      "carbsG": 3.5,
-      "proteinG": 2,
-      "fatG": 2,
+      "kcal": 42,
+      "carbsG": 2.9,
+      "proteinG": 2.2,
+      "fatG": 2.4,
       "fiberG": 0
     },
     "servings": [
@@ -9753,13 +9988,14 @@
       "passion fruit juice"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 55,
-      "carbsG": 13,
-      "proteinG": 0.6,
-      "fatG": 0.2,
-      "fiberG": 1
+      "kcal": 56,
+      "carbsG": 13.8,
+      "proteinG": 0.4,
+      "fatG": 0.1,
+      "fiberG": 2.1
     },
     "servings": [
       {
@@ -9837,12 +10073,13 @@
       "black milk tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 62,
-      "carbsG": 11.5,
-      "proteinG": 1,
-      "fatG": 1.5,
+      "kcal": 57,
+      "carbsG": 9.1,
+      "proteinG": 0.7,
+      "fatG": 2,
       "fiberG": 0
     },
     "servings": [
@@ -9877,12 +10114,13 @@
       "cafe latte"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 50,
-      "carbsG": 4.5,
-      "proteinG": 2.6,
-      "fatG": 2.5,
+      "kcal": 48,
+      "carbsG": 3.3,
+      "proteinG": 2.5,
+      "fatG": 2.8,
       "fiberG": 0
     },
     "servings": [
@@ -9917,13 +10155,14 @@
       "detox water"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
       "kcal": 15,
-      "carbsG": 3.8,
-      "proteinG": 0.2,
+      "carbsG": 3.3,
+      "proteinG": 0.3,
       "fatG": 0.1,
-      "fiberG": 0.3
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -9999,13 +10238,14 @@
       "carrot juice"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 40,
+      "kcal": 42,
       "carbsG": 9.3,
-      "proteinG": 0.9,
-      "fatG": 0.2,
-      "fiberG": 0.8
+      "proteinG": 0.8,
+      "fatG": 0.1,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -10039,11 +10279,12 @@
       "orange juice"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 45,
-      "carbsG": 10.5,
-      "proteinG": 0.7,
+      "kcal": 49,
+      "carbsG": 11.6,
+      "proteinG": 0.6,
       "fatG": 0.2,
       "fiberG": 0.2
     },
@@ -10079,13 +10320,14 @@
       "watermelon juice"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 32,
-      "carbsG": 8,
-      "proteinG": 0.6,
-      "fatG": 0.1,
-      "fiberG": 0.1
+      "kcal": 27,
+      "carbsG": 5.3,
+      "proteinG": 1,
+      "fatG": 0.2,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -10156,13 +10398,14 @@
       "guava juice"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 42,
-      "carbsG": 10,
-      "proteinG": 0.6,
-      "fatG": 0.3,
-      "fiberG": 0.5
+      "kcal": 44,
+      "carbsG": 9.5,
+      "proteinG": 0.3,
+      "fatG": 0.5,
+      "fiberG": 3.2
     },
     "servings": [
       {
@@ -10196,13 +10439,14 @@
       "apple juice"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 46,
-      "carbsG": 11,
-      "proteinG": 0.1,
+      "kcal": 39,
+      "carbsG": 9,
+      "proteinG": 0.3,
       "fatG": 0.1,
-      "fiberG": 0.2
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -10236,11 +10480,12 @@
       "sugarcane juice"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 55,
-      "carbsG": 14,
-      "proteinG": 0.1,
+      "kcal": 50,
+      "carbsG": 12.5,
+      "proteinG": 0,
       "fatG": 0,
       "fiberG": 0
     },
@@ -10277,12 +10522,14 @@
       "soft drink"
     ],
     "category": "do-uong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:174852",
+    "verified": true,
     "per100g": {
       "kcal": 42,
-      "carbsG": 10.6,
+      "carbsG": 10.4,
       "proteinG": 0,
-      "fatG": 0,
+      "fatG": 0.3,
       "fiberG": 0
     },
     "servings": [
@@ -10318,11 +10565,12 @@
       "herbal tea drink"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 30,
-      "carbsG": 7.5,
-      "proteinG": 0.1,
+      "kcal": 28,
+      "carbsG": 7,
+      "proteinG": 0,
       "fatG": 0,
       "fiberG": 0
     },
@@ -10358,11 +10606,13 @@
       "energy drink"
     ],
     "category": "do-uong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:173210",
+    "verified": true,
     "per100g": {
-      "kcal": 45,
-      "carbsG": 11,
-      "proteinG": 0,
+      "kcal": 43,
+      "carbsG": 10.2,
+      "proteinG": 0.5,
       "fatG": 0,
       "fiberG": 0
     },
@@ -10398,13 +10648,14 @@
       "pennywort drink"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 35,
-      "carbsG": 8,
+      "kcal": 30,
+      "carbsG": 6.9,
       "proteinG": 0.6,
-      "fatG": 0.2,
-      "fiberG": 0.3
+      "fatG": 0,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -10438,13 +10689,14 @@
       "pennywort with mung bean"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 11,
-      "proteinG": 2,
-      "fatG": 1,
-      "fiberG": 0.8
+      "kcal": 57,
+      "carbsG": 10.1,
+      "proteinG": 2.4,
+      "fatG": 0.8,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -10478,13 +10730,14 @@
       "avocado smoothie"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 13,
-      "proteinG": 1.8,
-      "fatG": 8,
-      "fiberG": 1.5
+      "kcal": 109,
+      "carbsG": 12.2,
+      "proteinG": 2.3,
+      "fatG": 5.7,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -10518,13 +10771,14 @@
       "strawberry smoothie"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 80,
-      "carbsG": 16,
-      "proteinG": 1.3,
-      "fatG": 1,
-      "fiberG": 1.2
+      "kcal": 68,
+      "carbsG": 11.7,
+      "proteinG": 1.9,
+      "fatG": 1.5,
+      "fiberG": 1.4
     },
     "servings": [
       {
@@ -10558,13 +10812,14 @@
       "soursop smoothie"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 100,
-      "carbsG": 21,
-      "proteinG": 1.3,
-      "fatG": 1,
-      "fiberG": 1.5
+      "kcal": 78,
+      "carbsG": 14.2,
+      "proteinG": 1.9,
+      "fatG": 1.5,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -10598,13 +10853,14 @@
       "blueberry smoothie"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 18,
-      "proteinG": 1.2,
-      "fatG": 1.2,
-      "fiberG": 1.3
+      "kcal": 82,
+      "carbsG": 15.2,
+      "proteinG": 1.8,
+      "fatG": 1.8,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -10638,13 +10894,14 @@
       "mango smoothie"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 19,
-      "proteinG": 1.2,
-      "fatG": 1.2,
-      "fiberG": 1
+      "kcal": 73,
+      "carbsG": 13.8,
+      "proteinG": 1.4,
+      "fatG": 1.4,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -10678,11 +10935,12 @@
       "lemon soda"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
       "kcal": 35,
-      "carbsG": 9,
-      "proteinG": 0.1,
+      "carbsG": 8.8,
+      "proteinG": 0,
       "fatG": 0,
       "fiberG": 0
     },
@@ -10718,13 +10976,14 @@
       "corn milk"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 10,
-      "proteinG": 1.8,
-      "fatG": 1.5,
-      "fiberG": 0.6
+      "kcal": 64,
+      "carbsG": 11.8,
+      "proteinG": 1.4,
+      "fatG": 1.2,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -10758,12 +11017,13 @@
       "drinking yogurt"
     ],
     "category": "do-uong",
-    "source": "label",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 70,
-      "carbsG": 13,
-      "proteinG": 2.5,
-      "fatG": 1,
+      "kcal": 65,
+      "carbsG": 7.1,
+      "proteinG": 2.6,
+      "fatG": 2.9,
       "fiberG": 0
     },
     "servings": [
@@ -10798,13 +11058,14 @@
       "soy milk"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
       "kcal": 45,
-      "carbsG": 5,
+      "carbsG": 5.1,
       "proteinG": 3,
-      "fatG": 1.8,
-      "fiberG": 0.4
+      "fatG": 1.5,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -10880,10 +11141,11 @@
       "artichoke tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 15,
-      "carbsG": 3.8,
+      "kcal": 18,
+      "carbsG": 4.4,
       "proteinG": 0.1,
       "fatG": 0,
       "fiberG": 0.2
@@ -10920,13 +11182,14 @@
       "winter melon tea"
     ],
     "category": "do-uong",
-    "source": "label",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 25,
-      "carbsG": 6.3,
-      "proteinG": 0,
+      "kcal": 28,
+      "carbsG": 6.9,
+      "proteinG": 0.1,
       "fatG": 0,
-      "fiberG": 0
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -10960,11 +11223,12 @@
       "lemon tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 30,
-      "carbsG": 7.5,
-      "proteinG": 0.1,
+      "kcal": 31,
+      "carbsG": 8,
+      "proteinG": 0,
       "fatG": 0,
       "fiberG": 0
     },
@@ -11000,13 +11264,14 @@
       "hand-crushed lemon tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 32,
-      "carbsG": 8,
+      "kcal": 33,
+      "carbsG": 8.5,
       "proteinG": 0.1,
       "fatG": 0,
-      "fiberG": 0
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -11040,13 +11305,14 @@
       "peach tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 42,
-      "carbsG": 10.5,
-      "proteinG": 0.2,
+      "kcal": 38,
+      "carbsG": 9.5,
+      "proteinG": 0.1,
       "fatG": 0,
-      "fiberG": 0
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -11080,13 +11346,14 @@
       "peach lemongrass tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
       "kcal": 40,
       "carbsG": 10,
-      "proteinG": 0.2,
+      "proteinG": 0.1,
       "fatG": 0,
-      "fiberG": 0
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -11120,13 +11387,14 @@
       "ginger tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 30,
-      "carbsG": 7.5,
-      "proteinG": 0.1,
+      "kcal": 25,
+      "carbsG": 6,
+      "proteinG": 0,
       "fatG": 0,
-      "fiberG": 0
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -11160,12 +11428,13 @@
       "milk tea no topping"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 11,
-      "proteinG": 1,
-      "fatG": 1.5,
+      "kcal": 57,
+      "carbsG": 9,
+      "proteinG": 0.7,
+      "fatG": 2,
       "fiberG": 0
     },
     "servings": [
@@ -11200,12 +11469,13 @@
       "matcha milk tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 68,
-      "carbsG": 12.5,
-      "proteinG": 1.2,
-      "fatG": 1.6,
+      "kcal": 59,
+      "carbsG": 9.1,
+      "proteinG": 1.1,
+      "fatG": 2,
       "fiberG": 0
     },
     "servings": [
@@ -11240,12 +11510,13 @@
       "chocolate milk tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 72,
-      "carbsG": 13.5,
-      "proteinG": 1.3,
-      "fatG": 1.6,
+      "kcal": 69,
+      "carbsG": 11.9,
+      "proteinG": 1,
+      "fatG": 2,
       "fiberG": 0
     },
     "servings": [
@@ -11282,12 +11553,13 @@
       "boba"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 75,
-      "carbsG": 14,
-      "proteinG": 1,
-      "fatG": 1.8,
+      "kcal": 78,
+      "carbsG": 14.1,
+      "proteinG": 1.1,
+      "fatG": 2,
       "fiberG": 0
     },
     "servings": [
@@ -11324,13 +11596,14 @@
       "kumquat tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 35,
-      "carbsG": 9,
+      "kcal": 31,
+      "carbsG": 7.7,
       "proteinG": 0.1,
       "fatG": 0,
-      "fiberG": 0
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -11364,13 +11637,14 @@
       "lychee tea"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 43,
-      "carbsG": 11,
-      "proteinG": 0.2,
+      "kcal": 36,
+      "carbsG": 9,
+      "proteinG": 0.1,
       "fatG": 0,
-      "fiberG": 0
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -11405,10 +11679,12 @@
       "sarsaparilla soda"
     ],
     "category": "do-uong",
-    "source": "label",
+    "source": "usda",
+    "sourceRef": "usda:171871",
+    "verified": true,
     "per100g": {
-      "kcal": 43,
-      "carbsG": 11,
+      "kcal": 41,
+      "carbsG": 10.6,
       "proteinG": 0,
       "fatG": 0,
       "fiberG": 0
@@ -11486,13 +11762,14 @@
       "braised basa fish"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 4,
-      "proteinG": 16,
-      "fatG": 8,
-      "fiberG": 0
+      "kcal": 177,
+      "carbsG": 6.9,
+      "proteinG": 15.7,
+      "fatG": 9.1,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -11526,13 +11803,14 @@
       "fried fish with fish sauce"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 6,
-      "proteinG": 19,
-      "fatG": 11,
-      "fiberG": 0
+      "kcal": 196,
+      "carbsG": 5.5,
+      "proteinG": 15.4,
+      "fatG": 12.6,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -11566,13 +11844,14 @@
       "caramelized fish in clay pot"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 5,
-      "proteinG": 18,
-      "fatG": 8,
-      "fiberG": 0
+      "kcal": 150,
+      "carbsG": 7.6,
+      "proteinG": 17.3,
+      "fatG": 5.6,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -11606,13 +11885,14 @@
       "braised round scad"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 3,
-      "proteinG": 20,
-      "fatG": 8,
-      "fiberG": 0
+      "kcal": 137,
+      "carbsG": 5.8,
+      "proteinG": 20.7,
+      "fatG": 3.3,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -11646,13 +11926,14 @@
       "fried tilapia"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 2,
-      "proteinG": 22,
-      "fatG": 9,
-      "fiberG": 0
+      "kcal": 184,
+      "carbsG": 2.5,
+      "proteinG": 20,
+      "fatG": 10.3,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -11686,13 +11967,14 @@
       "braised mackerel"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 170,
-      "carbsG": 3,
-      "proteinG": 20,
-      "fatG": 9,
-      "fiberG": 0
+      "kcal": 185,
+      "carbsG": 7.5,
+      "proteinG": 17.2,
+      "fatG": 9.5,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -11726,13 +12008,14 @@
       "winter melon soup"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 20,
-      "carbsG": 3,
-      "proteinG": 1.2,
+      "kcal": 16,
+      "carbsG": 1.1,
+      "proteinG": 1.8,
       "fatG": 0.5,
-      "fiberG": 0.5
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -11766,13 +12049,14 @@
       "mustard greens soup with minced pork"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 30,
-      "carbsG": 2.5,
-      "proteinG": 3,
+      "kcal": 25,
+      "carbsG": 0.9,
+      "proteinG": 3.2,
       "fatG": 1,
-      "fiberG": 0.8
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -11806,12 +12090,13 @@
       "sour fish soup"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 45,
-      "carbsG": 5,
+      "kcal": 40,
+      "carbsG": 3.5,
       "proteinG": 4,
-      "fatG": 1,
+      "fatG": 1.1,
       "fiberG": 0.5
     },
     "servings": [
@@ -11846,12 +12131,13 @@
       "sour snakehead fish soup"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 45,
-      "carbsG": 5,
-      "proteinG": 4.5,
-      "fatG": 1,
+      "kcal": 41,
+      "carbsG": 3.5,
+      "proteinG": 4.1,
+      "fatG": 1.2,
       "fiberG": 0.5
     },
     "servings": [
@@ -11886,13 +12172,14 @@
       "stuffed bitter melon soup"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 45,
-      "carbsG": 3.5,
-      "proteinG": 4,
-      "fatG": 1.8,
-      "fiberG": 1.2
+      "kcal": 43,
+      "carbsG": 2.7,
+      "proteinG": 2.4,
+      "fatG": 2.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -11926,13 +12213,14 @@
       "malabar spinach soup"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 28,
-      "carbsG": 3,
-      "proteinG": 2.2,
+      "kcal": 21,
+      "carbsG": 0.7,
+      "proteinG": 2.8,
       "fatG": 0.7,
-      "fiberG": 1.3
+      "fiberG": 1
     },
     "servings": [
       {
@@ -11966,13 +12254,14 @@
       "katuk leaf soup"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 30,
-      "carbsG": 3,
-      "proteinG": 2.5,
-      "fatG": 0.8,
-      "fiberG": 1.2
+      "kcal": 24,
+      "carbsG": 1,
+      "proteinG": 3.3,
+      "fatG": 0.7,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -12092,13 +12381,14 @@
       "fried tofu with lemongrass"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 6,
-      "proteinG": 11,
-      "fatG": 13,
-      "fiberG": 0.6
+      "kcal": 154,
+      "carbsG": 2.4,
+      "proteinG": 9.3,
+      "fatG": 12,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -12132,13 +12422,14 @@
       "tofu stuffed with pork"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 6,
-      "proteinG": 10,
-      "fatG": 10,
-      "fiberG": 0.5
+      "kcal": 176,
+      "carbsG": 1.1,
+      "proteinG": 11.3,
+      "fatG": 14,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -12172,13 +12463,14 @@
       "tofu in tomato sauce"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 7,
-      "proteinG": 8,
-      "fatG": 7,
-      "fiberG": 0.7
+      "kcal": 131,
+      "carbsG": 4.8,
+      "proteinG": 7.6,
+      "fatG": 9,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -12212,13 +12504,14 @@
       "braised chicken drumstick"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 5,
-      "proteinG": 19,
-      "fatG": 10,
-      "fiberG": 0.2
+      "kcal": 186,
+      "carbsG": 4.5,
+      "proteinG": 15.3,
+      "fatG": 11.9,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12252,13 +12545,14 @@
       "ginger braised chicken"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 6,
-      "proteinG": 20,
-      "fatG": 8,
-      "fiberG": 0.1
+      "kcal": 192,
+      "carbsG": 4.9,
+      "proteinG": 15.3,
+      "fatG": 12.4,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -12292,12 +12586,13 @@
       "lemongrass chili braised chicken"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 185,
-      "carbsG": 6,
-      "proteinG": 20,
-      "fatG": 9,
+      "kcal": 198,
+      "carbsG": 6.6,
+      "proteinG": 15.4,
+      "fatG": 12.3,
       "fiberG": 0.1
     },
     "servings": [
@@ -12332,13 +12627,14 @@
       "boiled chicken"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 0,
-      "proteinG": 24,
-      "fatG": 9,
-      "fiberG": 0
+      "kcal": 175,
+      "carbsG": 0.1,
+      "proteinG": 17.8,
+      "fatG": 11.5,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12372,13 +12668,14 @@
       "stir-fried chicken with lemongrass and chili"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 190,
-      "carbsG": 6,
-      "proteinG": 19,
-      "fatG": 10,
-      "fiberG": 0.3
+      "kcal": 208,
+      "carbsG": 4.8,
+      "proteinG": 14.7,
+      "fatG": 14.6,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12454,13 +12751,14 @@
       "squid stuffed with pork"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 6,
-      "proteinG": 15,
-      "fatG": 7,
-      "fiberG": 0.3
+      "kcal": 154,
+      "carbsG": 3.8,
+      "proteinG": 14.4,
+      "fatG": 9.1,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12494,13 +12792,14 @@
       "stir-fried squid"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 6,
-      "proteinG": 16,
-      "fatG": 3.5,
-      "fiberG": 0.5
+      "kcal": 125,
+      "carbsG": 4.1,
+      "proteinG": 11.9,
+      "fatG": 6.8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -12620,13 +12919,14 @@
       "salty braised pork ribs"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 10,
-      "proteinG": 17,
-      "fatG": 17,
-      "fiberG": 0.1
+      "kcal": 227,
+      "carbsG": 6.3,
+      "proteinG": 17.1,
+      "fatG": 14.8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12660,13 +12960,14 @@
       "sweet and sour pork ribs"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 230,
-      "carbsG": 14,
-      "proteinG": 15,
-      "fatG": 13,
-      "fiberG": 0.5
+      "kcal": 255,
+      "carbsG": 17,
+      "proteinG": 12.4,
+      "fatG": 15.2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -12700,13 +13001,14 @@
       "braised pork belly with eggs"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
-      "carbsG": 6,
-      "proteinG": 16,
-      "fatG": 19,
-      "fiberG": 0.2
+      "kcal": 291,
+      "carbsG": 7.1,
+      "proteinG": 17,
+      "fatG": 21.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12740,13 +13042,14 @@
       "braised pork with eggs"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 5,
-      "proteinG": 15,
-      "fatG": 19,
-      "fiberG": 0.1
+      "kcal": 249,
+      "carbsG": 6.2,
+      "proteinG": 15.8,
+      "fatG": 17.8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12780,12 +13083,13 @@
       "boiled pork belly"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
+      "kcal": 286,
       "carbsG": 0,
-      "proteinG": 17,
-      "fatG": 21,
+      "proteinG": 18.2,
+      "fatG": 23.7,
       "fiberG": 0
     },
     "servings": [
@@ -12820,12 +13124,13 @@
       "caramelized pan-fried pork"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 280,
-      "carbsG": 6,
-      "proteinG": 18,
-      "fatG": 21,
+      "kcal": 324,
+      "carbsG": 4.8,
+      "proteinG": 19.7,
+      "fatG": 25.1,
       "fiberG": 0.1
     },
     "servings": [
@@ -12860,12 +13165,13 @@
       "shrimp stir-fried with pork"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 6,
-      "proteinG": 16,
-      "fatG": 7,
+      "kcal": 180,
+      "carbsG": 4.7,
+      "proteinG": 15.5,
+      "fatG": 11,
       "fiberG": 0.1
     },
     "servings": [
@@ -12900,13 +13206,14 @@
       "caramelized shrimp"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 8,
-      "proteinG": 17,
-      "fatG": 2.5,
-      "fiberG": 0
+      "kcal": 128,
+      "carbsG": 6.6,
+      "proteinG": 14.6,
+      "fatG": 4.8,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -12940,13 +13247,14 @@
       "vietnamese omelette"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 2,
-      "proteinG": 12,
-      "fatG": 14,
-      "fiberG": 0.1
+      "kcal": 208,
+      "carbsG": 0.7,
+      "proteinG": 14.1,
+      "fatG": 16.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12980,13 +13288,14 @@
       "omelette with minced pork"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 2.5,
-      "proteinG": 13,
-      "fatG": 15,
-      "fiberG": 0.2
+      "kcal": 216,
+      "carbsG": 0.6,
+      "proteinG": 13.3,
+      "fatG": 17.7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -13020,13 +13329,14 @@
       "steamed egg meatloaf"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 195,
-      "carbsG": 3,
+      "kcal": 204,
+      "carbsG": 3.1,
       "proteinG": 13,
-      "fatG": 14,
-      "fiberG": 0.2
+      "fatG": 15.5,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -13099,12 +13409,13 @@
       "fried egg"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 170,
-      "carbsG": 1,
-      "proteinG": 12,
-      "fatG": 13,
+      "kcal": 194,
+      "carbsG": 0.4,
+      "proteinG": 12.9,
+      "fatG": 15.6,
       "fiberG": 0
     },
     "servings": [
@@ -13139,13 +13450,14 @@
       "snakehead fish thick noodle"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 88,
-      "carbsG": 13,
-      "proteinG": 6,
-      "fatG": 1.8,
-      "fiberG": 0.5
+      "kcal": 73,
+      "carbsG": 9.9,
+      "proteinG": 4.8,
+      "fatG": 1.7,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -13179,13 +13491,14 @@
       "fish cake thick noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 92,
-      "carbsG": 13,
-      "proteinG": 5.5,
-      "fatG": 2.5,
-      "fiberG": 0.5
+      "kcal": 75,
+      "carbsG": 9.8,
+      "proteinG": 3.9,
+      "fatG": 2.2,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -13219,13 +13532,14 @@
       "crab thick noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 13,
-      "proteinG": 5.5,
-      "fatG": 2,
-      "fiberG": 0.5
+      "kcal": 75,
+      "carbsG": 10.1,
+      "proteinG": 5,
+      "fatG": 1.6,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -13259,13 +13573,14 @@
       "pork trotter thick noodle"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 100,
-      "carbsG": 13,
-      "proteinG": 5,
-      "fatG": 3.5,
-      "fiberG": 0.5
+      "kcal": 84,
+      "carbsG": 9.4,
+      "proteinG": 3.4,
+      "fatG": 3.7,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -13299,13 +13614,14 @@
       "beef stew"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 7,
-      "proteinG": 9,
-      "fatG": 5,
-      "fiberG": 0.9
+      "kcal": 118,
+      "carbsG": 13.3,
+      "proteinG": 6.5,
+      "fatG": 4.3,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -13339,13 +13655,14 @@
       "hue beef noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 95,
-      "carbsG": 11,
-      "proteinG": 6.5,
-      "fatG": 3,
-      "fiberG": 0.8
+      "kcal": 93,
+      "carbsG": 9.7,
+      "proteinG": 4.9,
+      "fatG": 3.8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -13384,13 +13701,14 @@
       "fish noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 80,
-      "carbsG": 10,
-      "proteinG": 6,
-      "fatG": 2.5,
-      "fiberG": 0.8
+      "kcal": 72,
+      "carbsG": 10.3,
+      "proteinG": 3.9,
+      "fatG": 1.6,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -13424,13 +13742,14 @@
       "fish noodle with dipping broth"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 120,
-      "carbsG": 14,
-      "proteinG": 7,
-      "fatG": 4,
-      "fiberG": 0.8
+      "kcal": 90,
+      "carbsG": 11.8,
+      "proteinG": 5.1,
+      "fatG": 2.4,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -13464,13 +13783,14 @@
       "fish cake noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 82,
-      "carbsG": 10,
-      "proteinG": 6,
-      "fatG": 2.5,
-      "fiberG": 0.8
+      "kcal": 78,
+      "carbsG": 11.2,
+      "proteinG": 4.3,
+      "fatG": 1.7,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -13504,13 +13824,14 @@
       "vermicelli with taro stem soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 11,
-      "proteinG": 5,
-      "fatG": 3,
-      "fiberG": 0.8
+      "kcal": 81,
+      "carbsG": 11.1,
+      "proteinG": 3.1,
+      "fatG": 2.7,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -13544,13 +13865,14 @@
       "pork rib taro stem noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 92,
-      "carbsG": 11,
-      "proteinG": 5.5,
-      "fatG": 3.2,
-      "fiberG": 0.8
+      "kcal": 83,
+      "carbsG": 10.6,
+      "proteinG": 3.9,
+      "fatG": 2.8,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -13584,13 +13906,14 @@
       "coconut fish noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 105,
-      "carbsG": 11,
-      "proteinG": 5,
-      "fatG": 5,
-      "fiberG": 0.9
+      "kcal": 98,
+      "carbsG": 11.2,
+      "proteinG": 4.4,
+      "fatG": 4.1,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -13624,13 +13947,14 @@
       "chicken bamboo noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 82,
-      "carbsG": 9,
-      "proteinG": 6,
-      "fatG": 3,
-      "fiberG": 0.9
+      "kcal": 79,
+      "carbsG": 9.5,
+      "proteinG": 4.1,
+      "fatG": 2.7,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -13664,13 +13988,14 @@
       "duck bamboo noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 9,
-      "proteinG": 6.5,
-      "fatG": 3.5,
-      "fiberG": 0.9
+      "kcal": 89,
+      "carbsG": 9.5,
+      "proteinG": 3.7,
+      "fatG": 4,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -13704,13 +14029,14 @@
       "pork meatball noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 82,
-      "carbsG": 11,
+      "kcal": 86,
+      "carbsG": 9.8,
       "proteinG": 5,
-      "fatG": 2.5,
-      "fiberG": 0.8
+      "fatG": 2.9,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -13744,13 +14070,14 @@
       "soc trang fish noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 82,
-      "carbsG": 10,
-      "proteinG": 5.5,
-      "fatG": 2.5,
-      "fiberG": 0.8
+      "kcal": 80,
+      "carbsG": 10.1,
+      "proteinG": 4.5,
+      "fatG": 2.4,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -13784,13 +14111,14 @@
       "snail noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 70,
-      "carbsG": 10,
-      "proteinG": 4,
-      "fatG": 1.8,
-      "fiberG": 0.8
+      "kcal": 80,
+      "carbsG": 12.3,
+      "proteinG": 3.1,
+      "fatG": 2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -13824,13 +14152,14 @@
       "crab noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 80,
-      "carbsG": 9,
-      "proteinG": 5,
-      "fatG": 3,
-      "fiberG": 0.8
+      "kcal": 85,
+      "carbsG": 10.1,
+      "proteinG": 4.4,
+      "fatG": 2.9,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -13864,13 +14193,14 @@
       "pork rib noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 88,
-      "carbsG": 10,
-      "proteinG": 5.5,
-      "fatG": 3,
-      "fiberG": 0.8
+      "kcal": 84,
+      "carbsG": 11,
+      "proteinG": 3.8,
+      "fatG": 2.8,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -13904,13 +14234,14 @@
       "shrimp paste noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 88,
-      "carbsG": 12,
+      "kcal": 80,
+      "carbsG": 10.3,
       "proteinG": 5,
-      "fatG": 2.5,
-      "fiberG": 0.8
+      "fatG": 2.1,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -13944,13 +14275,14 @@
       "hanoi chicken noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 78,
-      "carbsG": 10,
-      "proteinG": 5.5,
-      "fatG": 2,
-      "fiberG": 0.8
+      "kcal": 81,
+      "carbsG": 9.4,
+      "proteinG": 4.8,
+      "fatG": 2.7,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -13984,13 +14316,14 @@
       "thick vermicelli crab soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 75,
-      "carbsG": 11,
-      "proteinG": 3.5,
-      "fatG": 2,
-      "fiberG": 0.8
+      "kcal": 79,
+      "carbsG": 10.1,
+      "proteinG": 4.3,
+      "fatG": 2.3,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -14024,13 +14357,14 @@
       "hoi an noodle"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 20,
-      "proteinG": 8,
-      "fatG": 4,
-      "fiberG": 1
+      "kcal": 134,
+      "carbsG": 18.5,
+      "proteinG": 5.5,
+      "fatG": 4.3,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -14064,13 +14398,14 @@
       "fish congee"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 55,
-      "carbsG": 8,
-      "proteinG": 4,
-      "fatG": 1,
-      "fiberG": 0.2
+      "kcal": 54,
+      "carbsG": 6.6,
+      "proteinG": 3.9,
+      "fatG": 1.3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -14104,13 +14439,14 @@
       "frog congee"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 7,
-      "proteinG": 5,
-      "fatG": 1.5,
-      "fiberG": 0.2
+      "kcal": 57,
+      "carbsG": 6.3,
+      "proteinG": 5.4,
+      "fatG": 1.1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -14144,13 +14480,14 @@
       "chicken congee"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 55,
-      "carbsG": 8,
-      "proteinG": 3.5,
-      "fatG": 1.2,
-      "fiberG": 0.2
+      "kcal": 64,
+      "carbsG": 6.6,
+      "proteinG": 3.7,
+      "fatG": 2.6,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -14184,13 +14521,14 @@
       "seafood congee"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 58,
-      "carbsG": 8,
-      "proteinG": 4,
-      "fatG": 1.2,
-      "fiberG": 0.2
+      "kcal": 54,
+      "carbsG": 6.8,
+      "proteinG": 4.2,
+      "fatG": 1.1,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -14224,13 +14562,14 @@
       "pork offal congee"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 70,
-      "carbsG": 9,
-      "proteinG": 4.5,
-      "fatG": 2,
-      "fiberG": 0.2
+      "kcal": 73,
+      "carbsG": 8.3,
+      "proteinG": 4.9,
+      "fatG": 2.3,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -14264,13 +14603,14 @@
       "pork rib congee"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 9,
-      "proteinG": 2.5,
-      "fatG": 1.5,
-      "fiberG": 0.2
+      "kcal": 67,
+      "carbsG": 6.6,
+      "proteinG": 3.8,
+      "fatG": 2.8,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -14304,13 +14644,14 @@
       "plain congee"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 47,
-      "carbsG": 9,
+      "kcal": 44,
+      "carbsG": 9.8,
       "proteinG": 1,
-      "fatG": 0.3,
-      "fiberG": 0.2
+      "fatG": 0.1,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -14344,13 +14685,14 @@
       "duck congee"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 65,
-      "carbsG": 8,
-      "proteinG": 4,
-      "fatG": 2,
-      "fiberG": 0.2
+      "kcal": 70,
+      "carbsG": 6.3,
+      "proteinG": 3.4,
+      "fatG": 3.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -14384,13 +14726,14 @@
       "beef stew noodle"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 100,
-      "carbsG": 12,
-      "proteinG": 6.5,
-      "fatG": 3,
-      "fiberG": 0.6
+      "kcal": 96,
+      "carbsG": 12.2,
+      "proteinG": 4.5,
+      "fatG": 3.3,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -14424,13 +14767,14 @@
       "street cart rice noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 80,
-      "carbsG": 12,
-      "proteinG": 4,
-      "fatG": 2,
-      "fiberG": 0.5
+      "kcal": 79,
+      "carbsG": 10.8,
+      "proteinG": 3.9,
+      "fatG": 2.2,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -14464,13 +14808,14 @@
       "squid noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 85,
-      "carbsG": 12,
-      "proteinG": 6,
-      "fatG": 1.8,
-      "fiberG": 0.5
+      "kcal": 81,
+      "carbsG": 11.1,
+      "proteinG": 5.4,
+      "fatG": 1.6,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -14504,13 +14849,14 @@
       "phnom penh noodle"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 12,
-      "proteinG": 6,
-      "fatG": 2.5,
-      "fiberG": 0.5
+      "kcal": 93,
+      "carbsG": 11.2,
+      "proteinG": 5.8,
+      "fatG": 2.8,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -14544,13 +14890,14 @@
       "satay noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 105,
-      "carbsG": 12,
-      "proteinG": 6,
-      "fatG": 4,
-      "fiberG": 0.6
+      "kcal": 92,
+      "carbsG": 11.1,
+      "proteinG": 5.1,
+      "fatG": 3,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -14584,13 +14931,14 @@
       "beef hot pot"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 75,
-      "carbsG": 4,
-      "proteinG": 8,
-      "fatG": 3.5,
-      "fiberG": 0.7
+      "kcal": 65,
+      "carbsG": 3.6,
+      "proteinG": 6.2,
+      "fatG": 2.9,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -14624,13 +14972,14 @@
       "goby fish hot pot"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 65,
-      "carbsG": 4,
-      "proteinG": 7,
-      "fatG": 2.5,
-      "fiberG": 0.8
+      "kcal": 49,
+      "carbsG": 4.4,
+      "proteinG": 5.4,
+      "fatG": 1.1,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -14664,13 +15013,14 @@
       "chicken basil hot pot"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 70,
-      "carbsG": 3,
-      "proteinG": 8,
-      "fatG": 3,
-      "fiberG": 0.7
+      "kcal": 64,
+      "carbsG": 3.4,
+      "proteinG": 5.5,
+      "fatG": 3.2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -14704,13 +15054,14 @@
       "crab and beef hot pot"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 70,
-      "carbsG": 5,
-      "proteinG": 7,
-      "fatG": 3,
-      "fiberG": 0.7
+      "kcal": 64,
+      "carbsG": 4.1,
+      "proteinG": 6.3,
+      "fatG": 2.5,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -14744,13 +15095,14 @@
       "thai hot pot"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 65,
+      "kcal": 54,
       "carbsG": 5,
-      "proteinG": 6,
-      "fatG": 2.5,
-      "fiberG": 0.7
+      "proteinG": 5.2,
+      "fatG": 1.5,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -14784,13 +15136,14 @@
       "herbal chicken egg noodle"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 100,
-      "carbsG": 10,
-      "proteinG": 8,
-      "fatG": 4,
-      "fiberG": 0.7
+      "kcal": 83,
+      "carbsG": 7.4,
+      "proteinG": 5.8,
+      "fatG": 3.4,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -14824,13 +15177,14 @@
       "wonton egg noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 95,
-      "carbsG": 13,
-      "proteinG": 5.5,
-      "fatG": 3,
-      "fiberG": 0.7
+      "kcal": 92,
+      "carbsG": 11.8,
+      "proteinG": 5.3,
+      "fatG": 2.5,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -14864,13 +15218,14 @@
       "quang style turmeric noodles"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 13,
-      "proteinG": 6.5,
-      "fatG": 4,
-      "fiberG": 0.9
+      "kcal": 112,
+      "carbsG": 12.7,
+      "proteinG": 6,
+      "fatG": 4.2,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -14904,13 +15259,14 @@
       "chicken mi quang"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 13,
-      "proteinG": 7,
-      "fatG": 4,
-      "fiberG": 0.9
+      "kcal": 109,
+      "carbsG": 12.3,
+      "proteinG": 5.2,
+      "fatG": 4.4,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -14944,13 +15300,14 @@
       "shrimp and pork mi quang"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 112,
-      "carbsG": 13,
-      "proteinG": 7,
-      "fatG": 4.2,
-      "fiberG": 0.9
+      "kcal": 105,
+      "carbsG": 12.1,
+      "proteinG": 5.8,
+      "fatG": 3.8,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -14984,13 +15341,14 @@
       "herbal duck egg noodle"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 115,
-      "carbsG": 12,
-      "proteinG": 7.5,
-      "fatG": 4.5,
-      "fiberG": 0.7
+      "kcal": 102,
+      "carbsG": 8.1,
+      "proteinG": 5.5,
+      "fatG": 5.3,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -15024,13 +15382,14 @@
       "crab glass noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 78,
-      "carbsG": 11,
-      "proteinG": 5,
-      "fatG": 2,
-      "fiberG": 0.4
+      "kcal": 70,
+      "carbsG": 8.8,
+      "proteinG": 3.7,
+      "fatG": 2.2,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -15064,13 +15423,14 @@
       "chicken glass noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 70,
-      "carbsG": 10,
-      "proteinG": 5,
-      "fatG": 1.5,
-      "fiberG": 0.4
+      "kcal": 65,
+      "carbsG": 7.3,
+      "proteinG": 3.3,
+      "fatG": 2.6,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -15104,13 +15464,14 @@
       "eel glass noodle soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 85,
-      "carbsG": 11,
-      "proteinG": 6,
-      "fatG": 2.5,
-      "fiberG": 0.4
+      "kcal": 75,
+      "carbsG": 7.2,
+      "proteinG": 3.5,
+      "fatG": 3.6,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -15144,12 +15505,13 @@
       "muscovy duck glass noodle"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 10,
-      "proteinG": 6.5,
-      "fatG": 3.5,
+      "kcal": 81,
+      "carbsG": 6.7,
+      "proteinG": 3.7,
+      "fatG": 4.4,
       "fiberG": 0.4
     },
     "servings": [
@@ -15184,13 +15546,14 @@
       "braised offal stew"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
-      "carbsG": 6,
-      "proteinG": 9,
-      "fatG": 8,
-      "fiberG": 0.3
+      "kcal": 113,
+      "carbsG": 2.7,
+      "proteinG": 7,
+      "fatG": 8.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -15225,13 +15588,14 @@
       "pho"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 88,
-      "carbsG": 12,
-      "proteinG": 5.5,
-      "fatG": 1.8,
-      "fiberG": 0.4
+      "kcal": 76,
+      "carbsG": 11.1,
+      "proteinG": 4.1,
+      "fatG": 1.7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -15271,13 +15635,14 @@
       "rare beef pho"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 88,
-      "carbsG": 12,
-      "proteinG": 5.5,
-      "fatG": 1.8,
-      "fiberG": 0.4
+      "kcal": 76,
+      "carbsG": 11.1,
+      "proteinG": 4.9,
+      "fatG": 1.4,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -15311,13 +15676,14 @@
       "beef ball pho"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 92,
-      "carbsG": 12.5,
-      "proteinG": 6,
-      "fatG": 2,
-      "fiberG": 0.4
+      "kcal": 78,
+      "carbsG": 11.9,
+      "proteinG": 4.8,
+      "fatG": 1.3,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -15351,13 +15717,14 @@
       "vegetarian pho"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 70,
-      "carbsG": 13,
-      "proteinG": 2.5,
-      "fatG": 1,
-      "fiberG": 1.2
+      "kcal": 79,
+      "carbsG": 12.3,
+      "proteinG": 3.1,
+      "fatG": 1.9,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -15391,13 +15758,14 @@
       "chicken pho"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 85,
-      "carbsG": 12,
-      "proteinG": 5.5,
-      "fatG": 1.5,
-      "fiberG": 0.4
+      "kcal": 82,
+      "carbsG": 11.1,
+      "proteinG": 4.4,
+      "fatG": 2.2,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -15431,13 +15799,14 @@
       "beef stew pho"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 105,
-      "carbsG": 11,
-      "proteinG": 6.5,
-      "fatG": 4,
-      "fiberG": 0.5
+      "kcal": 92,
+      "carbsG": 12.1,
+      "proteinG": 4.4,
+      "fatG": 2.9,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -15471,13 +15840,14 @@
       "stir-fried pho with beef"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 16,
-      "proteinG": 7,
-      "fatG": 6.5,
-      "fiberG": 1
+      "kcal": 144,
+      "carbsG": 18.4,
+      "proteinG": 7.4,
+      "fatG": 4.5,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -15511,13 +15881,14 @@
       "abalone soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 7,
-      "proteinG": 4.5,
-      "fatG": 1.5,
-      "fiberG": 0.3
+      "kcal": 55,
+      "carbsG": 3.7,
+      "proteinG": 5.5,
+      "fatG": 1.9,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -15551,13 +15922,14 @@
       "pumpkin soup"
     ],
     "category": "mon-nuoc",
-    "source": "generic",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 46,
-      "carbsG": 7,
-      "proteinG": 1.3,
-      "fatG": 1.6,
-      "fiberG": 1
+      "kcal": 37,
+      "carbsG": 3.5,
+      "proteinG": 0.7,
+      "fatG": 2.2,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -15586,12 +15958,13 @@
       "crab soup"
     ],
     "category": "mon-nuoc",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 65,
-      "carbsG": 7,
-      "proteinG": 5,
-      "fatG": 2,
+      "kcal": 59,
+      "carbsG": 8.1,
+      "proteinG": 3.6,
+      "fatG": 1.3,
       "fiberG": 0.3
     },
     "servings": [
@@ -15663,13 +16036,15 @@
       "dried rice crackers"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:1010",
+    "verified": true,
     "per100g": {
-      "kcal": 340,
-      "carbsG": 76,
-      "proteinG": 8,
-      "fatG": 1,
-      "fiberG": 2.5
+      "kcal": 333,
+      "carbsG": 78.9,
+      "proteinG": 4,
+      "fatG": 0.2,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -17712,13 +18087,14 @@
       "ground fish cake"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 3,
-      "proteinG": 18,
-      "fatG": 7,
-      "fiberG": 0
+      "kcal": 132,
+      "carbsG": 5.8,
+      "proteinG": 14.8,
+      "fatG": 5.4,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -20445,13 +20821,15 @@
       "yuca"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:2004",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 38,
-      "proteinG": 1.4,
-      "fatG": 0.3,
-      "fiberG": 1.8
+      "kcal": 152,
+      "carbsG": 36.4,
+      "proteinG": 1.1,
+      "fatG": 0.2,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -21841,12 +22219,14 @@
       "stock"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172883",
+    "verified": true,
     "per100g": {
-      "kcal": 15,
-      "carbsG": 0.9,
+      "kcal": 13,
+      "carbsG": 1.2,
       "proteinG": 2,
-      "fatG": 0.5,
+      "fatG": 0.1,
       "fiberG": 0
     },
     "servings": [
@@ -24474,13 +24854,14 @@
       "cooked glutinous rice"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 170,
-      "carbsG": 37,
-      "proteinG": 3.5,
-      "fatG": 0.5,
-      "fiberG": 0.6
+      "kcal": 202,
+      "carbsG": 43.7,
+      "proteinG": 5,
+      "fatG": 0.9,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -24633,13 +25014,14 @@
       "boiled cabbage"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 25,
-      "carbsG": 5,
-      "proteinG": 1.3,
+      "kcal": 29,
+      "carbsG": 5.3,
+      "proteinG": 1.8,
       "fatG": 0.1,
-      "fiberG": 2.5
+      "fiberG": 1.6
     },
     "servings": [
       {
@@ -24673,13 +25055,14 @@
       "stir-fried broccoli"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 75,
-      "carbsG": 7,
-      "proteinG": 3,
-      "fatG": 4,
-      "fiberG": 3
+      "kcal": 76,
+      "carbsG": 6.5,
+      "proteinG": 2.4,
+      "fatG": 5,
+      "fiberG": 2
     },
     "servings": [
       {
@@ -24713,12 +25096,13 @@
       "stir-fried bok choy"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 70,
-      "carbsG": 5,
-      "proteinG": 2.5,
-      "fatG": 4.5,
+      "kcal": 65,
+      "carbsG": 3.4,
+      "proteinG": 1.8,
+      "fatG": 4.9,
       "fiberG": 2
     },
     "servings": [
@@ -24753,13 +25137,14 @@
       "boiled okra"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 35,
-      "carbsG": 7,
-      "proteinG": 2,
+      "kcal": 22,
+      "carbsG": 4.5,
+      "proteinG": 1.9,
       "fatG": 0.2,
-      "fiberG": 3.2
+      "fiberG": 2.5
     },
     "servings": [
       {
@@ -24793,13 +25178,14 @@
       "stir-fried green beans"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 9,
-      "proteinG": 2.5,
-      "fatG": 5,
-      "fiberG": 3
+      "kcal": 80,
+      "carbsG": 6.9,
+      "proteinG": 1.9,
+      "fatG": 5.5,
+      "fiberG": 2.4
     },
     "servings": [
       {
@@ -24833,13 +25219,14 @@
       "stir-fried bean sprouts"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 5,
-      "proteinG": 3,
-      "fatG": 3.5,
-      "fiberG": 1.8
+      "kcal": 79,
+      "carbsG": 5.1,
+      "proteinG": 4.9,
+      "fatG": 4.3,
+      "fiberG": 1.7
     },
     "servings": [
       {
@@ -24873,13 +25260,14 @@
       "stir-fried mushrooms"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 70,
-      "carbsG": 6,
-      "proteinG": 3.5,
-      "fatG": 4,
-      "fiberG": 2.5
+      "kcal": 77,
+      "carbsG": 3.8,
+      "proteinG": 3.7,
+      "fatG": 5.3,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -24913,13 +25301,14 @@
       "boiled sweet potato leaves"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 35,
-      "carbsG": 5,
-      "proteinG": 2.8,
+      "kcal": 23,
+      "carbsG": 2.5,
+      "proteinG": 2.6,
       "fatG": 0.3,
-      "fiberG": 2.8
+      "fiberG": 1.4
     },
     "servings": [
       {
@@ -24953,13 +25342,14 @@
       "boiled water spinach"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 30,
-      "carbsG": 4,
-      "proteinG": 2.6,
-      "fatG": 0.3,
-      "fiberG": 2.5
+      "kcal": 27,
+      "carbsG": 2.2,
+      "proteinG": 3.4,
+      "fatG": 0.4,
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -24993,13 +25383,14 @@
       "stir-fried water spinach with garlic"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
       "kcal": 80,
-      "carbsG": 6,
-      "proteinG": 3,
-      "fatG": 5,
-      "fiberG": 2.5
+      "carbsG": 3.2,
+      "proteinG": 3.8,
+      "fatG": 5.8,
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -25033,13 +25424,14 @@
       "mixed green salad"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 6,
-      "proteinG": 1.5,
-      "fatG": 3.5,
-      "fiberG": 2
+      "kcal": 62,
+      "carbsG": 4.6,
+      "proteinG": 1.1,
+      "fatG": 4.3,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -25074,13 +25466,14 @@
       "green salad vinaigrette"
     ],
     "category": "rau-chay",
-    "source": "generic",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 6,
-      "proteinG": 1.5,
-      "fatG": 7,
-      "fiberG": 2
+      "kcal": 74,
+      "carbsG": 3.3,
+      "proteinG": 0.9,
+      "fatG": 6.2,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -25110,13 +25503,14 @@
       "stir-fried chayote"
     ],
     "category": "rau-chay",
-    "source": "recipe-estimate",
+    "source": "recipe",
+    "verified": true,
     "per100g": {
-      "kcal": 65,
-      "carbsG": 7,
-      "proteinG": 1.5,
-      "fatG": 4,
-      "fiberG": 1.8
+      "kcal": 62,
+      "carbsG": 3.8,
+      "proteinG": 0.9,
+      "fatG": 4.8,
+      "fiberG": 0.9
     },
     "servings": [
       {

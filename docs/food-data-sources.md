@@ -91,11 +91,21 @@ Each record in `data/catalog/*.json` names its source, and
 
 ### Migration status
 
-- **Single foods:** 284 of the 670 catalog foods are cited (139 NIN, 145 USDA).
-  Where the NIN entry was a different variety or state from the catalog food
-  (e.g. NIN has white asparagus only, and its "ớt" is chili, not bell pepper),
-  USDA was used instead.
-- **Still legacy:** 386 records. 365 of them are dishes that will become
-  recipes. The other 21 are single foods with no matching entry in either
-  source, e.g. sò huyết, cá basa, măng cụt, xôi, sa tế, hạt nêm, bột ngọt,
-  and xoài xanh (NIN only has the different fruit muỗm/quéo).
+**656 of the 670 catalog foods are cited:** 144 NIN, 162 USDA, 350 recipes.
+
+- **Single foods** cite NIN when NIN has the same food in the same state.
+  Otherwise they cite USDA, e.g. where NIN has white asparagus only, or its
+  "ớt" is chili rather than bell pepper.
+- **Dishes** are recipes sized to their default serving.
+  - Each recipe record keeps a `note` with its assumptions, e.g. cooking loss
+    on grilled meat, oil absorbed when frying, or bone share. The note stays
+    in the data file and is not bundled into the app.
+  - Where a recipe ingredient has no exact entry, the nearest entry stands in
+    and the note says so, e.g. tilapia for cá basa in a kho dish, or goby for
+    cá kèo.
+- **14 records stay legacy.** They have no tick and keep their old figures:
+  - **No matching entry:** xoài xanh, măng cụt, cá basa, sò huyết, rong biển
+    khô, roi, bột ngọt, giấm gạo, khoai lang chiên.
+  - **Doubtful match:** da heo luộc. NIN's pork skin is lean and raw.
+  - **Branded, need their package label:** Yakult, bột chiên giòn, sa tế,
+    hạt nêm.

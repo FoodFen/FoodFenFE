@@ -47,6 +47,8 @@ interface CatalogRecordBase {
   aliases: string[];
   category: string;
   servings: CatalogSourceServing[];
+  /** Assumptions behind a recipe or whole-item match; not bundled into foods.json. */
+  note?: string;
 }
 
 export interface NinRecord extends CatalogRecordBase {

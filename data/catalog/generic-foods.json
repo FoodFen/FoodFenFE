@@ -757,13 +757,6 @@
       "ground fish cake"
     ],
     "category": "nguyen-lieu",
-    "per100g": {
-      "kcal": 150,
-      "carbsG": 3,
-      "proteinG": 18,
-      "fatG": 7,
-      "fiberG": 0.0
-    },
     "servings": [
       {
         "label": "100 g",
@@ -775,7 +768,35 @@
         "grams": 25
       }
     ],
-    "source": "generic"
+    "source": "recipe",
+    "recipe": [
+      {
+        "ref": "nin:8013",
+        "grams": 88
+      },
+      {
+        "ref": "usda:169698",
+        "grams": 5
+      },
+      {
+        "ref": "nin:13017",
+        "grams": 1
+      },
+      {
+        "ref": "nin:12013",
+        "grams": 1
+      },
+      {
+        "ref": "nin:4103",
+        "grams": 1
+      },
+      {
+        "ref": "nin:6010",
+        "grams": 5
+      }
+    ],
+    "yieldGrams": 100,
+    "note": "Fish paste: featherback (NIN cá lác) pounded with starch, seasoning and lightly pan-fried (5 g oil). Proportions are an estimate."
   },
   {
     "name": "Cá hồi (sống)",
@@ -1993,13 +2014,6 @@
       "yuca"
     ],
     "category": "nguyen-lieu",
-    "per100g": {
-      "kcal": 160,
-      "carbsG": 38,
-      "proteinG": 1.4,
-      "fatG": 0.3,
-      "fiberG": 1.8
-    },
     "servings": [
       {
         "label": "100 g",
@@ -2011,7 +2025,8 @@
         "grams": 100
       }
     ],
-    "source": "generic"
+    "source": "nin:2004",
+    "note": "NIN củ sắn (raw, edible portion); boiling changes per-100 g energy little, state mismatch noted."
   },
   {
     "name": "Ngô / bắp ngọt (sống)",
@@ -4779,13 +4794,6 @@
       "stock"
     ],
     "category": "nguyen-lieu",
-    "per100g": {
-      "kcal": 15,
-      "carbsG": 0.9,
-      "proteinG": 2,
-      "fatG": 0.5,
-      "fiberG": 0.0
-    },
     "servings": [
       {
         "label": "100 g",
@@ -4797,7 +4805,8 @@
         "grams": 240
       }
     ],
-    "source": "generic"
+    "source": "usda:172883",
+    "note": "USDA home-prepared beef stock, nearest to bone broth; pork-bone broth is not tabulated."
   },
   {
     "name": "Snack khoai tây (khoai tây chiên giòn)",
@@ -5121,13 +5130,6 @@
       "ham and cheese sandwich"
     ],
     "category": "banh-mi",
-    "per100g": {
-      "kcal": 250,
-      "carbsG": 28,
-      "proteinG": 12,
-      "fatG": 10,
-      "fiberG": 2
-    },
     "servings": [
       {
         "label": "1 phần (~150 g)",
@@ -5139,7 +5141,30 @@
         "grams": 100
       }
     ],
-    "source": "generic"
+    "source": "recipe",
+    "recipe": [
+      {
+        "ref": "usda:174924",
+        "grams": 70
+      },
+      {
+        "ref": "usda:173864",
+        "grams": 40
+      },
+      {
+        "ref": "nin:10009",
+        "grams": 25
+      },
+      {
+        "ref": "nin:6001",
+        "grams": 3
+      },
+      {
+        "ref": "nin:4090",
+        "grams": 12
+      }
+    ],
+    "note": "Sandwich per default 150 g serving: 2 slices white sandwich bread 70 g (NIN has only baguette), sliced deli ham 40 g, cheese 25 g, butter 3 g, lettuce 12 g; proportions assumed."
   },
   {
     "name": "Salad trộn dầu giấm",
@@ -5149,13 +5174,6 @@
       "green salad vinaigrette"
     ],
     "category": "rau-chay",
-    "per100g": {
-      "kcal": 90,
-      "carbsG": 6,
-      "proteinG": 1.5,
-      "fatG": 7,
-      "fiberG": 2
-    },
     "servings": [
       {
         "label": "100 g",
@@ -5167,7 +5185,43 @@
         "grams": 150
       }
     ],
-    "source": "generic"
+    "source": "recipe",
+    "recipe": [
+      {
+        "ref": "nin:4090",
+        "grams": 40
+      },
+      {
+        "ref": "nin:4027",
+        "grams": 20
+      },
+      {
+        "ref": "nin:4005",
+        "grams": 15
+      },
+      {
+        "ref": "nin:4007",
+        "grams": 5
+      },
+      {
+        "ref": "nin:6010",
+        "grams": 6
+      },
+      {
+        "ref": "usda:172237",
+        "grams": 5
+      },
+      {
+        "ref": "nin:12013",
+        "grams": 1
+      },
+      {
+        "ref": "nin:13005",
+        "grams": 0.3
+      }
+    ],
+    "yieldGrams": 100,
+    "note": "Mixed leaf salad (lettuce, cucumber, tomato, carrot) dressed with oil, vinegar, a pinch of sugar."
   },
   {
     "name": "Súp bí đỏ",
@@ -5176,13 +5230,6 @@
       "pumpkin soup"
     ],
     "category": "mon-nuoc",
-    "per100g": {
-      "kcal": 46,
-      "carbsG": 7,
-      "proteinG": 1.3,
-      "fatG": 1.6,
-      "fiberG": 1
-    },
     "servings": [
       {
         "label": "100 g",
@@ -5194,7 +5241,30 @@
         "grams": 245
       }
     ],
-    "source": "generic"
+    "source": "recipe",
+    "recipe": [
+      {
+        "ref": "nin:4003",
+        "grams": 40
+      },
+      {
+        "ref": "nin:4039",
+        "grams": 6
+      },
+      {
+        "ref": "nin:6001",
+        "grams": 2
+      },
+      {
+        "ref": "nin:10001",
+        "grams": 12
+      },
+      {
+        "ref": "water",
+        "grams": 40
+      }
+    ],
+    "note": "Blended pumpkin soup per default 100 g: pumpkin 40 g, onion 6 g, butter 2 g, fresh milk 12 g, remainder water; proportions assumed."
   },
   {
     "name": "Bánh mì bơ tỏi",
