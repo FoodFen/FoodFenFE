@@ -131,4 +131,6 @@ export interface CatalogFood {
   /** Nutrition for 100 g of this food. */
   per100g: Nutrition;
   servings: CatalogServing[];
+  /** True when the nutrition is cited to a source (NIN / USDA / label / recipe of cited ingredients). */
+  verified?: boolean;
 }

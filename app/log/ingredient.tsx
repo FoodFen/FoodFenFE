@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
+import { VerifiedTick } from '@/components/ui/VerifiedTick';
 import { useDraftStore } from '@/features/diary/draftStore';
 import { useCatalogSearch } from '@/features/diary/queries';
 import { useIsPremium } from '@/features/profile/store';
@@ -91,9 +92,12 @@ export default function AddIngredientScreen() {
             className="flex-row items-center gap-3 border-b border-border px-4 py-3 active:bg-surface-alt"
           >
             <View className="flex-1 gap-0.5">
-              <Text variant="body" numberOfLines={1}>
-                {food.name}
-              </Text>
+              <View className="flex-row items-center gap-1.5">
+                <Text variant="body" numberOfLines={1} className="shrink">
+                  {food.name}
+                </Text>
+                <VerifiedTick verified={food.verified} />
+              </View>
               <Text variant="caption" tone="muted">
                 {t('logIngredient', 'kcalPer100g').replace(
                   '{kcal}',
@@ -215,7 +219,12 @@ function PortionForm({
         </Text>
       </Pressable>
 
-      <Text variant="title">{food.name}</Text>
+      <View className="flex-row items-center gap-2">
+        <Text variant="title" className="shrink">
+          {food.name}
+        </Text>
+        <VerifiedTick verified={food.verified} size={20} />
+      </View>
 
       <Card className="gap-4">
         <Input

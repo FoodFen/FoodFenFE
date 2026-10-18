@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/Input';
 import { NumberField } from '@/components/ui/NumberField';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
+import { VerifiedTick } from '@/components/ui/VerifiedTick';
 import { getCatalogFood } from '@/data/foodCatalog';
 import {
   useCatalogSearch,
@@ -138,6 +139,7 @@ export default function SearchFoodScreen() {
                 <FoodRow
                   key={row.catalogFoodId}
                   name={food.name}
+                  verified={food.verified}
                   detail={`${Math.round(row.quantityG)} g`}
                   a11y={t('logSearch', 'recentA11y').replace('{name}', food.name)}
                   onPress={() => open(food, serving?.id, Math.round(quantity * 2) / 2)}
@@ -152,6 +154,7 @@ export default function SearchFoodScreen() {
               <FoodRow
                 key={food.id}
                 name={food.name}
+                verified={food.verified}
                 detail={perServingLabel(food, t('logSearch', 'perServing'))}
                 a11y={t('logSearch', 'foodA11y')
                   .replace('{name}', food.name)
@@ -196,11 +199,13 @@ function perServingLabel(food: CatalogFood, template: string): string {
 
 function FoodRow({
   name,
+  verified,
   detail,
   a11y,
   onPress,
 }: {
   name: string;
+  verified?: boolean;
   detail: string;
   a11y: string;
   onPress: () => void;
@@ -216,9 +221,12 @@ function FoodRow({
       className="flex-row items-center gap-3 border-b border-border px-4 py-3 active:bg-surface-alt"
     >
       <View className="flex-1 gap-0.5">
-        <Text variant="body" numberOfLines={1}>
-          {name}
-        </Text>
+        <View className="flex-row items-center gap-1.5">
+          <Text variant="body" numberOfLines={1} className="shrink">
+            {name}
+          </Text>
+          <VerifiedTick verified={verified} />
+        </View>
         <Text variant="caption" tone="muted" numberOfLines={1}>
           {detail}
         </Text>

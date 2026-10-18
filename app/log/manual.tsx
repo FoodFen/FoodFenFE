@@ -20,6 +20,7 @@ import { Input } from '@/components/ui/Input';
 import { NumberField } from '@/components/ui/NumberField';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
+import { VerifiedTick } from '@/components/ui/VerifiedTick';
 import { useAuthStore } from '@/features/auth/store';
 import { isAiQuotaSpent } from '@/features/diary/aiQuota';
 import { useDraftStore } from '@/features/diary/draftStore';
@@ -443,9 +444,12 @@ export default function ManualEntryScreen() {
                         index > 0 && 'border-t border-border',
                       )}
                     >
-                      <Text variant="body" numberOfLines={1}>
-                        {food.name}
-                      </Text>
+                      <View className="flex-row items-center gap-1.5">
+                        <Text variant="body" numberOfLines={1} className="shrink">
+                          {food.name}
+                        </Text>
+                        <VerifiedTick verified={food.verified} />
+                      </View>
                     </Pressable>
                   ))}
                 </ScrollView>

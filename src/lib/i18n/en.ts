@@ -34,6 +34,7 @@ export const en: DeepPartial<Translations> = {
     yesterday: 'Yesterday',
     mealFallback: 'Meal',
     moreIngredients: '{name} + {n} more',
+    verifiedSource: 'Verified source',
   },
 
   apiError: {

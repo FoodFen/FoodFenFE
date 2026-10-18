@@ -36,6 +36,7 @@ export const vi = {
     yesterday: 'Hôm qua',
     mealFallback: 'Món ăn',
     moreIngredients: '{name} + {n} món khác',
+    verifiedSource: 'Đã xác minh nguồn',
   },
 
   apiError: {

@@ -287,11 +287,13 @@
       "croissant"
     ],
     "category": "an-vat",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174987",
+    "verified": true,
     "per100g": {
       "kcal": 406,
-      "carbsG": 46,
-      "proteinG": 8,
+      "carbsG": 45.8,
+      "proteinG": 8.2,
       "fatG": 21,
       "fiberG": 2.6
     },
@@ -682,12 +684,14 @@
       "garlic bread"
     ],
     "category": "an-vat",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:167939",
+    "verified": true,
     "per100g": {
       "kcal": 350,
-      "carbsG": 44,
-      "proteinG": 8,
-      "fatG": 15,
+      "carbsG": 41.7,
+      "proteinG": 8.4,
+      "fatG": 16.6,
       "fiberG": 2.5
     },
     "servings": [
@@ -798,13 +802,15 @@
       "shrimp chips"
     ],
     "category": "an-vat",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8055",
+    "verified": true,
     "per100g": {
-      "kcal": 525,
-      "carbsG": 60,
-      "proteinG": 2,
-      "fatG": 30,
-      "fiberG": 1
+      "kcal": 676,
+      "carbsG": 34.1,
+      "proteinG": 1.6,
+      "fatG": 59.2,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -835,13 +841,15 @@
       "crackers"
     ],
     "category": "an-vat",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174982",
+    "verified": true,
     "per100g": {
-      "kcal": 502,
-      "carbsG": 61,
-      "proteinG": 9,
-      "fatG": 25,
-      "fiberG": 3
+      "kcal": 510,
+      "carbsG": 61.3,
+      "proteinG": 6.6,
+      "fatG": 26.4,
+      "fiberG": 2.3
     },
     "servings": [
       {
@@ -1272,12 +1280,14 @@
       "buttered popcorn"
     ],
     "category": "an-vat",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169861",
+    "verified": true,
     "per100g": {
       "kcal": 500,
-      "carbsG": 55,
-      "proteinG": 8,
-      "fatG": 28,
+      "carbsG": 58.1,
+      "proteinG": 9,
+      "fatG": 28.1,
       "fiberG": 10
     },
     "servings": [
@@ -2036,13 +2046,15 @@
       "dried beef"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7075",
+    "verified": true,
     "per100g": {
-      "kcal": 280,
-      "carbsG": 8,
-      "proteinG": 45,
-      "fatG": 8,
-      "fiberG": 0.3
+      "kcal": 239,
+      "carbsG": 5.2,
+      "proteinG": 51,
+      "fatG": 1.6,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -2236,12 +2248,14 @@
       "chinese sausage"
     ],
     "category": "an-vat",
-    "source": "label",
+    "source": "nin",
+    "sourceRef": "nin:7071",
+    "verified": true,
     "per100g": {
-      "kcal": 450,
-      "carbsG": 6,
-      "proteinG": 18,
-      "fatG": 40,
+      "kcal": 585,
+      "carbsG": 1.7,
+      "proteinG": 20.8,
+      "fatG": 55,
       "fiberG": 0
     },
     "servings": [
@@ -2316,13 +2330,15 @@
       "fermented pork"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7073",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 6,
-      "proteinG": 13,
-      "fatG": 12,
-      "fiberG": 0.3
+      "kcal": 137,
+      "carbsG": 4.3,
+      "proteinG": 21.7,
+      "fatG": 3.7,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -2717,13 +2733,15 @@
       "crisps"
     ],
     "category": "an-vat",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:2024",
+    "verified": true,
     "per100g": {
-      "kcal": 536,
-      "carbsG": 53,
-      "proteinG": 7,
-      "fatG": 34,
-      "fiberG": 4.4
+      "kcal": 525,
+      "carbsG": 49.3,
+      "proteinG": 2.2,
+      "fatG": 35.4,
+      "fiberG": 6.3
     },
     "servings": [
       {
@@ -2913,12 +2931,14 @@
       "balut"
     ],
     "category": "an-vat",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:9010",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
-      "carbsG": 1.5,
-      "proteinG": 14,
-      "fatG": 13,
+      "kcal": 182,
+      "carbsG": 4,
+      "proteinG": 13.6,
+      "fatG": 12.4,
       "fiberG": 0
     },
     "servings": [
@@ -3555,13 +3575,15 @@
       "plain baguette"
     ],
     "category": "banh-mi",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:1012",
+    "verified": true,
     "per100g": {
-      "kcal": 275,
-      "carbsG": 54,
-      "proteinG": 9,
-      "fatG": 2,
-      "fiberG": 2
+      "kcal": 249,
+      "carbsG": 52.6,
+      "proteinG": 7.9,
+      "fatG": 0.8,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -5195,12 +5217,14 @@
       "doughnut"
     ],
     "category": "che-trang-mieng",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174992",
+    "verified": true,
     "per100g": {
-      "kcal": 452,
-      "carbsG": 51,
-      "proteinG": 4.9,
-      "fatG": 25,
+      "kcal": 426,
+      "carbsG": 50.8,
+      "proteinG": 5.2,
+      "fatG": 22.9,
       "fiberG": 1.5
     },
     "servings": [
@@ -5273,13 +5297,15 @@
       "muffin"
     ],
     "category": "che-trang-mieng",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172764",
+    "verified": true,
     "per100g": {
-      "kcal": 377,
-      "carbsG": 51,
-      "proteinG": 6,
-      "fatG": 17,
-      "fiberG": 1.7
+      "kcal": 296,
+      "carbsG": 41.4,
+      "proteinG": 6.9,
+      "fatG": 11.4,
+      "fiberG": 2.7
     },
     "servings": [
       {
@@ -5309,13 +5335,15 @@
       "biscuit"
     ],
     "category": "che-trang-mieng",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:12002",
+    "verified": true,
     "per100g": {
-      "kcal": 480,
-      "carbsG": 64,
-      "proteinG": 5,
-      "fatG": 22,
-      "fiberG": 2
+      "kcal": 376,
+      "carbsG": 75.1,
+      "proteinG": 8.8,
+      "fatG": 4.5,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -6025,13 +6053,15 @@
       "raisins"
     ],
     "category": "che-trang-mieng",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168165",
+    "verified": true,
     "per100g": {
       "kcal": 299,
-      "carbsG": 79,
-      "proteinG": 3.1,
-      "fatG": 0.5,
-      "fiberG": 3.7
+      "carbsG": 79.3,
+      "proteinG": 3.3,
+      "fatG": 0.3,
+      "fiberG": 4.5
     },
     "servings": [
       {
@@ -6100,13 +6130,15 @@
       "dark chocolate"
     ],
     "category": "che-trang-mieng",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170273",
+    "verified": true,
     "per100g": {
       "kcal": 598,
-      "carbsG": 46,
+      "carbsG": 45.9,
       "proteinG": 7.8,
-      "fatG": 43,
-      "fiberG": 11
+      "fatG": 42.6,
+      "fiberG": 10.9
     },
     "servings": [
       {
@@ -6136,12 +6168,14 @@
       "chocolate bar"
     ],
     "category": "che-trang-mieng",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:167587",
+    "verified": true,
     "per100g": {
       "kcal": 535,
-      "carbsG": 59,
-      "proteinG": 7.6,
-      "fatG": 30,
+      "carbsG": 59.4,
+      "proteinG": 7.7,
+      "fatG": 29.7,
       "fiberG": 3.4
     },
     "servings": [
@@ -6332,12 +6366,14 @@
       "tofu pudding"
     ],
     "category": "che-trang-mieng",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:3033",
+    "verified": true,
     "per100g": {
-      "kcal": 45,
-      "carbsG": 6,
-      "proteinG": 2.5,
-      "fatG": 1.3,
+      "kcal": 37,
+      "carbsG": 6.4,
+      "proteinG": 2.3,
+      "fatG": 0.2,
       "fiberG": 0.2
     },
     "servings": [
@@ -6492,13 +6528,14 @@
       "pancake"
     ],
     "category": "chien-nuong",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:175009",
+    "verified": true,
     "per100g": {
       "kcal": 227,
-      "carbsG": 28,
+      "carbsG": 28.3,
       "proteinG": 6.4,
-      "fatG": 9.7,
-      "fiberG": 1
+      "fatG": 9.7
     },
     "servings": [
       {
@@ -6527,13 +6564,14 @@
       "waffle"
     ],
     "category": "chien-nuong",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:175039",
+    "verified": true,
     "per100g": {
       "kcal": 291,
-      "carbsG": 33,
+      "carbsG": 32.9,
       "proteinG": 7.9,
-      "fatG": 14,
-      "fiberG": 1.5
+      "fatG": 14.1
     },
     "servings": [
       {
@@ -7236,12 +7274,14 @@
       "mashed potatoes"
     ],
     "category": "chien-nuong",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168555",
+    "verified": true,
     "per100g": {
       "kcal": 113,
-      "carbsG": 17,
-      "proteinG": 2,
-      "fatG": 4,
+      "carbsG": 16.8,
+      "proteinG": 1.9,
+      "fatG": 4.2,
       "fiberG": 1.5
     },
     "servings": [
@@ -7272,10 +7312,12 @@
       "baked potato"
     ],
     "category": "chien-nuong",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170093",
+    "verified": true,
     "per100g": {
       "kcal": 93,
-      "carbsG": 21,
+      "carbsG": 21.2,
       "proteinG": 2.5,
       "fatG": 0.1,
       "fiberG": 2.2
@@ -8387,13 +8429,15 @@
       "brown rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "usda",
+    "sourceRef": "usda:169704",
+    "verified": true,
     "per100g": {
       "kcal": 123,
-      "carbsG": 26,
+      "carbsG": 25.6,
       "proteinG": 2.7,
       "fatG": 1,
-      "fiberG": 1.8
+      "fiberG": 1.6
     },
     "servings": [
       {
@@ -8869,10 +8913,12 @@
       "steamed white rice"
     ],
     "category": "com",
-    "source": "recipe-estimate",
+    "source": "usda",
+    "sourceRef": "usda:168878",
+    "verified": true,
     "per100g": {
       "kcal": 130,
-      "carbsG": 28,
+      "carbsG": 28.2,
       "proteinG": 2.7,
       "fatG": 0.3,
       "fiberG": 0.4
@@ -9748,10 +9794,12 @@
       "cola"
     ],
     "category": "do-uong",
-    "source": "label",
+    "source": "nin",
+    "sourceRef": "nin:14004",
+    "verified": true,
     "per100g": {
       "kcal": 42,
-      "carbsG": 10.6,
+      "carbsG": 10.4,
       "proteinG": 0,
       "fatG": 0,
       "fiberG": 0
@@ -9909,12 +9957,14 @@
       "coconut water"
     ],
     "category": "do-uong",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:14006",
+    "verified": true,
     "per100g": {
-      "kcal": 20,
-      "carbsG": 4.5,
-      "proteinG": 0.5,
-      "fatG": 0.2,
+      "kcal": 21,
+      "carbsG": 4.8,
+      "proteinG": 0.4,
+      "fatG": 0,
       "fiberG": 0
     },
     "servings": [
@@ -10069,10 +10119,12 @@
       "grape juice"
     ],
     "category": "do-uong",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173042",
+    "verified": true,
     "per100g": {
       "kcal": 60,
-      "carbsG": 15,
+      "carbsG": 14.8,
       "proteinG": 0.4,
       "fatG": 0.1,
       "fiberG": 0.2
@@ -10786,12 +10838,14 @@
       "fresh milk"
     ],
     "category": "do-uong",
-    "source": "label",
+    "source": "nin",
+    "sourceRef": "nin:10001",
+    "verified": true,
     "per100g": {
-      "kcal": 62,
+      "kcal": 74,
       "carbsG": 4.8,
-      "proteinG": 3.2,
-      "fatG": 3.3,
+      "proteinG": 3.9,
+      "fatG": 4.4,
       "fiberG": 0
     },
     "servings": [
@@ -11953,13 +12007,15 @@
       "gio lua"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7069",
+    "verified": true,
     "per100g": {
-      "kcal": 140,
-      "carbsG": 2,
-      "proteinG": 14,
-      "fatG": 8.5,
-      "fiberG": 0.2
+      "kcal": 136,
+      "carbsG": 0,
+      "proteinG": 21.5,
+      "fatG": 5.5,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -11994,13 +12050,15 @@
       "cinnamon pork sausage"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7065",
+    "verified": true,
     "per100g": {
-      "kcal": 170,
-      "carbsG": 3,
-      "proteinG": 13,
-      "fatG": 12,
-      "fiberG": 0.2
+      "kcal": 416,
+      "carbsG": 0,
+      "proteinG": 16.2,
+      "fatG": 39,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12354,12 +12412,14 @@
       "head cheese"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7070",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
-      "carbsG": 1,
+      "kcal": 553,
+      "carbsG": 0,
       "proteinG": 16,
-      "fatG": 20,
+      "fatG": 54.3,
       "fiberG": 0
     },
     "servings": [
@@ -12474,12 +12534,14 @@
       "liver pate"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7063",
+    "verified": true,
     "per100g": {
-      "kcal": 300,
-      "carbsG": 4,
-      "proteinG": 12,
-      "fatG": 26,
+      "kcal": 326,
+      "carbsG": 15.4,
+      "proteinG": 10.8,
+      "fatG": 24.6,
       "fiberG": 0
     },
     "servings": [
@@ -12515,13 +12577,15 @@
       "pork floss"
     ],
     "category": "mon-man",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7074",
+    "verified": true,
     "per100g": {
-      "kcal": 380,
-      "carbsG": 6,
-      "proteinG": 55,
-      "fatG": 13,
-      "fiberG": 0.5
+      "kcal": 369,
+      "carbsG": 0,
+      "proteinG": 46.6,
+      "fatG": 20.3,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -12997,12 +13061,14 @@
       "hard boiled egg"
     ],
     "category": "mon-man",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173424",
+    "verified": true,
     "per100g": {
       "kcal": 155,
       "carbsG": 1.1,
-      "proteinG": 13,
-      "fatG": 11,
+      "proteinG": 12.6,
+      "fatG": 10.6,
       "fiberG": 0
     },
     "servings": [
@@ -15560,11 +15626,13 @@
       "octopus"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174218",
+    "verified": true,
     "per100g": {
       "kcal": 82,
-      "carbsG": 2,
-      "proteinG": 15,
+      "carbsG": 2.2,
+      "proteinG": 14.9,
       "fatG": 1,
       "fiberG": 0
     },
@@ -15636,13 +15704,15 @@
       "hamburger bun"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172796",
+    "verified": true,
     "per100g": {
-      "kcal": 280,
-      "carbsG": 50,
-      "proteinG": 9,
-      "fatG": 4,
-      "fiberG": 2.5
+      "kcal": 279,
+      "carbsG": 50.1,
+      "proteinG": 9.8,
+      "fatG": 3.9,
+      "fiberG": 1.8
     },
     "servings": [
       {
@@ -15673,13 +15743,15 @@
       "brown bread"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172688",
+    "verified": true,
     "per100g": {
-      "kcal": 247,
-      "carbsG": 41,
-      "proteinG": 13,
-      "fatG": 3.4,
-      "fiberG": 7
+      "kcal": 252,
+      "carbsG": 42.7,
+      "proteinG": 12.5,
+      "fatG": 3.5,
+      "fiberG": 6
     },
     "servings": [
       {
@@ -15710,13 +15782,15 @@
       "toasted bread"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174925",
+    "verified": true,
     "per100g": {
-      "kcal": 293,
-      "carbsG": 54,
-      "proteinG": 10,
-      "fatG": 3.5,
-      "fiberG": 3.5
+      "kcal": 290,
+      "carbsG": 54.5,
+      "proteinG": 9,
+      "fatG": 4,
+      "fiberG": 2.9
     },
     "servings": [
       {
@@ -15747,13 +15821,15 @@
       "plain bread roll"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:1012",
+    "verified": true,
     "per100g": {
-      "kcal": 274,
-      "carbsG": 52,
-      "proteinG": 9,
-      "fatG": 2.5,
-      "fiberG": 2.5
+      "kcal": 249,
+      "carbsG": 52.6,
+      "proteinG": 7.9,
+      "fatG": 0.8,
+      "fiberG": 0.2
     },
     "servings": [
       {
@@ -15784,12 +15860,14 @@
       "sandwich bread"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174924",
+    "verified": true,
     "per100g": {
-      "kcal": 265,
-      "carbsG": 49,
-      "proteinG": 9,
-      "fatG": 3.2,
+      "kcal": 266,
+      "carbsG": 49.4,
+      "proteinG": 8.9,
+      "fatG": 3.3,
       "fiberG": 2.7
     },
     "servings": [
@@ -15820,13 +15898,15 @@
       "fresh pho noodles"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:1013",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 25,
-      "proteinG": 2,
-      "fatG": 0.3,
-      "fiberG": 0.8
+      "kcal": 143,
+      "carbsG": 31.7,
+      "proteinG": 3.2,
+      "fatG": 0.4,
+      "fiberG": 0
     },
     "servings": [
       {
@@ -15861,13 +15941,15 @@
       "wrap"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:167535",
+    "verified": true,
     "per100g": {
-      "kcal": 310,
-      "carbsG": 51,
+      "kcal": 297,
+      "carbsG": 49.3,
       "proteinG": 8,
-      "fatG": 8,
-      "fiberG": 3
+      "fatG": 7.6,
+      "fiberG": 2.4
     },
     "servings": [
       {
@@ -15897,13 +15979,15 @@
       "rice paper"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:1010",
+    "verified": true,
     "per100g": {
-      "kcal": 330,
-      "carbsG": 80,
-      "proteinG": 5,
-      "fatG": 0.5,
-      "fiberG": 1
+      "kcal": 333,
+      "carbsG": 78.9,
+      "proteinG": 4,
+      "fatG": 0.2,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -15938,12 +16022,14 @@
       "braised beef shank"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169442",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
+      "kcal": 201,
       "carbsG": 0,
-      "proteinG": 30,
-      "fatG": 8,
+      "proteinG": 33.7,
+      "fatG": 6.4,
       "fiberG": 0
     },
     "servings": [
@@ -15975,12 +16061,14 @@
       "beef shin"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169441",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
+      "kcal": 128,
       "carbsG": 0,
-      "proteinG": 21,
-      "fatG": 5,
+      "proteinG": 21.8,
+      "fatG": 3.9,
       "fiberG": 0
     },
     "servings": [
@@ -16011,13 +16099,15 @@
       "cabbage"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4010",
+    "verified": true,
     "per100g": {
-      "kcal": 25,
-      "carbsG": 4.7,
-      "proteinG": 1.3,
+      "kcal": 29,
+      "carbsG": 5.3,
+      "proteinG": 1.8,
       "fatG": 0.1,
-      "fiberG": 2.5
+      "fiberG": 1.6
     },
     "servings": [
       {
@@ -16047,13 +16137,15 @@
       "purple cabbage"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4011",
+    "verified": true,
     "per100g": {
-      "kcal": 31,
-      "carbsG": 5.9,
-      "proteinG": 1.4,
+      "kcal": 45,
+      "carbsG": 9,
+      "proteinG": 1.9,
       "fatG": 0.2,
-      "fiberG": 2
+      "fiberG": 4
     },
     "servings": [
       {
@@ -16085,13 +16177,15 @@
       "kabocha"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4003",
+    "verified": true,
     "per100g": {
-      "kcal": 26,
-      "carbsG": 5.3,
-      "proteinG": 1,
+      "kcal": 27,
+      "carbsG": 6.1,
+      "proteinG": 0.3,
       "fatG": 0.1,
-      "fiberG": 0.5
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -16123,10 +16217,12 @@
       "courgette"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169291",
+    "verified": true,
     "per100g": {
       "kcal": 17,
-      "carbsG": 2.4,
+      "carbsG": 3.1,
       "proteinG": 1.2,
       "fatG": 0.3,
       "fiberG": 1
@@ -16161,13 +16257,15 @@
       "wax gourd"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4002",
+    "verified": true,
     "per100g": {
-      "kcal": 14,
-      "carbsG": 2.9,
-      "proteinG": 0.4,
-      "fatG": 0.2,
-      "fiberG": 2.9
+      "kcal": 12,
+      "carbsG": 2.4,
+      "proteinG": 0.6,
+      "fatG": 0,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -16198,13 +16296,15 @@
       "peanut butter"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174294",
+    "verified": true,
     "per100g": {
       "kcal": 588,
-      "carbsG": 20,
-      "proteinG": 25,
-      "fatG": 50,
-      "fiberG": 6
+      "carbsG": 24,
+      "proteinG": 21.9,
+      "fatG": 49.5,
+      "fiberG": 5.7
     },
     "servings": [
       {
@@ -16233,13 +16333,15 @@
       "almond butter"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168588",
+    "verified": true,
     "per100g": {
       "kcal": 614,
-      "carbsG": 19,
+      "carbsG": 18.8,
       "proteinG": 21,
-      "fatG": 56,
-      "fiberG": 10
+      "fatG": 55.5,
+      "fiberG": 10.3
     },
     "servings": [
       {
@@ -16268,12 +16370,14 @@
       "butter"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:6001",
+    "verified": true,
     "per100g": {
-      "kcal": 717,
-      "carbsG": 0.1,
-      "proteinG": 0.9,
-      "fatG": 81,
+      "kcal": 756,
+      "carbsG": 0.5,
+      "proteinG": 0.5,
+      "fatG": 83.5,
       "fiberG": 0
     },
     "servings": [
@@ -16303,10 +16407,12 @@
       "brussels sprouts"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170383",
+    "verified": true,
     "per100g": {
       "kcal": 43,
-      "carbsG": 6.7,
+      "carbsG": 9,
       "proteinG": 3.4,
       "fatG": 0.3,
       "fiberG": 3.8
@@ -16339,10 +16445,12 @@
       "steamed broccoli"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169967",
+    "verified": true,
     "per100g": {
       "kcal": 35,
-      "carbsG": 5.4,
+      "carbsG": 7.2,
       "proteinG": 2.4,
       "fatG": 0.4,
       "fiberG": 3.3
@@ -16375,10 +16483,12 @@
       "broccoli raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170379",
+    "verified": true,
     "per100g": {
       "kcal": 34,
-      "carbsG": 4.8,
+      "carbsG": 6.6,
       "proteinG": 2.8,
       "fatG": 0.4,
       "fiberG": 2.6
@@ -16411,10 +16521,12 @@
       "corn flour"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169698",
+    "verified": true,
     "per100g": {
       "kcal": 381,
-      "carbsG": 91,
+      "carbsG": 91.3,
       "proteinG": 0.3,
       "fatG": 0.1,
       "fiberG": 0.9
@@ -16484,13 +16596,15 @@
       "rice flour"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:1017",
+    "verified": true,
     "per100g": {
-      "kcal": 366,
-      "carbsG": 80,
-      "proteinG": 6,
-      "fatG": 1.4,
-      "fiberG": 2.4
+      "kcal": 359,
+      "carbsG": 82.2,
+      "proteinG": 6.6,
+      "fatG": 0.4,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -16520,13 +16634,15 @@
       "wheat flour"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:1018",
+    "verified": true,
     "per100g": {
-      "kcal": 364,
-      "carbsG": 76,
-      "proteinG": 10,
-      "fatG": 1,
-      "fiberG": 2.7
+      "kcal": 346,
+      "carbsG": 73.6,
+      "proteinG": 10.3,
+      "fatG": 1.1,
+      "fiberG": 0.3
     },
     "servings": [
       {
@@ -16556,13 +16672,15 @@
       "whole wheat flour"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168893",
+    "verified": true,
     "per100g": {
       "kcal": 340,
       "carbsG": 72,
-      "proteinG": 13,
+      "proteinG": 13.2,
       "fatG": 2.5,
-      "fiberG": 11
+      "fiberG": 10.7
     },
     "servings": [
       {
@@ -16592,13 +16710,15 @@
       "tapioca flour"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:2020",
+    "verified": true,
     "per100g": {
-      "kcal": 358,
-      "carbsG": 88,
-      "proteinG": 0.2,
-      "fatG": 0,
-      "fiberG": 0.9
+      "kcal": 333,
+      "carbsG": 79.6,
+      "proteinG": 2.4,
+      "fatG": 0.5,
+      "fiberG": 2.2
     },
     "servings": [
       {
@@ -16667,12 +16787,14 @@
       "fresh rice vermicelli"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:1020",
+    "verified": true,
     "per100g": {
       "kcal": 110,
-      "carbsG": 25,
-      "proteinG": 2,
-      "fatG": 0.2,
+      "carbsG": 25.7,
+      "proteinG": 1.7,
+      "fatG": 0,
       "fiberG": 0.5
     },
     "servings": [
@@ -16749,13 +16871,15 @@
       "tomato"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4005",
+    "verified": true,
     "per100g": {
-      "kcal": 18,
-      "carbsG": 3.2,
-      "proteinG": 0.9,
+      "kcal": 20,
+      "carbsG": 4,
+      "proteinG": 0.6,
       "fatG": 0.2,
-      "fiberG": 1.2
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -16785,12 +16909,14 @@
       "grilled salmon"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:175168",
+    "verified": true,
     "per100g": {
-      "kcal": 231,
+      "kcal": 206,
       "carbsG": 0,
-      "proteinG": 25,
-      "fatG": 14,
+      "proteinG": 22.1,
+      "fatG": 12.4,
       "fiberG": 0
     },
     "servings": [
@@ -16821,12 +16947,14 @@
       "salmon raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:175167",
+    "verified": true,
     "per100g": {
       "kcal": 208,
       "carbsG": 0,
-      "proteinG": 20,
-      "fatG": 13,
+      "proteinG": 20.4,
+      "fatG": 13.4,
       "fiberG": 0
     },
     "servings": [
@@ -16856,12 +16984,14 @@
       "dried fish"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8012",
+    "verified": true,
     "per100g": {
-      "kcal": 335,
+      "kcal": 208,
       "carbsG": 0,
-      "proteinG": 62,
-      "fatG": 9,
+      "proteinG": 43.3,
+      "fatG": 3.9,
       "fiberG": 0
     },
     "servings": [
@@ -16892,12 +17022,14 @@
       "snakehead fish"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8022",
+    "verified": true,
     "per100g": {
       "kcal": 97,
       "carbsG": 0,
-      "proteinG": 20,
-      "fatG": 1.5,
+      "proteinG": 18.2,
+      "fatG": 2.7,
       "fiberG": 0
     },
     "servings": [
@@ -16929,12 +17061,14 @@
       "sardines"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:175139",
+    "verified": true,
     "per100g": {
       "kcal": 208,
       "carbsG": 0,
-      "proteinG": 25,
-      "fatG": 11,
+      "proteinG": 24.6,
+      "fatG": 11.5,
       "fiberG": 0
     },
     "servings": [
@@ -16966,12 +17100,14 @@
       "fresh tuna"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8019",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
+      "kcal": 87,
       "carbsG": 0,
-      "proteinG": 23,
-      "fatG": 4,
+      "proteinG": 21,
+      "fatG": 0.3,
       "fiberG": 0
     },
     "servings": [
@@ -17003,12 +17139,14 @@
       "tuna in water"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171986",
+    "verified": true,
     "per100g": {
       "kcal": 116,
       "carbsG": 0,
-      "proteinG": 26,
-      "fatG": 1,
+      "proteinG": 25.5,
+      "fatG": 0.8,
       "fiberG": 0
     },
     "servings": [
@@ -17040,12 +17178,14 @@
       "mackerel scad"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8020",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
+      "kcal": 111,
       "carbsG": 0,
-      "proteinG": 20,
-      "fatG": 3,
+      "proteinG": 20.2,
+      "fatG": 3.3,
       "fiberG": 0
     },
     "servings": [
@@ -17078,12 +17218,14 @@
       "red tilapia"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8024",
+    "verified": true,
     "per100g": {
-      "kcal": 96,
+      "kcal": 100,
       "carbsG": 0,
-      "proteinG": 20,
-      "fatG": 1.7,
+      "proteinG": 19.7,
+      "fatG": 2.3,
       "fiberG": 0
     },
     "servings": [
@@ -17116,10 +17258,12 @@
       "cooked carrot"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170394",
+    "verified": true,
     "per100g": {
       "kcal": 35,
-      "carbsG": 8,
+      "carbsG": 8.2,
       "proteinG": 0.8,
       "fatG": 0.2,
       "fiberG": 3
@@ -17152,13 +17296,15 @@
       "carrot raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4007",
+    "verified": true,
     "per100g": {
-      "kcal": 41,
-      "carbsG": 10,
-      "proteinG": 0.9,
+      "kcal": 39,
+      "carbsG": 7.8,
+      "proteinG": 1.5,
       "fatG": 0.2,
-      "fiberG": 2.8
+      "fiberG": 1.2
     },
     "servings": [
       {
@@ -17187,12 +17333,14 @@
       "mackerel cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173674",
+    "verified": true,
     "per100g": {
-      "kcal": 262,
+      "kcal": 158,
       "carbsG": 0,
-      "proteinG": 24,
-      "fatG": 18,
+      "proteinG": 23.6,
+      "fatG": 6.3,
       "fiberG": 0
     },
     "servings": [
@@ -17222,12 +17370,14 @@
       "mackerel raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8026",
+    "verified": true,
     "per100g": {
-      "kcal": 205,
+      "kcal": 166,
       "carbsG": 0,
-      "proteinG": 19,
-      "fatG": 14,
+      "proteinG": 18.2,
+      "fatG": 10.3,
       "fiberG": 0
     },
     "servings": [
@@ -17258,13 +17408,15 @@
       "aubergine"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4009",
+    "verified": true,
     "per100g": {
-      "kcal": 25,
-      "carbsG": 4.8,
+      "kcal": 22,
+      "carbsG": 4.5,
       "proteinG": 1,
-      "fatG": 0.2,
-      "fiberG": 3
+      "fatG": 0,
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -17294,12 +17446,14 @@
       "catfish"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8030",
+    "verified": true,
     "per100g": {
-      "kcal": 105,
+      "kcal": 173,
       "carbsG": 0,
-      "proteinG": 18,
-      "fatG": 3,
+      "proteinG": 16.5,
+      "fatG": 11.9,
       "fiberG": 0
     },
     "servings": [
@@ -17330,10 +17484,12 @@
       "spinach"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168462",
+    "verified": true,
     "per100g": {
       "kcal": 23,
-      "carbsG": 2.2,
+      "carbsG": 3.6,
       "proteinG": 2.9,
       "fatG": 0.4,
       "fiberG": 2.2
@@ -17367,10 +17523,12 @@
       "chinese cabbage"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169979",
+    "verified": true,
     "per100g": {
       "kcal": 16,
-      "carbsG": 2.3,
+      "carbsG": 3.2,
       "proteinG": 1.2,
       "fatG": 0.2,
       "fiberG": 1.2
@@ -17404,13 +17562,15 @@
       "pak choi"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4015",
+    "verified": true,
     "per100g": {
-      "kcal": 13,
-      "carbsG": 1.3,
-      "proteinG": 1.5,
+      "kcal": 17,
+      "carbsG": 2.4,
+      "proteinG": 1.4,
       "fatG": 0.2,
-      "fiberG": 1
+      "fiberG": 1.8
     },
     "servings": [
       {
@@ -17440,9 +17600,11 @@
       "celery"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169988",
+    "verified": true,
     "per100g": {
-      "kcal": 16,
+      "kcal": 14,
       "carbsG": 3,
       "proteinG": 0.7,
       "fatG": 0.2,
@@ -17475,12 +17637,14 @@
       "chicken wings cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173630",
+    "verified": true,
     "per100g": {
-      "kcal": 290,
+      "kcal": 254,
       "carbsG": 0,
-      "proteinG": 27,
-      "fatG": 19,
+      "proteinG": 23.8,
+      "fatG": 16.9,
       "fiberG": 0
     },
     "servings": [
@@ -17510,12 +17674,14 @@
       "chicken wings raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172390",
+    "verified": true,
     "per100g": {
-      "kcal": 203,
+      "kcal": 191,
       "carbsG": 0,
-      "proteinG": 18,
-      "fatG": 14,
+      "proteinG": 17.5,
+      "fatG": 12.9,
       "fiberG": 0
     },
     "servings": [
@@ -17582,12 +17748,14 @@
       "chicken feet"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171119",
+    "verified": true,
     "per100g": {
       "kcal": 215,
       "carbsG": 0.2,
-      "proteinG": 19,
-      "fatG": 15,
+      "proteinG": 19.4,
+      "fatG": 14.6,
       "fiberG": 0
     },
     "servings": [
@@ -17619,12 +17787,14 @@
       "pork trotter"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:7032",
+    "verified": true,
     "per100g": {
       "kcal": 230,
       "carbsG": 0,
-      "proteinG": 19,
-      "fatG": 17,
+      "proteinG": 15.7,
+      "fatG": 18.6,
       "fiberG": 0
     },
     "servings": [
@@ -17656,13 +17826,15 @@
       "lime"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5003",
+    "verified": true,
     "per100g": {
-      "kcal": 30,
-      "carbsG": 6.4,
-      "proteinG": 0.7,
-      "fatG": 0.2,
-      "fiberG": 2.8
+      "kcal": 24,
+      "carbsG": 4.5,
+      "proteinG": 0.9,
+      "fatG": 0.3,
+      "fiberG": 1.3
     },
     "servings": [
       {
@@ -17691,10 +17863,12 @@
       "lemon"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:167746",
+    "verified": true,
     "per100g": {
       "kcal": 29,
-      "carbsG": 5.5,
+      "carbsG": 9.3,
       "proteinG": 1.1,
       "fatG": 0.3,
       "fiberG": 2.8
@@ -17726,10 +17900,12 @@
       "cooked white rice"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "usda",
+    "sourceRef": "usda:168878",
+    "verified": true,
     "per100g": {
       "kcal": 130,
-      "carbsG": 28,
+      "carbsG": 28.2,
       "proteinG": 2.7,
       "fatG": 0.3,
       "fiberG": 0.4
@@ -17765,12 +17941,14 @@
       "couscous"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169700",
+    "verified": true,
     "per100g": {
       "kcal": 112,
-      "carbsG": 23,
+      "carbsG": 23.2,
       "proteinG": 3.8,
-      "fatG": 0.16,
+      "fatG": 0.2,
       "fiberG": 1.4
     },
     "servings": [
@@ -17800,13 +17978,15 @@
       "white radish"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4021",
+    "verified": true,
     "per100g": {
-      "kcal": 18,
-      "carbsG": 4.1,
-      "proteinG": 0.6,
+      "kcal": 21,
+      "carbsG": 3.6,
+      "proteinG": 1.5,
       "fatG": 0.1,
-      "fiberG": 1.6
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -17837,10 +18017,12 @@
       "beet"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169145",
+    "verified": true,
     "per100g": {
       "kcal": 43,
-      "carbsG": 10,
+      "carbsG": 9.6,
       "proteinG": 1.6,
       "fatG": 0.2,
       "fiberG": 2.8
@@ -17874,12 +18056,14 @@
       "crab cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174205",
+    "verified": true,
     "per100g": {
-      "kcal": 97,
+      "kcal": 83,
       "carbsG": 0,
-      "proteinG": 19,
-      "fatG": 1.5,
+      "proteinG": 17.9,
+      "fatG": 0.7,
       "fiberG": 0
     },
     "servings": [
@@ -17912,13 +18096,15 @@
       "grated coconut"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:3001",
+    "verified": true,
     "per100g": {
-      "kcal": 354,
-      "carbsG": 15,
-      "proteinG": 3.3,
-      "fatG": 33,
-      "fiberG": 9
+      "kcal": 368,
+      "carbsG": 6.2,
+      "proteinG": 4.8,
+      "fatG": 36,
+      "fiberG": 4.2
     },
     "servings": [
       {
@@ -17949,12 +18135,14 @@
       "chicken skin"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171452",
+    "verified": true,
     "per100g": {
-      "kcal": 450,
+      "kcal": 349,
       "carbsG": 0,
-      "proteinG": 20,
-      "fatG": 40,
+      "proteinG": 13.3,
+      "fatG": 32.4,
       "fiberG": 0
     },
     "servings": [
@@ -18021,12 +18209,14 @@
       "cooking oil"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:6002",
+    "verified": true,
     "per100g": {
-      "kcal": 884,
+      "kcal": 897,
       "carbsG": 0,
       "proteinG": 0,
-      "fatG": 100,
+      "fatG": 99.7,
       "fiberG": 0
     },
     "servings": [
@@ -18062,10 +18252,12 @@
       "ladyfinger"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169260",
+    "verified": true,
     "per100g": {
       "kcal": 33,
-      "carbsG": 5.9,
+      "carbsG": 7.5,
       "proteinG": 1.9,
       "fatG": 0.2,
       "fiberG": 3.2
@@ -18098,10 +18290,12 @@
       "cooked black beans"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173735",
+    "verified": true,
     "per100g": {
       "kcal": 132,
-      "carbsG": 24,
+      "carbsG": 23.7,
       "proteinG": 8.9,
       "fatG": 0.5,
       "fiberG": 8.7
@@ -18133,13 +18327,15 @@
       "dried black beans"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:3004",
+    "verified": true,
     "per100g": {
-      "kcal": 341,
-      "carbsG": 62,
-      "proteinG": 21,
-      "fatG": 1.4,
-      "fiberG": 15
+      "kcal": 325,
+      "carbsG": 53.3,
+      "proteinG": 24.2,
+      "fatG": 1.7,
+      "fiberG": 4
     },
     "servings": [
       {
@@ -18169,10 +18365,12 @@
       "cooked adzuki"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173728",
+    "verified": true,
     "per100g": {
       "kcal": 128,
-      "carbsG": 25,
+      "carbsG": 24.8,
       "proteinG": 7.5,
       "fatG": 0.1,
       "fiberG": 7.3
@@ -18206,13 +18404,15 @@
       "adzuki beans"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173727",
+    "verified": true,
     "per100g": {
       "kcal": 329,
-      "carbsG": 63,
-      "proteinG": 20,
+      "carbsG": 62.9,
+      "proteinG": 19.9,
       "fatG": 0.5,
-      "fiberG": 13
+      "fiberG": 12.7
     },
     "servings": [
       {
@@ -18242,9 +18442,11 @@
       "coconut oil"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:6009",
+    "verified": true,
     "per100g": {
-      "kcal": 892,
+      "kcal": 900,
       "carbsG": 0,
       "proteinG": 0,
       "fatG": 100,
@@ -18278,10 +18480,12 @@
       "garbanzo beans"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173757",
+    "verified": true,
     "per100g": {
       "kcal": 164,
-      "carbsG": 27,
+      "carbsG": 27.4,
       "proteinG": 8.9,
       "fatG": 2.6,
       "fiberG": 7.6
@@ -18315,13 +18519,15 @@
       "garden peas"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4031",
+    "verified": true,
     "per100g": {
-      "kcal": 81,
-      "carbsG": 14,
-      "proteinG": 5.4,
+      "kcal": 72,
+      "carbsG": 10.6,
+      "proteinG": 6.5,
       "fatG": 0.4,
-      "fiberG": 5.7
+      "fiberG": 1
     },
     "servings": [
       {
@@ -18351,10 +18557,12 @@
       "oyster sauce"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174529",
+    "verified": true,
     "per100g": {
       "kcal": 51,
-      "carbsG": 11,
+      "carbsG": 10.9,
       "proteinG": 1.4,
       "fatG": 0.3,
       "fiberG": 0.3
@@ -18388,13 +18596,15 @@
       "firm tofu"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:3025",
+    "verified": true,
     "per100g": {
-      "kcal": 76,
-      "carbsG": 1.9,
-      "proteinG": 8,
-      "fatG": 4.8,
-      "fiberG": 0.3
+      "kcal": 95,
+      "carbsG": 0.7,
+      "proteinG": 10.9,
+      "fatG": 5.4,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -18426,13 +18636,15 @@
       "soft tofu"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174292",
+    "verified": true,
     "per100g": {
       "kcal": 55,
-      "carbsG": 2,
+      "carbsG": 2.9,
       "proteinG": 4.8,
       "fatG": 2.7,
-      "fiberG": 0.2
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -18463,10 +18675,12 @@
       "cooked lentils"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172421",
+    "verified": true,
     "per100g": {
       "kcal": 116,
-      "carbsG": 20,
+      "carbsG": 20.1,
       "proteinG": 9,
       "fatG": 0.4,
       "fiberG": 7.9
@@ -18499,9 +18713,11 @@
       "sesame oil"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:6012",
+    "verified": true,
     "per100g": {
-      "kcal": 884,
+      "kcal": 900,
       "carbsG": 0,
       "proteinG": 0,
       "fatG": 100,
@@ -18535,13 +18751,15 @@
       "raw soybeans"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:3007",
+    "verified": true,
     "per100g": {
-      "kcal": 446,
-      "carbsG": 30,
-      "proteinG": 36,
-      "fatG": 20,
-      "fiberG": 9
+      "kcal": 400,
+      "carbsG": 24.6,
+      "proteinG": 34,
+      "fatG": 18.4,
+      "fiberG": 4.5
     },
     "servings": [
       {
@@ -18572,11 +18790,13 @@
       "edamame"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174271",
+    "verified": true,
     "per100g": {
-      "kcal": 173,
-      "carbsG": 10,
-      "proteinG": 17,
+      "kcal": 172,
+      "carbsG": 8.4,
+      "proteinG": 18.2,
       "fatG": 9,
       "fiberG": 6
     },
@@ -18608,9 +18828,11 @@
       "olive oil"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:6014",
+    "verified": true,
     "per100g": {
-      "kcal": 884,
+      "kcal": 900,
       "carbsG": 0,
       "proteinG": 0,
       "fatG": 100,
@@ -18644,13 +18866,15 @@
       "peanuts"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173806",
+    "verified": true,
     "per100g": {
       "kcal": 587,
-      "carbsG": 21,
-      "proteinG": 24,
-      "fatG": 50,
-      "fiberG": 8
+      "carbsG": 21.3,
+      "proteinG": 24.4,
+      "fatG": 49.7,
+      "fiberG": 8.4
     },
     "servings": [
       {
@@ -18682,10 +18906,12 @@
       "string beans"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169961",
+    "verified": true,
     "per100g": {
       "kcal": 31,
-      "carbsG": 5.5,
+      "carbsG": 7,
       "proteinG": 1.8,
       "fatG": 0.2,
       "fiberG": 2.7
@@ -18720,12 +18946,14 @@
       "cannellini beans"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:175203",
+    "verified": true,
     "per100g": {
       "kcal": 139,
-      "carbsG": 25,
+      "carbsG": 25.1,
       "proteinG": 9.7,
-      "fatG": 0.35,
+      "fatG": 0.4,
       "fiberG": 6.3
     },
     "servings": [
@@ -18756,10 +18984,12 @@
       "cooked mung beans"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174257",
+    "verified": true,
     "per100g": {
       "kcal": 105,
-      "carbsG": 19,
+      "carbsG": 19.2,
       "proteinG": 7,
       "fatG": 0.4,
       "fiberG": 7.6
@@ -18792,13 +19022,15 @@
       "mung beans"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:3010",
+    "verified": true,
     "per100g": {
-      "kcal": 347,
-      "carbsG": 63,
-      "proteinG": 24,
-      "fatG": 1.2,
-      "fiberG": 16
+      "kcal": 328,
+      "carbsG": 53.1,
+      "proteinG": 23.4,
+      "fatG": 2.4,
+      "fiberG": 4.7
     },
     "servings": [
       {
@@ -18829,13 +19061,15 @@
       "cucumber"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4027",
+    "verified": true,
     "per100g": {
-      "kcal": 15,
-      "carbsG": 2.8,
-      "proteinG": 0.7,
+      "kcal": 16,
+      "carbsG": 2.9,
+      "proteinG": 0.8,
       "fatG": 0.1,
-      "fiberG": 0.5
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -18866,12 +19100,14 @@
       "frog legs"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:7080",
+    "verified": true,
     "per100g": {
-      "kcal": 73,
+      "kcal": 90,
       "carbsG": 0,
-      "proteinG": 16,
-      "fatG": 0.3,
+      "proteinG": 20,
+      "fatG": 1.1,
       "fiberG": 0
     },
     "servings": [
@@ -18902,12 +19138,14 @@
       "chicken thigh raw skin on"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172385",
+    "verified": true,
     "per100g": {
-      "kcal": 210,
-      "carbsG": 0,
-      "proteinG": 17,
-      "fatG": 15,
+      "kcal": 221,
+      "carbsG": 0.3,
+      "proteinG": 16.5,
+      "fatG": 16.6,
       "fiberG": 0
     },
     "servings": [
@@ -18937,12 +19175,14 @@
       "chicken thigh skinless cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172388",
+    "verified": true,
     "per100g": {
-      "kcal": 209,
+      "kcal": 179,
       "carbsG": 0,
-      "proteinG": 26,
-      "fatG": 11,
+      "proteinG": 24.8,
+      "fatG": 8.2,
       "fiberG": 0
     },
     "servings": [
@@ -18972,10 +19212,12 @@
       "sugar"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:12014",
+    "verified": true,
     "per100g": {
-      "kcal": 400,
-      "carbsG": 100,
+      "kcal": 397,
+      "carbsG": 99.3,
       "proteinG": 0,
       "fatG": 0,
       "fiberG": 0
@@ -19012,11 +19254,13 @@
       "brown sugar"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168833",
+    "verified": true,
     "per100g": {
       "kcal": 380,
-      "carbsG": 98,
-      "proteinG": 0,
+      "carbsG": 98.1,
+      "proteinG": 0.1,
       "fatG": 0,
       "fiberG": 0
     },
@@ -19047,12 +19291,14 @@
       "chicken liver"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:7040",
+    "verified": true,
     "per100g": {
-      "kcal": 167,
-      "carbsG": 1,
-      "proteinG": 24,
-      "fatG": 6,
+      "kcal": 111,
+      "carbsG": 2,
+      "proteinG": 18.2,
+      "fatG": 3.4,
       "fiberG": 0
     },
     "servings": [
@@ -19082,12 +19328,14 @@
       "pork liver"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:7041",
+    "verified": true,
     "per100g": {
-      "kcal": 134,
-      "carbsG": 3,
-      "proteinG": 21,
-      "fatG": 4,
+      "kcal": 116,
+      "carbsG": 2,
+      "proteinG": 18.8,
+      "fatG": 3.6,
       "fiberG": 0
     },
     "servings": [
@@ -19118,13 +19366,15 @@
       "raw brown rice"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:1005",
+    "verified": true,
     "per100g": {
-      "kcal": 370,
-      "carbsG": 77,
-      "proteinG": 8,
-      "fatG": 2.9,
-      "fiberG": 3.5
+      "kcal": 345,
+      "carbsG": 72.8,
+      "proteinG": 7.5,
+      "fatG": 2.7,
+      "fiberG": 3.4
     },
     "servings": [
       {
@@ -19154,13 +19404,15 @@
       "cooked brown rice"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "usda",
+    "sourceRef": "usda:169704",
+    "verified": true,
     "per100g": {
       "kcal": 123,
-      "carbsG": 26,
+      "carbsG": 25.6,
       "proteinG": 2.7,
       "fatG": 1,
-      "fiberG": 1.8
+      "fiberG": 1.6
     },
     "servings": [
       {
@@ -19195,13 +19447,15 @@
       "sticky rice raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:1002",
+    "verified": true,
     "per100g": {
-      "kcal": 370,
-      "carbsG": 81,
-      "proteinG": 6.8,
-      "fatG": 0.6,
-      "fiberG": 1.4
+      "kcal": 346,
+      "carbsG": 74.9,
+      "proteinG": 8.4,
+      "fatG": 1.6,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -19232,13 +19486,15 @@
       "raw white rice"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:1004",
+    "verified": true,
     "per100g": {
-      "kcal": 365,
-      "carbsG": 80,
-      "proteinG": 7,
-      "fatG": 0.7,
-      "fiberG": 1.3
+      "kcal": 344,
+      "carbsG": 75.9,
+      "proteinG": 7.9,
+      "fatG": 1,
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -19269,12 +19525,14 @@
       "beef brisket"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168607",
+    "verified": true,
     "per100g": {
-      "kcal": 155,
-      "carbsG": 0,
-      "proteinG": 19,
-      "fatG": 8,
+      "kcal": 157,
+      "carbsG": 0.6,
+      "proteinG": 20.7,
+      "fatG": 7.4,
       "fiberG": 0
     },
     "servings": [
@@ -19306,12 +19564,14 @@
       "flower crab"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8035",
+    "verified": true,
     "per100g": {
-      "kcal": 87,
+      "kcal": 54,
       "carbsG": 0,
-      "proteinG": 18,
-      "fatG": 1,
+      "proteinG": 11.9,
+      "fatG": 0.7,
       "fiberG": 0
     },
     "servings": [
@@ -19343,13 +19603,15 @@
       "mung bean sprouts"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4036",
+    "verified": true,
     "per100g": {
-      "kcal": 30,
-      "carbsG": 4.1,
-      "proteinG": 3,
+      "kcal": 44,
+      "carbsG": 5.1,
+      "proteinG": 5.5,
       "fatG": 0.2,
-      "fiberG": 1.8
+      "fiberG": 2
     },
     "servings": [
       {
@@ -19380,13 +19642,15 @@
       "sliced ham"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173864",
+    "verified": true,
     "per100g": {
-      "kcal": 145,
-      "carbsG": 1.5,
-      "proteinG": 21,
-      "fatG": 5.5,
-      "fiberG": 0
+      "kcal": 164,
+      "carbsG": 3.6,
+      "proteinG": 16.6,
+      "fatG": 8.8,
+      "fiberG": 1.3
     },
     "servings": [
       {
@@ -19452,13 +19716,15 @@
       "granola"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171646",
+    "verified": true,
     "per100g": {
-      "kcal": 471,
-      "carbsG": 64,
-      "proteinG": 10,
-      "fatG": 20,
-      "fiberG": 7
+      "kcal": 489,
+      "carbsG": 53.9,
+      "proteinG": 13.7,
+      "fatG": 24.3,
+      "fiberG": 8.9
     },
     "servings": [
       {
@@ -19486,13 +19752,15 @@
       "ginger"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:13003",
+    "verified": true,
     "per100g": {
-      "kcal": 80,
-      "carbsG": 18,
-      "proteinG": 1.8,
-      "fatG": 0.75,
-      "fiberG": 2
+      "kcal": 29,
+      "carbsG": 5.1,
+      "proteinG": 0.4,
+      "fatG": 0.8,
+      "fiberG": 3.3
     },
     "servings": [
       {
@@ -19523,13 +19791,15 @@
       "spring onion"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4038",
+    "verified": true,
     "per100g": {
-      "kcal": 32,
-      "carbsG": 5.8,
-      "proteinG": 1.8,
-      "fatG": 0.2,
-      "fiberG": 2.6
+      "kcal": 22,
+      "carbsG": 4.3,
+      "proteinG": 1.3,
+      "fatG": 0,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -19560,12 +19830,14 @@
       "almonds"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170567",
+    "verified": true,
     "per100g": {
       "kcal": 579,
-      "carbsG": 22,
-      "proteinG": 21,
-      "fatG": 50,
+      "carbsG": 21.6,
+      "proteinG": 21.2,
+      "fatG": 49.9,
       "fiberG": 12.5
     },
     "servings": [
@@ -19595,13 +19867,15 @@
       "onion"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4039",
+    "verified": true,
     "per100g": {
-      "kcal": 40,
-      "carbsG": 9,
-      "proteinG": 1.1,
+      "kcal": 41,
+      "carbsG": 8.2,
+      "proteinG": 1.8,
       "fatG": 0.1,
-      "fiberG": 1.7
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -19630,12 +19904,14 @@
       "pumpkin seeds"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170556",
+    "verified": true,
     "per100g": {
       "kcal": 559,
-      "carbsG": 11,
-      "proteinG": 30,
-      "fatG": 49,
+      "carbsG": 10.7,
+      "proteinG": 30.2,
+      "fatG": 49.1,
       "fiberG": 6
     },
     "servings": [
@@ -19665,13 +19941,15 @@
       "chia seeds"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170554",
+    "verified": true,
     "per100g": {
       "kcal": 486,
-      "carbsG": 42,
-      "proteinG": 17,
-      "fatG": 31,
-      "fiberG": 34
+      "carbsG": 42.1,
+      "proteinG": 16.5,
+      "fatG": 30.7,
+      "fiberG": 34.4
     },
     "servings": [
       {
@@ -19700,13 +19978,15 @@
       "pistachios"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170184",
+    "verified": true,
     "per100g": {
       "kcal": 560,
-      "carbsG": 28,
-      "proteinG": 20,
-      "fatG": 45,
-      "fiberG": 10
+      "carbsG": 27.2,
+      "proteinG": 20.2,
+      "fatG": 45.3,
+      "fiberG": 10.6
     },
     "servings": [
       {
@@ -19736,13 +20016,15 @@
       "cashew nuts"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:3015",
+    "verified": true,
     "per100g": {
-      "kcal": 553,
-      "carbsG": 30,
-      "proteinG": 18,
-      "fatG": 44,
-      "fiberG": 3.3
+      "kcal": 605,
+      "carbsG": 28.7,
+      "proteinG": 18.4,
+      "fatG": 46.3,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -19772,12 +20054,14 @@
       "sunflower seeds"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170562",
+    "verified": true,
     "per100g": {
       "kcal": 584,
       "carbsG": 20,
-      "proteinG": 21,
-      "fatG": 51,
+      "proteinG": 20.8,
+      "fatG": 51.5,
       "fiberG": 8.6
     },
     "servings": [
@@ -19847,13 +20131,15 @@
       "lotus seeds"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4041",
+    "verified": true,
     "per100g": {
-      "kcal": 332,
-      "carbsG": 64,
-      "proteinG": 15,
-      "fatG": 2,
-      "fiberG": 5
+      "kcal": 334,
+      "carbsG": 58,
+      "proteinG": 20,
+      "fatG": 2.4,
+      "fiberG": 2.2
     },
     "servings": [
       {
@@ -19884,12 +20170,14 @@
       "oysters"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8048",
+    "verified": true,
     "per100g": {
-      "kcal": 68,
-      "carbsG": 4,
-      "proteinG": 7,
-      "fatG": 2.5,
+      "kcal": 78,
+      "carbsG": 4.9,
+      "proteinG": 9.5,
+      "fatG": 2.3,
       "fiberG": 0
     },
     "servings": [
@@ -19920,13 +20208,15 @@
       "rice stick noodles"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "usda",
+    "sourceRef": "usda:168914",
+    "verified": true,
     "per100g": {
-      "kcal": 110,
-      "carbsG": 25,
+      "kcal": 108,
+      "carbsG": 24,
       "proteinG": 1.8,
       "fatG": 0.2,
-      "fiberG": 0.9
+      "fiberG": 1
     },
     "servings": [
       {
@@ -19960,12 +20250,14 @@
       "sour cream"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171257",
+    "verified": true,
     "per100g": {
       "kcal": 198,
       "carbsG": 4.6,
       "proteinG": 2.4,
-      "fatG": 19,
+      "fatG": 19.4,
       "fiberG": 0
     },
     "servings": [
@@ -19996,12 +20288,14 @@
       "heavy cream"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170859",
+    "verified": true,
     "per100g": {
       "kcal": 340,
-      "carbsG": 3,
+      "carbsG": 2.8,
       "proteinG": 2.8,
-      "fatG": 36,
+      "fatG": 36.1,
       "fiberG": 0
     },
     "servings": [
@@ -20034,13 +20328,15 @@
       "bitter gourd"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4055",
+    "verified": true,
     "per100g": {
-      "kcal": 17,
+      "kcal": 16,
       "carbsG": 2.8,
-      "proteinG": 1,
+      "proteinG": 0.9,
       "fatG": 0.2,
-      "fiberG": 2.8
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -20072,13 +20368,15 @@
       "steamed sweet potato"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168484",
+    "verified": true,
     "per100g": {
-      "kcal": 90,
-      "carbsG": 21,
-      "proteinG": 2,
-      "fatG": 0.15,
-      "fiberG": 3.3
+      "kcal": 76,
+      "carbsG": 17.7,
+      "proteinG": 1.4,
+      "fatG": 0.1,
+      "fiberG": 2.5
     },
     "servings": [
       {
@@ -20108,13 +20406,15 @@
       "sweet potato raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:2008",
+    "verified": true,
     "per100g": {
-      "kcal": 86,
-      "carbsG": 20,
-      "proteinG": 1.6,
-      "fatG": 0.1,
-      "fiberG": 3
+      "kcal": 119,
+      "carbsG": 28.5,
+      "proteinG": 0.8,
+      "fatG": 0.2,
+      "fiberG": 1.3
     },
     "servings": [
       {
@@ -20182,13 +20482,15 @@
       "taro cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168486",
+    "verified": true,
     "per100g": {
       "kcal": 142,
-      "carbsG": 35,
+      "carbsG": 34.6,
       "proteinG": 0.5,
       "fatG": 0.1,
-      "fiberG": 5
+      "fiberG": 5.1
     },
     "servings": [
       {
@@ -20218,11 +20520,13 @@
       "potato cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170440",
+    "verified": true,
     "per100g": {
-      "kcal": 87,
+      "kcal": 86,
       "carbsG": 20,
-      "proteinG": 1.9,
+      "proteinG": 1.7,
       "fatG": 0.1,
       "fiberG": 1.8
     },
@@ -20254,13 +20558,15 @@
       "potato raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:2014",
+    "verified": true,
     "per100g": {
-      "kcal": 77,
-      "carbsG": 17,
+      "kcal": 93,
+      "carbsG": 20.9,
       "proteinG": 2,
       "fatG": 0.1,
-      "fiberG": 2.2
+      "fiberG": 1
     },
     "servings": [
       {
@@ -20289,12 +20595,14 @@
       "egg yolk"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:9002",
+    "verified": true,
     "per100g": {
-      "kcal": 322,
-      "carbsG": 3.6,
-      "proteinG": 16,
-      "fatG": 27,
+      "kcal": 327,
+      "carbsG": 1,
+      "proteinG": 13.6,
+      "fatG": 29.8,
       "fiberG": 0
     },
     "servings": [
@@ -20324,12 +20632,14 @@
       "egg white"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:9003",
+    "verified": true,
     "per100g": {
-      "kcal": 52,
-      "carbsG": 0.7,
-      "proteinG": 11,
-      "fatG": 0.2,
+      "kcal": 46,
+      "carbsG": 1,
+      "proteinG": 10.3,
+      "fatG": 0.1,
       "fiberG": 0
     },
     "servings": [
@@ -20359,11 +20669,13 @@
       "eel cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174194",
+    "verified": true,
     "per100g": {
       "kcal": 236,
       "carbsG": 0,
-      "proteinG": 24,
+      "proteinG": 23.7,
       "fatG": 15,
       "fiberG": 0
     },
@@ -20394,12 +20706,14 @@
       "eel raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8038",
+    "verified": true,
     "per100g": {
-      "kcal": 184,
-      "carbsG": 0,
-      "proteinG": 18,
-      "fatG": 12,
+      "kcal": 180,
+      "carbsG": 0.2,
+      "proteinG": 18.4,
+      "fatG": 11.7,
       "fiberG": 0
     },
     "servings": [
@@ -20429,10 +20743,12 @@
       "asparagus"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168389",
+    "verified": true,
     "per100g": {
       "kcal": 20,
-      "carbsG": 2.6,
+      "carbsG": 3.9,
       "proteinG": 2.2,
       "fatG": 0.1,
       "fiberG": 2.1
@@ -20464,13 +20780,15 @@
       "bamboo shoots"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4053",
+    "verified": true,
     "per100g": {
-      "kcal": 27,
-      "carbsG": 3.5,
-      "proteinG": 2.6,
+      "kcal": 15,
+      "carbsG": 1.4,
+      "proteinG": 1.7,
       "fatG": 0.3,
-      "fiberG": 2.2
+      "fiberG": 4.1
     },
     "servings": [
       {
@@ -20499,13 +20817,15 @@
       "honey"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:12026",
+    "verified": true,
     "per100g": {
-      "kcal": 304,
-      "carbsG": 82,
-      "proteinG": 0.3,
+      "kcal": 327,
+      "carbsG": 81.3,
+      "proteinG": 0.4,
       "fatG": 0,
-      "fiberG": 0.2
+      "fiberG": 0
     },
     "servings": [
       {
@@ -20535,12 +20855,14 @@
       "xot mayonnaise"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:13023",
+    "verified": true,
     "per100g": {
-      "kcal": 680,
-      "carbsG": 0.6,
-      "proteinG": 1,
-      "fatG": 75,
+      "kcal": 701,
+      "carbsG": 0.1,
+      "proteinG": 0,
+      "fatG": 77.8,
       "fiberG": 0
     },
     "servings": [
@@ -20572,13 +20894,15 @@
       "sesame seeds"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:3020",
+    "verified": true,
     "per100g": {
-      "kcal": 573,
-      "carbsG": 23,
-      "proteinG": 18,
-      "fatG": 50,
-      "fiberG": 12
+      "kcal": 568,
+      "carbsG": 17.6,
+      "proteinG": 20.1,
+      "fatG": 46.4,
+      "fiberG": 3.5
     },
     "servings": [
       {
@@ -20609,13 +20933,15 @@
       "ramen"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171177",
+    "verified": true,
     "per100g": {
       "kcal": 440,
-      "carbsG": 60,
-      "proteinG": 9,
-      "fatG": 18,
-      "fiberG": 3
+      "carbsG": 60.3,
+      "proteinG": 10.2,
+      "fatG": 17.6,
+      "fiberG": 2.9
     },
     "servings": [
       {
@@ -20645,13 +20971,15 @@
       "egg noodles"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "usda",
+    "sourceRef": "usda:169731",
+    "verified": true,
     "per100g": {
-      "kcal": 350,
-      "carbsG": 68,
-      "proteinG": 12,
-      "fatG": 4,
-      "fiberG": 3
+      "kcal": 384,
+      "carbsG": 71.3,
+      "proteinG": 14.2,
+      "fatG": 4.4,
+      "fiberG": 3.3
     },
     "servings": [
       {
@@ -20687,10 +21015,12 @@
       "pasta"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169736",
+    "verified": true,
     "per100g": {
       "kcal": 371,
-      "carbsG": 75,
+      "carbsG": 74.7,
       "proteinG": 13,
       "fatG": 1.5,
       "fiberG": 3.2
@@ -20725,11 +21055,13 @@
       "cooked pasta"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169737",
+    "verified": true,
     "per100g": {
       "kcal": 158,
-      "carbsG": 31,
-      "proteinG": 6,
+      "carbsG": 30.9,
+      "proteinG": 5.8,
       "fatG": 0.9,
       "fiberG": 1.8
     },
@@ -20762,13 +21094,15 @@
       "cellophane noodles"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:2015",
+    "verified": true,
     "per100g": {
-      "kcal": 350,
-      "carbsG": 86,
-      "proteinG": 0.2,
+      "kcal": 332,
+      "carbsG": 82.2,
+      "proteinG": 0.6,
       "fatG": 0.1,
-      "fiberG": 1
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -20804,12 +21138,14 @@
       "pork fat"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:6004",
+    "verified": true,
     "per100g": {
-      "kcal": 902,
+      "kcal": 896,
       "carbsG": 0,
       "proteinG": 0,
-      "fatG": 100,
+      "fatG": 99.6,
       "fiberG": 0
     },
     "servings": [
@@ -20842,13 +21178,15 @@
       "black fungus"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4121",
+    "verified": true,
     "per100g": {
-      "kcal": 284,
-      "carbsG": 70,
-      "proteinG": 9.3,
-      "fatG": 0.7,
-      "fiberG": 70
+      "kcal": 304,
+      "carbsG": 65,
+      "proteinG": 10.6,
+      "fatG": 0.2,
+      "fiberG": 7
     },
     "servings": [
       {
@@ -20880,13 +21218,15 @@
       "yellow mustard"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172234",
+    "verified": true,
     "per100g": {
-      "kcal": 66,
-      "carbsG": 6,
-      "proteinG": 4,
+      "kcal": 60,
+      "carbsG": 5.8,
+      "proteinG": 3.7,
       "fatG": 3.3,
-      "fiberG": 3.3
+      "fiberG": 4
     },
     "servings": [
       {
@@ -20916,12 +21256,14 @@
       "squid"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:8040",
+    "verified": true,
     "per100g": {
-      "kcal": 92,
-      "carbsG": 3,
-      "proteinG": 15,
-      "fatG": 1.4,
+      "kcal": 73,
+      "carbsG": 0,
+      "proteinG": 16.3,
+      "fatG": 0.9,
       "fiberG": 0
     },
     "servings": [
@@ -20957,7 +21299,9 @@
       "table salt"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:13005",
+    "verified": true,
     "per100g": {
       "kcal": 0,
       "carbsG": 0,
@@ -20993,12 +21337,14 @@
       "pork shoulder cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:167846",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
+      "kcal": 230,
       "carbsG": 0,
-      "proteinG": 25,
-      "fatG": 16,
+      "proteinG": 25.3,
+      "fatG": 13.5,
       "fiberG": 0
     },
     "servings": [
@@ -21029,12 +21375,14 @@
       "pork collar"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:7017",
+    "verified": true,
     "per100g": {
-      "kcal": 180,
+      "kcal": 139,
       "carbsG": 0,
-      "proteinG": 18,
-      "fatG": 12,
+      "proteinG": 19,
+      "fatG": 7,
       "fiberG": 0
     },
     "servings": [
@@ -21065,10 +21413,12 @@
       "oyster mushroom"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168580",
+    "verified": true,
     "per100g": {
       "kcal": 33,
-      "carbsG": 4.1,
+      "carbsG": 6.1,
       "proteinG": 3.3,
       "fatG": 0.4,
       "fiberG": 2.3
@@ -21100,13 +21450,15 @@
       "shiitake mushroom"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4123",
+    "verified": true,
     "per100g": {
-      "kcal": 34,
-      "carbsG": 5.2,
-      "proteinG": 2.2,
+      "kcal": 39,
+      "carbsG": 3.1,
+      "proteinG": 5.5,
       "fatG": 0.5,
-      "fiberG": 2.5
+      "fiberG": 3
     },
     "servings": [
       {
@@ -21135,10 +21487,12 @@
       "enoki mushroom"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169382",
+    "verified": true,
     "per100g": {
       "kcal": 37,
-      "carbsG": 5.9,
+      "carbsG": 7.8,
       "proteinG": 2.7,
       "fatG": 0.3,
       "fiberG": 2.7
@@ -21171,13 +21525,15 @@
       "white mushroom"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4124",
+    "verified": true,
     "per100g": {
-      "kcal": 22,
-      "carbsG": 1.7,
-      "proteinG": 3.1,
+      "kcal": 32,
+      "carbsG": 3.4,
+      "proteinG": 4,
       "fatG": 0.3,
-      "fiberG": 1
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -21207,13 +21563,15 @@
       "straw mushroom"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4125",
+    "verified": true,
     "per100g": {
-      "kcal": 22,
-      "carbsG": 2.5,
-      "proteinG": 2.7,
-      "fatG": 0.2,
-      "fiberG": 2.5
+      "kcal": 57,
+      "carbsG": 3.4,
+      "proteinG": 3.6,
+      "fatG": 3.2,
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -21243,11 +21601,13 @@
       "clam meat"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174214",
+    "verified": true,
     "per100g": {
       "kcal": 86,
-      "carbsG": 3,
-      "proteinG": 15,
+      "carbsG": 3.6,
+      "proteinG": 14.7,
       "fatG": 1,
       "fiberG": 0
     },
@@ -21281,13 +21641,15 @@
       "corn"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169998",
+    "verified": true,
     "per100g": {
       "kcal": 86,
-      "carbsG": 15.6,
-      "proteinG": 3.2,
-      "fatG": 1.2,
-      "fiberG": 2.7
+      "carbsG": 18.7,
+      "proteinG": 3.3,
+      "fatG": 1.4,
+      "fiberG": 2
     },
     "servings": [
       {
@@ -21319,12 +21681,14 @@
       "canned corn"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169216",
+    "verified": true,
     "per100g": {
-      "kcal": 81,
-      "carbsG": 18,
-      "proteinG": 2.9,
-      "fatG": 0.6,
+      "kcal": 79,
+      "carbsG": 19.4,
+      "proteinG": 2.4,
+      "fatG": 0.5,
       "fiberG": 2
     },
     "servings": [
@@ -21356,13 +21720,15 @@
       "breakfast cereal"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174648",
+    "verified": true,
     "per100g": {
-      "kcal": 357,
-      "carbsG": 84,
-      "proteinG": 7,
-      "fatG": 0.4,
-      "fiberG": 3
+      "kcal": 384,
+      "carbsG": 88,
+      "proteinG": 5.9,
+      "fatG": 0.9,
+      "fiberG": 2.7
     },
     "servings": [
       {
@@ -21393,10 +21759,12 @@
       "elbow pasta"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169737",
+    "verified": true,
     "per100g": {
-      "kcal": 157,
-      "carbsG": 31,
+      "kcal": 158,
+      "carbsG": 30.9,
       "proteinG": 5.8,
       "fatG": 0.9,
       "fiberG": 1.8
@@ -21429,13 +21797,15 @@
       "coconut milk"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "usda",
+    "sourceRef": "usda:170172",
+    "verified": true,
     "per100g": {
-      "kcal": 200,
-      "carbsG": 6,
-      "proteinG": 2,
-      "fatG": 20,
-      "fiberG": 0.5
+      "kcal": 230,
+      "carbsG": 5.5,
+      "proteinG": 2.3,
+      "fatG": 23.8,
+      "fiberG": 2.2
     },
     "servings": [
       {
@@ -21508,11 +21878,13 @@
       "fish sauce"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:13017",
+    "verified": true,
     "per100g": {
       "kcal": 35,
-      "carbsG": 4,
-      "proteinG": 6,
+      "carbsG": 3.6,
+      "proteinG": 5.1,
       "fatG": 0,
       "fiberG": 0
     },
@@ -21549,11 +21921,13 @@
       "sea snail"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:167744",
+    "verified": true,
     "per100g": {
       "kcal": 90,
       "carbsG": 2,
-      "proteinG": 16,
+      "proteinG": 16.1,
       "fatG": 1.4,
       "fiberG": 0
     },
@@ -21585,12 +21959,14 @@
       "walnuts"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170187",
+    "verified": true,
     "per100g": {
       "kcal": 654,
-      "carbsG": 14,
-      "proteinG": 15,
-      "fatG": 65,
+      "carbsG": 13.7,
+      "proteinG": 15.2,
+      "fatG": 65.2,
       "fiberG": 6.7
     },
     "servings": [
@@ -21620,9 +21996,11 @@
       "red bell pepper"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170108",
+    "verified": true,
     "per100g": {
-      "kcal": 31,
+      "kcal": 26,
       "carbsG": 6,
       "proteinG": 1,
       "fatG": 0.3,
@@ -21655,10 +22033,12 @@
       "green bell pepper"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170427",
+    "verified": true,
     "per100g": {
       "kcal": 20,
-      "carbsG": 3.6,
+      "carbsG": 4.6,
       "proteinG": 0.9,
       "fatG": 0.2,
       "fiberG": 1.7
@@ -21690,12 +22070,14 @@
       "cheddar cheese"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173414",
+    "verified": true,
     "per100g": {
       "kcal": 403,
       "carbsG": 3.4,
-      "proteinG": 23,
-      "fatG": 33,
+      "proteinG": 22.9,
+      "fatG": 33.3,
       "fiberG": 0
     },
     "servings": [
@@ -21725,12 +22107,14 @@
       "cream cheese"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173418",
+    "verified": true,
     "per100g": {
-      "kcal": 342,
-      "carbsG": 4.1,
-      "proteinG": 6,
-      "fatG": 34,
+      "kcal": 350,
+      "carbsG": 5.5,
+      "proteinG": 6.2,
+      "fatG": 34.4,
       "fiberG": 0
     },
     "servings": [
@@ -21761,12 +22145,14 @@
       "processed cheese"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171252",
+    "verified": true,
     "per100g": {
-      "kcal": 280,
-      "carbsG": 6,
-      "proteinG": 14,
-      "fatG": 22,
+      "kcal": 330,
+      "carbsG": 8.6,
+      "proteinG": 16.9,
+      "fatG": 25.6,
       "fiberG": 0
     },
     "servings": [
@@ -21797,12 +22183,14 @@
       "mozzarella cheese"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171244",
+    "verified": true,
     "per100g": {
-      "kcal": 280,
-      "carbsG": 3.1,
-      "proteinG": 28,
-      "fatG": 17,
+      "kcal": 295,
+      "carbsG": 5.6,
+      "proteinG": 23.8,
+      "fatG": 19.8,
       "fiberG": 0
     },
     "servings": [
@@ -21832,12 +22220,14 @@
       "parmesan cheese"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170848",
+    "verified": true,
     "per100g": {
-      "kcal": 431,
-      "carbsG": 4,
-      "proteinG": 38,
-      "fatG": 29,
+      "kcal": 392,
+      "carbsG": 3.2,
+      "proteinG": 35.8,
+      "fatG": 25,
       "fiberG": 0
     },
     "servings": [
@@ -21867,10 +22257,12 @@
       "hat diem mach"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168917",
+    "verified": true,
     "per100g": {
       "kcal": 120,
-      "carbsG": 21,
+      "carbsG": 21.3,
       "proteinG": 4.4,
       "fatG": 1.9,
       "fiberG": 2.8
@@ -21903,13 +22295,15 @@
       "morning glory"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4083",
+    "verified": true,
     "per100g": {
-      "kcal": 19,
+      "kcal": 25,
       "carbsG": 2.1,
-      "proteinG": 2.6,
-      "fatG": 0.2,
-      "fiberG": 2.1
+      "proteinG": 3.2,
+      "fatG": 0.4,
+      "fiberG": 1
     },
     "servings": [
       {
@@ -22015,7 +22409,9 @@
       "maple syrup"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169661",
+    "verified": true,
     "per100g": {
       "kcal": 260,
       "carbsG": 67,
@@ -22051,12 +22447,14 @@
       "scallops"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174220",
+    "verified": true,
     "per100g": {
-      "kcal": 88,
-      "carbsG": 3,
-      "proteinG": 17,
-      "fatG": 0.8,
+      "kcal": 69,
+      "carbsG": 3.2,
+      "proteinG": 12.1,
+      "fatG": 0.5,
       "fiberG": 0
     },
     "servings": [
@@ -22125,13 +22523,15 @@
       "bbq sauce"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174523",
+    "verified": true,
     "per100g": {
       "kcal": 172,
-      "carbsG": 41,
+      "carbsG": 40.8,
       "proteinG": 0.8,
       "fatG": 0.6,
-      "fiberG": 0.8
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -22163,13 +22563,15 @@
       "tomato sauce"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171192",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 9,
-      "proteinG": 1.8,
-      "fatG": 1.8,
-      "fiberG": 2
+      "kcal": 50,
+      "carbsG": 7.4,
+      "proteinG": 1.4,
+      "fatG": 1.6,
+      "fiberG": 1.8
     },
     "servings": [
       {
@@ -22200,13 +22602,15 @@
       "teriyaki sauce"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171167",
+    "verified": true,
     "per100g": {
       "kcal": 89,
-      "carbsG": 16,
+      "carbsG": 15.6,
       "proteinG": 5.9,
       "fatG": 0,
-      "fiberG": 0.3
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -22236,13 +22640,15 @@
       "chow chow"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4098",
+    "verified": true,
     "per100g": {
       "kcal": 19,
-      "carbsG": 3.7,
+      "carbsG": 3.6,
       "proteinG": 0.8,
       "fatG": 0.1,
-      "fiberG": 1.7
+      "fiberG": 1
     },
     "servings": [
       {
@@ -22273,11 +22679,13 @@
       "plain greek yogurt"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:170894",
+    "verified": true,
     "per100g": {
       "kcal": 59,
       "carbsG": 3.6,
-      "proteinG": 10,
+      "proteinG": 10.2,
       "fatG": 0.4,
       "fiberG": 0
     },
@@ -22310,12 +22718,14 @@
       "unsweetened yogurt"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:10004",
+    "verified": true,
     "per100g": {
       "kcal": 61,
-      "carbsG": 4.7,
-      "proteinG": 3.5,
-      "fatG": 3.3,
+      "carbsG": 3.6,
+      "proteinG": 3.3,
+      "fatG": 3.7,
       "fiberG": 0
     },
     "servings": [
@@ -22346,12 +22756,14 @@
       "condensed milk"
     ],
     "category": "nguyen-lieu",
-    "source": "label",
+    "source": "nin",
+    "sourceRef": "nin:10008",
+    "verified": true,
     "per100g": {
-      "kcal": 320,
-      "carbsG": 54,
-      "proteinG": 8,
-      "fatG": 9,
+      "kcal": 336,
+      "carbsG": 56,
+      "proteinG": 8.1,
+      "fatG": 8.8,
       "fiberG": 0
     },
     "servings": [
@@ -22387,7 +22799,9 @@
       "nonfat milk"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171269",
+    "verified": true,
     "per100g": {
       "kcal": 34,
       "carbsG": 5,
@@ -22424,12 +22838,14 @@
       "whole milk"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:10001",
+    "verified": true,
     "per100g": {
-      "kcal": 61,
+      "kcal": 74,
       "carbsG": 4.8,
-      "proteinG": 3.2,
-      "fatG": 3.3,
+      "proteinG": 3.9,
+      "fatG": 4.4,
       "fiberG": 0
     },
     "servings": [
@@ -22460,12 +22876,14 @@
       "pork ribs cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169178",
+    "verified": true,
     "per100g": {
-      "kcal": 290,
+      "kcal": 361,
       "carbsG": 0,
-      "proteinG": 25,
-      "fatG": 21,
+      "proteinG": 20.9,
+      "fatG": 30.9,
       "fiberG": 0
     },
     "servings": [
@@ -22496,12 +22914,14 @@
       "pork spare ribs"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:7053",
+    "verified": true,
     "per100g": {
-      "kcal": 220,
+      "kcal": 187,
       "carbsG": 0,
-      "proteinG": 17,
-      "fatG": 17,
+      "proteinG": 17.9,
+      "fatG": 12.8,
       "fiberG": 0
     },
     "servings": [
@@ -22532,13 +22952,15 @@
       "cauliflower"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4099",
+    "verified": true,
     "per100g": {
-      "kcal": 25,
-      "carbsG": 3.7,
-      "proteinG": 1.9,
-      "fatG": 0.3,
-      "fiberG": 2
+      "kcal": 30,
+      "carbsG": 4.8,
+      "proteinG": 2.5,
+      "fatG": 0.1,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -22568,12 +22990,14 @@
       "pork ear"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:7054",
+    "verified": true,
     "per100g": {
-      "kcal": 234,
-      "carbsG": 1,
-      "proteinG": 18,
-      "fatG": 17,
+      "kcal": 126,
+      "carbsG": 1.3,
+      "proteinG": 21,
+      "fatG": 4.1,
       "fiberG": 0
     },
     "servings": [
@@ -22603,13 +23027,14 @@
       "tempeh"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174272",
+    "verified": true,
     "per100g": {
-      "kcal": 193,
-      "carbsG": 9,
-      "proteinG": 19,
-      "fatG": 11,
-      "fiberG": 1.4
+      "kcal": 192,
+      "carbsG": 7.6,
+      "proteinG": 20.3,
+      "fatG": 10.8
     },
     "servings": [
       {
@@ -22638,12 +23063,14 @@
       "pork chop cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168232",
+    "verified": true,
     "per100g": {
-      "kcal": 230,
+      "kcal": 210,
       "carbsG": 0,
-      "proteinG": 30,
-      "fatG": 12,
+      "proteinG": 28.6,
+      "fatG": 9.8,
       "fiberG": 0
     },
     "servings": [
@@ -22676,12 +23103,14 @@
       "pork chop raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168230",
+    "verified": true,
     "per100g": {
-      "kcal": 145,
+      "kcal": 143,
       "carbsG": 0,
-      "proteinG": 21,
-      "fatG": 6,
+      "proteinG": 21.4,
+      "fatG": 5.7,
       "fiberG": 0
     },
     "servings": [
@@ -22715,13 +23144,15 @@
       "imitation crab"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174203",
+    "verified": true,
     "per100g": {
       "kcal": 95,
       "carbsG": 15,
-      "proteinG": 8,
+      "proteinG": 7.6,
       "fatG": 0.5,
-      "fiberG": 0
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -22752,12 +23183,14 @@
       "beef"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7003",
+    "verified": true,
     "per100g": {
-      "kcal": 175,
+      "kcal": 118,
       "carbsG": 0,
-      "proteinG": 22,
-      "fatG": 9,
+      "proteinG": 21,
+      "fatG": 3.8,
       "fiberG": 0
     },
     "servings": [
@@ -22793,12 +23226,14 @@
       "grilled beef"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171811",
+    "verified": true,
     "per100g": {
-      "kcal": 210,
+      "kcal": 200,
       "carbsG": 0,
       "proteinG": 29,
-      "fatG": 10,
+      "fatG": 8.4,
       "fiberG": 0
     },
     "servings": [
@@ -22830,12 +23265,14 @@
       "beef tenderloin raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171812",
+    "verified": true,
     "per100g": {
-      "kcal": 130,
+      "kcal": 153,
       "carbsG": 0,
-      "proteinG": 21,
-      "fatG": 5,
+      "proteinG": 22.1,
+      "fatG": 6.5,
       "fiberG": 0
     },
     "servings": [
@@ -22867,12 +23304,14 @@
       "minced beef cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171798",
+    "verified": true,
     "per100g": {
-      "kcal": 250,
+      "kcal": 246,
       "carbsG": 0,
-      "proteinG": 26,
-      "fatG": 15,
+      "proteinG": 24,
+      "fatG": 15.9,
       "fiberG": 0
     },
     "servings": [
@@ -22904,11 +23343,13 @@
       "minced beef"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:174036",
+    "verified": true,
     "per100g": {
       "kcal": 254,
       "carbsG": 0,
-      "proteinG": 17,
+      "proteinG": 17.2,
       "fatG": 20,
       "fiberG": 0
     },
@@ -22940,12 +23381,14 @@
       "canned crab meat"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171966",
+    "verified": true,
     "per100g": {
       "kcal": 83,
       "carbsG": 0,
-      "proteinG": 17,
-      "fatG": 1,
+      "proteinG": 17.9,
+      "fatG": 0.7,
       "fiberG": 0
     },
     "servings": [
@@ -22975,12 +23418,14 @@
       "lamb cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172480",
+    "verified": true,
     "per100g": {
-      "kcal": 258,
+      "kcal": 294,
       "carbsG": 0,
-      "proteinG": 25,
-      "fatG": 17,
+      "proteinG": 24.5,
+      "fatG": 20.9,
       "fiberG": 0
     },
     "servings": [
@@ -23011,12 +23456,14 @@
       "mutton raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:7010",
+    "verified": true,
     "per100g": {
-      "kcal": 195,
+      "kcal": 219,
       "carbsG": 0,
-      "proteinG": 18,
-      "fatG": 13,
+      "proteinG": 16.4,
+      "fatG": 17,
       "fiberG": 0
     },
     "servings": [
@@ -23047,12 +23494,14 @@
       "chicken"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7013",
+    "verified": true,
     "per100g": {
-      "kcal": 165,
+      "kcal": 199,
       "carbsG": 0,
-      "proteinG": 25,
-      "fatG": 7,
+      "proteinG": 20.3,
+      "fatG": 13.1,
       "fiberG": 0
     },
     "servings": [
@@ -23088,12 +23537,14 @@
       "minced chicken"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171116",
+    "verified": true,
     "per100g": {
       "kcal": 143,
       "carbsG": 0,
-      "proteinG": 17,
-      "fatG": 8,
+      "proteinG": 17.4,
+      "fatG": 8.1,
       "fiberG": 0
     },
     "servings": [
@@ -23124,12 +23575,14 @@
       "pork belly"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7018",
+    "verified": true,
     "per100g": {
-      "kcal": 290,
+      "kcal": 260,
       "carbsG": 0,
-      "proteinG": 17,
-      "fatG": 25,
+      "proteinG": 16.5,
+      "fatG": 21.5,
       "fiberG": 0
     },
     "servings": [
@@ -23165,12 +23618,14 @@
       "minced pork cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:167903",
+    "verified": true,
     "per100g": {
-      "kcal": 300,
+      "kcal": 297,
       "carbsG": 0,
-      "proteinG": 26,
-      "fatG": 21,
+      "proteinG": 25.7,
+      "fatG": 20.8,
       "fiberG": 0
     },
     "servings": [
@@ -23202,12 +23657,14 @@
       "minced pork"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:167902",
+    "verified": true,
     "per100g": {
-      "kcal": 260,
+      "kcal": 263,
       "carbsG": 0,
-      "proteinG": 17,
-      "fatG": 21,
+      "proteinG": 16.9,
+      "fatG": 21.2,
       "fiberG": 0
     },
     "servings": [
@@ -23238,11 +23695,13 @@
       "lean pork"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:7017",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
+      "kcal": 139,
       "carbsG": 0,
-      "proteinG": 21,
+      "proteinG": 19,
       "fatG": 7,
       "fiberG": 0
     },
@@ -23278,12 +23737,14 @@
       "duck meat skin on"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:7028",
+    "verified": true,
     "per100g": {
-      "kcal": 337,
+      "kcal": 267,
       "carbsG": 0,
-      "proteinG": 19,
-      "fatG": 28,
+      "proteinG": 17.8,
+      "fatG": 21.8,
       "fiberG": 0
     },
     "servings": [
@@ -23313,12 +23774,14 @@
       "bacon"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:167914",
+    "verified": true,
     "per100g": {
-      "kcal": 540,
+      "kcal": 548,
       "carbsG": 1.4,
-      "proteinG": 37,
-      "fatG": 42,
+      "proteinG": 35.7,
+      "fatG": 43.3,
       "fiberG": 0
     },
     "servings": [
@@ -23349,13 +23812,15 @@
       "ground pepper"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:13004",
+    "verified": true,
     "per100g": {
-      "kcal": 251,
-      "carbsG": 45.3,
-      "proteinG": 10,
-      "fatG": 3.3,
-      "fiberG": 25
+      "kcal": 231,
+      "carbsG": 34.1,
+      "proteinG": 7,
+      "fatG": 7.4,
+      "fiberG": 33.5
     },
     "servings": [
       {
@@ -23385,13 +23850,15 @@
       "garlic"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4103",
+    "verified": true,
     "per100g": {
-      "kcal": 149,
-      "carbsG": 33,
-      "proteinG": 6.4,
+      "kcal": 121,
+      "carbsG": 23,
+      "proteinG": 6,
       "fatG": 0.5,
-      "fiberG": 2.1
+      "fiberG": 1.5
     },
     "servings": [
       {
@@ -23421,12 +23888,14 @@
       "prawn"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:8051",
+    "verified": true,
     "per100g": {
-      "kcal": 85,
+      "kcal": 82,
       "carbsG": 0.9,
-      "proteinG": 20,
-      "fatG": 0.5,
+      "proteinG": 17.6,
+      "fatG": 0.9,
       "fiberG": 0
     },
     "servings": [
@@ -23462,12 +23931,14 @@
       "dried shrimp"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:8053",
+    "verified": true,
     "per100g": {
-      "kcal": 290,
-      "carbsG": 3,
-      "proteinG": 62,
-      "fatG": 3,
+      "kcal": 347,
+      "carbsG": 2.5,
+      "proteinG": 75.6,
+      "fatG": 3.8,
       "fiberG": 0
     },
     "servings": [
@@ -23498,12 +23969,14 @@
       "quail eggs"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:9007",
+    "verified": true,
     "per100g": {
-      "kcal": 158,
+      "kcal": 154,
       "carbsG": 0.4,
-      "proteinG": 13,
-      "fatG": 11,
+      "proteinG": 13.1,
+      "fatG": 11.1,
       "fiberG": 0
     },
     "servings": [
@@ -23534,12 +24007,14 @@
       "chicken egg"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:9001",
+    "verified": true,
     "per100g": {
-      "kcal": 155,
-      "carbsG": 1.1,
-      "proteinG": 13,
-      "fatG": 11,
+      "kcal": 166,
+      "carbsG": 0.5,
+      "proteinG": 14.8,
+      "fatG": 11.6,
       "fiberG": 0
     },
     "servings": [
@@ -23574,12 +24049,14 @@
       "duck egg"
     ],
     "category": "nguyen-lieu",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:9004",
+    "verified": true,
     "per100g": {
-      "kcal": 185,
-      "carbsG": 1.5,
+      "kcal": 184,
+      "carbsG": 1,
       "proteinG": 13,
-      "fatG": 14,
+      "fatG": 14.2,
       "fiberG": 0
     },
     "servings": [
@@ -23615,11 +24092,13 @@
       "tomato ketchup"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:168556",
+    "verified": true,
     "per100g": {
       "kcal": 101,
-      "carbsG": 27,
-      "proteinG": 1.2,
+      "carbsG": 27.4,
+      "proteinG": 1,
       "fatG": 0.1,
       "fiberG": 0.3
     },
@@ -23651,11 +24130,13 @@
       "hoisin sauce"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172886",
+    "verified": true,
     "per100g": {
       "kcal": 220,
-      "carbsG": 44,
-      "proteinG": 3,
+      "carbsG": 44.1,
+      "proteinG": 3.3,
       "fatG": 3.4,
       "fiberG": 2.8
     },
@@ -23687,11 +24168,13 @@
       "miso"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172442",
+    "verified": true,
     "per100g": {
-      "kcal": 199,
-      "carbsG": 26,
-      "proteinG": 12,
+      "kcal": 198,
+      "carbsG": 25.4,
+      "proteinG": 12.8,
       "fatG": 6,
       "fiberG": 5.4
     },
@@ -23725,13 +24208,15 @@
       "hot sauce"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171186",
+    "verified": true,
     "per100g": {
       "kcal": 93,
-      "carbsG": 19,
-      "proteinG": 2,
-      "fatG": 1,
-      "fiberG": 1.6
+      "carbsG": 19.2,
+      "proteinG": 1.9,
+      "fatG": 0.9,
+      "fiberG": 2.2
     },
     "servings": [
       {
@@ -23763,7 +24248,9 @@
       "chicken breast"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171477",
+    "verified": true,
     "per100g": {
       "kcal": 165,
       "carbsG": 0,
@@ -23799,11 +24286,13 @@
       "chicken breast raw"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171077",
+    "verified": true,
     "per100g": {
       "kcal": 120,
       "carbsG": 0,
-      "proteinG": 23,
+      "proteinG": 22.5,
       "fatG": 2.6,
       "fiberG": 0
     },
@@ -23834,13 +24323,14 @@
       "duck breast skinless cooked"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171511",
+    "verified": true,
     "per100g": {
-      "kcal": 201,
+      "kcal": 140,
       "carbsG": 0,
-      "proteinG": 24,
-      "fatG": 11,
-      "fiberG": 0
+      "proteinG": 27.6,
+      "fatG": 2.5
     },
     "servings": [
       {
@@ -23870,13 +24360,15 @@
       "protein powder"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173180",
+    "verified": true,
     "per100g": {
-      "kcal": 400,
-      "carbsG": 8,
-      "proteinG": 80,
-      "fatG": 5,
-      "fiberG": 0
+      "kcal": 352,
+      "carbsG": 6.3,
+      "proteinG": 78.1,
+      "fatG": 1.6,
+      "fiberG": 3.1
     },
     "servings": [
       {
@@ -23906,13 +24398,15 @@
       "lettuce"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4090",
+    "verified": true,
     "per100g": {
-      "kcal": 15,
-      "carbsG": 1.9,
-      "proteinG": 1.4,
-      "fatG": 0.2,
-      "fiberG": 1.3
+      "kcal": 17,
+      "carbsG": 1.8,
+      "proteinG": 1.5,
+      "fatG": 0.4,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -23942,12 +24436,14 @@
       "soy sauce"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:13022",
+    "verified": true,
     "per100g": {
       "kcal": 53,
-      "carbsG": 5,
-      "proteinG": 8,
-      "fatG": 0.6,
+      "carbsG": 6.8,
+      "proteinG": 6.3,
+      "fatG": 0,
       "fiberG": 0.8
     },
     "servings": [
@@ -24019,13 +24515,15 @@
       "sausage"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:172964",
+    "verified": true,
     "per100g": {
-      "kcal": 300,
-      "carbsG": 3,
-      "proteinG": 12,
-      "fatG": 27,
-      "fiberG": 0
+      "kcal": 269,
+      "carbsG": 0.3,
+      "proteinG": 12.8,
+      "fatG": 23.7,
+      "fiberG": 0.1
     },
     "servings": [
       {
@@ -24056,13 +24554,15 @@
       "rolled oats dry"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173904",
+    "verified": true,
     "per100g": {
-      "kcal": 389,
-      "carbsG": 66,
-      "proteinG": 17,
-      "fatG": 7,
-      "fiberG": 10
+      "kcal": 379,
+      "carbsG": 67.7,
+      "proteinG": 13.2,
+      "fatG": 6.5,
+      "fiberG": 10.1
     },
     "servings": [
       {
@@ -24094,7 +24594,9 @@
       "porridge"
     ],
     "category": "nguyen-lieu",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:173905",
+    "verified": true,
     "per100g": {
       "kcal": 71,
       "carbsG": 12,
@@ -24648,13 +25150,15 @@
       "avocado"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5042",
+    "verified": true,
     "per100g": {
-      "kcal": 160,
-      "carbsG": 6,
-      "proteinG": 2,
-      "fatG": 15,
-      "fiberG": 7
+      "kcal": 101,
+      "carbsG": 2.3,
+      "proteinG": 1.9,
+      "fatG": 9.4,
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -24689,13 +25193,15 @@
       "grapefruit"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5001",
+    "verified": true,
     "per100g": {
-      "kcal": 38,
-      "carbsG": 8.6,
-      "proteinG": 0.8,
-      "fatG": 0.04,
-      "fiberG": 1
+      "kcal": 30,
+      "carbsG": 7.3,
+      "proteinG": 0.2,
+      "fatG": 0,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -24725,13 +25231,15 @@
       "orange"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5002",
+    "verified": true,
     "per100g": {
-      "kcal": 47,
-      "carbsG": 12,
+      "kcal": 38,
+      "carbsG": 8.3,
       "proteinG": 0.9,
       "fatG": 0.1,
-      "fiberG": 2.4
+      "fiberG": 1.4
     },
     "servings": [
       {
@@ -24760,12 +25268,14 @@
       "rambutan"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5004",
+    "verified": true,
     "per100g": {
-      "kcal": 75,
-      "carbsG": 19,
-      "proteinG": 0.9,
-      "fatG": 0.2,
+      "kcal": 72,
+      "carbsG": 16.4,
+      "proteinG": 1.5,
+      "fatG": 0,
       "fiberG": 1.3
     },
     "servings": [
@@ -24800,13 +25310,15 @@
       "banana"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5007",
+    "verified": true,
     "per100g": {
-      "kcal": 89,
-      "carbsG": 23,
-      "proteinG": 1.1,
-      "fatG": 0.3,
-      "fiberG": 2.6
+      "kcal": 97,
+      "carbsG": 22.2,
+      "proteinG": 1.5,
+      "fatG": 0.2,
+      "fiberG": 0.8
     },
     "servings": [
       {
@@ -24841,13 +25353,15 @@
       "june plum"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5043",
+    "verified": true,
     "per100g": {
-      "kcal": 45,
-      "carbsG": 11,
-      "proteinG": 0.8,
-      "fatG": 0.2,
-      "fiberG": 2
+      "kcal": 58,
+      "carbsG": 12.8,
+      "proteinG": 1.8,
+      "fatG": 0,
+      "fiberG": 0.9
     },
     "servings": [
       {
@@ -24882,12 +25396,14 @@
       "peach"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5016",
+    "verified": true,
     "per100g": {
-      "kcal": 39,
-      "carbsG": 8.2,
+      "kcal": 31,
+      "carbsG": 6.3,
       "proteinG": 0.9,
-      "fatG": 0.3,
+      "fatG": 0.2,
       "fiberG": 1.5
     },
     "servings": [
@@ -24918,13 +25434,15 @@
       "strawberries"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5009",
+    "verified": true,
     "per100g": {
-      "kcal": 32,
-      "carbsG": 6.6,
-      "proteinG": 0.7,
-      "fatG": 0.3,
-      "fiberG": 2
+      "kcal": 43,
+      "carbsG": 8.1,
+      "proteinG": 1.8,
+      "fatG": 0.4,
+      "fiberG": 4
     },
     "servings": [
       {
@@ -24954,13 +25472,15 @@
       "papaya"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5017",
+    "verified": true,
     "per100g": {
-      "kcal": 43,
-      "carbsG": 11,
-      "proteinG": 0.5,
-      "fatG": 0.3,
-      "fiberG": 1.7
+      "kcal": 36,
+      "carbsG": 7.6,
+      "proteinG": 1,
+      "fatG": 0.1,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -24996,13 +25516,15 @@
       "pineapple"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5015",
+    "verified": true,
     "per100g": {
-      "kcal": 50,
-      "carbsG": 13,
+      "kcal": 38,
+      "carbsG": 8.8,
       "proteinG": 0.5,
       "fatG": 0.1,
-      "fiberG": 1.4
+      "fiberG": 0.4
     },
     "servings": [
       {
@@ -25034,13 +25556,15 @@
       "snake melon"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:4028",
+    "verified": true,
     "per100g": {
-      "kcal": 24,
-      "carbsG": 5.2,
-      "proteinG": 0.6,
-      "fatG": 0.1,
-      "fiberG": 0.6
+      "kcal": 11,
+      "carbsG": 2,
+      "proteinG": 0.8,
+      "fatG": 0,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -25070,13 +25594,15 @@
       "watermelon"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5011",
+    "verified": true,
     "per100g": {
-      "kcal": 30,
-      "carbsG": 6.8,
-      "proteinG": 0.6,
+      "kcal": 16,
+      "carbsG": 2.3,
+      "proteinG": 1.2,
       "fatG": 0.2,
-      "fiberG": 0.4
+      "fiberG": 0.5
     },
     "servings": [
       {
@@ -25111,10 +25637,12 @@
       "muskmelon"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:169092",
+    "verified": true,
     "per100g": {
       "kcal": 34,
-      "carbsG": 8,
+      "carbsG": 8.2,
       "proteinG": 0.8,
       "fatG": 0.2,
       "fiberG": 0.9
@@ -25147,13 +25675,15 @@
       "persimmon"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5020",
+    "verified": true,
     "per100g": {
-      "kcal": 70,
-      "carbsG": 16.5,
-      "proteinG": 0.6,
+      "kcal": 29,
+      "carbsG": 6,
+      "proteinG": 0.7,
       "fatG": 0.2,
-      "fiberG": 3.6
+      "fiberG": 2.5
     },
     "servings": [
       {
@@ -25181,10 +25711,12 @@
       "kiwi"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5056",
+    "verified": true,
     "per100g": {
-      "kcal": 61,
-      "carbsG": 15,
+      "kcal": 56,
+      "carbsG": 11.7,
       "proteinG": 1.1,
       "fatG": 0.5,
       "fiberG": 3
@@ -25215,13 +25747,15 @@
       "pear"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5023",
+    "verified": true,
     "per100g": {
-      "kcal": 57,
-      "carbsG": 15,
-      "proteinG": 0.4,
-      "fatG": 0.1,
-      "fiberG": 3.1
+      "kcal": 45,
+      "carbsG": 10.2,
+      "proteinG": 0.7,
+      "fatG": 0.2,
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -25250,13 +25784,15 @@
       "pomegranate"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5024",
+    "verified": true,
     "per100g": {
-      "kcal": 83,
-      "carbsG": 19,
-      "proteinG": 1.7,
-      "fatG": 1.2,
-      "fiberG": 4
+      "kcal": 70,
+      "carbsG": 16.2,
+      "proteinG": 0.6,
+      "fatG": 0.3,
+      "fiberG": 2.5
     },
     "servings": [
       {
@@ -25286,10 +25822,12 @@
       "raspberries"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:167755",
+    "verified": true,
     "per100g": {
       "kcal": 52,
-      "carbsG": 10.2,
+      "carbsG": 11.9,
       "proteinG": 1.2,
       "fatG": 0.7,
       "fiberG": 6.5
@@ -25322,13 +25860,15 @@
       "plum"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5027",
+    "verified": true,
     "per100g": {
-      "kcal": 46,
-      "carbsG": 11,
-      "proteinG": 0.7,
-      "fatG": 0.3,
-      "fiberG": 1.4
+      "kcal": 20,
+      "carbsG": 3.9,
+      "proteinG": 0.6,
+      "fatG": 0.2,
+      "fiberG": 0.7
     },
     "servings": [
       {
@@ -25397,13 +25937,15 @@
       "tamarind"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "usda",
+    "sourceRef": "usda:167763",
+    "verified": true,
     "per100g": {
-      "kcal": 240,
-      "carbsG": 62,
+      "kcal": 239,
+      "carbsG": 62.5,
       "proteinG": 2.8,
       "fatG": 0.6,
-      "fiberG": 5
+      "fiberG": 5.1
     },
     "servings": [
       {
@@ -25437,10 +25979,12 @@
       "jackfruit"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "usda",
+    "sourceRef": "usda:174687",
+    "verified": true,
     "per100g": {
       "kcal": 95,
-      "carbsG": 23,
+      "carbsG": 23.3,
       "proteinG": 1.7,
       "fatG": 0.6,
       "fiberG": 1.5
@@ -25477,13 +26021,15 @@
       "longan"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5035",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 15,
-      "proteinG": 1.3,
+      "kcal": 48,
+      "carbsG": 10.9,
+      "proteinG": 0.9,
       "fatG": 0.1,
-      "fiberG": 1.1
+      "fiberG": 1
     },
     "servings": [
       {
@@ -25517,13 +26063,15 @@
       "grapes"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5037",
+    "verified": true,
     "per100g": {
-      "kcal": 69,
-      "carbsG": 18,
-      "proteinG": 0.7,
+      "kcal": 68,
+      "carbsG": 16.3,
+      "proteinG": 0.4,
       "fatG": 0.2,
-      "fiberG": 0.9
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -25552,13 +26100,15 @@
       "guava"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5040",
+    "verified": true,
     "per100g": {
-      "kcal": 68,
-      "carbsG": 14,
-      "proteinG": 2.6,
+      "kcal": 38,
+      "carbsG": 6.8,
+      "proteinG": 0.6,
       "fatG": 1,
-      "fiberG": 5
+      "fiberG": 6
     },
     "servings": [
       {
@@ -25593,13 +26143,15 @@
       "tangerine"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5047",
+    "verified": true,
     "per100g": {
-      "kcal": 53,
-      "carbsG": 13,
+      "kcal": 39,
+      "carbsG": 8.3,
       "proteinG": 0.8,
       "fatG": 0.3,
-      "fiberG": 1.8
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -25670,13 +26222,15 @@
       "durian"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5048",
+    "verified": true,
     "per100g": {
-      "kcal": 150,
-      "carbsG": 27,
-      "proteinG": 1.5,
-      "fatG": 5,
-      "fiberG": 3.8
+      "kcal": 132,
+      "carbsG": 26.9,
+      "proteinG": 2.5,
+      "fatG": 1.6,
+      "fiberG": 1.4
     },
     "servings": [
       {
@@ -25710,13 +26264,15 @@
       "apple"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "nin",
+    "sourceRef": "nin:5051",
+    "verified": true,
     "per100g": {
-      "kcal": 52,
-      "carbsG": 12.3,
-      "proteinG": 0.3,
+      "kcal": 48,
+      "carbsG": 11,
+      "proteinG": 0.5,
       "fatG": 0.2,
-      "fiberG": 2.4
+      "fiberG": 0.6
     },
     "servings": [
       {
@@ -25745,13 +26301,15 @@
       "dragon fruit"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5044",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 13,
-      "proteinG": 1.2,
-      "fatG": 0.4,
-      "fiberG": 3
+      "kcal": 40,
+      "carbsG": 8.7,
+      "proteinG": 1.3,
+      "fatG": 0,
+      "fiberG": 1.8
     },
     "servings": [
       {
@@ -25785,13 +26343,15 @@
       "lychee"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5052",
+    "verified": true,
     "per100g": {
-      "kcal": 66,
-      "carbsG": 16.5,
-      "proteinG": 0.8,
+      "kcal": 45,
+      "carbsG": 9.6,
+      "proteinG": 0.7,
       "fatG": 0.4,
-      "fiberG": 1.3
+      "fiberG": 1.1
     },
     "servings": [
       {
@@ -25826,10 +26386,12 @@
       "blueberries"
     ],
     "category": "trai-cay",
-    "source": "generic",
+    "source": "usda",
+    "sourceRef": "usda:171711",
+    "verified": true,
     "per100g": {
       "kcal": 57,
-      "carbsG": 14,
+      "carbsG": 14.5,
       "proteinG": 0.7,
       "fatG": 0.3,
       "fiberG": 2.4
@@ -25862,13 +26424,15 @@
       "mango"
     ],
     "category": "trai-cay",
-    "source": "recipe-estimate",
+    "source": "nin",
+    "sourceRef": "nin:5055",
+    "verified": true,
     "per100g": {
-      "kcal": 60,
-      "carbsG": 15,
-      "proteinG": 0.8,
-      "fatG": 0.4,
-      "fiberG": 1.6
+      "kcal": 62,
+      "carbsG": 14.1,
+      "proteinG": 0.6,
+      "fatG": 0.3,
+      "fiberG": 1.8
     },
     "servings": [
       {

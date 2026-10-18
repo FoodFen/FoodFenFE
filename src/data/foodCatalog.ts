@@ -51,7 +51,7 @@ const SCORE = {
 } as const;
 
 /** Label facts and institute figures rank above recipe estimates. */
-const TRUSTED_SOURCES = new Set(['label', 'nin']);
+const TRUSTED_SOURCES = new Set(['label', 'nin', 'usda']);
 
 function baseScore(food: BuiltCatalogFood, tokens: string[], folded: string): number {
   const everyTokenHits = tokens.every(
