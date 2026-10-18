@@ -249,10 +249,7 @@ function AppShell({ migrated }: { migrated: boolean }) {
             options={{ title: t('dishes', 'restaurantTitle') }}
           />
           <Stack.Screen name="dish-list" options={{ title: t('dishes', 'allTitle') }} />
-          <Stack.Screen
-            name="chat"
-            options={{ title: t('chat', 'layoutTitle'), presentation: 'modal' }}
-          />
+          <Stack.Screen name="chat" options={{ title: t('chat', 'layoutTitle') }} />
         </Stack.Protected>
 
         {/* Reachable at any time from Profile — "sign in to sync" — and gating
