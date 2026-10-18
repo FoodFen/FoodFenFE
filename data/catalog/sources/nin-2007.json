@@ -1,0 +1,9470 @@
+[
+  {
+    "code": "1001",
+    "stt": 1,
+    "page": 14,
+    "nameEn": "Glutinous rice, milled",
+    "nameVi": "Gạo nếp cái",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 344,
+      "kj": 1441,
+      "proteinG": 8.6,
+      "fatG": 1.5,
+      "carbsG": 74.5,
+      "fiberG": 0.6,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "1002",
+    "stt": 2,
+    "page": 15,
+    "nameEn": "Glutinous rice, milled",
+    "nameVi": "Gạo nếp máy (loại thường)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 13.9,
+      "kcal": 346,
+      "kj": 1447,
+      "proteinG": 8.4,
+      "fatG": 1.6,
+      "carbsG": 74.9,
+      "fiberG": 0.5,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "1003",
+    "stt": 3,
+    "page": 16,
+    "nameEn": "Under milled, home-pounded rice",
+    "nameVi": "Gạo tẻ giã",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 344,
+      "kj": 1439,
+      "proteinG": 8.1,
+      "fatG": 1.3,
+      "carbsG": 75,
+      "fiberG": 0.7,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "1004",
+    "stt": 4,
+    "page": 17,
+    "nameEn": "Ordinary polished rice",
+    "nameVi": "Gạo tẻ máy",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 344,
+      "kj": 1439,
+      "proteinG": 7.9,
+      "fatG": 1,
+      "carbsG": 75.9,
+      "fiberG": 0.4,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "1005",
+    "stt": 5,
+    "page": 18,
+    "nameEn": "Rice, brown or hulled",
+    "nameVi": "Gạo lứt",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 12.4,
+      "kcal": 345,
+      "kj": 1443,
+      "proteinG": 7.5,
+      "fatG": 2.7,
+      "carbsG": 72.8,
+      "fiberG": 3.4,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "1006",
+    "stt": 6,
+    "page": 19,
+    "nameEn": "Foxtail millet",
+    "nameVi": "Kê",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 331,
+      "kj": 1385,
+      "proteinG": 7,
+      "fatG": 3,
+      "carbsG": 69,
+      "fiberG": 3.4,
+      "ashG": 3.6
+    }
+  },
+  {
+    "code": "1007",
+    "stt": 7,
+    "page": 20,
+    "nameEn": "Fresh maize seeds, raw",
+    "nameVi": "Ngô bắp tươi",
+    "wastePct": 45,
+    "per100g": {
+      "waterG": 52,
+      "kcal": 196,
+      "kj": 818,
+      "proteinG": 4.1,
+      "fatG": 2.3,
+      "carbsG": 39.6,
+      "fiberG": 1.2,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "1008",
+    "stt": 8,
+    "page": 21,
+    "nameEn": "Yellow maize, dried seeds",
+    "nameVi": "Ngô vàng hạt khô",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 354,
+      "kj": 1482,
+      "proteinG": 8.6,
+      "fatG": 4.7,
+      "carbsG": 69.4,
+      "fiberG": 2,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "1009",
+    "stt": 9,
+    "page": 22,
+    "nameEn": "Ball shaped dumpling, Vietnamese steamed buns",
+    "nameVi": "Bánh bao nhân thịt",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 44,
+      "kcal": 219,
+      "kj": 916,
+      "proteinG": 6.1,
+      "fatG": 0.5,
+      "carbsG": 47.5,
+      "fiberG": 0.5,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "1010",
+    "stt": 10,
+    "page": 23,
+    "nameEn": "Rice paper for rollers",
+    "nameVi": "Bánh đa nem",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 15,
+      "kcal": 333,
+      "kj": 1394,
+      "proteinG": 4,
+      "fatG": 0.2,
+      "carbsG": 78.9,
+      "fiberG": 0.5,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "1011",
+    "stt": 11,
+    "page": 24,
+    "nameEn": "Rice pudding",
+    "nameVi": "Bánh đúc",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 86.8,
+      "kcal": 52,
+      "kj": 215,
+      "proteinG": 0.9,
+      "fatG": 0.3,
+      "carbsG": 11.3,
+      "fiberG": 0.1,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "1012",
+    "stt": 12,
+    "page": 25,
+    "nameEn": "French bread",
+    "nameVi": "Bánh mỳ",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 37.2,
+      "kcal": 249,
+      "kj": 1043,
+      "proteinG": 7.9,
+      "fatG": 0.8,
+      "carbsG": 52.6,
+      "fiberG": 0.2,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "1013",
+    "stt": 13,
+    "page": 26,
+    "nameEn": "Rice noodles",
+    "nameVi": "Bánh phở",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 64.3,
+      "kcal": 143,
+      "kj": 599,
+      "proteinG": 3.2,
+      "fatG": 0.4,
+      "carbsG": 31.7,
+      "fiberG": 0,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "1014",
+    "stt": 14,
+    "page": 27,
+    "nameEn": "Wheat fritters twisted fried",
+    "nameVi": "Bánh quẩy",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 38.7,
+      "kcal": 292,
+      "kj": 1222,
+      "proteinG": 8,
+      "fatG": 10.8,
+      "carbsG": 40.7,
+      "fiberG": 0.7,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "1015",
+    "stt": 15,
+    "page": 28,
+    "nameEn": "Corn flakes",
+    "nameVi": "Bỏng ngô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 3,
+      "kcal": 372,
+      "kj": 1556,
+      "proteinG": 8.6,
+      "fatG": 1.6,
+      "carbsG": 80.8,
+      "fiberG": 3.4,
+      "ashG": 2.6
+    }
+  },
+  {
+    "code": "1016",
+    "stt": 16,
+    "page": 29,
+    "nameEn": "Glutinous rice flour",
+    "nameVi": "Bột gạo nếp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 10,
+      "kcal": 362,
+      "kj": 1516,
+      "proteinG": 8.2,
+      "fatG": 1.6,
+      "carbsG": 78.8,
+      "fiberG": 0.6,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "1017",
+    "stt": 17,
+    "page": 30,
+    "nameEn": "Rice ordinary flour",
+    "nameVi": "Bột gạo tẻ",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 10,
+      "kcal": 359,
+      "kj": 1501,
+      "proteinG": 6.6,
+      "fatG": 0.4,
+      "carbsG": 82.2,
+      "fiberG": 0.4,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "1018",
+    "stt": 18,
+    "page": 31,
+    "nameEn": "Wheat flour",
+    "nameVi": "Bột mì",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 346,
+      "kj": 1446,
+      "proteinG": 10.3,
+      "fatG": 1.1,
+      "carbsG": 73.6,
+      "fiberG": 0.3,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "1019",
+    "stt": 19,
+    "page": 32,
+    "nameEn": "Yellow maize flour",
+    "nameVi": "Bột ngô vàng",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 12,
+      "kcal": 361,
+      "kj": 1511,
+      "proteinG": 8.3,
+      "fatG": 4,
+      "carbsG": 73,
+      "fiberG": 1.5,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "1020",
+    "stt": 20,
+    "page": 33,
+    "nameEn": "Rice vermicelli",
+    "nameVi": "Bún",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 72,
+      "kcal": 110,
+      "kj": 459,
+      "proteinG": 1.7,
+      "fatG": null,
+      "carbsG": 25.7,
+      "fiberG": 0.5,
+      "ashG": 0.1
+    }
+  },
+  {
+    "code": "1021",
+    "stt": 21,
+    "page": 34,
+    "nameEn": "Rice, unriped. Raw",
+    "nameVi": "Cốm",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 25,
+      "kcal": 297,
+      "kj": 1242,
+      "proteinG": 6.1,
+      "fatG": 0.8,
+      "carbsG": 66.3,
+      "fiberG": 0.6,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "1022",
+    "stt": 22,
+    "page": 35,
+    "nameEn": "Wheat noodles",
+    "nameVi": "Mỳ sợi",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 13,
+      "kcal": 349,
+      "kj": 1460,
+      "proteinG": 11,
+      "fatG": 0.9,
+      "carbsG": 74.2,
+      "fiberG": 0.3,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "1023",
+    "stt": 23,
+    "page": 36,
+    "nameEn": "Glutinous maize, boiled",
+    "nameVi": "Ngô nếp luộc",
+    "wastePct": 50,
+    "per100g": {
+      "waterG": 59,
+      "kcal": 167,
+      "kj": 699,
+      "proteinG": 3.9,
+      "fatG": 2.2,
+      "carbsG": 32.9,
+      "fiberG": 1.2,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "2001",
+    "stt": 24,
+    "page": 39,
+    "nameEn": "Water-caltrops",
+    "nameVi": "Củ ấu",
+    "wastePct": 50,
+    "per100g": {
+      "waterG": 69.2,
+      "kcal": 115,
+      "kj": 481,
+      "proteinG": 3.6,
+      "fatG": 0.5,
+      "carbsG": 24,
+      "fiberG": 1,
+      "ashG": 1.7
+    }
+  },
+  {
+    "code": "2002",
+    "stt": 25,
+    "page": 40,
+    "nameEn": "Yam winged",
+    "nameVi": "Củ cái",
+    "wastePct": 15,
+    "per100g": {
+      "waterG": 65.5,
+      "kcal": 127,
+      "kj": 532,
+      "proteinG": 3.1,
+      "fatG": 0.2,
+      "carbsG": 28.3,
+      "fiberG": 1.8,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "2003",
+    "stt": 26,
+    "page": 41,
+    "nameEn": "Bermuda tuber",
+    "nameVi": "Củ dong",
+    "wastePct": 4,
+    "per100g": {
+      "waterG": 66.5,
+      "kcal": 119,
+      "kj": 499,
+      "proteinG": 1.4,
+      "fatG": null,
+      "carbsG": 28.4,
+      "fiberG": 2.4,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "2004",
+    "stt": 27,
+    "page": 42,
+    "nameEn": "Bitter cassava",
+    "nameVi": "Củ sắn",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 60,
+      "kcal": 152,
+      "kj": 635,
+      "proteinG": 1.1,
+      "fatG": 0.2,
+      "carbsG": 36.4,
+      "fiberG": 1.5,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "2005",
+    "stt": 28,
+    "page": 43,
+    "nameEn": "Radix puerariae",
+    "nameVi": "Củ sắn dây",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 60.3,
+      "kcal": 119,
+      "kj": 499,
+      "proteinG": 1.6,
+      "fatG": 0.1,
+      "carbsG": 28,
+      "fiberG": 9.2,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "2006",
+    "stt": 29,
+    "page": 44,
+    "nameEn": "Nymphaea stellata wild, dried, unshelled",
+    "nameVi": "Củ súng khô (đã bỏ vỏ)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 8.6,
+      "kcal": 350,
+      "kj": 1465,
+      "proteinG": 16.1,
+      "fatG": 0.5,
+      "carbsG": 70.3,
+      "fiberG": 2.3,
+      "ashG": 2.2
+    }
+  },
+  {
+    "code": "2007",
+    "stt": 30,
+    "page": 45,
+    "nameEn": "Igname Yam, Chinese",
+    "nameVi": "Củ từ",
+    "wastePct": 6,
+    "per100g": {
+      "waterG": 75,
+      "kcal": 92,
+      "kj": 385,
+      "proteinG": 1.5,
+      "fatG": null,
+      "carbsG": 21.5,
+      "fiberG": 1.2,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "2008",
+    "stt": 31,
+    "page": 46,
+    "nameEn": "Sweet potato, white",
+    "nameVi": "Khoai lang",
+    "wastePct": 17,
+    "per100g": {
+      "waterG": 68,
+      "kcal": 119,
+      "kj": 498,
+      "proteinG": 0.8,
+      "fatG": 0.2,
+      "carbsG": 28.5,
+      "fiberG": 1.3,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "2009",
+    "stt": 32,
+    "page": 47,
+    "nameEn": "Sweet potato, yellow",
+    "nameVi": "Khoai lang nghệ",
+    "wastePct": 13,
+    "per100g": {
+      "waterG": 69.9,
+      "kcal": 116,
+      "kj": 485,
+      "proteinG": 1.2,
+      "fatG": 0.3,
+      "carbsG": 27.1,
+      "fiberG": 0.8,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "2010",
+    "stt": 33,
+    "page": 48,
+    "nameEn": "Chinese Yam, spiny yam",
+    "nameVi": "Khoai môn",
+    "wastePct": 14,
+    "per100g": {
+      "waterG": 70.8,
+      "kcal": 109,
+      "kj": 454,
+      "proteinG": 1.5,
+      "fatG": 0.2,
+      "carbsG": 25.2,
+      "fiberG": 1.2,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "2011",
+    "stt": 34,
+    "page": 49,
+    "nameEn": "Water-taro",
+    "nameVi": "Khoai nước",
+    "wastePct": 14,
+    "per100g": {
+      "waterG": 72.5,
+      "kcal": 98,
+      "kj": 410,
+      "proteinG": 1,
+      "fatG": 0.1,
+      "carbsG": 23.3,
+      "fiberG": 2,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "2012",
+    "stt": 35,
+    "page": 50,
+    "nameEn": "Edible canna",
+    "nameVi": "Khoai riềng",
+    "wastePct": 19,
+    "per100g": {
+      "waterG": 70,
+      "kcal": 104,
+      "kj": 433,
+      "proteinG": 0.8,
+      "fatG": null,
+      "carbsG": 25.1,
+      "fiberG": 2.5,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "2013",
+    "stt": 36,
+    "page": 51,
+    "nameEn": "Taro tuber",
+    "nameVi": "Khoai sọ",
+    "wastePct": 18,
+    "per100g": {
+      "waterG": 69,
+      "kcal": 114,
+      "kj": 477,
+      "proteinG": 1.8,
+      "fatG": 0.1,
+      "carbsG": 26.5,
+      "fiberG": 1.2,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "2014",
+    "stt": 37,
+    "page": 52,
+    "nameEn": "Potato, white",
+    "nameVi": "Khoai tây",
+    "wastePct": 13,
+    "per100g": {
+      "waterG": 75,
+      "kcal": 93,
+      "kj": 387,
+      "proteinG": 2,
+      "fatG": 0.1,
+      "carbsG": 20.9,
+      "fiberG": 1,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "2015",
+    "stt": 38,
+    "page": 53,
+    "nameEn": "Vermicelli from Bermuda tuber",
+    "nameVi": "Miến dong",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14.5,
+      "kcal": 332,
+      "kj": 1390,
+      "proteinG": 0.6,
+      "fatG": 0.1,
+      "carbsG": 82.2,
+      "fiberG": 1.5,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "2016",
+    "stt": 39,
+    "page": 54,
+    "nameEn": "Bermuda flour",
+    "nameVi": "Bột dong lọc",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 341,
+      "kj": 1428,
+      "proteinG": 0.6,
+      "fatG": null,
+      "carbsG": 84.7,
+      "fiberG": 0.5,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "2017",
+    "stt": 40,
+    "page": 55,
+    "nameEn": "Sweet potato flour",
+    "nameVi": "Bột khoai lang",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 334,
+      "kj": 1398,
+      "proteinG": 2.2,
+      "fatG": 0.5,
+      "carbsG": 80.2,
+      "fiberG": 1.6,
+      "ashG": 1.5
+    }
+  },
+  {
+    "code": "2018",
+    "stt": 41,
+    "page": 56,
+    "nameEn": "Canna edulis Ker, flour",
+    "nameVi": "Bột khoai riềng (bột đao)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 337,
+      "kj": 1411,
+      "proteinG": 0.2,
+      "fatG": null,
+      "carbsG": 84.1,
+      "fiberG": 1.5,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "2019",
+    "stt": 42,
+    "page": 57,
+    "nameEn": "Potato flour, white",
+    "nameVi": "Bột khoai tây (lọc)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 13.6,
+      "kcal": 345,
+      "kj": 1441,
+      "proteinG": 1,
+      "fatG": 0.3,
+      "carbsG": 84.4,
+      "fiberG": 0.4,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "2020",
+    "stt": 43,
+    "page": 58,
+    "nameEn": "Cassava flour",
+    "nameVi": "Bột sắn",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 333,
+      "kj": 1391,
+      "proteinG": 2.4,
+      "fatG": 0.5,
+      "carbsG": 79.6,
+      "fiberG": 2.2,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "2021",
+    "stt": 44,
+    "page": 59,
+    "nameEn": "Radix puerariae flour",
+    "nameVi": "Bột sắn dây",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 340,
+      "kj": 1423,
+      "proteinG": 0.7,
+      "fatG": null,
+      "carbsG": 84.3,
+      "fiberG": 0.8,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "2022",
+    "stt": 45,
+    "page": 60,
+    "nameEn": "Sweet potato, dried",
+    "nameVi": "Khoai lang khô",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 11,
+      "kcal": 333,
+      "kj": 1395,
+      "proteinG": 2.2,
+      "fatG": 0.5,
+      "carbsG": 80,
+      "fiberG": 3.6,
+      "ashG": 2.7
+    }
+  },
+  {
+    "code": "2023",
+    "stt": 46,
+    "page": 61,
+    "nameEn": "Potato, white, dried",
+    "nameVi": "Khoai tây khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 11,
+      "kcal": 330,
+      "kj": 1379,
+      "proteinG": 6.6,
+      "fatG": 0.3,
+      "carbsG": 75.1,
+      "fiberG": 3.4,
+      "ashG": 3.6
+    }
+  },
+  {
+    "code": "2024",
+    "stt": 47,
+    "page": 62,
+    "nameEn": "Potato crisp, fried",
+    "nameVi": "Khoai tây lát chiên",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 3,
+      "kcal": 525,
+      "kj": 2195,
+      "proteinG": 2.2,
+      "fatG": 35.4,
+      "carbsG": 49.3,
+      "fiberG": 6.3,
+      "ashG": 3.8
+    }
+  },
+  {
+    "code": "2025",
+    "stt": 48,
+    "page": 63,
+    "nameEn": "Dried bitter cassava",
+    "nameVi": "Sắn khô",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 11,
+      "kcal": 340,
+      "kj": 1420,
+      "proteinG": 3,
+      "fatG": 0.7,
+      "carbsG": 80.3,
+      "fiberG": 3,
+      "ashG": 2
+    }
+  },
+  {
+    "code": "2026",
+    "stt": 49,
+    "page": 64,
+    "nameEn": "Tapioca, pearls E.P",
+    "nameVi": "Trân châu sắn",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 341,
+      "kj": 1428,
+      "proteinG": 1,
+      "fatG": null,
+      "carbsG": 84.3,
+      "fiberG": 0.6,
+      "ashG": 0.1
+    }
+  },
+  {
+    "code": "3001",
+    "stt": 50,
+    "page": 67,
+    "nameEn": "Coconut meat, mature, raw",
+    "nameVi": "Cùi dừa già",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 47.6,
+      "kcal": 368,
+      "kj": 1540,
+      "proteinG": 4.8,
+      "fatG": 36,
+      "carbsG": 6.2,
+      "fiberG": 4.2,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "3002",
+    "stt": 51,
+    "page": 68,
+    "nameEn": "Coconut meat, immature, raw",
+    "nameVi": "Cùi dừa non",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 87.8,
+      "kcal": 40,
+      "kj": 166,
+      "proteinG": 3.5,
+      "fatG": 1.7,
+      "carbsG": 2.6,
+      "fiberG": 3.5,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "3003",
+    "stt": 52,
+    "page": 69,
+    "nameEn": "French bean seeds, dried",
+    "nameVi": "Đậu cô ve (hạt)",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 321,
+      "kj": 1344,
+      "proteinG": 21.8,
+      "fatG": 1.6,
+      "carbsG": 54.9,
+      "fiberG": 3.5,
+      "ashG": 4.2
+    }
+  },
+  {
+    "code": "3004",
+    "stt": 53,
+    "page": 70,
+    "nameEn": "Black bean seeds, dried",
+    "nameVi": "Đậu đen (hạt)",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 325,
+      "kj": 1361,
+      "proteinG": 24.2,
+      "fatG": 1.7,
+      "carbsG": 53.3,
+      "fiberG": 4,
+      "ashG": 2.8
+    }
+  },
+  {
+    "code": "3005",
+    "stt": 54,
+    "page": 71,
+    "nameEn": "Cow pea whole seeds, dried",
+    "nameVi": "Đậu đũa (hạt)",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 320,
+      "kj": 1341,
+      "proteinG": 23.7,
+      "fatG": 2,
+      "carbsG": 51.9,
+      "fiberG": 4.3,
+      "ashG": 4.1
+    }
+  },
+  {
+    "code": "3006",
+    "stt": 55,
+    "page": 72,
+    "nameEn": "Peas garden and field, seeds, dried",
+    "nameVi": "Đậu hà lan (hạt)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 13.6,
+      "kcal": 318,
+      "kj": 1330,
+      "proteinG": 22.2,
+      "fatG": 1.4,
+      "carbsG": 54.1,
+      "fiberG": 6,
+      "ashG": 2.7
+    }
+  },
+  {
+    "code": "3007",
+    "stt": 56,
+    "page": 73,
+    "nameEn": "Yellow dried soybean seeds, dried",
+    "nameVi": "Đậu tương (đậu nành)",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 400,
+      "kj": 1674,
+      "proteinG": 34,
+      "fatG": 18.4,
+      "carbsG": 24.6,
+      "fiberG": 4.5,
+      "ashG": 4.5
+    }
+  },
+  {
+    "code": "3008",
+    "stt": 57,
+    "page": 74,
+    "nameEn": "Kidney bean whole seeds, dried",
+    "nameVi": "Đậu trắng hạt (đậu tây)",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 327,
+      "kj": 1368,
+      "proteinG": 23.2,
+      "fatG": 2.1,
+      "carbsG": 53.8,
+      "fiberG": 3.6,
+      "ashG": 3.3
+    }
+  },
+  {
+    "code": "3009",
+    "stt": 58,
+    "page": 75,
+    "nameEn": "Egg bird bean seeds, dried",
+    "nameVi": "Đậu trứng cuốc",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 321,
+      "kj": 1344,
+      "proteinG": 25.8,
+      "fatG": 2,
+      "carbsG": 50,
+      "fiberG": 4.8,
+      "ashG": 3.4
+    }
+  },
+  {
+    "code": "3010",
+    "stt": 59,
+    "page": 76,
+    "nameEn": "Mungo bean seeds, dried",
+    "nameVi": "Đậu xanh (đậu tắt)",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 328,
+      "kj": 1371,
+      "proteinG": 23.4,
+      "fatG": 2.4,
+      "carbsG": 53.1,
+      "fiberG": 4.7,
+      "ashG": 2.4
+    }
+  },
+  {
+    "code": "3011",
+    "stt": 60,
+    "page": 77,
+    "nameEn": "Chestnut, Chinese whole, raw",
+    "nameVi": "Hạt dẻ to",
+    "wastePct": 30,
+    "per100g": {
+      "waterG": 9,
+      "kcal": 638,
+      "kj": 2669,
+      "proteinG": 18,
+      "fatG": 59,
+      "carbsG": 8.7,
+      "fiberG": 3.5,
+      "ashG": 1.8
+    }
+  },
+  {
+    "code": "3012",
+    "stt": 61,
+    "page": 78,
+    "nameEn": "Chestnut, Chinese whole, raw",
+    "nameVi": "Hạt dẻ tươi",
+    "wastePct": 18,
+    "per100g": {
+      "waterG": 44,
+      "kcal": 223,
+      "kj": 933,
+      "proteinG": 4.2,
+      "fatG": 1.1,
+      "carbsG": 49.1,
+      "fiberG": null,
+      "ashG": 1.7
+    }
+  },
+  {
+    "code": "3013",
+    "stt": 62,
+    "page": 79,
+    "nameEn": "Chestnut, dried",
+    "nameVi": "Hạt dẻ khô",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 8.9,
+      "kcal": 363,
+      "kj": 1517,
+      "proteinG": 6.8,
+      "fatG": 1.8,
+      "carbsG": 79.8,
+      "fiberG": null,
+      "ashG": 2.7
+    }
+  },
+  {
+    "code": "3014",
+    "stt": 63,
+    "page": 80,
+    "nameEn": "Black seed",
+    "nameVi": "Hạt đen",
+    "wastePct": 50,
+    "per100g": {
+      "waterG": 12,
+      "kcal": 472,
+      "kj": 1976,
+      "proteinG": 17.3,
+      "fatG": 29,
+      "carbsG": 35.5,
+      "fiberG": 3.5,
+      "ashG": 2.7
+    }
+  },
+  {
+    "code": "3015",
+    "stt": 64,
+    "page": 81,
+    "nameEn": "Cashew nut, common",
+    "nameVi": "Hạt điều",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 3.4,
+      "kcal": 605,
+      "kj": 2532,
+      "proteinG": 18.4,
+      "fatG": 46.3,
+      "carbsG": 28.7,
+      "fiberG": 0.6,
+      "ashG": 2.6
+    }
+  },
+  {
+    "code": "3016",
+    "stt": 65,
+    "page": 82,
+    "nameEn": "Jack fruit, seed, raw",
+    "nameVi": "Hạt mít",
+    "wastePct": 15,
+    "per100g": {
+      "waterG": 58.2,
+      "kcal": 166,
+      "kj": 694,
+      "proteinG": 0.7,
+      "fatG": 1.1,
+      "carbsG": 38.3,
+      "fiberG": null,
+      "ashG": 1.7
+    }
+  },
+  {
+    "code": "3017",
+    "stt": 66,
+    "page": 83,
+    "nameEn": "Dried peanut seed",
+    "nameVi": "Lạc hạt",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 7.5,
+      "kcal": 573,
+      "kj": 2395,
+      "proteinG": 27.5,
+      "fatG": 44.5,
+      "carbsG": 15.5,
+      "fiberG": 2.5,
+      "ashG": 2.5
+    }
+  },
+  {
+    "code": "3018",
+    "stt": 67,
+    "page": 84,
+    "nameEn": "Palm fruit fresh",
+    "nameVi": "Quả cọ tươi",
+    "wastePct": 40,
+    "per100g": {
+      "waterG": 67.1,
+      "kcal": 178,
+      "kj": 746,
+      "proteinG": 2.3,
+      "fatG": 13.4,
+      "carbsG": 12.1,
+      "fiberG": 3.5,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "3019",
+    "stt": 68,
+    "page": 85,
+    "nameEn": "Hodgsonia fruit",
+    "nameVi": "Quả đại hái tươi",
+    "wastePct": 90,
+    "per100g": {
+      "waterG": 35,
+      "kcal": 427,
+      "kj": 1786,
+      "proteinG": 20,
+      "fatG": 38,
+      "carbsG": 1.2,
+      "fiberG": 3.4,
+      "ashG": 2.4
+    }
+  },
+  {
+    "code": "3020",
+    "stt": 69,
+    "page": 86,
+    "nameEn": "Sesame oriental seeds, whole, dried black or white",
+    "nameVi": "Vừng (đen, trắng)",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 7.6,
+      "kcal": 568,
+      "kj": 2378,
+      "proteinG": 20.1,
+      "fatG": 46.4,
+      "carbsG": 17.6,
+      "fiberG": 3.5,
+      "ashG": 4.8
+    }
+  },
+  {
+    "code": "3021",
+    "stt": 70,
+    "page": 87,
+    "nameEn": "Soybeans flour, defatted",
+    "nameVi": "Bột đậu tương đã loại béo (đậu nành)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 321,
+      "kj": 1343,
+      "proteinG": 49,
+      "fatG": 1,
+      "carbsG": 29,
+      "fiberG": 2.5,
+      "ashG": 4.5
+    }
+  },
+  {
+    "code": "3022",
+    "stt": 71,
+    "page": 88,
+    "nameEn": "Roasted soybeans flour",
+    "nameVi": "Bột đậu tương rang chín",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 10,
+      "kcal": 418,
+      "kj": 1747,
+      "proteinG": 41,
+      "fatG": 18,
+      "carbsG": 22.9,
+      "fiberG": 2.5,
+      "ashG": 5.6
+    }
+  },
+  {
+    "code": "3023",
+    "stt": 72,
+    "page": 89,
+    "nameEn": "Mungo bean flour",
+    "nameVi": "Bột đậu xanh",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 10,
+      "kcal": 347,
+      "kj": 1451,
+      "proteinG": 24.6,
+      "fatG": 2.5,
+      "carbsG": 56.5,
+      "fiberG": 3.9,
+      "ashG": 2.5
+    }
+  },
+  {
+    "code": "3024",
+    "stt": 73,
+    "page": 90,
+    "nameEn": "Peanut flour",
+    "nameVi": "Bột lạc",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 8,
+      "kcal": 575,
+      "kj": 2406,
+      "proteinG": 27.5,
+      "fatG": 45,
+      "carbsG": 15,
+      "fiberG": 2.1,
+      "ashG": 2.4
+    }
+  },
+  {
+    "code": "3025",
+    "stt": 74,
+    "page": 91,
+    "nameEn": "Soybean curt cake pressed, raw",
+    "nameVi": "Đậu phụ",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 82,
+      "kcal": 95,
+      "kj": 397,
+      "proteinG": 10.9,
+      "fatG": 5.4,
+      "carbsG": 0.7,
+      "fiberG": 0.4,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "3026",
+    "stt": 75,
+    "page": 92,
+    "nameEn": "Curd tofu concentrated",
+    "nameVi": "Đậu phụ chúc",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 18.5,
+      "kcal": 414,
+      "kj": 1732,
+      "proteinG": 50.2,
+      "fatG": 20.8,
+      "carbsG": 6.5,
+      "fiberG": 0.3,
+      "ashG": 3.7
+    }
+  },
+  {
+    "code": "3027",
+    "stt": 76,
+    "page": 93,
+    "nameEn": "Curd tofu, fried",
+    "nameVi": "Đậu phụ nướng",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 78.2,
+      "kcal": 114,
+      "kj": 479,
+      "proteinG": 13.4,
+      "fatG": 6.4,
+      "carbsG": 0.8,
+      "fiberG": 0.5,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "3028",
+    "stt": 77,
+    "page": 94,
+    "nameEn": "Pumpkin seeds, fried",
+    "nameVi": "Hạt bí đỏ rang",
+    "wastePct": 19,
+    "per100g": {
+      "waterG": 3.6,
+      "kcal": 519,
+      "kj": 2170,
+      "proteinG": 35.1,
+      "fatG": 31.8,
+      "carbsG": 23,
+      "fiberG": 2.3,
+      "ashG": 4.2
+    }
+  },
+  {
+    "code": "3029",
+    "stt": 78,
+    "page": 95,
+    "nameEn": "Water melon seeds whole, fried",
+    "nameVi": "Hạt dưa đỏ rang (dưa hấu)",
+    "wastePct": 22,
+    "per100g": {
+      "waterG": 4.8,
+      "kcal": 551,
+      "kj": 2306,
+      "proteinG": 31.8,
+      "fatG": 39.1,
+      "carbsG": 18,
+      "fiberG": 1.8,
+      "ashG": 4.5
+    }
+  },
+  {
+    "code": "3030",
+    "stt": 79,
+    "page": 96,
+    "nameEn": "Cashew, common, roasted with oil",
+    "nameVi": "Hạt điều khô, chiên dầu",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 12.7,
+      "kcal": 583,
+      "kj": 2437,
+      "proteinG": 18.3,
+      "fatG": 49.3,
+      "carbsG": 16.4,
+      "fiberG": 0.7,
+      "ashG": 2.6
+    }
+  },
+  {
+    "code": "3031",
+    "stt": 80,
+    "page": 97,
+    "nameEn": "Milk flour, made from roasted soybeans",
+    "nameVi": "Sữa bột đậu nành",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 3.5,
+      "kcal": 405,
+      "kj": 1692,
+      "proteinG": 31.1,
+      "fatG": 9.7,
+      "carbsG": 48.2,
+      "fiberG": 2.2,
+      "ashG": 5.3
+    }
+  },
+  {
+    "code": "3032",
+    "stt": 81,
+    "page": 98,
+    "nameEn": "Soybean milk (100 g soybean/l)",
+    "nameVi": "Sữa đậu nành (100g đậu/lít)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 94.4,
+      "kcal": 28,
+      "kj": 119,
+      "proteinG": 3.1,
+      "fatG": 1.6,
+      "carbsG": 0.4,
+      "fiberG": 0.1,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "3033",
+    "stt": 82,
+    "page": 99,
+    "nameEn": "Tofu in light syrup (Tofu 160g, sirup 65ml)",
+    "nameVi": "Tào phớ",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 90,
+      "kcal": 37,
+      "kj": 153,
+      "proteinG": 2.3,
+      "fatG": 0.2,
+      "carbsG": 6.4,
+      "fiberG": 0.2,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "4001",
+    "stt": 83,
+    "page": 103,
+    "nameEn": "Calabash, Bottle gourd",
+    "nameVi": "Bầu",
+    "wastePct": 35.3,
+    "per100g": {
+      "waterG": 95.1,
+      "kcal": 14,
+      "kj": 59,
+      "proteinG": 0.6,
+      "fatG": 0.02,
+      "carbsG": 2.9,
+      "fiberG": 1,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "4002",
+    "stt": 84,
+    "page": 104,
+    "nameEn": "Asgourd Waxgoured, Winter melon",
+    "nameVi": "Bí đao (bí xanh)",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 95.5,
+      "kcal": 12,
+      "kj": 50,
+      "proteinG": 0.6,
+      "fatG": null,
+      "carbsG": 2.4,
+      "fiberG": 1,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4003",
+    "stt": 85,
+    "page": 105,
+    "nameEn": "Pumpkin squash",
+    "nameVi": "Bí ngô",
+    "wastePct": 18.3,
+    "per100g": {
+      "waterG": 92,
+      "kcal": 27,
+      "kj": 111,
+      "proteinG": 0.3,
+      "fatG": 0.1,
+      "carbsG": 6.1,
+      "fiberG": 0.7,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4004",
+    "stt": 86,
+    "page": 106,
+    "nameEn": "Egg plant big, Brinja aubergine",
+    "nameVi": "Cà bát",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 92.5,
+      "kcal": 23,
+      "kj": 94,
+      "proteinG": 1.2,
+      "fatG": 0.2,
+      "carbsG": 4,
+      "fiberG": 1.5,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4005",
+    "stt": 87,
+    "page": 107,
+    "nameEn": "Tomato",
+    "nameVi": "Cà chua",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 94,
+      "kcal": 20,
+      "kj": 85,
+      "proteinG": 0.6,
+      "fatG": 0.2,
+      "carbsG": 4,
+      "fiberG": 0.8,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "4006",
+    "stt": 88,
+    "page": 108,
+    "nameEn": "Egg plant - small",
+    "nameVi": "Cà pháo",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 92.5,
+      "kcal": 20,
+      "kj": 85,
+      "proteinG": 1.5,
+      "fatG": null,
+      "carbsG": 3.6,
+      "fiberG": 1.6,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4007",
+    "stt": 89,
+    "page": 109,
+    "nameEn": "Carrots",
+    "nameVi": "Cà rốt (củ đỏ, vàng)",
+    "wastePct": 10.5,
+    "per100g": {
+      "waterG": 88.5,
+      "kcal": 39,
+      "kj": 164,
+      "proteinG": 1.5,
+      "fatG": 0.2,
+      "carbsG": 7.8,
+      "fiberG": 1.2,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4008",
+    "stt": 90,
+    "page": 110,
+    "nameEn": "Dried carrot",
+    "nameVi": "Cà rốt khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 292,
+      "kj": 1221,
+      "proteinG": 9.2,
+      "fatG": 1.5,
+      "carbsG": 60.4,
+      "fiberG": 9.6,
+      "ashG": 5.3
+    }
+  },
+  {
+    "code": "4009",
+    "stt": 91,
+    "page": 111,
+    "nameEn": "Aubergine",
+    "nameVi": "Cà tím",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 92.5,
+      "kcal": 22,
+      "kj": 92,
+      "proteinG": 1,
+      "fatG": null,
+      "carbsG": 4.5,
+      "fiberG": 1.5,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4010",
+    "stt": 92,
+    "page": 112,
+    "nameEn": "Cabbage, common",
+    "nameVi": "Cải bắp",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 90,
+      "kcal": 29,
+      "kj": 123,
+      "proteinG": 1.8,
+      "fatG": 0.1,
+      "carbsG": 5.3,
+      "fiberG": 1.6,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "4011",
+    "stt": 93,
+    "page": 113,
+    "nameEn": "Cabbage, red",
+    "nameVi": "Cải bắp đỏ",
+    "wastePct": 22,
+    "per100g": {
+      "waterG": 84,
+      "kcal": 45,
+      "kj": 190,
+      "proteinG": 1.9,
+      "fatG": 0.2,
+      "carbsG": 9,
+      "fiberG": 4,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "4012",
+    "stt": 94,
+    "page": 114,
+    "nameEn": "Dried cabbage, white",
+    "nameVi": "Cải bắp khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 16,
+      "kcal": 245,
+      "kj": 1026,
+      "proteinG": 18,
+      "fatG": 1.6,
+      "carbsG": 39.7,
+      "fiberG": 14,
+      "ashG": 10.7
+    }
+  },
+  {
+    "code": "4013",
+    "stt": 95,
+    "page": 115,
+    "nameEn": "Chrysanthemum. crown-daisy",
+    "nameVi": "Cải cúc",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 93.8,
+      "kcal": 14,
+      "kj": 59,
+      "proteinG": 1.6,
+      "fatG": null,
+      "carbsG": 1.9,
+      "fiberG": 2,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "4014",
+    "stt": 96,
+    "page": 116,
+    "nameEn": "Watercress",
+    "nameVi": "Cải soong",
+    "wastePct": 30,
+    "per100g": {
+      "waterG": 93.7,
+      "kcal": 15,
+      "kj": 61,
+      "proteinG": 2.1,
+      "fatG": 0.1,
+      "carbsG": 1.3,
+      "fiberG": 2,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4015",
+    "stt": 97,
+    "page": 117,
+    "nameEn": "Chinese cabbage, white",
+    "nameVi": "Cải thìa (cải trắng)",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 93.2,
+      "kcal": 17,
+      "kj": 71,
+      "proteinG": 1.4,
+      "fatG": 0.2,
+      "carbsG": 2.4,
+      "fiberG": 1.8,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "4016",
+    "stt": 98,
+    "page": 118,
+    "nameEn": "Mustard greens, India, leaves and stems",
+    "nameVi": "Cải xanh",
+    "wastePct": 24,
+    "per100g": {
+      "waterG": 93.8,
+      "kcal": 16,
+      "kj": 68,
+      "proteinG": 1.7,
+      "fatG": 0.2,
+      "carbsG": 1.9,
+      "fiberG": 1.8,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4017",
+    "stt": 99,
+    "page": 119,
+    "nameEn": "Water drop-wort; Celery water",
+    "nameVi": "Cần ta",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 95.3,
+      "kcal": 10,
+      "kj": 42,
+      "proteinG": 1,
+      "fatG": null,
+      "carbsG": 1.5,
+      "fiberG": 1.5,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "4018",
+    "stt": 100,
+    "page": 120,
+    "nameEn": "Celery, Chinese",
+    "nameVi": "Cần tây",
+    "wastePct": 16,
+    "per100g": {
+      "waterG": 85,
+      "kcal": 48,
+      "kj": 201,
+      "proteinG": 3.7,
+      "fatG": 0.2,
+      "carbsG": 7.9,
+      "fiberG": 1.5,
+      "ashG": 1.7
+    }
+  },
+  {
+    "code": "4019",
+    "stt": 101,
+    "page": 121,
+    "nameEn": "Banana common varieties, unripe",
+    "nameVi": "Chuối xanh",
+    "wastePct": 32,
+    "per100g": {
+      "waterG": 80.2,
+      "kcal": 74,
+      "kj": 311,
+      "proteinG": 1.2,
+      "fatG": 0.5,
+      "carbsG": 16.4,
+      "fiberG": 1,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4020",
+    "stt": 102,
+    "page": 122,
+    "nameEn": "Red radish oriental, raw",
+    "nameVi": "Củ cải đỏ",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 86,
+      "kcal": 48,
+      "kj": 203,
+      "proteinG": 1.3,
+      "fatG": null,
+      "carbsG": 10.8,
+      "fiberG": 0.9,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "4021",
+    "stt": 103,
+    "page": 123,
+    "nameEn": "Radish garden while, raw",
+    "nameVi": "Củ cải trắng",
+    "wastePct": 13.2,
+    "per100g": {
+      "waterG": 92.1,
+      "kcal": 21,
+      "kj": 89,
+      "proteinG": 1.5,
+      "fatG": 0.1,
+      "carbsG": 3.6,
+      "fiberG": 1.5,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "4022",
+    "stt": 104,
+    "page": 124,
+    "nameEn": "Dried radish, white",
+    "nameVi": "Củ cải trắng khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 16,
+      "kcal": 220,
+      "kj": 918,
+      "proteinG": 17.6,
+      "fatG": 1.5,
+      "carbsG": 33.9,
+      "fiberG": 17.7,
+      "ashG": 13.3
+    }
+  },
+  {
+    "code": "4023",
+    "stt": 105,
+    "page": 125,
+    "nameEn": "Pachyrrhizus",
+    "nameVi": "Củ đậu",
+    "wastePct": 15,
+    "per100g": {
+      "waterG": 92,
+      "kcal": 28,
+      "kj": 117,
+      "proteinG": 1,
+      "fatG": null,
+      "carbsG": 6,
+      "fiberG": 0.7,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "4024",
+    "stt": 106,
+    "page": 126,
+    "nameEn": "Manchurian water-rice, Manchurian Wild rice",
+    "nameVi": "Củ niễng",
+    "wastePct": 13,
+    "per100g": {
+      "waterG": 90.2,
+      "kcal": 30,
+      "kj": 124,
+      "proteinG": 2,
+      "fatG": null,
+      "carbsG": 5.4,
+      "fiberG": 1.8,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4025",
+    "stt": 107,
+    "page": 127,
+    "nameEn": "Horse radish; dish - tree, drumstick leave",
+    "nameVi": "Dọc củ cải (non)",
+    "wastePct": 4,
+    "per100g": {
+      "waterG": 93.6,
+      "kcal": 14,
+      "kj": 59,
+      "proteinG": 1.9,
+      "fatG": null,
+      "carbsG": 1.6,
+      "fiberG": 1.8,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "4026",
+    "stt": 108,
+    "page": 128,
+    "nameEn": "Colocasia indica",
+    "nameVi": "Dọc mùng",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 96,
+      "kcal": 5,
+      "kj": 20,
+      "proteinG": 0.4,
+      "fatG": null,
+      "carbsG": 0.8,
+      "fiberG": 2,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4027",
+    "stt": 109,
+    "page": 129,
+    "nameEn": "Cucumber",
+    "nameVi": "Dưa chuột",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 95,
+      "kcal": 16,
+      "kj": 66,
+      "proteinG": 0.8,
+      "fatG": 0.1,
+      "carbsG": 2.9,
+      "fiberG": 0.7,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4028",
+    "stt": 110,
+    "page": 130,
+    "nameEn": "Large cucumber",
+    "nameVi": "Dưa gang",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 96.2,
+      "kcal": 11,
+      "kj": 47,
+      "proteinG": 0.8,
+      "fatG": null,
+      "carbsG": 2,
+      "fiberG": 0.7,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "4029",
+    "stt": 111,
+    "page": 131,
+    "nameEn": "Beans, kidney, in pod, French bean; Navy been",
+    "nameVi": "Đậu cô ve",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 80,
+      "kcal": 73,
+      "kj": 306,
+      "proteinG": 5,
+      "fatG": null,
+      "carbsG": 13.3,
+      "fiberG": 1,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "4030",
+    "stt": 112,
+    "page": 132,
+    "nameEn": "Cow-peas, yard long, Chinese long bean",
+    "nameVi": "Đậu đũa",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 83,
+      "kcal": 59,
+      "kj": 248,
+      "proteinG": 6,
+      "fatG": 0.4,
+      "carbsG": 7.9,
+      "fiberG": 2,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "4031",
+    "stt": 113,
+    "page": 133,
+    "nameEn": "Green peas; field pea; Peas garden",
+    "nameVi": "Đậu hà lan",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 81,
+      "kcal": 72,
+      "kj": 301,
+      "proteinG": 6.5,
+      "fatG": 0.4,
+      "carbsG": 10.6,
+      "fiberG": 1,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4032",
+    "stt": 114,
+    "page": 134,
+    "nameEn": "Winged bean goabean, Indies, asparagus pea",
+    "nameVi": "Đậu rồng (quả non)",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 89.5,
+      "kcal": 34,
+      "kj": 141,
+      "proteinG": 1.9,
+      "fatG": 0.1,
+      "carbsG": 6.3,
+      "fiberG": 1.6,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4033",
+    "stt": 115,
+    "page": 135,
+    "nameEn": "Papaya, unripe, raw",
+    "nameVi": "Đu đủ xanh",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 92.1,
+      "kcal": 22,
+      "kj": 90,
+      "proteinG": 0.8,
+      "fatG": null,
+      "carbsG": 4.6,
+      "fiberG": 2,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4034",
+    "stt": 116,
+    "page": 136,
+    "nameEn": "Gac fruit, whole",
+    "nameVi": "Gấc",
+    "wastePct": 80,
+    "per100g": {
+      "waterG": 77,
+      "kcal": 122,
+      "kj": 508,
+      "proteinG": 2.1,
+      "fatG": 7.9,
+      "carbsG": 10.5,
+      "fiberG": 1.8,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "4035",
+    "stt": 117,
+    "page": 137,
+    "nameEn": "Sprout of soybeans",
+    "nameVi": "Giá đậu tương",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 80.8,
+      "kcal": 79,
+      "kj": 331,
+      "proteinG": 7.7,
+      "fatG": 1.8,
+      "carbsG": 8,
+      "fiberG": 0.7,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "4036",
+    "stt": 118,
+    "page": 138,
+    "nameEn": "Mungobean sprouts, Green gram, Tiensin green bean",
+    "nameVi": "Giá đậu xanh",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 86.5,
+      "kcal": 44,
+      "kj": 185,
+      "proteinG": 5.5,
+      "fatG": 0.2,
+      "carbsG": 5.1,
+      "fiberG": 2,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "4037",
+    "stt": 119,
+    "page": 139,
+    "nameEn": "Onion, Welsh",
+    "nameVi": "Hành củ tươi",
+    "wastePct": 24,
+    "per100g": {
+      "waterG": 92.5,
+      "kcal": 26,
+      "kj": 110,
+      "proteinG": 1.3,
+      "fatG": 0.4,
+      "carbsG": 4.4,
+      "fiberG": 0.7,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "4038",
+    "stt": 120,
+    "page": 140,
+    "nameEn": "Onion, Welsh",
+    "nameVi": "Hành lá (hành hoa)",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 92.5,
+      "kcal": 22,
+      "kj": 94,
+      "proteinG": 1.3,
+      "fatG": null,
+      "carbsG": 4.3,
+      "fiberG": 0.9,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "4039",
+    "stt": 121,
+    "page": 141,
+    "nameEn": "Onion, common, garden",
+    "nameVi": "Hành tây",
+    "wastePct": 17,
+    "per100g": {
+      "waterG": 88,
+      "kcal": 41,
+      "kj": 171,
+      "proteinG": 1.8,
+      "fatG": 0.1,
+      "carbsG": 8.2,
+      "fiberG": 1.1,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4040",
+    "stt": 122,
+    "page": 142,
+    "nameEn": "Lotus seed, raw",
+    "nameVi": "Hạt sen tươi",
+    "wastePct": 39,
+    "per100g": {
+      "waterG": 57.9,
+      "kcal": 161,
+      "kj": 672,
+      "proteinG": 9.5,
+      "fatG": 0.5,
+      "carbsG": 29.5,
+      "fiberG": 0.8,
+      "ashG": 1.8
+    }
+  },
+  {
+    "code": "4041",
+    "stt": 123,
+    "page": 143,
+    "nameEn": "Dried lotus seed",
+    "nameVi": "Hạt sen khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 334,
+      "kj": 1396,
+      "proteinG": 20,
+      "fatG": 2.4,
+      "carbsG": 58,
+      "fiberG": 2.2,
+      "ashG": 3.4
+    }
+  },
+  {
+    "code": "4042",
+    "stt": 124,
+    "page": 144,
+    "nameEn": "Onion, fragrant, Chinese leek",
+    "nameVi": "Hẹ lá",
+    "wastePct": 13,
+    "per100g": {
+      "waterG": 94.5,
+      "kcal": 18,
+      "kj": 73,
+      "proteinG": 2.2,
+      "fatG": 0.3,
+      "carbsG": 1.5,
+      "fiberG": 0.9,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4043",
+    "stt": 125,
+    "page": 145,
+    "nameEn": "Banana, buds and flowers",
+    "nameVi": "Hoa chuối",
+    "wastePct": 29,
+    "per100g": {
+      "waterG": 92,
+      "kcal": 20,
+      "kj": 84,
+      "proteinG": 1.5,
+      "fatG": null,
+      "carbsG": 3.5,
+      "fiberG": 2,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "4044",
+    "stt": 126,
+    "page": 146,
+    "nameEn": "Daylily, lemon flowers, Pergularia, raw",
+    "nameVi": "Hoa lý",
+    "wastePct": 3,
+    "per100g": {
+      "waterG": 90.5,
+      "kcal": 23,
+      "kj": 95,
+      "proteinG": 2.9,
+      "fatG": null,
+      "carbsG": 2.8,
+      "fiberG": 3,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4045",
+    "stt": 127,
+    "page": 147,
+    "nameEn": "Carambola; Star fruit",
+    "nameVi": "Khế",
+    "wastePct": 13,
+    "per100g": {
+      "waterG": 93.5,
+      "kcal": 16,
+      "kj": 69,
+      "proteinG": 0.6,
+      "fatG": 0.3,
+      "carbsG": 2.8,
+      "fiberG": 2.6,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "4046",
+    "stt": 128,
+    "page": 148,
+    "nameEn": "Lolot",
+    "nameVi": "Lá lốt",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 86.5,
+      "kcal": 39,
+      "kj": 162,
+      "proteinG": 4.3,
+      "fatG": null,
+      "carbsG": 5.4,
+      "fiberG": 2.5,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "4047",
+    "stt": 129,
+    "page": 149,
+    "nameEn": "Tamarind, leaves",
+    "nameVi": "Lá me",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 86,
+      "kcal": 46,
+      "kj": 192,
+      "proteinG": 7.5,
+      "fatG": null,
+      "carbsG": 4,
+      "fiberG": null,
+      "ashG": 2.5
+    }
+  },
+  {
+    "code": "4048",
+    "stt": 130,
+    "page": 150,
+    "nameEn": "Wild plant",
+    "nameVi": "Lá mơ lông",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 86.1,
+      "kcal": 27,
+      "kj": 114,
+      "proteinG": 3.9,
+      "fatG": null,
+      "carbsG": 2.9,
+      "fiberG": 5.1,
+      "ashG": 2
+    }
+  },
+  {
+    "code": "4049",
+    "stt": 131,
+    "page": 151,
+    "nameEn": "Cassava leaves",
+    "nameVi": "Lá sắn tươi",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 74.8,
+      "kcal": 78,
+      "kj": 328,
+      "proteinG": 7,
+      "fatG": null,
+      "carbsG": 12.6,
+      "fiberG": 4.3,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "4050",
+    "stt": 132,
+    "page": 152,
+    "nameEn": "Bamboo shoot, unspecified",
+    "nameVi": "Măng chua",
+    "wastePct": 24,
+    "per100g": {
+      "waterG": 92.8,
+      "kcal": 11,
+      "kj": 47,
+      "proteinG": 1.4,
+      "fatG": null,
+      "carbsG": 1.4,
+      "fiberG": 4.1,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "4051",
+    "stt": 133,
+    "page": 153,
+    "nameEn": "Dried bamboo shoots",
+    "nameVi": "Măng khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 23,
+      "kcal": 157,
+      "kj": 656,
+      "proteinG": 13,
+      "fatG": 2.1,
+      "carbsG": 21.5,
+      "fiberG": 36,
+      "ashG": 4.4
+    }
+  },
+  {
+    "code": "4052",
+    "stt": 134,
+    "page": 154,
+    "nameEn": "Asparagus, white",
+    "nameVi": "Măng tây",
+    "wastePct": 50,
+    "per100g": {
+      "waterG": 93.7,
+      "kcal": 14,
+      "kj": 59,
+      "proteinG": 2.2,
+      "fatG": 0.1,
+      "carbsG": 1.1,
+      "fiberG": 2.3,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4053",
+    "stt": 135,
+    "page": 155,
+    "nameEn": "Bamboo shoots, spring variety",
+    "nameVi": "Măng tre",
+    "wastePct": 50,
+    "per100g": {
+      "waterG": 92,
+      "kcal": 15,
+      "kj": 63,
+      "proteinG": 1.7,
+      "fatG": 0.3,
+      "carbsG": 1.4,
+      "fiberG": 4.1,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4054",
+    "stt": 136,
+    "page": 156,
+    "nameEn": "Gourd, sponge gourd",
+    "nameVi": "Mướp",
+    "wastePct": 18.8,
+    "per100g": {
+      "waterG": 95.1,
+      "kcal": 17,
+      "kj": 69,
+      "proteinG": 0.9,
+      "fatG": 0.2,
+      "carbsG": 2.8,
+      "fiberG": 0.5,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4055",
+    "stt": 137,
+    "page": 157,
+    "nameEn": "Balsam-pear, balsam-apple, bitter melon, bitter gourd",
+    "nameVi": "Mướp đắng",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 94.4,
+      "kcal": 16,
+      "kj": 69,
+      "proteinG": 0.9,
+      "fatG": 0.2,
+      "carbsG": 2.8,
+      "fiberG": 1.1,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4056",
+    "stt": 138,
+    "page": 158,
+    "nameEn": "Gourd, sponge gourd, Japanese",
+    "nameVi": "Mướp nhật bản",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 95.4,
+      "kcal": 10,
+      "kj": 44,
+      "proteinG": 0.8,
+      "fatG": 0,
+      "carbsG": 1.8,
+      "fiberG": 1.4,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4057",
+    "stt": 139,
+    "page": 159,
+    "nameEn": "Mugwort, common sagebrush",
+    "nameVi": "Ngải cứu",
+    "wastePct": 31,
+    "per100g": {
+      "waterG": 89.7,
+      "kcal": 25,
+      "kj": 104,
+      "proteinG": 3.8,
+      "fatG": 0,
+      "carbsG": 2.4,
+      "fiberG": 2,
+      "ashG": 2.1
+    }
+  },
+  {
+    "code": "4058",
+    "stt": 140,
+    "page": 160,
+    "nameEn": "Corn, small variety immature, baby corn",
+    "nameVi": "Ngô bao tử",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 89.2,
+      "kcal": 40,
+      "kj": 168,
+      "proteinG": 2.2,
+      "fatG": 0.2,
+      "carbsG": 7.4,
+      "fiberG": 0.4,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4059",
+    "stt": 141,
+    "page": 161,
+    "nameEn": "Lotus, stem underground",
+    "nameVi": "Ngó sen",
+    "wastePct": 11,
+    "per100g": {
+      "waterG": 82.9,
+      "kcal": 61,
+      "kj": 253,
+      "proteinG": 1,
+      "fatG": 0.1,
+      "carbsG": 13.9,
+      "fiberG": 1.2,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "4060",
+    "stt": 142,
+    "page": 162,
+    "nameEn": "Sponge gourd, rag, young flower",
+    "nameVi": "Nụ mướp",
+    "wastePct": 18,
+    "per100g": {
+      "waterG": 90,
+      "kcal": 30,
+      "kj": 124,
+      "proteinG": 4.9,
+      "fatG": null,
+      "carbsG": 2.5,
+      "fiberG": 1.5,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "4061",
+    "stt": 143,
+    "page": 163,
+    "nameEn": "Chili pepper, peppers red",
+    "nameVi": "Ớt đỏ to",
+    "wastePct": 18,
+    "per100g": {
+      "waterG": 92.2,
+      "kcal": 23,
+      "kj": 95,
+      "proteinG": 1,
+      "fatG": 0.3,
+      "carbsG": 4,
+      "fiberG": 2,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4062",
+    "stt": 144,
+    "page": 164,
+    "nameEn": "Peppers, yellow",
+    "nameVi": "Ớt vàng to",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 91,
+      "kcal": 29,
+      "kj": 122,
+      "proteinG": 1.3,
+      "fatG": 0.2,
+      "carbsG": 5.5,
+      "fiberG": 1.4,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4063",
+    "stt": 145,
+    "page": 165,
+    "nameEn": "Peppers, green",
+    "nameVi": "Ớt xanh to",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 92,
+      "kcal": 25,
+      "kj": 104,
+      "proteinG": 1.3,
+      "fatG": 0.2,
+      "carbsG": 4.5,
+      "fiberG": 1.5,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4064",
+    "stt": 146,
+    "page": 166,
+    "nameEn": "",
+    "nameVi": "Quả dọc",
+    "wastePct": 36,
+    "per100g": {
+      "waterG": 95,
+      "kcal": 19,
+      "kj": 79,
+      "proteinG": 0.8,
+      "fatG": 0,
+      "carbsG": 3.9,
+      "fiberG": null,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "4065",
+    "stt": 147,
+    "page": 167,
+    "nameEn": "Tamarind fruit, pulp raw",
+    "nameVi": "Quả me chua",
+    "wastePct": 15,
+    "per100g": {
+      "waterG": 90.3,
+      "kcal": 27,
+      "kj": 112,
+      "proteinG": 1.9,
+      "fatG": null,
+      "carbsG": 4.8,
+      "fiberG": 2,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "4066",
+    "stt": 148,
+    "page": 168,
+    "nameEn": "Pumpkin leaves",
+    "nameVi": "Rau bí",
+    "wastePct": 23.4,
+    "per100g": {
+      "waterG": 93.2,
+      "kcal": 18,
+      "kj": 74,
+      "proteinG": 2.7,
+      "fatG": null,
+      "carbsG": 1.7,
+      "fiberG": 1.7,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "4067",
+    "stt": 149,
+    "page": 169,
+    "nameEn": "Dried seaweed",
+    "nameVi": "Rau câu khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 20,
+      "kcal": 198,
+      "kj": 828,
+      "proteinG": 11.2,
+      "fatG": 1.1,
+      "carbsG": 35.8,
+      "fiberG": 20.8,
+      "ashG": 11.1
+    }
+  },
+  {
+    "code": "4068",
+    "stt": 150,
+    "page": 170,
+    "nameEn": "Seaweed fresh",
+    "nameVi": "Rau câu tươi",
+    "wastePct": 4,
+    "per100g": {
+      "waterG": 86.2,
+      "kcal": 25,
+      "kj": 104,
+      "proteinG": 1.9,
+      "fatG": 0.1,
+      "carbsG": 4.1,
+      "fiberG": 5,
+      "ashG": 2.7
+    }
+  },
+  {
+    "code": "4069",
+    "stt": 151,
+    "page": 171,
+    "nameEn": "Lettuce garden",
+    "nameVi": "Rau diếp",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 95.7,
+      "kcal": 14,
+      "kj": 57,
+      "proteinG": 1.2,
+      "fatG": 0.2,
+      "carbsG": 1.8,
+      "fiberG": 0.5,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4070",
+    "stt": 152,
+    "page": 172,
+    "nameEn": "Jute potherb",
+    "nameVi": "Rau đay",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 91.4,
+      "kcal": 25,
+      "kj": 106,
+      "proteinG": 2.8,
+      "fatG": 0.3,
+      "carbsG": 3,
+      "fiberG": 1.5,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "4071",
+    "stt": 153,
+    "page": 173,
+    "nameEn": "Wild plant",
+    "nameVi": "Rau giấp cá, diếp cá",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 91.5,
+      "kcal": 22,
+      "kj": 94,
+      "proteinG": 2.9,
+      "fatG": null,
+      "carbsG": 2.7,
+      "fiberG": 1.8,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "4072",
+    "stt": 154,
+    "page": 174,
+    "nameEn": "Amaranth, spineless",
+    "nameVi": "Rau giền cơm",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 92,
+      "kcal": 21,
+      "kj": 87,
+      "proteinG": 3.4,
+      "fatG": 0.3,
+      "carbsG": 1.1,
+      "fiberG": 1.6,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "4073",
+    "stt": 155,
+    "page": 175,
+    "nameEn": "Amaranth, sp. Red",
+    "nameVi": "Rau giền đỏ",
+    "wastePct": 38,
+    "per100g": {
+      "waterG": 86.2,
+      "kcal": 41,
+      "kj": 170,
+      "proteinG": 3.3,
+      "fatG": 0.3,
+      "carbsG": 6.2,
+      "fiberG": 1.6,
+      "ashG": 2.4
+    }
+  },
+  {
+    "code": "4074",
+    "stt": 156,
+    "page": 176,
+    "nameEn": "Amaranth, sp White",
+    "nameVi": "Rau giền trắng",
+    "wastePct": 14,
+    "per100g": {
+      "waterG": 86.7,
+      "kcal": 42,
+      "kj": 174,
+      "proteinG": 3.2,
+      "fatG": 0.4,
+      "carbsG": 6.3,
+      "fiberG": 1.5,
+      "ashG": 1.9
+    }
+  },
+  {
+    "code": "4075",
+    "stt": 157,
+    "page": 177,
+    "nameEn": "Basil sweet leaves, raw",
+    "nameVi": "Rau húng",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 91.4,
+      "kcal": 20,
+      "kj": 85,
+      "proteinG": 2.2,
+      "fatG": 0.6,
+      "carbsG": 1.5,
+      "fiberG": 3.5,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4076",
+    "stt": 158,
+    "page": 178,
+    "nameEn": "Sweet potato, leaves",
+    "nameVi": "Rau khoai lang",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 91.9,
+      "kcal": 23,
+      "kj": 97,
+      "proteinG": 2.6,
+      "fatG": 0.3,
+      "carbsG": 2.5,
+      "fiberG": 1.4,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "4077",
+    "stt": 159,
+    "page": 179,
+    "nameEn": "Sweet marjoram",
+    "nameVi": "Rau kinh giới",
+    "wastePct": 16,
+    "per100g": {
+      "waterG": 90.3,
+      "kcal": 22,
+      "kj": 92,
+      "proteinG": 2.7,
+      "fatG": null,
+      "carbsG": 2.8,
+      "fiberG": 3.6,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "4078",
+    "stt": 160,
+    "page": 180,
+    "nameEn": "Wild plant",
+    "nameVi": "Rau má rừng",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 91.1,
+      "kcal": 25,
+      "kj": 104,
+      "proteinG": 3.1,
+      "fatG": null,
+      "carbsG": 3.1,
+      "fiberG": 1.5,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "4079",
+    "stt": 161,
+    "page": 181,
+    "nameEn": "Wort, India penny",
+    "nameVi": "Rau má, má mơ",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 88.2,
+      "kcal": 20,
+      "kj": 84,
+      "proteinG": 3.2,
+      "fatG": null,
+      "carbsG": 1.8,
+      "fiberG": 4.5,
+      "ashG": 2.3
+    }
+  },
+  {
+    "code": "4080",
+    "stt": 162,
+    "page": 182,
+    "nameEn": "Malabar night shade, Vinespinach, Ceylon spinach",
+    "nameVi": "Rau mồng tơi",
+    "wastePct": 17,
+    "per100g": {
+      "waterG": 93.2,
+      "kcal": 14,
+      "kj": 57,
+      "proteinG": 2,
+      "fatG": null,
+      "carbsG": 1.4,
+      "fiberG": 2.5,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "4081",
+    "stt": 163,
+    "page": 183,
+    "nameEn": "Coriander",
+    "nameVi": "Rau mùi",
+    "wastePct": 15,
+    "per100g": {
+      "waterG": 93.3,
+      "kcal": 16,
+      "kj": 66,
+      "proteinG": 2.6,
+      "fatG": 0.5,
+      "carbsG": 0.2,
+      "fiberG": 1.8,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "4082",
+    "stt": 164,
+    "page": 184,
+    "nameEn": "Parsley, curley",
+    "nameVi": "Rau mùi tàu",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 92,
+      "kcal": 25,
+      "kj": 105,
+      "proteinG": 2.1,
+      "fatG": 0.8,
+      "carbsG": 2.4,
+      "fiberG": 1.6,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "4083",
+    "stt": 165,
+    "page": 185,
+    "nameEn": "Swamp cabbage, water spinach, water convol",
+    "nameVi": "Rau muống",
+    "wastePct": 37.5,
+    "per100g": {
+      "waterG": 92,
+      "kcal": 25,
+      "kj": 104,
+      "proteinG": 3.2,
+      "fatG": 0.4,
+      "carbsG": 2.1,
+      "fiberG": 1,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "4084",
+    "stt": 166,
+    "page": 186,
+    "nameEn": "Water spinach, dried",
+    "nameVi": "Rau muống khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 245,
+      "kj": 1025,
+      "proteinG": 34.2,
+      "fatG": 1.8,
+      "carbsG": 23,
+      "fiberG": 12,
+      "ashG": 15
+    }
+  },
+  {
+    "code": "4085",
+    "stt": 167,
+    "page": 187,
+    "nameEn": "Limnophila aromatic",
+    "nameVi": "Rau ngổ",
+    "wastePct": 29,
+    "per100g": {
+      "waterG": 93.3,
+      "kcal": 15,
+      "kj": 64,
+      "proteinG": 1.5,
+      "fatG": null,
+      "carbsG": 2.3,
+      "fiberG": 2.1,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4086",
+    "stt": 168,
+    "page": 188,
+    "nameEn": "Sauropus, sp. leaves",
+    "nameVi": "Rau ngót",
+    "wastePct": 23,
+    "per100g": {
+      "waterG": 86.4,
+      "kcal": 35,
+      "kj": 146,
+      "proteinG": 5.3,
+      "fatG": null,
+      "carbsG": 3.4,
+      "fiberG": 2.5,
+      "ashG": 2.4
+    }
+  },
+  {
+    "code": "4087",
+    "stt": 169,
+    "page": 189,
+    "nameEn": "Sauropus, dried",
+    "nameVi": "Rau ngót khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 239,
+      "kj": 1002,
+      "proteinG": 32.2,
+      "fatG": 2.6,
+      "carbsG": 21.8,
+      "fiberG": 15,
+      "ashG": 14.4
+    }
+  },
+  {
+    "code": "4088",
+    "stt": 170,
+    "page": 190,
+    "nameEn": "Polygonum odoratum",
+    "nameVi": "Rau răm",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 86.7,
+      "kcal": 30,
+      "kj": 126,
+      "proteinG": 4.7,
+      "fatG": null,
+      "carbsG": 2.8,
+      "fiberG": 3.8,
+      "ashG": 2
+    }
+  },
+  {
+    "code": "4089",
+    "stt": 171,
+    "page": 191,
+    "nameEn": "Neptunia, dismanthus",
+    "nameVi": "Rau rút",
+    "wastePct": 55,
+    "per100g": {
+      "waterG": 90.4,
+      "kcal": 28,
+      "kj": 115,
+      "proteinG": 5.1,
+      "fatG": null,
+      "carbsG": 1.8,
+      "fiberG": 1.9,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4090",
+    "stt": 172,
+    "page": 192,
+    "nameEn": "Lettuce, garden asparagus",
+    "nameVi": "Rau sà lách",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 95,
+      "kcal": 17,
+      "kj": 70,
+      "proteinG": 1.5,
+      "fatG": 0.4,
+      "carbsG": 1.8,
+      "fiberG": 0.5,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4091",
+    "stt": 173,
+    "page": 193,
+    "nameEn": "Purslane, common",
+    "nameVi": "Rau sam",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 93.6,
+      "kcal": 18,
+      "kj": 74,
+      "proteinG": 1.4,
+      "fatG": null,
+      "carbsG": 3,
+      "fiberG": 0.7,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "4092",
+    "stt": 174,
+    "page": 194,
+    "nameEn": "Perfume pagoda wild plant",
+    "nameVi": "Rau sắng (chùa hương)",
+    "wastePct": 40,
+    "per100g": {
+      "waterG": 82.4,
+      "kcal": 48,
+      "kj": 201,
+      "proteinG": 6.5,
+      "fatG": null,
+      "carbsG": 5.5,
+      "fiberG": 3.4,
+      "ashG": 2.2
+    }
+  },
+  {
+    "code": "4093",
+    "stt": 175,
+    "page": 195,
+    "nameEn": "Gynura crepidioides",
+    "nameVi": "Rau tàu bay",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 93.1,
+      "kcal": 18,
+      "kj": 74,
+      "proteinG": 2.5,
+      "fatG": null,
+      "carbsG": 1.9,
+      "fiberG": 1.6,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "4094",
+    "stt": 176,
+    "page": 196,
+    "nameEn": "Mint leaves",
+    "nameVi": "Rau thơm",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 91.7,
+      "kcal": 18,
+      "kj": 74,
+      "proteinG": 2,
+      "fatG": null,
+      "carbsG": 2.4,
+      "fiberG": 3,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "4095",
+    "stt": 177,
+    "page": 197,
+    "nameEn": "Dracontomelum fruit, unripe, raw",
+    "nameVi": "Sấu xanh",
+    "wastePct": 35,
+    "per100g": {
+      "waterG": 94.7,
+      "kcal": 19,
+      "kj": 80,
+      "proteinG": 1.8,
+      "fatG": null,
+      "carbsG": 3,
+      "fiberG": null,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4096",
+    "stt": 178,
+    "page": 198,
+    "nameEn": "Kohlrabi",
+    "nameVi": "Su hào",
+    "wastePct": 22.4,
+    "per100g": {
+      "waterG": 88,
+      "kcal": 37,
+      "kj": 154,
+      "proteinG": 2.8,
+      "fatG": 0.1,
+      "carbsG": 6.2,
+      "fiberG": 1.7,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "4097",
+    "stt": 179,
+    "page": 199,
+    "nameEn": "Dried kohlrabi",
+    "nameVi": "Su hào khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 15,
+      "kcal": 261,
+      "kj": 1092,
+      "proteinG": 20,
+      "fatG": 1.4,
+      "carbsG": 42.1,
+      "fiberG": 12.5,
+      "ashG": 9
+    }
+  },
+  {
+    "code": "4098",
+    "stt": 180,
+    "page": 200,
+    "nameEn": "Chayote, fruit raw",
+    "nameVi": "Su su, quả",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 94,
+      "kcal": 19,
+      "kj": 78,
+      "proteinG": 0.8,
+      "fatG": 0.1,
+      "carbsG": 3.6,
+      "fiberG": 1,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "4099",
+    "stt": 181,
+    "page": 201,
+    "nameEn": "Cauliflower, white",
+    "nameVi": "Súp lơ trắng",
+    "wastePct": 40,
+    "per100g": {
+      "waterG": 90.9,
+      "kcal": 30,
+      "kj": 126,
+      "proteinG": 2.5,
+      "fatG": 0.1,
+      "carbsG": 4.8,
+      "fiberG": 0.9,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4100",
+    "stt": 182,
+    "page": 202,
+    "nameEn": "Cauliflower, green",
+    "nameVi": "Súp lơ xanh",
+    "wastePct": 39,
+    "per100g": {
+      "waterG": 89.8,
+      "kcal": 26,
+      "kj": 109,
+      "proteinG": 3,
+      "fatG": 0.3,
+      "carbsG": 2.9,
+      "fiberG": 3.2,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "4101",
+    "stt": 183,
+    "page": 203,
+    "nameEn": "Dill",
+    "nameVi": "Thìa là",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 88.4,
+      "kcal": 28,
+      "kj": 115,
+      "proteinG": 2.6,
+      "fatG": 1.1,
+      "carbsG": 1.8,
+      "fiberG": 5,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "4102",
+    "stt": 184,
+    "page": 204,
+    "nameEn": "Balm-mint, garden- balm",
+    "nameVi": "Tía tô",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 89.1,
+      "kcal": 25,
+      "kj": 105,
+      "proteinG": 2.9,
+      "fatG": null,
+      "carbsG": 3.4,
+      "fiberG": 3.6,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "4103",
+    "stt": 185,
+    "page": 205,
+    "nameEn": "Garlic bulbs",
+    "nameVi": "Tỏi ta",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 67.7,
+      "kcal": 121,
+      "kj": 504,
+      "proteinG": 6,
+      "fatG": 0.5,
+      "carbsG": 23,
+      "fiberG": 1.5,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "4104",
+    "stt": 186,
+    "page": 206,
+    "nameEn": "Chinese Leek, Onion fragrant",
+    "nameVi": "Tỏi tây (cả lá)",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 90,
+      "kcal": 29,
+      "kj": 122,
+      "proteinG": 1.4,
+      "fatG": null,
+      "carbsG": 5.9,
+      "fiberG": 1.5,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "4105",
+    "stt": 187,
+    "page": 207,
+    "nameEn": "Variety of canarium",
+    "nameVi": "Trám đen chín",
+    "wastePct": 50,
+    "per100g": {
+      "waterG": 77,
+      "kcal": 114,
+      "kj": 479,
+      "proteinG": 2.5,
+      "fatG": 10,
+      "carbsG": 3.6,
+      "fiberG": 4.9,
+      "ashG": 2
+    }
+  },
+  {
+    "code": "4106",
+    "stt": 188,
+    "page": 208,
+    "nameEn": "Chinese olive",
+    "nameVi": "Trám xanh sống, trám trắng",
+    "wastePct": 34,
+    "per100g": {
+      "waterG": 86.7,
+      "kcal": 37,
+      "kj": 154,
+      "proteinG": 1.2,
+      "fatG": 1.6,
+      "carbsG": 4.4,
+      "fiberG": 4.9,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "4107",
+    "stt": 189,
+    "page": 209,
+    "nameEn": "Edible herbaceous plant",
+    "nameVi": "Xương sông",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 91.7,
+      "kcal": 15,
+      "kj": 62,
+      "proteinG": 2.2,
+      "fatG": null,
+      "carbsG": 1.5,
+      "fiberG": 3.2,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "4108",
+    "stt": 190,
+    "page": 210,
+    "nameEn": "Tomato, pickled",
+    "nameVi": "Cà chua muối",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 94,
+      "kcal": 6,
+      "kj": 27,
+      "proteinG": 0.6,
+      "fatG": null,
+      "carbsG": 1,
+      "fiberG": 0.8,
+      "ashG": 3.6
+    }
+  },
+  {
+    "code": "4109",
+    "stt": 191,
+    "page": 211,
+    "nameEn": "Eggplant, garden, brinjan; aubergine, pickled",
+    "nameVi": "Cà muối nén",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 81,
+      "kcal": 13,
+      "kj": 55,
+      "proteinG": 1.3,
+      "fatG": null,
+      "carbsG": 2,
+      "fiberG": 1.7,
+      "ashG": 14
+    }
+  },
+  {
+    "code": "4110",
+    "stt": 192,
+    "page": 212,
+    "nameEn": "Eggplant, garden, brinjan; aubergine, pickled",
+    "nameVi": "Cà muối sổi",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 84.3,
+      "kcal": 16,
+      "kj": 67,
+      "proteinG": 1.5,
+      "fatG": null,
+      "carbsG": 2.5,
+      "fiberG": 1.7,
+      "ashG": 10
+    }
+  },
+  {
+    "code": "4111",
+    "stt": 193,
+    "page": 213,
+    "nameEn": "Cabbage Chinese, pickled",
+    "nameVi": "Dưa cải bắp",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 90.9,
+      "kcal": 18,
+      "kj": 75,
+      "proteinG": 1.2,
+      "fatG": null,
+      "carbsG": 3.3,
+      "fiberG": 1.6,
+      "ashG": 3
+    }
+  },
+  {
+    "code": "4112",
+    "stt": 194,
+    "page": 214,
+    "nameEn": "Mustard green, pickled",
+    "nameVi": "Dưa cải bẹ",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 90.1,
+      "kcal": 17,
+      "kj": 70,
+      "proteinG": 1.8,
+      "fatG": null,
+      "carbsG": 2.4,
+      "fiberG": 2.1,
+      "ashG": 3.6
+    }
+  },
+  {
+    "code": "4113",
+    "stt": 195,
+    "page": 215,
+    "nameEn": "Rape bird, pickled",
+    "nameVi": "Dưa cải sen",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 93.8,
+      "kcal": 10,
+      "kj": 40,
+      "proteinG": 1.1,
+      "fatG": null,
+      "carbsG": 1.3,
+      "fiberG": 1.8,
+      "ashG": 2
+    }
+  },
+  {
+    "code": "4114",
+    "stt": 196,
+    "page": 216,
+    "nameEn": "Cucumber, pickled",
+    "nameVi": "Dưa chuột muối",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 92.1,
+      "kcal": 13,
+      "kj": 55,
+      "proteinG": 0.8,
+      "fatG": null,
+      "carbsG": 2.5,
+      "fiberG": 0.7,
+      "ashG": 3.9
+    }
+  },
+  {
+    "code": "4115",
+    "stt": 197,
+    "page": 217,
+    "nameEn": "Mung bean sprouts, pickled",
+    "nameVi": "Dưa giá (đậu xanh)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 86.2,
+      "kcal": 39,
+      "kj": 164,
+      "proteinG": 5,
+      "fatG": null,
+      "carbsG": 4.8,
+      "fiberG": 2,
+      "ashG": 2
+    }
+  },
+  {
+    "code": "4116",
+    "stt": 198,
+    "page": 218,
+    "nameEn": "Onion, pickled",
+    "nameVi": "Hành củ muối",
+    "wastePct": 30,
+    "per100g": {
+      "waterG": 88.5,
+      "kcal": 22,
+      "kj": 90,
+      "proteinG": 1.4,
+      "fatG": null,
+      "carbsG": 4,
+      "fiberG": 0.7,
+      "ashG": 5.4
+    }
+  },
+  {
+    "code": "4117",
+    "stt": 199,
+    "page": 219,
+    "nameEn": "Onion shallot, scallion, pickled",
+    "nameVi": "Kiệu muối",
+    "wastePct": 30,
+    "per100g": {
+      "waterG": 89.5,
+      "kcal": 24,
+      "kj": 100,
+      "proteinG": 1.3,
+      "fatG": null,
+      "carbsG": 4.7,
+      "fiberG": 1.2,
+      "ashG": 3.3
+    }
+  },
+  {
+    "code": "4118",
+    "stt": 200,
+    "page": 220,
+    "nameEn": "Mix pickled from young jack fruit",
+    "nameVi": "Nhút (muối từ mít non, ngọn đậu xanh non...)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 84.9,
+      "kcal": 16,
+      "kj": 67,
+      "proteinG": 2.5,
+      "fatG": null,
+      "carbsG": 1.5,
+      "fiberG": 2.3,
+      "ashG": 8.8
+    }
+  },
+  {
+    "code": "4119",
+    "stt": 201,
+    "page": 221,
+    "nameEn": "Brewer's yeast, fried",
+    "nameVi": "Men bia khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 7.5,
+      "kcal": 340,
+      "kj": 1424,
+      "proteinG": 52.5,
+      "fatG": 3.2,
+      "carbsG": 25.4,
+      "fiberG": 6.6,
+      "ashG": 4.8
+    }
+  },
+  {
+    "code": "4120",
+    "stt": 202,
+    "page": 222,
+    "nameEn": "Baker's yeast, fresh",
+    "nameVi": "Men bia tươi",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 74.6,
+      "kcal": 95,
+      "kj": 395,
+      "proteinG": 16.2,
+      "fatG": 1.3,
+      "carbsG": 4.5,
+      "fiberG": 2,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "4121",
+    "stt": 203,
+    "page": 223,
+    "nameEn": "Jew's ear, Juda's ear, dried, Wood-ear, Tender variety",
+    "nameVi": "Mộc nhĩ",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 11.4,
+      "kcal": 304,
+      "kj": 1273,
+      "proteinG": 10.6,
+      "fatG": 0.2,
+      "carbsG": 65,
+      "fiberG": 7,
+      "ashG": 5.8
+    }
+  },
+  {
+    "code": "4122",
+    "stt": 204,
+    "page": 224,
+    "nameEn": "Mushroom Chinese, dried",
+    "nameVi": "Nấm hương khô",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 13,
+      "kcal": 274,
+      "kj": 1146,
+      "proteinG": 36,
+      "fatG": 4,
+      "carbsG": 23.5,
+      "fiberG": 17,
+      "ashG": 6.5
+    }
+  },
+  {
+    "code": "4123",
+    "stt": 205,
+    "page": 225,
+    "nameEn": "Mushroom, Chinese, raw",
+    "nameVi": "Nấm hương tươi",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 87,
+      "kcal": 39,
+      "kj": 163,
+      "proteinG": 5.5,
+      "fatG": 0.5,
+      "carbsG": 3.1,
+      "fiberG": 3,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "4124",
+    "stt": 206,
+    "page": 226,
+    "nameEn": "Mushroom",
+    "nameVi": "Nấm mỡ (nấm tây)",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 90.4,
+      "kcal": 32,
+      "kj": 135,
+      "proteinG": 4,
+      "fatG": 0.3,
+      "carbsG": 3.4,
+      "fiberG": 1.1,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4125",
+    "stt": 207,
+    "page": 227,
+    "nameEn": "Mushroom, straw",
+    "nameVi": "Nấm rơm",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 87.9,
+      "kcal": 57,
+      "kj": 238,
+      "proteinG": 3.6,
+      "fatG": 3.2,
+      "carbsG": 3.4,
+      "fiberG": 1.1,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "4126",
+    "stt": 208,
+    "page": 228,
+    "nameEn": "Mushroom, common",
+    "nameVi": "Nấm thường tươi",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 88,
+      "kcal": 34,
+      "kj": 144,
+      "proteinG": 4.6,
+      "fatG": 0.8,
+      "carbsG": 2.2,
+      "fiberG": 3.5,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "5001",
+    "stt": 209,
+    "page": 231,
+    "nameEn": "Pomelo, Pummelo; Shaddock",
+    "nameVi": "Bưởi",
+    "wastePct": 35,
+    "per100g": {
+      "waterG": 91.4,
+      "kcal": 30,
+      "kj": 126,
+      "proteinG": 0.2,
+      "fatG": 0,
+      "carbsG": 7.3,
+      "fiberG": 0.7,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "5002",
+    "stt": 210,
+    "page": 232,
+    "nameEn": "Orange",
+    "nameVi": "Cam",
+    "wastePct": 31.1,
+    "per100g": {
+      "waterG": 88.8,
+      "kcal": 38,
+      "kj": 158,
+      "proteinG": 0.9,
+      "fatG": 0.1,
+      "carbsG": 8.3,
+      "fiberG": 1.4,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5003",
+    "stt": 211,
+    "page": 233,
+    "nameEn": "Lemon",
+    "nameVi": "Chanh",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 92.5,
+      "kcal": 24,
+      "kj": 102,
+      "proteinG": 0.9,
+      "fatG": 0.3,
+      "carbsG": 4.5,
+      "fiberG": 1.3,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5004",
+    "stt": 212,
+    "page": 234,
+    "nameEn": "Rambutan",
+    "nameVi": "Chôm chôm",
+    "wastePct": 50,
+    "per100g": {
+      "waterG": 80.3,
+      "kcal": 72,
+      "kj": 300,
+      "proteinG": 1.5,
+      "fatG": 0,
+      "carbsG": 16.4,
+      "fiberG": 1.3,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5005",
+    "stt": 213,
+    "page": 235,
+    "nameEn": "Banana, dried",
+    "nameVi": "Chuối khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 22,
+      "kcal": 292,
+      "kj": 1222,
+      "proteinG": 5,
+      "fatG": 0,
+      "carbsG": 68,
+      "fiberG": 2.3,
+      "ashG": 2.7
+    }
+  },
+  {
+    "code": "5006",
+    "stt": 214,
+    "page": 236,
+    "nameEn": "Banana",
+    "nameVi": "Chuối tây",
+    "wastePct": 26.5,
+    "per100g": {
+      "waterG": 83.2,
+      "kcal": 56,
+      "kj": 234,
+      "proteinG": 0.9,
+      "fatG": 0.3,
+      "carbsG": 12.4,
+      "fiberG": 2.6,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "5007",
+    "stt": 215,
+    "page": 237,
+    "nameEn": "Banana, dwarf",
+    "nameVi": "Chuối tiêu",
+    "wastePct": 35,
+    "per100g": {
+      "waterG": 74.4,
+      "kcal": 97,
+      "kj": 404,
+      "proteinG": 1.5,
+      "fatG": 0.2,
+      "carbsG": 22.2,
+      "fiberG": 0.8,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "5008",
+    "stt": 216,
+    "page": 238,
+    "nameEn": "Blackberry",
+    "nameVi": "Dâu gia",
+    "wastePct": 56,
+    "per100g": {
+      "waterG": 92.8,
+      "kcal": 27,
+      "kj": 114,
+      "proteinG": 0.6,
+      "fatG": null,
+      "carbsG": 6.2,
+      "fiberG": null,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "5009",
+    "stt": 217,
+    "page": 239,
+    "nameEn": "Strawberry",
+    "nameVi": "Dâu tây",
+    "wastePct": 15,
+    "per100g": {
+      "waterG": 84.9,
+      "kcal": 43,
+      "kj": 181,
+      "proteinG": 1.8,
+      "fatG": 0.4,
+      "carbsG": 8.1,
+      "fiberG": 4,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "5010",
+    "stt": 218,
+    "page": 240,
+    "nameEn": "Musk melon, Spanish melon, Cantaloupe",
+    "nameVi": "Dưa bở",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 94.5,
+      "kcal": 18,
+      "kj": 76,
+      "proteinG": 0.5,
+      "fatG": 0.2,
+      "carbsG": 3.6,
+      "fiberG": 0.7,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5011",
+    "stt": 219,
+    "page": 241,
+    "nameEn": "Watermelon",
+    "nameVi": "Dưa hấu",
+    "wastePct": 48,
+    "per100g": {
+      "waterG": 95.5,
+      "kcal": 16,
+      "kj": 66,
+      "proteinG": 1.2,
+      "fatG": 0.2,
+      "carbsG": 2.3,
+      "fiberG": 0.5,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "5012",
+    "stt": 220,
+    "page": 242,
+    "nameEn": "Honey dew melon",
+    "nameVi": "Dưa hồng",
+    "wastePct": 16,
+    "per100g": {
+      "waterG": 95,
+      "kcal": 17,
+      "kj": 72,
+      "proteinG": 0.3,
+      "fatG": 0.1,
+      "carbsG": 3.7,
+      "fiberG": 0.4,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5013",
+    "stt": 221,
+    "page": 243,
+    "nameEn": "",
+    "nameVi": "Dưa lê",
+    "wastePct": 18,
+    "per100g": {
+      "waterG": 93.3,
+      "kcal": 18,
+      "kj": 77,
+      "proteinG": 0.4,
+      "fatG": 0,
+      "carbsG": 4.2,
+      "fiberG": 0.5,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "5014",
+    "stt": 222,
+    "page": 244,
+    "nameEn": "Pineapple, wild",
+    "nameVi": "Dứa ta",
+    "wastePct": 40,
+    "per100g": {
+      "waterG": 91.5,
+      "kcal": 29,
+      "kj": 122,
+      "proteinG": 0.8,
+      "fatG": null,
+      "carbsG": 6.5,
+      "fiberG": 0.8,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "5015",
+    "stt": 223,
+    "page": 245,
+    "nameEn": "Pineapple",
+    "nameVi": "Dứa tây",
+    "wastePct": 40,
+    "per100g": {
+      "waterG": 89.7,
+      "kcal": 38,
+      "kj": 160,
+      "proteinG": 0.5,
+      "fatG": 0.1,
+      "carbsG": 8.8,
+      "fiberG": 0.4,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5016",
+    "stt": 224,
+    "page": 246,
+    "nameEn": "Peach",
+    "nameVi": "Đào",
+    "wastePct": 12,
+    "per100g": {
+      "waterG": 90.5,
+      "kcal": 31,
+      "kj": 128,
+      "proteinG": 0.9,
+      "fatG": 0.2,
+      "carbsG": 6.3,
+      "fiberG": 1.5,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "5017",
+    "stt": 225,
+    "page": 247,
+    "nameEn": "Papaya, ripe",
+    "nameVi": "Đu đủ chín",
+    "wastePct": 12.4,
+    "per100g": {
+      "waterG": 90.1,
+      "kcal": 36,
+      "kj": 149,
+      "proteinG": 1,
+      "fatG": 0.1,
+      "carbsG": 7.6,
+      "fiberG": 0.6,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "5018",
+    "stt": 226,
+    "page": 248,
+    "nameEn": "Ohia; Malaya roseapple",
+    "nameVi": "Gioi",
+    "wastePct": 19,
+    "per100g": {
+      "waterG": 93,
+      "kcal": 16,
+      "kj": 65,
+      "proteinG": 0.4,
+      "fatG": 0.3,
+      "carbsG": 3.2,
+      "fiberG": 2.9,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "5019",
+    "stt": 227,
+    "page": 249,
+    "nameEn": "Wampee, Chinese; Wampi",
+    "nameVi": "Hồng bì",
+    "wastePct": 46,
+    "per100g": {
+      "waterG": 88.2,
+      "kcal": 34,
+      "kj": 144,
+      "proteinG": 1.4,
+      "fatG": null,
+      "carbsG": 7.2,
+      "fiberG": 2.4,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "5020",
+    "stt": 228,
+    "page": 250,
+    "nameEn": "Persimmon kaki, soft type, ripe",
+    "nameVi": "Hồng đỏ",
+    "wastePct": 8.8,
+    "per100g": {
+      "waterG": 90,
+      "kcal": 29,
+      "kj": 119,
+      "proteinG": 0.7,
+      "fatG": 0.2,
+      "carbsG": 6,
+      "fiberG": 2.5,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "5021",
+    "stt": 229,
+    "page": 251,
+    "nameEn": "Persimmon kaki, Hard-type, ripe",
+    "nameVi": "Hồng ngâm",
+    "wastePct": 17.7,
+    "per100g": {
+      "waterG": 87.5,
+      "kcal": 38,
+      "kj": 159,
+      "proteinG": 0.9,
+      "fatG": null,
+      "carbsG": 8.6,
+      "fiberG": 2.5,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5022",
+    "stt": 230,
+    "page": 252,
+    "nameEn": "Sapodilla, sapota ponderosa",
+    "nameVi": "Hồng xiêm",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 85.7,
+      "kcal": 48,
+      "kj": 202,
+      "proteinG": 0.5,
+      "fatG": 0.7,
+      "carbsG": 10,
+      "fiberG": 2.5,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "5023",
+    "stt": 231,
+    "page": 253,
+    "nameEn": "Pear",
+    "nameVi": "Lê",
+    "wastePct": 12,
+    "per100g": {
+      "waterG": 87.8,
+      "kcal": 45,
+      "kj": 190,
+      "proteinG": 0.7,
+      "fatG": 0.2,
+      "carbsG": 10.2,
+      "fiberG": 0.6,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5024",
+    "stt": 232,
+    "page": 254,
+    "nameEn": "Pome granate",
+    "nameVi": "Lựu",
+    "wastePct": 85,
+    "per100g": {
+      "waterG": 79.6,
+      "kcal": 70,
+      "kj": 292,
+      "proteinG": 0.6,
+      "fatG": 0.3,
+      "carbsG": 16.2,
+      "fiberG": 2.5,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "5025",
+    "stt": 233,
+    "page": 255,
+    "nameEn": "Siamese custard apple, soursop",
+    "nameVi": "Mãng cầu xiêm",
+    "wastePct": 21,
+    "per100g": {
+      "waterG": 84.7,
+      "kcal": 53,
+      "kj": 222,
+      "proteinG": 1.8,
+      "fatG": 0.6,
+      "carbsG": 10.1,
+      "fiberG": 1.9,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "5026",
+    "stt": 234,
+    "page": 256,
+    "nameEn": "Pyrus pashia Ham",
+    "nameVi": "Mắc coọc",
+    "wastePct": 14,
+    "per100g": {
+      "waterG": 93.8,
+      "kcal": 24,
+      "kj": 99,
+      "proteinG": 0.2,
+      "fatG": null,
+      "carbsG": 5.7,
+      "fiberG": null,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "5027",
+    "stt": 235,
+    "page": 257,
+    "nameEn": "Japanese, plum",
+    "nameVi": "Mận",
+    "wastePct": 15,
+    "per100g": {
+      "waterG": 94.1,
+      "kcal": 20,
+      "kj": 83,
+      "proteinG": 0.6,
+      "fatG": 0.2,
+      "carbsG": 3.9,
+      "fiberG": 0.7,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5028",
+    "stt": 236,
+    "page": 258,
+    "nameEn": "Jackfruit, jackfruit mature",
+    "nameVi": "Mít dai",
+    "wastePct": 55,
+    "per100g": {
+      "waterG": 85.4,
+      "kcal": 50,
+      "kj": 207,
+      "proteinG": 0.6,
+      "fatG": 0.3,
+      "carbsG": 11.1,
+      "fiberG": 1.2,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "5029",
+    "stt": 237,
+    "page": 259,
+    "nameEn": "Dried jackfruit",
+    "nameVi": "Mít khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 26,
+      "kcal": 280,
+      "kj": 1170,
+      "proteinG": 2.9,
+      "fatG": null,
+      "carbsG": 67,
+      "fiberG": 1.5,
+      "ashG": 2.6
+    }
+  },
+  {
+    "code": "5030",
+    "stt": 238,
+    "page": 260,
+    "nameEn": "Jack fruit, honey",
+    "nameVi": "Mít mật",
+    "wastePct": 55,
+    "per100g": {
+      "waterG": 82.2,
+      "kcal": 62,
+      "kj": 259,
+      "proteinG": 1.5,
+      "fatG": null,
+      "carbsG": 14,
+      "fiberG": 1.2,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "5031",
+    "stt": 239,
+    "page": 261,
+    "nameEn": "Apricot, Apricot nectar",
+    "nameVi": "Mơ",
+    "wastePct": 14,
+    "per100g": {
+      "waterG": 87.1,
+      "kcal": 48,
+      "kj": 199,
+      "proteinG": 0.9,
+      "fatG": 0.4,
+      "carbsG": 10.1,
+      "fiberG": 0.8,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "5032",
+    "stt": 240,
+    "page": 262,
+    "nameEn": "Apricot dried, unsulfured",
+    "nameVi": "Mơ khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 25.9,
+      "kcal": 273,
+      "kj": 1143,
+      "proteinG": 3,
+      "fatG": 1.1,
+      "carbsG": 62.8,
+      "fiberG": 4.1,
+      "ashG": 3.1
+    }
+  },
+  {
+    "code": "5033",
+    "stt": 241,
+    "page": 263,
+    "nameEn": "Mango, common; Indian mango, unripe",
+    "nameVi": "Muỗm, quéo",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 82.9,
+      "kcal": 67,
+      "kj": 281,
+      "proteinG": 0.6,
+      "fatG": 0.4,
+      "carbsG": 15.3,
+      "fiberG": 0.4,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "5034",
+    "stt": 242,
+    "page": 264,
+    "nameEn": "Sugarapple, sweetsop",
+    "nameVi": "Na",
+    "wastePct": 44.4,
+    "per100g": {
+      "waterG": 82.5,
+      "kcal": 66,
+      "kj": 276,
+      "proteinG": 1.6,
+      "fatG": 0.3,
+      "carbsG": 14.2,
+      "fiberG": 0.8,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "5035",
+    "stt": 243,
+    "page": 265,
+    "nameEn": "Longan",
+    "nameVi": "Nhãn",
+    "wastePct": 45,
+    "per100g": {
+      "waterG": 86.3,
+      "kcal": 48,
+      "kj": 201,
+      "proteinG": 0.9,
+      "fatG": 0.1,
+      "carbsG": 10.9,
+      "fiberG": 1,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "5036",
+    "stt": 244,
+    "page": 266,
+    "nameEn": "Longan, dried",
+    "nameVi": "Nhãn khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 25,
+      "kcal": 285,
+      "kj": 1194,
+      "proteinG": 4.3,
+      "fatG": 0.5,
+      "carbsG": 65.9,
+      "fiberG": 1.7,
+      "ashG": 2.6
+    }
+  },
+  {
+    "code": "5037",
+    "stt": 245,
+    "page": 267,
+    "nameEn": "Grape, European, sweet",
+    "nameVi": "Nho ngọt",
+    "wastePct": 1.9,
+    "per100g": {
+      "waterG": 82.1,
+      "kcal": 68,
+      "kj": 286,
+      "proteinG": 0.4,
+      "fatG": 0.2,
+      "carbsG": 16.3,
+      "fiberG": 0.6,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "5038",
+    "stt": 246,
+    "page": 268,
+    "nameEn": "Grape fruit, sour",
+    "nameVi": "Nho ta (nho chua)",
+    "wastePct": 13,
+    "per100g": {
+      "waterG": 93.6,
+      "kcal": 14,
+      "kj": 59,
+      "proteinG": 0.4,
+      "fatG": null,
+      "carbsG": 3.1,
+      "fiberG": 2.4,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5039",
+    "stt": 247,
+    "page": 269,
+    "nameEn": "Silver berry",
+    "nameVi": "Nhót",
+    "wastePct": 24,
+    "per100g": {
+      "waterG": 94,
+      "kcal": 13,
+      "kj": 55,
+      "proteinG": 1.2,
+      "fatG": null,
+      "carbsG": 2.1,
+      "fiberG": 2.3,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "5040",
+    "stt": 248,
+    "page": 270,
+    "nameEn": "Guava, common",
+    "nameVi": "Ổi",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 85,
+      "kcal": 38,
+      "kj": 159,
+      "proteinG": 0.6,
+      "fatG": 1,
+      "carbsG": 6.8,
+      "fiberG": 6,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "5041",
+    "stt": 249,
+    "page": 271,
+    "nameEn": "Avocado, purple",
+    "nameVi": "Quả bơ vỏ tím",
+    "wastePct": 27,
+    "per100g": {
+      "waterG": 88.3,
+      "kcal": 74,
+      "kj": 310,
+      "proteinG": 1.8,
+      "fatG": 6.2,
+      "carbsG": 2.8,
+      "fiberG": 0.4,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5042",
+    "stt": 250,
+    "page": 272,
+    "nameEn": "Avocado, green",
+    "nameVi": "Quả bơ vỏ xanh",
+    "wastePct": 28,
+    "per100g": {
+      "waterG": 85.4,
+      "kcal": 101,
+      "kj": 424,
+      "proteinG": 1.9,
+      "fatG": 9.4,
+      "carbsG": 2.3,
+      "fiberG": 0.5,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5043",
+    "stt": 251,
+    "page": 273,
+    "nameEn": "-",
+    "nameVi": "Quả cóc",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 83.9,
+      "kcal": 58,
+      "kj": 244,
+      "proteinG": 1.8,
+      "fatG": null,
+      "carbsG": 12.8,
+      "fiberG": 0.9,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "5044",
+    "stt": 252,
+    "page": 274,
+    "nameEn": "Dragon's eyes fruit",
+    "nameVi": "Quả thanh long",
+    "wastePct": null,
+    "per100g": {
+      "waterG": 87.6,
+      "kcal": 40,
+      "kj": 167,
+      "proteinG": 1.3,
+      "fatG": null,
+      "carbsG": 8.7,
+      "fiberG": 1.8,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "5045",
+    "stt": 253,
+    "page": 275,
+    "nameEn": "-",
+    "nameVi": "Quả trứng gà",
+    "wastePct": 25,
+    "per100g": {
+      "waterG": 73.4,
+      "kcal": 106,
+      "kj": 444,
+      "proteinG": 4.3,
+      "fatG": 0.4,
+      "carbsG": 21.3,
+      "fiberG": null,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "5046",
+    "stt": 254,
+    "page": 276,
+    "nameEn": "Mandarin, whole fruit",
+    "nameVi": "Quất chín (cả vỏ)",
+    "wastePct": 4,
+    "per100g": {
+      "waterG": 89,
+      "kcal": 26,
+      "kj": 107,
+      "proteinG": 0.9,
+      "fatG": null,
+      "carbsG": 5.5,
+      "fiberG": 4.1,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5047",
+    "stt": 255,
+    "page": 277,
+    "nameEn": "Tangerine; Orange; Mandarin",
+    "nameVi": "Quít",
+    "wastePct": 19.8,
+    "per100g": {
+      "waterG": 89.5,
+      "kcal": 39,
+      "kj": 164,
+      "proteinG": 0.8,
+      "fatG": 0.3,
+      "carbsG": 8.3,
+      "fiberG": 0.6,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5048",
+    "stt": 256,
+    "page": 278,
+    "nameEn": "Durian, Civet",
+    "nameVi": "Sầu riêng",
+    "wastePct": 75,
+    "per100g": {
+      "waterG": 66.8,
+      "kcal": 132,
+      "kj": 552,
+      "proteinG": 2.5,
+      "fatG": 1.6,
+      "carbsG": 26.9,
+      "fiberG": 1.4,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "5049",
+    "stt": 257,
+    "page": 279,
+    "nameEn": "Sanpidus, ripe",
+    "nameVi": "Sấu chín",
+    "wastePct": 24,
+    "per100g": {
+      "waterG": 87,
+      "kcal": 38,
+      "kj": 159,
+      "proteinG": 1.3,
+      "fatG": null,
+      "carbsG": 8.2,
+      "fiberG": 2.7,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "5050",
+    "stt": 258,
+    "page": 280,
+    "nameEn": "Jujube, common or Chinese; Chinese date",
+    "nameVi": "Táo ta",
+    "wastePct": 14,
+    "per100g": {
+      "waterG": 89.5,
+      "kcal": 38,
+      "kj": 160,
+      "proteinG": 0.8,
+      "fatG": 0.2,
+      "carbsG": 8.3,
+      "fiberG": 0.7,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5051",
+    "stt": 259,
+    "page": 281,
+    "nameEn": "Apple, common, domestic",
+    "nameVi": "Táo tây",
+    "wastePct": 12,
+    "per100g": {
+      "waterG": 87.2,
+      "kcal": 48,
+      "kj": 199,
+      "proteinG": 0.5,
+      "fatG": 0.2,
+      "carbsG": 11,
+      "fiberG": 0.6,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "5052",
+    "stt": 260,
+    "page": 282,
+    "nameEn": "Litchi; lychee",
+    "nameVi": "Vải",
+    "wastePct": 48,
+    "per100g": {
+      "waterG": 87.8,
+      "kcal": 45,
+      "kj": 188,
+      "proteinG": 0.7,
+      "fatG": 0.4,
+      "carbsG": 9.6,
+      "fiberG": 1.1,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "5053",
+    "stt": 261,
+    "page": 283,
+    "nameEn": "Litchi, dried with shells",
+    "nameVi": "Vải khô",
+    "wastePct": 44,
+    "per100g": {
+      "waterG": 34.9,
+      "kcal": 260,
+      "kj": 1086,
+      "proteinG": 3,
+      "fatG": 1.9,
+      "carbsG": 57.6,
+      "fiberG": 1,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "5054",
+    "stt": 262,
+    "page": 284,
+    "nameEn": "Starapple, cainito",
+    "nameVi": "Vú sữa",
+    "wastePct": 22,
+    "per100g": {
+      "waterG": 86.5,
+      "kcal": 42,
+      "kj": 174,
+      "proteinG": 1,
+      "fatG": null,
+      "carbsG": 9.4,
+      "fiberG": 2.3,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "5055",
+    "stt": 263,
+    "page": 285,
+    "nameEn": "Mango, common; India mango, ripe",
+    "nameVi": "Xoài chín",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 82.6,
+      "kcal": 62,
+      "kj": 257,
+      "proteinG": 0.6,
+      "fatG": 0.3,
+      "carbsG": 14.1,
+      "fiberG": 1.8,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "5056",
+    "stt": 264,
+    "page": 286,
+    "nameEn": "Kiwi fruit",
+    "nameVi": "Quả kiwi",
+    "wastePct": 14,
+    "per100g": {
+      "waterG": 83.1,
+      "kcal": 56,
+      "kj": 234,
+      "proteinG": 1.1,
+      "fatG": 0.5,
+      "carbsG": 11.7,
+      "fiberG": 3,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "6001",
+    "stt": 265,
+    "page": 289,
+    "nameEn": "Butter, unsalted",
+    "nameVi": "Bơ",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 15.4,
+      "kcal": 756,
+      "kj": 3161,
+      "proteinG": 0.5,
+      "fatG": 83.5,
+      "carbsG": 0.5,
+      "fiberG": 0,
+      "ashG": 0.1
+    }
+  },
+  {
+    "code": "6002",
+    "stt": 266,
+    "page": 290,
+    "nameEn": "Vegetable oil, mix",
+    "nameVi": "Dầu thảo mộc (lạc, vừng, cám...)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0.3,
+      "kcal": 897,
+      "kj": 3754,
+      "proteinG": 0,
+      "fatG": 99.7,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "6003",
+    "stt": 267,
+    "page": 291,
+    "nameEn": "Lard, salted",
+    "nameVi": "Mỡ lợn muối",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 3,
+      "kcal": 827,
+      "kj": 3460,
+      "proteinG": 2,
+      "fatG": 91,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 4
+    }
+  },
+  {
+    "code": "6004",
+    "stt": 268,
+    "page": 292,
+    "nameEn": "Lard, liquid",
+    "nameVi": "Mỡ lợn nước",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0.4,
+      "kcal": 896,
+      "kj": 3751,
+      "proteinG": 0,
+      "fatG": 99.6,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "6005",
+    "stt": 269,
+    "page": 293,
+    "nameEn": "Butter-margarine blend, stick, unsalted",
+    "nameVi": "Bơ thực vật",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 18.5,
+      "kcal": 729,
+      "kj": 3049,
+      "proteinG": 0.5,
+      "fatG": 80.7,
+      "carbsG": 0.1,
+      "fiberG": 0,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "6006",
+    "stt": 270,
+    "page": 294,
+    "nameEn": "Cottonseed oil, salad or cooking",
+    "nameVi": "Dầu bông",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0,
+      "kcal": 900,
+      "kj": 3766,
+      "proteinG": 0,
+      "fatG": 100,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "6007",
+    "stt": 271,
+    "page": 295,
+    "nameEn": "Rice bran oil",
+    "nameVi": "Dầu cám gạo",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0,
+      "kcal": 900,
+      "kj": 3766,
+      "proteinG": 0,
+      "fatG": 100,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "6008",
+    "stt": 272,
+    "page": 296,
+    "nameEn": "Palm oil",
+    "nameVi": "Dầu cọ",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0,
+      "kcal": 900,
+      "kj": 3766,
+      "proteinG": 0,
+      "fatG": 100,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "6009",
+    "stt": 273,
+    "page": 297,
+    "nameEn": "Coconut oil",
+    "nameVi": "Dầu dừa",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0,
+      "kcal": 900,
+      "kj": 3766,
+      "proteinG": 0,
+      "fatG": 100,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "6010",
+    "stt": 274,
+    "page": 298,
+    "nameEn": "Soybean oil, salad or cooking",
+    "nameVi": "Dầu đậu tương",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0,
+      "kcal": 900,
+      "kj": 3766,
+      "proteinG": 0,
+      "fatG": 100,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "6011",
+    "stt": 275,
+    "page": 299,
+    "nameEn": "Peanut oil, salad or cooking",
+    "nameVi": "Dầu lạc",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0,
+      "kcal": 900,
+      "kj": 3766,
+      "proteinG": 0,
+      "fatG": 100,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "6012",
+    "stt": 276,
+    "page": 300,
+    "nameEn": "Sesame oil, salad or cooking",
+    "nameVi": "Dầu mè",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0,
+      "kcal": 900,
+      "kj": 3766,
+      "proteinG": 0,
+      "fatG": 100,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "6013",
+    "stt": 277,
+    "page": 301,
+    "nameEn": "Corn oil, salad or cooking",
+    "nameVi": "Dầu ngô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0,
+      "kcal": 900,
+      "kj": 3766,
+      "proteinG": 0,
+      "fatG": 100,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "6014",
+    "stt": 278,
+    "page": 302,
+    "nameEn": "Olive oil, salad or cooking",
+    "nameVi": "Dầu oliu",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0,
+      "kcal": 900,
+      "kj": 3766,
+      "proteinG": 0,
+      "fatG": 100,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0
+    }
+  },
+  {
+    "code": "7001",
+    "stt": 279,
+    "page": 305,
+    "nameEn": "Veal meat, lean and fat",
+    "nameVi": "Thịt bê mỡ",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 72.8,
+      "kcal": 144,
+      "kj": 600,
+      "proteinG": 19,
+      "fatG": 7.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "7002",
+    "stt": 280,
+    "page": 306,
+    "nameEn": "Veal meat, lean only",
+    "nameVi": "Thịt bê nạc",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 78.2,
+      "kcal": 85,
+      "kj": 354,
+      "proteinG": 20,
+      "fatG": 0.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "7003",
+    "stt": 281,
+    "page": 307,
+    "nameEn": "Beef, grade I",
+    "nameVi": "Thịt bò loại i",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 74.1,
+      "kcal": 118,
+      "kj": 495,
+      "proteinG": 21,
+      "fatG": 3.8,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "7004",
+    "stt": 282,
+    "page": 308,
+    "nameEn": "Beef, grade II",
+    "nameVi": "Thịt bò loại ii",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 70.5,
+      "kcal": 167,
+      "kj": 697,
+      "proteinG": 18,
+      "fatG": 10.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7005",
+    "stt": 283,
+    "page": 309,
+    "nameEn": "Beef, top loin, seperable lean only, trimmed to 1/8\" fat, prime, raw",
+    "nameVi": "Thịt bò, lưng, nạc",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 72.7,
+      "kcal": 127,
+      "kj": 532,
+      "proteinG": 23.1,
+      "fatG": 3.9,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7006",
+    "stt": 284,
+    "page": 310,
+    "nameEn": "Beef, top loin, seperable lean only, trimmed to 1/4\" fat, prime, raw",
+    "nameVi": "Thịt bò, lưng, nạc và mỡ",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 67.4,
+      "kcal": 182,
+      "kj": 763,
+      "proteinG": 21.5,
+      "fatG": 10.7,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "7007",
+    "stt": 285,
+    "page": 311,
+    "nameEn": "Pigeon young bird flesh skin and giblets",
+    "nameVi": "Thịt bồ câu ra ràng",
+    "wastePct": 60,
+    "per100g": {
+      "waterG": 51.7,
+      "kcal": 340,
+      "kj": 1423,
+      "proteinG": 17.5,
+      "fatG": 30,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "7008",
+    "stt": 286,
+    "page": 312,
+    "nameEn": "Dog meat",
+    "nameVi": "Thịt chó sấn",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 53,
+      "kcal": 338,
+      "kj": 1413,
+      "proteinG": 16,
+      "fatG": 30.4,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "7009",
+    "stt": 287,
+    "page": 313,
+    "nameEn": "Dog, shoulder",
+    "nameVi": "Thịt chó vai",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 63.8,
+      "kcal": 230,
+      "kj": 964,
+      "proteinG": 18,
+      "fatG": 17.6,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "7010",
+    "stt": 288,
+    "page": 314,
+    "nameEn": "Mutton meat, lean",
+    "nameVi": "Thịt cừu, nạc",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 65.8,
+      "kcal": 219,
+      "kj": 915,
+      "proteinG": 16.4,
+      "fatG": 17,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "7011",
+    "stt": 289,
+    "page": 315,
+    "nameEn": "Goat, meat, lean",
+    "nameVi": "Thịt dê, nạc",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 74.4,
+      "kcal": 122,
+      "kj": 508,
+      "proteinG": 20.7,
+      "fatG": 4.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "7012",
+    "stt": 290,
+    "page": 316,
+    "nameEn": "Grouse field chicken",
+    "nameVi": "Thịt gà rừng",
+    "wastePct": 58,
+    "per100g": {
+      "waterG": 69.7,
+      "kcal": 141,
+      "kj": 589,
+      "proteinG": 24.4,
+      "fatG": 4.8,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "7013",
+    "stt": 291,
+    "page": 317,
+    "nameEn": "Chicken meat, average",
+    "nameVi": "Thịt gà ta",
+    "wastePct": 52,
+    "per100g": {
+      "waterG": 65.6,
+      "kcal": 199,
+      "kj": 833,
+      "proteinG": 20.3,
+      "fatG": 13.1,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7014",
+    "stt": 292,
+    "page": 318,
+    "nameEn": "Turkey raw flesh and skin giblets",
+    "nameVi": "Thịt gà tây",
+    "wastePct": 53,
+    "per100g": {
+      "waterG": 63.6,
+      "kcal": 218,
+      "kj": 913,
+      "proteinG": 20.1,
+      "fatG": 15.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7015",
+    "stt": 293,
+    "page": 319,
+    "nameEn": "Deer meat",
+    "nameVi": "Thịt hươu",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 77.9,
+      "kcal": 94,
+      "kj": 393,
+      "proteinG": 19,
+      "fatG": 2,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "7016",
+    "stt": 294,
+    "page": 320,
+    "nameEn": "Pork, lean and fat",
+    "nameVi": "Thịt lợn mỡ",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 47.5,
+      "kcal": 394,
+      "kj": 1647,
+      "proteinG": 14.5,
+      "fatG": 37.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "7017",
+    "stt": 295,
+    "page": 321,
+    "nameEn": "Pork, lean",
+    "nameVi": "Thịt lợn nạc",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 73,
+      "kcal": 139,
+      "kj": 582,
+      "proteinG": 19,
+      "fatG": 7,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7018",
+    "stt": 296,
+    "page": 322,
+    "nameEn": "Pork, medium fat",
+    "nameVi": "Thịt lợn nửa nạc, nửa mỡ",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 60.9,
+      "kcal": 260,
+      "kj": 1086,
+      "proteinG": 16.5,
+      "fatG": 21.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "7019",
+    "stt": 297,
+    "page": 323,
+    "nameEn": "Goose",
+    "nameVi": "Thịt ngỗng",
+    "wastePct": 52,
+    "per100g": {
+      "waterG": 46.1,
+      "kcal": 409,
+      "kj": 1710,
+      "proteinG": 14,
+      "fatG": 39.2,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "7020",
+    "stt": 298,
+    "page": 324,
+    "nameEn": "Horse meat",
+    "nameVi": "Thịt ngựa",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 66.8,
+      "kcal": 176,
+      "kj": 736,
+      "proteinG": 21.5,
+      "fatG": 10,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.7
+    }
+  },
+  {
+    "code": "7021",
+    "stt": 299,
+    "page": 325,
+    "nameEn": "Rabbit meat, raw",
+    "nameVi": "Thịt thỏ nhà",
+    "wastePct": 45,
+    "per100g": {
+      "waterG": 69.3,
+      "kcal": 158,
+      "kj": 661,
+      "proteinG": 21.5,
+      "fatG": 8,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "7022",
+    "stt": 300,
+    "page": 326,
+    "nameEn": "Hare rabbit (field or wild)",
+    "nameVi": "Thịt thỏ rừng",
+    "wastePct": 45,
+    "per100g": {
+      "waterG": 74.3,
+      "kcal": 103,
+      "kj": 431,
+      "proteinG": 23.5,
+      "fatG": 1,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "7023",
+    "stt": 301,
+    "page": 327,
+    "nameEn": "Buffalo meat, average",
+    "nameVi": "Thịt trâu",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 76.3,
+      "kcal": 97,
+      "kj": 408,
+      "proteinG": 20.4,
+      "fatG": 1.4,
+      "carbsG": 0.9,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "7024",
+    "stt": 302,
+    "page": 328,
+    "nameEn": "Buffalo meat (shoulder)",
+    "nameVi": "Thịt trâu bắp",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 74.2,
+      "kcal": 115,
+      "kj": 479,
+      "proteinG": 21.9,
+      "fatG": 3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "7025",
+    "stt": 303,
+    "page": 329,
+    "nameEn": "Buffalo meat, neck",
+    "nameVi": "Thịt trâu cổ",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 74.9,
+      "kcal": 112,
+      "kj": 467,
+      "proteinG": 20.9,
+      "fatG": 3.1,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "7026",
+    "stt": 304,
+    "page": 330,
+    "nameEn": "Buffalo meat, leg",
+    "nameVi": "Thịt trâu đùi",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 74.9,
+      "kcal": 112,
+      "kj": 468,
+      "proteinG": 21.2,
+      "fatG": 3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "7027",
+    "stt": 305,
+    "page": 331,
+    "nameEn": "Buffalo meat, lean (loin)",
+    "nameVi": "Thịt trâu thăn",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 73,
+      "kcal": 121,
+      "kj": 506,
+      "proteinG": 22.8,
+      "fatG": 3.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "7028",
+    "stt": 306,
+    "page": 332,
+    "nameEn": "Duck meat, average",
+    "nameVi": "Thịt vịt",
+    "wastePct": 55,
+    "per100g": {
+      "waterG": 59.5,
+      "kcal": 267,
+      "kj": 1119,
+      "proteinG": 17.8,
+      "fatG": 21.8,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "7029",
+    "stt": 307,
+    "page": 333,
+    "nameEn": "Beef, kidney",
+    "nameVi": "Bầu dục bò",
+    "wastePct": 7,
+    "per100g": {
+      "waterG": 84.3,
+      "kcal": 67,
+      "kj": 282,
+      "proteinG": 12.5,
+      "fatG": 1.8,
+      "carbsG": 0.3,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "7030",
+    "stt": 308,
+    "page": 334,
+    "nameEn": "Pork, kidney",
+    "nameVi": "Bầu dục lợn",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 82.5,
+      "kcal": 81,
+      "kj": 339,
+      "proteinG": 13,
+      "fatG": 3.1,
+      "carbsG": 0.3,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "7031",
+    "stt": 309,
+    "page": 335,
+    "nameEn": "Pork skin",
+    "nameVi": "Bì lợn",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 73.3,
+      "kcal": 118,
+      "kj": 492,
+      "proteinG": 23.3,
+      "fatG": 2.7,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "7032",
+    "stt": 310,
+    "page": 336,
+    "nameEn": "Pork, leg",
+    "nameVi": "Chân giò lợn",
+    "wastePct": 38,
+    "per100g": {
+      "waterG": 64.7,
+      "kcal": 230,
+      "kj": 963,
+      "proteinG": 15.7,
+      "fatG": 18.6,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7033",
+    "stt": 311,
+    "page": 337,
+    "nameEn": "Stomach, beef",
+    "nameVi": "Dạ dày bò",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 80.5,
+      "kcal": 97,
+      "kj": 406,
+      "proteinG": 14.8,
+      "fatG": 4.2,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "7034",
+    "stt": 312,
+    "page": 338,
+    "nameEn": "Stomach, hog",
+    "nameVi": "Dạ dày lợn",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 81.7,
+      "kcal": 85,
+      "kj": 354,
+      "proteinG": 14.6,
+      "fatG": 2.9,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "7035",
+    "stt": 313,
+    "page": 339,
+    "nameEn": "Head beef (without tongue, brain, ears).",
+    "nameVi": "Đầu bò",
+    "wastePct": 68,
+    "per100g": {
+      "waterG": 68.7,
+      "kcal": 185,
+      "kj": 774,
+      "proteinG": 18.1,
+      "fatG": 12.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "7036",
+    "stt": 314,
+    "page": 340,
+    "nameEn": "Hog, head",
+    "nameVi": "Đầu lợn",
+    "wastePct": 68,
+    "per100g": {
+      "waterG": 54.6,
+      "kcal": 335,
+      "kj": 1403,
+      "proteinG": 13.4,
+      "fatG": 31.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "7037",
+    "stt": 315,
+    "page": 341,
+    "nameEn": "Beef, tail",
+    "nameVi": "Đuôi bò",
+    "wastePct": 46,
+    "per100g": {
+      "waterG": 73,
+      "kcal": 137,
+      "kj": 574,
+      "proteinG": 19.7,
+      "fatG": 6.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "7038",
+    "stt": 316,
+    "page": 342,
+    "nameEn": "Hog, tail",
+    "nameVi": "Đuôi lợn",
+    "wastePct": 30,
+    "per100g": {
+      "waterG": 41.8,
+      "kcal": 467,
+      "kj": 1954,
+      "proteinG": 10.8,
+      "fatG": 47.1,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "7039",
+    "stt": 317,
+    "page": 343,
+    "nameEn": "Beef, liver",
+    "nameVi": "Gan bò",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 75.2,
+      "kcal": 109,
+      "kj": 458,
+      "proteinG": 17.4,
+      "fatG": 3.1,
+      "carbsG": 3,
+      "fiberG": 0,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "7040",
+    "stt": 318,
+    "page": 344,
+    "nameEn": "Chicken liver",
+    "nameVi": "Gan gà",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 75,
+      "kcal": 111,
+      "kj": 466,
+      "proteinG": 18.2,
+      "fatG": 3.4,
+      "carbsG": 2,
+      "fiberG": 0,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "7041",
+    "stt": 319,
+    "page": 345,
+    "nameEn": "Pork liver",
+    "nameVi": "Gan lợn",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 74.1,
+      "kcal": 116,
+      "kj": 484,
+      "proteinG": 18.8,
+      "fatG": 3.6,
+      "carbsG": 2,
+      "fiberG": 0,
+      "ashG": 1.5
+    }
+  },
+  {
+    "code": "7042",
+    "stt": 320,
+    "page": 346,
+    "nameEn": "Duck liver",
+    "nameVi": "Gan vịt",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 74.1,
+      "kcal": 122,
+      "kj": 510,
+      "proteinG": 17.1,
+      "fatG": 4.7,
+      "carbsG": 2.8,
+      "fiberG": 0,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "7043",
+    "stt": 321,
+    "page": 347,
+    "nameEn": "",
+    "nameVi": "Gân chân bò",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 69.2,
+      "kcal": 124,
+      "kj": 517,
+      "proteinG": 30.2,
+      "fatG": 0.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "7044",
+    "stt": 322,
+    "page": 348,
+    "nameEn": "Beef tongue",
+    "nameVi": "Lưỡi bò",
+    "wastePct": 8,
+    "per100g": {
+      "waterG": 73.2,
+      "kcal": 164,
+      "kj": 687,
+      "proteinG": 13.6,
+      "fatG": 12.1,
+      "carbsG": 0.2,
+      "fiberG": 0,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "7045",
+    "stt": 323,
+    "page": 349,
+    "nameEn": "Hog, tongue",
+    "nameVi": "Lưỡi lợn",
+    "wastePct": 3,
+    "per100g": {
+      "waterG": 70.8,
+      "kcal": 178,
+      "kj": 743,
+      "proteinG": 14.2,
+      "fatG": 12.8,
+      "carbsG": 1.4,
+      "fiberG": 0,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "7046",
+    "stt": 324,
+    "page": 350,
+    "nameEn": "Hog, intestine large raw",
+    "nameVi": "Lòng lợn (ruột già)",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 76.6,
+      "kcal": 167,
+      "kj": 697,
+      "proteinG": 6.9,
+      "fatG": 15.1,
+      "carbsG": 0.8,
+      "fiberG": 0,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "7047",
+    "stt": 325,
+    "page": 351,
+    "nameEn": "Hog intestine small raw without fat",
+    "nameVi": "Lòng lợn (ruột non)",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 90.5,
+      "kcal": 44,
+      "kj": 183,
+      "proteinG": 7.2,
+      "fatG": 1.3,
+      "carbsG": 0.8,
+      "fiberG": 0,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "7048",
+    "stt": 326,
+    "page": 352,
+    "nameEn": "Chicken gizzard",
+    "nameVi": "Mề gà",
+    "wastePct": 4,
+    "per100g": {
+      "waterG": 75.6,
+      "kcal": 99,
+      "kj": 415,
+      "proteinG": 21.3,
+      "fatG": 1.3,
+      "carbsG": 0.6,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "7049",
+    "stt": 327,
+    "page": 353,
+    "nameEn": "Brain beef",
+    "nameVi": "Óc bò",
+    "wastePct": 8,
+    "per100g": {
+      "waterG": 79.4,
+      "kcal": 124,
+      "kj": 517,
+      "proteinG": 9,
+      "fatG": 9.5,
+      "carbsG": 0.5,
+      "fiberG": 0,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "7050",
+    "stt": 328,
+    "page": 354,
+    "nameEn": "Hog brain",
+    "nameVi": "Óc lợn",
+    "wastePct": 8,
+    "per100g": {
+      "waterG": 80.1,
+      "kcal": 123,
+      "kj": 515,
+      "proteinG": 9,
+      "fatG": 9.5,
+      "carbsG": 0.4,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7051",
+    "stt": 329,
+    "page": 355,
+    "nameEn": "Beef, lung",
+    "nameVi": "Phổi bò",
+    "wastePct": 8,
+    "per100g": {
+      "waterG": 79.1,
+      "kcal": 103,
+      "kj": 431,
+      "proteinG": 15.2,
+      "fatG": 4.7,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7052",
+    "stt": 330,
+    "page": 356,
+    "nameEn": "Hog lung, raw",
+    "nameVi": "Phổi lợn",
+    "wastePct": 8,
+    "per100g": {
+      "waterG": 80.6,
+      "kcal": 92,
+      "kj": 383,
+      "proteinG": 14.8,
+      "fatG": 3.6,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7053",
+    "stt": 331,
+    "page": 357,
+    "nameEn": "Pork, ribs",
+    "nameVi": "Sườn lợn",
+    "wastePct": 57,
+    "per100g": {
+      "waterG": 68.2,
+      "kcal": 187,
+      "kj": 782,
+      "proteinG": 17.9,
+      "fatG": 12.8,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "7054",
+    "stt": 332,
+    "page": 358,
+    "nameEn": "Hog ears",
+    "nameVi": "Tai lợn",
+    "wastePct": 4,
+    "per100g": {
+      "waterG": 72.9,
+      "kcal": 126,
+      "kj": 528,
+      "proteinG": 21,
+      "fatG": 4.1,
+      "carbsG": 1.3,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "7055",
+    "stt": 333,
+    "page": 359,
+    "nameEn": "Beef, heart",
+    "nameVi": "Tim bò",
+    "wastePct": 8,
+    "per100g": {
+      "waterG": 80.4,
+      "kcal": 89,
+      "kj": 374,
+      "proteinG": 15,
+      "fatG": 3,
+      "carbsG": 0.6,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7056",
+    "stt": 334,
+    "page": 360,
+    "nameEn": "Chicken heart",
+    "nameVi": "Tim gà",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 77.5,
+      "kcal": 114,
+      "kj": 475,
+      "proteinG": 16,
+      "fatG": 5.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7057",
+    "stt": 335,
+    "page": 361,
+    "nameEn": "Hog heart",
+    "nameVi": "Tim lợn",
+    "wastePct": 6,
+    "per100g": {
+      "waterG": 79.5,
+      "kcal": 94,
+      "kj": 393,
+      "proteinG": 15.1,
+      "fatG": 3.2,
+      "carbsG": 1.2,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7058",
+    "stt": 336,
+    "page": 362,
+    "nameEn": "Beef, blood",
+    "nameVi": "Tiết bò",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 80.4,
+      "kcal": 75,
+      "kj": 315,
+      "proteinG": 18,
+      "fatG": 0.2,
+      "carbsG": 0.4,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7059",
+    "stt": 337,
+    "page": 363,
+    "nameEn": "Hog blood, boiled",
+    "nameVi": "Tiết lợn luộc",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 86.8,
+      "kcal": 44,
+      "kj": 183,
+      "proteinG": 10.7,
+      "fatG": 0.1,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 2.4
+    }
+  },
+  {
+    "code": "7060",
+    "stt": 338,
+    "page": 364,
+    "nameEn": "Hog blood, raw",
+    "nameVi": "Tiết lợn sống",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 91.9,
+      "kcal": 25,
+      "kj": 103,
+      "proteinG": 5.7,
+      "fatG": 0.1,
+      "carbsG": 0.2,
+      "fiberG": 0,
+      "ashG": 2.1
+    }
+  },
+  {
+    "code": "7061",
+    "stt": 339,
+    "page": 365,
+    "nameEn": "Beef bone marrow",
+    "nameVi": "Tủy xương bò",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 8.7,
+      "kcal": 814,
+      "kj": 3404,
+      "proteinG": 1.1,
+      "fatG": 89.9,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "7062",
+    "stt": 340,
+    "page": 366,
+    "nameEn": "Hog, bone marrow",
+    "nameVi": "Tủy xương lợn",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 15,
+      "kcal": 749,
+      "kj": 3134,
+      "proteinG": 2.3,
+      "fatG": 82.2,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "7063",
+    "stt": 341,
+    "page": 367,
+    "nameEn": "Pa tª",
+    "nameVi": "Ba tê",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 47.5,
+      "kcal": 326,
+      "kj": 1365,
+      "proteinG": 10.8,
+      "fatG": 24.6,
+      "carbsG": 15.4,
+      "fiberG": 0,
+      "ashG": 1.7
+    }
+  },
+  {
+    "code": "7064",
+    "stt": 342,
+    "page": 368,
+    "nameEn": "Pork, mince fat meat grilled",
+    "nameVi": "Chả lợn",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 32.6,
+      "kcal": 517,
+      "kj": 2164,
+      "proteinG": 10.8,
+      "fatG": 50.4,
+      "carbsG": 5.1,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "7065",
+    "stt": 343,
+    "page": 369,
+    "nameEn": "Pork, cinnamon mince grilled",
+    "nameVi": "Chả quế lợn",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 42.5,
+      "kcal": 416,
+      "kj": 1740,
+      "proteinG": 16.2,
+      "fatG": 39,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 2.3
+    }
+  },
+  {
+    "code": "7066",
+    "stt": 344,
+    "page": 370,
+    "nameEn": "Ham, pork",
+    "nameVi": "Dăm bông lợn",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 48.7,
+      "kcal": 318,
+      "kj": 1331,
+      "proteinG": 23,
+      "fatG": 25,
+      "carbsG": 0.3,
+      "fiberG": 0,
+      "ashG": 3
+    }
+  },
+  {
+    "code": "7067",
+    "stt": 345,
+    "page": 371,
+    "nameEn": "Blood mix-pudding with viscera in large intestine",
+    "nameVi": "Dồi lợn",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 78.9,
+      "kcal": 114,
+      "kj": 475,
+      "proteinG": 12.4,
+      "fatG": 7.1,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "7068",
+    "stt": 346,
+    "page": 372,
+    "nameEn": "Beef dumpling",
+    "nameVi": "Giò bò",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 48.8,
+      "kcal": 357,
+      "kj": 1492,
+      "proteinG": 13.8,
+      "fatG": 33.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 3.9
+    }
+  },
+  {
+    "code": "7069",
+    "stt": 347,
+    "page": 373,
+    "nameEn": "Pork, mince lean meat steamed",
+    "nameVi": "Giò lụa",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 72,
+      "kcal": 136,
+      "kj": 567,
+      "proteinG": 21.5,
+      "fatG": 5.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7070",
+    "stt": 348,
+    "page": 374,
+    "nameEn": "Pork, head meat, steamed",
+    "nameVi": "Giò thủ lợn",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 29,
+      "kcal": 553,
+      "kj": 2312,
+      "proteinG": 16,
+      "fatG": 54.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "7071",
+    "stt": 349,
+    "page": 375,
+    "nameEn": "Chinese sausage",
+    "nameVi": "Lạp xường",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 18.8,
+      "kcal": 585,
+      "kj": 2448,
+      "proteinG": 20.8,
+      "fatG": 55,
+      "carbsG": 1.7,
+      "fiberG": 0,
+      "ashG": 3.7
+    }
+  },
+  {
+    "code": "7072",
+    "stt": 350,
+    "page": 376,
+    "nameEn": "",
+    "nameVi": "Nem chạo",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 68.1,
+      "kcal": 153,
+      "kj": 638,
+      "proteinG": 16.6,
+      "fatG": 6.5,
+      "carbsG": 6.9,
+      "fiberG": 0,
+      "ashG": 1.9
+    }
+  },
+  {
+    "code": "7073",
+    "stt": 351,
+    "page": 377,
+    "nameEn": "Pork mince, fermented",
+    "nameVi": "Nem chua",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 68,
+      "kcal": 137,
+      "kj": 574,
+      "proteinG": 21.7,
+      "fatG": 3.7,
+      "carbsG": 4.3,
+      "fiberG": 0,
+      "ashG": 2.3
+    }
+  },
+  {
+    "code": "7074",
+    "stt": 352,
+    "page": 378,
+    "nameEn": "",
+    "nameVi": "Ruốc thịt lợn",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 25.8,
+      "kcal": 369,
+      "kj": 1544,
+      "proteinG": 46.6,
+      "fatG": 20.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 7.3
+    }
+  },
+  {
+    "code": "7075",
+    "stt": 353,
+    "page": 379,
+    "nameEn": "Dried beef",
+    "nameVi": "Thịt bò khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 32.4,
+      "kcal": 239,
+      "kj": 1001,
+      "proteinG": 51,
+      "fatG": 1.6,
+      "carbsG": 5.2,
+      "fiberG": 0,
+      "ashG": 9.8
+    }
+  },
+  {
+    "code": "7076",
+    "stt": 354,
+    "page": 380,
+    "nameEn": "Buffalo meat, dried",
+    "nameVi": "Thịt trâu khô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 36.4,
+      "kcal": 226,
+      "kj": 945,
+      "proteinG": 50.4,
+      "fatG": 2.7,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 10.5
+    }
+  },
+  {
+    "code": "7077",
+    "stt": 355,
+    "page": 381,
+    "nameEn": "Pork sausage",
+    "nameVi": "Xúc xích",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 17,
+      "kcal": 535,
+      "kj": 2240,
+      "proteinG": 27.2,
+      "fatG": 47.4,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 8.4
+    }
+  },
+  {
+    "code": "7078",
+    "stt": 356,
+    "page": 382,
+    "nameEn": "Toad meat powder",
+    "nameVi": "Bột cóc",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 7.2,
+      "kcal": 342,
+      "kj": 1432,
+      "proteinG": 55.4,
+      "fatG": 13.4,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 24
+    }
+  },
+  {
+    "code": "7079",
+    "stt": 357,
+    "page": 383,
+    "nameEn": "Locust",
+    "nameVi": "Châu chấu",
+    "wastePct": 20,
+    "per100g": {
+      "waterG": 71.1,
+      "kcal": 130,
+      "kj": 542,
+      "proteinG": 24.3,
+      "fatG": 3.6,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "7080",
+    "stt": 358,
+    "page": 384,
+    "nameEn": "Frog",
+    "nameVi": "Ếch (thịt đùi)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 75,
+      "kcal": 90,
+      "kj": 376,
+      "proteinG": 20,
+      "fatG": 1.1,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 3.9
+    }
+  },
+  {
+    "code": "7081",
+    "stt": 359,
+    "page": 385,
+    "nameEn": "Silk worm",
+    "nameVi": "Nhộng",
+    "wastePct": 2,
+    "per100g": {
+      "waterG": 79.7,
+      "kcal": 111,
+      "kj": 462,
+      "proteinG": 13,
+      "fatG": 6.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "7082",
+    "stt": 360,
+    "page": 386,
+    "nameEn": "Chicken giblets",
+    "nameVi": "Lòng gà (cả bộ)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 74.9,
+      "kcal": 119,
+      "kj": 498,
+      "proteinG": 17.9,
+      "fatG": 4.5,
+      "carbsG": 1.8,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "8001",
+    "stt": 361,
+    "page": 389,
+    "nameEn": "Goby, gudgeon",
+    "nameVi": "Cá bống",
+    "wastePct": 45,
+    "per100g": {
+      "waterG": 81.9,
+      "kcal": 70,
+      "kj": 295,
+      "proteinG": 15.8,
+      "fatG": 0.8,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.5
+    }
+  },
+  {
+    "code": "8002",
+    "stt": 362,
+    "page": 390,
+    "nameEn": "Pond fish",
+    "nameVi": "Cá chày",
+    "wastePct": 31,
+    "per100g": {
+      "waterG": 75.1,
+      "kcal": 113,
+      "kj": 472,
+      "proteinG": 20.1,
+      "fatG": 3.6,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8003",
+    "stt": 363,
+    "page": 391,
+    "nameEn": "Carp",
+    "nameVi": "Cá chép",
+    "wastePct": 40,
+    "per100g": {
+      "waterG": 79.1,
+      "kcal": 96,
+      "kj": 403,
+      "proteinG": 16,
+      "fatG": 3.6,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "8004",
+    "stt": 364,
+    "page": 392,
+    "nameEn": "Conger pike",
+    "nameVi": "Cá dưa",
+    "wastePct": null,
+    "per100g": {
+      "waterG": 75.6,
+      "kcal": 115,
+      "kj": 483,
+      "proteinG": 17.6,
+      "fatG": 5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.8
+    }
+  },
+  {
+    "code": "8005",
+    "stt": 365,
+    "page": 393,
+    "nameEn": "",
+    "nameVi": "Cá dầu",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 75.1,
+      "kcal": 96,
+      "kj": 403,
+      "proteinG": 18.9,
+      "fatG": 2.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 3.7
+    }
+  },
+  {
+    "code": "8006",
+    "stt": 366,
+    "page": 394,
+    "nameEn": "Mullet, harder",
+    "nameVi": "Cá diếc",
+    "wastePct": 45,
+    "per100g": {
+      "waterG": 78.9,
+      "kcal": 87,
+      "kj": 364,
+      "proteinG": 17.7,
+      "fatG": 1.8,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "8007",
+    "stt": 367,
+    "page": 395,
+    "nameEn": "Sawfish, wolfherring",
+    "nameVi": "Cá đao",
+    "wastePct": null,
+    "per100g": {
+      "waterG": 78.3,
+      "kcal": 94,
+      "kj": 393,
+      "proteinG": 18.3,
+      "fatG": 2.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "8008",
+    "stt": 368,
+    "page": 396,
+    "nameEn": "Chinese herring",
+    "nameVi": "Cá đé",
+    "wastePct": null,
+    "per100g": {
+      "waterG": 78.8,
+      "kcal": 83,
+      "kj": 347,
+      "proteinG": 18.7,
+      "fatG": 0.9,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "8009",
+    "stt": 369,
+    "page": 397,
+    "nameEn": "Mullet, gray mullet",
+    "nameVi": "Cá đối",
+    "wastePct": 42,
+    "per100g": {
+      "waterG": 76,
+      "kcal": 108,
+      "kj": 451,
+      "proteinG": 19.5,
+      "fatG": 3.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8010",
+    "stt": 370,
+    "page": 398,
+    "nameEn": "Goby",
+    "nameVi": "Cá đồng tiền",
+    "wastePct": null,
+    "per100g": {
+      "waterG": 76.4,
+      "kcal": 98,
+      "kj": 412,
+      "proteinG": 20.1,
+      "fatG": 2,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.5
+    }
+  },
+  {
+    "code": "8011",
+    "stt": 371,
+    "page": 399,
+    "nameEn": "Salmon",
+    "nameVi": "Cá hồi",
+    "wastePct": 40,
+    "per100g": {
+      "waterG": 71.3,
+      "kcal": 136,
+      "kj": 568,
+      "proteinG": 22,
+      "fatG": 5.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "8012",
+    "stt": 372,
+    "page": 400,
+    "nameEn": "Dried fish, miscellaneous",
+    "nameVi": "Cá khô (chim, thu, nụ, đé)",
+    "wastePct": 15,
+    "per100g": {
+      "waterG": 37.8,
+      "kcal": 208,
+      "kj": 872,
+      "proteinG": 43.3,
+      "fatG": 3.9,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 15
+    }
+  },
+  {
+    "code": "8013",
+    "stt": 373,
+    "page": 401,
+    "nameEn": "",
+    "nameVi": "Cá lác",
+    "wastePct": null,
+    "per100g": {
+      "waterG": 78.1,
+      "kcal": 71,
+      "kj": 298,
+      "proteinG": 16.7,
+      "fatG": 0.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 4.7
+    }
+  },
+  {
+    "code": "8014",
+    "stt": 374,
+    "page": 402,
+    "nameEn": "Hypophthalmichthys, chub, dory, tench bream",
+    "nameVi": "Cá mè",
+    "wastePct": 36,
+    "per100g": {
+      "waterG": 74.7,
+      "kcal": 144,
+      "kj": 600,
+      "proteinG": 15.4,
+      "fatG": 9.1,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "8015",
+    "stt": 375,
+    "page": 403,
+    "nameEn": "Sardin",
+    "nameVi": "Cá mòi",
+    "wastePct": 45,
+    "per100g": {
+      "waterG": 75.3,
+      "kcal": 124,
+      "kj": 519,
+      "proteinG": 17.5,
+      "fatG": 6,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8016",
+    "stt": 376,
+    "page": 404,
+    "nameEn": "",
+    "nameVi": "Cá mỡ",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 72.7,
+      "kcal": 151,
+      "kj": 631,
+      "proteinG": 16.8,
+      "fatG": 9.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8017",
+    "stt": 377,
+    "page": 405,
+    "nameEn": "",
+    "nameVi": "Cá mối",
+    "wastePct": null,
+    "per100g": {
+      "waterG": 73.3,
+      "kcal": 116,
+      "kj": 487,
+      "proteinG": 22.1,
+      "fatG": 3.1,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.5
+    }
+  },
+  {
+    "code": "8018",
+    "stt": 378,
+    "page": 406,
+    "nameEn": "Fish low fat",
+    "nameVi": "Cá nạc",
+    "wastePct": 39,
+    "per100g": {
+      "waterG": 80,
+      "kcal": 80,
+      "kj": 334,
+      "proteinG": 17.5,
+      "fatG": 1.1,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "8019",
+    "stt": 379,
+    "page": 407,
+    "nameEn": "Flying fish, tuna",
+    "nameVi": "Cá ngừ",
+    "wastePct": 42,
+    "per100g": {
+      "waterG": 77.5,
+      "kcal": 87,
+      "kj": 363,
+      "proteinG": 21,
+      "fatG": 0.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8020",
+    "stt": 380,
+    "page": 408,
+    "nameEn": "Scad, anchovy",
+    "nameVi": "Cá nục",
+    "wastePct": null,
+    "per100g": {
+      "waterG": 74.9,
+      "kcal": 111,
+      "kj": 462,
+      "proteinG": 20.2,
+      "fatG": 3.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "8021",
+    "stt": 381,
+    "page": 409,
+    "nameEn": "Goatfish, surmullet, red mullet",
+    "nameVi": "Cá phèn",
+    "wastePct": null,
+    "per100g": {
+      "waterG": 78.2,
+      "kcal": 104,
+      "kj": 436,
+      "proteinG": 15.9,
+      "fatG": 4.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "8022",
+    "stt": 382,
+    "page": 410,
+    "nameEn": "Fish, snake head",
+    "nameVi": "Cá quả",
+    "wastePct": 40,
+    "per100g": {
+      "waterG": 78,
+      "kcal": 97,
+      "kj": 406,
+      "proteinG": 18.2,
+      "fatG": 2.7,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "8023",
+    "stt": 383,
+    "page": 411,
+    "nameEn": "Anabas",
+    "nameVi": "Cá rô đồng",
+    "wastePct": 44,
+    "per100g": {
+      "waterG": 74.2,
+      "kcal": 126,
+      "kj": 527,
+      "proteinG": 19.1,
+      "fatG": 5.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8024",
+    "stt": 384,
+    "page": 412,
+    "nameEn": "Tilapia, African carp",
+    "nameVi": "Cá rô phi",
+    "wastePct": 43,
+    "per100g": {
+      "waterG": 76.8,
+      "kcal": 100,
+      "kj": 416,
+      "proteinG": 19.7,
+      "fatG": 2.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8025",
+    "stt": 385,
+    "page": 413,
+    "nameEn": "Flounder, sole, turbot",
+    "nameVi": "Cá thờn bơn (cá bơn)",
+    "wastePct": null,
+    "per100g": {
+      "waterG": 81.3,
+      "kcal": 73,
+      "kj": 306,
+      "proteinG": 17.4,
+      "fatG": 0.4,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "8026",
+    "stt": 386,
+    "page": 414,
+    "nameEn": "Mackerel, codfish, kingfish",
+    "nameVi": "Cá thu",
+    "wastePct": 35,
+    "per100g": {
+      "waterG": 70.2,
+      "kcal": 166,
+      "kj": 692,
+      "proteinG": 18.2,
+      "fatG": 10.3,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "8027",
+    "stt": 387,
+    "page": 415,
+    "nameEn": "",
+    "nameVi": "Cá thu đao",
+    "wastePct": 30,
+    "per100g": {
+      "waterG": 70.3,
+      "kcal": 156,
+      "kj": 651,
+      "proteinG": 20,
+      "fatG": 8.4,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "8028",
+    "stt": 388,
+    "page": 416,
+    "nameEn": "Loach",
+    "nameVi": "Cá trạch (cá chạch)",
+    "wastePct": 26,
+    "per100g": {
+      "waterG": 74.2,
+      "kcal": 110,
+      "kj": 462,
+      "proteinG": 20.4,
+      "fatG": 3.2,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 2.2
+    }
+  },
+  {
+    "code": "8029",
+    "stt": 389,
+    "page": 417,
+    "nameEn": "Carp, amur",
+    "nameVi": "Cá trắm cỏ",
+    "wastePct": 35,
+    "per100g": {
+      "waterG": 79.4,
+      "kcal": 91,
+      "kj": 382,
+      "proteinG": 17,
+      "fatG": 2.6,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "8030",
+    "stt": 390,
+    "page": 418,
+    "nameEn": "Catfish, silurus, sheatfish, hito",
+    "nameVi": "Cá trê",
+    "wastePct": 40,
+    "per100g": {
+      "waterG": 70.4,
+      "kcal": 173,
+      "kj": 724,
+      "proteinG": 16.5,
+      "fatG": 11.9,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8031",
+    "stt": 391,
+    "page": 419,
+    "nameEn": "Herring",
+    "nameVi": "Cá trích",
+    "wastePct": 35,
+    "per100g": {
+      "waterG": 70.5,
+      "kcal": 166,
+      "kj": 695,
+      "proteinG": 17.7,
+      "fatG": 10.6,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8032",
+    "stt": 392,
+    "page": 420,
+    "nameEn": "Major carp, mud carp; cirrhina molitorella",
+    "nameVi": "Cá trôi",
+    "wastePct": 27.6,
+    "per100g": {
+      "waterG": 74.3,
+      "kcal": 127,
+      "kj": 529,
+      "proteinG": 18.8,
+      "fatG": 5.7,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8033",
+    "stt": 393,
+    "page": 421,
+    "nameEn": "Crab, sea water",
+    "nameVi": "Cua bể",
+    "wastePct": 40,
+    "per100g": {
+      "waterG": 72.2,
+      "kcal": 103,
+      "kj": 433,
+      "proteinG": 17.5,
+      "fatG": 0.6,
+      "carbsG": 7,
+      "fiberG": 0,
+      "ashG": 2.7
+    }
+  },
+  {
+    "code": "8034",
+    "stt": 394,
+    "page": 422,
+    "nameEn": "Crab, fresh water",
+    "nameVi": "Cua đồng",
+    "wastePct": 69,
+    "per100g": {
+      "waterG": 74.4,
+      "kcal": 87,
+      "kj": 364,
+      "proteinG": 12.3,
+      "fatG": 3.3,
+      "carbsG": 2,
+      "fiberG": 0,
+      "ashG": 8
+    }
+  },
+  {
+    "code": "8035",
+    "stt": 395,
+    "page": 423,
+    "nameEn": "Crab",
+    "nameVi": "Ghẹ",
+    "wastePct": 68,
+    "per100g": {
+      "waterG": 85.5,
+      "kcal": 54,
+      "kj": 226,
+      "proteinG": 11.9,
+      "fatG": 0.7,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.9
+    }
+  },
+  {
+    "code": "8036",
+    "stt": 396,
+    "page": 424,
+    "nameEn": "Sea slug, sea cucumber",
+    "nameVi": "Hải sâm",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 76.9,
+      "kcal": 90,
+      "kj": 374,
+      "proteinG": 21.5,
+      "fatG": 0.3,
+      "carbsG": 0.2,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "8037",
+    "stt": 397,
+    "page": 425,
+    "nameEn": "Clam",
+    "nameVi": "Hến",
+    "wastePct": 82,
+    "per100g": {
+      "waterG": 88.8,
+      "kcal": 45,
+      "kj": 187,
+      "proteinG": 4.5,
+      "fatG": 0.7,
+      "carbsG": 5.1,
+      "fiberG": 0,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "8038",
+    "stt": 398,
+    "page": 426,
+    "nameEn": "Eel, silver - pike",
+    "nameVi": "Lươn",
+    "wastePct": 35,
+    "per100g": {
+      "waterG": 68.3,
+      "kcal": 180,
+      "kj": 752,
+      "proteinG": 18.4,
+      "fatG": 11.7,
+      "carbsG": 0.2,
+      "fiberG": 0,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "8039",
+    "stt": 399,
+    "page": 427,
+    "nameEn": "Dried cuttle fish, squid",
+    "nameVi": "Mực khô",
+    "wastePct": 4,
+    "per100g": {
+      "waterG": 26.2,
+      "kcal": 291,
+      "kj": 1217,
+      "proteinG": 60.1,
+      "fatG": 4.5,
+      "carbsG": 2.5,
+      "fiberG": 0,
+      "ashG": 6.7
+    }
+  },
+  {
+    "code": "8040",
+    "stt": 400,
+    "page": 428,
+    "nameEn": "Cuttle fish, raw (Squid)",
+    "nameVi": "Mực tươi",
+    "wastePct": 22,
+    "per100g": {
+      "waterG": 81.4,
+      "kcal": 73,
+      "kj": 307,
+      "proteinG": 16.3,
+      "fatG": 0.9,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "8041",
+    "stt": 401,
+    "page": 429,
+    "nameEn": "Snail medium - size, edible",
+    "nameVi": "Ốc bươu",
+    "wastePct": 67,
+    "per100g": {
+      "waterG": 76.8,
+      "kcal": 84,
+      "kj": 351,
+      "proteinG": 11.1,
+      "fatG": 0.7,
+      "carbsG": 8.3,
+      "fiberG": 0,
+      "ashG": 3.1
+    }
+  },
+  {
+    "code": "8042",
+    "stt": 402,
+    "page": 430,
+    "nameEn": "Marble snail, edible",
+    "nameVi": "Ốc đá",
+    "wastePct": 80,
+    "per100g": {
+      "waterG": 80.3,
+      "kcal": 63,
+      "kj": 264,
+      "proteinG": 11.2,
+      "fatG": 0.3,
+      "carbsG": 3.9,
+      "fiberG": 0,
+      "ashG": 4.3
+    }
+  },
+  {
+    "code": "8043",
+    "stt": 403,
+    "page": 431,
+    "nameEn": "Snail large, edible",
+    "nameVi": "Ốc nhồi",
+    "wastePct": 79,
+    "per100g": {
+      "waterG": 77.6,
+      "kcal": 84,
+      "kj": 353,
+      "proteinG": 11.9,
+      "fatG": 0.7,
+      "carbsG": 7.6,
+      "fiberG": 0,
+      "ashG": 2.2
+    }
+  },
+  {
+    "code": "8044",
+    "stt": 404,
+    "page": 432,
+    "nameEn": "Helix",
+    "nameVi": "Ốc vặn",
+    "wastePct": 70,
+    "per100g": {
+      "waterG": 79.1,
+      "kcal": 72,
+      "kj": 303,
+      "proteinG": 12.2,
+      "fatG": 0.7,
+      "carbsG": 4.3,
+      "fiberG": 0,
+      "ashG": 3.7
+    }
+  },
+  {
+    "code": "8045",
+    "stt": 405,
+    "page": 433,
+    "nameEn": "Small sea - crab bicled, steamed",
+    "nameVi": "Rạm (muối, đồ)",
+    "wastePct": 50,
+    "per100g": {
+      "waterG": 64.4,
+      "kcal": 83,
+      "kj": 347,
+      "proteinG": 14.2,
+      "fatG": 2.9,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 18.5
+    }
+  },
+  {
+    "code": "8046",
+    "stt": 406,
+    "page": 434,
+    "nameEn": "Small sea - crab",
+    "nameVi": "Rạm tươi",
+    "wastePct": 50,
+    "per100g": {
+      "waterG": 78.2,
+      "kcal": 77,
+      "kj": 321,
+      "proteinG": 12.9,
+      "fatG": 2.8,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 6.1
+    }
+  },
+  {
+    "code": "8047",
+    "stt": 407,
+    "page": 435,
+    "nameEn": "Tylorhynchus sinensis",
+    "nameVi": "Rươi",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 81.9,
+      "kcal": 89,
+      "kj": 373,
+      "proteinG": 12.4,
+      "fatG": 4.4,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "8048",
+    "stt": 408,
+    "page": 436,
+    "nameEn": "Oyster",
+    "nameVi": "Sò",
+    "wastePct": 80,
+    "per100g": {
+      "waterG": 82.1,
+      "kcal": 78,
+      "kj": 328,
+      "proteinG": 9.5,
+      "fatG": 2.3,
+      "carbsG": 4.9,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "8049",
+    "stt": 409,
+    "page": 437,
+    "nameEn": "Tiny shrimp",
+    "nameVi": "Tép gạo",
+    "wastePct": 8,
+    "per100g": {
+      "waterG": 84.5,
+      "kcal": 58,
+      "kj": 241,
+      "proteinG": 11.7,
+      "fatG": 1.2,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 2.6
+    }
+  },
+  {
+    "code": "8050",
+    "stt": 410,
+    "page": 438,
+    "nameEn": "Tiny shrimp, dried",
+    "nameVi": "Tép khô",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 23,
+      "kcal": 269,
+      "kj": 1125,
+      "proteinG": 59.8,
+      "fatG": 3,
+      "carbsG": 0.7,
+      "fiberG": 0,
+      "ashG": 13.5
+    }
+  },
+  {
+    "code": "8051",
+    "stt": 411,
+    "page": 439,
+    "nameEn": "Sea shrimp, sea-water shrimp",
+    "nameVi": "Tôm biển",
+    "wastePct": 54,
+    "per100g": {
+      "waterG": 79.2,
+      "kcal": 82,
+      "kj": 344,
+      "proteinG": 17.6,
+      "fatG": 0.9,
+      "carbsG": 0.9,
+      "fiberG": 0,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "8052",
+    "stt": 412,
+    "page": 440,
+    "nameEn": "Fresh-water shrimp",
+    "nameVi": "Tôm đồng",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 76.9,
+      "kcal": 90,
+      "kj": 376,
+      "proteinG": 18.4,
+      "fatG": 1.8,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 2.9
+    }
+  },
+  {
+    "code": "8053",
+    "stt": 413,
+    "page": 441,
+    "nameEn": "Shrimp, dried",
+    "nameVi": "Tôm khô",
+    "wastePct": 5,
+    "per100g": {
+      "waterG": 12.6,
+      "kcal": 347,
+      "kj": 1450,
+      "proteinG": 75.6,
+      "fatG": 3.8,
+      "carbsG": 2.5,
+      "fiberG": 0,
+      "ashG": 5.5
+    }
+  },
+  {
+    "code": "8054",
+    "stt": 414,
+    "page": 442,
+    "nameEn": "Manodonta",
+    "nameVi": "Trai",
+    "wastePct": 60,
+    "per100g": {
+      "waterG": 89.9,
+      "kcal": 38,
+      "kj": 160,
+      "proteinG": 4.6,
+      "fatG": 1.1,
+      "carbsG": 2.5,
+      "fiberG": 0,
+      "ashG": 1.9
+    }
+  },
+  {
+    "code": "8055",
+    "stt": 415,
+    "page": 443,
+    "nameEn": "Deep fried shrimp paste",
+    "nameVi": "Bánh phồng tôm rán",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 3.8,
+      "kcal": 676,
+      "kj": 2827,
+      "proteinG": 1.6,
+      "fatG": 59.2,
+      "carbsG": 34.1,
+      "fiberG": 0,
+      "ashG": 1.3
+    }
+  },
+  {
+    "code": "8056",
+    "stt": 416,
+    "page": 444,
+    "nameEn": "Shrimp paste",
+    "nameVi": "Bánh phồng tôm sống",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 12,
+      "kcal": 381,
+      "kj": 1596,
+      "proteinG": 3.4,
+      "fatG": 7.4,
+      "carbsG": 75.3,
+      "fiberG": 0,
+      "ashG": 1.9
+    }
+  },
+  {
+    "code": "8057",
+    "stt": 417,
+    "page": 445,
+    "nameEn": "Fish flour with bones",
+    "nameVi": "Bột cá",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 11.6,
+      "kcal": 323,
+      "kj": 1351,
+      "proteinG": 71.2,
+      "fatG": 2.9,
+      "carbsG": 3,
+      "fiberG": 0,
+      "ashG": 11.3
+    }
+  },
+  {
+    "code": "8058",
+    "stt": 418,
+    "page": 446,
+    "nameEn": "Shredded snake-head fish, salted and dried",
+    "nameVi": "Ruốc cá quả",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 14,
+      "kcal": 312,
+      "kj": 1304,
+      "proteinG": 65.7,
+      "fatG": 4.1,
+      "carbsG": 3,
+      "fiberG": 0,
+      "ashG": 13.2
+    }
+  },
+  {
+    "code": "8059",
+    "stt": 419,
+    "page": 447,
+    "nameEn": "Shredded shrimp, salted and dried",
+    "nameVi": "Ruốc tôm",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 13.1,
+      "kcal": 305,
+      "kj": 1275,
+      "proteinG": 65.5,
+      "fatG": 3.1,
+      "carbsG": 3.7,
+      "fiberG": 0,
+      "ashG": 14.6
+    }
+  },
+  {
+    "code": "9001",
+    "stt": 420,
+    "page": 450,
+    "nameEn": "Hen egg, raw, whole",
+    "nameVi": "Trứng gà",
+    "wastePct": 14,
+    "per100g": {
+      "waterG": 72,
+      "kcal": 166,
+      "kj": 693,
+      "proteinG": 14.8,
+      "fatG": 11.6,
+      "carbsG": 0.5,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "9002",
+    "stt": 421,
+    "page": 451,
+    "nameEn": "Hen egg, yolk",
+    "nameVi": "Lòng đỏ trứng gà",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 54,
+      "kcal": 327,
+      "kj": 1366,
+      "proteinG": 13.6,
+      "fatG": 29.8,
+      "carbsG": 1,
+      "fiberG": 0,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "9003",
+    "stt": 422,
+    "page": 452,
+    "nameEn": "Hen egg, white",
+    "nameVi": "Lòng trắng trứng gà",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 88,
+      "kcal": 46,
+      "kj": 193,
+      "proteinG": 10.3,
+      "fatG": 0.1,
+      "carbsG": 1,
+      "fiberG": 0,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "9004",
+    "stt": 423,
+    "page": 453,
+    "nameEn": "Duck egg, whole",
+    "nameVi": "Trứng vịt",
+    "wastePct": 12,
+    "per100g": {
+      "waterG": 70,
+      "kcal": 184,
+      "kj": 769,
+      "proteinG": 13,
+      "fatG": 14.2,
+      "carbsG": 1,
+      "fiberG": 0,
+      "ashG": 1.8
+    }
+  },
+  {
+    "code": "9005",
+    "stt": 424,
+    "page": 454,
+    "nameEn": "Duck egg, yolk",
+    "nameVi": "Lòng đỏ trứng vịt",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 47.5,
+      "kcal": 364,
+      "kj": 1524,
+      "proteinG": 13.6,
+      "fatG": 32.3,
+      "carbsG": 4.8,
+      "fiberG": 0,
+      "ashG": 1.8
+    }
+  },
+  {
+    "code": "9006",
+    "stt": 425,
+    "page": 455,
+    "nameEn": "Duck egg, white",
+    "nameVi": "Lòng trắng trứng vịt",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 87.8,
+      "kcal": 47,
+      "kj": 196,
+      "proteinG": 10.7,
+      "fatG": 0.1,
+      "carbsG": 0.8,
+      "fiberG": 0,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "9007",
+    "stt": 426,
+    "page": 456,
+    "nameEn": "Quail egg",
+    "nameVi": "Trứng chim cút",
+    "wastePct": 11,
+    "per100g": {
+      "waterG": 74.4,
+      "kcal": 154,
+      "kj": 643,
+      "proteinG": 13.1,
+      "fatG": 11.1,
+      "carbsG": 0.4,
+      "fiberG": 0,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "9008",
+    "stt": 427,
+    "page": 457,
+    "nameEn": "Fish roe",
+    "nameVi": "Trứng cá",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 64.9,
+      "kcal": 171,
+      "kj": 716,
+      "proteinG": 20.5,
+      "fatG": 9.9,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 4.7
+    }
+  },
+  {
+    "code": "9009",
+    "stt": 428,
+    "page": 458,
+    "nameEn": "Fish caviar, black and red, granule",
+    "nameVi": "Trứng cá muối",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 47.5,
+      "kcal": 274,
+      "kj": 1144,
+      "proteinG": 24.6,
+      "fatG": 17.9,
+      "carbsG": 3.5,
+      "fiberG": 0,
+      "ashG": 6.5
+    }
+  },
+  {
+    "code": "9010",
+    "stt": 429,
+    "page": 459,
+    "nameEn": "Duck egg, embryonated",
+    "nameVi": "Trứng vịt lộn",
+    "wastePct": 12,
+    "per100g": {
+      "waterG": 67,
+      "kcal": 182,
+      "kj": 761,
+      "proteinG": 13.6,
+      "fatG": 12.4,
+      "carbsG": 4,
+      "fiberG": 0,
+      "ashG": 3
+    }
+  },
+  {
+    "code": "9011",
+    "stt": 430,
+    "page": 460,
+    "nameEn": "Chicken egg powder",
+    "nameVi": "Bột trứng",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 8.5,
+      "kcal": 563,
+      "kj": 2356,
+      "proteinG": 44,
+      "fatG": 42.2,
+      "carbsG": 1.8,
+      "fiberG": 0,
+      "ashG": 3.5
+    }
+  },
+  {
+    "code": "10001",
+    "stt": 431,
+    "page": 463,
+    "nameEn": "Milk cow, fresh (fluid)",
+    "nameVi": "Sữa bò tươi",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 86.2,
+      "kcal": 74,
+      "kj": 311,
+      "proteinG": 3.9,
+      "fatG": 4.4,
+      "carbsG": 4.8,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "10002",
+    "stt": 432,
+    "page": 464,
+    "nameEn": "Milk goat's, whole",
+    "nameVi": "Sữa dê tươi",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 87.2,
+      "kcal": 69,
+      "kj": 288,
+      "proteinG": 3.5,
+      "fatG": 4.1,
+      "carbsG": 4.5,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "10003",
+    "stt": 433,
+    "page": 465,
+    "nameEn": "Breast milk (Human milk, whole).",
+    "nameVi": "Sữa mẹ (sữa người)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 88.3,
+      "kcal": 61,
+      "kj": 255,
+      "proteinG": 1.5,
+      "fatG": 3,
+      "carbsG": 7,
+      "fiberG": 0,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "10004",
+    "stt": 434,
+    "page": 466,
+    "nameEn": "Yogurt (whole milk)",
+    "nameVi": "Sữa chua (từ sữa bò)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 88.7,
+      "kcal": 61,
+      "kj": 255,
+      "proteinG": 3.3,
+      "fatG": 3.7,
+      "carbsG": 3.6,
+      "fiberG": 0,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "10005",
+    "stt": 435,
+    "page": 467,
+    "nameEn": "Yogurt, chocolate, nonfat milk",
+    "nameVi": "Sữa chua vớt béo",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 71.6,
+      "kcal": 103,
+      "kj": 432,
+      "proteinG": 3.5,
+      "fatG": 0,
+      "carbsG": 22.3,
+      "fiberG": 1.2,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "10006",
+    "stt": 436,
+    "page": 468,
+    "nameEn": "Milk powder, whole",
+    "nameVi": "Sữa bột toàn phần",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 3.5,
+      "kcal": 494,
+      "kj": 2067,
+      "proteinG": 27,
+      "fatG": 26,
+      "carbsG": 38,
+      "fiberG": 0,
+      "ashG": 5.5
+    }
+  },
+  {
+    "code": "10007",
+    "stt": 437,
+    "page": 469,
+    "nameEn": "Skimmed milk powder",
+    "nameVi": "Sữa bột tách béo",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 4,
+      "kcal": 357,
+      "kj": 1494,
+      "proteinG": 35,
+      "fatG": 1,
+      "carbsG": 52,
+      "fiberG": 0,
+      "ashG": 8
+    }
+  },
+  {
+    "code": "10008",
+    "stt": 438,
+    "page": 470,
+    "nameEn": "Milk condensed, sweetened",
+    "nameVi": "Sữa đặc có đường việt nam",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 25.4,
+      "kcal": 336,
+      "kj": 1404,
+      "proteinG": 8.1,
+      "fatG": 8.8,
+      "carbsG": 56,
+      "fiberG": 0,
+      "ashG": 1.7
+    }
+  },
+  {
+    "code": "10009",
+    "stt": 439,
+    "page": 471,
+    "nameEn": "Cheese (whole fat)",
+    "nameVi": "Pho mát",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 38.9,
+      "kcal": 380,
+      "kj": 1590,
+      "proteinG": 25.5,
+      "fatG": 30.9,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 4.7
+    }
+  },
+  {
+    "code": "11001",
+    "stt": 440,
+    "page": 474,
+    "nameEn": "Banana, canned, sweetened",
+    "nameVi": "Chuối nước đường",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 83.9,
+      "kcal": 58,
+      "kj": 241,
+      "proteinG": 0.5,
+      "fatG": 0,
+      "carbsG": 13.9,
+      "fiberG": 1.3,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "11002",
+    "stt": 441,
+    "page": 475,
+    "nameEn": "Cucumber (canned)",
+    "nameVi": "Dưa chuột hộp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 94.1,
+      "kcal": 8,
+      "kj": 33,
+      "proteinG": 0.3,
+      "fatG": 0.2,
+      "carbsG": 1.2,
+      "fiberG": 3.1,
+      "ashG": 1.1
+    }
+  },
+  {
+    "code": "11003",
+    "stt": 442,
+    "page": 476,
+    "nameEn": "Pineapple, canned, sweetened",
+    "nameVi": "Dứa hộp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 85.7,
+      "kcal": 53,
+      "kj": 223,
+      "proteinG": 0.4,
+      "fatG": 0.1,
+      "carbsG": 12.7,
+      "fiberG": 0.8,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "11004",
+    "stt": 443,
+    "page": 477,
+    "nameEn": "Peanut, oil fried",
+    "nameVi": "Lạc chao dầu",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 1.8,
+      "kcal": 680,
+      "kj": 2843,
+      "proteinG": 25.7,
+      "fatG": 59.5,
+      "carbsG": 10.3,
+      "fiberG": null,
+      "ashG": 2.7
+    }
+  },
+  {
+    "code": "11005",
+    "stt": 444,
+    "page": 478,
+    "nameEn": "Pyrus pachis in syrup",
+    "nameVi": "Mắc coọc nước đường",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 85.1,
+      "kcal": 56,
+      "kj": 233,
+      "proteinG": 0.2,
+      "fatG": 0,
+      "carbsG": 13.7,
+      "fiberG": 0.7,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "11006",
+    "stt": 445,
+    "page": 479,
+    "nameEn": "Plum, canned, sweetened",
+    "nameVi": "Mận nước đường",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 83,
+      "kcal": 64,
+      "kj": 268,
+      "proteinG": 0.4,
+      "fatG": 0.1,
+      "carbsG": 15.4,
+      "fiberG": 0.9,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "11007",
+    "stt": 446,
+    "page": 480,
+    "nameEn": "Dried preserved squash",
+    "nameVi": "Mứt bí ngô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 49.4,
+      "kcal": 198,
+      "kj": 830,
+      "proteinG": 0.5,
+      "fatG": 0,
+      "carbsG": 49.1,
+      "fiberG": 0.7,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "11008",
+    "stt": 447,
+    "page": 481,
+    "nameEn": "Orange marmalade, jellies",
+    "nameVi": "Mứt cam có vỏ",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 42.8,
+      "kcal": 218,
+      "kj": 914,
+      "proteinG": 0.4,
+      "fatG": 0,
+      "carbsG": 54.2,
+      "fiberG": 2.2,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "11009",
+    "stt": 448,
+    "page": 482,
+    "nameEn": "Banana jam",
+    "nameVi": "Mứt chuối",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 43.8,
+      "kcal": 218,
+      "kj": 914,
+      "proteinG": 0.7,
+      "fatG": 0,
+      "carbsG": 53.9,
+      "fiberG": 1.3,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "11010",
+    "stt": 449,
+    "page": 483,
+    "nameEn": "Pineapple jam",
+    "nameVi": "Mứt dứa",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 47.2,
+      "kcal": 208,
+      "kj": 870,
+      "proteinG": 0.5,
+      "fatG": 0,
+      "carbsG": 51.5,
+      "fiberG": 0.4,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "11011",
+    "stt": 450,
+    "page": 484,
+    "nameEn": "Papaya jam",
+    "nameVi": "Mứt đu đủ",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 53.2,
+      "kcal": 178,
+      "kj": 745,
+      "proteinG": 0.4,
+      "fatG": 0,
+      "carbsG": 44.1,
+      "fiberG": 2,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "11012",
+    "stt": 451,
+    "page": 485,
+    "nameEn": "Longan, canned, sweetened",
+    "nameVi": "Nhãn nước đường",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 83.3,
+      "kcal": 62,
+      "kj": 259,
+      "proteinG": 0.5,
+      "fatG": 0,
+      "carbsG": 15,
+      "fiberG": 1,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "11013",
+    "stt": 452,
+    "page": 486,
+    "nameEn": "Pineapple juice",
+    "nameVi": "Nước dứa hộp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 86.4,
+      "kcal": 53,
+      "kj": 221,
+      "proteinG": 0.4,
+      "fatG": 0.1,
+      "carbsG": 12.6,
+      "fiberG": 0.2,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "11014",
+    "stt": 453,
+    "page": 487,
+    "nameEn": "Litchi, canned, sweetened",
+    "nameVi": "Vải nước đường",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 83.6,
+      "kcal": 60,
+      "kj": 253,
+      "proteinG": 0.4,
+      "fatG": 0,
+      "carbsG": 14.7,
+      "fiberG": 1.1,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "11015",
+    "stt": 454,
+    "page": 488,
+    "nameEn": "Mackerel, canned",
+    "nameVi": "Cá thu hộp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 57.5,
+      "kcal": 207,
+      "kj": 867,
+      "proteinG": 24.8,
+      "fatG": 12,
+      "carbsG": 0,
+      "fiberG": null,
+      "ashG": 5.7
+    }
+  },
+  {
+    "code": "11016",
+    "stt": 455,
+    "page": 489,
+    "nameEn": "Herring, canned",
+    "nameVi": "Cá trích hộp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 56.7,
+      "kcal": 233,
+      "kj": 974,
+      "proteinG": 22.3,
+      "fatG": 14.4,
+      "carbsG": 3.5,
+      "fiberG": null,
+      "ashG": 3.1
+    }
+  },
+  {
+    "code": "11017",
+    "stt": 456,
+    "page": 490,
+    "nameEn": "Beef, canned",
+    "nameVi": "Thịt bò hộp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 61.4,
+      "kcal": 251,
+      "kj": 1050,
+      "proteinG": 16.4,
+      "fatG": 20.6,
+      "carbsG": 0,
+      "fiberG": null,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "11018",
+    "stt": 457,
+    "page": 491,
+    "nameEn": "Chicken, canned",
+    "nameVi": "Thịt gà hộp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 59,
+      "kcal": 273,
+      "kj": 1143,
+      "proteinG": 17,
+      "fatG": 22.8,
+      "carbsG": 0,
+      "fiberG": null,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "11019",
+    "stt": 458,
+    "page": 492,
+    "nameEn": "Pork, canned",
+    "nameVi": "Thịt lợn hộp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 49,
+      "kcal": 344,
+      "kj": 1438,
+      "proteinG": 17.3,
+      "fatG": 29.3,
+      "carbsG": 2.7,
+      "fiberG": null,
+      "ashG": 1.7
+    }
+  },
+  {
+    "code": "11020",
+    "stt": 459,
+    "page": 493,
+    "nameEn": "Pork and beef, minced canned",
+    "nameVi": "Thịt lợn, thịt bò xay hộp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 62.8,
+      "kcal": 244,
+      "kj": 1021,
+      "proteinG": 16,
+      "fatG": 20,
+      "carbsG": 0,
+      "fiberG": null,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "11021",
+    "stt": 460,
+    "page": 494,
+    "nameEn": "Duck, stewed meat",
+    "nameVi": "Thịt vịt hầm",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 59.9,
+      "kcal": 224,
+      "kj": 938,
+      "proteinG": 19.6,
+      "fatG": 16.2,
+      "carbsG": 0,
+      "fiberG": null,
+      "ashG": 4.3
+    }
+  },
+  {
+    "code": "12001",
+    "stt": 461,
+    "page": 497,
+    "nameEn": "Whole wheat rusk",
+    "nameVi": "Bánh bích cốt",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 12,
+      "kcal": 346,
+      "kj": 1448,
+      "proteinG": 12.3,
+      "fatG": 1.3,
+      "carbsG": 71.3,
+      "fiberG": 0.8,
+      "ashG": 2.3
+    }
+  },
+  {
+    "code": "12002",
+    "stt": 462,
+    "page": 498,
+    "nameEn": "Biscuits",
+    "nameVi": "Bánh bích quy",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 10.4,
+      "kcal": 376,
+      "kj": 1574,
+      "proteinG": 8.8,
+      "fatG": 4.5,
+      "carbsG": 75.1,
+      "fiberG": 0.5,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "12003",
+    "stt": 463,
+    "page": 499,
+    "nameEn": "Sweet meat pie in lumps",
+    "nameVi": "Bánh chả",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 8,
+      "kcal": 395,
+      "kj": 1653,
+      "proteinG": 3.4,
+      "fatG": 6.6,
+      "carbsG": 80.5,
+      "fiberG": 1,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "12004",
+    "stt": 464,
+    "page": 500,
+    "nameEn": "Small biscuits, fish figured",
+    "nameVi": "Bánh con cá",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 10,
+      "kcal": 368,
+      "kj": 1541,
+      "proteinG": 7.5,
+      "fatG": 2.2,
+      "carbsG": 79.6,
+      "fiberG": 0.2,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "12005",
+    "stt": 465,
+    "page": 501,
+    "nameEn": "Mungbean cake",
+    "nameVi": "Bánh đậu xanh",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 6.8,
+      "kcal": 416,
+      "kj": 1738,
+      "proteinG": 15.6,
+      "fatG": 11.5,
+      "carbsG": 62.4,
+      "fiberG": 1.1,
+      "ashG": 2.6
+    }
+  },
+  {
+    "code": "12006",
+    "stt": 466,
+    "page": 502,
+    "nameEn": "Wafers filled",
+    "nameVi": "Bánh kem xốp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 1.9,
+      "kcal": 492,
+      "kj": 2059,
+      "proteinG": 8.3,
+      "fatG": 24,
+      "carbsG": 60.7,
+      "fiberG": 3.5,
+      "ashG": 1.6
+    }
+  },
+  {
+    "code": "12007",
+    "stt": 467,
+    "page": 503,
+    "nameEn": "Rice cake, plain",
+    "nameVi": "Bánh khảo chay",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 5.8,
+      "kcal": 376,
+      "kj": 1574,
+      "proteinG": 3.2,
+      "fatG": 0.3,
+      "carbsG": 90.2,
+      "fiberG": 0.2,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "12008",
+    "stt": 468,
+    "page": 504,
+    "nameEn": "Cinnamon waffle (roll)",
+    "nameVi": "Bánh quế",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 3.6,
+      "kcal": 435,
+      "kj": 1820,
+      "proteinG": 8.3,
+      "fatG": 10.7,
+      "carbsG": 76.4,
+      "fiberG": 0.3,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "12009",
+    "stt": 469,
+    "page": 505,
+    "nameEn": "Chocolate, filled",
+    "nameVi": "Bánh sô cô la",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 8.5,
+      "kcal": 449,
+      "kj": 1879,
+      "proteinG": 3.9,
+      "fatG": 17.6,
+      "carbsG": 68.8,
+      "fiberG": 0,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "12010",
+    "stt": 470,
+    "page": 506,
+    "nameEn": "Chocolate, sweet",
+    "nameVi": "Bánh thỏi sô cô la",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0.8,
+      "kcal": 543,
+      "kj": 2273,
+      "proteinG": 4.9,
+      "fatG": 30.4,
+      "carbsG": 62.5,
+      "fiberG": null,
+      "ashG": 1.4
+    }
+  },
+  {
+    "code": "12011",
+    "stt": 471,
+    "page": 507,
+    "nameEn": "Small biscuit",
+    "nameVi": "Bánh trứng nhện",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 11.6,
+      "kcal": 369,
+      "kj": 1542,
+      "proteinG": 9.6,
+      "fatG": 3.7,
+      "carbsG": 74.2,
+      "fiberG": 0.2,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "12012",
+    "stt": 472,
+    "page": 508,
+    "nameEn": "Cocoa powder",
+    "nameVi": "Bột ca cao",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 3,
+      "kcal": 414,
+      "kj": 1731,
+      "proteinG": 19.6,
+      "fatG": 13.7,
+      "carbsG": 53,
+      "fiberG": 4.6,
+      "ashG": 6.1
+    }
+  },
+  {
+    "code": "12013",
+    "stt": 473,
+    "page": 509,
+    "nameEn": "Refined sugar",
+    "nameVi": "Đường cát",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 1.7,
+      "kcal": 390,
+      "kj": 1630,
+      "proteinG": 0,
+      "fatG": 0,
+      "carbsG": 97.4,
+      "fiberG": 0,
+      "ashG": 0.9
+    }
+  },
+  {
+    "code": "12014",
+    "stt": 474,
+    "page": 510,
+    "nameEn": "Granulated sugar",
+    "nameVi": "Đường kính",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 0.5,
+      "kcal": 397,
+      "kj": 1662,
+      "proteinG": 0,
+      "fatG": 0,
+      "carbsG": 99.3,
+      "fiberG": 0,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "12015",
+    "stt": 475,
+    "page": 511,
+    "nameEn": "Toffee, sweets",
+    "nameVi": "Kẹo bơ cứng",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 8.8,
+      "kcal": 448,
+      "kj": 1873,
+      "proteinG": 2.1,
+      "fatG": 17.2,
+      "carbsG": 71.1,
+      "fiberG": 0,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "12016",
+    "stt": 476,
+    "page": 512,
+    "nameEn": "Coffee sweets",
+    "nameVi": "Kẹo cà phê",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 6.6,
+      "kcal": 378,
+      "kj": 1580,
+      "proteinG": 0,
+      "fatG": 1.3,
+      "carbsG": 91.5,
+      "fiberG": 0,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "12017",
+    "stt": 477,
+    "page": 513,
+    "nameEn": "Sweets, caramel with citron, orange aroma",
+    "nameVi": "Kẹo cam chanh",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 5.4,
+      "kcal": 377,
+      "kj": 1577,
+      "proteinG": 0,
+      "fatG": 0.5,
+      "carbsG": 93.1,
+      "fiberG": 0.3,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "12018",
+    "stt": 478,
+    "page": 514,
+    "nameEn": "Sweets with coconut aroma",
+    "nameVi": "Kẹo dừa mềm",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 8.5,
+      "kcal": 415,
+      "kj": 1735,
+      "proteinG": 0.6,
+      "fatG": 12.2,
+      "carbsG": 75.6,
+      "fiberG": 2.5,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "12019",
+    "stt": 479,
+    "page": 515,
+    "nameEn": "Pineapple sweets candy",
+    "nameVi": "Kẹo dứa mềm",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 8.5,
+      "kcal": 415,
+      "kj": 1735,
+      "proteinG": 0.6,
+      "fatG": 12.2,
+      "carbsG": 75.6,
+      "fiberG": 2.5,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "12020",
+    "stt": 480,
+    "page": 516,
+    "nameEn": "Peanut candy",
+    "nameVi": "Kẹo lạc",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 5,
+      "kcal": 449,
+      "kj": 1878,
+      "proteinG": 10.3,
+      "fatG": 16.5,
+      "carbsG": 64.8,
+      "fiberG": 2.2,
+      "ashG": 1.2
+    }
+  },
+  {
+    "code": "12021",
+    "stt": 481,
+    "page": 517,
+    "nameEn": "Menthol pastille",
+    "nameVi": "Kẹo pastille (kẹo ngậm bạc hà)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 10.2,
+      "kcal": 356,
+      "kj": 1490,
+      "proteinG": 5.2,
+      "fatG": 0,
+      "carbsG": 83.8,
+      "fiberG": null,
+      "ashG": 0.8
+    }
+  },
+  {
+    "code": "12022",
+    "stt": 482,
+    "page": 518,
+    "nameEn": "Sweets with chocolate",
+    "nameVi": "Kẹo sô cô la",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 6.8,
+      "kcal": 388,
+      "kj": 1624,
+      "proteinG": 1.6,
+      "fatG": 4.6,
+      "carbsG": 85.1,
+      "fiberG": 1.2,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "12023",
+    "stt": 483,
+    "page": 519,
+    "nameEn": "Sweets with milk",
+    "nameVi": "Kẹo sữa",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 8.4,
+      "kcal": 390,
+      "kj": 1633,
+      "proteinG": 2.9,
+      "fatG": 5.2,
+      "carbsG": 83,
+      "fiberG": null,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "12024",
+    "stt": 484,
+    "page": 520,
+    "nameEn": "Sesame candy",
+    "nameVi": "Kẹo vừng viên",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 1.7,
+      "kcal": 417,
+      "kj": 1744,
+      "proteinG": 2.8,
+      "fatG": 6.9,
+      "carbsG": 85.9,
+      "fiberG": 1.7,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "12025",
+    "stt": 485,
+    "page": 521,
+    "nameEn": "Malt",
+    "nameVi": "Mạch nha",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 15,
+      "kcal": 331,
+      "kj": 1384,
+      "proteinG": 0.2,
+      "fatG": 0,
+      "carbsG": 82.5,
+      "fiberG": 0,
+      "ashG": 2.3
+    }
+  },
+  {
+    "code": "12026",
+    "stt": 486,
+    "page": 522,
+    "nameEn": "Honey",
+    "nameVi": "Mật ong",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 18,
+      "kcal": 327,
+      "kj": 1367,
+      "proteinG": 0.4,
+      "fatG": 0,
+      "carbsG": 81.3,
+      "fiberG": 0,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "12027",
+    "stt": 487,
+    "page": 523,
+    "nameEn": "Peanut sugar (Jam)",
+    "nameVi": "Mứt lạc",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 1.8,
+      "kcal": 431,
+      "kj": 1802,
+      "proteinG": 5.4,
+      "fatG": 8.6,
+      "carbsG": 82.9,
+      "fiberG": 0.7,
+      "ashG": 0.6
+    }
+  },
+  {
+    "code": "13001",
+    "stt": 488,
+    "page": 526,
+    "nameEn": "Cari powder (Mix, turmeric, red pepper and other spices)",
+    "nameVi": "Cary bột",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 10,
+      "kcal": 283,
+      "kj": 1182,
+      "proteinG": 8.2,
+      "fatG": 7.3,
+      "carbsG": 46,
+      "fiberG": 8.9,
+      "ashG": 19.6
+    }
+  },
+  {
+    "code": "13002",
+    "stt": 489,
+    "page": 527,
+    "nameEn": "Ginger root, dried powder",
+    "nameVi": "Gừng khô (bột)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 9.4,
+      "kcal": 323,
+      "kj": 1350,
+      "proteinG": 9.1,
+      "fatG": 5.9,
+      "carbsG": 58.3,
+      "fiberG": 12.5,
+      "ashG": 4.8
+    }
+  },
+  {
+    "code": "13003",
+    "stt": 490,
+    "page": 528,
+    "nameEn": "Ginger root, fresh",
+    "nameVi": "Gừng tươi",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 90,
+      "kcal": 29,
+      "kj": 119,
+      "proteinG": 0.4,
+      "fatG": 0.8,
+      "carbsG": 5.1,
+      "fiberG": 3.3,
+      "ashG": 0.5
+    }
+  },
+  {
+    "code": "13004",
+    "stt": 491,
+    "page": 529,
+    "nameEn": "Peppercorn, seeds",
+    "nameVi": "Hạt tiêu",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 13.5,
+      "kcal": 231,
+      "kj": 967,
+      "proteinG": 7,
+      "fatG": 7.4,
+      "carbsG": 34.1,
+      "fiberG": 33.5,
+      "ashG": 4.5
+    }
+  },
+  {
+    "code": "13005",
+    "stt": 492,
+    "page": 530,
+    "nameEn": "Table salt",
+    "nameVi": "Muối",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 1,
+      "kcal": 0,
+      "kj": 0,
+      "proteinG": 0,
+      "fatG": 0,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 99
+    }
+  },
+  {
+    "code": "13006",
+    "stt": 493,
+    "page": 531,
+    "nameEn": "Turmeric rhizome, dried powder",
+    "nameVi": "Nghệ khô, bột",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 11.4,
+      "kcal": 295,
+      "kj": 1236,
+      "proteinG": 7.8,
+      "fatG": 9.9,
+      "carbsG": 43.8,
+      "fiberG": 21.1,
+      "ashG": 6
+    }
+  },
+  {
+    "code": "13007",
+    "stt": 494,
+    "page": 532,
+    "nameEn": "Turmeric, rhizome, fresh",
+    "nameVi": "Nghệ tươi",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 86.7,
+      "kcal": 25,
+      "kj": 103,
+      "proteinG": 1.1,
+      "fatG": 0.3,
+      "carbsG": 4.4,
+      "fiberG": 6.5,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "13008",
+    "stt": 495,
+    "page": 533,
+    "nameEn": "Red pepper, dried powder",
+    "nameVi": "Ớt khô bột",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 12,
+      "kcal": 227,
+      "kj": 951,
+      "proteinG": 15.6,
+      "fatG": 4.2,
+      "carbsG": 31.8,
+      "fiberG": 23.6,
+      "ashG": 12.8
+    }
+  },
+  {
+    "code": "13009",
+    "stt": 496,
+    "page": 534,
+    "nameEn": "Alpinia root, fresh",
+    "nameVi": "Riềng",
+    "wastePct": 10,
+    "per100g": {
+      "waterG": 91.7,
+      "kcal": 26,
+      "kj": 109,
+      "proteinG": 0.3,
+      "fatG": null,
+      "carbsG": 2.5,
+      "fiberG": 3.7,
+      "ashG": 1.8
+    }
+  },
+  {
+    "code": "13010",
+    "stt": 497,
+    "page": 535,
+    "nameEn": "Soybean sauce",
+    "nameVi": "Magi",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 66,
+      "kcal": 65,
+      "kj": 273,
+      "proteinG": 10.5,
+      "fatG": 0.1,
+      "carbsG": 5.6,
+      "fiberG": 0,
+      "ashG": 17.8
+    }
+  },
+  {
+    "code": "13011",
+    "stt": 498,
+    "page": 536,
+    "nameEn": "Shrimp sauce concentrate",
+    "nameVi": "Mắm tôm đặc",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 48,
+      "kcal": 73,
+      "kj": 304,
+      "proteinG": 14.8,
+      "fatG": 1.5,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 35.7
+    }
+  },
+  {
+    "code": "13012",
+    "stt": 499,
+    "page": 537,
+    "nameEn": "Shrimp sauce, diluted",
+    "nameVi": "Mắm tôm loãng",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 68.6,
+      "kcal": 44,
+      "kj": 182,
+      "proteinG": 7,
+      "fatG": 0.8,
+      "carbsG": 2.1,
+      "fiberG": 0,
+      "ashG": 21.5
+    }
+  },
+  {
+    "code": "13013",
+    "stt": 500,
+    "page": 538,
+    "nameEn": "Tiny shrimp, sour sauce",
+    "nameVi": "Mắm tép chua",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 55.5,
+      "kcal": 68,
+      "kj": 283,
+      "proteinG": 8.7,
+      "fatG": 1.2,
+      "carbsG": 5.5,
+      "fiberG": 0,
+      "ashG": 29.1
+    }
+  },
+  {
+    "code": "13014",
+    "stt": 501,
+    "page": 539,
+    "nameEn": "Fish - sauce (super quality).",
+    "nameVi": "Nước mắm cá (loại đặc biệt)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 60,
+      "kcal": 60,
+      "kj": 251,
+      "proteinG": 15,
+      "fatG": 0,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 25
+    }
+  },
+  {
+    "code": "13015",
+    "stt": 502,
+    "page": 540,
+    "nameEn": "Fish sauce, grade I",
+    "nameVi": "Nước mắm cá loại i",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 67.9,
+      "kcal": 28,
+      "kj": 119,
+      "proteinG": 7.1,
+      "fatG": 0,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 25
+    }
+  },
+  {
+    "code": "13016",
+    "stt": 503,
+    "page": 541,
+    "nameEn": "Fish sauce, grade II",
+    "nameVi": "Nước mắm loại ii",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 66.8,
+      "kcal": 21,
+      "kj": 87,
+      "proteinG": 5.2,
+      "fatG": 0,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 28
+    }
+  },
+  {
+    "code": "13017",
+    "stt": 504,
+    "page": 542,
+    "nameEn": "Fish sauce, ready-to-serve",
+    "nameVi": "Nước mắm cá",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 71.1,
+      "kcal": 35,
+      "kj": 146,
+      "proteinG": 5.1,
+      "fatG": 0.01,
+      "carbsG": 3.6,
+      "fiberG": 0,
+      "ashG": 20.2
+    }
+  },
+  {
+    "code": "13018",
+    "stt": 505,
+    "page": 543,
+    "nameEn": "Fish sauce, concentrated",
+    "nameVi": "Nước mắm cô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 20.2,
+      "kcal": 131,
+      "kj": 549,
+      "proteinG": 32.8,
+      "fatG": 0,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 47
+    }
+  },
+  {
+    "code": "13019",
+    "stt": 506,
+    "page": 544,
+    "nameEn": "Soybean sauce with rice and maize",
+    "nameVi": "Tương ngô",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 70.3,
+      "kcal": 75,
+      "kj": 312,
+      "proteinG": 3.9,
+      "fatG": 0.1,
+      "carbsG": 14.5,
+      "fiberG": 0,
+      "ashG": 11.2
+    }
+  },
+  {
+    "code": "13020",
+    "stt": 507,
+    "page": 545,
+    "nameEn": "Soybean sauce with glutinous rice",
+    "nameVi": "Tương nếp",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 68.3,
+      "kcal": 86,
+      "kj": 361,
+      "proteinG": 4.3,
+      "fatG": 0.7,
+      "carbsG": 15.7,
+      "fiberG": 0,
+      "ashG": 11
+    }
+  },
+  {
+    "code": "13021",
+    "stt": 508,
+    "page": 546,
+    "nameEn": "Red pepper sauce concentrate",
+    "nameVi": "Tương ớt",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 84,
+      "kcal": 37,
+      "kj": 154,
+      "proteinG": 0.5,
+      "fatG": 0.5,
+      "carbsG": 7.6,
+      "fiberG": 0.9,
+      "ashG": 6.5
+    }
+  },
+  {
+    "code": "13022",
+    "stt": 509,
+    "page": 547,
+    "nameEn": "Soybean sauce",
+    "nameVi": "Xì dầu",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 70.8,
+      "kcal": 53,
+      "kj": 220,
+      "proteinG": 6.3,
+      "fatG": 0.04,
+      "carbsG": 6.8,
+      "fiberG": 0.8,
+      "ashG": 15.3
+    }
+  },
+  {
+    "code": "13023",
+    "stt": 510,
+    "page": 548,
+    "nameEn": "Mayonnaise",
+    "nameVi": "Sốt mayonnaise",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 21.7,
+      "kcal": 701,
+      "kj": 2931,
+      "proteinG": 0,
+      "fatG": 77.8,
+      "carbsG": 0.1,
+      "fiberG": 0,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "14001",
+    "stt": 511,
+    "page": 551,
+    "nameEn": "Beer light (4,5 % Alcohol)",
+    "nameVi": "Bia (cồn: 4,5 g)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 92.5,
+      "kcal": 11,
+      "kj": 47,
+      "proteinG": 0.5,
+      "fatG": 0,
+      "carbsG": 2.3,
+      "fiberG": 0,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "14002",
+    "stt": 512,
+    "page": 552,
+    "nameEn": "Cognac",
+    "nameVi": "Cô nhắc (cồn 32 g)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 67.8,
+      "kcal": 0,
+      "kj": 0,
+      "proteinG": 0,
+      "fatG": 0,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "14003",
+    "stt": 513,
+    "page": 553,
+    "nameEn": "Cocktail, vermouth sweet",
+    "nameVi": "Cốc tai (cồn 13 g)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 71,
+      "kcal": 63,
+      "kj": 263,
+      "proteinG": 0,
+      "fatG": 0,
+      "carbsG": 15.7,
+      "fiberG": 0,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "14004",
+    "stt": 514,
+    "page": 554,
+    "nameEn": "Coca Cola",
+    "nameVi": "Coca cola",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 89.4,
+      "kcal": 42,
+      "kj": 174,
+      "proteinG": 0,
+      "fatG": 0,
+      "carbsG": 10.4,
+      "fiberG": 0,
+      "ashG": 0.2
+    }
+  },
+  {
+    "code": "14005",
+    "stt": 515,
+    "page": 555,
+    "nameEn": "Orange juice, fresh",
+    "nameVi": "Nước cam tươi",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 94.1,
+      "kcal": 23,
+      "kj": 95,
+      "proteinG": 0.7,
+      "fatG": 0.2,
+      "carbsG": 4.5,
+      "fiberG": 0.2,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "14006",
+    "stt": 516,
+    "page": 556,
+    "nameEn": "Coconut milk, immature",
+    "nameVi": "Nước dừa non tươi",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 94.4,
+      "kcal": 21,
+      "kj": 87,
+      "proteinG": 0.4,
+      "fatG": 0,
+      "carbsG": 4.8,
+      "fiberG": 0,
+      "ashG": 0.4
+    }
+  },
+  {
+    "code": "14007",
+    "stt": 517,
+    "page": 557,
+    "nameEn": "Tomato juice",
+    "nameVi": "Nước ép cà chua",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 94.6,
+      "kcal": 19,
+      "kj": 79,
+      "proteinG": 0.8,
+      "fatG": 0.6,
+      "carbsG": 2.6,
+      "fiberG": 0.4,
+      "ashG": 1
+    }
+  },
+  {
+    "code": "14008",
+    "stt": 518,
+    "page": 558,
+    "nameEn": "Mineral water",
+    "nameVi": "Nước khoáng",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 99.7,
+      "kcal": 0,
+      "kj": 0,
+      "proteinG": 0,
+      "fatG": 0,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "14009",
+    "stt": 519,
+    "page": 559,
+    "nameEn": "Mandarins juice (fresh)",
+    "nameVi": "Nước quít tươi",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 93.8,
+      "kcal": 24,
+      "kj": 100,
+      "proteinG": 0.4,
+      "fatG": 0.2,
+      "carbsG": 5.1,
+      "fiberG": 0.2,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "14010",
+    "stt": 520,
+    "page": 560,
+    "nameEn": "Liqueur, orange flavor",
+    "nameVi": "Rượu cam, chanh (cồn 24,2 g)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 75.8,
+      "kcal": 0,
+      "kj": 0,
+      "proteinG": 0,
+      "fatG": 0,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": null
+    }
+  },
+  {
+    "code": "14011",
+    "stt": 521,
+    "page": 561,
+    "nameEn": "Rice glutinous (Alcohol fermentation rice 80 g water 24 ml)",
+    "nameVi": "Rượu nếp (80g/ 24 ml) (cồn 5 g)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 52.4,
+      "kcal": 167,
+      "kj": 698,
+      "proteinG": 4,
+      "fatG": 0,
+      "carbsG": 37.7,
+      "fiberG": 0.2,
+      "ashG": 0.7
+    }
+  },
+  {
+    "code": "14012",
+    "stt": 522,
+    "page": 562,
+    "nameEn": "Vodka",
+    "nameVi": "Rượu trắng (cồn 39 g)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 61,
+      "kcal": 273,
+      "kj": 1142,
+      "proteinG": null,
+      "fatG": 0,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": null
+    }
+  },
+  {
+    "code": "14013",
+    "stt": 523,
+    "page": 563,
+    "nameEn": "Red wine",
+    "nameVi": "Rượu vang đỏ (cồn 9,5 g)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 88,
+      "kcal": 9,
+      "kj": 37,
+      "proteinG": 0.2,
+      "fatG": 0,
+      "carbsG": 2,
+      "fiberG": 0,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "14014",
+    "stt": 524,
+    "page": 564,
+    "nameEn": "White wine",
+    "nameVi": "Rượu vang trắng (cồn 9,5 g)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 89.9,
+      "kcal": 1,
+      "kj": 5,
+      "proteinG": 0.1,
+      "fatG": 0,
+      "carbsG": 0.2,
+      "fiberG": 0,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "14015",
+    "stt": 525,
+    "page": 565,
+    "nameEn": "White wine, sweet",
+    "nameVi": "Rượu vang trắng ngọt (cồn 10.2 g)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 83.4,
+      "kcal": 24,
+      "kj": 102,
+      "proteinG": 0.2,
+      "fatG": 0,
+      "carbsG": 5.9,
+      "fiberG": 0,
+      "ashG": 0.3
+    }
+  },
+  {
+    "code": "14016",
+    "stt": 526,
+    "page": 566,
+    "nameEn": "Whisky liqueur",
+    "nameVi": "Rượu whisky (cồn 35,2 g)",
+    "wastePct": 0,
+    "per100g": {
+      "waterG": 64.7,
+      "kcal": 0,
+      "kj": 0,
+      "proteinG": 0,
+      "fatG": 0,
+      "carbsG": 0,
+      "fiberG": 0,
+      "ashG": 0.1
+    }
+  }
+]
