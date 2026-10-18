@@ -8,6 +8,7 @@ import m0003 from './0003_lame_silverclaw.sql';
 import m0004 from './0004_windy_nicolaos.sql';
 import m0005 from './0005_legal_omega_red.sql';
 import m0006 from './0006_lean_bullseye.sql';
+import m0007 from './0007_neat_monster_badoon.sql';
 
   export default {
     journal,
@@ -18,7 +19,8 @@ m0002,
 m0003,
 m0004,
 m0005,
-m0006
+m0006,
+m0007
     }
   }
   

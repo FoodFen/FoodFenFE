@@ -19,21 +19,13 @@ export const KCAL_PER_GRAM = {
 /** Kilocalories in one kilogram of body mass — the standard planning figure. */
 const KCAL_PER_KG_BODY_MASS = 7700;
 
-/**
- * Daily deficit or surplus is capped so the app never suggests an unsafe
- * target. 1 kg/week is already an aggressive rate.
- */
-const MAX_DAILY_KCAL_DELTA = 1000;
+/** Daily deficit or surplus is capped at this share of TDEE so the target stays safe. */
+const MAX_DELTA_SHARE_OF_TDEE = 0.2;
 
 /** Floors from common clinical guidance; we never target below these. */
 const MIN_KCAL_BY_GENDER = { male: 1500, female: 1200, other: 1200 } as const;
 
-/**
- * The pace assumed when nothing else says otherwise — matches
- * `user.weekly_rate_kg`'s own column default. Onboarding no longer asks for a
- * pace explicitly, so every new profile starts here; the goals editor still
- * lets it be changed later.
- */
+/** The pace a new profile starts at — matches `user.weekly_rate_kg`'s column default. */
 export const DEFAULT_WEEKLY_RATE_KG = 0.5;
 
 /** Millilitres of water per kilogram of body mass, the usual rule of thumb. */
@@ -46,6 +38,37 @@ const ACTIVITY_MULTIPLIERS: Record<ActivityLevel, number> = {
   active: 1.725,
   very_active: 1.9,
 };
+
+const PROTEIN_G_PER_KG_BY_ACTIVITY: Record<ActivityLevel, number> = {
+  sedentary: 0.8,
+  light: 1.2,
+  moderate: 1.6,
+  active: 1.8,
+  very_active: 2,
+};
+
+const PROTEIN_G_PER_KG_BY_GOAL: Record<GoalDirection, number> = {
+  lose: 1.6,
+  maintain: 1.4,
+  gain: 1.4,
+};
+
+const PROTEIN_G_PER_KG_BY_DIET: Record<DietType, number> = {
+  balanced: 0,
+  low_carb: 0,
+  high_protein: 2,
+  keto: 0,
+  vegetarian: 0,
+};
+
+const FAT_SHARE_BY_DIET: Record<Exclude<DietType, 'keto'>, number> = {
+  balanced: 0.25,
+  low_carb: 0.5,
+  high_protein: 0.25,
+  vegetarian: 0.25,
+};
+
+const KETO_CARB_SHARE = 0.05;
 
 export const ACTIVITY_LABELS: Record<ActivityLevel, string> = {
   sedentary: 'Sedentary — little or no exercise',
@@ -152,18 +175,36 @@ export function weightGoalDelta(currentKg: number, goalKg: number): WeightGoalDe
 }
 
 /**
- * Daily calorie change implied by the target rate, clamped to
- * `MAX_DAILY_KCAL_DELTA`. Negative is a deficit, positive a surplus.
+ * Daily calorie change implied by the target rate, capped at 20% of `tdee`.
+ * Negative is a deficit, positive a surplus.
  */
-export function dailyKcalDelta(direction: GoalDirection, weeklyRateKg: number): number {
+export function dailyKcalDelta(
+  direction: GoalDirection,
+  weeklyRateKg: number,
+  tdee: number,
+): number {
   if (direction === 'maintain') return 0;
 
   const magnitude = Math.min(
     (Math.abs(weeklyRateKg) * KCAL_PER_KG_BODY_MASS) / 7,
-    MAX_DAILY_KCAL_DELTA,
+    MAX_DELTA_SHARE_OF_TDEE * tdee,
   );
 
   return direction === 'lose' ? -magnitude : magnitude;
+}
+
+/** The weekly pace whose daily delta exactly hits the 20%-of-TDEE cap. */
+export function maxWeeklyRateKg(
+  profile: Pick<
+    UserProfile,
+    'gender' | 'birthYear' | 'height' | 'weightCurrent' | 'activityLevel'
+  >,
+  now: Date = new Date(),
+): number {
+  return (
+    (MAX_DELTA_SHARE_OF_TDEE * totalDailyEnergyExpenditure(profile, now) * 7) /
+    KCAL_PER_KG_BODY_MASS
+  );
 }
 
 /**
@@ -177,35 +218,6 @@ export function weeksToGoal(
   if (weeklyRateKg <= 0 || goalDirection(profile) === 'maintain') return 0;
 
   return Math.abs(profile.weightGoal - profile.weightCurrent) / weeklyRateKg;
-}
-
-/**
- * Macro split as a fraction of total calories.
- *
- * Diet type leads where the user has chosen one; otherwise the split follows
- * the goal, raising protein on a cut so muscle is better preserved.
- */
-function macroSplitFor(direction: GoalDirection, dietType: DietType): Macros {
-  switch (dietType) {
-    case 'low_carb':
-      return { proteinG: 0.3, carbsG: 0.2, fatG: 0.5 };
-    case 'high_protein':
-      return { proteinG: 0.4, carbsG: 0.35, fatG: 0.25 };
-    case 'keto':
-      return { proteinG: 0.25, carbsG: 0.05, fatG: 0.7 };
-    case 'balanced':
-    case 'vegetarian':
-      break;
-  }
-
-  switch (direction) {
-    case 'lose':
-      return { proteinG: 0.35, carbsG: 0.35, fatG: 0.3 };
-    case 'gain':
-      return { proteinG: 0.25, carbsG: 0.45, fatG: 0.3 };
-    case 'maintain':
-      return { proteinG: 0.3, carbsG: 0.4, fatG: 0.3 };
-  }
 }
 
 /** The daily targets a `daily_goal` row is created from. */
@@ -235,27 +247,75 @@ export function calculateTargets(
     | 'activityLevel'
     | 'dietType'
     | 'weeklyRateKg'
-  >,
+  > & { proteinGPerKg?: number | null; fatShare?: number | null },
   now: Date = new Date(),
 ): CalculatedTargets {
   const direction = goalDirection(profile);
   const maintenance = totalDailyEnergyExpenditure(profile, now);
   const targetKcal = Math.round(
     Math.max(
-      maintenance + dailyKcalDelta(direction, profile.weeklyRateKg),
+      maintenance + dailyKcalDelta(direction, profile.weeklyRateKg, maintenance),
       MIN_KCAL_BY_GENDER[profile.gender],
     ),
   );
 
-  const split = macroSplitFor(direction, profile.dietType);
+  // Protein is rounded to whole grams first. Keto then fixes carbs at a share
+  // of kcal and fat takes the remainder; every other diet fixes fat and carbs
+  // take the remainder. Either way the rounded figures are used so the macros
+  // reconcile with the kcal target.
+  const proteinGPerKg =
+    profile.proteinGPerKg ??
+    Math.max(
+      PROTEIN_G_PER_KG_BY_ACTIVITY[profile.activityLevel],
+      PROTEIN_G_PER_KG_BY_GOAL[direction],
+      PROTEIN_G_PER_KG_BY_DIET[profile.dietType],
+    );
+  const targetProteinG = Math.round(profile.weightCurrent * proteinGPerKg);
+  const proteinKcal = targetProteinG * KCAL_PER_GRAM.protein;
+  let targetCarbsG: number;
+  let targetFatG: number;
+
+  if (profile.dietType === 'keto') {
+    targetCarbsG = Math.round((targetKcal * KETO_CARB_SHARE) / KCAL_PER_GRAM.carbs);
+    targetFatG = Math.max(
+      0,
+      Math.round((targetKcal - proteinKcal - targetCarbsG * KCAL_PER_GRAM.carbs) / KCAL_PER_GRAM.fat),
+    );
+  } else {
+    targetFatG = Math.round(
+      (targetKcal * (profile.fatShare ?? FAT_SHARE_BY_DIET[profile.dietType])) / KCAL_PER_GRAM.fat,
+    );
+    targetCarbsG = Math.max(
+      0,
+      Math.round((targetKcal - proteinKcal - targetFatG * KCAL_PER_GRAM.fat) / KCAL_PER_GRAM.carbs),
+    );
+  }
 
   return {
     targetKcal,
-    targetProteinG: Math.round((targetKcal * split.proteinG) / KCAL_PER_GRAM.protein),
-    targetCarbsG: Math.round((targetKcal * split.carbsG) / KCAL_PER_GRAM.carbs),
-    targetFatG: Math.round((targetKcal * split.fatG) / KCAL_PER_GRAM.fat),
+    targetProteinG,
+    targetCarbsG,
+    targetFatG,
     targetWaterMl: Math.round((profile.weightCurrent * WATER_ML_PER_KG) / 50) * 50,
   };
+}
+
+/**
+ * The weekly pace the stored target actually produces — reflects both the
+ * 20%-of-TDEE cap and the kcal floor. `0` for maintain.
+ */
+export function effectiveWeeklyRateKg(
+  profile: Parameters<typeof calculateTargets>[0],
+  now: Date = new Date(),
+): number {
+  if (goalDirection(profile) === 'maintain') return 0;
+
+  const { targetKcal } = calculateTargets(profile, now);
+
+  return (
+    (Math.abs(targetKcal - totalDailyEnergyExpenditure(profile, now)) * 7) /
+    KCAL_PER_KG_BODY_MASS
+  );
 }
 
 /** What one quantity of a catalog serving weighs. */

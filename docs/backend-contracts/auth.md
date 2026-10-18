@@ -68,12 +68,17 @@ the client compares it directly against `Date.now()`.
   "calorieLeftMode": "smart" | "all_calories",
   "subscriptionTier": "free" | "premium",
   "weeklyRateKg": 0,
+  "proteinGPerKg": number | null,
+  "fatShare": number | null,
   "createdAt": "ISO 8601 string"
 }
 ```
 
 `height`/`weightCurrent`/`weightGoal` must be strictly positive;
-`weeklyRateKg` non-negative. This is the server's copy of the user's
+`weeklyRateKg` non-negative. `proteinGPerKg` (0.8–2.0 g per kg) and
+`fatShare` (0.2–0.35 of kcal) are custom macro choices: `null` = auto, an
+explicit `null` clears the value, an omitted key leaves it unchanged, and
+out-of-range values get a 400. This is the server's copy of the user's
 profile, not the device's local one — the two are reconciled by push sync,
 which does not exist yet (`src/data/sync.ts`'s own documented gap); until
 it does, this object can drift from what the device has on disk, and the

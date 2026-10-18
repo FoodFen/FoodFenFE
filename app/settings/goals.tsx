@@ -51,6 +51,8 @@ export default function GoalsScreen() {
           activityLevel: user.activityLevel,
           dietType: user.dietType,
           weeklyRateKg: user.weeklyRateKg,
+          proteinGPerKg: user.proteinGPerKg,
+          fatShare: user.fatShare,
         }
       : undefined,
   });

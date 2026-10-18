@@ -12,7 +12,14 @@ import { Text } from '@/components/ui/Text';
 import { units } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
-import { bmi, bmiCategory, calculateTargets, macroEnergyShare, weeksToGoal } from '@/lib/nutrition';
+import {
+  bmi,
+  bmiCategory,
+  calculateTargets,
+  effectiveWeeklyRateKg,
+  macroEnergyShare,
+  weeksToGoal,
+} from '@/lib/nutrition';
 import { colorsFor, macroColors } from '@/theme/colors';
 import type { ActivityLevel, Gender, UnitSystem } from '@/types/models';
 
@@ -136,7 +143,7 @@ function FinalizeResults({ draft, onDone }: FinalizeStepProps) {
 
   // `null` for `maintain` — there is no "reach it by" date for a target
   // that's already where the user is.
-  const weeks = weeksToGoal(draft, draft.weeklyRateKg);
+  const weeks = weeksToGoal(draft, effectiveWeeklyRateKg({ ...draft, dietType: 'balanced' }));
   const etaMessage =
     weeks > 0
       ? t('onboardingFinalize', 'etaMessage')

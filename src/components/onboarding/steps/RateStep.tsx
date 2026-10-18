@@ -7,23 +7,18 @@ import { Text } from '@/components/ui/Text';
 import { units } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
-import { goalDirection } from '@/lib/nutrition';
+import { goalDirection, maxWeeklyRateKg } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
-import type { UnitSystem } from '@/types/models';
+import type { ActivityLevel, Gender, UnitSystem } from '@/types/models';
 
 /**
- * The reasonable-pace range, defined in pounds/week (0.2 = barely moving, 2.0
- * = aggressive) and converted to kg once here — `weeklyRateKg`, what's stored
- * and passed in `value`/`onChange`, is always kg regardless of `unitSystem`.
+ * The slowest pace on offer, defined in pounds/week and converted to kg once
+ * here — `weeklyRateKg`, what's stored and passed in `value`/`onChange`, is
+ * always kg regardless of `unitSystem`. The fastest is per-user (20% of TDEE).
  */
 const MIN_RATE_LB = 0.2;
-const MAX_RATE_LB = 2;
 
 export const MIN_RATE_KG = units.weightToKg(MIN_RATE_LB, 'lb');
-export const MAX_RATE_KG = units.weightToKg(MAX_RATE_LB, 'lb');
-
-/** A sensible starting point when a direction is first chosen. */
-export const DEFAULT_RATE_KG = MIN_RATE_KG + 0.5 * (MAX_RATE_KG - MIN_RATE_KG);
 
 type Zone = 'tooSlow' | 'safe' | 'reasonable' | 'tooFast';
 
@@ -56,6 +51,10 @@ export interface RateStepProps {
   /** Always in kg. Direction (lose/gain) is derived from comparing the two — never collected as a separate choice, so it can't disagree with the target weight. */
   weightCurrent: number;
   weightGoal: number;
+  gender: Gender;
+  birthYear: number;
+  height: number;
+  activityLevel: ActivityLevel;
 }
 
 /** Shown only when the target-weight step's goal isn't (effectively) maintain. */
@@ -65,6 +64,10 @@ export function RateStep({
   onChange,
   weightCurrent,
   weightGoal,
+  gender,
+  birthYear,
+  height,
+  activityLevel,
 }: RateStepProps) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
@@ -72,7 +75,9 @@ export function RateStep({
   const unit = unitSystem === 'imperial' ? 'lb' : 'kg';
   const isGain = goalDirection({ weightCurrent, weightGoal }) === 'gain';
 
-  const fraction = (value - MIN_RATE_KG) / (MAX_RATE_KG - MIN_RATE_KG);
+  const maxRateKg = maxWeeklyRateKg({ gender, birthYear, height, weightCurrent, activityLevel });
+
+  const fraction = (value - MIN_RATE_KG) / (maxRateKg - MIN_RATE_KG);
   const zone = zoneFor(Math.min(1, Math.max(0, fraction)));
 
   const displayRate = units.weightFromKg(value, unit).toFixed(1);
@@ -115,7 +120,7 @@ export function RateStep({
 
       <PaceSlider
         min={MIN_RATE_KG}
-        max={MAX_RATE_KG}
+        max={maxRateKg}
         value={value}
         onChange={onChange}
         leftIcon={<MaterialCommunityIcons name="tortoise" size={28} color={colors.fgMuted} />}

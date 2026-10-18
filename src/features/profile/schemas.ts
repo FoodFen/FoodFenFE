@@ -43,6 +43,8 @@ export function makeBodyStatsSchema(t: Translate) {
       activityLevel: z.enum(['sedentary', 'light', 'moderate', 'active', 'very_active']),
       dietType: z.enum(['balanced', 'low_carb', 'high_protein', 'keto', 'vegetarian']),
       weeklyRateKg: z.coerce.number<number>().min(0).max(1.5),
+      proteinGPerKg: z.number().min(0.8).max(2).nullable(),
+      fatShare: z.number().min(0.2).max(0.35).nullable(),
     })
     .refine(
       // A goal that differs from current weight but with no pace set would

@@ -29,7 +29,7 @@ export function CaloriesEatenSection({
   const colors = colorsFor(resolved);
   const present = useLogSheetStore((state) => state.present);
   const calorieLeftMode = useProfileStore(
-    (state) => state.profile?.calorieLeftMode ?? 'all_calories',
+    (state) => state.profile?.calorieLeftMode ?? 'smart',
   );
 
   // Calories left today: target minus what was eaten, with eligible exercise

@@ -64,9 +64,11 @@ export function createLocalUser(input: CreateUserInput): {
     activityLevel: input.activityLevel,
     dietType: input.dietType,
     calorieCalcMode: 'auto' as const,
-    calorieLeftMode: 'all_calories' as const,
+    calorieLeftMode: 'smart' as const,
     subscriptionTier: 'free' as const,
     weeklyRateKg: input.weeklyRateKg,
+    proteinGPerKg: null,
+    fatShare: null,
     createdAt: now,
     remoteId: null,
     deletedAt: null,
@@ -137,9 +139,11 @@ export function restoreLocalUser(remote: RemoteUser): UserProfile | undefined {
     activityLevel,
     dietType,
     calorieCalcMode: remote.calorieCalcMode,
-    calorieLeftMode: remote.calorieLeftMode ?? ('all_calories' as const),
+    calorieLeftMode: remote.calorieLeftMode ?? ('smart' as const),
     subscriptionTier: remote.subscriptionTier,
     weeklyRateKg: remote.weeklyRateKg ?? 0.5,
+    proteinGPerKg: remote.proteinGPerKg ?? null,
+    fatShare: remote.fatShare ?? null,
     createdAt: new Date(remote.createdAt),
     remoteId: remote.id,
     deletedAt: null,
@@ -279,11 +283,18 @@ export function writeCalculatedGoal(
   effectiveDate: DateKey = todayKey(),
   now: Date = new Date(),
 ): DailyGoal {
+  return setGoal(profile.id, calculatedTargetsFor(profile, now), effectiveDate);
+}
+
+function calculatedTargetsFor(
+  profile: Parameters<typeof calculateTargets>[0] & { id: string },
+  now: Date,
+): GoalTargets {
   const latestWeight = getLatestWeight(profile.id)?.weight;
   const resolved =
     latestWeight === undefined ? profile : { ...profile, weightCurrent: latestWeight };
 
-  return setGoal(profile.id, calculateTargets(resolved, now), effectiveDate);
+  return calculateTargets(resolved, now);
 }
 
 /** Stops push from sending a goal row the server must not receive. */
@@ -298,9 +309,26 @@ export function markGoalSynced(goalId: string): void {
  * those has to rewrite today's goal or the diary would keep measuring against
  * the old number. A `manual` user typed their targets deliberately and they
  * are left exactly as they are.
+ *
+ * Writes nothing when the goal in force today already holds the calculated
+ * targets, so opening the app does not mint a dirty row for push on every launch.
  */
 export function refreshGoalIfAuto(profile: UserProfile): DailyGoal | undefined {
   if (profile.calorieCalcMode !== 'auto') return undefined;
 
-  return writeCalculatedGoal(profile);
+  const current = getGoalForDate(profile.id);
+  const targets = calculatedTargetsFor(profile, new Date());
+
+  if (
+    current &&
+    current.targetKcal === targets.targetKcal &&
+    current.targetProteinG === targets.targetProteinG &&
+    current.targetCarbsG === targets.targetCarbsG &&
+    current.targetFatG === targets.targetFatG &&
+    current.targetWaterMl === targets.targetWaterMl
+  ) {
+    return current;
+  }
+
+  return setGoal(profile.id, targets);
 }

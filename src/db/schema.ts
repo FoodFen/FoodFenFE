@@ -108,6 +108,13 @@ export const user = sqliteTable('user', {
    * it.
    */
   weeklyRateKg: real('weekly_rate_kg').notNull().default(0.5),
+  /**
+   * Extension: custom macro choices, not in ERD v1.0.0. `null` means auto (the
+   * formula decides). `proteinGPerKg` is 0.8-2.0 g per kg of body weight;
+   * `fatShare` is a fraction of kcal, 0.2-0.35.
+   */
+  proteinGPerKg: real('protein_g_per_kg'),
+  fatShare: real('fat_share'),
   createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
   ...userSyncColumns,
 });

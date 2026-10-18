@@ -91,6 +91,8 @@ export const userSchema = z.object({
   calorieLeftMode: calorieLeftModeSchema.nullable(),
   subscriptionTier: subscriptionTierSchema,
   weeklyRateKg: z.number().nonnegative().nullable(),
+  proteinGPerKg: z.number().nullish(),
+  fatShare: z.number().nullish(),
   createdAt: z.iso.datetime(),
 });
 

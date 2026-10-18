@@ -51,6 +51,7 @@ export async function pushUserProfile(profile: UserProfile): Promise<void> {
       calorieCalcMode: profile.calorieCalcMode,
       calorieLeftMode: profile.calorieLeftMode,
       weeklyRateKg: profile.weeklyRateKg,
+      // proteinGPerKg/fatShare omitted until the BE deploy is live: the server rejects unknown keys.
     });
 
     markSynced(user, profile.id);

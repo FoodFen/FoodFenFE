@@ -2,7 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, useWatch } from 'react-hook-form';
 import type { Control, FieldErrors } from 'react-hook-form';
 import { Pressable, View } from 'react-native';
 import Animated, {
@@ -29,6 +29,8 @@ import type { ActivityLevel, DietType, Gender } from '@/types/models';
 const ACTIVITY_OPTIONS = Object.keys(ACTIVITY_LABELS) as ActivityLevel[];
 const DIET_OPTIONS = Object.keys(DIET_LABELS) as DietType[];
 const RATE_OPTIONS = [0, 0.25, 0.5, 0.75, 1];
+const PROTEIN_G_PER_KG_OPTIONS = [0.8, 1, 1.2, 1.4, 1.6, 1.8, 2];
+const FAT_SHARE_OPTIONS = [0.2, 0.25, 0.3, 0.35];
 
 const ACTIVITY_ICONS: Record<ActivityLevel, (color: string) => ReactNode> = {
   sedentary: (color) => <MaterialCommunityIcons name="sofa-outline" size={24} color={color} />,
@@ -60,6 +62,7 @@ export interface BodyStatsFormProps {
  */
 export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
   const { t } = useTranslation();
+  const dietType = useWatch({ control, name: 'dietType' });
 
   const genderOptions: { value: Gender; label: string }[] = [
     { value: 'female', label: t('onboardingGender', 'female') },
@@ -83,6 +86,18 @@ export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
     value: diet,
     label: t('dietType', diet),
   }));
+
+  const autoLabel = t('profileBodyStats', 'macrosAuto');
+
+  const proteinOptions: { value: number | null; label: string }[] = [
+    { value: null, label: autoLabel },
+    ...PROTEIN_G_PER_KG_OPTIONS.map((perKg) => ({ value: perKg, label: `${perKg} g/kg` })),
+  ];
+
+  const fatOptions: { value: number | null; label: string }[] = [
+    { value: null, label: autoLabel },
+    ...FAT_SHARE_OPTIONS.map((share) => ({ value: share, label: `${Math.round(share * 100)}%` })),
+  ];
 
   return (
     <>
@@ -219,6 +234,36 @@ export function BodyStatsForm({ control, errors }: BodyStatsFormProps) {
           {t('profileBodyStats', 'dietHint')}
         </Text>
       </Card>
+
+      <Card className="gap-4">
+        <Text variant="heading">{t('profileBodyStats', 'macros')}</Text>
+
+        <Controller
+          control={control}
+          name="proteinGPerKg"
+          render={({ field: { onChange, value } }) => (
+            <Field label={t('dashboard', 'protein')}>
+              <ChipRow options={proteinOptions} value={value} onChange={onChange} />
+            </Field>
+          )}
+        />
+
+        {dietType === 'keto' ? null : (
+          <Controller
+            control={control}
+            name="fatShare"
+            render={({ field: { onChange, value } }) => (
+              <Field label={t('dashboard', 'fat')}>
+                <ChipRow options={fatOptions} value={value} onChange={onChange} />
+              </Field>
+            )}
+          />
+        )}
+
+        <Text variant="caption" tone="subtle">
+          {t('profileBodyStats', 'macrosHint')}
+        </Text>
+      </Card>
     </>
   );
 }
@@ -350,7 +395,7 @@ function OptionRow<T extends string | number>({
 }
 
 /** A row of selectable chips — the compact form used in the dense goals editor. */
-export function ChipRow<T extends string | number>({
+export function ChipRow<T extends string | number | null>({
   options,
   value,
   onChange,

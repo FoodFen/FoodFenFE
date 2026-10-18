@@ -11,7 +11,7 @@ import { TargetWeightStep } from '@/components/onboarding/steps/TargetWeightStep
 import { UnitSystemStep } from '@/components/onboarding/steps/UnitSystemStep';
 import { WeightStep } from '@/components/onboarding/steps/WeightStep';
 import { StepScreen } from '@/components/onboarding/StepScreen';
-import { DEFAULT_WEEKLY_RATE_KG, goalDirection } from '@/lib/nutrition';
+import { DEFAULT_WEEKLY_RATE_KG, goalDirection, maxWeeklyRateKg } from '@/lib/nutrition';
 import type { ActivityLevel, Gender, UnitSystem } from '@/types/models';
 
 export interface OnboardingDraft {
@@ -113,7 +113,16 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
     setStepIndex((index) => Math.max(0, index - 1));
   }
 
+  const maxRateKg = maxWeeklyRateKg(draft);
+
   function goNext() {
+    if (currentStep === 'rate') {
+      setDraft((previous) => ({
+        ...previous,
+        weeklyRateKg: Math.min(previous.weeklyRateKg, maxRateKg),
+      }));
+    }
+
     const nextSteps = routeFor(draft);
     setSteps(nextSteps);
 
@@ -211,10 +220,14 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
       {currentStep === 'rate' && (
         <RateStep
           unitSystem={draft.unitSystem}
-          value={draft.weeklyRateKg}
+          value={Math.min(draft.weeklyRateKg, maxRateKg)}
           onChange={(value) => update('weeklyRateKg', value)}
           weightCurrent={draft.weightCurrent}
           weightGoal={draft.weightGoal}
+          gender={draft.gender}
+          birthYear={draft.birthYear}
+          height={draft.height}
+          activityLevel={draft.activityLevel}
         />
       )}
       {currentStep === 'finalize' && <FinalizeStep draft={draft} onDone={goNext} />}

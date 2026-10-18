@@ -143,17 +143,16 @@ describe('weeksToGoal', () => {
 
 describe('dailyKcalDelta', () => {
   it('is zero when maintaining, whatever the rate says', () => {
-    expect(dailyKcalDelta('maintain', 0.5)).toBe(0);
+    expect(dailyKcalDelta('maintain', 0.5, 2000)).toBe(0);
   });
 
   it('is negative when losing and positive when gaining', () => {
-    expect(dailyKcalDelta('lose', 0.5)).toBeLessThan(0);
-    expect(dailyKcalDelta('gain', 0.5)).toBeGreaterThan(0);
+    expect(dailyKcalDelta('lose', 0.5, 2000)).toBeLessThan(0);
+    expect(dailyKcalDelta('gain', 0.5, 2000)).toBeGreaterThan(0);
   });
 
-  it('caps an unrealistic rate at 1000 kcal a day', () => {
-    // 5 kg/week implies ~5500 kcal/day without the clamp.
-    expect(dailyKcalDelta('lose', 5)).toBe(-1000);
+  it('caps an unrealistic rate at 20% of TDEE', () => {
+    expect(dailyKcalDelta('lose', 5, 2000)).toBe(-400);
   });
 });
 

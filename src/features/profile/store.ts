@@ -56,7 +56,11 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
   isLoaded: false,
 
   refresh: () => {
-    set({ profile: userRepository.getLocalUser() ?? null, isLoaded: true });
+    const profile = userRepository.getLocalUser() ?? null;
+
+    if (profile) userRepository.refreshGoalIfAuto(profile);
+
+    set({ profile, isLoaded: true });
   },
 
   createProfile: (input) => {
