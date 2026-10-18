@@ -17,7 +17,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { haptics } from '@/lib/haptics';
-import { nutritionForServing } from '@/lib/nutrition';
+import { gramsForServing, isGramServing, nutritionForServing } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 import type { CatalogFood } from '@/types/models';
 
@@ -164,7 +164,9 @@ function PortionForm({
   const isPremium = useIsPremium();
   const { t } = useTranslation();
 
-  const [quantityText, setQuantityText] = useState('1');
+  const [quantityText, setQuantityText] = useState(
+    food.servings[0] && isGramServing(food.servings[0]) ? '100' : '1',
+  );
   const [servingId, setServingId] = useState(food.servings[0]?.id ?? '');
 
   // A half-typed value ("1.") must not blank the preview, so anything
@@ -176,8 +178,10 @@ function PortionForm({
   }, [quantityText]);
 
   const serving = food.servings.find((row) => row.id === servingId) ?? food.servings[0];
-  const grams = serving ? quantity * serving.grams : quantity;
-  const nutrition = nutritionForServing(food, quantity, servingId);
+  const servingQuantity =
+    serving && isGramServing(serving) ? quantity / serving.grams : quantity;
+  const grams = serving ? gramsForServing(servingQuantity, serving) : quantity;
+  const nutrition = nutritionForServing(food, servingQuantity, servingId);
 
   const add = () => {
     haptics.success();
@@ -242,6 +246,7 @@ function PortionForm({
                   onPress={() => {
                     haptics.selection();
                     setServingId(row.id);
+                    setQuantityText(isGramServing(row) ? '100' : '1');
                   }}
                   accessibilityRole="radio"
                   accessibilityState={{ selected: isSelected }}

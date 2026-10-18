@@ -25,7 +25,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { haptics } from '@/lib/haptics';
-import { gramsForServing, nutritionForServing } from '@/lib/nutrition';
+import { gramsForServing, isGramServing, nutritionForServing } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 import type { CatalogFood } from '@/types/models';
 
@@ -228,10 +228,6 @@ function FoodRow({
   );
 }
 
-function isGramChip(serving: CatalogFood['servings'][number]) {
-  return serving.grams === 100 && /100\s*g/i.test(serving.label);
-}
-
 function PortionStep({
   food,
   initialServingId,
@@ -253,14 +249,14 @@ function PortionStep({
   const [servingId, setServingId] = useState(initialServingId);
   const [quantity, setQuantity] = useState(() => {
     const initial = food.servings.find((s) => s.id === initialServingId);
-    return initial && isGramChip(initial)
+    return initial && isGramServing(initial)
       ? Math.round(initialQuantity * initial.grams)
       : initialQuantity;
   });
 
   const serving = food.servings.find((s) => s.id === servingId) ?? food.servings[0];
-  const isGramServing = serving !== undefined && isGramChip(serving);
-  const servingQuantity = isGramServing ? quantity / serving.grams : quantity;
+  const isGram = serving !== undefined && isGramServing(serving);
+  const servingQuantity = isGram ? quantity / serving.grams : quantity;
   const grams = serving ? gramsForServing(servingQuantity, serving) : quantity;
   const nutrition = nutritionForServing(food, servingQuantity, servingId);
 
@@ -315,7 +311,7 @@ function PortionStep({
                     onPress={() => {
                       haptics.selection();
                       setServingId(row.id);
-                      setQuantity(isGramChip(row) ? 100 : 1);
+                      setQuantity(isGramServing(row) ? 100 : 1);
                     }}
                     accessibilityRole="radio"
                     accessibilityState={{ selected: isSelected }}
@@ -341,10 +337,10 @@ function PortionStep({
               compact
               label={t('logSearch', 'amount')}
               value={quantity}
-              onChange={(next) => setQuantity(next ?? (isGramServing ? 10 : 0.5))}
-              min={isGramServing ? 10 : 0.5}
-              max={isGramServing ? 5000 : 20}
-              precision={isGramServing ? 0 : 1}
+              onChange={(next) => setQuantity(next ?? (isGram ? 10 : 0.5))}
+              min={isGram ? 10 : 0.5}
+              max={isGram ? 5000 : 20}
+              precision={isGram ? 0 : 1}
             />
           </View>
         </Card>

@@ -323,6 +323,10 @@ export function gramsForServing(quantity: number, serving: CatalogServing): numb
   return quantity * serving.grams;
 }
 
+export function isGramServing(serving: CatalogServing): boolean {
+  return serving.grams === 100 && /100\s*g/i.test(serving.label);
+}
+
 export function findServing(
   food: CatalogFood,
   servingId: string,
