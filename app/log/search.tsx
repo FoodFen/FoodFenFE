@@ -228,6 +228,10 @@ function FoodRow({
   );
 }
 
+function isGramChip(serving: CatalogFood['servings'][number]) {
+  return serving.grams === 100 && /100\s*g/i.test(serving.label);
+}
+
 function PortionStep({
   food,
   initialServingId,
@@ -247,18 +251,24 @@ function PortionStep({
   const finishLogging = usePostLogInterstitial(dismissLogFlow);
 
   const [servingId, setServingId] = useState(initialServingId);
-  const [quantity, setQuantity] = useState(initialQuantity);
+  const [quantity, setQuantity] = useState(() => {
+    const initial = food.servings.find((s) => s.id === initialServingId);
+    return initial && isGramChip(initial)
+      ? Math.round(initialQuantity * initial.grams)
+      : initialQuantity;
+  });
 
   const serving = food.servings.find((s) => s.id === servingId) ?? food.servings[0];
-  const isGramServing = serving?.grams === 100 && /100\s*g/i.test(serving.label);
-  const grams = serving ? gramsForServing(quantity, serving) : quantity;
-  const nutrition = nutritionForServing(food, quantity, servingId);
+  const isGramServing = serving !== undefined && isGramChip(serving);
+  const servingQuantity = isGramServing ? quantity / serving.grams : quantity;
+  const grams = serving ? gramsForServing(servingQuantity, serving) : quantity;
+  const nutrition = nutritionForServing(food, servingQuantity, servingId);
 
   const save = () => {
     if (quickLog.isPending) return;
 
     quickLog.mutate(
-      { catalogFoodId: food.id, servingId, quantity },
+      { catalogFoodId: food.id, servingId, quantity: servingQuantity },
       {
         onSuccess: () => {
           haptics.success();
@@ -305,7 +315,7 @@ function PortionStep({
                     onPress={() => {
                       haptics.selection();
                       setServingId(row.id);
-                      setQuantity(1);
+                      setQuantity(isGramChip(row) ? 100 : 1);
                     }}
                     accessibilityRole="radio"
                     accessibilityState={{ selected: isSelected }}
