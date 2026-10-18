@@ -63,6 +63,8 @@ export type PushUserInput = Pick<
   | 'calorieCalcMode'
   | 'calorieLeftMode'
   | 'weeklyRateKg'
+  | 'proteinGPerKg'
+  | 'fatShare'
 >;
 
 export interface PushGoalInput {

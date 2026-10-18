@@ -89,9 +89,7 @@ Verified live against a fresh sign-up: `gender`, `birthYear`, `height`,
 `weightCurrent`, `weightGoal`, `activityLevel`, `dietType`,
 `calorieLeftMode`, `weeklyRateKg`, `proteinGPerKg`, `fatShare` all come back
 `null` until the profile has been pushed (`PATCH /users/me`), so an account that never finished
-onboarding on a signed-in device has them all `null`. (`proteinGPerKg`/
-`fatShare` are stored locally but the client does not push them yet — the
-server rejects unknown keys until its deploy lands.) `userSchema` (`src/api/schemas.ts`) now
+onboarding on a signed-in device has them all `null`. `userSchema` (`src/api/schemas.ts`) now
 accepts `null` on all of those; it previously required them, which failed
 validation on literally the first real account tested against it. Nothing
 in the client reads these fields off the server's copy anyway (the local
