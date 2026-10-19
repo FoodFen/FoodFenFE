@@ -42,7 +42,7 @@ export default function MealComposerScreen() {
 
   const draft = useDraftStore();
   const logMeal = useLogMeal();
-  const finishLogging = usePostLogInterstitial(() => router.dismissAll());
+  const finishLogging = usePostLogInterstitial('food', () => router.dismissAll());
 
   const date = params.date ?? todayKey();
 

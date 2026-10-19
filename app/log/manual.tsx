@@ -130,7 +130,7 @@ export default function ManualEntryScreen() {
   const params = useLocalSearchParams<{ mode?: string }>();
 
   const logManual = useLogManualEntry();
-  const finishLogging = usePostLogInterstitial(dismissLogFlow);
+  const finishLogging = usePostLogInterstitial('food', dismissLogFlow);
   const analyzeFood = useAnalyzeFood();
 
   // No session needed: signed-out users get a few free AI tries, counted

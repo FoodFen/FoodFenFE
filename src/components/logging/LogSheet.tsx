@@ -74,7 +74,7 @@ export function LogSheet() {
   const logWeight = useLogWeight();
   const addWater = useAddWater();
   const setWaterGoal = useSetWaterGoal();
-  const finishLogging = usePostLogInterstitial();
+  const finishLogging = usePostLogInterstitial('water');
   const { data: today } = useDiaryDay(todayKey());
   const { data: lastWeight } = useWeightAsOf(todayKey());
   const profileWeightKg = useProfileStore((state) => state.profile?.weightCurrent);

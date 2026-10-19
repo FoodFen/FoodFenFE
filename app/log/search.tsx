@@ -252,7 +252,7 @@ function PortionStep({
   const colors = colorsFor(resolved);
   const isPremium = useIsPremium();
   const quickLog = useQuickLogFood();
-  const finishLogging = usePostLogInterstitial(dismissLogFlow);
+  const finishLogging = usePostLogInterstitial('food', dismissLogFlow);
 
   const [servingId, setServingId] = useState(initialServingId);
   const [quantity, setQuantity] = useState(() => {

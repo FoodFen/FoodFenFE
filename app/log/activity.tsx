@@ -128,7 +128,7 @@ function DurationStep({
 }) {
   const { t } = useTranslation();
   const logActivity = useLogActivity();
-  const finishLogging = usePostLogInterstitial(dismissLogFlow);
+  const finishLogging = usePostLogInterstitial('activity', dismissLogFlow);
 
   const [duration, setDuration] = useState(30);
   const [useNow, setUseNow] = useState(true);

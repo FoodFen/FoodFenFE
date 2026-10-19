@@ -62,6 +62,12 @@ export function defaultMealReminders(enabled: boolean): MealReminder[] {
   }));
 }
 
+const DEFAULT_WAKE_TIME: TimeOfDay = { hour: 8, minute: 0 };
+const DEFAULT_SLEEP_TIME: TimeOfDay = { hour: 22, minute: 0 };
+const DEFAULT_WATER_LAG_PCT = 25;
+
+const minutesOf = (t: TimeOfDay) => t.hour * 60 + t.minute;
+
 function loadReminders(): Reminder[] {
   return (
     preferences.get<Reminder[]>(StorageKeys.reminders) ??
@@ -101,6 +107,12 @@ interface SettingsState {
   reminders: Reminder[];
   /** Local reminder before an active streak breaks for the day. */
   streakRemindersEnabled: boolean;
+  /** Mascot's hungry/thirsty looks and bubbles; reactions stay on regardless. */
+  mascotRemindersEnabled: boolean;
+  mascotWakeTime: TimeOfDay;
+  mascotSleepTime: TimeOfDay;
+  /** Percentage points behind water pace before the mascot looks thirsty. */
+  mascotWaterLagPct: number;
 
   setTheme: (theme: ThemePreference) => void;
   setWeightUnit: (unit: WeightUnit) => void;
@@ -117,6 +129,12 @@ interface SettingsState {
   setReminderEnabled: (id: Reminder['id'], enabled: boolean) => void;
   resetReminders: () => void;
   setStreakRemindersEnabled: (value: boolean) => void;
+  setMascotRemindersEnabled: (value: boolean) => void;
+  /** Ignored when the new wake time is not before the stored sleep time. */
+  setMascotWakeTime: (time: TimeOfDay) => void;
+  /** Ignored when the new sleep time is not after the stored wake time. */
+  setMascotSleepTime: (time: TimeOfDay) => void;
+  setMascotWaterLagPct: (pct: number) => void;
   completeOnboarding: () => void;
   /** Part of "erase local data" — sends the user back through onboarding. */
   resetOnboarding: () => void;
@@ -142,6 +160,14 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   reminders: loadReminders(),
   streakRemindersEnabled:
     preferences.get<boolean>(StorageKeys.streakRemindersEnabled) ?? false,
+  mascotRemindersEnabled:
+    preferences.get<boolean>(StorageKeys.mascotRemindersEnabled) ?? true,
+  mascotWakeTime:
+    preferences.get<TimeOfDay>(StorageKeys.mascotWakeTime) ?? DEFAULT_WAKE_TIME,
+  mascotSleepTime:
+    preferences.get<TimeOfDay>(StorageKeys.mascotSleepTime) ?? DEFAULT_SLEEP_TIME,
+  mascotWaterLagPct:
+    preferences.get<number>(StorageKeys.mascotWaterLagPct) ?? DEFAULT_WATER_LAG_PCT,
 
   setTheme: (theme) => {
     preferences.set(StorageKeys.colorScheme, theme);
@@ -223,6 +249,32 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setStreakRemindersEnabled: (streakRemindersEnabled) => {
     preferences.set(StorageKeys.streakRemindersEnabled, streakRemindersEnabled);
     set({ streakRemindersEnabled });
+  },
+
+  setMascotRemindersEnabled: (mascotRemindersEnabled) => {
+    preferences.set(StorageKeys.mascotRemindersEnabled, mascotRemindersEnabled);
+    set({ mascotRemindersEnabled });
+  },
+
+  setMascotWakeTime: (mascotWakeTime) => {
+    set((state) => {
+      if (minutesOf(mascotWakeTime) >= minutesOf(state.mascotSleepTime)) return state;
+      preferences.set(StorageKeys.mascotWakeTime, mascotWakeTime);
+      return { mascotWakeTime };
+    });
+  },
+
+  setMascotSleepTime: (mascotSleepTime) => {
+    set((state) => {
+      if (minutesOf(mascotSleepTime) <= minutesOf(state.mascotWakeTime)) return state;
+      preferences.set(StorageKeys.mascotSleepTime, mascotSleepTime);
+      return { mascotSleepTime };
+    });
+  },
+
+  setMascotWaterLagPct: (mascotWaterLagPct) => {
+    preferences.set(StorageKeys.mascotWaterLagPct, mascotWaterLagPct);
+    set({ mascotWaterLagPct });
   },
 
   completeOnboarding: () => {

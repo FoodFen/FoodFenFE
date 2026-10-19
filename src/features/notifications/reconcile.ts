@@ -19,6 +19,7 @@ import {
   scheduleDaily,
   streakNudgeTime,
   tomorrowAt,
+  type TimeOfDay,
 } from '@/lib/notificationScheduler';
 import type { FoodEntry } from '@/types/models';
 
@@ -32,6 +33,18 @@ export const MEAL_COPY_KEYS: Record<
   lunch: { titleKey: 'mealLunchTitle', bodyKey: 'mealLunchBody' },
   dinner: { titleKey: 'mealDinnerTitle', bodyKey: 'mealDinnerBody' },
 };
+
+export function resolveMealTime(
+  userId: string,
+  meal: Meal,
+  reminderTime: TimeOfDay | null,
+): TimeOfDay {
+  return (
+    reminderTime ??
+    notificationRepository.medianMealTime(userId, meal) ??
+    DEFAULT_MEAL_TIMES[meal]
+  );
+}
 
 /**
  * Serializes every call below: two calls fired close together (e.g. two
@@ -100,10 +113,7 @@ async function reconcileMeal(
 
   const alreadyLogged = todaysEntries.some((entry) => entry.mealType === meal);
 
-  const time =
-    reminder.time ??
-    notificationRepository.medianMealTime(userId, meal) ??
-    DEFAULT_MEAL_TIMES[meal];
+  const time = resolveMealTime(userId, meal, reminder.time);
   const { titleKey, bodyKey } = MEAL_COPY_KEYS[meal];
 
   // Today's occurrence is already satisfied — pre-schedule tomorrow's

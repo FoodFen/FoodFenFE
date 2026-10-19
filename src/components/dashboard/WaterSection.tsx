@@ -32,7 +32,7 @@ export function WaterSection({ day }: { day: DiaryDay }) {
   const colors = colorsFor(resolved);
   const present = useLogSheetStore((state) => state.present);
   const setWaterTotal = useSetWaterTotal();
-  const finishLogging = usePostLogInterstitial();
+  const finishLogging = usePostLogInterstitial('water');
 
   const targetMl = day.goal.targetWaterMl;
   const filled = Math.round(day.waterMl / GLASS_ML);

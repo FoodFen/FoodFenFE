@@ -91,7 +91,7 @@ export function useRestaurant(id: string) {
 export function useAddDishToDiary() {
   const queryClient = useQueryClient();
   const logManual = useLogManualEntry();
-  const finishLogging = usePostLogInterstitial();
+  const finishLogging = usePostLogInterstitial('food');
   const { t } = useTranslation();
 
   return useMutation({

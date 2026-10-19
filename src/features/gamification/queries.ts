@@ -11,10 +11,12 @@ import { useInterstitialStore } from '@/features/gamification/interstitialStore'
 import { loggingHeatmap } from '@/features/gamification/selectors';
 import type { QuestToastEntry } from '@/features/gamification/toastStore';
 import { useQuestToastStore } from '@/features/gamification/toastStore';
+import { useMascotReactionStore } from '@/features/mascot/reactionStore';
 import { useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import { shiftDateKey, todayKey } from '@/lib/date';
 import { env } from '@/lib/env';
+import type { MascotReaction } from '@/lib/mascot';
 import { queryKeys } from '@/lib/queryClient';
 import type { Quest } from '@/types/models';
 
@@ -107,7 +109,7 @@ function announceBackgroundCompletions(quests: Quest[], before: Map<string, Ques
  * interstitial for a quest type seen for the first time) surfaces once it
  * resolves, a beat after the caller has already moved on.
  */
-export function usePostLogInterstitial(leave: () => void = () => {}) {
+export function usePostLogInterstitial(kind: MascotReaction, leave: () => void = () => {}) {
   const profile = useProfileStore((state) => state.profile);
   const userId = profile?.id ?? null;
   const locale = useSettingsStore((state) => state.locale);
@@ -117,6 +119,8 @@ export function usePostLogInterstitial(leave: () => void = () => {}) {
   const queryClient = useQueryClient();
 
   return () => {
+    useMascotReactionStore.getState().queue(kind);
+
     if (!profile || !userId || !signedIn || !canUseRemote()) {
       leave();
       return;

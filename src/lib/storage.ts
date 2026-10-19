@@ -113,4 +113,8 @@ export const StorageKeys = {
   mealRemindersEnabled: 'meal-reminders-enabled',
   streakRemindersEnabled: 'streak-reminders-enabled',
   reminders: 'reminders',
+  mascotRemindersEnabled: 'mascot-reminders-enabled',
+  mascotWakeTime: 'mascot-wake-time',
+  mascotSleepTime: 'mascot-sleep-time',
+  mascotWaterLagPct: 'mascot-water-lag-pct',
 } as const;
