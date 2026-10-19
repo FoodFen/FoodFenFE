@@ -1,12 +1,14 @@
 import { View } from 'react-native';
 
 import { Mascot } from '@/components/mascot/Mascot';
+import { mascotArtId } from '@/components/mascot/visuals';
+import { useEquippedMascotId } from '@/features/mascot/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import type { MascotAction } from '@/lib/mascot';
 import { colorsFor } from '@/theme/colors';
 
 /**
- * The assistant's avatar: the default mascot showing `action`. `glow` adds the
+ * The assistant's avatar: the equipped mascot showing `action`. `glow` adds the
  * larger, softer halo used on the empty state hero.
  */
 
@@ -19,6 +21,7 @@ export interface AiAvatarProps {
 export function AiAvatar({ size = 28, action = 'idle', glow = false }: AiAvatarProps) {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
+  const mascotId = mascotArtId(useEquippedMascotId());
 
   return (
     <View style={{ width: size, height: size }} className="items-center justify-center">
@@ -38,7 +41,7 @@ export function AiAvatar({ size = 28, action = 'idle', glow = false }: AiAvatarP
           }}
         />
       ) : null}
-      <Mascot mascotId="default" action={action} size={size} />
+      <Mascot mascotId={mascotId} action={action} size={size} />
     </View>
   );
 }

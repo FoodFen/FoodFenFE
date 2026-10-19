@@ -6,7 +6,7 @@ import Svg, { Circle, Ellipse, Path, Rect } from 'react-native-svg';
 import type { MascotAction } from '@/lib/mascot';
 import type { ThemeColors } from '@/theme/colors';
 
-export type MascotId = 'default';
+export type MascotId = 'default' | 'sprout' | 'berry' | 'chili';
 
 export interface MascotVisualProps {
   size: number;
@@ -123,6 +123,38 @@ const confused: MascotVisual = (p) => (
   </Face>
 );
 
-export const MASCOT_VISUALS: Record<MascotId, Record<MascotAction, MascotVisual>> = {
-  default: { idle, hungry, thirsty, eating, drinking, exercising, thinking, happy, confused },
+const DEFAULT_ACTIONS: Record<MascotAction, MascotVisual> = {
+  idle,
+  hungry,
+  thirsty,
+  eating,
+  drinking,
+  exercising,
+  thinking,
+  happy,
+  confused,
 };
+
+function tinted(body: string): Record<MascotAction, MascotVisual> {
+  return Object.fromEntries(
+    Object.entries(DEFAULT_ACTIONS).map(([action, visual]) => [
+      action,
+      (p: MascotVisualProps) => visual({ ...p, colors: { ...p.colors, brand: body } as ThemeColors }),
+    ]),
+  ) as Record<MascotAction, MascotVisual>;
+}
+
+export const MASCOT_VISUALS: Record<MascotId, Record<MascotAction, MascotVisual>> = {
+  default: DEFAULT_ACTIONS,
+  sprout: tinted('#14B8A6'),
+  berry: tinted('#8B5CF6'),
+  chili: tinted('#F97316'),
+};
+
+export function hasMascotArt(id: string): id is MascotId {
+  return Object.prototype.hasOwnProperty.call(MASCOT_VISUALS, id);
+}
+
+export function mascotArtId(id: string): MascotId {
+  return hasMascotArt(id) ? id : 'default';
+}

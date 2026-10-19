@@ -4,10 +4,12 @@ import { View } from 'react-native';
 
 import { Mascot } from '@/components/mascot/Mascot';
 import { MascotBubbleStrip } from '@/components/mascot/MascotBubbleStrip';
+import { mascotArtId } from '@/components/mascot/visuals';
 import { Card } from '@/components/ui/Card';
 import { MacroBarGroup } from '@/components/ui/MacroBar';
 import { ProgressRing } from '@/components/ui/ProgressRing';
 import { Text, type TextTone } from '@/components/ui/Text';
+import { useEquippedMascotId } from '@/features/mascot/queries';
 import { useDashboardMascot } from '@/features/mascot/useDashboardMascot';
 import { useProfileStore } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -39,6 +41,7 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
   );
   const isOver = remaining < 0;
   const mascot = useDashboardMascot(day.date === todayKey());
+  const mascotId = mascotArtId(useEquippedMascotId());
 
   return (
     <Card className="gap-4">
@@ -50,7 +53,7 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
             progress={progressFraction(day.totals.kcal, day.totals.kcal + remaining)}
             color={isOver ? colors.danger : undefined}
           >
-            <Mascot mascotId="default" action={mascot.action} size={80} />
+            <Mascot mascotId={mascotId} action={mascot.action} size={80} />
           </ProgressRing>
           <View className="flex-1 justify-center gap-2">
             <StatRow

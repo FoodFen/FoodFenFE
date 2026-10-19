@@ -566,6 +566,13 @@ export const vi = {
     redeemConfirmTitle: 'Đổi {days} ngày Premium?',
     redeemConfirmMessage: 'Bạn sẽ dùng {cost} xu để đổi gói này.',
     bundlesError: 'Không tải được các gói đổi. Bạn kiểm tra kết nối mạng rồi thử lại nhé.',
+    mascotsHeading: 'Linh vật',
+    mascotsError: 'Không tải được danh sách linh vật. Bạn kiểm tra kết nối mạng rồi thử lại nhé.',
+    buyButton: 'Mua',
+    equipButton: 'Chọn',
+    equippedLabel: 'Đang dùng',
+    buyConfirmTitle: 'Mua {name}?',
+    buyConfirmMessage: 'Bạn sẽ dùng {cost} xu để mua linh vật này.',
   },
 
   quiz: {

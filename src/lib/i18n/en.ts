@@ -548,6 +548,13 @@ export const en: DeepPartial<Translations> = {
     redeemConfirmTitle: 'Redeem {days} days of Premium?',
     redeemConfirmMessage: 'This will cost {cost} coins.',
     bundlesError: "Couldn't load the bundles. Check your connection and try again.",
+    mascotsHeading: 'Mascots',
+    mascotsError: "Couldn't load the mascots. Check your connection and try again.",
+    buyButton: 'Buy',
+    equipButton: 'Equip',
+    equippedLabel: 'Equipped',
+    buyConfirmTitle: 'Buy {name}?',
+    buyConfirmMessage: 'This will cost {cost} coins.',
   },
 
   quiz: {
