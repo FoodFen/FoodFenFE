@@ -1,8 +1,9 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
 import { Card } from '@/components/ui/Card';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { ProgressRing } from '@/components/ui/ProgressRing';
 import { Text } from '@/components/ui/Text';
 import { useIsPremium } from '@/features/profile/store';
@@ -84,16 +85,16 @@ export function FiberSection({ day }: { day: DiaryDay }) {
         {t('dashboard', 'fiberDailyLevel')}
       </Text>
 
-      <Pressable
+      <PressableScale
         onPress={() => router.push('/premium')}
         accessibilityRole="button"
-        className="flex-row items-center justify-center gap-2 border-t border-border pt-3 active:opacity-70"
+        className="flex-row items-center justify-center gap-2 border-t border-border pt-3"
       >
         <Ionicons name="lock-closed" size={14} color={colors.brand} />
         <Text variant="label" tone="brand">
           {t('dashboard', 'viewFiberIntake')}
         </Text>
-      </Pressable>
+      </PressableScale>
     </Card>
   );
 }

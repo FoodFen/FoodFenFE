@@ -1,12 +1,12 @@
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
+import { PressableScale } from '@/components/ui/PressableScale';
 import { ProgressRing } from '@/components/ui/ProgressRing';
 import { Text } from '@/components/ui/Text';
 import type { RingStatus } from '@/features/dashboard/ringStatus';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import type { DateKey } from '@/lib/date';
 import { formatDayOfMonth, formatWeekdayInitial } from '@/lib/date';
-import { haptics } from '@/lib/haptics';
 import { colorsFor } from '@/theme/colors';
 
 /** Arc colour per status — matches the "Ring Colors Explained" screen. */
@@ -52,12 +52,9 @@ export function DayRing({ date, status, progress, selected, onPress }: DayRingPr
   const hasRing = !disabled && (progress > 0 || selected);
 
   return (
-    <Pressable
+    <PressableScale
       disabled={disabled}
-      onPress={() => {
-        haptics.selection();
-        onPress();
-      }}
+      onPress={onPress}
       accessibilityRole="button"
       accessibilityState={{ selected, disabled }}
       accessibilityLabel={date}
@@ -89,6 +86,6 @@ export function DayRing({ date, status, progress, selected, onPress }: DayRingPr
           </Text>
         </ProgressRing>
       </View>
-    </Pressable>
+    </PressableScale>
   );
 }

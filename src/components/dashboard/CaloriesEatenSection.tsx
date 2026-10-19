@@ -1,13 +1,13 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
+import { PressableScale } from '@/components/ui/PressableScale';
 import { Text } from '@/components/ui/Text';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import { useLogSheetStore } from '@/features/logging/store';
 import { useProfileStore } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
-import { haptics } from '@/lib/haptics';
 import { kcalRemaining } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 import type { DiaryDay } from '@/types/models';
@@ -62,21 +62,22 @@ export function CaloriesEatenSection({
       </Text>
 
       {day.entries.length === 0 ? (
-        <View className="flex-row items-center gap-2 py-1">
-          <Text variant="body" tone="subtle" className="italic">
+        <PressableScale
+          onPress={() => present('food')}
+          accessibilityRole="button"
+          className="h-10 flex-row items-center gap-2 self-start rounded-pill bg-brand/10 px-4"
+        >
+          <Ionicons name="add-circle" size={20} color={colors.brand} />
+          <Text variant="label" tone="brand">
             {t('dashboard', 'logFirstMeal')}
           </Text>
-          <Ionicons name="return-up-forward" size={20} color={colors.fgSubtle} />
-        </View>
+        </PressableScale>
       ) : (
-        <Pressable
-          onPress={() => {
-            haptics.selection();
-            onOpenEntries?.();
-          }}
+        <PressableScale
+          onPress={onOpenEntries}
           accessibilityRole="button"
           accessibilityLabel={t('dashboard', 'viewEntriesA11y')}
-          className="mt-1 flex-row items-center gap-2 py-1 active:opacity-60"
+          className="mt-1 flex-row items-center gap-2 py-1"
         >
           <View className="flex-1 flex-row items-center gap-1">
             {peek.slice(0, PEEK_LIMIT).map((entry) => (
@@ -91,7 +92,7 @@ export function CaloriesEatenSection({
             ) : null}
           </View>
           <Ionicons name="chevron-forward" size={18} color={colors.fgSubtle} />
-        </Pressable>
+        </PressableScale>
       )}
     </MetricSection>
   );

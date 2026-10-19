@@ -2,7 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { format } from 'date-fns';
 import { enUS, vi as viLocale } from 'date-fns/locale';
 import { useLayoutEffect, useMemo } from 'react';
-import { Pressable, View, useWindowDimensions } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
@@ -11,6 +11,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { PressableScale } from '@/components/ui/PressableScale';
 import { Text } from '@/components/ui/Text';
 import { useDiaryWeek } from '@/features/dashboard/queries';
 import { dayRingStatus } from '@/features/dashboard/ringStatus';
@@ -151,33 +152,35 @@ export function WeekStrip({
   return (
     <View className="gap-2">
       <View className="flex-row items-center justify-center gap-3">
-        <Pressable
+        <PressableScale
+          haptic={false}
           onPress={pageBack}
           accessibilityRole="button"
           accessibilityLabel={t('weekStrip', 'previousWeek')}
-          className="h-9 w-9 items-center justify-center rounded-full active:bg-surface-alt"
+          className="h-9 w-9 items-center justify-center rounded-full"
         >
           <Ionicons name="chevron-back" size={20} color={colors.fgMuted} />
-        </Pressable>
+        </PressableScale>
 
         <Text variant="label" tone="muted">
           {rangeLabel}
         </Text>
 
-        <Pressable
+        <PressableScale
+          haptic={false}
           onPress={pageForward}
           disabled={!canPageForward}
           accessibilityRole="button"
           accessibilityState={{ disabled: !canPageForward }}
           accessibilityLabel={t('weekStrip', 'nextWeek')}
-          className="h-9 w-9 items-center justify-center rounded-full active:bg-surface-alt"
+          className="h-9 w-9 items-center justify-center rounded-full"
         >
           <Ionicons
             name="chevron-forward"
             size={20}
             color={canPageForward ? colors.fgMuted : colors.fgSubtle}
           />
-        </Pressable>
+        </PressableScale>
       </View>
 
       <View style={{ height: STRIP_HEIGHT, overflow: 'hidden' }}>

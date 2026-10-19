@@ -1,30 +1,26 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import type { ReactNode } from 'react';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
 import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 import { Card } from '@/components/ui/Card';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { Text } from '@/components/ui/Text';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
-import { haptics } from '@/lib/haptics';
 import { colorsFor } from '@/theme/colors';
 
 export interface MetricSectionProps {
   title: string;
   value: string | number;
   unit?: string;
-  /**
-   * The corner "+" button. Logging is not wired this pass, so it is left
-   * undefined by every caller and only gives haptic feedback.
-   */
+  /** The corner "+" button's action. */
   onAdd?: () => void;
   children?: ReactNode;
 }
 
 /**
- * The shared shell for the dashboard's stacked sections: a title with the
- * (decorative) sort handle, a large current value, a corner add button, and
+ * The shared shell for the dashboard's stacked sections: a title, a large current value, a corner add button, and
  * whatever the section wants below.
  */
 export function MetricSection({ title, value, unit, onAdd, children }: MetricSectionProps) {
@@ -34,23 +30,20 @@ export function MetricSection({ title, value, unit, onAdd, children }: MetricSec
 
   return (
     <Card className="gap-2">
-      <Pressable
-        onPress={() => {
-          haptics.selection();
-          onAdd?.();
-        }}
+      <PressableScale
+        onPress={onAdd}
+        hitSlop={4}
         accessibilityRole="button"
         accessibilityLabel={`${t('dashboard', 'addA11y')} — ${title}`}
-        className="absolute right-4 top-4 h-14 w-14 items-center justify-center rounded-full border border-border active:bg-surface-alt"
+        className="absolute right-4 top-4 h-10 w-10 items-center justify-center rounded-full bg-surface-alt"
       >
-        <Ionicons name="add" size={26} color={colors.fgMuted} />
-      </Pressable>
+        <Ionicons name="add" size={22} color={colors.fg} />
+      </PressableScale>
 
-      <View className="flex-row items-center gap-1 pr-16">
+      <View className="pr-12">
         <Text variant="caption" tone="muted">
           {title}
         </Text>
-        <Ionicons name="swap-vertical" size={13} color={colors.fgSubtle} />
       </View>
 
       <View className="flex-row items-baseline gap-1">

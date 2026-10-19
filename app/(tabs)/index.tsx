@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { userErrorMessage } from '@/api/errors';
@@ -23,12 +24,16 @@ import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { todayKey } from '@/lib/date';
 import type { DateKey } from '@/lib/date';
+import { env } from '@/lib/env';
 import { colorsFor } from '@/theme/colors';
+
+// Staggered entrance plays once per app session, not on every day switch or refetch.
+let hasAnimatedIn = false;
 
 /**
  * The dashboard: the header, the week strip, a summary pager, and the stacked
- * metric sections. Logging happens from the floating action button in the tab
- * bar, not from here — the section "+" buttons are inert this pass.
+ * metric sections. Logging starts from the tab bar's "+" button or a section's
+ * "+" button, which opens the matching log flow.
  */
 export default function DashboardScreen() {
   const [selectedDate, setSelectedDate] = useState<DateKey>(todayKey());
@@ -46,6 +51,15 @@ export default function DashboardScreen() {
   };
 
   const { data: day, isPending, isRefetching, error, refetch } = useDiaryDay(selectedDate);
+
+  const contentShown = !isPending && !error && !!day;
+  useEffect(() => {
+    if (contentShown) {
+      hasAnimatedIn = true;
+    }
+  }, [contentShown]);
+  const enter = (index: number) =>
+    hasAnimatedIn ? undefined : FadeInDown.springify().damping(18).delay(index * 50);
 
   const profile = useProfileStore((state) => state.profile);
   const { mutate: healGoal, reset: resetHeal, isIdle: healIsIdle } = useHealMissingGoal();
@@ -95,13 +109,29 @@ export default function DashboardScreen() {
             />
           }
         >
-          <SummaryCard day={day} />
-          <QuizCard />
-          <CaloriesEatenSection day={day} onOpenEntries={() => setEntriesOpen(true)} />
-          <CaloriesBurnedSection day={day} />
-          <WaterSection day={day} />
-          <FiberSection day={day} />
-          <WeightSection day={day} />
+          <Animated.View entering={enter(0)}>
+            <SummaryCard day={day} />
+          </Animated.View>
+          <Animated.View entering={enter(1)}>
+            <CaloriesEatenSection day={day} onOpenEntries={() => setEntriesOpen(true)} />
+          </Animated.View>
+          <Animated.View entering={enter(2)}>
+            <CaloriesBurnedSection day={day} />
+          </Animated.View>
+          <Animated.View entering={enter(3)}>
+            <WaterSection day={day} />
+          </Animated.View>
+          <Animated.View entering={enter(4)}>
+            <FiberSection day={day} />
+          </Animated.View>
+          <Animated.View entering={enter(5)}>
+            <WeightSection day={day} />
+          </Animated.View>
+          {env.hasBackend ? (
+            <Animated.View entering={enter(6)}>
+              <QuizCard />
+            </Animated.View>
+          ) : null}
         </ScrollScreen>
       )}
 

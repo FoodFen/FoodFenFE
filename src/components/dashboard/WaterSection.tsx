@@ -1,7 +1,8 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
 import { WaterCup } from '@/components/dashboard/WaterCup';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { Text } from '@/components/ui/Text';
 import { GLASS_ML } from '@/features/dashboard/constants';
 import { useSetWaterTotal } from '@/features/diary/queries';
@@ -78,14 +79,14 @@ export function WaterSection({ day }: { day: DiaryDay }) {
           <Text variant="caption" tone="subtle">
             {t('dashboard', 'waterGoal').replace('{ml}', targetMl.toLocaleString())}
           </Text>
-          <Pressable
+          <PressableScale
             onPress={() => present('waterGoal')}
             accessibilityRole="button"
             accessibilityLabel={t('dashboard', 'editWaterGoalA11y')}
             hitSlop={8}
           >
             <Ionicons name="ellipsis-horizontal" size={16} color={colors.fgSubtle} />
-          </Pressable>
+          </PressableScale>
         </View>
       </View>
     </MetricSection>
