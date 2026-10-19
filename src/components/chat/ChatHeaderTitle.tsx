@@ -4,15 +4,16 @@ import Animated, { FadeIn, useReducedMotion } from 'react-native-reanimated';
 import { AiAvatar } from '@/components/chat/AiAvatar';
 import { Text } from '@/components/ui/Text';
 import { useTranslation } from '@/hooks/useTranslation';
+import type { MascotAction } from '@/lib/mascot';
 
 /** Navigator header title: avatar, name, and a status line that follows the reply stream. */
-export function ChatHeaderTitle({ typing }: { typing: boolean }) {
+export function ChatHeaderTitle({ typing, action }: { typing: boolean; action: MascotAction }) {
   const { t } = useTranslation();
   const reducedMotion = useReducedMotion();
 
   return (
     <View className="flex-row items-center gap-3">
-      <AiAvatar size={36} pulsing={typing} />
+      <AiAvatar size={36} action={action} />
       <View>
         <Text variant="label" className="font-semibold">
           {t('chat', 'title')}

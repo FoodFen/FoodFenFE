@@ -1,7 +1,7 @@
 import { Chat, LoadEarlierMessages, useStreamingMessages } from '@kesha-antonov/react-native-chat';
 import { useQueryClient, onlineManager } from '@tanstack/react-query';
 import { Stack, router, useLocalSearchParams } from 'expo-router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { streamChatReply } from '@/api/endpoints/chat';
 import { AiAvatar } from '@/components/chat/AiAvatar';
@@ -21,8 +21,11 @@ import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { env } from '@/lib/env';
 import { haptics } from '@/lib/haptics';
+import type { MascotAction } from '@/lib/mascot';
 import { queryKeys } from '@/lib/queryClient';
 import { CHAT_AVATAR_SIZE, chatDarkTheme, chatLightTheme } from '@/theme/chatTheme';
+
+const OUTCOME_MS = 2500;
 
 /**
  * The single continuous conversation with the assistant. Gated exactly like
@@ -48,6 +51,18 @@ export default function ChatScreen() {
     useStreamingMessages<ChatIMessage>();
   const [freshIds] = useState<FreshIds>(() => new Set());
   const [pendingIds] = useState(() => new Set<string | number>());
+  const [outcome, setOutcome] = useState<'happy' | 'confused' | null>(null);
+  const outcomeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  const showOutcome = useCallback((next: 'happy' | 'confused') => {
+    clearTimeout(outcomeTimer.current);
+    setOutcome(next);
+    outcomeTimer.current = setTimeout(() => setOutcome(null), OUTCOME_MS);
+  }, []);
+
+  useEffect(() => () => clearTimeout(outcomeTimer.current), []);
+
+  const headerAction: MascotAction = isStreaming ? 'thinking' : (outcome ?? 'idle');
 
   // `useChatHistory` pages are newest-first, and within a page messages are
   // newest-first too (design spec), so this flattened array is already in
@@ -103,6 +118,8 @@ export default function ChatScreen() {
       if (!outgoing) return;
 
       haptics.selection();
+      clearTimeout(outcomeTimer.current);
+      setOutcome(null);
       append(outgoing);
       const stream = startStream({ user: CHAT_ASSISTANT });
       freshIds.add(outgoing._id);
@@ -115,12 +132,16 @@ export default function ChatScreen() {
         onDone: (message) => {
           haptics.success();
           stream.done(toIMessage(message));
+          showOutcome('happy');
           void queryClient.invalidateQueries({ queryKey: queryKeys.chat.all });
         },
-        onError: (message) => stream.done({ text: message }),
+        onError: (message) => {
+          stream.done({ text: message });
+          showOutcome('confused');
+        },
       });
     },
-    [append, startStream, freshIds, pendingIds, queryClient],
+    [append, startStream, freshIds, pendingIds, queryClient, showOutcome],
   );
 
   const sendSuggestion = useCallback(
@@ -137,8 +158,8 @@ export default function ChatScreen() {
   );
 
   const headerOptions = useMemo(
-    () => ({ headerTitle: () => <ChatHeaderTitle typing={isStreaming} /> }),
-    [isStreaming],
+    () => ({ headerTitle: () => <ChatHeaderTitle typing={isStreaming} action={headerAction} /> }),
+    [isStreaming, headerAction],
   );
 
   // The list is inverted, so the footer is the visual top: the intro scrolls
