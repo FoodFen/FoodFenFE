@@ -7,9 +7,17 @@ import {
   useSpeechRecognitionEvent,
 } from 'expo-speech-recognition';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { LayoutChangeEvent } from 'react-native';
 import { Alert, Image, Keyboard, Pressable, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import Animated, {
+  FadeIn,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ApiError, userErrorMessage } from '@/api/errors';
@@ -341,225 +349,228 @@ export default function ManualEntryScreen() {
   return (
     <View className="flex-1 bg-bg">
       <ScreenHeader
-        title="FoodFen"
+        title={t(
+          'logManual',
+          captureMode === 'describe'
+            ? 'modeDescribe'
+            : captureMode === 'image'
+              ? 'modeImage'
+              : 'modeManual',
+        )}
         icon="close"
         onPress={() => router.dismiss()}
         accessibilityLabel={t('common', 'cancel')}
       />
 
-      {captureMode === 'image' ? (
-        aiAvailable ? (
-          <ImageCapturePanel
-            image={pickedImage}
-            isAnalyzing={analyzeFood.isPending}
-            onPick={pickImage}
-            onAnalyze={analyzeImage}
-            onClear={() => setPickedImage(null)}
-          />
-        ) : (
-          <View className="flex-1 justify-center">
-            <EmptyState
-              icon="alert-circle-outline"
-              title={t('logManual', 'aiUnavailableTitle')}
-              description={t('logManual', 'aiUnavailableDescription')}
+      <Animated.View key={captureMode} entering={FadeIn.duration(180)} className="flex-1">
+        {captureMode === 'image' ? (
+          aiAvailable ? (
+            <ImageCapturePanel
+              image={pickedImage}
+              isAnalyzing={analyzeFood.isPending}
+              onPick={pickImage}
+              onAnalyze={analyzeImage}
+              onClear={() => setPickedImage(null)}
             />
-          </View>
-        )
-      ) : captureMode === 'describe' ? (
-        aiAvailable ? (
-          <DescribePanel
-            text={smartText}
-            onChangeText={(value) => {
-              setSmartText(value);
-              setSmartTextSource('type');
-            }}
-            onSpeechResult={(value) => {
-              setSmartText(value);
-              setSmartTextSource('voice');
-            }}
-            onAnalyze={analyzeSmartText}
-            isAnalyzing={analyzeFood.isPending}
-          />
-        ) : (
-          <View className="flex-1 justify-center">
-            <EmptyState
-              icon="alert-circle-outline"
-              title={t('logManual', 'aiUnavailableTitle')}
-              description={t('logManual', 'aiUnavailableDescription')}
-            />
-          </View>
-        )
-      ) : (
-        <>
-          <View className="relative z-20 flex-row items-center gap-2 px-4 pt-1">
-            <TextInput
-              value={emoji ?? foodEmojiFor({ name, mealType: suggestedMealType() })}
-              onChangeText={(next) => setEmoji(next)}
-              selectTextOnFocus
-              accessibilityLabel={t('logManual', 'chooseEmojiA11y')}
-              className="h-11 w-11 rounded-card border border-border bg-surface text-center text-[21px]"
-            />
-
-            <TextInput
-              className="flex-1 font-bold font-sans text-[26.25px] text-fg"
-              value={name}
-              onChangeText={setName}
-              onFocus={() => {
-                if (blurTimer.current) clearTimeout(blurTimer.current);
-                setNameFocused(true);
+          ) : (
+            <View className="flex-1 justify-center">
+              <EmptyState
+                icon="alert-circle-outline"
+                title={t('logManual', 'aiUnavailableTitle')}
+                description={t('logManual', 'aiUnavailableDescription')}
+              />
+            </View>
+          )
+        ) : captureMode === 'describe' ? (
+          aiAvailable ? (
+            <DescribePanel
+              text={smartText}
+              onChangeText={(value) => {
+                setSmartText(value);
+                setSmartTextSource('type');
               }}
-              onBlur={() => {
-                blurTimer.current = setTimeout(() => setNameFocused(false), 120);
+              onSpeechResult={(value) => {
+                setSmartText(value);
+                setSmartTextSource('voice');
               }}
-              placeholder={t('logManual', 'mealName')}
-              placeholderTextColor={colors.fgSubtle}
-              autoCapitalize="sentences"
-              autoFocus
-              accessibilityLabel={t('logManual', 'mealName')}
+              onAnalyze={analyzeSmartText}
+              isAnalyzing={analyzeFood.isPending}
             />
+          ) : (
+            <View className="flex-1 justify-center">
+              <EmptyState
+                icon="alert-circle-outline"
+                title={t('logManual', 'aiUnavailableTitle')}
+                description={t('logManual', 'aiUnavailableDescription')}
+              />
+            </View>
+          )
+        ) : (
+          <>
+            <View className="relative z-20 flex-row items-center gap-2 px-4 pt-1">
+              <TextInput
+                value={emoji ?? foodEmojiFor({ name, mealType: suggestedMealType() })}
+                onChangeText={(next) => setEmoji(next)}
+                selectTextOnFocus
+                accessibilityLabel={t('logManual', 'chooseEmojiA11y')}
+                className="h-11 w-11 rounded-card border border-border bg-surface text-center text-[21px]"
+              />
 
-            {showSuggestions ? (
-              <View
-                style={{ elevation: 8 }}
-                accessibilityLabel={t('logManual', 'suggestionsA11y')}
-                className="absolute inset-x-4 top-14 overflow-hidden rounded-card border border-border bg-surface"
-              >
-                <ScrollView
-                  style={{ maxHeight: 176 }}
-                  nestedScrollEnabled
-                  keyboardShouldPersistTaps="handled"
-                  showsVerticalScrollIndicator
+              <TextInput
+                className="flex-1 font-bold font-sans text-[26.25px] text-fg"
+                value={name}
+                onChangeText={setName}
+                onFocus={() => {
+                  if (blurTimer.current) clearTimeout(blurTimer.current);
+                  setNameFocused(true);
+                }}
+                onBlur={() => {
+                  blurTimer.current = setTimeout(() => setNameFocused(false), 120);
+                }}
+                placeholder={t('logManual', 'mealName')}
+                placeholderTextColor={colors.fgSubtle}
+                autoCapitalize="sentences"
+                autoFocus
+                accessibilityLabel={t('logManual', 'mealName')}
+              />
+
+              {showSuggestions ? (
+                <View
+                  style={{ elevation: 8 }}
+                  accessibilityLabel={t('logManual', 'suggestionsA11y')}
+                  className="absolute inset-x-4 top-14 overflow-hidden rounded-card border border-border bg-surface"
                 >
-                  {suggestions.map((food, index) => (
-                    <Pressable
-                      key={food.id}
-                      onPress={() => pickSuggestion(food)}
-                      accessibilityRole="button"
-                      accessibilityLabel={t('logManual', 'pickSuggestionA11y').replace(
-                        '{name}',
-                        food.name,
-                      )}
-                      className={cn(
-                        'px-3 py-3 active:bg-surface-alt',
-                        index > 0 && 'border-t border-border',
-                      )}
-                    >
-                      <View className="flex-row items-center gap-1.5">
-                        <Text variant="body" numberOfLines={1} className="shrink">
-                          {food.name}
-                        </Text>
-                        <VerifiedTick verified={food.verified} />
-                      </View>
-                    </Pressable>
-                  ))}
-                </ScrollView>
-              </View>
-            ) : null}
-          </View>
-
-          <KeyboardAwareScrollView
-            className="flex-1"
-            contentContainerStyle={{ padding: 16, gap: 18, paddingBottom: 24 }}
-            keyboardShouldPersistTaps="handled"
-            bottomOffset={24}
-          >
-            <Field label={t('logManual', 'amountEaten')}>
-              <View className="flex-row items-center gap-2">
-                <UnitPill
-                  label={t('logManual', 'grams')}
-                  selected={amountUnit === 'g'}
-                  onPress={() => setAmountUnit('g')}
-                />
-                <UnitPill
-                  label={t('logManual', 'serving')}
-                  selected={amountUnit === 'serving'}
-                  onPress={() => setAmountUnit('serving')}
-                />
-                <NumberField
-                  compact
-                  value={amount}
-                  onChange={setAmount}
-                  min={0}
-                  max={amountUnit === 'g' ? 5000 : 50}
-                  precision={amountUnit === 'g' ? 0 : 1}
-                  placeholder="0"
-                />
-              </View>
-            </Field>
-
-            <View className="gap-1">
-              <Field label={t('logManual', 'calories')}>
-                <NumberField
-                  compact
-                  value={kcal}
-                  onChange={setKcal}
-                  min={0}
-                  max={20000}
-                  precision={0}
-                  placeholder="0"
-                />
-              </Field>
-              {showWarning ? (
-                <Text variant="caption" tone="warning">
-                  {t('logManual', 'reconcileWarning')}
-                </Text>
+                  <ScrollView
+                    style={{ maxHeight: 176 }}
+                    nestedScrollEnabled
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator
+                  >
+                    {suggestions.map((food, index) => (
+                      <Pressable
+                        key={food.id}
+                        onPress={() => pickSuggestion(food)}
+                        accessibilityRole="button"
+                        accessibilityLabel={t('logManual', 'pickSuggestionA11y').replace(
+                          '{name}',
+                          food.name,
+                        )}
+                        className={cn(
+                          'px-3 py-3 active:bg-surface-alt',
+                          index > 0 && 'border-t border-border',
+                        )}
+                      >
+                        <View className="flex-row items-center gap-1.5">
+                          <Text variant="body" numberOfLines={1} className="shrink">
+                            {food.name}
+                          </Text>
+                          <VerifiedTick verified={food.verified} />
+                        </View>
+                      </Pressable>
+                    ))}
+                  </ScrollView>
+                </View>
               ) : null}
             </View>
 
-            <View className="gap-1">
-              <Text variant="caption" tone="subtle">
-                {t('logManual', 'macros')}
-              </Text>
-              <MacroRow
-                dotClassName="bg-carbs"
-                label={t('logManual', 'carbs')}
-                value={carbsG}
-                onChange={setCarbsG}
-              />
-              <MacroRow
-                dotClassName="bg-protein"
-                label={t('logManual', 'protein')}
-                value={proteinG}
-                onChange={setProteinG}
-              />
-              <MacroRow
-                dotClassName="bg-fat"
-                label={t('logManual', 'fat')}
-                value={fatG}
-                onChange={setFatG}
-              />
-            </View>
+            <KeyboardAwareScrollView
+              className="flex-1"
+              contentContainerStyle={{ padding: 16, gap: 18, paddingBottom: 24 }}
+              keyboardShouldPersistTaps="handled"
+              bottomOffset={24}
+            >
+              <Field label={t('logManual', 'amountEaten')}>
+                <View className="flex-row items-center gap-2">
+                  <UnitPill
+                    label={t('logManual', 'grams')}
+                    selected={amountUnit === 'g'}
+                    onPress={() => setAmountUnit('g')}
+                  />
+                  <UnitPill
+                    label={t('logManual', 'serving')}
+                    selected={amountUnit === 'serving'}
+                    onPress={() => setAmountUnit('serving')}
+                  />
+                  <NumberField
+                    compact
+                    value={amount}
+                    onChange={setAmount}
+                    min={0}
+                    max={amountUnit === 'g' ? 5000 : 50}
+                    precision={amountUnit === 'g' ? 0 : 1}
+                    placeholder="0"
+                  />
+                </View>
+              </Field>
 
-            <Button
-              label={t('logManual', 'save')}
-              onPress={save}
-              disabled={!canSave}
-              loading={logManual.isPending}
-              fullWidth
-              size="lg"
-            />
-          </KeyboardAwareScrollView>
-        </>
-      )}
+              <View className="gap-1">
+                <Field label={t('logManual', 'calories')}>
+                  <NumberField
+                    compact
+                    value={kcal}
+                    onChange={setKcal}
+                    min={0}
+                    max={20000}
+                    precision={0}
+                    placeholder="0"
+                  />
+                </Field>
+                {showWarning ? (
+                  <Text variant="caption" tone="warning">
+                    {t('logManual', 'reconcileWarning')}
+                  </Text>
+                ) : null}
+              </View>
+
+              <View className="gap-1">
+                <Text variant="caption" tone="subtle">
+                  {t('logManual', 'macros')}
+                </Text>
+                <MacroRow
+                  dotClassName="bg-carbs"
+                  label={t('logManual', 'carbs')}
+                  value={carbsG}
+                  onChange={setCarbsG}
+                />
+                <MacroRow
+                  dotClassName="bg-protein"
+                  label={t('logManual', 'protein')}
+                  value={proteinG}
+                  onChange={setProteinG}
+                />
+                <MacroRow
+                  dotClassName="bg-fat"
+                  label={t('logManual', 'fat')}
+                  value={fatG}
+                  onChange={setFatG}
+                />
+              </View>
+
+              <Button
+                label={t('logManual', 'save')}
+                onPress={save}
+                disabled={!canSave}
+                loading={logManual.isPending}
+                fullWidth
+                size="lg"
+              />
+            </KeyboardAwareScrollView>
+          </>
+        )}
+      </Animated.View>
 
       <View
         style={{ paddingBottom: insets.bottom + 10 }}
-        className="flex-row justify-center gap-8 border-t border-border pt-3"
+        className="border-t border-border px-4 pt-3"
       >
-        <ModeTab
-          label={t('logManual', 'modeDescribe')}
-          active={captureMode === 'describe'}
-          onPress={() => setCaptureMode('describe')}
-        />
-        <ModeTab
-          label={t('logManual', 'modeImage')}
-          active={captureMode === 'image'}
-          onPress={() => setCaptureMode('image')}
-        />
-        <ModeTab
-          label={t('logManual', 'modeManual')}
-          active={captureMode === 'manual'}
-          onPress={() => setCaptureMode('manual')}
+        <ModeSegments
+          value={captureMode}
+          onChange={setCaptureMode}
+          options={[
+            { value: 'describe', label: t('logManual', 'modeDescribe') },
+            { value: 'image', label: t('logManual', 'modeImage') },
+            { value: 'manual', label: t('logManual', 'modeManual') },
+          ]}
         />
       </View>
     </View>
@@ -636,32 +647,94 @@ function UnitPill({
   );
 }
 
-function ModeTab({
-  label,
-  active = false,
-  onPress,
+const PILL_SPRING = { damping: 20, stiffness: 260, mass: 0.7 };
+
+function ModeSegments({
+  value,
+  options,
+  onChange,
 }: {
-  label: string;
-  active?: boolean;
-  onPress: () => void;
+  value: CaptureMode;
+  options: { value: CaptureMode; label: string }[];
+  onChange: (next: CaptureMode) => void;
 }) {
+  const reducedMotion = useReducedMotion();
+  const [layouts, setLayouts] = useState<
+    Partial<Record<CaptureMode, { x: number; width: number }>>
+  >({});
+  const pillX = useSharedValue(0);
+  const pillWidth = useSharedValue(0);
+  const placed = useRef(false);
+
+  const active = layouts[value];
+  const activeX = active?.x;
+  const activeWidth = active?.width;
+  useEffect(() => {
+    if (activeX === undefined || activeWidth === undefined) return;
+    if (reducedMotion || !placed.current) {
+      pillX.set(activeX);
+      pillWidth.set(activeWidth);
+      placed.current = true;
+      return;
+    }
+    pillX.set(withSpring(activeX, PILL_SPRING));
+    pillWidth.set(withSpring(activeWidth, PILL_SPRING));
+  }, [activeX, activeWidth, reducedMotion, pillX, pillWidth]);
+
+  const pillStyle = useAnimatedStyle(() => ({
+    width: pillWidth.value,
+    transform: [{ translateX: pillX.value }],
+  }));
+
   return (
-    <Pressable
-      onPress={() => {
-        haptics.selection();
-        onPress();
-      }}
-      accessibilityRole="tab"
-      accessibilityState={{ selected: active }}
-      className="items-center gap-1 rounded-card px-3 py-3 active:bg-surface-alt"
+    <View
+      className="flex-row rounded-pill bg-surface-alt p-1"
+      accessibilityRole="tablist"
     >
-      <Text variant="label" tone={active ? 'brand' : 'subtle'}>
-        {label}
-      </Text>
-      <View
-        className={cn('h-0.5 w-6 rounded-full', active ? 'bg-brand' : 'bg-transparent')}
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          {
+            position: 'absolute',
+            top: 4,
+            bottom: 4,
+            left: 0,
+            shadowColor: '#000',
+            shadowOpacity: 0.12,
+            shadowRadius: 4,
+            shadowOffset: { width: 0, height: 1 },
+            elevation: 2,
+          },
+          pillStyle,
+        ]}
+        className="rounded-pill bg-surface"
       />
-    </Pressable>
+      {options.map((option) => (
+        <Pressable
+          key={option.value}
+          onLayout={(event: LayoutChangeEvent) => {
+            const { x, width } = event.nativeEvent.layout;
+            setLayouts((prev) =>
+              prev[option.value]?.x === x && prev[option.value]?.width === width
+                ? prev
+                : { ...prev, [option.value]: { x, width } },
+            );
+          }}
+          onPress={() => {
+            if (option.value === value) return;
+            haptics.selection();
+            onChange(option.value);
+          }}
+          accessibilityRole="tab"
+          accessibilityState={{ selected: option.value === value }}
+          className="flex-1 items-center justify-center rounded-pill py-2.5"
+        >
+          <Text variant="label" tone={option.value === value ? 'default' : 'muted'}>
+            {option.label}
+          </Text>
+        </Pressable>
+      ))}
+    </View>
   );
 }
 
@@ -843,7 +916,12 @@ function DescribePanel({
   return (
     <KeyboardAwareScrollView
       className="flex-1"
-      contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', gap: 24, padding: 24 }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: 'center',
+        gap: 24,
+        padding: 24,
+      }}
       keyboardShouldPersistTaps="handled"
       bottomOffset={24}
     >
