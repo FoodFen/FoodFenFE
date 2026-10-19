@@ -1,176 +1,95 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { useState } from 'react';
 import type { ReactNode } from 'react';
-import { ScrollView, View } from 'react-native';
-import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { View } from 'react-native';
 
+import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 import { Card } from '@/components/ui/Card';
 import { MacroBarGroup } from '@/components/ui/MacroBar';
+import { ProgressRing } from '@/components/ui/ProgressRing';
 import { Text } from '@/components/ui/Text';
-import { useIsPremium } from '@/features/profile/store';
+import { useProfileStore } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
-import { cn } from '@/lib/cn';
+import { kcalRemaining, progressFraction } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 import type { DiaryDay } from '@/types/models';
 
-import { MascotPlaceholder } from './MascotPlaceholder';
-
 /**
- * The day at a glance, as a two-page pager.
- *
- * Page 1 is live — the calorie budget and macro progress. Page 2 is a
- * placeholder for a future fiber / sugar / sodium breakdown; sugar and sodium
- * are not tracked anywhere yet, so it shows nothing real.
+ * The day at a glance: a calories-left ring beside target / consumed / burned,
+ * with macro progress underneath. The ring fills as the budget is used and
+ * turns red once the day is over budget.
  */
 export function SummaryCard({ day }: { day: DiaryDay }) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
-  const isPremium = useIsPremium();
   const iconSize = 18;
-  const [width, setWidth] = useState(0);
-  const [page, setPage] = useState(0);
+  const calorieLeftMode = useProfileStore(
+    (state) => state.profile?.calorieLeftMode ?? 'smart',
+  );
 
-  const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (width === 0) return;
-    setPage(Math.round(event.nativeEvent.contentOffset.x / width));
-  };
+  const remaining = kcalRemaining(
+    day.goal.targetKcal,
+    day.totals.kcal,
+    day.addBackEligibleExerciseKcal,
+    calorieLeftMode,
+  );
+  const isOver = remaining < 0;
 
   return (
-    <Card flush className="overflow-hidden">
-      <View onLayout={(event) => setWidth(event.nativeEvent.layout.width)}>
-        <ScrollView
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScroll={onScroll}
-          scrollEventThrottle={16}
+    <Card className="gap-4">
+      <View className="flex-row gap-4">
+        <ProgressRing
+          size={112}
+          strokeWidth={10}
+          progress={progressFraction(day.totals.kcal, day.totals.kcal + remaining)}
+          color={isOver ? colors.danger : undefined}
         >
-          <View style={{ width }} className="gap-4 p-4">
-            <View className="flex-row gap-4">
-              <MascotPlaceholder className="w-28" />
-              <View className="flex-1 justify-center gap-2">
-                <StatRow
-                  icon={
-                    <Ionicons
-                      name="flag-outline"
-                      size={iconSize}
-                      color={colors.fgMuted}
-                    />
-                  }
-                  label={t('dashboard', 'target')}
-                  value={day.goal.targetKcal}
-                />
-                <StatRow
-                  icon={
-                    <Ionicons
-                      name="restaurant-outline"
-                      size={iconSize}
-                      color={colors.fgMuted}
-                    />
-                  }
-                  label={t('dashboard', 'consumed')}
-                  value={day.totals.kcal}
-                />
-                <StatRow
-                  icon={
-                    <Ionicons
-                      name="flame-outline"
-                      size={iconSize}
-                      color={colors.fgMuted}
-                    />
-                  }
-                  label={t('dashboard', 'burned')}
-                  value={day.exerciseKcal}
-                />
-              </View>
-            </View>
-
-            <View className="h-px bg-border" />
-
-            <MacroBarGroup
-              consumed={{
-                proteinG: day.totals.proteinG,
-                carbsG: day.totals.carbsG,
-                fatG: day.totals.fatG,
-              }}
-              targets={{
-                proteinG: day.goal.targetProteinG,
-                carbsG: day.goal.targetCarbsG,
-                fatG: day.goal.targetFatG,
-              }}
-            />
-          </View>
-
-          <View style={{ width }} className="gap-4 p-4">
-            <View className="flex-row gap-4">
-              <MascotPlaceholder className="w-28" />
-              <View className="flex-1 justify-center gap-2">
-                <StatRow
-                  icon={
-                    <Ionicons
-                      name="leaf-outline"
-                      size={iconSize}
-                      color={colors.fgMuted}
-                    />
-                  }
-                  label={t('dashboard', 'fiber')}
-                  value={
-                    isPremium && day.totals.fiberG !== undefined && day.totals.fiberG !== null
-                      ? Math.round(day.totals.fiberG)
-                      : '—'
-                  }
-                  unit="g"
-                />
-                <StatRow
-                  icon={
-                    <MaterialCommunityIcons
-                      name="candy-outline"
-                      size={iconSize}
-                      color={colors.fgMuted}
-                    />
-                  }
-                  label={t('dashboard', 'sugar')}
-                  value="—"
-                  unit="g"
-                />
-                <StatRow
-                  icon={
-                    <MaterialCommunityIcons
-                      name="shaker-outline"
-                      size={iconSize}
-                      color={colors.fgMuted}
-                    />
-                  }
-                  label={t('dashboard', 'sodium')}
-                  value="—"
-                  unit="mg"
-                />
-              </View>
-            </View>
-
-            <View className="h-px bg-border" />
-
-            <Text variant="caption" tone="subtle" className="text-center">
-              {t('dashboard', 'comingSoon')}
-            </Text>
-          </View>
-        </ScrollView>
-      </View>
-
-      <View className="flex-row justify-center gap-1.5 pb-3">
-        {[0, 1].map((index) => (
-          <View
-            key={index}
-            className={cn(
-              'h-1.5 rounded-pill',
-              index === page ? 'w-4 bg-fg-muted' : 'w-1.5 bg-border',
-            )}
+          <AnimatedNumber
+            value={Math.abs(remaining)}
+            variant="heading"
+            tone={isOver ? 'danger' : undefined}
+            className="text-2xl"
           />
-        ))}
+          <Text variant="caption" tone="muted">
+            {t('dashboard', isOver ? 'ringOver' : 'ringLeft')}
+          </Text>
+        </ProgressRing>
+        <View className="flex-1 justify-center gap-2">
+          <StatRow
+            icon={<Ionicons name="flag-outline" size={iconSize} color={colors.fgMuted} />}
+            label={t('dashboard', 'target')}
+            value={day.goal.targetKcal}
+          />
+          <StatRow
+            icon={
+              <Ionicons name="restaurant-outline" size={iconSize} color={colors.fgMuted} />
+            }
+            label={t('dashboard', 'consumed')}
+            value={day.totals.kcal}
+          />
+          <StatRow
+            icon={<Ionicons name="flame-outline" size={iconSize} color={colors.fgMuted} />}
+            label={t('dashboard', 'burned')}
+            value={day.exerciseKcal}
+          />
+        </View>
       </View>
+
+      <View className="h-px bg-border" />
+
+      <MacroBarGroup
+        consumed={{
+          proteinG: day.totals.proteinG,
+          carbsG: day.totals.carbsG,
+          fatG: day.totals.fatG,
+        }}
+        targets={{
+          proteinG: day.goal.targetProteinG,
+          carbsG: day.goal.targetCarbsG,
+          fatG: day.goal.targetFatG,
+        }}
+      />
     </Card>
   );
 }

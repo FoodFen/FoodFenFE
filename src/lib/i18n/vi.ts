@@ -466,9 +466,8 @@ export const vi = {
     protein: 'Đạm',
     fat: 'Chất béo',
     fiber: 'Chất xơ',
-    sugar: 'Đường',
-    sodium: 'Natri',
-    comingSoon: 'Sắp có',
+    ringLeft: 'kcal còn lại',
+    ringOver: 'kcal vượt',
     // Sections
     caloriesEaten: 'Calo đã ăn',
     caloriesBurned: 'Calo đã đốt',
