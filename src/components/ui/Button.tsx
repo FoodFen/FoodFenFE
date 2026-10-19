@@ -1,16 +1,11 @@
-import { useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable } from 'react-native';
-import type { GestureResponderEvent, PressableProps } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { ActivityIndicator } from 'react-native';
+import type { PressableProps } from 'react-native';
 
 import { cn } from '@/lib/cn';
-import { haptics } from '@/lib/haptics';
 
+import { PressableScale } from './PressableScale';
 import { Text } from './Text';
 import type { TextTone } from './Text';
-
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-const PRESS_SCALE = 0.96;
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -62,44 +57,19 @@ export function Button({
   className,
   hapticFeedback = true,
   disabled,
-  onPress,
-  onPressIn,
-  onPressOut,
   ...props
 }: ButtonProps) {
   // A loading button stays visible but must not fire twice.
   const isDisabled = disabled === true || loading;
 
-  const [pressed, setPressed] = useState(false);
-  const scale = useSharedValue(1);
-
-  useEffect(() => {
-    scale.value = withTiming(pressed ? PRESS_SCALE : 1, { duration: pressed ? 100 : 150 });
-  }, [pressed, scale]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
-
   return (
-    <AnimatedPressable
+    <PressableScale
+      pressedScale={0.96}
+      haptic={hapticFeedback}
       accessibilityRole="button"
       accessibilityState={{ disabled: isDisabled, busy: loading }}
       accessibilityLabel={label}
       disabled={isDisabled}
-      onPressIn={(event: GestureResponderEvent) => {
-        setPressed(true);
-        onPressIn?.(event);
-      }}
-      onPressOut={(event: GestureResponderEvent) => {
-        setPressed(false);
-        onPressOut?.(event);
-      }}
-      onPress={(event: GestureResponderEvent) => {
-        if (hapticFeedback) haptics.selection();
-        onPress?.(event);
-      }}
-      style={animatedStyle}
       className={cn(
         'flex-row items-center justify-center gap-2',
         VARIANT_CLASSES[variant],
@@ -124,6 +94,6 @@ export function Button({
           </Text>
         </>
       )}
-    </AnimatedPressable>
+    </PressableScale>
   );
 }

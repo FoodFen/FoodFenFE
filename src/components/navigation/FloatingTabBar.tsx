@@ -4,21 +4,22 @@ import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
+  useReducedMotion,
   useSharedValue,
   withSequence,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { GlassSurface, hasLiquidGlass } from '@/components/ui/GlassSurface';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { useLogSheetStore } from '@/features/logging/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { haptics } from '@/lib/haptics';
 import { colorsFor } from '@/theme/colors';
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-const PRESS_SCALE = 0.9;
+const INDICATOR_SPRING = { damping: 20, stiffness: 260, mass: 0.7 };
 
 type IconName = keyof typeof Ionicons.glyphMap;
 
@@ -43,6 +44,9 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const presentLogSheet = useLogSheetStore((store) => store.present);
+  const [tabX, setTabX] = useState<Record<string, number>>({});
+  const inactiveColor = hasLiquidGlass ? colors.fgMuted : colors.fgSubtle;
+  const indicatorX = tabX[state.routes[state.index]?.key ?? ''];
 
   return (
     <View
@@ -50,85 +54,109 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
       className="absolute inset-x-0 flex-row items-center gap-3 px-6"
       style={{ bottom: insets.bottom + 10 }}
     >
-      <View className="flex-1 flex-row items-center justify-around rounded-full border border-border bg-surface px-2 py-2">
-        {state.routes.map((route, index) => {
-          const icons = TAB_ICONS[route.name];
-          if (!icons) return null;
+      <GlassSurface className="flex-1 rounded-full px-2 py-2">
+        <View className="flex-row items-center justify-around">
+          {indicatorX !== undefined && <TabIndicator x={indicatorX} />}
+          {state.routes.map((route, index) => {
+            const icons = TAB_ICONS[route.name];
+            if (!icons) return null;
 
-          const focused = state.index === index;
-          const label = descriptors[route.key]?.options.title ?? route.name;
+            const focused = state.index === index;
+            const label = descriptors[route.key]?.options.title ?? route.name;
 
-          return (
-            <TabButton
-              key={route.key}
-              focused={focused}
-              icon={focused ? icons.active : icons.inactive}
-              color={focused ? colors.brand : colors.fgSubtle}
-              label={label}
-              onPress={() => {
-                haptics.selection();
-                const event = navigation.emit({
-                  type: 'tabPress',
-                  target: route.key,
-                  canPreventDefault: true,
-                });
-
-                if (!focused && !event.defaultPrevented) {
-                  // `route.name` is a known tab route; the navigator's own
-                  // param list is not narrowed here.
-                  navigation.navigate(route.name as never);
+            return (
+              <TabButton
+                key={route.key}
+                focused={focused}
+                icon={focused ? icons.active : icons.inactive}
+                color={focused ? colors.brand : inactiveColor}
+                label={label}
+                onLayoutX={(x) =>
+                  setTabX((prev) =>
+                    prev[route.key] === x ? prev : { ...prev, [route.key]: x },
+                  )
                 }
-              }}
-            />
-          );
-        })}
-      </View>
+                onPress={() => {
+                  haptics.selection();
+                  const event = navigation.emit({
+                    type: 'tabPress',
+                    target: route.key,
+                    canPreventDefault: true,
+                  });
+
+                  if (!focused && !event.defaultPrevented) {
+                    // `route.name` is a known tab route; the navigator's own
+                    // param list is not narrowed here.
+                    navigation.navigate(route.name as never);
+                  }
+                }}
+              />
+            );
+          })}
+        </View>
+      </GlassSurface>
 
       <LogButton
         color={colors.onBrand}
         label={t('logSheet', 'openA11y')}
-        onPress={() => {
-          haptics.selection();
-          presentLogSheet();
-        }}
+        tint={colors.brand}
+        onPress={presentLogSheet}
       />
     </View>
   );
 }
 
-/** The floating "+" log button: scales down while held, springs back on release. */
+/** The floating "+" log button: Liquid Glass tinted brand green, a solid green disc elsewhere. */
 function LogButton({
   color,
+  tint,
   label,
   onPress,
 }: {
   color: string;
+  tint: string;
   label: string;
   onPress: () => void;
 }) {
-  const [pressed, setPressed] = useState(false);
-  const scale = useSharedValue(1);
-
-  useEffect(() => {
-    scale.value = withTiming(pressed ? PRESS_SCALE : 1, { duration: pressed ? 100 : 150 });
-  }, [pressed, scale]);
-
-  const style = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
-
   return (
-    <AnimatedPressable
-      onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}
+    <PressableScale
+      pressedScale={0.9}
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}
-      style={style}
-      className="h-14 w-14 items-center justify-center rounded-full bg-brand"
+      className="h-14 w-14 rounded-full"
     >
-      <Ionicons name="add" size={30} color={color} />
-    </AnimatedPressable>
+      <GlassSurface
+        interactive
+        tintColor={tint}
+        fallbackClassName="bg-brand"
+        className="h-14 w-14 items-center justify-center rounded-full"
+      >
+        <Ionicons name="add" size={30} color={color} />
+      </GlassSurface>
+    </PressableScale>
+  );
+}
+
+/** The pill behind the selected tab; springs sideways when the selection changes. */
+function TabIndicator({ x }: { x: number }) {
+  const reducedMotion = useReducedMotion();
+  const translateX = useSharedValue(x);
+
+  useEffect(() => {
+    translateX.value = reducedMotion ? x : withSpring(x, INDICATOR_SPRING);
+  }, [x, reducedMotion, translateX]);
+
+  const style = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
+
+  return (
+    <Animated.View
+      pointerEvents="none"
+      style={style}
+      className="absolute left-0 top-0 h-11 w-14 rounded-full bg-brand/15"
+    />
   );
 }
 
@@ -138,12 +166,14 @@ function TabButton({
   icon,
   color,
   label,
+  onLayoutX,
   onPress,
 }: {
   focused: boolean;
   icon: IconName;
   color: string;
   label: string;
+  onLayoutX: (x: number) => void;
   onPress: () => void;
 }) {
   const scale = useSharedValue(1);
@@ -163,8 +193,9 @@ function TabButton({
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ selected: focused }}
+      onLayout={(event) => onLayoutX(event.nativeEvent.layout.x)}
       onPress={onPress}
-      className="h-11 w-14 items-center justify-center rounded-full active:bg-surface-alt"
+      className="h-11 w-14 items-center justify-center rounded-full"
     >
       <Animated.View style={iconStyle}>
         <Ionicons name={icon} size={24} color={color} />
