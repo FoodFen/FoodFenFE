@@ -449,8 +449,8 @@ export const en: DeepPartial<Translations> = {
     protein: 'Protein',
     fat: 'Fat',
     fiber: 'Fiber',
-    ringLeft: 'kcal left',
-    ringOver: 'kcal over',
+    ringLeft: 'Left',
+    ringOver: 'Over',
     caloriesEaten: 'Calories eaten',
     caloriesBurned: 'Calories burned',
     steps: 'Steps',
@@ -833,5 +833,15 @@ export const en: DeepPartial<Translations> = {
     unavailableTitle: 'Chat isn’t available',
     unavailableDescription: 'Sign in and check your connection, then try again.',
     signIn: 'Sign in',
+  },
+
+  mascot: {
+    hungryBreakfast: 'Breakfast time! Have you eaten yet?',
+    hungryLunch: 'Lunchtime already. What are you having?',
+    hungryDinner: 'Dinner time! Tell me what you’re eating.',
+    thirsty: 'I’m thirsty. Time for some water?',
+    reactionFood: 'Yum, that looks delicious!',
+    reactionWater: 'Ahh, so refreshing!',
+    reactionActivity: 'Great workout, keep it up!',
   },
 };

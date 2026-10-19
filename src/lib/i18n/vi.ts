@@ -466,8 +466,8 @@ export const vi = {
     protein: 'Đạm',
     fat: 'Chất béo',
     fiber: 'Chất xơ',
-    ringLeft: 'kcal còn lại',
-    ringOver: 'kcal vượt',
+    ringLeft: 'Còn lại',
+    ringOver: 'Vượt',
     // Sections
     caloriesEaten: 'Calo đã ăn',
     caloriesBurned: 'Calo đã đốt',
@@ -851,6 +851,16 @@ export const vi = {
     unavailableTitle: 'Chưa trò chuyện được',
     unavailableDescription: 'Bạn đăng nhập và kiểm tra kết nối mạng rồi thử lại nhé.',
     signIn: 'Đăng nhập',
+  },
+
+  mascot: {
+    hungryBreakfast: 'Đến giờ ăn sáng rồi, bạn ăn chưa?',
+    hungryLunch: 'Trưa rồi, hôm nay bạn ăn gì nào?',
+    hungryDinner: 'Tối rồi, kể mình nghe bạn ăn gì nhé!',
+    thirsty: 'Mình khát quá, uống chút nước nhé?',
+    reactionFood: 'Ngon quá đi!',
+    reactionWater: 'Mát quá, cảm ơn bạn!',
+    reactionActivity: 'Tuyệt vời, cố lên nhé!',
   },
 } as const;
 
