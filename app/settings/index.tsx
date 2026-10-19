@@ -1,12 +1,14 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQueryClient } from '@tanstack/react-query';
 import { router, Stack } from 'expo-router';
-import { Alert, Pressable, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, Pressable, Switch, View } from 'react-native';
 
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ScrollScreen } from '@/components/ui/Screen';
 import { Text } from '@/components/ui/Text';
+import { TimePicker } from '@/components/ui/TimePicker';
 import { useAuthStore } from '@/features/auth/store';
 import { useDiaryDay } from '@/features/diary/queries';
 import { useLogSheetStore } from '@/features/logging/store';
@@ -22,8 +24,15 @@ import { todayKey } from '@/lib/date';
 import { haptics } from '@/lib/haptics';
 import { getHealthProvider } from '@/lib/health';
 import type { Locale } from '@/lib/i18n';
+import type { TimeOfDay as MascotTime } from '@/lib/notificationScheduler';
 import { ageFromBirthYear, totalDailyEnergyExpenditure } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
+
+const WATER_LAG_MIN = 10;
+const WATER_LAG_MAX = 50;
+const WATER_LAG_STEP = 5;
+
+const pad = (n: number) => String(n).padStart(2, '0');
 
 export default function SettingsScreen() {
   const { resolved } = useAppTheme();
@@ -59,6 +68,17 @@ export default function SettingsScreen() {
   const setStreakRemindersEnabled = useSettingsStore(
     (state) => state.setStreakRemindersEnabled,
   );
+
+  const mascotRemindersEnabled = useSettingsStore((state) => state.mascotRemindersEnabled);
+  const setMascotRemindersEnabled = useSettingsStore(
+    (state) => state.setMascotRemindersEnabled,
+  );
+  const mascotWakeTime = useSettingsStore((state) => state.mascotWakeTime);
+  const setMascotWakeTime = useSettingsStore((state) => state.setMascotWakeTime);
+  const mascotSleepTime = useSettingsStore((state) => state.mascotSleepTime);
+  const setMascotSleepTime = useSettingsStore((state) => state.setMascotSleepTime);
+  const mascotWaterLagPct = useSettingsStore((state) => state.mascotWaterLagPct);
+  const setMascotWaterLagPct = useSettingsStore((state) => state.setMascotWaterLagPct);
 
   const languageOptions: { value: Locale; label: string }[] = [
     { value: 'vi', label: t('profileLanguage', 'vietnamese') },
@@ -407,6 +427,76 @@ export default function SettingsScreen() {
         </Text>
       </Card>
 
+      <Card className="gap-3">
+        <Text variant="heading">{t('settings', 'mascotHeading')}</Text>
+
+        <View className="flex-row items-center justify-between gap-3">
+          <View className="flex-1 gap-0.5">
+            <Text variant="label">{t('settings', 'mascotReminders')}</Text>
+            <Text variant="caption" tone="subtle">
+              {t('settings', 'mascotRemindersHint')}
+            </Text>
+          </View>
+          <Switch
+            value={mascotRemindersEnabled}
+            onValueChange={setMascotRemindersEnabled}
+            trackColor={{ false: colors.border, true: colors.brand }}
+            accessibilityLabel={t('settings', 'mascotReminders')}
+          />
+        </View>
+
+        {mascotRemindersEnabled ? (
+          <>
+            <MascotTimeRow
+              label={t('settings', 'mascotWakeTime')}
+              value={mascotWakeTime}
+              onChange={setMascotWakeTime}
+              invalidMessage={t('settings', 'mascotWakeInvalid')}
+            />
+            <MascotTimeRow
+              label={t('settings', 'mascotSleepTime')}
+              value={mascotSleepTime}
+              onChange={setMascotSleepTime}
+              invalidMessage={t('settings', 'mascotSleepInvalid')}
+            />
+
+            <View className="gap-1 border-t border-border pt-3">
+              <View className="flex-row items-center justify-between">
+                <Text variant="label">{t('settings', 'mascotWaterLag')}</Text>
+                <View className="flex-row items-center gap-3">
+                  <Pressable
+                    onPress={() => setMascotWaterLagPct(mascotWaterLagPct - WATER_LAG_STEP)}
+                    disabled={mascotWaterLagPct <= WATER_LAG_MIN}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('settings', 'mascotWaterLagDecrease')}
+                    hitSlop={8}
+                    className="h-9 w-9 items-center justify-center rounded-full bg-surface-alt active:opacity-60 disabled:opacity-40"
+                  >
+                    <Ionicons name="remove" size={18} color={colors.fg} />
+                  </Pressable>
+                  <Text variant="label" className="min-w-10 text-center">
+                    {mascotWaterLagPct}%
+                  </Text>
+                  <Pressable
+                    onPress={() => setMascotWaterLagPct(mascotWaterLagPct + WATER_LAG_STEP)}
+                    disabled={mascotWaterLagPct >= WATER_LAG_MAX}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('settings', 'mascotWaterLagIncrease')}
+                    hitSlop={8}
+                    className="h-9 w-9 items-center justify-center rounded-full bg-surface-alt active:opacity-60 disabled:opacity-40"
+                  >
+                    <Ionicons name="add" size={18} color={colors.fg} />
+                  </Pressable>
+                </View>
+              </View>
+              <Text variant="caption" tone="subtle">
+                {t('settings', 'mascotWaterLagHint')}
+              </Text>
+            </View>
+          </>
+        ) : null}
+      </Card>
+
       {__DEV__ ? (
         <Card className="gap-3">
           <Text variant="heading">{t('developer', 'heading')}</Text>
@@ -445,6 +535,64 @@ export default function SettingsScreen() {
         onPress={confirmErase}
       />
     </ScrollScreen>
+  );
+}
+
+function MascotTimeRow({
+  label,
+  value,
+  onChange,
+  invalidMessage,
+}: {
+  label: string;
+  value: MascotTime;
+  onChange: (time: MascotTime) => void;
+  invalidMessage: string;
+}) {
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
+  const [open, setOpen] = useState(false);
+  const [draft, setDraft] = useState<MascotTime | null>(null);
+
+  const shown = draft ?? value;
+  const rejected = draft !== null && (draft.hour !== value.hour || draft.minute !== value.minute);
+
+  return (
+    <View className="gap-2 border-t border-border pt-3">
+      <Pressable
+        onPress={() => {
+          setOpen(!open);
+          setDraft(null);
+        }}
+        accessibilityRole="button"
+        accessibilityState={{ expanded: open }}
+        className="flex-row items-center justify-between active:opacity-60"
+      >
+        <Text variant="label">{label}</Text>
+        <View className="flex-row items-center gap-2">
+          <Text variant="body">{`${pad(value.hour)}:${pad(value.minute)}`}</Text>
+          <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={16} color={colors.fgMuted} />
+        </View>
+      </Pressable>
+
+      {open ? (
+        <>
+          <TimePicker
+            value={{ hours: shown.hour, minutes: shown.minute }}
+            onChange={({ hours, minutes }) => {
+              const next = { hour: hours, minute: minutes };
+              setDraft(next);
+              onChange(next);
+            }}
+          />
+          {rejected ? (
+            <Text variant="caption" tone="danger">
+              {invalidMessage}
+            </Text>
+          ) : null}
+        </>
+      ) : null}
+    </View>
   );
 }
 

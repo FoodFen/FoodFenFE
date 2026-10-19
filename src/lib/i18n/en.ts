@@ -504,6 +504,17 @@ export const en: DeepPartial<Translations> = {
   settings: {
     title: 'Settings',
     ringColorsRow: 'Ring colors explained',
+    mascotHeading: 'Mascot',
+    mascotReminders: 'Mascot reminders',
+    mascotRemindersHint: 'Hungry and thirsty looks and bubbles. Reactions to your logs stay on.',
+    mascotWakeTime: 'Wake time',
+    mascotSleepTime: 'Sleep time',
+    mascotWakeInvalid: 'Wake time must be before sleep time.',
+    mascotSleepInvalid: 'Sleep time must be after wake time.',
+    mascotWaterLag: 'Water lag allowed',
+    mascotWaterLagHint: 'How far behind your water pace you can fall before the mascot looks thirsty.',
+    mascotWaterLagDecrease: 'Decrease allowed lag',
+    mascotWaterLagIncrease: 'Increase allowed lag',
   },
 
   interstitial: {

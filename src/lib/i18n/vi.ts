@@ -522,6 +522,17 @@ export const vi = {
   settings: {
     title: 'Cài đặt',
     ringColorsRow: 'Giải thích màu vòng tròn',
+    mascotHeading: 'Linh vật',
+    mascotReminders: 'Nhắc nhở từ linh vật',
+    mascotRemindersHint: 'Dáng đói, khát và lời nhắc. Linh vật vẫn phản ứng khi bạn ghi nhật ký.',
+    mascotWakeTime: 'Giờ thức dậy',
+    mascotSleepTime: 'Giờ đi ngủ',
+    mascotWakeInvalid: 'Giờ thức dậy phải sớm hơn giờ đi ngủ.',
+    mascotSleepInvalid: 'Giờ đi ngủ phải muộn hơn giờ thức dậy.',
+    mascotWaterLag: 'Mức uống nước chậm cho phép',
+    mascotWaterLagHint: 'Bạn có thể uống chậm hơn tiến độ bao nhiêu trước khi linh vật tỏ ra khát.',
+    mascotWaterLagDecrease: 'Giảm mức cho phép',
+    mascotWaterLagIncrease: 'Tăng mức cho phép',
   },
 
   interstitial: {
