@@ -124,6 +124,11 @@ export const queryKeys = {
     heatmap: (weeks: number) =>
       [...queryKeys.gamification.all, 'heatmap', weeks] as const,
   },
+  mascots: {
+    all: ['mascots'] as const,
+    catalog: (accountId: number | undefined) =>
+      [...queryKeys.mascots.all, 'catalog', accountId] as const,
+  },
   health: {
     all: ['health'] as const,
     steps: (date: string) => [...queryKeys.health.all, 'steps', date] as const,

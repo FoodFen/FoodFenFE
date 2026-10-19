@@ -25,6 +25,8 @@ export type ApiErrorKind =
 export class ApiError extends Error {
   readonly kind: ApiErrorKind;
   readonly status?: number;
+  /** Machine-readable code from the response body (`code` or `error`), when present. */
+  readonly code?: string;
   /** Field-level messages from a validation failure, keyed by field name. */
   readonly fieldErrors?: Record<string, string>;
   // `Error.cause` exists in the base type, so this narrowing needs `override`.
@@ -35,6 +37,7 @@ export class ApiError extends Error {
     message: string,
     options: {
       status?: number;
+      code?: string;
       fieldErrors?: Record<string, string>;
       cause?: unknown;
     } = {},
@@ -43,6 +46,7 @@ export class ApiError extends Error {
     this.name = 'ApiError';
     this.kind = kind;
     this.status = options.status;
+    this.code = options.code;
     this.fieldErrors = options.fieldErrors;
     this.cause = options.cause;
   }

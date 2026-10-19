@@ -117,4 +117,6 @@ export const StorageKeys = {
   mascotWakeTime: 'mascot-wake-time',
   mascotSleepTime: 'mascot-sleep-time',
   mascotWaterLagPct: 'mascot-water-lag-pct',
+  mascotEquippedId: 'mascot-equipped-id',
+  mascotPendingEquipId: 'mascot-pending-equip-id',
 } as const;

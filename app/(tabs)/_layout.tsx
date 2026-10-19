@@ -4,6 +4,7 @@ import { Tabs } from 'expo-router/js-tabs';
 
 import { FloatingTabBar } from '@/components/navigation/FloatingTabBar';
 import { useQuestsPull } from '@/features/gamification/queries';
+import { useMascotCatalog } from '@/features/mascot/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { colorsFor } from '@/theme/colors';
@@ -20,6 +21,7 @@ export default function TabsLayout() {
   const colors = colorsFor(resolved);
 
   useQuestsPull();
+  useMascotCatalog();
 
   return (
     <Tabs

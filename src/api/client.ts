@@ -174,7 +174,7 @@ export async function parseErrorBody(
         )
       : undefined;
 
-    return { message: body.message ?? body.error, code: body.code, fieldErrors };
+    return { message: body.message ?? body.error, code: body.code ?? body.error, fieldErrors };
   } catch {
     return {};
   }
@@ -270,7 +270,7 @@ export async function request<TResponse = void>(
       throw new ApiError(
         code === 'ai_trial_exhausted' ? 'trial_exhausted' : statusToKind(response.status),
         message ?? `Request failed with status ${response.status}.`,
-        { status: response.status, fieldErrors },
+        { status: response.status, code, fieldErrors },
       );
     }
 

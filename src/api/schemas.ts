@@ -377,6 +377,21 @@ export const redeemCoinsResponseSchema = z.object({
   subscription: subscriptionInfoSchema,
 });
 
+export const mascotCatalogResponseSchema = z.object({
+  balance: z.number().int(),
+  equippedId: z.string(),
+  mascots: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      coinCost: z.number().int().nonnegative(),
+      owned: z.boolean(),
+    }),
+  ),
+});
+
+export const equipMascotResponseSchema = z.object({ equippedId: z.string() });
+
 export const quizAnswerResultSchema = z.object({
   questionId: z.string(),
   selectedOptionId: z.string(),
@@ -441,6 +456,8 @@ export type RemoteSubscriptionMeResponse = z.infer<typeof subscriptionMeResponse
 export type RemoteQuestProgress = z.infer<typeof questProgressSchema>;
 export type RemoteQuestsResponse = z.infer<typeof questsResponseSchema>;
 export type RemoteRedeemCoinsResponse = z.infer<typeof redeemCoinsResponseSchema>;
+export type RemoteMascotCatalog = z.infer<typeof mascotCatalogResponseSchema>;
+export type RemoteMascot = RemoteMascotCatalog['mascots'][number];
 export type RemoteCoinBundle = z.infer<typeof coinBundlesResponseSchema>['bundles'][number];
 export type RemotePaymentPlan = z.infer<typeof paymentPlansResponseSchema>['plans'][number];
 const listedDishSchema = chatDishSchema.extend({

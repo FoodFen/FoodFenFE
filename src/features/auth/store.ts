@@ -12,6 +12,7 @@ import { applyDailyGoals } from '@/data/pull';
 import { configureSyncAuth } from '@/data/sync';
 import * as userRepository from '@/data/userRepository';
 import { getAppleCredential, getGoogleIdToken } from '@/features/auth/social';
+import { useMascotEquipStore } from '@/features/mascot/equippedStore';
 import { useProfileStore } from '@/features/profile/store';
 import { env } from '@/lib/env';
 import { preferences, StorageKeys } from '@/lib/storage';
@@ -211,6 +212,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     const profileId = useProfileStore.getState().profile?.id;
 
     if (profileId) clearAccountState(profileId);
+    useMascotEquipStore.getState().reset();
 
     // Clear locally first: if the server call fails the user is still signed
     // out on this device, which is what they asked for.
