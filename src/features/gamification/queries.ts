@@ -8,7 +8,7 @@ import { pushAll } from '@/data/push';
 import { canUseRemote } from '@/data/sync';
 import { useAuthStore } from '@/features/auth/store';
 import { useInterstitialStore } from '@/features/gamification/interstitialStore';
-import { loggingHeatmap, shouldAnnounce } from '@/features/gamification/selectors';
+import { loggingHeatmap } from '@/features/gamification/selectors';
 import type { QuestToastEntry } from '@/features/gamification/toastStore';
 import { useQuestToastStore } from '@/features/gamification/toastStore';
 import { useProfileStore } from '@/features/profile/store';
@@ -97,8 +97,8 @@ function announceBackgroundCompletions(quests: Quest[], before: Map<string, Ques
  *
  * Two-tier notification: a quest type gets the full-screen interstitial
  * exactly once, ever (`seenQuestTypes`); every log after that just shows a
- * small toast with whatever progressed, so the mechanic is taught once and
- * then gets out of the way.
+ * small toast, but only for quests that just completed, so the mechanic is
+ * taught once and then gets out of the way.
  *
  * Quest completion is server-side now (`gamificationRepository.pullQuests`),
  * so it is a network round-trip — and per CLAUDE.md, server sync may never
@@ -144,7 +144,6 @@ export function usePostLogInterstitial(leave: () => void = () => {}) {
 
         // Completion can flip without progress moving (a ratio quest, or the
         // server settling it), so completion is diffed separately.
-        const activeQuestIds = quests.map((q) => q.id);
         const advanced = quests.filter((q) => {
           const prev = questsBefore.get(q.id);
 
@@ -168,12 +167,8 @@ export function usePostLogInterstitial(leave: () => void = () => {}) {
         const entries: QuestToastEntry[] = [];
 
         for (const quest of advanced) {
-          const count = settings.bumpQuestAdvance(quest.id, activeQuestIds);
-
-          if (quest.completed && !claimCompletion(quest.id)) continue;
-
-          if (shouldAnnounce(count, quest.completed)) {
-            entries.push({ quest, completed: quest.completed });
+          if (quest.completed && claimCompletion(quest.id)) {
+            entries.push({ quest, completed: true });
           }
         }
 

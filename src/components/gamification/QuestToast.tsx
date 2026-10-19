@@ -35,10 +35,10 @@ const SWIPE_DISMISS_THRESHOLD = 0.3;
  * further progress shows this instead. One instance for the whole app, like
  * `LogSheet` — any screen can trigger it through `useQuestToastStore`.
  *
- * Carries every quest that advanced from the triggering action (already
- * throttled by `usePostLogInterstitial`), so one log that moves several
- * quests shows them together as stacked rows instead of a burst of separate
- * toasts. A completed row gets a checkmark and a brand accent; swiping the
+ * Carries every quest that completed from the triggering action (filtered by
+ * `usePostLogInterstitial`), so one log that completes several quests shows
+ * them together as stacked rows instead of a burst of separate toasts. A
+ * completed row gets a checkmark and a brand accent; swiping the
  * card sideways dismisses it early instead of waiting out the timer.
  */
 export function QuestToast() {

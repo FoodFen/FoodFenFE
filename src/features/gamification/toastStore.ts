@@ -7,8 +7,8 @@ import type { Quest } from '@/types/models';
  *
  * Once every active quest type has already earned its one full-screen
  * interstitial, further progress shows this instead — a brief, in-app
- * banner rather than a takeover. Carries every quest that advanced from the
- * triggering action (throttled — see `usePostLogInterstitial`), capped at
+ * banner rather than a takeover. Carries every quest that completed from the
+ * triggering action (see `usePostLogInterstitial`), capped at
  * `MAX_ENTRIES`, so one log that moves several quests at once shows them
  * together instead of a burst of separate toasts.
  *

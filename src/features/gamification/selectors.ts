@@ -100,13 +100,3 @@ export function loggingHeatmap(
 
   return columns;
 }
-
-/**
- * Whether this advance of a quest earns a toast: the first ever, then every
- * other one, and always the one that completes it — so routine progress
- * doesn't nag on every single log, but the mechanic is taught immediately and
- * the payoff is never missed.
- */
-export function shouldAnnounce(count: number, completed: boolean): boolean {
-  return count === 1 || count % 2 === 0 || completed;
-}

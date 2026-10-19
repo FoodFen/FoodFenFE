@@ -92,13 +92,6 @@ interface SettingsState {
    */
   seenQuestTypes: QuestType[];
   /**
-   * How many times each active quest's progress has moved, keyed by quest id.
-   * Drives the toast's own throttle (first advance, then every other one, and
-   * always the one that completes it) — a notification-frequency concern, not
-   * domain data, so it lives here rather than in the quest row itself.
-   */
-  questAdvanceCounts: Record<string, number>;
-  /**
    * Opt-in to reading today's step count from Health Connect (Android) /
    * HealthKit (iOS). Off by default — health data is sensitive, so this is
    * never requested without the user turning it on first.
@@ -116,12 +109,6 @@ interface SettingsState {
   setDevSeedEnabled: (value: boolean) => void;
   setHideChallengeProgress: (value: boolean) => void;
   markQuestTypesSeen: (types: QuestType[]) => void;
-  /**
-   * Record another advance for `questId` and return the new count. Prunes any
-   * counter not in `activeQuestIds` first, so a counter for a quest reissued
-   * yesterday never lingers.
-   */
-  bumpQuestAdvance: (questId: string, activeQuestIds: string[]) => number;
   setHealthSyncEnabled: (value: boolean) => void;
   addReminder: (reminder: Omit<CustomReminder, 'id' | 'kind'>) => void;
   updateReminder: (id: Reminder['id'], patch: ReminderPatch) => void;
@@ -151,8 +138,6 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   hideChallengeProgress:
     preferences.get<boolean>(StorageKeys.hideChallengeProgress) ?? false,
   seenQuestTypes: preferences.get<QuestType[]>(StorageKeys.seenQuestTypes) ?? [],
-  questAdvanceCounts:
-    preferences.get<Record<string, number>>(StorageKeys.questAdvanceCounts) ?? {},
   healthSyncEnabled: preferences.get<boolean>(StorageKeys.healthSyncEnabled) ?? false,
   reminders: loadReminders(),
   streakRemindersEnabled:
@@ -195,28 +180,6 @@ export const useSettingsStore = create<SettingsState>((set) => ({
       preferences.set(StorageKeys.seenQuestTypes, seenQuestTypes);
       return { seenQuestTypes };
     });
-  },
-
-  bumpQuestAdvance: (questId, activeQuestIds) => {
-    let nextCount = 0;
-
-    set((state) => {
-      const activeIds = new Set(activeQuestIds);
-      const pruned: Record<string, number> = {};
-
-      for (const [id, count] of Object.entries(state.questAdvanceCounts)) {
-        if (activeIds.has(id)) pruned[id] = count;
-      }
-
-      nextCount = (pruned[questId] ?? 0) + 1;
-      pruned[questId] = nextCount;
-
-      preferences.set(StorageKeys.questAdvanceCounts, pruned);
-
-      return { questAdvanceCounts: pruned };
-    });
-
-    return nextCount;
   },
 
   setHealthSyncEnabled: (healthSyncEnabled) => {
