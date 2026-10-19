@@ -51,14 +51,26 @@ export default function DishesScreen() {
   const add = useConfirmAddDish();
   const { data, isPending, fetchStatus, error, refetch } = allQuery;
 
+  const shownAbove = new Set([
+    ...(fitsQuery.data?.dishes ?? []).map((d) => d.id),
+    ...(data?.featured ?? []).map((d) => d.id),
+  ]);
+
   const sections: {
     key: string;
     title: string;
     filters: DishFilters;
     query: DishesQuery;
+    excludeIds?: Set<string>;
   }[] = [
     { key: 'fits', title: t('dishes', 'sectionFits'), filters: { fits: true }, query: fitsQuery },
-    { key: 'all', title: t('dishes', 'sectionAll'), filters: {}, query: allQuery },
+    {
+      key: 'all',
+      title: t('dishes', 'sectionOthers'),
+      filters: {},
+      query: allQuery,
+      excludeIds: shownAbove,
+    },
   ];
 
   const onRefresh = async () => {
@@ -205,6 +217,7 @@ export default function DishesScreen() {
               title={section.title}
               filters={section.filters}
               query={section.query}
+              excludeIds={section.excludeIds}
               remainingKcal={remainingKcal}
               add={add}
             />
@@ -225,12 +238,14 @@ function DishSection({
   title,
   filters,
   query,
+  excludeIds,
   remainingKcal,
   add,
 }: {
   title: string;
   filters: DishFilters;
   query: DishesQuery;
+  excludeIds?: Set<string>;
   remainingKcal: number | null;
   add: ReturnType<typeof useConfirmAddDish>;
 }) {
@@ -239,6 +254,7 @@ function DishSection({
   const { width } = useWindowDimensions();
   const itemWidth = Math.round(width * 0.75);
   const dishes = query.data?.dishes;
+  const visible = excludeIds ? dishes?.filter((d) => !excludeIds.has(d.id)) : dishes;
 
   if (!dishes && !query.isPending) return null;
   if (dishes?.length === 0) {
@@ -277,8 +293,8 @@ function DishSection({
         </Pressable>
       </View>
 
-      {dishes ? (
-        <DishCarousel dishes={dishes} remainingKcal={remainingKcal} add={add} />
+      {visible ? (
+        visible.length > 0 && <DishCarousel dishes={visible} remainingKcal={remainingKcal} add={add} />
       ) : (
         <View className="flex-row gap-3">
           {[0, 1].map((i) => (

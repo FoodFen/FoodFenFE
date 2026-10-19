@@ -782,6 +782,7 @@ export const en: DeepPartial<Translations> = {
     searchPlaceholder: 'Search dishes or restaurants',
     sectionFits: 'Fits your day',
     sectionAll: 'All dishes',
+    sectionOthers: 'More dishes',
     sectionSponsored: 'Sponsored',
     sponsoredBadge: 'Sponsored',
     viewAll: 'View all',

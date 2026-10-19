@@ -799,6 +799,7 @@ export const vi = {
     searchPlaceholder: 'Tìm món hoặc nhà hàng',
     sectionFits: 'Phù hợp cho bạn',
     sectionAll: 'Tất cả món',
+    sectionOthers: 'Món khác',
     sectionSponsored: 'Được tài trợ',
     sponsoredBadge: 'Tài trợ',
     viewAll: 'Xem tất cả',
