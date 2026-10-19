@@ -2,14 +2,23 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { onlineManager } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
-import { Alert, Pressable, View } from 'react-native';
+import { Alert, View } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withSequence,
+  withSpring,
+} from 'react-native-reanimated';
 
 import { isApiError } from '@/api/errors';
 import type { RemoteQuiz, RemoteQuizResult } from '@/api/schemas';
 import { QuizSignInPrompt } from '@/components/quiz/QuizSignInPrompt';
+import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -138,21 +147,15 @@ function QuizTake({ quiz }: { quiz: RemoteQuiz }) {
           const selected = answers[question.id] === option.id;
 
           return (
-            <Pressable
+            <AnswerOption
               key={option.id}
-              accessibilityRole="button"
-              accessibilityState={{ selected }}
+              text={option.text}
+              selected={selected}
               onPress={() => {
                 haptics.selection();
                 select(question.id, option.id);
               }}
-              className={cn(
-                'rounded-card border p-4',
-                selected ? 'border-brand bg-brand/10' : 'border-border bg-surface',
-              )}
-            >
-              <Text variant="body">{option.text}</Text>
-            </Pressable>
+            />
           );
         })}
       </View>
@@ -193,6 +196,39 @@ function QuizTake({ quiz }: { quiz: RemoteQuiz }) {
   );
 }
 
+function AnswerOption({
+  text,
+  selected,
+  onPress,
+}: {
+  text: string;
+  selected: boolean;
+  onPress: () => void;
+}) {
+  const reducedMotion = useReducedMotion();
+  const scale = useSharedValue(1);
+  const style = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+
+  return (
+    <Animated.View style={style}>
+      <PressableScale
+        accessibilityRole="button"
+        accessibilityState={{ selected }}
+        onPress={() => {
+          if (!reducedMotion) scale.set(withSequence(withSpring(1.04), withSpring(1)));
+          onPress();
+        }}
+        className={cn(
+          'rounded-card border p-4',
+          selected ? 'border-brand bg-brand/10' : 'border-border bg-surface',
+        )}
+      >
+        <Text variant="body">{text}</Text>
+      </PressableScale>
+    </Animated.View>
+  );
+}
+
 function QuizResultView({ quiz, result }: { quiz: RemoteQuiz; result: RemoteQuizResult }) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
@@ -202,11 +238,15 @@ function QuizResultView({ quiz, result }: { quiz: RemoteQuiz; result: RemoteQuiz
   return (
     <ScrollScreen>
       <Card className="items-center gap-2">
-        <Text variant="display">
-          {t('quiz', 'resultScore')
-            .replace('{correct}', String(result.correctCount))
-            .replace('{total}', String(result.total))}
-        </Text>
+        <AnimatedNumber
+          variant="display"
+          value={result.correctCount}
+          format={(value) =>
+            t('quiz', 'resultScore')
+              .replace('{correct}', String(Math.round(value)))
+              .replace('{total}', String(result.total))
+          }
+        />
         <View className="flex-row items-center gap-1.5">
           <Ionicons name="sparkles" size={18} color={colors.warning} />
           <Text variant="heading" tone="brand">

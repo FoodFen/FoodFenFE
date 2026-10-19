@@ -1,6 +1,15 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Stack } from 'expo-router';
+import { useEffect } from 'react';
 import { Share, View } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { userErrorMessage } from '@/api/errors';
 import { StreakHeatmap, StreakHeatmapLegend } from '@/components/gamification/StreakHeatmap';
@@ -73,7 +82,7 @@ export default function StreakScreen() {
       <Stack.Screen options={{ title: t('streak', 'title') }} />
 
       <Card className="items-center gap-2 py-6">
-        <Ionicons name="flame" size={40} color={colors.warning} />
+        <PulsingFlame active={currentStreak > 0} color={colors.warning} />
         <View className="flex-row items-baseline gap-1.5">
           <AnimatedNumber value={currentStreak} variant="display" />
           <Text variant="body" tone="muted">
@@ -141,5 +150,31 @@ export default function StreakScreen() {
         fullWidth
       />
     </ScrollScreen>
+  );
+}
+
+function PulsingFlame({ active, color }: { active: boolean; color: string }) {
+  const reducedMotion = useReducedMotion();
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    if (active && !reducedMotion) {
+      scale.set(
+        withRepeat(
+          withSequence(withTiming(1.08, { duration: 600 }), withTiming(1, { duration: 600 })),
+          -1,
+        ),
+      );
+    } else {
+      scale.set(1);
+    }
+  }, [active, reducedMotion, scale]);
+
+  const style = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+
+  return (
+    <Animated.View style={style}>
+      <Ionicons name="flame" size={40} color={color} />
+    </Animated.View>
   );
 }

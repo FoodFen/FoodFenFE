@@ -1,8 +1,9 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
 import { Card } from '@/components/ui/Card';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { Text } from '@/components/ui/Text';
 import { useDailyQuiz } from '@/features/quiz/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -33,11 +34,10 @@ export function QuizCard() {
         : t('quiz', 'cardCta');
 
   return (
-    <Pressable
+    <PressableScale
       onPress={() => router.push('/quiz')}
       accessibilityRole="button"
       accessibilityLabel={t('quiz', 'cardTitle')}
-      className="active:opacity-70"
     >
       <Card className="flex-row items-center gap-3">
         <Ionicons name="school" size={22} color={colors.brand} />
@@ -49,6 +49,6 @@ export function QuizCard() {
         </View>
         <Ionicons name="chevron-forward" size={18} color={colors.fgSubtle} />
       </Card>
-    </Pressable>
+    </PressableScale>
   );
 }

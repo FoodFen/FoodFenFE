@@ -2,12 +2,14 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import type { ReactNode } from 'react';
-import { Pressable, RefreshControl, View } from 'react-native';
+import { RefreshControl, View } from 'react-native';
+import Animated, { FadeInDown, ZoomIn } from 'react-native-reanimated';
 
 import { userErrorMessage } from '@/api/errors';
 import { QuizCard } from '@/components/quiz/QuizCard';
 import { Card } from '@/components/ui/Card';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -106,8 +108,8 @@ export default function AchievementsScreen() {
         {daily.length > 0 ? (
           <View className="gap-3">
             <Text variant="heading">{t('achievements', 'dailyHeading')}</Text>
-            {daily.map((quest) => (
-              <ChallengeRow key={quest.id} quest={quest} daysLeft={0} />
+            {daily.map((quest, index) => (
+              <ChallengeRow key={quest.id} quest={quest} daysLeft={0} index={index} />
             ))}
           </View>
         ) : null}
@@ -115,10 +117,11 @@ export default function AchievementsScreen() {
         {weekly.length > 0 ? (
           <View className="gap-3">
             <Text variant="heading">{t('achievements', 'weeklyHeading')}</Text>
-            {weekly.map((quest) => (
+            {weekly.map((quest, index) => (
               <ChallengeRow
                 key={quest.id}
                 quest={quest}
+                index={index}
                 daysLeft={Math.max(daysUntil(weekEnd), 0)}
               />
             ))}
@@ -149,11 +152,10 @@ function StreakSummaryCard({ currentStreak }: { currentStreak: number }) {
   const colors = colorsFor(resolved);
 
   return (
-    <Pressable
+    <PressableScale
       onPress={() => router.push('/streak')}
       accessibilityRole="button"
       accessibilityLabel={t('streak', 'viewStreak')}
-      className="active:opacity-70"
     >
       <Card className="flex-row items-center gap-3">
         <Ionicons name="flame" size={22} color={colors.warning} />
@@ -167,47 +169,59 @@ function StreakSummaryCard({ currentStreak }: { currentStreak: number }) {
         </View>
         <Ionicons name="chevron-forward" size={18} color={colors.fgSubtle} />
       </Card>
-    </Pressable>
+    </PressableScale>
   );
 }
 
-function ChallengeRow({ quest, daysLeft }: { quest: Quest; daysLeft: number }) {
+function ChallengeRow({
+  quest,
+  daysLeft,
+  index,
+}: {
+  quest: Quest;
+  daysLeft: number;
+  index: number;
+}) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
 
   return (
-    <Card className="gap-2">
-      <View className="flex-row items-center justify-between gap-2">
-        <View className="flex-1 flex-row items-center gap-2">
-          {quest.completed ? (
-            <Ionicons name="checkmark-circle" size={20} color={colors.brand} />
-          ) : null}
-          <Text variant="heading" numberOfLines={1} className="flex-1">
-            {quest.title}
+    <Animated.View entering={FadeInDown.springify().damping(18).delay(index * 60)}>
+      <Card className="gap-2">
+        <View className="flex-row items-center justify-between gap-2">
+          <View className="flex-1 flex-row items-center gap-2">
+            {quest.completed ? (
+              <Animated.View entering={ZoomIn.springify()}>
+                <Ionicons name="checkmark-circle" size={20} color={colors.brand} />
+              </Animated.View>
+            ) : null}
+            <Text variant="heading" numberOfLines={1} className="flex-1">
+              {quest.title}
+            </Text>
+          </View>
+          <Text variant="caption" tone="brand">
+            +{quest.rewardCoins}
           </Text>
         </View>
-        <Text variant="caption" tone="brand">
-          +{quest.rewardCoins}
+        <Text variant="body" tone="muted">
+          {quest.description}
         </Text>
-      </View>
-      <Text variant="body" tone="muted">
-        {quest.description}
-      </Text>
-      <ProgressBar
-        progress={questProgressFraction(quest)}
-        color={quest.completed ? colors.brand : undefined}
-      />
-      <View className="flex-row items-center justify-between">
-        <Text variant="caption" tone="subtle">
-          {questProgressLabel(quest)}
-        </Text>
-        <Text variant="caption" tone="subtle">
-          {daysLeft <= 0
-            ? t('achievements', 'todayLeft')
-            : t('achievements', 'daysLeft').replace('{days}', String(daysLeft))}
-        </Text>
-      </View>
-    </Card>
+        <ProgressBar
+          progress={questProgressFraction(quest)}
+          color={quest.completed ? colors.brand : undefined}
+        />
+        <View className="flex-row items-center justify-between">
+          <Text variant="caption" tone="subtle">
+            {questProgressLabel(quest)}
+          </Text>
+          <Text variant="caption" tone="subtle">
+            {daysLeft <= 0
+              ? t('achievements', 'todayLeft')
+              : t('achievements', 'daysLeft').replace('{days}', String(daysLeft))}
+          </Text>
+        </View>
+      </Card>
+    </Animated.View>
   );
 }
