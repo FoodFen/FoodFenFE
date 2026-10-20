@@ -44,3 +44,6 @@ yarn-error.*
 .env
 .env.local
 .env.*.local
+
+# superpowers brainstorm/SDD scratch
+.superpowers/
