@@ -1,4 +1,5 @@
 import { File } from 'expo-file-system';
+import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 
 import { api } from '@/api/client';
 import { getDeviceId } from '@/api/deviceId';
@@ -21,6 +22,31 @@ import { useSettingsStore } from '@/features/settings/store';
 // misread as a failure.
 const AI_ANALYSIS_TIMEOUT_MS = 60_000;
 
+const AI_IMAGE_MAX_SIDE_PX = 1280;
+const AI_IMAGE_JPEG_QUALITY = 0.7;
+
+const downscale = async (uri: string, fileName: string) => {
+  try {
+    const source = await ImageManipulator.manipulate(uri).renderAsync();
+    const { width, height } = source;
+    // min() so a smaller image is only re-encoded, never upscaled.
+    const resized = await ImageManipulator.manipulate(source)
+      .resize(
+        width >= height
+          ? { width: Math.min(width, AI_IMAGE_MAX_SIDE_PX) }
+          : { height: Math.min(height, AI_IMAGE_MAX_SIDE_PX) },
+      )
+      .renderAsync();
+    const out = await resized.saveAsync({
+      compress: AI_IMAGE_JPEG_QUALITY,
+      format: SaveFormat.JPEG,
+    });
+    return { uri: out.uri, fileName: fileName.replace(/\.[^./\\]+$/, '') + '.jpg' };
+  } catch {
+    return { uri, fileName };
+  }
+};
+
 const deviceHeaders = async () => ({ 'X-Device-Id': await getDeviceId() });
 
 export const foodAiApi = {
@@ -28,12 +54,13 @@ export const foodAiApi = {
     uri: string,
     fileName: string,
   ): Promise<RemoteAiFoodAnalysisResponse> => {
+    const image = await downscale(uri, fileName);
     const form = new FormData();
     // Expo SDK 57's global `fetch` (`expo/fetch`) only accepts a real
     // Blob-like part (string | Blob | { bytes() }) in FormData — React
     // Native's classic `{ uri, name, type }` shape throws "Unsupported
     // FormDataPart implementation". `File` implements that Blob interface.
-    form.append('image', new File(uri), fileName);
+    form.append('image', new File(image.uri), image.fileName);
     // So the model responds in the user's language instead of a mix — see
     // docs/backend-contracts/ai-food-capture.md.
     form.append('language', useSettingsStore.getState().locale);
