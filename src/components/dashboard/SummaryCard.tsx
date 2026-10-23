@@ -46,14 +46,14 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
   return (
     <Card className="gap-4">
       <View>
-        <View className="flex-row gap-4">
+        <View className="flex-row items-center gap-4">
           <ProgressRing
-            size={112}
+            size={140}
             strokeWidth={10}
             progress={progressFraction(day.totals.kcal, day.totals.kcal + remaining)}
             color={isOver ? colors.danger : undefined}
           >
-            <Mascot mascotId={mascotId} action={mascot.action} size={80} />
+            <Mascot mascotId={mascotId} action={mascot.action} size={100} />
           </ProgressRing>
           <View className="flex-1 justify-center gap-2">
             <StatRow

@@ -50,6 +50,7 @@ interface DraftState {
   setImageUrl: (imageUrl: string | null) => void;
   addIngredient: (ingredient: Omit<DraftIngredient, 'key'>) => void;
   removeIngredient: (key: string) => void;
+  updateIngredient: (key: string, patch: Partial<Omit<DraftIngredient, 'key'>>) => void;
   reset: () => void;
 }
 
@@ -88,6 +89,13 @@ export const useDraftStore = create<DraftState>((set) => ({
   removeIngredient: (key) =>
     set((state) => ({
       ingredients: state.ingredients.filter((row) => row.key !== key),
+    })),
+
+  updateIngredient: (key, patch) =>
+    set((state) => ({
+      ingredients: state.ingredients.map((row) =>
+        row.key === key ? { ...row, ...patch } : row,
+      ),
     })),
 
   reset: () => set(emptyDraft()),

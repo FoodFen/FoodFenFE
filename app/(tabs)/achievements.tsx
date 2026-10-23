@@ -187,12 +187,12 @@ function ChallengeRow({
   const colors = colorsFor(resolved);
 
   return (
-    <Animated.View entering={FadeInDown.springify().damping(18).delay(index * 60)}>
+    <Animated.View entering={FadeInDown.duration(300).delay(index * 60)}>
       <Card className="gap-2">
         <View className="flex-row items-center justify-between gap-2">
           <View className="flex-1 flex-row items-center gap-2">
             {quest.completed ? (
-              <Animated.View entering={ZoomIn.springify()}>
+              <Animated.View entering={ZoomIn.duration(300)}>
                 <Ionicons name="checkmark-circle" size={20} color={colors.brand} />
               </Animated.View>
             ) : null}

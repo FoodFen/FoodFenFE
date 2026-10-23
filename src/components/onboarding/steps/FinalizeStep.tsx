@@ -109,7 +109,7 @@ export function FinalizeStep({ draft, onDone }: FinalizeStepProps) {
     return (
       <View className="w-full flex-1 items-center justify-center gap-6">
         <Animated.View
-          entering={ZoomIn.springify().damping(22)}
+          entering={ZoomIn.duration(300)}
           className="h-28 w-28 items-center justify-center rounded-full bg-success/15"
         >
           <Ionicons name="checkmark" size={64} color={colors.success} />

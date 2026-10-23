@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Alert, Pressable, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
@@ -8,8 +8,14 @@ import { userErrorMessage } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
+import { NumberField } from '@/components/ui/NumberField';
 import { Text } from '@/components/ui/Text';
-import { draftName, draftTotals, useDraftStore } from '@/features/diary/draftStore';
+import {
+  draftName,
+  draftTotals,
+  useDraftStore,
+  type DraftIngredient,
+} from '@/features/diary/draftStore';
 import { useLogMeal } from '@/features/diary/queries';
 import { usePostLogInterstitial } from '@/features/gamification/queries';
 import { useIsPremium } from '@/features/profile/store';
@@ -18,6 +24,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
 import { todayKey } from '@/lib/date';
 import { haptics } from '@/lib/haptics';
+import { scaleNutrition } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 import { MEAL_TYPES } from '@/types/models';
 import type { MealType } from '@/types/models';
@@ -45,6 +52,26 @@ export default function MealComposerScreen() {
   const finishLogging = usePostLogInterstitial('food', () => router.dismissAll());
 
   const date = params.date ?? todayKey();
+  const [editingKey, setEditingKey] = useState<string | null>(null);
+
+  const changeGrams = (row: DraftIngredient, grams: number | null) => {
+    if (grams === null || grams <= 0 || grams === Math.round(row.quantityG)) return;
+    if (row.quantityG <= 0) {
+      draft.updateIngredient(row.key, { quantityG: grams });
+      return;
+    }
+
+    // Scales the row's own values by grams / old grams (kcal to whole, macros to 0.1 g, as scaleNutrition does).
+    const n = scaleNutrition(row, (grams * 100) / row.quantityG);
+    draft.updateIngredient(row.key, {
+      quantityG: grams,
+      kcal: n.kcal,
+      carbsG: n.carbsG,
+      proteinG: n.proteinG,
+      fatG: n.fatG,
+      fiberG: n.fiberG ?? null,
+    });
+  };
 
   // Start a fresh draft when the flow is entered, keyed on the day and meal
   // that was tapped. Guarded so re-rendering (or returning from the ingredient
@@ -142,53 +169,82 @@ export default function MealComposerScreen() {
         ) : (
           <View className="border-t border-border">
             {draft.ingredients.map((row) => (
-              <View
-                key={row.key}
-                className="flex-row items-center gap-3 border-b border-border px-4 py-3"
-              >
-                <View className="flex-1 gap-0.5">
-                  <View className="flex-row items-center gap-1.5">
-                    <Text variant="body" numberOfLines={1}>
-                      {row.name}
-                    </Text>
-                    {row.confidence !== undefined && row.confidence < LOW_CONFIDENCE ? (
-                      <Ionicons
-                        name="help-circle-outline"
-                        size={14}
-                        color={colors.warning}
-                        accessibilityLabel={t('logMeal', 'lowConfidenceA11y')}
-                      />
-                    ) : null}
-                  </View>
-                  <Text variant="caption" tone="muted">
-                    {Math.round(row.quantityG)} g · {row.proteinG}P / {row.carbsG}C /{' '}
-                    {row.fatG}F
-                  </Text>
-                  {isPremium && (row.fiberG === undefined || row.fiberG === null) ? (
-                    <Text variant="caption" tone="subtle">
-                      {t('logMeal', 'fiberMissing')}
-                    </Text>
-                  ) : null}
-                </View>
-
-                <Text variant="mono" tone="muted">
-                  {row.kcal}
-                </Text>
-
+              <View key={row.key} className="border-b border-border">
                 <Pressable
                   onPress={() => {
-                    haptics.impact();
-                    draft.removeIngredient(row.key);
+                    haptics.selection();
+                    setEditingKey(editingKey === row.key ? null : row.key);
                   }}
                   accessibilityRole="button"
-                  accessibilityLabel={t('logMeal', 'removeIngredientA11y').replace(
+                  accessibilityLabel={t('logMeal', 'editIngredientA11y').replace(
                     '{name}',
                     row.name,
                   )}
-                  hitSlop={8}
+                  accessibilityState={{ expanded: editingKey === row.key }}
+                  className="flex-row items-center gap-3 px-4 py-3 active:bg-surface-alt"
                 >
-                  <Ionicons name="close-circle" size={20} color={colors.fgSubtle} />
+                  <View className="flex-1 gap-0.5">
+                    <View className="flex-row items-center gap-1.5">
+                      <Text variant="body" numberOfLines={1}>
+                        {row.name}
+                      </Text>
+                      {row.confidence !== undefined && row.confidence < LOW_CONFIDENCE ? (
+                        <Ionicons
+                          name="help-circle-outline"
+                          size={14}
+                          color={colors.warning}
+                          accessibilityLabel={t('logMeal', 'lowConfidenceA11y')}
+                        />
+                      ) : null}
+                    </View>
+                    <Text variant="caption" tone="muted">
+                      {Math.round(row.quantityG)} g · {row.proteinG}P / {row.carbsG}C /{' '}
+                      {row.fatG}F
+                    </Text>
+                    {isPremium && (row.fiberG === undefined || row.fiberG === null) ? (
+                      <Text variant="caption" tone="subtle">
+                        {t('logMeal', 'fiberMissing')}
+                      </Text>
+                    ) : null}
+                  </View>
+
+                  <Text variant="mono" tone="muted">
+                    {row.kcal}
+                  </Text>
+
+                  <Pressable
+                    onPress={() => {
+                      haptics.impact();
+                      draft.removeIngredient(row.key);
+                    }}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('logMeal', 'removeIngredientA11y').replace(
+                      '{name}',
+                      row.name,
+                    )}
+                    hitSlop={8}
+                  >
+                    <Ionicons name="close-circle" size={20} color={colors.fgSubtle} />
+                  </Pressable>
                 </Pressable>
+                {editingKey === row.key ? (
+                  <View className="gap-3 px-4 pb-3">
+                    <Input
+                      label={t('logMeal', 'ingredientNameLabel')}
+                      value={row.name}
+                      onChangeText={(name) => draft.updateIngredient(row.key, { name })}
+                      autoCapitalize="sentences"
+                    />
+                    <NumberField
+                      label={t('logMeal', 'ingredientGramsLabel')}
+                      suffix="g"
+                      value={Math.round(row.quantityG)}
+                      onChange={(grams) => changeGrams(row, grams)}
+                      min={1}
+                      max={5000}
+                    />
+                  </View>
+                ) : null}
               </View>
             ))}
           </View>
@@ -217,8 +273,14 @@ export default function MealComposerScreen() {
           </View>
 
           <View className="gap-2 border-t border-border pt-3">
-            <TotalRow label={t('onboardingFinalize', 'protein')} value={`${totals.proteinG} g`} />
-            <TotalRow label={t('onboardingFinalize', 'carbs')} value={`${totals.carbsG} g`} />
+            <TotalRow
+              label={t('onboardingFinalize', 'protein')}
+              value={`${totals.proteinG} g`}
+            />
+            <TotalRow
+              label={t('onboardingFinalize', 'carbs')}
+              value={`${totals.carbsG} g`}
+            />
             <TotalRow label={t('onboardingFinalize', 'fat')} value={`${totals.fatG} g`} />
             {isPremium ? (
               <TotalRow
@@ -231,19 +293,19 @@ export default function MealComposerScreen() {
               />
             ) : totals.fiberG !== undefined && totals.fiberG !== null ? (
               <Pressable
-                  onPress={() => router.push('/premium')}
-                  accessibilityRole="button"
-                  className="flex-row items-center justify-between active:opacity-70"
-                >
-                  <Text variant="body" tone="muted">
-                    {t('entryDetail', 'fiber')}
+                onPress={() => router.push('/premium')}
+                accessibilityRole="button"
+                className="flex-row items-center justify-between active:opacity-70"
+              >
+                <Text variant="body" tone="muted">
+                  {t('entryDetail', 'fiber')}
+                </Text>
+                <View className="flex-row items-center gap-1.5">
+                  <Ionicons name="lock-closed" size={12} color={colors.brand} />
+                  <Text variant="caption" tone="brand">
+                    {t('common', 'premium')}
                   </Text>
-                  <View className="flex-row items-center gap-1.5">
-                    <Ionicons name="lock-closed" size={12} color={colors.brand} />
-                    <Text variant="caption" tone="brand">
-                      {t('common', 'premium')}
-                    </Text>
-                  </View>
+                </View>
               </Pressable>
             ) : null}
           </View>

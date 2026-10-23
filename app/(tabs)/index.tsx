@@ -59,7 +59,7 @@ export default function DashboardScreen() {
     }
   }, [contentShown]);
   const enter = (index: number) =>
-    hasAnimatedIn ? undefined : FadeInDown.springify().damping(18).delay(index * 50);
+    hasAnimatedIn ? undefined : FadeInDown.duration(300).delay(index * 50);
 
   const profile = useProfileStore((state) => state.profile);
   const { mutate: healGoal, reset: resetHeal, isIdle: healIsIdle } = useHealMissingGoal();

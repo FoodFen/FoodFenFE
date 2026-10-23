@@ -23,7 +23,7 @@ export function ChatEmpty({ onSuggest }: { onSuggest: (text: string) => void }) 
       className="items-center justify-center gap-6 px-6"
       style={{ minHeight: height * 0.6 }}
     >
-      <Animated.View entering={reducedMotion ? undefined : ZoomIn.springify().damping(14)}>
+      <Animated.View entering={reducedMotion ? undefined : ZoomIn.duration(350)}>
         <AiAvatar size={72} glow />
       </Animated.View>
 
@@ -46,9 +46,7 @@ export function ChatEmpty({ onSuggest }: { onSuggest: (text: string) => void }) 
               entering={
                 reducedMotion
                   ? undefined
-                  : FadeInDown.delay(250 + index * 90)
-                      .springify()
-                      .damping(16)
+                  : FadeInDown.duration(300).delay(250 + index * 90)
               }
             >
               <Pressable

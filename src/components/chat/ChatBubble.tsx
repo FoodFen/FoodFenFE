@@ -42,7 +42,7 @@ export function ChatBubble({ freshIds, ...bubbleProps }: BubbleProps & { freshId
 
   useEffect(() => {
     freshIds.delete(id);
-    if (animate) enter.value = withSpring(1, { damping: 15, stiffness: 190, mass: 0.8 });
+    if (animate) enter.value = withSpring(1, { damping: 15, stiffness: 190, mass: 0.8, overshootClamping: true });
   }, [animate, enter, freshIds, id]);
 
   const entranceStyle = useAnimatedStyle(() => ({
