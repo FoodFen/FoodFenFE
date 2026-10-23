@@ -74,6 +74,7 @@ import type { CatalogFood, InputMethod } from '@/types/models';
 
 type AmountUnit = 'g' | 'serving';
 type CaptureMode = 'manual' | 'image' | 'describe';
+type PickedImage = Pick<ImagePicker.ImagePickerAsset, 'uri' | 'fileName' | 'mimeType'>;
 const MAX_SUGGESTIONS = 8;
 const IMAGE_TIP_KEYS = ['imageTip1', 'imageTip2', 'imageTip3'] as const;
 const DESCRIBE_EXAMPLE_KEYS = [
@@ -127,7 +128,7 @@ export default function ManualEntryScreen() {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const insets = useSafeAreaInsets();
-  const params = useLocalSearchParams<{ mode?: string }>();
+  const params = useLocalSearchParams<{ mode?: string; imageUri?: string }>();
 
   const logManual = useLogManualEntry();
   const finishLogging = usePostLogInterstitial('food', dismissLogFlow);
@@ -157,9 +158,18 @@ export default function ManualEntryScreen() {
   const [captureMode, setCaptureMode] = useState<CaptureMode>(
     params.mode === 'image' ? 'image' : 'manual',
   );
-  const [pickedImage, setPickedImage] = useState<ImagePicker.ImagePickerAsset | null>(
-    null,
+  const [pickedImage, setPickedImage] = useState<PickedImage | null>(
+    params.imageUri ? { uri: params.imageUri } : null,
   );
+  const [seenImageUri, setSeenImageUri] = useState(params.imageUri);
+  if (params.imageUri !== seenImageUri) {
+    setSeenImageUri(params.imageUri);
+    if (params.imageUri) {
+      setPickedImage({ uri: params.imageUri });
+      setCaptureMode('image');
+    }
+  }
+
   const [smartText, setSmartText] = useState('');
   // Which method actually produced `smartText` — set on every edit, typed or
   // spoken, so `applyAnalysisToDraft` records the entry under the right one
@@ -179,19 +189,18 @@ export default function ManualEntryScreen() {
       showLimitReached();
       return;
     }
-    const permission =
-      source === 'camera'
-        ? await ImagePicker.requestCameraPermissionsAsync()
-        : await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (source === 'camera') {
+      router.push('/log/camera');
+      return;
+    }
+
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permission.granted) return;
 
-    const result =
-      source === 'camera'
-        ? await ImagePicker.launchCameraAsync({ mediaTypes: ['images'], quality: 0.7 })
-        : await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ['images'],
-            quality: 0.7,
-          });
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      quality: 0.7,
+    });
 
     if (result.canceled || !result.assets[0]) return;
     haptics.selection();
@@ -763,7 +772,7 @@ function ImageCapturePanel({
   onAnalyze,
   onClear,
 }: {
-  image: ImagePicker.ImagePickerAsset | null;
+  image: PickedImage | null;
   isAnalyzing: boolean;
   onPick: (source: 'camera' | 'library') => void;
   onAnalyze: () => void;

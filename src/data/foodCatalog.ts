@@ -1,3 +1,4 @@
+import { localData, StorageKeys } from '@/lib/storage';
 import type { CatalogFood } from '@/types/models';
 
 import rawFoods from './catalog/foods.json';
@@ -11,7 +12,9 @@ import type { BuiltCatalogFood } from './catalog/record';
  * has to be useful the moment it is installed with no network, so the whole
  * list ships in the bundle and search runs in memory. Picking a food prefills
  * an ingredient's numbers, which are then copied onto the `ingredient` row —
- * the catalog is never consulted when reading history.
+ * the catalog is never consulted when reading history. Products found by
+ * barcode scan are kept beside it in local storage and resolve through
+ * `getCatalogFood` too.
  */
 
 // foods.json is generated to exactly the BuiltCatalogFood shape by the build
@@ -106,6 +109,18 @@ export function searchCatalog(
   return scored.slice(0, limit).map((entry) => entry.food);
 }
 
+function getScannedFoods(): Record<string, CatalogFood> {
+  return localData.get<Record<string, CatalogFood>>(StorageKeys.scannedFoods) ?? {};
+}
+
+export function getScannedFood(id: string): CatalogFood | undefined {
+  return getScannedFoods()[id];
+}
+
+export function saveScannedFood(food: CatalogFood): void {
+  localData.set(StorageKeys.scannedFoods, { ...getScannedFoods(), [food.id]: food });
+}
+
 export function getCatalogFood(id: string): CatalogFood | undefined {
-  return FOODS_BY_ID.get(id);
+  return FOODS_BY_ID.get(id) ?? getScannedFood(id);
 }

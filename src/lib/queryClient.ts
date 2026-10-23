@@ -113,6 +113,7 @@ export const queryKeys = {
   catalog: {
     all: ['catalog'] as const,
     search: (query: string) => [...queryKeys.catalog.all, 'search', query] as const,
+    barcode: (code: string) => [...queryKeys.catalog.all, 'barcode', code] as const,
   },
   gamification: {
     all: ['gamification'] as const,

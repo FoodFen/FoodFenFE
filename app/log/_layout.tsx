@@ -23,6 +23,7 @@ export default function LogLayout() {
         name="ingredient"
         options={{ title: t('logIngredient', 'layoutTitle') }}
       />
+      <Stack.Screen name="camera" options={{ headerShown: false }} />
       <Stack.Screen name="search" options={{ headerShown: false }} />
       <Stack.Screen name="manual" options={{ headerShown: false }} />
       <Stack.Screen name="activity" options={{ headerShown: false }} />

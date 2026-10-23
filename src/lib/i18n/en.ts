@@ -314,6 +314,9 @@ export const en: DeepPartial<Translations> = {
     mealLabel: 'Meal',
     emptyHint: 'What did you eat? Add it here.',
     removeIngredientA11y: 'Remove {name}',
+    editIngredientA11y: 'Edit {name}',
+    ingredientNameLabel: 'Ingredient name',
+    ingredientGramsLabel: 'Amount (g)',
     lowConfidenceA11y: 'AI guess — double check this',
     fiberMissing: 'No fiber data',
     addIngredientA11y: 'Add an ingredient',
@@ -359,6 +362,20 @@ export const en: DeepPartial<Translations> = {
     serving: 'Serving',
     add: 'Add',
     addErrorTitle: 'Couldn’t log that food',
+  },
+
+  logCamera: {
+    permissionTitle: 'Camera access needed',
+    permissionDescription: 'We need the camera to scan barcodes and photograph your meal.',
+    permissionAction: 'Allow camera',
+    hint: 'Point at a barcode, or take a photo of your meal.',
+    lookingUp: 'Looking up…',
+    detected: 'Detected from barcode',
+    detectedA11y: 'Detected from barcode: {name}. Tap to log this food',
+    notFound: 'Product not found',
+    lookupError: "Couldn't look up that barcode",
+    shutterA11y: 'Take a photo of your meal',
+    captureErrorTitle: "Couldn't take the photo",
   },
 
   logManual: {

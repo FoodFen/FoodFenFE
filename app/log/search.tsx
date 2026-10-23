@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Alert, Pressable, ScrollView, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
@@ -34,17 +34,27 @@ import type { CatalogFood } from '@/types/models';
  * Search the bundled catalog, choose a portion, log it as a one-item entry.
  *
  * The empty state is the user's recent picks — tapping one jumps to the
- * portion step with its last portion prefilled. Everything after picking a
+ * portion step with its last portion prefilled. A `foodId` param (the barcode
+ * camera's hit) opens straight on the portion step. Everything after picking a
  * food mirrors the portion step in `app/log/ingredient.tsx`, but it writes
  * straight to the diary rather than a meal draft.
  */
+function defaultServingId(food: CatalogFood): string {
+  return food.servings.find((s) => s.default)?.id ?? food.servings[0]?.id ?? '';
+}
+
 export default function SearchFoodScreen() {
+  const { foodId } = useLocalSearchParams<{ foodId?: string }>();
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<{
     food: CatalogFood;
     servingId: string;
     quantity: number;
-  } | null>(null);
+  } | null>(() => {
+    const food = foodId ? getCatalogFood(foodId) : undefined;
+
+    return food ? { food, servingId: defaultServingId(food), quantity: 1 } : null;
+  });
 
   const debounced = useDebounce(query, 250);
   const recents = useRecentFoods();
@@ -71,15 +81,7 @@ export default function SearchFoodScreen() {
 
   const open = (food: CatalogFood, servingId?: string, quantity = 1) => {
     haptics.selection();
-    setSelected({
-      food,
-      servingId:
-        servingId ??
-        food.servings.find((s) => s.default)?.id ??
-        food.servings[0]?.id ??
-        '',
-      quantity,
-    });
+    setSelected({ food, servingId: servingId ?? defaultServingId(food), quantity });
   };
 
   const results = search.data ?? [];

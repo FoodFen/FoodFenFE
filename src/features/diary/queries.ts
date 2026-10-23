@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { foodAiApi } from '@/api/endpoints/foodAi';
+import { lookupBarcode } from '@/data/barcodeLookup';
 import * as diaryRepository from '@/data/diaryRepository';
 import * as entryRepository from '@/data/entryRepository';
 import type {
@@ -117,6 +118,23 @@ export function useCatalogSearch(query: string, recentIds?: string[]) {
     queryKey: queryKeys.catalog.search(trimmed),
     queryFn: () => searchCatalog(trimmed, { recentIds }),
     enabled: trimmed.length >= 2,
+    retry: false,
+  });
+}
+
+/**
+ * A scanned barcode's product, from local storage or Open Food Facts.
+ *
+ * `gcTime: 0` keeps a miss (`null`) from outliving the screen that asked, so
+ * the same code is looked up again next time instead of staying "not found".
+ */
+export function useBarcodeLookup(code: string | null) {
+  return useQuery({
+    queryKey: queryKeys.catalog.barcode(code ?? ''),
+    queryFn: () => lookupBarcode(code ?? ''),
+    enabled: !!code,
+    staleTime: Infinity,
+    gcTime: 0,
     retry: false,
   });
 }

@@ -330,6 +330,9 @@ export const vi = {
     mealLabel: 'Bữa ăn',
     emptyHint: 'Hôm nay bạn ăn gì? Thêm món vào đây nhé.',
     removeIngredientA11y: 'Xóa {name}',
+    editIngredientA11y: 'Sửa {name}',
+    ingredientNameLabel: 'Tên nguyên liệu',
+    ingredientGramsLabel: 'Khối lượng (g)',
     lowConfidenceA11y: 'AI đoán — kiểm tra lại mục này',
     fiberMissing: 'Chưa có dữ liệu chất xơ',
     addIngredientA11y: 'Thêm nguyên liệu',
@@ -375,6 +378,20 @@ export const vi = {
     serving: 'Khẩu phần',
     add: 'Thêm',
     addErrorTitle: 'Chưa ghi được món này',
+  },
+
+  logCamera: {
+    permissionTitle: 'Cần quyền camera',
+    permissionDescription: 'Mình cần camera để quét mã vạch và chụp ảnh bữa ăn.',
+    permissionAction: 'Cho phép camera',
+    hint: 'Đưa mã vạch vào khung hình, hoặc chụp ảnh bữa ăn.',
+    lookingUp: 'Đang tra cứu…',
+    detected: 'Phát hiện từ mã vạch',
+    detectedA11y: 'Phát hiện từ mã vạch: {name}. Chạm để ghi món này',
+    notFound: 'Không tìm thấy sản phẩm',
+    lookupError: 'Chưa tra cứu được mã vạch',
+    shutterA11y: 'Chụp ảnh bữa ăn',
+    captureErrorTitle: 'Chưa chụp được ảnh',
   },
 
   logManual: {
