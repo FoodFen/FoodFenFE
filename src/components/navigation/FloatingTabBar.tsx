@@ -100,7 +100,7 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
         color={colors.onBrand}
         label={t('logSheet', 'openA11y')}
         tint={colors.brand}
-        onPress={presentLogSheet}
+        onPress={() => presentLogSheet()}
       />
     </View>
   );
