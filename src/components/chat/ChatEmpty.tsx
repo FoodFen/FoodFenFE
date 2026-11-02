@@ -7,8 +7,8 @@ import { useTranslation } from '@/hooks/useTranslation';
 
 /**
  * Intro at the top of the conversation, scrolling away with the history: a
- * glowing avatar, a prompt, and three suggestion chips that stagger in and
- * send on tap.
+ * large glowing avatar, a speech-bubble prompt, and three suggestion chips
+ * that stagger in and send on tap.
  */
 
 const SUGGESTION_KEYS = ['suggestion1', 'suggestion2', 'suggestion3'] as const;
@@ -20,21 +20,28 @@ export function ChatEmpty({ onSuggest }: { onSuggest: (text: string) => void }) 
 
   return (
     <View
-      className="items-center justify-center gap-6 px-6"
+      className="items-center justify-center gap-4 px-6"
       style={{ minHeight: height * 0.6 }}
     >
       <Animated.View entering={reducedMotion ? undefined : ZoomIn.duration(350)}>
-        <AiAvatar size={72} glow />
+        <AiAvatar size={160} glow />
       </Animated.View>
 
-      <View className="items-center gap-2">
+      <Animated.View
+        entering={reducedMotion ? undefined : FadeInDown.duration(300).delay(150)}
+        className="items-center gap-2 rounded-2xl bg-brand-soft px-4 py-3"
+      >
+        <View
+          className="absolute -top-1.5 left-1/2 -ml-1.5 h-3 w-3 rotate-45 bg-brand-soft"
+          pointerEvents="none"
+        />
         <Text variant="heading" className="text-center">
           {t('chat', 'emptyTitle')}
         </Text>
         <Text tone="muted" className="text-center">
           {t('chat', 'emptyDescription')}
         </Text>
-      </View>
+      </Animated.View>
 
       <View className="flex-row flex-wrap justify-center gap-2">
         {SUGGESTION_KEYS.map((key, index) => {
@@ -46,7 +53,7 @@ export function ChatEmpty({ onSuggest }: { onSuggest: (text: string) => void }) 
               entering={
                 reducedMotion
                   ? undefined
-                  : FadeInDown.duration(300).delay(250 + index * 90)
+                  : FadeInDown.duration(300).delay(400 + index * 90)
               }
             >
               <Pressable

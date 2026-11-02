@@ -1,7 +1,9 @@
 import { Chat, LoadEarlierMessages, useStreamingMessages } from '@kesha-antonov/react-native-chat';
 import { useQueryClient, onlineManager } from '@tanstack/react-query';
-import { Stack, router, useLocalSearchParams } from 'expo-router';
+import { Stack, router, useLocalSearchParams, useNavigation } from 'expo-router';
+import type { NativeStackNavigationProp } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { TextInput } from 'react-native';
 
 import { streamChatReply } from '@/api/endpoints/chat';
 import { AiAvatar } from '@/components/chat/AiAvatar';
@@ -26,6 +28,7 @@ import { queryKeys } from '@/lib/queryClient';
 import { CHAT_AVATAR_SIZE, chatDarkTheme, chatLightTheme } from '@/theme/chatTheme';
 
 const OUTCOME_MS = 2500;
+const THINKING_AVATAR_SIZE = 48;
 
 /**
  * The single continuous conversation with the assistant. Gated exactly like
@@ -37,6 +40,9 @@ export default function ChatScreen() {
   const { isDark } = useAppTheme();
   const queryClient = useQueryClient();
   const { draft } = useLocalSearchParams<{ draft?: string }>();
+  const navigation = useNavigation<NativeStackNavigationProp<Record<string, object | undefined>>>();
+  // Cast: Chat types textInputRef as RefObject<TextInput> (React 18 typings), not RefObject<TextInput | null>.
+  const inputRef = useRef<TextInput>(null as unknown as TextInput);
   const session = useAuthStore((state) => state.session);
   const available = canUseRemote();
   // The one reason among the three `canUseRemote()` checks worth a distinct
@@ -61,6 +67,16 @@ export default function ChatScreen() {
   }, []);
 
   useEffect(() => () => clearTimeout(outcomeTimer.current), []);
+
+  // keyboard-controller's KeyboardAvoidingView only measures its frame while the
+  // keyboard is closed, so focusing during the push animation captures a
+  // mid-transition position. Focus once the screen has fully appeared.
+  useEffect(() => {
+    if (!draft) return;
+    return navigation.addListener('transitionEnd', (e) => {
+      if (!e.data.closing) inputRef.current?.focus();
+    });
+  }, [draft, navigation]);
 
   const headerAction: MascotAction = isStreaming ? 'thinking' : (outcome ?? 'idle');
 
@@ -206,7 +222,7 @@ export default function ChatScreen() {
         user={CHAT_USER}
         labels={{ placeholder: t('chat', 'inputPlaceholder') }}
         initialText={draft}
-        textInputProps={draft ? { autoFocus: true } : undefined}
+        textInputRef={inputRef}
         enableGestureHandlerRootView={false}
         keyboardAvoidingViewProps={{ automaticOffset: true, keyboardVerticalOffset: 0 }}
         colorScheme={isDark ? 'dark' : 'light'}
@@ -214,7 +230,13 @@ export default function ChatScreen() {
         darkTheme={chatDarkTheme}
         messageTextProps={{ markdown: true }}
         renderBubble={(props) => <ChatBubble {...props} freshIds={freshIds} />}
-        renderAvatar={() => <AiAvatar size={CHAT_AVATAR_SIZE} />}
+        renderAvatar={({ currentMessage }) =>
+          currentMessage.streaming && !currentMessage.text ? (
+            <AiAvatar size={THINKING_AVATAR_SIZE} action="thinking" />
+          ) : (
+            <AiAvatar size={CHAT_AVATAR_SIZE} />
+          )
+        }
         renderSend={(props) => <ChatSendButton {...props} />}
         listProps={listProps}
       />
