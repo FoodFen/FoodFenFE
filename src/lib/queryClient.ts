@@ -18,7 +18,11 @@ const CACHE_MAX_AGE_MS = 1000 * 60 * 60 * 24; // 24 hours
 export function createQueryClient(): QueryClient {
   return new QueryClient({
     defaultOptions: {
+      // The default 'online' mode pauses every query and mutation while NetInfo
+      // reports offline, including local SQLite reads and writes. 'offlineFirst'
+      // always runs the fn and only pauses retries.
       queries: {
+        networkMode: 'offlineFirst',
         staleTime: 1000 * 60,
         gcTime: CACHE_MAX_AGE_MS,
         retry: (failureCount, error) => {
@@ -34,6 +38,7 @@ export function createQueryClient(): QueryClient {
         refetchOnReconnect: true,
       },
       mutations: {
+        networkMode: 'offlineFirst',
         retry: (failureCount, error) => {
           if (isApiError(error) && !error.isRetryable) return false;
 
