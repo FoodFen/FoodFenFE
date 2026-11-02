@@ -177,9 +177,9 @@ describe('redeemCoinsForPremium', () => {
       subscription: remoteSubscription(shiftDateKey(todayKey(), 10)),
     });
 
-    await gamification.redeemCoinsForPremium(user.id, 10);
+    await gamification.redeemCoinsForPremium(user.id, 10, 'redeem-1');
 
-    expect(mockedGamificationApi.redeemCoins).toHaveBeenCalledWith(10);
+    expect(mockedGamificationApi.redeemCoins).toHaveBeenCalledWith(10, 'redeem-1');
     expect(gamification.getCoinBalance(user.id)).toBe(0);
     const sub = gamification.getSubscription(user.id);
     expect(sub?.planType).toBe('coin_redeem');
@@ -195,7 +195,7 @@ describe('redeemCoinsForPremium', () => {
       subscription: remoteSubscription(shiftDateKey(todayKey(), 10)),
     });
 
-    await gamification.redeemCoinsForPremium(user.id, 10);
+    await gamification.redeemCoinsForPremium(user.id, 10, 'redeem-1');
 
     expect(gamification.getCoinBalance(user.id)).toBe(400);
   });
@@ -205,7 +205,7 @@ describe('redeemCoinsForPremium', () => {
     gamification.addCoins(user.id, 100, 'adjustment');
     mockedGamificationApi.redeemCoins.mockRejectedValue(new Error('insufficient coins'));
 
-    await expect(gamification.redeemCoinsForPremium(user.id, 10)).rejects.toThrow();
+    await expect(gamification.redeemCoinsForPremium(user.id, 10, 'redeem-1')).rejects.toThrow();
 
     expect(gamification.getCoinBalance(user.id)).toBe(100);
     expect(gamification.getSubscription(user.id)).toBeUndefined();

@@ -556,6 +556,7 @@ export const en: DeepPartial<Translations> = {
 
   shop: {
     title: 'Shop',
+    historyRow: 'Coin history',
     balanceLabel: 'Your coins',
     premiumBundlesHeading: 'Redeem for Premium',
     bundleTitle: '{days}-day Premium',
@@ -572,6 +573,21 @@ export const en: DeepPartial<Translations> = {
     equippedLabel: 'Equipped',
     buyConfirmTitle: 'Buy {name}?',
     buyConfirmMessage: 'This will cost {cost} coins.',
+  },
+
+  coinHistory: {
+    title: 'Coin history',
+    empty: 'No transactions yet',
+    loadError: "Couldn't load your coin history. Check your connection and try again.",
+    quest_completed: 'Quest completed',
+    streak_bonus: 'Streak bonus',
+    purchase: 'Coin purchase',
+    spend: 'Premium days',
+    mascot_purchase: 'Mascot purchase',
+    adjustment: 'Adjustment',
+    quiz_daily: 'Daily quiz',
+    quiz_practice: 'Practice quiz',
+    unknown: 'Coin transaction',
   },
 
   quiz: {

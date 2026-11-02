@@ -1,6 +1,7 @@
 import { api } from '@/api/client';
 import {
   coinBundlesResponseSchema,
+  coinTransactionsResponseSchema,
   questsResponseSchema,
   redeemCoinsResponseSchema,
 } from '@/api/schemas';
@@ -32,7 +33,15 @@ export const gamificationApi = {
   bundles: (signal?: AbortSignal) =>
     api.get('coins/bundles', { schema: coinBundlesResponseSchema, signal }),
 
-  /** Spends coins for `days` of Premium. 409 when the balance is too low. */
-  redeemCoins: (days: number): Promise<RemoteRedeemCoinsResponse> =>
-    api.post('coins/redeem', { days }, { schema: redeemCoinsResponseSchema }),
+  /** One page of the coin ledger, newest first; `before` is the previous page's `nextCursor`. */
+  transactions: (before: string | undefined, signal?: AbortSignal) =>
+    api.get('coins/transactions', {
+      query: { before },
+      schema: coinTransactionsResponseSchema,
+      signal,
+    }),
+
+  /** Spends coins for `days` of Premium. 409 when the balance is too low; `clientId` makes a retry a replay. */
+  redeemCoins: (days: number, clientId: string): Promise<RemoteRedeemCoinsResponse> =>
+    api.post('coins/redeem', { days, clientId }, { schema: redeemCoinsResponseSchema }),
 };

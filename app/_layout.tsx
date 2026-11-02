@@ -243,6 +243,7 @@ function AppShell({ migrated }: { migrated: boolean }) {
             options={{ headerShown: false, presentation: 'modal' }}
           />
           <Stack.Screen name="shop" options={{ title: t('shop', 'title') }} />
+          <Stack.Screen name="coin-history" options={{ title: t('coinHistory', 'title') }} />
           <Stack.Screen name="streak" options={{ title: t('streak', 'title') }} />
           <Stack.Screen name="quiz" options={{ headerShown: false }} />
           <Stack.Screen

@@ -574,6 +574,7 @@ export const vi = {
 
   shop: {
     title: 'Cửa hàng',
+    historyRow: 'Lịch sử xu',
     balanceLabel: 'Số xu của bạn',
     premiumBundlesHeading: 'Đổi lấy Premium',
     bundleTitle: 'Premium {days} ngày',
@@ -590,6 +591,21 @@ export const vi = {
     equippedLabel: 'Đang dùng',
     buyConfirmTitle: 'Mua {name}?',
     buyConfirmMessage: 'Bạn sẽ dùng {cost} xu để mua linh vật này.',
+  },
+
+  coinHistory: {
+    title: 'Lịch sử xu',
+    empty: 'Chưa có giao dịch nào',
+    loadError: 'Không tải được lịch sử xu. Bạn kiểm tra kết nối mạng rồi thử lại nhé.',
+    quest_completed: 'Hoàn thành nhiệm vụ',
+    streak_bonus: 'Thưởng chuỗi ngày',
+    purchase: 'Mua xu',
+    spend: 'Đổi ngày Premium',
+    mascot_purchase: 'Mua thú cưng',
+    adjustment: 'Điều chỉnh',
+    quiz_daily: 'Quiz hằng ngày',
+    quiz_practice: 'Quiz luyện tập',
+    unknown: 'Giao dịch xu',
   },
 
   quiz: {

@@ -260,8 +260,12 @@ export function resolveTier(
  * account's one subscription row, and returns both. A 409 `ApiError` means
  * insufficient coins; the caller (`useRedeemCoins`) surfaces that.
  */
-export async function redeemCoinsForPremium(userId: string, days: number): Promise<void> {
-  const { balance, subscription: remote } = await gamificationApi.redeemCoins(days);
+export async function redeemCoinsForPremium(
+  userId: string,
+  days: number,
+  clientId: string,
+): Promise<void> {
+  const { balance, subscription: remote } = await gamificationApi.redeemCoins(days, clientId);
 
   reconcileCoinBalance(userId, balance);
 

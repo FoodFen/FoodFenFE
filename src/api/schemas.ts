@@ -333,6 +333,18 @@ export const questProgressSchema = z.object({
   description: z.string(),
 });
 
+export const coinTransactionsResponseSchema = z.object({
+  transactions: z.array(
+    z.object({
+      id: z.string(),
+      amount: z.number().int(),
+      reason: z.string(),
+      createdAt: z.iso.datetime(),
+    }),
+  ),
+  nextCursor: z.string().nullable(),
+});
+
 export const coinBundlesResponseSchema = z.object({
   bundles: z.array(
     z.object({

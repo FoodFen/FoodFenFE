@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 
 import { gamificationApi } from '@/api/endpoints/gamification';
@@ -283,18 +283,41 @@ export function useCoinBundles() {
   });
 }
 
+/** Signed-out users have no server ledger, so the history row and query exist only with a backend and a session. */
+export function useCoinHistoryAvailable(): boolean {
+  const signedIn = useAuthStore((state) => state.session !== null);
+
+  return signedIn && env.hasBackend;
+}
+
+/** The server's coin ledger, newest first, one cursor page at a time. */
+export function useCoinTransactions() {
+  const available = useCoinHistoryAvailable();
+
+  return useInfiniteQuery({
+    queryKey: queryKeys.gamification.transactions(),
+    queryFn: ({ pageParam, signal }) => gamificationApi.transactions(pageParam, signal),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    select: (data) => data.pages.flatMap((page) => page.transactions),
+    enabled: available,
+    retry: false,
+  });
+}
+
 /** Spend coins on a shop bundle; refreshes the balance and the premium tier on success. */
 export function useRedeemCoins() {
   const userId = useUserId();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (days: number) => {
+    mutationFn: async ({ days, clientId }: { days: number; clientId: string }) => {
       if (!userId) throw new Error('No local profile yet.');
 
-      await gamificationRepository.redeemCoinsForPremium(userId, days);
+      await gamificationRepository.redeemCoinsForPremium(userId, days, clientId);
     },
     onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.transactions() });
       void queryClient.invalidateQueries({ queryKey: queryKeys.gamification.coins() });
       void queryClient.invalidateQueries({ queryKey: queryKeys.premium.all });
       void queryClient.invalidateQueries({ queryKey: queryKeys.aiQuota });

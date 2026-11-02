@@ -1,7 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, Stack } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { Alert, RefreshControl, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, Pressable, RefreshControl, View } from 'react-native';
 
 import { isApiError } from '@/api/errors';
 import { Mascot } from '@/components/mascot/Mascot';
@@ -13,7 +13,16 @@ import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
 import { useCoinBalance } from '@/features/dashboard/queries';
-import { useCoinBundles, useRedeemCoins } from '@/features/gamification/queries';
+import {
+  redeemClientId,
+  retainFailedRedeem,
+  type FailedRedeem,
+} from '@/features/gamification/coinHistory';
+import {
+  useCoinBundles,
+  useCoinHistoryAvailable,
+  useRedeemCoins,
+} from '@/features/gamification/queries';
 import {
   isInsufficientCoins,
   useEquipMascot,
@@ -25,6 +34,7 @@ import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { env } from '@/lib/env';
 import { haptics } from '@/lib/haptics';
+import { generateLocalId } from '@/lib/id';
 import { colorsFor } from '@/theme/colors';
 
 /** Spend earned coins for Premium days — the counterpart to the PayOS `app/premium` flow. */
@@ -34,6 +44,8 @@ export default function ShopScreen() {
   const colors = colorsFor(resolved);
   const { data: balance = 0 } = useCoinBalance();
   const redeem = useRedeemCoins();
+  const historyAvailable = useCoinHistoryAvailable();
+  const failedRedeem = useRef<FailedRedeem | null>(null);
   const { data: bundleData, isError, fetchStatus, refetch } = useCoinBundles();
   const bundles = bundleData?.bundles ?? [];
   const loadingBundles = bundles.length === 0 && fetchStatus === 'fetching';
@@ -111,20 +123,33 @@ export default function ShopScreen() {
         {
           text: t('shop', 'redeemButton'),
           onPress: () => {
-            redeem.mutate(days, {
-              onSuccess: () => {
-                haptics.success();
-                router.push('/premium/welcome');
+            const clientId = redeemClientId(failedRedeem.current, days, () =>
+              generateLocalId('redeem'),
+            );
+
+            redeem.mutate(
+              { days, clientId },
+              {
+                onSuccess: () => {
+                  failedRedeem.current = null;
+                  haptics.success();
+                  router.push('/premium/welcome');
+                },
+                onError: (error) => {
+                  failedRedeem.current = retainFailedRedeem(
+                    days,
+                    clientId,
+                    isApiError(error) ? error.status : undefined,
+                  );
+                  haptics.error();
+                  Alert.alert(
+                    isApiError(error) && error.status === 409
+                      ? t('shop', 'insufficientCoins')
+                      : t('common', 'somethingWentWrong'),
+                  );
+                },
               },
-              onError: (error) => {
-                haptics.error();
-                Alert.alert(
-                  isApiError(error) && error.status === 409
-                    ? t('shop', 'insufficientCoins')
-                    : t('common', 'somethingWentWrong'),
-                );
-              },
-            });
+            );
           },
         },
       ],
@@ -152,6 +177,19 @@ export default function ShopScreen() {
           <Text variant="heading">{balance.toLocaleString()}</Text>
         </View>
       </Card>
+
+      {historyAvailable ? (
+        <Pressable
+          onPress={() => router.push('/coin-history')}
+          accessibilityRole="button"
+          accessibilityLabel={t('shop', 'historyRow')}
+        >
+          <Card className="flex-row items-center justify-between">
+            <Text variant="label">{t('shop', 'historyRow')}</Text>
+            <Ionicons name="chevron-forward" size={18} color={colors.fgMuted} />
+          </Card>
+        </Pressable>
+      ) : null}
 
       <Text variant="label" tone="muted">
         {t('shop', 'premiumBundlesHeading')}

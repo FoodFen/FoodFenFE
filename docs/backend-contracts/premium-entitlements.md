@@ -151,9 +151,35 @@ Response `200`:
 - Active rows only, sorted by `days` ascending. The list is data, so count
   and values can change without an app release — render whatever comes
   back.
-- `POST /coins/redeem` takes `{ "days": N }` where `N` matches a bundle's
-  `days` (not its `id`); `409` means the balance is too low.
+- `POST /coins/redeem` takes `{ "days": N, "clientId"?: "string" }` where `N`
+  matches a bundle's `days` (not its `id`); `409` means the balance is too low.
+  `clientId` (1–64 chars, one per redeem attempt, reused on retries) makes the
+  call idempotent: a repeat with a `clientId` the server has already spent
+  returns `200` with the current balance and subscription and spends nothing
+  (even if `days` differs). Without it, every call spends.
 - Errors: only generic `5xx`.
+
+## `GET /coins/transactions?before=&limit=`
+
+**Bearer required.** The caller's coin ledger, newest first, paged like
+`GET /chat/messages`: `before` is the previous page's `nextCursor` (opaque),
+`limit` 1–50 (default 20). Bad `limit` or a malformed cursor → `422`.
+
+Response `200`:
+```json
+{
+  "transactions": [
+    { "id": "uuid", "amount": 120, "reason": "quest_completed", "createdAt": "iso-datetime" }
+  ],
+  "nextCursor": "string | null"
+}
+```
+
+- `amount` is signed: credits > 0, debits < 0 (a redeem is `spend`, negative).
+- `reason` values are listed under "Mascots and coin history (notes)" below.
+  Render an unknown value with a generic label rather than failing, so a new
+  reason can't break the screen.
+- `nextCursor: null` means this is the last page.
 
 ## Mascots and coin history (notes)
 
