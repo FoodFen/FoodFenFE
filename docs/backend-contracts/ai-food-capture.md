@@ -91,12 +91,43 @@ which language to prefer.
       "proteinG": 0,
       "fatG": 0,
       "fiberG": 0,
-      "confidence": 0.0
+      "confidence": 0.0,
+      "catalogFoodId": "string | null",
+      "catalogName": "string | null",
+      "verified": false,
+      "sourceRef": "string | null",
+      "per100g": { "kcal": 0, "carbsG": 0, "proteinG": 0, "fatG": 0, "fiberG": 0 }
     }
   ],
   "imageUrl": "string | null"
 }
 ```
+
+### Catalog grounding
+
+Spec: `docs/superpowers/specs/2026-11-02-catalog-grounded-ai-design.md`.
+
+The model names the foods and estimates grams. The server matches each row to the food catalog (the
+same slugs as the bundled `foods.json`), preferring a whole dish over its components.
+
+- **Matched row.**
+  - `kcal` and the macros are the catalog's per-100 g figures × `quantityG`, not the model's: kcal is
+    rounded to a whole number, macros to one decimal.
+  - `catalogFoodId` is the catalog slug, and `catalogName` is the catalog's (Vietnamese) name.
+  - `name` stays the model's label, in the requested `language`; it is what the app shows.
+  - `per100g` is the catalog's figures. A catalog food with no fiber value gives `per100g.fiberG: null`
+    and a row `fiberG: null`.
+- **`verified`.** It is `true` only when the matched food has a source (NIN, USDA, recipe, label, FoodFen
+  team); the app shows the green tick for it. A matched legacy food still uses the catalog numbers but
+  comes back with `verified: false` and `sourceRef: null`. Values of `sourceRef`: `nin:<code>`,
+  `usda:<fdcId>`, `recipe`, `label:<brand>`, `team`.
+- **Unmatched row** (the catalog has no such food), or grounding switched off server-side
+  (`FOOD_ANALYSIS_GROUNDING=false`): `catalogFoodId`, `catalogName`, `sourceRef` and `per100g` are
+  `null`, `verified` is `false`, and the numbers are the model's estimate as before.
+- The new fields are additive. The app treats every one as optional, and builds without them ignore them.
+- **What the app uses.** It reads only `catalogFoodId`, which it saves onto `ingredient.catalog_food_id`,
+  and `verified`. Gram edits re-scale a row proportionally, which equals scaling from `per100g` for a
+  catalog row.
 
 - `ingredients` — one row per food item detected. `quantityG` is the model's
   best-guess portion size; every macro is scaled to that portion, not to
@@ -131,8 +162,9 @@ same as every other endpoint:
 
 ## Left to the backend session's own judgment
 
-- Model choice, prompt design, and how `quantityG`/macros are estimated from
-  a photo vs. a sentence.
+- Model choice, prompt design, and how `quantityG` is estimated from a photo vs. a sentence. The
+  nutrition of a matched row is not the backend's judgment: it must come from the catalog (see Catalog
+  grounding).
 - Image storage (if any) behind `imageUrl` — format, retention, CDN.
 - Rate limiting and per-user quota, moderation of uploaded images.
 - `confidence` calibration — only its relative meaning (low = uncertain) is
