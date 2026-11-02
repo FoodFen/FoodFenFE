@@ -1,10 +1,10 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Image } from 'expo-image';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { Linking, Pressable, RefreshControl, View } from 'react-native';
 
 import { isApiError } from '@/api/errors';
 import { AddDishSheet } from '@/components/dishes/AddDishSheet';
+import { DishImage } from '@/components/dishes/DishImage';
 import { DishRow } from '@/components/dishes/DishRow';
 import { Button } from '@/components/ui/Button';
 import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
@@ -101,17 +101,7 @@ export default function RestaurantScreen() {
       >
         <Stack.Screen options={{ title: restaurant.name }} />
 
-        {restaurant.imageUrl ? (
-          <Image
-            source={{ uri: restaurant.imageUrl }}
-            className="-mx-4 -mt-4 h-56"
-            contentFit="cover"
-          />
-        ) : (
-          <View className="-mx-4 -mt-4 h-56 items-center justify-center bg-surface-alt">
-            <Ionicons name="restaurant-outline" size={48} color={colors.fgSubtle} />
-          </View>
-        )}
+        <DishImage uri={restaurant.imageUrl} className="-mx-4 -mt-4 h-56" iconSize={48} />
 
         <View className="gap-6">
           <View className="gap-3">

@@ -1,8 +1,8 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Image } from 'expo-image';
 import { ActivityIndicator, Pressable, View } from 'react-native';
 
 import type { RemoteDish } from '@/api/schemas';
+import { DishImage } from '@/components/dishes/DishImage';
 import { Card } from '@/components/ui/Card';
 import { Text } from '@/components/ui/Text';
 import { describeReasons, formatVnd } from '@/features/dishes/mappers';
@@ -61,17 +61,7 @@ export function DishRow({
   return (
     <Card flush className="overflow-hidden">
       <Pressable onPress={onPress} disabled={!onPress}>
-        {dish.imageUrl ? (
-          <Image
-            source={{ uri: dish.imageUrl }}
-            className="h-40 w-full"
-            contentFit="cover"
-          />
-        ) : (
-          <View className="h-40 w-full items-center justify-center bg-surface-alt">
-            <Ionicons name="restaurant-outline" size={48} color={colors.fgSubtle} />
-          </View>
-        )}
+        <DishImage uri={dish.imageUrl} className="h-40 w-full" iconSize={48} />
 
         {fits || overKcal !== undefined ? (
           <View className="absolute left-0 top-0 m-3 items-start gap-1">
