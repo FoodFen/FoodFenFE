@@ -1,5 +1,6 @@
-// The mascot: renders the static visual for an action and plays one hop when the action changes,
+// The mascot: renders the server art (or the bundled hand-drawn visual) for an action and plays one hop when the action changes,
 // swapping the visual at the top of the hop. Decorative; the speech bubble carries the meaning.
+import { Image } from 'expo-image';
 import { useEffect, useState } from 'react';
 import Animated, {
   useAnimatedStyle,
@@ -10,24 +11,27 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { MASCOT_VISUALS, type MascotId } from '@/components/mascot/visuals';
+import { MASCOT_VISUALS, mascotArtId } from '@/components/mascot/visuals';
 import { useAppTheme } from '@/hooks/useAppTheme';
-import type { MascotAction } from '@/lib/mascot';
-import { colorsFor } from '@/theme/colors';
+import { mascotImageUrl, type MascotAction, type MascotImages } from '@/lib/mascot';
+import { colorsFor, type ThemeColors } from '@/theme/colors';
 
 const HOP_UP_MS = 130;
 
 export interface MascotProps {
-  mascotId: MascotId;
+  mascotId: string;
+  images?: MascotImages;
+  bodyColor?: string | null;
   action: MascotAction;
   size: number;
 }
 
-export function Mascot({ mascotId, action, size }: MascotProps) {
+export function Mascot({ mascotId, images, bodyColor, action, size }: MascotProps) {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const reducedMotion = useReducedMotion();
   const [shown, setShown] = useState(action);
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
   const lift = useSharedValue(0);
 
   useEffect(() => {
@@ -45,7 +49,10 @@ export function Mascot({ mascotId, action, size }: MascotProps) {
   }, [action, shown, reducedMotion, size, lift]);
 
   const style = useAnimatedStyle(() => ({ transform: [{ translateY: lift.get() }] }));
-  const Visual = MASCOT_VISUALS[mascotId][reducedMotion ? action : shown];
+  const current = reducedMotion ? action : shown;
+  const url = images?.[current] ?? images?.idle;
+  const artId = mascotArtId(mascotId);
+  const Visual = MASCOT_VISUALS[artId][current];
 
   return (
     <Animated.View
@@ -53,7 +60,17 @@ export function Mascot({ mascotId, action, size }: MascotProps) {
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"
     >
-      <Visual size={size} colors={colors} />
+      {url && url !== failedUrl ? (
+        <Image
+          source={{ uri: mascotImageUrl(url) }}
+          style={{ width: size, height: size }}
+          contentFit="contain"
+          cachePolicy="disk"
+          onError={() => setFailedUrl(url)}
+        />
+      ) : (
+        <Visual size={size} colors={bodyColor ? ({ ...colors, brand: bodyColor } as ThemeColors) : colors} />
+      )}
     </Animated.View>
   );
 }

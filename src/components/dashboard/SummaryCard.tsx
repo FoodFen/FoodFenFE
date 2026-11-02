@@ -2,14 +2,16 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import type { ReactNode } from 'react';
 import { View } from 'react-native';
 
+import { arcColor } from '@/components/dashboard/DayRing';
 import { Mascot } from '@/components/mascot/Mascot';
 import { MascotBubbleStrip } from '@/components/mascot/MascotBubbleStrip';
-import { mascotArtId } from '@/components/mascot/visuals';
+import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 import { Card } from '@/components/ui/Card';
 import { MacroBarGroup } from '@/components/ui/MacroBar';
 import { ProgressRing } from '@/components/ui/ProgressRing';
 import { Text, type TextTone } from '@/components/ui/Text';
-import { useEquippedMascotId } from '@/features/mascot/queries';
+import { dayRingStatus } from '@/features/dashboard/ringStatus';
+import { useEquippedMascotId, useMascotBodyColor, useMascotImages } from '@/features/mascot/queries';
 import { useDashboardMascot } from '@/features/mascot/useDashboardMascot';
 import { useProfileStore } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -41,7 +43,9 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
   );
   const isOver = remaining < 0;
   const mascot = useDashboardMascot(day.date === todayKey());
-  const mascotId = mascotArtId(useEquippedMascotId());
+  const mascotId = useEquippedMascotId();
+  const images = useMascotImages(mascotId);
+  const bodyColor = useMascotBodyColor(mascotId);
 
   return (
     <Card className="gap-4">
@@ -51,9 +55,9 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
             size={140}
             strokeWidth={10}
             progress={progressFraction(day.totals.kcal, day.totals.kcal + remaining)}
-            color={isOver ? colors.danger : undefined}
+            color={arcColor(dayRingStatus(day, { isFuture: false }), colors)}
           >
-            <Mascot mascotId={mascotId} action={mascot.action} size={100} />
+            <Mascot mascotId={mascotId} images={images} bodyColor={bodyColor} action={mascot.action} size={120} />
           </ProgressRing>
           <View className="flex-1 justify-center gap-2">
             <StatRow
@@ -129,9 +133,13 @@ function StatRow({
           {label}
         </Text>
         <View className="flex-row items-baseline gap-1">
-          <Text variant="heading" tone={tone}>
-            {typeof value === 'number' ? value.toLocaleString() : value}
-          </Text>
+          {typeof value === 'number' ? (
+            <AnimatedNumber value={value} variant="heading" tone={tone} />
+          ) : (
+            <Text variant="heading" tone={tone}>
+              {value}
+            </Text>
+          )}
           <Text variant="caption" tone="subtle">
             {unit}
           </Text>

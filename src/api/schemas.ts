@@ -67,6 +67,9 @@ export const coinReasonSchema = z.enum([
   'purchase',
   'spend',
   'adjustment',
+  'mascot_purchase',
+  'quiz_daily',
+  'quiz_practice',
 ]);
 
 export const userSchema = z.object({
@@ -386,6 +389,12 @@ export const mascotCatalogResponseSchema = z.object({
       name: z.string(),
       coinCost: z.number().int().nonnegative(),
       owned: z.boolean(),
+      images: z.record(z.string(), z.string()).default({}),
+      bodyColor: z
+        .string()
+        .regex(/^#[0-9A-Fa-f]{6}$/)
+        .nullable()
+        .default(null),
     }),
   ),
 });

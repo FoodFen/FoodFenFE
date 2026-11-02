@@ -1,25 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import Animated, {
-  useAnimatedProps,
-  useSharedValue,
-  withTiming,
-  Easing,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import Svg, { Circle } from 'react-native-svg';
 
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { cn } from '@/lib/cn';
 import { colorsFor } from '@/theme/colors';
 
+// React owns the value and Reanimated only transitions between values: an animated-props snapshot
+// goes stale on re-render, and per-frame JS state starved React updates.
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+
+const ARC_TRANSITION = {
+  transitionProperty: 'strokeDashoffset',
+  transitionDuration: 600,
+  transitionTimingFunction: 'ease-out',
+} as const;
 
 export interface ProgressRingProps {
   /** 0–1. Values above 1 are clamped by the caller, not here. */
   progress: number;
   size?: number;
   strokeWidth?: number;
-  /** Overrides the brand color — used to flag an exceeded goal. */
+  /** Overrides the brand color. */
   color?: string;
   trackColor?: string;
   /** Rendered in the middle of the ring. */
@@ -50,18 +53,13 @@ export function ProgressRing({
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
 
-  const animatedProgress = useSharedValue(0);
-
+  const strokeColor = color ?? colors.brand;
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
-    animatedProgress.value = withTiming(Math.min(Math.max(progress, 0), 1), {
-      duration: 600,
-      easing: Easing.out(Easing.cubic),
-    });
-  }, [progress, animatedProgress]);
-
-  const animatedProps = useAnimatedProps(() => ({
-    strokeDashoffset: circumference * (1 - animatedProgress.value),
-  }));
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+  const target = mounted ? Math.min(Math.max(progress, 0), 1) : 0;
 
   return (
     <View
@@ -81,12 +79,13 @@ export function ProgressRing({
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke={color ?? colors.brand}
+          stroke={strokeColor}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           fill="none"
           strokeDasharray={circumference}
-          animatedProps={animatedProps}
+          strokeDashoffset={circumference * (1 - target)}
+          animatedProps={ARC_TRANSITION}
         />
       </Svg>
 

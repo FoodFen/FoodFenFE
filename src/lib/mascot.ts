@@ -13,6 +13,20 @@ export type MascotAction =
   | 'happy'
   | 'confused';
 
+export type MascotImages = Partial<Record<MascotAction, string>>;
+
+const CLOUDINARY_UPLOAD = '/image/upload/';
+
+export function mascotImageUrl(url: string): string {
+  const at = url.indexOf(CLOUDINARY_UPLOAD);
+
+  if (at === -1) return url;
+
+  const end = at + CLOUDINARY_UPLOAD.length;
+
+  return `${url.slice(0, end)}c_limit,w_512/${url.slice(end)}`;
+}
+
 export type MascotReaction = 'food' | 'water' | 'activity';
 
 export const REACTION_ACTION: Record<MascotReaction, MascotAction> = {

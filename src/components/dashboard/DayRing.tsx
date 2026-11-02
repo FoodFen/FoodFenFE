@@ -10,7 +10,7 @@ import { formatDayOfMonth, formatWeekdayInitial } from '@/lib/date';
 import { colorsFor } from '@/theme/colors';
 
 /** Arc colour per status — matches the "Ring Colors Explained" screen. */
-function arcColor(status: RingStatus, colors: ReturnType<typeof colorsFor>): string {
+export function arcColor(status: RingStatus, colors: ReturnType<typeof colorsFor>): string {
   switch (status) {
     case 'under':
       return colors.fg;

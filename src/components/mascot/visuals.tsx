@@ -18,7 +18,6 @@ type MascotVisual = (props: MascotVisualProps) => ReactElement;
 function Face({ size, colors, children }: MascotVisualProps & { children: ReactNode }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 100 100">
-      <Circle cx={50} cy={50} r={46} fill={colors.brand} />
       {children}
     </Svg>
   );
@@ -49,40 +48,40 @@ const drop = (x: number, y: number, fill: string) => (
 
 const idle: MascotVisual = (p) => (
   <Face {...p}>
-    {dotEyes(p.colors.onBrand)}
-    <Path d="M36 62 Q50 74 64 62" stroke={p.colors.onBrand} {...STROKE} />
+    {dotEyes(p.colors.brand)}
+    <Path d="M36 62 Q50 74 64 62" stroke={p.colors.brand} {...STROKE} />
   </Face>
 );
 
 const hungry: MascotVisual = (p) => (
   <Face {...p}>
-    {dotEyes(p.colors.onBrand)}
-    <Ellipse cx={50} cy={68} rx={7} ry={9} fill={p.colors.onBrand} />
+    {dotEyes(p.colors.brand)}
+    <Ellipse cx={50} cy={68} rx={7} ry={9} fill={p.colors.brand} />
     {drop(62, 72, p.colors.fat)}
   </Face>
 );
 
 const thirsty: MascotVisual = (p) => (
   <Face {...p}>
-    {dotEyes(p.colors.onBrand)}
-    <Path d="M38 68 H62" stroke={p.colors.onBrand} {...STROKE} />
+    {dotEyes(p.colors.brand)}
+    <Path d="M38 68 H62" stroke={p.colors.brand} {...STROKE} />
     {drop(80, 20, p.colors.fat)}
   </Face>
 );
 
 const eating: MascotVisual = (p) => (
   <Face {...p}>
-    {happyEyes(p.colors.onBrand)}
-    <Ellipse cx={50} cy={68} rx={10} ry={8} fill={p.colors.onBrand} />
+    {happyEyes(p.colors.brand)}
+    <Ellipse cx={50} cy={68} rx={10} ry={8} fill={p.colors.brand} />
     <Circle cx={80} cy={70} r={8} fill={p.colors.carbs} />
   </Face>
 );
 
 const drinking: MascotVisual = (p) => (
   <Face {...p}>
-    {dotEyes(p.colors.onBrand)}
-    <Circle cx={42} cy={68} r={4} fill={p.colors.onBrand} />
-    <Rect x={70} y={46} width={4} height={18} fill={p.colors.onBrand} />
+    {dotEyes(p.colors.brand)}
+    <Circle cx={42} cy={68} r={4} fill={p.colors.brand} />
+    <Rect x={70} y={46} width={4} height={18} fill={p.colors.brand} />
     <Rect x={58} y={60} width={26} height={28} rx={4} fill={p.colors.fat} />
   </Face>
 );
@@ -90,16 +89,16 @@ const drinking: MascotVisual = (p) => (
 const exercising: MascotVisual = (p) => (
   <Face {...p}>
     <Path d="M8 34 Q50 18 92 34 L90 42 Q50 28 10 42 Z" fill={p.colors.danger} />
-    {dotEyes(p.colors.onBrand, 52)}
-    <Path d="M36 68 Q50 80 64 68" stroke={p.colors.onBrand} {...STROKE} />
+    {dotEyes(p.colors.brand, 52)}
+    <Path d="M36 68 Q50 80 64 68" stroke={p.colors.brand} {...STROKE} />
     {drop(86, 52, p.colors.fat)}
   </Face>
 );
 
 const thinking: MascotVisual = (p) => (
   <Face {...p}>
-    {dotEyes(p.colors.onBrand, 38)}
-    <Path d="M42 68 H58" stroke={p.colors.onBrand} {...STROKE} />
+    {dotEyes(p.colors.brand, 38)}
+    <Path d="M42 68 H58" stroke={p.colors.brand} {...STROKE} />
     <Circle cx={88} cy={14} r={3.5} fill={p.colors.fgMuted} />
     <Circle cx={95} cy={5} r={2.5} fill={p.colors.fgMuted} />
   </Face>
@@ -107,8 +106,8 @@ const thinking: MascotVisual = (p) => (
 
 const happy: MascotVisual = (p) => (
   <Face {...p}>
-    {happyEyes(p.colors.onBrand)}
-    <Path d="M32 60 Q50 84 68 60 Z" fill={p.colors.onBrand} />
+    {happyEyes(p.colors.brand)}
+    <Path d="M32 60 Q50 84 68 60 Z" fill={p.colors.brand} />
     <Circle cx={24} cy={62} r={5} fill={p.colors.protein} opacity={0.5} />
     <Circle cx={76} cy={62} r={5} fill={p.colors.protein} opacity={0.5} />
   </Face>
@@ -116,10 +115,10 @@ const happy: MascotVisual = (p) => (
 
 const confused: MascotVisual = (p) => (
   <Face {...p}>
-    <Circle cx={36} cy={42} r={6} fill={p.colors.onBrand} />
-    <Circle cx={64} cy={44} r={3} fill={p.colors.onBrand} />
-    <Path d="M56 32 L72 27" stroke={p.colors.onBrand} {...STROKE} />
-    <Path d="M34 68 Q42 60 50 68 T66 68" stroke={p.colors.onBrand} {...STROKE} />
+    <Circle cx={36} cy={42} r={6} fill={p.colors.brand} />
+    <Circle cx={64} cy={44} r={3} fill={p.colors.brand} />
+    <Path d="M56 32 L72 27" stroke={p.colors.brand} {...STROKE} />
+    <Path d="M34 68 Q42 60 50 68 T66 68" stroke={p.colors.brand} {...STROKE} />
   </Face>
 );
 
@@ -144,11 +143,17 @@ function tinted(body: string): Record<MascotAction, MascotVisual> {
   ) as Record<MascotAction, MascotVisual>;
 }
 
+export const MASCOT_BODY_COLORS: Partial<Record<MascotId, string>> = {
+  sprout: '#14B8A6',
+  berry: '#8B5CF6',
+  chili: '#F97316',
+};
+
 export const MASCOT_VISUALS: Record<MascotId, Record<MascotAction, MascotVisual>> = {
   default: DEFAULT_ACTIONS,
-  sprout: tinted('#14B8A6'),
-  berry: tinted('#8B5CF6'),
-  chili: tinted('#F97316'),
+  sprout: tinted(MASCOT_BODY_COLORS.sprout as string),
+  berry: tinted(MASCOT_BODY_COLORS.berry as string),
+  chili: tinted(MASCOT_BODY_COLORS.chili as string),
 };
 
 export function hasMascotArt(id: string): id is MascotId {

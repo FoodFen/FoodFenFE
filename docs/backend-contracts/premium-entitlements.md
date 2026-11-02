@@ -155,6 +155,24 @@ Response `200`:
   `days` (not its `id`); `409` means the balance is too low.
 - Errors: only generic `5xx`.
 
+## Mascots and coin history (notes)
+
+- `GET /mascots` and `POST /mascots/{id}/purchase` items carry
+  `images: { [state]: url }` — only states that have art, `{}` for the
+  hand-drawn `default`/`sprout`/`berry`/`chili`. States are the app's
+  `MascotAction` values. URLs are Cloudinary PNG/WebP (animated WebP
+  allowed). Items also carry `bodyColor`: `#RRGGBB` or `null`, where `null`
+  means the theme brand green (`#15803D` light / `#4ADE80` dark). The app
+  draws server art as-is, with no backdrop; the hand-drawn fallback face
+  is drawn in the bundled per-id color (sprout/berry/chili), else
+  `bodyColor`, else the brand color. The app draws: state image → `idle` image → hand-drawn visual →
+  Fen, and persists the catalogue's images and body colors on device so the equipped mascot
+  renders offline. Ids are admin-chosen slugs; an unknown id with no art
+  falls back to Fen.
+- `GET /coins/transactions` `reason` values: `quest_completed`,
+  `streak_bonus`, `purchase`, `spend` (Premium redeem), `mascot_purchase`,
+  `quiz_daily`, `quiz_practice`, `adjustment`.
+
 ## `GET /quests?date=YYYY-MM-DD&language=vi|en`
 
 **Bearer required.** Signed-out → `401` (`{ "message": "…" }`, treat the

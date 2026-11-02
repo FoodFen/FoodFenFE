@@ -1,8 +1,7 @@
 import { View } from 'react-native';
 
 import { Mascot } from '@/components/mascot/Mascot';
-import { mascotArtId } from '@/components/mascot/visuals';
-import { useEquippedMascotId } from '@/features/mascot/queries';
+import { useEquippedMascotId, useMascotBodyColor, useMascotImages } from '@/features/mascot/queries';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import type { MascotAction } from '@/lib/mascot';
 import { colorsFor } from '@/theme/colors';
@@ -21,7 +20,9 @@ export interface AiAvatarProps {
 export function AiAvatar({ size = 28, action = 'idle', glow = false }: AiAvatarProps) {
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
-  const mascotId = mascotArtId(useEquippedMascotId());
+  const mascotId = useEquippedMascotId();
+  const images = useMascotImages(mascotId);
+  const bodyColor = useMascotBodyColor(mascotId);
 
   return (
     <View style={{ width: size, height: size }} className="items-center justify-center">
@@ -41,7 +42,7 @@ export function AiAvatar({ size = 28, action = 'idle', glow = false }: AiAvatarP
           }}
         />
       ) : null}
-      <Mascot mascotId={mascotId} action={action} size={size} />
+      <Mascot mascotId={mascotId} images={images} bodyColor={bodyColor} action={action} size={size} />
     </View>
   );
 }

@@ -356,7 +356,14 @@ export const quest = sqliteTable(
 );
 
 export type CoinReason =
-  'quest_completed' | 'streak_bonus' | 'purchase' | 'spend' | 'adjustment';
+  | 'quest_completed'
+  | 'streak_bonus'
+  | 'purchase'
+  | 'spend'
+  | 'adjustment'
+  | 'mascot_purchase'
+  | 'quiz_daily'
+  | 'quiz_practice';
 
 export const coinTransaction = sqliteTable(
   'coin_transaction',

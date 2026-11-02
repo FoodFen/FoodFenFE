@@ -119,5 +119,7 @@ export const StorageKeys = {
   mascotWaterLagPct: 'mascot-water-lag-pct',
   mascotEquippedId: 'mascot-equipped-id',
   mascotPendingEquipId: 'mascot-pending-equip-id',
+  mascotImages: 'mascot-images',
+  mascotBodyColors: 'mascot-body-colors',
   scannedFoods: 'scanned-foods',
 } as const;

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { QueryClient } from '@tanstack/react-query';
+import { Image } from 'expo-image';
 
 import { mascotsApi } from '@/api/endpoints/mascots';
 import { ApiError, isApiError } from '@/api/errors';
@@ -9,6 +10,7 @@ import { useAuthStore } from '@/features/auth/store';
 import { DEFAULT_MASCOT_ID, useMascotEquipStore } from '@/features/mascot/equippedStore';
 import { useProfileStore } from '@/features/profile/store';
 import { env } from '@/lib/env';
+import { mascotImageUrl, type MascotImages } from '@/lib/mascot';
 import { queryKeys } from '@/lib/queryClient';
 
 /**
@@ -59,6 +61,13 @@ function sendEquip(id: string, onRejected: () => void): void {
   );
 }
 
+function prefetchMascotImages(id: string): void {
+  const images = useMascotEquipStore.getState().images[id];
+  const urls = images ? Object.values(images).map(mascotImageUrl) : [];
+
+  if (urls.length > 0) Image.prefetch(urls, { cachePolicy: 'disk' }).catch(() => {});
+}
+
 function applyCatalog(
   queryClient: QueryClient,
   userId: string | null,
@@ -70,9 +79,14 @@ function applyCatalog(
   const store = useMascotEquipStore.getState();
   const pending = store.pendingEquipId;
 
+  store.setImages(Object.fromEntries(catalog.mascots.map((m) => [m.id, m.images])));
+  store.setBodyColors(Object.fromEntries(catalog.mascots.map((m) => [m.id, m.bodyColor])));
+
   if (pending === null) store.adopt(catalog.equippedId);
   else if (pending === catalog.equippedId) store.settle(pending);
   else sendEquip(pending, () => store.settle(pending, catalog.equippedId));
+
+  prefetchMascotImages(useMascotEquipStore.getState().equippedId);
 }
 
 /** Mounted in the tabs layout; screens read the same query for the shop. */
@@ -135,6 +149,7 @@ export function useEquipMascot() {
     if (accountId === undefined || !env.hasBackend) return;
 
     useMascotEquipStore.getState().equip(id);
+    prefetchMascotImages(id);
     sendEquip(id, () => {
       useMascotEquipStore.getState().settle(id);
       void queryClient.invalidateQueries({
@@ -149,4 +164,12 @@ export function useEquippedMascotId(): string {
   const equippedId = useMascotEquipStore((state) => state.equippedId);
 
   return signedIn ? equippedId : DEFAULT_MASCOT_ID;
+}
+
+export function useMascotImages(id: string): MascotImages | undefined {
+  return useMascotEquipStore((state) => state.images[id]);
+}
+
+export function useMascotBodyColor(id: string): string | null {
+  return useMascotEquipStore((state) => state.bodyColors[id] ?? null);
 }

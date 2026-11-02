@@ -5,7 +5,7 @@ import { Alert, RefreshControl, View } from 'react-native';
 
 import { isApiError } from '@/api/errors';
 import { Mascot } from '@/components/mascot/Mascot';
-import { hasMascotArt, mascotArtId } from '@/components/mascot/visuals';
+import { hasMascotArt } from '@/components/mascot/visuals';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ScrollScreen } from '@/components/ui/Screen';
@@ -44,7 +44,9 @@ export default function ShopScreen() {
   const purchase = usePurchaseMascot();
   const equip = useEquipMascot();
   const equippedId = useEquippedMascotId();
-  const mascots = (catalog.data?.mascots ?? []).filter((mascot) => hasMascotArt(mascot.id));
+  const mascots = (catalog.data?.mascots ?? []).filter(
+    (mascot) => hasMascotArt(mascot.id) || mascot.images.idle !== undefined,
+  );
   const loadingMascots = !catalog.data && catalog.fetchStatus === 'fetching';
   const mascotsFailed = !loadingMascots && (catalog.isError || !catalog.data);
   const refetchCatalog = catalog.refetch;
@@ -229,7 +231,7 @@ export default function ShopScreen() {
 
           {mascots.map((mascot) => (
             <Card key={mascot.id} className="flex-row items-center gap-3">
-              <Mascot mascotId={mascotArtId(mascot.id)} action="idle" size={56} />
+              <Mascot mascotId={mascot.id} images={mascot.images} bodyColor={mascot.bodyColor} action="idle" size={56} />
               <View className="flex-1 gap-0.5">
                 <Text variant="label">{mascot.name}</Text>
                 {mascot.owned ? null : (
