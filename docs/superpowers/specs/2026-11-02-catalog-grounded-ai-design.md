@@ -187,9 +187,9 @@ tens of thousands of foods.
 - **Schema.** Extend `aiFoodAnalysisResponseSchema` with the new fields, all optional or nullable, so a
   BE without the change still parses.
 - **Draft rows.** In the meal draft (`app/log/manual.tsx` → `useDraftStore`), an AI row keeps
-  `catalogFoodId`, `verified` and `per100g`:
-  - editing grams re-scales from `per100g`;
-  - a row without `per100g` keeps today's behaviour.
+  `catalogFoodId` and `verified`. Editing grams already re-scales the row's own values proportionally in
+  `app/log/meal.tsx`. For a catalog-derived row that equals scaling from `per100g`, so the app doesn't use
+  `per100g` (the BE still sends it).
 - **Tick.** Draft rows show `VerifiedTick` when `verified`.
 - **Persistence.** Saving writes `catalogFoodId` onto `ingredient.catalog_food_id` (the column exists).
   No new column.

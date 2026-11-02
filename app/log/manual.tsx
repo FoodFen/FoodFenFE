@@ -87,8 +87,9 @@ const DESCRIBE_EXAMPLE_KEYS = [
 /**
  * Seed a fresh meal draft from an AI analysis and hand off to the composer.
  *
- * `catalogFoodId` stays null — these rows came from the model, not the
- * bundled catalog. `confidence` rides along on the draft row so the composer
+ * Rows may be matched to the catalog by the server: `catalogFoodId` (null when
+ * unmatched) is saved onto `ingredient.catalog_food_id`, and `verified` rides
+ * along on the draft row like `confidence`. `confidence` rides along on the draft row so the composer
  * can flag an uncertain guess, but `DraftIngredient` is the only place it
  * lives — `IngredientInput` (what `useLogMeal` actually persists) has no such
  * field, so it never reaches the database.
@@ -109,8 +110,9 @@ function applyAnalysisToDraft(
       proteinG: ing.proteinG,
       fatG: ing.fatG,
       fiberG: ing.fiberG ?? null,
-      catalogFoodId: null,
+      catalogFoodId: ing.catalogFoodId ?? null,
       confidence: ing.confidence,
+      verified: ing.verified ?? false,
     });
   }
 

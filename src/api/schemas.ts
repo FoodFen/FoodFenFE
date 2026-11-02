@@ -260,6 +260,9 @@ export const aiIngredientSchema = z.object({
   fiberG: z.number().nonnegative().nullish(),
   /** 0–1, how confident the model is in this specific row. Not stored. */
   confidence: z.number().min(0).max(1),
+  /** Catalog slug the server matched this row to; absent from older servers. */
+  catalogFoodId: z.string().nullish(),
+  verified: z.boolean().optional(),
 });
 
 export const aiFoodAnalysisResponseSchema = z.object({

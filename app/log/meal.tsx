@@ -10,6 +10,7 @@ import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { NumberField } from '@/components/ui/NumberField';
 import { Text } from '@/components/ui/Text';
+import { VerifiedTick } from '@/components/ui/VerifiedTick';
 import {
   draftName,
   draftTotals,
@@ -188,6 +189,7 @@ export default function MealComposerScreen() {
                       <Text variant="body" numberOfLines={1}>
                         {row.name}
                       </Text>
+                      <VerifiedTick verified={row.verified} />
                       {row.confidence !== undefined && row.confidence < LOW_CONFIDENCE ? (
                         <Ionicons
                           name="help-circle-outline"
@@ -232,7 +234,7 @@ export default function MealComposerScreen() {
                     <Input
                       label={t('logMeal', 'ingredientNameLabel')}
                       value={row.name}
-                      onChangeText={(name) => draft.updateIngredient(row.key, { name })}
+                      onChangeText={(name) => draft.updateIngredient(row.key, { name, verified: false })}
                       autoCapitalize="sentences"
                     />
                     <NumberField

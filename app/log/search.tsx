@@ -86,7 +86,7 @@ export default function SearchFoodScreen() {
 
   const results = search.data ?? [];
   const showResults = debounced.trim().length >= 2;
-  const recentRows = recents.data ?? [];
+  const recentRows = (recents.data ?? []).filter((row) => getCatalogFood(row.catalogFoodId));
 
   return (
     <View className="flex-1 bg-bg">

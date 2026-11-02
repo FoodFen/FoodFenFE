@@ -31,6 +31,11 @@ export interface DraftIngredient extends IngredientInput {
    * the database.
    */
   confidence?: number;
+  /**
+   * True when the server matched this AI row to a source-cited catalog food.
+   * UI-only like `confidence` — never persisted.
+   */
+  verified?: boolean;
 }
 
 interface DraftState {
