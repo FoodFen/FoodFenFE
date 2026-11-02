@@ -56,8 +56,8 @@ export default function SettingsScreen() {
   const setTheme = useSettingsStore((state) => state.setTheme);
   const weightUnit = useSettingsStore((state) => state.weightUnit);
   const setWeightUnit = useSettingsStore((state) => state.setWeightUnit);
-  const devSeedEnabled = useSettingsStore((state) => state.devSeedEnabled);
-  const setDevSeedEnabled = useSettingsStore((state) => state.setDevSeedEnabled);
+  // const devSeedEnabled = useSettingsStore((state) => state.devSeedEnabled);
+  // const setDevSeedEnabled = useSettingsStore((state) => state.setDevSeedEnabled);
   const hideChallengeProgress = useSettingsStore((state) => state.hideChallengeProgress);
   const setHideChallengeProgress = useSettingsStore(
     (state) => state.setHideChallengeProgress,
@@ -497,7 +497,8 @@ export default function SettingsScreen() {
         ) : null}
       </Card>
 
-      {__DEV__ ? (
+      {/* Developer seed toggle hidden for now; uncomment to restore (also restore devSeedEnabled/setDevSeedEnabled above). */}
+      {/* {__DEV__ ? (
         <Card className="gap-3">
           <Text variant="heading">{t('developer', 'heading')}</Text>
           <SegmentedControl
@@ -512,7 +513,7 @@ export default function SettingsScreen() {
             {t('developer', 'seedData')}
           </Text>
         </Card>
-      ) : null}
+      ) : null} */}
 
       {isSignedIn ? (
         <Card flush>

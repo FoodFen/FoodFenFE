@@ -6,7 +6,7 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
-import { useQueryClient } from '@tanstack/react-query';
+// import { useQueryClient } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import { useFonts } from 'expo-font';
@@ -23,19 +23,19 @@ import { QuestToast } from '@/components/gamification/QuestToast';
 import { LogSheet } from '@/components/logging/LogSheet';
 import { ErrorState } from '@/components/ui/EmptyState';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
-import { clearSeededDays, seedRecentDays } from '@/data/devSeed';
+// import { clearSeededDays, seedRecentDays } from '@/data/devSeed';
 import { db, enableForeignKeys } from '@/db/client';
 import { connectAuthToApiClient, connectAuthToSync, useAuthStore } from '@/features/auth/store';
 import { reconcileNotifications } from '@/features/notifications/reconcile';
 import { useProfileStore } from '@/features/profile/store';
-import { useSettingsStore } from '@/features/settings/store';
+// import { useSettingsStore } from '@/features/settings/store';
 import { useAccountHydration } from '@/hooks/useAccountHydration';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { usePushSync } from '@/hooks/usePushSync';
 import { useReactQueryBridge } from '@/hooks/useReactQueryBridge';
 import { useSubscriptionSync } from '@/hooks/useSubscriptionSync';
 import { useTranslation } from '@/hooks/useTranslation';
-import { createQueryClient, persistOptions, queryKeys } from '@/lib/queryClient';
+import { createQueryClient, persistOptions /* , queryKeys */ } from '@/lib/queryClient';
 import { colorsFor } from '@/theme/colors';
 
 import migrations from '../drizzle/migrations';
@@ -155,26 +155,27 @@ function AppShell({ migrated }: { migrated: boolean }) {
   const profileId = useProfileStore((state) => state.profile?.id ?? null);
   const hasProfile = profileId !== null;
 
-  const devSeedEnabled = useSettingsStore((state) => state.devSeedEnabled);
-  const queryClient = useQueryClient();
+  // Dev seed disabled along with its Settings toggle; uncomment both to restore.
+  // const devSeedEnabled = useSettingsStore((state) => state.devSeedEnabled);
+  // const queryClient = useQueryClient();
 
   useReactQueryBridge();
   usePushSync();
   useAccountHydration();
   useSubscriptionSync();
 
-  // Dev-only: fill the last few days so the dashboard has data to render while
-  // food logging is unbuilt. The whole effect no-ops in a release build.
-  // Turning the Settings → Developer toggle off wipes the last-3-days window
-  // (dev-only; there is no real diary data there yet).
-  useEffect(() => {
-    if (!__DEV__ || !migrated || !profileId) return;
-
-    if (devSeedEnabled) seedRecentDays(profileId);
-    else clearSeededDays(profileId);
-
-    void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
-  }, [migrated, devSeedEnabled, profileId, queryClient]);
+  // // Dev-only: fill the last few days so the dashboard has data to render while
+  // // food logging is unbuilt. The whole effect no-ops in a release build.
+  // // Turning the Settings → Developer toggle off wipes the last-3-days window
+  // // (dev-only; there is no real diary data there yet).
+  // useEffect(() => {
+  //   if (!__DEV__ || !migrated || !profileId) return;
+  //
+  //   if (devSeedEnabled) seedRecentDays(profileId);
+  //   else clearSeededDays(profileId);
+  //
+  //   void queryClient.invalidateQueries({ queryKey: queryKeys.diary.all });
+  // }, [migrated, devSeedEnabled, profileId, queryClient]);
 
   // Re-evaluate meal/streak notifications once the profile is available —
   // covers first boot, and a profile appearing right after onboarding.

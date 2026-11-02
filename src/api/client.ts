@@ -201,7 +201,7 @@ async function send(
     // 'network' is a catch-all for whatever `fetch` itself threw — log the
     // raw error so a real-device repro (e.g. this exact image-upload bug)
     // shows what actually failed instead of just the generic user message.
-    if (env.isDev) console.error('[api] fetch failed, classified as network:', error);
+    if (env.isDev) console.warn('[api] fetch failed, classified as network:', error);
 
     throw new ApiError('network', 'Unable to reach the server.', { cause: error });
   }
