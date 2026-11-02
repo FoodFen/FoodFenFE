@@ -34,16 +34,29 @@ export const MEAL_COPY_KEYS: Record<
   dinner: { titleKey: 'mealDinnerTitle', bodyKey: 'mealDinnerBody' },
 };
 
+// Minutes of day, [start, end). The learned median is when entries were recorded, not eaten, so
+// catch-up logging can skew it far outside the meal's real slot.
+const PLAUSIBLE_MEAL_WINDOWS: Record<Meal, [number, number]> = {
+  breakfast: [4 * 60, 11 * 60],
+  lunch: [11 * 60, 16 * 60],
+  dinner: [16 * 60, 24 * 60],
+};
+
 export function resolveMealTime(
   userId: string,
   meal: Meal,
   reminderTime: TimeOfDay | null,
 ): TimeOfDay {
-  return (
-    reminderTime ??
-    notificationRepository.medianMealTime(userId, meal) ??
-    DEFAULT_MEAL_TIMES[meal]
-  );
+  if (reminderTime) return reminderTime;
+
+  const learned = notificationRepository.medianMealTime(userId, meal);
+  if (learned) {
+    const minutes = learned.hour * 60 + learned.minute;
+    const [start, end] = PLAUSIBLE_MEAL_WINDOWS[meal];
+    if (minutes >= start && minutes < end) return learned;
+  }
+
+  return DEFAULT_MEAL_TIMES[meal];
 }
 
 /**

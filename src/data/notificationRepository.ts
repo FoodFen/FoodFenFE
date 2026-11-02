@@ -3,7 +3,7 @@ import { and, eq, gte } from 'drizzle-orm';
 
 import { db } from '@/db/client';
 import { activityLog, foodEntry, waterLog } from '@/db/schema';
-import { shiftDateKey, todayKey } from '@/lib/date';
+import { shiftDateKey, toDateKey, todayKey } from '@/lib/date';
 import type { TimeOfDay } from '@/lib/notificationScheduler';
 
 import { notDeleted } from './sync';
@@ -50,7 +50,7 @@ export function medianMealTime(
   const since = shiftDateKey(todayKey(), -(days - 1));
 
   const rows = db
-    .select({ loggedAt: foodEntry.loggedAt })
+    .select({ loggedOn: foodEntry.loggedOn, loggedAt: foodEntry.loggedAt })
     .from(foodEntry)
     .where(
       and(
@@ -60,7 +60,9 @@ export function medianMealTime(
         notDeleted(foodEntry),
       ),
     )
-    .all();
+    .all()
+    // Back-filled entries (logged on a past day) record when they were typed in, not when the meal was eaten.
+    .filter((row) => toDateKey(row.loggedAt) === row.loggedOn);
 
   if (rows.length < MIN_SAMPLES) return null;
 
