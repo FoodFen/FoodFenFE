@@ -205,23 +205,210 @@ tens of thousands of foods.
 
 ---
 
-## Phase 3 — Admin catalog management (decision level; detail in its own session)
+## Phase 3 — Admin catalog management
 
-- **BE admin endpoints** (admin role, same auth as the existing admin endpoints): list with
-  accent-insensitive search and paging (reuse the restaurant-search approach), get, create, update,
-  archive/unarchive. No hard delete: slugs are referenced by users' logged meals.
-- **Admin-entered foods.**
-  - A food created by an admin gets `source_kind=team`, `source_ref="team"`, and is verified.
-  - Editing the numbers of a NIN/USDA/recipe/label food switches it to `team`: the admin now owns the
-    numbers, and the original reference is kept in the change log.
-  - A legacy food becomes verified once an admin saves it as `team`.
-- **Audit.** An append-only `food_change` log stores admin id, timestamp, action, and before/after
-  values. It is visible to admins only.
-- **Slug.** Generated from the name on create, unique, immutable after create.
-- Any change invalidates the Phase 2 prompt cache.
-- **Web.** An admin page "Thức ăn" beside the existing mascot and restaurant admin pages: a list with
-  search, a create/edit form (name, aliases, category, per-100 g numbers, servings), archive, and a view of
-  the change log for one food.
+Detailed with the owner on 2026-11-03.
+
+**Why.** Real users notice foods whose numbers are slightly off. They report it outside the app (the in-app
+report is deferred). An admin then fixes the food from the Web admin, and the next AI analysis uses the new
+numbers. Admins also add missing foods. A list of the names the AI could not match tells them which foods
+to add.
+
+**Who.** Any user with the admin role. There is one kind of admin and no approval step. An admin who saves
+a change is fully accountable for it. There is no "reason" or "source note" field.
+
+**Goals**
+- Admins can find any food by name (accent- and case-insensitive), fix its numbers, add new foods, archive
+  and unarchive foods.
+- Every create, edit, archive and unarchive is recorded: which admin, when, before and after.
+- An edit takes effect on the next AI analysis, with no deploy.
+- Admins see the food names the AI could not match, most frequent first, and can turn one into a new food
+  or dismiss it.
+- The catalog gets an English name per food.
+
+**Non-goals**
+- Bulk edit, CSV import or export.
+- Re-computing meals logged in the past. They keep the numbers they were saved with.
+- Mobile seeing the new numbers in manual search. That is Phase 4. In Phase 3 only AI results change.
+- Showing the English name anywhere in the Mobile app. Phase 4 carries it to the app; how it is displayed
+  is decided there.
+- Recipe breakdowns or ingredient lists for a food. The admin enters per-100 g figures directly.
+- Hard delete, ever.
+- Recording the name of a whole dish the AI broke into components (owner, 2026-11-03). Only unmatched
+  rows are recorded; the prompt is not changed for this.
+
+**Anti-goals**
+- An AI analysis that fails or slows down because recording an unmatched name failed.
+- An edit that stores the user's identity or photo anywhere in the unmatched-names log.
+- A catalog change that leaves the AI on stale numbers for longer than a TTL fallback.
+
+### BE
+
+**`foods` table changes**
+- Add `name_en` (nullable string, same length limit as `name`).
+- **Backfill** (data migration): for each food, `name_en` = the first alias that is pure ASCII and is not
+  just the folded Vietnamese name or a part of it (for example `bun cha` is skipped, `grilled pork with
+  noodles` is taken). Roughly 650 of 670 foods get one; the exact count depends on edge cases like
+  `cafe latte` for `latte`, and spot-checking a sample is enough. The rest stay null for admins to fill in.
+  - My call: the alias stays in `aliases` too. Removing it would change the prompt's catalog block and
+    could hurt matching.
+- The prompt's catalog block is unchanged (`slug | name | aliases | default g`). `name_en` is not added to
+  it, because the English alias is already there.
+- `updated_by_admin_id` (already present) is set on every admin write.
+
+**Source rules on save**
+- **Create:** `source_kind=team`, `source_ref="team"`, so the food is verified.
+- **Edit of any food, legacy included** (owner, 2026-11-03):
+  - If any of `kcal`, `carbs_g`, `protein_g`, `fat_g`, `fiber_g` changes, the food becomes `team` /
+    `"team"`.
+  - Changes to the name, English name, aliases, category or servings keep the source.
+  - The original source stays readable in the change log's "before" snapshot.
+- A legacy food gets a tick only when an admin changes one of its numbers. Renaming it alone keeps it
+  legacy and unticked.
+- `fiber_g` null means "not tracked" and stays distinct from 0 in the form, the API and storage.
+
+**Validation** (my call; the builder may tighten it)
+- `name`: required, 1–120 characters after trimming. No other non-archived or archived food may have the
+  same folded name; on a clash the API returns 409.
+- `name_en`: optional, up to 120 characters.
+- `aliases`: up to 20, each 1–80 characters, trimmed, with duplicates dropped.
+- `category`: one of the existing `FoodCategory` values.
+- Per 100 g:
+  - `kcal` must be an integer from 0 to 900;
+  - `carbs_g`, `protein_g`, `fat_g` each from 0 to 100, with a sum of at most 100;
+  - `fiber_g` is null, or from 0 to 100.
+- `servings`: 1–10 rows, each with a label of 1–40 characters and `grams` > 0 and ≤ 5000, and exactly one
+  marked as the default.
+
+**Slug.** Generated on create from the folded name: lowercase ASCII, with `đ` → `d` and non-alphanumeric
+runs replaced by `-`. The existing `fold()` in `src/application/dish_fit.py` already handles `đ`. On a
+clash, append `-2`, `-3`, and so on. The slug never changes afterwards, even when the name does.
+
+**Audit log `food_changes`** (append-only, admin-only)
+- `id`, `food_id` (FK), `admin_id` (FK users, `SET NULL`), `action`
+  (`create` | `update` | `archive` | `unarchive`), `before` (JSON, null for create), `after` (JSON),
+  `created_at`.
+- `before`/`after` are full snapshots of the editable fields plus `source_kind`/`source_ref`/`archived`.
+  The Web computes the diff.
+- Each change row is written in the same transaction as the food write.
+
+**Unmatched names log `food_misses`**
+- Written from the Phase 2 grounding step: for each row the server treats as unmatched (null or unknown
+  slug), upsert by `fold(name)`:
+  - store the display `name` from the first time it was seen and the request `language`;
+  - increment `count`;
+  - set `last_seen_at`.
+- Columns: `id`, `key` (unique folded name), `name`, `language`, `count`, `first_seen_at`, `last_seen_at`,
+  `status` (`open` | `ignored` | `resolved`), `resolved_food_id` (nullable FK foods).
+- No user id, no image, nothing else from the request.
+- Not written when `FOOD_ANALYSIS_GROUNDING` is off.
+- **Key normalisation** (my call): strip the count suffix (`"Egg (x3)"` → `"Egg"`), trim whitespace and
+  trailing punctuation, then `fold()`. The stored display `name` is the stripped first-seen form.
+- A failure to record is logged and swallowed: the analysis response is never affected. The upsert is one
+  statement per analysis (all of that analysis's unmatched names together). It must run in its own
+  session or a SAVEPOINT: a failed statement inside the request's session would poison it, and the later
+  trial consume and commit would fail with it.
+- **Auto-resolve** (my call): creating a food, or saving a new name/aliases, marks `resolved` every
+  `open` miss whose key equals the folded name, English name or an alias of that food.
+- A `missId` on create that is unknown or not `open` is ignored: the food is still created.
+- An `ignored` or `resolved` key keeps its status: later sightings still raise `count` and
+  `last_seen_at` but never re-open it (owner, 2026-11-03).
+
+**Admin endpoints** (under the existing `/admin` router and its admin dependency; camelCase on the wire;
+the same opaque `cursor` / `limit` (1–50, default 20) / `nextCursor` paging as `/admin/restaurants`)
+- `GET /admin/foods`
+  - Query: `q` (accent-insensitive substring over `name`, `nameEn`, `aliases`, `slug`), `category`,
+    `verified` (true/false), `archived` (default false; `true` lists only archived foods).
+  - Sorted by folded name.
+  - Each item has `slug`, `name`, `nameEn`, `category`, `sourceKind`, `sourceRef`, `verified`, per-100 g
+    numbers, `archived`, `updatedAt`.
+  - Searching in memory over all rows with `fold()` (as `/admin/users` does) or in SQL with `unaccent`
+    (as restaurants do) is the builder's call. Either way, `đ` must match `d`.
+- `GET /admin/foods/{slug}`: the full food, including `aliases`, `servings`, and the email of the last
+  admin to update it.
+- `POST /admin/foods`: create. The body is the editable fields. An optional `missId` marks that miss
+  `resolved` with `resolved_food_id` in the same transaction.
+- `PATCH /admin/foods/{slug}`: a partial update of the editable fields, with the source rules above.
+- `POST /admin/foods/{slug}/archive` and `POST /admin/foods/{slug}/unarchive`: idempotent; each writes a
+  change row only when the state actually flips. Unarchive returns 409 if a non-archived food now has the
+  same folded name (my call).
+- **Concurrent edits:** last write wins (my call). Both saves are in the change log.
+- **Search:** in memory with `fold()`, sorted by folded name and paged by slicing (my call). `aliases` is
+  a JSON column, so SQL `unaccent` over it would need a cast or a new column.
+- `GET /admin/foods/{slug}/changes`: newest first, each with the admin's email, `action`, `createdAt`,
+  `before`, `after`. No paging is needed at this size (my call).
+- `GET /admin/food-misses`: `status` (default `open`), paged, sorted by `count` descending and then
+  `lastSeenAt` descending.
+  - Each item carries `existingFood` (`{slug, name}` or null): a non-archived food whose folded name,
+    English name or an alias equals the miss key (owner, 2026-11-03). It is computed at read time against
+    the current catalog, never stored, so it is always up to date.
+  - It covers the case where the AI returned no catalog id even though a food with that exact name
+    exists. The admin sees it and ignores the miss. Grounding itself is not changed: the server does not
+    match by name.
+- `POST /admin/food-misses/{id}/ignore` and `POST /admin/food-misses/{id}/reopen`.
+
+**Cache**
+- Every food write (create, update, archive, unarchive) calls `FoodCatalogCache.invalidate()` after
+  commit.
+- The explicit Gemini context cache is keyed by the hash of the prompt prefix, so it rebuilds by itself
+  when the catalog block changes. The old cache simply expires. Nothing else needs invalidating.
+- Prod runs one instance (Render free plan). If it ever scales out, other instances pick up the change
+  within the cache's 600 s TTL. That is acceptable, and noted here so nobody is surprised.
+- An archived food disappears from the prompt and from matching on the next analysis. It still exists for
+  meals already logged with it.
+
+**Mobile.** No Mobile change in Phase 3. The AI contract is unchanged: `catalogName` stays the Vietnamese
+name.
+
+### Web — admin page "Thức ăn"
+
+- **Placement.** A new admin nav entry "Thức ăn" (en: "Foods") beside the mascot and restaurant pages, at
+  route `/admin/foods`, following the existing admin page, table, toolbar and dialog patterns
+  (`src/features/admin/`).
+- **Two tabs.**
+  1. **"Danh mục"** (catalog):
+     - A table with columns name (with the English name under it, muted), category, kcal/100 g, source
+       (tick when verified, else a "chưa có nguồn" badge), and updated.
+     - A toolbar with search, a category filter, a "verified / not verified" filter and a "show archived"
+       toggle.
+     - A "Thêm món" button.
+     - Clicking a row opens the edit dialog.
+  2. **"AI chưa nhận ra"** (misses):
+     - A table with name (plus an "EN" badge when `language` isn't `vi`), count, and last seen.
+     - Each row has **Thêm món** (opens the create dialog and sends `missId`) and **Bỏ qua** (ignore).
+       The miss name is prefilled into `name`, or into `nameEn` when the miss's language isn't `vi`
+       (my call).
+     - When `existingFood` is set, the row shows a badge "Đã có trong danh mục: <name>" that links to that
+       food. **Thêm món** is hidden on that row, and **Bỏ qua** stays.
+     - A status filter `open` / `ignored` / `resolved`, where an ignored or resolved row can be re-opened.
+- **Create/edit dialog.**
+  - Fields: name, English name, aliases (tag input), category (select), per-100 g kcal/carbs/protein/fat,
+    and fiber (empty = not tracked).
+  - A servings editor: rows of label + grams, one default radio, add/remove.
+  - Client-side Zod validation mirrors the BE rules. The slug is shown read-only on edit.
+  - When editing a sourced (non-team) food, a one-line notice warns that changing any number switches its
+    source to "FoodFen team".
+- **Food detail actions** in the dialog: "Lưu trữ" / "Bỏ lưu trữ" (with a confirm) and a "Lịch sử" panel
+  listing the change rows: admin email, time, action, and the fields that differ between before and after.
+- **Copy** in `vi` and `en` locale files, like the other admin pages.
+
+### Done when
+- **BE:**
+  - the migration applies on prod data: `name_en` is backfilled for roughly 650 foods, and `food_changes` and
+    `food_misses` exist;
+  - create, update, archive and unarchive behave as above, each writing exactly one change row;
+  - the source switches to `team` exactly per the rules;
+  - an edited food's new numbers come back from the next analysis without a restart;
+  - an unmatched analysis row creates or increments a miss;
+  - a failing miss upsert doesn't fail the analysis;
+  - tests, `lint-imports` and the BE verify command all pass.
+- **Web:** an admin can find "bun cha" by typing it without accents, fix its kcal, see the change in
+  "Lịch sử", add a food from a miss, archive it and unarchive it; and Web verify passes.
+
+### Left to the builders
+- Table and column names within BE conventions, and the exact JSON shape of the snapshots.
+- In-memory vs SQL search (see above).
+- Web layout details, within the existing admin patterns.
 
 ## Phase 4 — Mobile syncs the catalog (decision level; detail in its own session)
 
