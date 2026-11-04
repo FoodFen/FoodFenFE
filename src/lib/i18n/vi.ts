@@ -23,6 +23,8 @@ export const vi = {
     cancel: 'Hủy',
     done: 'Xong',
     retry: 'Thử lại',
+    reload: 'Tải lại',
+    needsConnection: 'Tính năng này cần kết nối mạng',
     enable: 'Bật',
     delete: 'Xóa',
     name: 'Tên',
@@ -591,6 +593,11 @@ export const vi = {
     equippedLabel: 'Đang dùng',
     buyConfirmTitle: 'Mua {name}?',
     buyConfirmMessage: 'Bạn sẽ dùng {cost} xu để mua linh vật này.',
+    signInRequiredTitle: 'Cần đăng nhập',
+    signInRequiredButton: 'Đăng nhập',
+    signInRequiredMascot: 'Đăng nhập để mua và dùng linh vật.',
+    signInRequiredRedeem: 'Đăng nhập để đổi xu lấy Premium.',
+    signInRequiredHistory: 'Đăng nhập để xem lịch sử xu của bạn.',
   },
 
   coinHistory: {

@@ -21,6 +21,8 @@ export const en: DeepPartial<Translations> = {
     cancel: 'Cancel',
     done: 'Done',
     retry: 'Retry',
+    reload: 'Reload',
+    needsConnection: 'This feature needs an internet connection',
     enable: 'Enable',
     delete: 'Delete',
     name: 'Name',
@@ -573,6 +575,11 @@ export const en: DeepPartial<Translations> = {
     equippedLabel: 'Equipped',
     buyConfirmTitle: 'Buy {name}?',
     buyConfirmMessage: 'This will cost {cost} coins.',
+    signInRequiredTitle: 'Sign in required',
+    signInRequiredButton: 'Sign in',
+    signInRequiredMascot: 'Sign in to buy and use mascots.',
+    signInRequiredRedeem: 'Sign in to redeem coins for Premium.',
+    signInRequiredHistory: 'Sign in to see your coin history.',
   },
 
   coinHistory: {

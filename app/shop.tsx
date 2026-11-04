@@ -20,7 +20,6 @@ import {
 } from '@/features/gamification/coinHistory';
 import {
   useCoinBundles,
-  useCoinHistoryAvailable,
   useRedeemCoins,
 } from '@/features/gamification/queries';
 import {
@@ -44,14 +43,14 @@ export default function ShopScreen() {
   const colors = colorsFor(resolved);
   const { data: balance = 0 } = useCoinBalance();
   const redeem = useRedeemCoins();
-  const historyAvailable = useCoinHistoryAvailable();
   const failedRedeem = useRef<FailedRedeem | null>(null);
   const { data: bundleData, isError, fetchStatus, refetch } = useCoinBundles();
   const bundles = bundleData?.bundles ?? [];
   const loadingBundles = bundles.length === 0 && fetchStatus === 'fetching';
   const bundlesFailed = !loadingBundles && (isError || bundles.length === 0);
 
-  const showMascots = useAuthStore((state) => state.session !== null) && env.hasBackend;
+  const signedIn = useAuthStore((state) => state.session !== null);
+  const showMascots = env.hasBackend;
   const catalog = useMascotCatalog();
   const purchase = usePurchaseMascot();
   const equip = useEquipMascot();
@@ -74,7 +73,20 @@ export default function ShopScreen() {
     setRefreshing(false);
   };
 
+  const promptSignIn = (message: string): boolean => {
+    if (signedIn) return false;
+
+    Alert.alert(t('shop', 'signInRequiredTitle'), message, [
+      { text: t('common', 'cancel'), style: 'cancel' },
+      { text: t('shop', 'signInRequiredButton'), onPress: () => router.push('/sign-in') },
+    ]);
+
+    return true;
+  };
+
   const confirmBuy = (id: string, name: string, coinCost: number) => {
+    if (promptSignIn(t('shop', 'signInRequiredMascot'))) return;
+
     if (balance < coinCost) {
       Alert.alert(t('shop', 'insufficientCoins'));
       return;
@@ -109,6 +121,8 @@ export default function ShopScreen() {
   };
 
   const confirmRedeem = (days: number, coinCost: number) => {
+    if (promptSignIn(t('shop', 'signInRequiredRedeem'))) return;
+
     if (balance < coinCost) {
       Alert.alert(t('shop', 'insufficientCoins'));
       return;
@@ -178,9 +192,11 @@ export default function ShopScreen() {
         </View>
       </Card>
 
-      {historyAvailable ? (
+      {env.hasBackend ? (
         <Pressable
-          onPress={() => router.push('/coin-history')}
+          onPress={() => {
+            if (!promptSignIn(t('shop', 'signInRequiredHistory'))) router.push('/coin-history');
+          }}
           accessibilityRole="button"
           accessibilityLabel={t('shop', 'historyRow')}
         >
@@ -217,7 +233,7 @@ export default function ShopScreen() {
       ) : null}
 
       {bundles.map((bundle) => {
-        const affordable = balance >= bundle.coinCost;
+        const affordable = !signedIn || balance >= bundle.coinCost;
 
         return (
           <Card key={bundle.id} className="flex-row items-center justify-between gap-3">
@@ -293,6 +309,8 @@ export default function ShopScreen() {
                   label={t('shop', 'equipButton')}
                   variant="secondary"
                   onPress={() => {
+                    if (promptSignIn(t('shop', 'signInRequiredMascot'))) return;
+
                     haptics.selection();
                     equip(mascot.id);
                   }}

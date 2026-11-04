@@ -17,7 +17,7 @@ import { QuizSignInPrompt } from '@/components/quiz/QuizSignInPrompt';
 import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
+import { ErrorState, OfflineState } from '@/components/ui/EmptyState';
 import { PressableScale } from '@/components/ui/PressableScale';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Screen, ScrollScreen } from '@/components/ui/Screen';
@@ -42,7 +42,7 @@ export default function QuizScreen() {
   if (isPending) {
     return fetchStatus === 'paused' ? (
       <Screen>
-        <EmptyState icon="cloud-offline-outline" title={t('quiz', 'needsConnection')} />
+        <OfflineState description={t('quiz', 'needsConnection')} onRetry={refetch} />
       </Screen>
     ) : (
       <ScrollScreen>

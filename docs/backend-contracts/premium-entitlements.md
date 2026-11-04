@@ -195,6 +195,11 @@ Response `200`:
   Fen, and persists the catalogue's images and body colors on device so the equipped mascot
   renders offline. Ids are admin-chosen slugs; an unknown id with no art
   falls back to Fen.
+- `GET /mascots` also answers **without a bearer token**, so a signed-out user can browse the shop. The
+  response has the same shape: `balance: 0`, `equippedId` = the default mascot, and every active mascot
+  with `owned` as a brand-new account would see it. An invalid or expired token is still `401`, never a
+  silent guest answer, so the app's refresh flow keeps working. `PUT /mascots/equipped` and
+  `POST /mascots/{id}/purchase` still require auth.
 - `GET /coins/transactions` `reason` values: `quest_completed`,
   `streak_bonus`, `purchase`, `spend` (Premium redeem), `mascot_purchase`,
   `quiz_daily`, `quiz_practice`, `adjustment`.

@@ -16,7 +16,7 @@ import { isApiError } from '@/api/errors';
 import type { RemoteListedDish } from '@/api/schemas';
 import { AddDishSheet } from '@/components/dishes/AddDishSheet';
 import { DishRow } from '@/components/dishes/DishRow';
-import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
+import { EmptyState, ErrorState, OfflineState } from '@/components/ui/EmptyState';
 import { Screen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
@@ -112,7 +112,7 @@ export default function DishListScreen() {
     }
 
     if (!data && isPending && fetchStatus === 'paused') {
-      return <EmptyState icon="cloud-offline-outline" title={t('dishes', 'needsConnection')} />;
+      return <OfflineState description={t('dishes', 'needsConnection')} onRetry={refetch} />;
     }
 
     if (!data && isPending) {

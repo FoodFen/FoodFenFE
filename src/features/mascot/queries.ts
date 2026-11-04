@@ -68,6 +68,13 @@ function prefetchMascotImages(id: string): void {
   if (urls.length > 0) Image.prefetch(urls, { cachePolicy: 'disk' }).catch(() => {});
 }
 
+function storeCatalogArt(catalog: RemoteMascotCatalog): void {
+  const store = useMascotEquipStore.getState();
+
+  store.setImages(Object.fromEntries(catalog.mascots.map((m) => [m.id, m.images])));
+  store.setBodyColors(Object.fromEntries(catalog.mascots.map((m) => [m.id, m.bodyColor])));
+}
+
 function applyCatalog(
   queryClient: QueryClient,
   userId: string | null,
@@ -79,8 +86,7 @@ function applyCatalog(
   const store = useMascotEquipStore.getState();
   const pending = store.pendingEquipId;
 
-  store.setImages(Object.fromEntries(catalog.mascots.map((m) => [m.id, m.images])));
-  store.setBodyColors(Object.fromEntries(catalog.mascots.map((m) => [m.id, m.bodyColor])));
+  storeCatalogArt(catalog);
 
   if (pending === null) store.adopt(catalog.equippedId);
   else if (pending === catalog.equippedId) store.settle(pending);
@@ -93,6 +99,7 @@ function applyCatalog(
 export function useMascotCatalog() {
   const userId = useUserId();
   const accountId = useAccountId();
+  const authReady = useAuthStore((state) => state.status !== 'loading');
   const queryClient = useQueryClient();
 
   return useQuery({
@@ -100,11 +107,12 @@ export function useMascotCatalog() {
     queryFn: async ({ signal }) => {
       const catalog = await forCurrentAccount(() => mascotsApi.list(signal));
 
-      applyCatalog(queryClient, userId, catalog);
+      if (useAuthStore.getState().session) applyCatalog(queryClient, userId, catalog);
+      else storeCatalogArt(catalog);
 
       return catalog;
     },
-    enabled: accountId !== undefined && env.hasBackend,
+    enabled: authReady && env.hasBackend,
     staleTime: 30_000,
     networkMode: 'always',
     retry: false,

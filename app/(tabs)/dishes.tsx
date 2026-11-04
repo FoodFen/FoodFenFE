@@ -17,7 +17,7 @@ import { AddDishSheet } from '@/components/dishes/AddDishSheet';
 import { DishRow } from '@/components/dishes/DishRow';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
+import { EmptyState, ErrorState, OfflineState } from '@/components/ui/EmptyState';
 import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
@@ -98,7 +98,7 @@ export default function DishesScreen() {
   if (!data && isPending && fetchStatus === 'paused') {
     return (
       <Screen tabBar topInset>
-        <EmptyState icon="cloud-offline-outline" title={t('dishes', 'needsConnection')} />
+        <OfflineState description={t('dishes', 'needsConnection')} onRetry={refetch} />
       </Screen>
     );
   }

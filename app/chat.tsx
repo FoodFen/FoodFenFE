@@ -2,7 +2,7 @@ import { Chat, LoadEarlierMessages, useStreamingMessages } from '@kesha-antonov/
 import { useQueryClient, onlineManager } from '@tanstack/react-query';
 import { Stack, router, useLocalSearchParams, useNavigation } from 'expo-router';
 import type { NativeStackNavigationProp } from 'expo-router';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import type { TextInput } from 'react-native';
 
 import { streamChatReply } from '@/api/endpoints/chat';
@@ -12,7 +12,7 @@ import type { FreshIds } from '@/components/chat/ChatBubble';
 import { ChatEmpty } from '@/components/chat/ChatEmpty';
 import { ChatHeaderTitle } from '@/components/chat/ChatHeaderTitle';
 import { ChatSendButton } from '@/components/chat/ChatSendButton';
-import { EmptyState, ErrorState } from '@/components/ui/EmptyState';
+import { EmptyState, OfflineState } from '@/components/ui/EmptyState';
 import { Screen } from '@/components/ui/Screen';
 import { canUseRemote } from '@/data/sync';
 import { useAuthStore } from '@/features/auth/store';
@@ -44,11 +44,12 @@ export default function ChatScreen() {
   // Cast: Chat types textInputRef as RefObject<TextInput> (React 18 typings), not RefObject<TextInput | null>.
   const inputRef = useRef<TextInput>(null as unknown as TextInput);
   const session = useAuthStore((state) => state.session);
+  const online = useSyncExternalStore(onlineManager.subscribe, () => onlineManager.isOnline());
   const available = canUseRemote();
   // The one reason among the three `canUseRemote()` checks worth a distinct
   // affordance: everything else about the build/connection is fine, only
   // signing in is missing.
-  const isNoSessionReason = env.hasBackend && onlineManager.isOnline() && !session;
+  const isNoSessionReason = env.hasBackend && online && !session;
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useChatHistory({
     enabled: available,
@@ -204,10 +205,7 @@ export default function ChatScreen() {
             onAction={() => router.push('/sign-in')}
           />
         ) : (
-          <ErrorState
-            title={t('chat', 'unavailableTitle')}
-            description={t('chat', 'unavailableDescription')}
-          />
+          <OfflineState />
         )}
       </Screen>
     );

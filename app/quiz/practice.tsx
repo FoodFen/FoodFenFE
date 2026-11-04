@@ -6,7 +6,7 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { QuizSignInPrompt } from '@/components/quiz/QuizSignInPrompt';
 import { Card } from '@/components/ui/Card';
-import { ErrorState } from '@/components/ui/EmptyState';
+import { ErrorState, OfflineState } from '@/components/ui/EmptyState';
 import { PressableScale } from '@/components/ui/PressableScale';
 import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -54,9 +54,7 @@ export default function PracticeTopicsScreen() {
     return (
       <ScrollScreen>
         {fetchStatus === 'paused' ? (
-          <Text variant="body" tone="muted">
-            {t('quiz', 'needsConnection')}
-          </Text>
+          <OfflineState description={t('quiz', 'needsConnection')} onRetry={refetch} />
         ) : (
           <>
             <Skeleton className="h-14 rounded-card" />

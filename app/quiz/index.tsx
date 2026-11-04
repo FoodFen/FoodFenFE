@@ -5,6 +5,7 @@ import { isApiError } from '@/api/errors';
 import { QuizSignInPrompt } from '@/components/quiz/QuizSignInPrompt';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { OfflineState } from '@/components/ui/EmptyState';
 import { ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
@@ -39,9 +40,11 @@ export default function QuizHubScreen() {
             />
           </>
         ) : isPending && fetchStatus === 'paused' ? (
-          <Text variant="body" tone="muted">
-            {t('quiz', 'needsConnection')}
-          </Text>
+          <OfflineState
+            description={t('quiz', 'needsConnection')}
+            onRetry={refetch}
+            className="px-0 py-2"
+          />
         ) : isPending ? (
           <View className="gap-2">
             <Skeleton className="h-4 w-48" />
