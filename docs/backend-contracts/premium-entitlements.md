@@ -185,13 +185,13 @@ Response `200`:
 
 - `GET /mascots` and `POST /mascots/{id}/purchase` items carry
   `images: { [state]: url }` — only states that have art, `{}` for the
-  hand-drawn `default`/`sprout`/`berry`/`chili`. States are the app's
+  bundled-art `default` and the hand-drawn `sprout`/`berry`/`chili`. States are the app's
   `MascotAction` values. URLs are Cloudinary PNG/WebP (animated WebP
   allowed). Items also carry `bodyColor`: `#RRGGBB` or `null`, where `null`
   means the theme brand green (`#15803D` light / `#4ADE80` dark). The app
   draws server art as-is, with no backdrop; the hand-drawn fallback face
   is drawn in the bundled per-id color (sprout/berry/chili), else
-  `bodyColor`, else the brand color. The app draws: state image → `idle` image → hand-drawn visual →
+  `bodyColor`, else the brand color (the bundled `default` art is a raster and is never tinted). The app draws: state image → `idle` image → hand-drawn visual →
   Fen, and persists the catalogue's images and body colors on device so the equipped mascot
   renders offline. Ids are admin-chosen slugs; an unknown id with no art
   falls back to Fen.

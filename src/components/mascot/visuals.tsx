@@ -1,5 +1,6 @@
-// Mascot art registry: mascot id -> action -> one static visual. Placeholders are drawn with SVG;
-// replace an entry with an expo-image `<Image source={require(...)} />` once the real art arrives.
+// Mascot art registry: mascot id -> action -> one static visual. `default` is bundled raster art (one pose for every
+// action); the other mascots are SVG placeholders tinted per id.
+import { Image } from 'expo-image';
 import type { ReactElement, ReactNode } from 'react';
 import Svg, { Circle, Ellipse, Path, Rect } from 'react-native-svg';
 
@@ -122,7 +123,7 @@ const confused: MascotVisual = (p) => (
   </Face>
 );
 
-const DEFAULT_ACTIONS: Record<MascotAction, MascotVisual> = {
+const FACE_ACTIONS: Record<MascotAction, MascotVisual> = {
   idle,
   hungry,
   thirsty,
@@ -136,12 +137,22 @@ const DEFAULT_ACTIONS: Record<MascotAction, MascotVisual> = {
 
 function tinted(body: string): Record<MascotAction, MascotVisual> {
   return Object.fromEntries(
-    Object.entries(DEFAULT_ACTIONS).map(([action, visual]) => [
+    Object.entries(FACE_ACTIONS).map(([action, visual]) => [
       action,
       (p: MascotVisualProps) => visual({ ...p, colors: { ...p.colors, brand: body } as ThemeColors }),
     ]),
   ) as Record<MascotAction, MascotVisual>;
 }
+
+const FEN_IMAGE = require('../../../assets/mascot-default.png') as number;
+
+const fen: MascotVisual = ({ size }) => (
+  <Image source={FEN_IMAGE} style={{ width: size, height: size }} contentFit="contain" />
+);
+
+const DEFAULT_ACTIONS = Object.fromEntries(
+  Object.keys(FACE_ACTIONS).map((action) => [action, fen]),
+) as Record<MascotAction, MascotVisual>;
 
 export const MASCOT_BODY_COLORS: Partial<Record<MascotId, string>> = {
   sprout: '#14B8A6',
