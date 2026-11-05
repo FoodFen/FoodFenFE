@@ -122,4 +122,5 @@ export const StorageKeys = {
   mascotImages: 'mascot-images',
   mascotBodyColors: 'mascot-body-colors',
   scannedFoods: 'scanned-foods',
+  catalogCursor: 'catalog-cursor',
 } as const;

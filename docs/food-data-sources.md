@@ -5,6 +5,16 @@ source and an identifier inside that source. Vietnamese data takes priority:
 a food that exists in the NIN table is cited from NIN, and USDA is used only
 for what NIN does not cover.
 
+> **The BE is the only place foods are edited.** Admins fix and add foods in the
+> Web admin; the app merges those changes over its bundled list at runtime (see
+> "Sync & local-first" in `docs/feature-notes.md`). `scripts/build-catalog.mjs`
+> and the hand-authored `data/catalog` files are kept only as the record of
+> where the original numbers came from. **Editing them has no effect**, and the
+> build script is not run any more: it writes the old array shape and would
+> break the bundle. Before each app release run `npm run catalog:pull`
+> (`scripts/pull-catalog.mjs`): it fetches `GET /foods` and rewrites
+> `src/data/catalog/foods.json` as `{ snapshotAt, foods }`. Commit the result.
+
 ## Sources
 
 ### NIN — Bảng thành phần thực phẩm Việt Nam (2007)
@@ -84,10 +94,11 @@ Each record in `data/catalog/*.json` names its source, and
 - **Output:** the built `foods.json` carries `source`, a `sourceRef`
   (`nin:…`, `usda:…`, `label:<brand>`) and `verified: true`. The app shows a
   green tick next to a verified food's name.
-- **Enforcement:** `npm run catalog:build` fails on any record without a
-  cited source. While old records are being migrated,
-  `node scripts/build-catalog.mjs --allow-legacy` passes them through unchanged
-  and without the tick.
+- **Enforcement (historical):** `node scripts/build-catalog.mjs` failed on any
+  record without a cited source, and `--allow-legacy` passed old records through
+  without the tick. The server now holds the same rule: `verified` is
+  `sourceKind != legacy`, and an admin-entered food is `team`
+  (shown as "FoodFen team").
 
 ### Migration status
 

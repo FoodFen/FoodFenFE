@@ -522,3 +522,31 @@ export type RemotePublicRestaurant = z.infer<typeof publicRestaurantSchema>;
 export type RemoteQuiz = z.infer<typeof quizSchema>;
 export type RemoteQuizResult = z.infer<typeof quizResultSchema>;
 export type RemoteQuizTopic = z.infer<typeof quizTopicsResponseSchema>['topics'][number];
+
+export const catalogFoodSchema = z.object({
+  slug: z.string(),
+  name: z.string(),
+  nameEn: z.string().nullable(),
+  aliases: z.array(z.string()),
+  category: z.string(),
+  sourceKind: z.enum(['nin', 'usda', 'recipe', 'label', 'team', 'legacy']),
+  sourceRef: z.string().nullable(),
+  verified: z.boolean(),
+  per100g: z.object({
+    kcal: z.number(),
+    carbsG: z.number(),
+    proteinG: z.number(),
+    fatG: z.number(),
+    fiberG: z.number().nullable(),
+  }),
+  servings: z.array(z.object({ label: z.string(), grams: z.number(), default: z.boolean() })),
+  archived: z.boolean(),
+  updatedAt: z.string(),
+});
+
+export const catalogResponseSchema = z.object({
+  foods: z.array(catalogFoodSchema),
+  serverTime: z.string(),
+});
+
+export type RemoteCatalogFood = z.infer<typeof catalogFoodSchema>;

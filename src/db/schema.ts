@@ -400,6 +400,17 @@ export const subscription = sqliteTable('subscription', {
   ...syncColumns,
 });
 
+/**
+ * Foods synced from the server catalog, merged over the bundled list by slug.
+ * Public data with no owner, so `eraseDatabase()` leaves it alone.
+ */
+export const catalogFood = sqliteTable('catalog_food', {
+  slug: text('slug').primaryKey(),
+  /** The server's food JSON, verbatim. */
+  payload: text('payload').notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp_ms' }).notNull(),
+});
+
 export const userRelations = relations(user, ({ many, one }) => ({
   dailyGoals: many(dailyGoal),
   foodEntries: many(foodEntry),
@@ -455,3 +466,4 @@ export type StreakRow = typeof streak.$inferSelect;
 export type QuestRow = typeof quest.$inferSelect;
 export type CoinTransactionRow = typeof coinTransaction.$inferSelect;
 export type SubscriptionRow = typeof subscription.$inferSelect;
+export type CatalogFoodRow = typeof catalogFood.$inferSelect;

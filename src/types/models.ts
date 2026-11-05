@@ -123,6 +123,8 @@ export interface CatalogServing {
 export interface CatalogFood {
   id: string;
   name: string;
+  /** English name; absent when the food has none. Show it through `foodDisplayName`. */
+  nameEn?: string;
   brand?: string;
   /** Folded search terms — no-diacritic Vietnamese plus English. */
   aliases: string[];
@@ -133,4 +135,6 @@ export interface CatalogFood {
   servings: CatalogServing[];
   /** True when the nutrition is cited to a source (NIN / USDA / label / recipe of cited ingredients). */
   verified?: boolean;
+  /** Hidden from search and recents, still resolvable by id. */
+  archived?: boolean;
 }

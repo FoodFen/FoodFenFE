@@ -94,7 +94,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "verify": "npm run typecheck && npm run lint && npm test",
-    "catalog:build": "node scripts/build-catalog.mjs",
+    "catalog:pull": "node scripts/pull-catalog.mjs",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio"
   },

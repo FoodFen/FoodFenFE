@@ -10,6 +10,7 @@ import { userErrorMessage } from '@/api/errors';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
+import { foodDisplayName } from '@/data/foodCatalog';
 import { useAuthStore } from '@/features/auth/store';
 import { isAiQuotaSpent } from '@/features/diary/aiQuota';
 import { useAiQuota, useBarcodeLookup } from '@/features/diary/queries';
@@ -32,7 +33,7 @@ import { colorsFor } from '@/theme/colors';
 const BARCODE_TYPES = ['ean13', 'ean8', 'upc_a', 'upc_e'] as const;
 
 export default function CameraScreen() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const insets = useSafeAreaInsets();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
@@ -167,7 +168,7 @@ export default function CameraScreen() {
             accessibilityRole="button"
             accessibilityLabel={t('logCamera', 'detectedA11y').replace(
               '{name}',
-              food.name,
+              foodDisplayName(food, locale),
             )}
             className="flex-row items-center gap-3 self-stretch rounded-card border border-border bg-surface px-4 py-3 active:bg-surface-alt"
           >
@@ -176,7 +177,7 @@ export default function CameraScreen() {
                 {t('logCamera', 'detected')}
               </Text>
               <Text variant="heading" numberOfLines={2}>
-                {food.name}
+                {foodDisplayName(food, locale)}
               </Text>
             </View>
             <Ionicons name="chevron-forward" size={18} color={colors.fgSubtle} />

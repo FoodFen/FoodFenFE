@@ -29,6 +29,7 @@ import { NumberField } from '@/components/ui/NumberField';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
 import { VerifiedTick } from '@/components/ui/VerifiedTick';
+import { foodDisplayName } from '@/data/foodCatalog';
 import { useAuthStore } from '@/features/auth/store';
 import { isAiQuotaSpent } from '@/features/diary/aiQuota';
 import { useDraftStore } from '@/features/diary/draftStore';
@@ -126,7 +127,7 @@ function applyAnalysisToDraft(
 }
 
 export default function ManualEntryScreen() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const insets = useSafeAreaInsets();
@@ -313,7 +314,7 @@ export default function ManualEntryScreen() {
     const serving = food.servings.find((s) => s.id === servingId);
     const n = nutritionForServing(food, 1, servingId);
 
-    setName(food.name);
+    setName(foodDisplayName(food, locale));
     setAmount(serving ? Math.round(serving.grams) : null);
     setAmountUnit('g');
     setKcal(n.kcal);
@@ -464,7 +465,7 @@ export default function ManualEntryScreen() {
                         accessibilityRole="button"
                         accessibilityLabel={t('logManual', 'pickSuggestionA11y').replace(
                           '{name}',
-                          food.name,
+                          foodDisplayName(food, locale),
                         )}
                         className={cn(
                           'px-3 py-3 active:bg-surface-alt',
@@ -473,7 +474,7 @@ export default function ManualEntryScreen() {
                       >
                         <View className="flex-row items-center gap-1.5">
                           <Text variant="body" numberOfLines={1} className="shrink">
-                            {food.name}
+                            {foodDisplayName(food, locale)}
                           </Text>
                           <VerifiedTick verified={food.verified} />
                         </View>

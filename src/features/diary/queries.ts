@@ -10,7 +10,7 @@ import type {
   UpdateEntryInput,
   UpdateManualEntryInput,
 } from '@/data/entryRepository';
-import { getCatalogFood, searchCatalog } from '@/data/foodCatalog';
+import { foodDisplayName, getCatalogFood, searchCatalog } from '@/data/foodCatalog';
 import * as gamification from '@/data/gamificationRepository';
 import * as logRepository from '@/data/logRepository';
 import type { AddActivityInput } from '@/data/logRepository';
@@ -20,6 +20,7 @@ import * as userRepository from '@/data/userRepository';
 import { suggestedMealType } from '@/features/diary/selectors';
 import { reconcileNotifications } from '@/features/notifications/reconcile';
 import { useProfileStore } from '@/features/profile/store';
+import { useSettingsStore } from '@/features/settings/store';
 import type { DateKey } from '@/lib/date';
 import { isFutureDate, lastNDays, todayKey } from '@/lib/date';
 import { findServing, gramsForServing, nutritionForServing } from '@/lib/nutrition';
@@ -313,15 +314,16 @@ export function useQuickLogFood() {
       const nutrition = nutritionForServing(food, quantity, servingId);
       const today = todayKey();
 
+      const name = foodDisplayName(food, useSettingsStore.getState().locale);
       const entry = entryRepository.createEntry({
         userId,
-        name: food.name,
+        name,
         mealType: suggestedMealType(),
         inputMethod: 'type',
         loggedOn: today,
         ingredients: [
           {
-            name: food.name,
+            name,
             quantityG: grams,
             kcal: nutrition.kcal,
             carbsG: nutrition.carbsG,

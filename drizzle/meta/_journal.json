@@ -57,6 +57,13 @@
       "when": 1792326759254,
       "tag": "0007_neat_monster_badoon",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1793894792022,
+      "tag": "0008_salty_kid_colt",
+      "breakpoints": true
     }
   ]
 }

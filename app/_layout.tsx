@@ -31,6 +31,7 @@ import { useProfileStore } from '@/features/profile/store';
 // import { useSettingsStore } from '@/features/settings/store';
 import { useAccountHydration } from '@/hooks/useAccountHydration';
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { useCatalogSync } from '@/hooks/useCatalogSync';
 import { usePushSync } from '@/hooks/usePushSync';
 import { useReactQueryBridge } from '@/hooks/useReactQueryBridge';
 import { useSubscriptionSync } from '@/hooks/useSubscriptionSync';
@@ -161,6 +162,7 @@ function AppShell({ migrated }: { migrated: boolean }) {
 
   useReactQueryBridge();
   usePushSync();
+  useCatalogSync(migrated);
   useAccountHydration();
   useSubscriptionSync();
 

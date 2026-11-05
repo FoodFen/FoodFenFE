@@ -9,16 +9,25 @@ import type { CatalogFood } from '@/types/models';
  * summed from cited ingredients, and a `label` carries hand-entered package
  * figures cited by URL. Legacy records (`recipe-estimate`, `generic`, `chain`,
  * or `label` without a `label` object) keep their own `per100g` until migrated.
- * `BuiltCatalogFood` is what `scripts/build-catalog.mjs` emits into
- * `src/data/catalog/foods.json` (committed): the resolved record plus a stable
- * slug `id`, serving ids, and folded (diacritic- and `đ`-insensitive)
- * name/alias fields the in-memory search scans.
+ * `BuiltCatalogFood` is what `foods.json` (committed) holds per food: the
+ * resolved record plus a stable slug `id`, serving ids, and folded (diacritic-
+ * and `đ`-insensitive) name/alias fields the in-memory search scans. Since
+ * Phase 4 the BE is the editing path: `scripts/pull-catalog.mjs` writes the
+ * bundle as a `BuiltCatalog`; `build-catalog.mjs` and `data/catalog` are only
+ * the provenance record of the original numbers.
  */
 
 export type LegacyCatalogSource = 'label' | 'nin' | 'recipe-estimate' | 'chain' | 'generic';
 
 /** The `source` of a built food: the source kind, or a legacy string. */
-export type CatalogSource = 'nin' | 'usda' | 'recipe' | 'label' | LegacyCatalogSource;
+export type CatalogSource =
+  | 'nin'
+  | 'usda'
+  | 'recipe'
+  | 'label'
+  | 'team'
+  | 'legacy'
+  | LegacyCatalogSource;
 
 export interface CatalogSourceServing {
   label: string;
@@ -87,10 +96,18 @@ export type CatalogSourceRecord =
 
 export interface BuiltCatalogFood extends CatalogFood {
   source: CatalogSource;
-  /** `nin:<code>`, `usda:<fdcId>` or `label:<brand>`; absent for recipes and legacy records. */
+  /** `nin:<code>`, `usda:<fdcId>`, `label:<brand>` or `FoodFen team`; absent for recipes and legacy records. */
   sourceRef?: string;
   /** `foldVi(name)` — precomputed so search never folds the whole list. */
   nameFold: string;
+  /** `foldVi(nameEn)`; absent when the food has no English name. */
+  nameEnFold?: string;
   /** `aliases.map(foldVi)`. */
   aliasesFold: string[];
+}
+
+export interface BuiltCatalog {
+  /** The server's `serverTime` when the bundle was pulled; the first sync cursor. */
+  snapshotAt: string;
+  foods: BuiltCatalogFood[];
 }

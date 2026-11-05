@@ -10,6 +10,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
 import { VerifiedTick } from '@/components/ui/VerifiedTick';
+import { foodDisplayName } from '@/data/foodCatalog';
 import { useDraftStore } from '@/features/diary/draftStore';
 import { useCatalogSearch } from '@/features/diary/queries';
 import { useIsPremium } from '@/features/profile/store';
@@ -37,7 +38,7 @@ export default function AddIngredientScreen() {
   const debouncedQuery = useDebounce(query, 250);
   const search = useCatalogSearch(debouncedQuery);
   const isPremium = useIsPremium();
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
@@ -87,14 +88,14 @@ export default function AddIngredientScreen() {
             }}
             accessibilityRole="button"
             accessibilityLabel={t('logIngredient', 'foodA11y')
-              .replace('{name}', food.name)
+              .replace('{name}', foodDisplayName(food, locale))
               .replace('{kcal}', String(food.per100g.kcal))}
             className="flex-row items-center gap-3 border-b border-border px-4 py-3 active:bg-surface-alt"
           >
             <View className="flex-1 gap-0.5">
               <View className="flex-row items-center gap-1.5">
                 <Text variant="body" numberOfLines={1} className="shrink">
-                  {food.name}
+                  {foodDisplayName(food, locale)}
                 </Text>
                 <VerifiedTick verified={food.verified} />
               </View>
@@ -166,7 +167,7 @@ function PortionForm({
 }) {
   const addIngredient = useDraftStore((state) => state.addIngredient);
   const isPremium = useIsPremium();
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   const [quantityText, setQuantityText] = useState(
     food.servings[0] && isGramServing(food.servings[0]) ? '100' : '1',
@@ -190,7 +191,7 @@ function PortionForm({
   const add = () => {
     haptics.success();
     addIngredient({
-      name: food.name,
+      name: foodDisplayName(food, locale),
       quantityG: grams,
       kcal: nutrition.kcal,
       carbsG: nutrition.carbsG,
@@ -221,7 +222,7 @@ function PortionForm({
 
       <View className="flex-row items-center gap-2">
         <Text variant="title" className="shrink">
-          {food.name}
+          {foodDisplayName(food, locale)}
         </Text>
         <VerifiedTick verified={food.verified} size={20} />
       </View>

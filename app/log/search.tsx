@@ -13,7 +13,7 @@ import { NumberField } from '@/components/ui/NumberField';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
 import { VerifiedTick } from '@/components/ui/VerifiedTick';
-import { getCatalogFood } from '@/data/foodCatalog';
+import { foodDisplayName, getCatalogFood } from '@/data/foodCatalog';
 import {
   useCatalogSearch,
   useQuickLogFood,
@@ -64,7 +64,7 @@ export default function SearchFoodScreen() {
   );
   const search = useCatalogSearch(debounced, recentIds);
 
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
 
@@ -86,7 +86,11 @@ export default function SearchFoodScreen() {
 
   const results = search.data ?? [];
   const showResults = debounced.trim().length >= 2;
-  const recentRows = (recents.data ?? []).filter((row) => getCatalogFood(row.catalogFoodId));
+  const recentRows = (recents.data ?? []).filter((row) => {
+    const food = getCatalogFood(row.catalogFoodId);
+
+    return food && !food.archived;
+  });
 
   return (
     <View className="flex-1 bg-bg">
@@ -140,10 +144,13 @@ export default function SearchFoodScreen() {
               return (
                 <FoodRow
                   key={row.catalogFoodId}
-                  name={food.name}
+                  name={foodDisplayName(food, locale)}
                   verified={food.verified}
                   detail={`${Math.round(row.quantityG)} g`}
-                  a11y={t('logSearch', 'recentA11y').replace('{name}', food.name)}
+                  a11y={t('logSearch', 'recentA11y').replace(
+                    '{name}',
+                    foodDisplayName(food, locale),
+                  )}
                   onPress={() => open(food, serving?.id, Math.round(quantity * 2) / 2)}
                 />
               );
@@ -155,11 +162,11 @@ export default function SearchFoodScreen() {
           ? results.map((food) => (
               <FoodRow
                 key={food.id}
-                name={food.name}
+                name={foodDisplayName(food, locale)}
                 verified={food.verified}
                 detail={perServingLabel(food, t('logSearch', 'perServing'))}
                 a11y={t('logSearch', 'foodA11y')
-                  .replace('{name}', food.name)
+                  .replace('{name}', foodDisplayName(food, locale))
                   .replace('{kcal}', String(food.per100g.kcal))}
                 onPress={() => open(food)}
               />
@@ -249,7 +256,7 @@ function PortionStep({
   initialQuantity: number;
   onBack: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const isPremium = useIsPremium();
@@ -294,7 +301,7 @@ function PortionStep({
   return (
     <View className="flex-1 bg-bg">
       <ScreenHeader
-        title={food.name}
+        title={foodDisplayName(food, locale)}
         icon="arrow-back"
         onPress={onBack}
         accessibilityLabel={t('logIngredient', 'backToSearch')}
