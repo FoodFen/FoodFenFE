@@ -41,8 +41,6 @@ export function usePushSync(): void {
     const tryPush = () => {
       if (!profile || !canUseRemote()) return;
 
-      console.warn('[push] trigger fired for user', profile.id);
-
       void pushAll(profile).finally(() => {
         void refreshQuestsRef.current();
         void queryClient.invalidateQueries({ queryKey: queryKeys.dishes.all });

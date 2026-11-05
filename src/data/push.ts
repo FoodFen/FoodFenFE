@@ -25,9 +25,7 @@ import { getLocalUser } from './userRepository';
  * envelope). A row that fails just stays dirty and gets retried whenever
  * push next runs (`usePushSync`) — there is no separate retry queue.
  *
- * The `console.warn` calls throughout are deliberate, not leftover
- * debugging — `no-console` here only allows `warn`/`error`, and this is the
- * first version of push, worth being able to watch happen on a real device.
+ * Failures are logged with `console.warn` so a row stuck dirty is visible; successes are not logged.
  */
 
 function isDirty(row: { updatedAt: Date; syncedAt: Date | null }): boolean {
@@ -56,7 +54,6 @@ export async function pushUserProfile(profile: UserProfile): Promise<void> {
     });
 
     markSynced(user, profile.id);
-    console.warn('[push] profile synced', profile.id);
   } catch (error) {
     console.warn('[push] profile failed, will retry next sync', error);
   }
@@ -87,7 +84,6 @@ export async function pushDailyGoals(userId: string): Promise<void> {
       });
 
       markSynced(dailyGoal, row.id, remote.id);
-      console.warn('[push] daily goal synced', row.id, '->', remote.id);
     } catch (error) {
       console.warn('[push] daily goal failed, will retry next sync', row.id, error);
     }
@@ -117,7 +113,6 @@ export async function pushStreak(userId: string): Promise<void> {
     });
 
     markSynced(streak, row.id, remote.id);
-    console.warn('[push] streak synced', row.id, '->', remote.id);
   } catch (error) {
     console.warn('[push] streak failed, will retry next sync', row.id, error);
   }
@@ -151,8 +146,6 @@ export async function pushFoodEntries(userId: string): Promise<void> {
           .all();
 
         for (const ing of deletedIngredients) markSynced(ingredient, ing.id);
-
-        console.warn('[push] food entry deleted', row.id);
         continue;
       }
 
@@ -204,8 +197,6 @@ export async function pushFoodEntries(userId: string): Promise<void> {
       // ingredient's dirty flag (live or soft-deleted) rather than mapping
       // individual remote ids.
       for (const ing of allIngredients) markSynced(ingredient, ing.id);
-
-      console.warn('[push] food entry synced', row.id, '->', remote.id);
     } catch (error) {
       console.warn('[push] food entry failed, will retry next sync', row.id, error);
     }
@@ -241,7 +232,6 @@ async function pushActivityLogs(userId: string): Promise<void> {
           : await syncApi.updateActivityLog(row.remoteId, body);
 
       markSynced(activityLog, row.id, remote.id);
-      console.warn('[push] activity log synced', row.id, '->', remote.id);
     } catch (error) {
       console.warn('[push] activity log failed, will retry next sync', row.id, error);
     }
@@ -265,7 +255,6 @@ async function pushWaterLogs(userId: string): Promise<void> {
       if (row.deletedAt !== null) {
         if (row.remoteId !== null) await syncApi.deleteWaterLog(row.remoteId);
         markSynced(waterLog, row.id);
-        console.warn('[push] water log deleted', row.id);
         continue;
       }
 
@@ -286,7 +275,6 @@ async function pushWaterLogs(userId: string): Promise<void> {
             });
 
       markSynced(waterLog, row.id, remote.id);
-      console.warn('[push] water log synced', row.id, '->', remote.id);
     } catch (error) {
       console.warn('[push] water log failed, will retry next sync', row.id, error);
     }
@@ -314,7 +302,6 @@ async function pushWeightLogs(userId: string): Promise<void> {
       });
 
       markSynced(weightLog, row.id, remote.id);
-      console.warn('[push] weight log synced', row.id, '->', remote.id);
     } catch (error) {
       console.warn('[push] weight log failed, will retry next sync', row.id, error);
     }
@@ -339,15 +326,11 @@ async function runPushAll(queued: UserProfile): Promise<void> {
 
   if (!profile || profile.id !== queued.id) return;
 
-  console.warn('[push] starting for user', profile.id);
-
   await pushUserProfile(profile);
   await pushDailyGoals(profile.id);
   await pushStreak(profile.id);
   await pushDayLogs(profile.id);
   await pushFoodEntries(profile.id);
-
-  console.warn('[push] done for user', profile.id);
 }
 
 let pushTail: Promise<void> = Promise.resolve();
