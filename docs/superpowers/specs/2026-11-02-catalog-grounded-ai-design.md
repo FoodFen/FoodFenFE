@@ -410,18 +410,135 @@ name.
 - In-memory vs SQL search (see above).
 - Web layout details, within the existing admin patterns.
 
-## Phase 4 — Mobile syncs the catalog (decision level; detail in its own session)
+## Phase 4 — Mobile syncs the catalog
 
-- **BE.** A public read endpoint, `GET /foods?updatedSince=<iso>`, returns the changed foods, including
-  archived ones so the app can hide them. It needs no auth: the catalog is public data.
-- **Mobile.**
-  - Keep the bundled `foods.json` as the offline baseline.
-  - Persist a delta overlay of BE foods newer than the bundle.
-  - Search and `getCatalogFood` read the bundle merged with the overlay; archived foods are hidden from
-    search but still resolve by id.
-  - The sync is fire-and-forget, on app start and on foreground, per CLAUDE.md's no-blocking rule.
-- How the bundle snapshot gets regenerated from the BE (a script that dumps the BE table into `foods.json`)
-  is decided in that phase.
+Detailed with the owner on 2026-11-05.
+
+**Why.** Since Phase 3, admins fix and add foods in the BE, but the app's manual search still reads the
+bundled `foods.json`. A food an admin fixed shows its old numbers when a user types its name, and a food
+an admin added can't be found at all. Only AI results see the change today.
+
+**Where the user sees it** (owner): the manual food search (`app/log/search.tsx`). As the user types a
+name:
+- foods an admin added appear;
+- foods an admin edited show the new numbers, with a tick when they have a source;
+- archived foods disappear.
+
+Everything else that reads the catalog through `getCatalogFood` picks up the same data with no extra
+work: the ingredient screen, quick log, barcode and recents.
+
+**Goals**
+- Admin changes reach the app on the next app start or foreground, in the background.
+- The app stays fully usable offline and for guests, using the bundle plus whatever it last synced.
+- **English names** (owner): when the app language is English, the search results, the ingredient screen
+  and every other place that shows a catalog food's name use `nameEn` when it exists, and the Vietnamese
+  name otherwise. Search matches the Vietnamese name, the English name and the aliases, whatever the app
+  language.
+
+**Non-goals**
+- Re-computing meals already logged. A logged ingredient keeps the name and numbers it was saved with.
+  Changing the app language later doesn't rename it (my call).
+- A tick in diary history.
+- Real-time push of catalog changes.
+- Any change to the AI analysis or the admin side.
+
+**Anti-goals**
+- A catalog sync that blocks a render, the splash screen or a search keystroke (CLAUDE.md no-blocking
+  rule).
+- A sync failure that loses already-synced foods, or leaves search worse than the bundle alone.
+- An archived food breaking an existing diary entry, the ingredient screen or recents.
+- An English user seeing a Vietnamese name when the food has an English one.
+
+### BE
+
+- **`GET /foods?updatedSince=<iso>`**, public with no auth (the catalog is public data). The response
+  is `{ foods: Food[], serverTime }`.
+  - `Food` = `{slug, name, nameEn, aliases, category, sourceKind, sourceRef, verified, per100g: {kcal,
+    carbsG, proteinG, fatG, fiberG}, servings: [{label, grams, default}], archived, updatedAt}`.
+  - It returns foods with `updated_at >= updatedSince`, archived ones included. Without `updatedSince`
+    it returns every food; the bundle refresh script uses that.
+  - `serverTime` is the server's clock taken **before** the query runs. The app stores it as its next
+    cursor, so device clock skew never matters, and a food written during the query is fetched again
+    next time rather than missed. The overlay is keyed by slug, so a duplicate is harmless.
+- No paging (my call). A full dump is ~670 rows; a delta is usually a handful. Normal response
+  compression is enough.
+- An index on `foods.updated_at` if the builder thinks the table size warrants it.
+- Every admin write (Phase 3) already bumps `updated_at`. Archive and unarchive must bump it too; check
+  that they do.
+- The endpoint goes in the BE contract doc for the app: a new section in FoodFenFE
+  `docs/backend-contracts/`. That doc is written from this repo, not by the BE session.
+
+### Mobile
+
+- **Overlay storage** (my call): a local SQLite table (Drizzle schema plus a generated migration) with
+  one row per synced food: the slug as key, the food payload, and `updatedAt`. Store the sync cursor
+  (`serverTime`) next to it, in the same table's metadata or the app's storage helper.
+- **Merge.**
+  - `src/data/foodCatalog.ts` builds its in-memory food list from the bundle, then applies overlay rows
+    by slug: an overlay row replaces the bundle record, or adds a new food.
+  - The merged list is rebuilt once after each sync that wrote rows, not on every search.
+  - New overlay foods get folded name, English name and aliases for search, using the same `foldVi`
+    rules.
+  - Serving ids follow the bundle's `<slug>-s<index>` convention.
+- **A newer bundle wins over older overlay rows** (my call): on start, drop the overlay rows whose
+  `updatedAt` is older than the bundle's `snapshotAt`, and reset the cursor to `snapshotAt` if it is
+  older. An app update that ships a fresh bundle then isn't shadowed by stale synced rows.
+- **Source mapping:** the bundle type and its trusted-source list must cover `team` (verified, label
+  "FoodFen team") and `legacy` (unverified).
+- **Erase:** the overlay is public data, so it survives `eraseDatabase()` (an account switch) by design.
+- **Archived foods** are left out of search results and recents, but `getCatalogFood` still resolves
+  them, so old entries and the ingredient screen keep working.
+- **The first cursor** is the bundle's snapshot time (`snapshotAt`, see the bundle refresh below). After
+  the first successful sync it is the last `serverTime`.
+- **Sync trigger.**
+  - On app start and on foreground, fire-and-forget, with `.catch()` and nothing awaited in a render
+    path.
+  - At most once every 10 minutes after a **successful** sync (my call). A failed sync, e.g. a Render
+    cold start, doesn't start the 10 minutes.
+  - It runs for guests too and needs no session; it is skipped when `env.hasBackend` is false.
+  - A failure leaves the overlay and the cursor untouched. The next trigger retries.
+- **After a sync that wrote rows**, invalidate whatever query or memo the search screen reads, so an
+  open search refreshes.
+- **Display name.** One helper picks `nameEn` when the locale is English and it exists, else `name`.
+  Every screen showing a catalog food's name goes through it. When the user logs a food, the stored name
+  is the one displayed at that moment (my call).
+
+### Bundle refresh
+
+- After Phase 4, **the BE is the only place foods are edited.**
+  - `scripts/build-catalog.mjs` and the hand-authored `data/catalog` sources stop being the editing path
+    (my call).
+  - Keep them in the repo as the record of where the original numbers came from.
+  - Say so in `docs/food-data-sources.md`, so nobody edits them expecting an effect.
+- A new script (e.g. `npm run catalog:pull`) calls `GET /foods` on prod with no `updatedSince` and
+  writes `src/data/catalog/foods.json`:
+  - in the existing built shape, with `nameEn` and the folded fields added, and serving ids generated;
+  - archived foods are kept, so old ids still resolve;
+  - it records `snapshotAt` = the response's `serverTime`.
+- Run it once as part of Phase 4, so the bundle carries `nameEn` and `snapshotAt`. After that, run it
+  before each app release (a manual step, my call). It needs no auth.
+
+### Done when
+- **BE:**
+  - `GET /foods` returns everything without auth, and only changed rows (archived included) with
+    `updatedSince`;
+  - `serverTime` is taken before the query;
+  - archive and unarchive bump `updated_at`;
+  - tests and the BE verify pass.
+- **Mobile:**
+  - Edit a food's kcal in the Web admin, reopen the app, and the search shows the new number without a
+    reinstall.
+  - Add a food in the admin, and it appears in search.
+  - Archive it, and it disappears from search, while an entry already logged with it still opens.
+  - Switch the app to English, and search shows "Grilled pork with noodles" for `bun-cha`.
+  - Turn the network off, and search still works from the bundle and the last overlay.
+  - The bundle is refreshed from prod with `snapshotAt` and `nameEn`.
+  - `npm run verify` passes.
+
+### Left to the builders
+- Exact table and column names, and the shape of the cursor storage.
+- Whether the BE adds the `updated_at` index.
+- How the search screen is told to refresh (query invalidation or a store version counter).
 
 ---
 
@@ -441,4 +558,5 @@ name.
 | Phase 2 Mobile | this FoodFenFE session (via a subagent) | can start as soon as the contract above is fixed |
 | Phase 3 BE | FoodFenBE session | after Phase 2, or in parallel on its own branch |
 | Phase 3 Web | new FoodFenWeb session | after the Phase 3 BE endpoints exist |
-| Phase 4 | FoodFenBE session, then FoodFenFE | last |
+| Phase 4 BE | new FoodFenBE session | the public `GET /foods` endpoint |
+| Phase 4 Mobile | this FoodFenFE session (via a subagent) | overlay, sync, English names, bundle refresh; after the BE endpoint is on prod (the bundle refresh needs it) |
