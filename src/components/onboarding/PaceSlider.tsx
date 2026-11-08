@@ -66,7 +66,7 @@ export function PaceSlider({
       {leftIcon}
 
       <View
-        className="relative flex-1 justify-center"
+        className="relative flex-1 justify-center mx-2"
         style={{ height: THUMB_SIZE }}
         onLayout={(event) => setTrackWidth(event.nativeEvent.layout.width)}
         {...panResponder.panHandlers}
