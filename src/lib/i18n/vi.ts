@@ -327,7 +327,7 @@ export const vi = {
 
   logMeal: {
     layoutTitle: 'Ghi bữa ăn',
-    mealNameLabel: 'Tên bữa ăn',
+    mealNameLabel: 'Tên món ăn',
     mealNameHint: 'Không bắt buộc — để trống thì mình sẽ đặt tên theo nguyên liệu.',
     mealLabel: 'Bữa ăn',
     emptyHint: 'Hôm nay bạn ăn gì? Thêm món vào đây nhé.',
