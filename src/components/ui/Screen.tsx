@@ -14,15 +14,15 @@ import { cn } from '@/lib/cn';
 
 /**
  * Vertical space the docked tab bar occupies above the safe area, plus
- * breathing room: 60 (8 + 44 tab row + 8) + 24 (the "+" protruding above the
- * bar) + 40 = 124. Add `insets.bottom` on top, since the bar covers it too.
+ * breathing room: 60 (8 + 44 tab row + 8) + 18 (the "+" protruding above the
+ * bar) + 40 = 118. Add `insets.bottom` on top, since the bar covers it too.
  * Mirrors the geometry in `FloatingTabBar` — change both together.
  *
  * The bar is drawn by the tabs navigator as a sibling *over* the scene, so
  * anything a `(tabs)` screen puts at its own bottom edge is hidden underneath
  * it unless that screen reserves this much.
  */
-export const TAB_BAR_CLEARANCE = 124;
+export const TAB_BAR_CLEARANCE = 118;
 
 export interface ScreenProps extends ViewProps {
   className?: string;

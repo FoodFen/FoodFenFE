@@ -25,8 +25,11 @@ const MIDDLE_AFTER = 'achievements';
 
 const INDICATOR_SPRING = { damping: 20, stiffness: 260, mass: 0.7 };
 
-const LOG_BUTTON_SIZE = 48;
+const LOG_BUTTON_SIZE = 56;
+const LOG_BUTTON_SINK = 10;
 const NOTCH_RADIUS = LOG_BUTTON_SIZE / 2 + 6;
+const SHOULDER_RUN = 8;
+const CIRCLE_KAPPA = 0.55;
 const STROKE_INSET = 0.5;
 const BAR_PADDING = 8;
 
@@ -34,26 +37,31 @@ const LOG_BUTTON_SIZE_STYLE = { width: LOG_BUTTON_SIZE, height: LOG_BUTTON_SIZE 
 
 /**
  * Fill and top-edge stroke of a full-width bar whose top edge is cut by a
- * circular notch of radius `notchRadius` centred on (`notchCenterX`, top edge).
- * Cubic shoulders round the corners where the flat edge meets the circle.
+ * circular notch of radius `notchRadius` centred `notchSink` below the top edge
+ * at `notchCenterX`. Quarter-ellipse shoulders leave the flat edge and meet the
+ * circle at its widest point, where both tangents are vertical, so there is no
+ * kink.
  */
 export function notchedBarPath(
   width: number,
   height: number,
   notchCenterX: number,
   notchRadius: number,
+  notchSink: number,
 ): { fill: string; edge: string } {
-  const R = Math.min(notchRadius, height - BAR_PADDING);
+  const R = Math.min(notchRadius, height - BAR_PADDING - notchSink);
   const n = (v: number) => Math.round(v * 100) / 100;
 
   const topEdge = (top: number) => {
-    const x = (dx: number) => n(notchCenterX + dx * R);
-    const y = (dy: number) => n(top + dy * R);
+    const left = notchCenterX - R;
+    const right = notchCenterX + R;
+    const mid = top + notchSink;
+    const k = CIRCLE_KAPPA;
     return [
-      `H${x(-1.27)}`,
-      `C${x(-1.02)} ${y(0)} ${x(-0.99)} ${y(0.28)} ${x(-0.866)} ${y(0.5)}`,
-      `A${n(R)} ${n(R)} 0 0 0 ${x(0.866)} ${y(0.5)}`,
-      `C${x(0.99)} ${y(0.28)} ${x(1.02)} ${y(0)} ${x(1.27)} ${y(0)}`,
+      `H${n(left - SHOULDER_RUN)}`,
+      `C${n(left - SHOULDER_RUN * (1 - k))} ${n(top)} ${n(left)} ${n(mid - notchSink * k)} ${n(left)} ${n(mid)}`,
+      `A${n(R)} ${n(R)} 0 0 0 ${n(right)} ${n(mid)}`,
+      `C${n(right)} ${n(mid - notchSink * k)} ${n(right + SHOULDER_RUN * (1 - k))} ${n(top)} ${n(right + SHOULDER_RUN)} ${n(top)}`,
       `H${n(width)}`,
     ].join(' ');
   };
@@ -76,14 +84,14 @@ const TAB_ICONS: Record<string, { active: IconName; inactive: IconName }> = {
 
 /**
  * The docked, full-width bar: a flat `surfaceAlt` SVG shape with a circular
- * notch cut into its top edge around the green log button, which sits centred
- * on that edge (between the second and third tab). The bar is a plain filled
+ * notch cut into its top edge around the green log button, which sits with its
+ * centre `LOG_BUTTON_SINK` below that edge (between the second and third tab). The bar is a plain filled
  * shape, not glass; only the "+" keeps the glass look.
  *
  * Passed to `<Tabs tabBar={...}>`, so it drives the real navigator state. The
  * log button is not a tab — logging is an action that returns you to wherever
  * you were — so it opens the shared log bottom sheet instead of navigating.
- * The disc is a sibling drawn over the bar, centred on its top edge, and the
+ * The disc is a sibling drawn over the bar, sunk into its top edge, and the
  * container's top padding keeps it inside the parent's bounds, which Android
  * needs to deliver touches.
  */
@@ -98,7 +106,13 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
   const inactiveColor = colors.fgSubtle;
   const barPath =
     barSize.width > 0
-      ? notchedBarPath(barSize.width, barSize.height, barSize.width / 2, NOTCH_RADIUS)
+      ? notchedBarPath(
+          barSize.width,
+          barSize.height,
+          barSize.width / 2,
+          NOTCH_RADIUS,
+          LOG_BUTTON_SINK,
+        )
       : null;
   const indicatorX = tabX[state.routes[state.index]?.key ?? ''];
 
@@ -106,7 +120,7 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
     <View
       pointerEvents="box-none"
       className="absolute inset-x-0 bottom-0"
-      style={{ paddingTop: LOG_BUTTON_SIZE / 2 }}
+      style={{ paddingTop: LOG_BUTTON_SIZE / 2 - LOG_BUTTON_SINK }}
     >
       <View
         className="relative"
@@ -213,7 +227,7 @@ function LogButton({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}
-      style={[LOG_BUTTON_SIZE_STYLE, { boxShadow: `0 0 16px ${tint}59` }]}
+      style={[LOG_BUTTON_SIZE_STYLE, { boxShadow: `0 0 18px ${tint}59` }]}
       className="rounded-full"
     >
       <GlassSurface
@@ -223,7 +237,7 @@ function LogButton({
         style={LOG_BUTTON_SIZE_STYLE}
         className="items-center justify-center rounded-full"
       >
-        <Ionicons name="add" size={26} color={color} />
+        <Ionicons name="add" size={30} color={color} />
       </GlassSurface>
     </PressableScale>
   );
