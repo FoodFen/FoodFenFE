@@ -36,6 +36,7 @@ export function PaceSlider({
   tone,
 }: PaceSliderProps) {
   const [trackWidth, setTrackWidth] = useState(0);
+  const [trackPageX, setTrackPageX] = useState(0);
   const fraction = Math.min(1, Math.max(0, (value - min) / (max - min)));
 
   function updateFromTouchX(x: number) {
@@ -51,8 +52,12 @@ export function PaceSlider({
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onMoveShouldSetPanResponder: () => true,
-    onPanResponderGrant: (event) => updateFromTouchX(event.nativeEvent.locationX),
-    onPanResponderMove: (event) => updateFromTouchX(event.nativeEvent.locationX),
+    // locationX is relative to whichever view is under the finger, so it jumps once a drag drifts off the track; pageX minus the track's origin (captured at grant) stays stable.
+    onPanResponderGrant: (event) => {
+      setTrackPageX(event.nativeEvent.pageX - event.nativeEvent.locationX);
+      updateFromTouchX(event.nativeEvent.locationX);
+    },
+    onPanResponderMove: (event) => updateFromTouchX(event.nativeEvent.pageX - trackPageX),
     onPanResponderTerminationRequest: () => false,
   });
 
