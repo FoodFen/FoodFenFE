@@ -335,6 +335,7 @@ export const vi = {
     editIngredientA11y: 'Sửa {name}',
     ingredientNameLabel: 'Tên nguyên liệu',
     ingredientGramsLabel: 'Khối lượng (g)',
+    swapVerified: 'Đổi sang món chuẩn',
     lowConfidenceA11y: 'AI đoán — kiểm tra lại mục này',
     fiberMissing: 'Chưa có dữ liệu chất xơ',
     addIngredientA11y: 'Thêm nguyên liệu',

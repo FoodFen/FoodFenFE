@@ -319,6 +319,7 @@ export const en: DeepPartial<Translations> = {
     editIngredientA11y: 'Edit {name}',
     ingredientNameLabel: 'Ingredient name',
     ingredientGramsLabel: 'Amount (g)',
+    swapVerified: 'Swap for a verified food',
     lowConfidenceA11y: 'AI guess — double check this',
     fiberMissing: 'No fiber data',
     addIngredientA11y: 'Add an ingredient',

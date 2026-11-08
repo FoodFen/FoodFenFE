@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
@@ -32,7 +32,8 @@ import type { CatalogFood } from '@/types/models';
  * onto the draft, so the catalog is only ever a starting point.
  */
 export default function AddIngredientScreen() {
-  const [query, setQuery] = useState('');
+  const params = useLocalSearchParams<{ replace?: string; q?: string }>();
+  const [query, setQuery] = useState(params.q ?? '');
   const [selected, setSelected] = useState<CatalogFood | null>(null);
 
   const debouncedQuery = useDebounce(query, 250);
@@ -47,6 +48,7 @@ export default function AddIngredientScreen() {
     return (
       <PortionForm
         food={selected}
+        replaceKey={params.replace}
         onBack={() => setSelected(null)}
         onDone={() => router.back()}
       />
@@ -158,20 +160,29 @@ export default function AddIngredientScreen() {
 /** Choose how much of a catalog food was eaten. */
 function PortionForm({
   food,
+  replaceKey,
   onBack,
   onDone,
 }: {
   food: CatalogFood;
+  replaceKey?: string;
   onBack: () => void;
   onDone: () => void;
 }) {
   const addIngredient = useDraftStore((state) => state.addIngredient);
+  const updateIngredient = useDraftStore((state) => state.updateIngredient);
   const isPremium = useIsPremium();
   const { t, locale } = useTranslation();
 
-  const [quantityText, setQuantityText] = useState(
-    food.servings[0] && isGramServing(food.servings[0]) ? '100' : '1',
-  );
+  const [quantityText, setQuantityText] = useState(() => {
+    if (!food.servings[0] || !isGramServing(food.servings[0])) return '1';
+
+    const replaced = replaceKey
+      ? useDraftStore.getState().ingredients.find((row) => row.key === replaceKey)
+      : undefined;
+
+    return replaced && replaced.quantityG > 0 ? String(Math.round(replaced.quantityG)) : '100';
+  });
   const [servingId, setServingId] = useState(food.servings[0]?.id ?? '');
 
   // A half-typed value ("1.") must not blank the preview, so anything
@@ -190,7 +201,7 @@ function PortionForm({
 
   const add = () => {
     haptics.success();
-    addIngredient({
+    const row = {
       name: foodDisplayName(food, locale),
       quantityG: grams,
       kcal: nutrition.kcal,
@@ -200,7 +211,20 @@ function PortionForm({
       fiberG: nutrition.fiberG ?? null,
       catalogFoodId: food.id,
       per100g: food.per100g,
-    });
+    };
+    const replaces =
+      replaceKey !== undefined &&
+      useDraftStore.getState().ingredients.some((r) => r.key === replaceKey);
+
+    if (replaces) {
+      updateIngredient(replaceKey, {
+        ...row,
+        verified: food.verified ?? false,
+        confidence: undefined,
+      });
+    } else {
+      addIngredient(row);
+    }
     onDone();
   };
 

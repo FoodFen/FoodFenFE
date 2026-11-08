@@ -247,6 +247,22 @@ export default function MealComposerScreen() {
                       min={1}
                       max={5000}
                     />
+                    {row.verified === false ? (
+                      <Button
+                        label={t('logMeal', 'swapVerified')}
+                        onPress={() =>
+                          router.push({
+                            pathname: '/log/ingredient',
+                            params: { replace: row.key, q: row.name },
+                          })
+                        }
+                        variant="secondary"
+                        size="sm"
+                        leading={
+                          <Ionicons name="swap-horizontal" size={18} color={colors.fg} />
+                        }
+                      />
+                    ) : null}
                   </View>
                 ) : null}
               </View>
