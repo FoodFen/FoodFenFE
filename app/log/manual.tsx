@@ -22,6 +22,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ApiError, userErrorMessage } from '@/api/errors';
 import type { RemoteAiFoodAnalysisResponse } from '@/api/schemas';
+import { AiAnalyzingView } from '@/components/logging/AiAnalyzingView';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Input } from '@/components/ui/Input';
@@ -159,7 +160,7 @@ export default function ManualEntryScreen() {
   };
 
   const [captureMode, setCaptureMode] = useState<CaptureMode>(
-    params.mode === 'image' ? 'image' : 'manual',
+    params.mode === 'image' || params.mode === 'describe' ? params.mode : 'manual',
   );
   const [pickedImage, setPickedImage] = useState<PickedImage | null>(
     params.imageUri ? { uri: params.imageUri } : null,
@@ -787,7 +788,9 @@ function ImageCapturePanel({
 
   return (
     <View className="flex-1 justify-center gap-6 p-6">
-      {image ? (
+      {image && isAnalyzing ? (
+        <AiAnalyzingView variant="image" imageUri={image.uri} />
+      ) : image ? (
         <View className="gap-4">
           <Image
             source={{ uri: image.uri }}
@@ -926,82 +929,90 @@ function DescribePanel({
   };
 
   return (
-    <KeyboardAwareScrollView
-      className="flex-1"
-      contentContainerStyle={{
-        flexGrow: 1,
-        justifyContent: 'center',
-        gap: 24,
-        padding: 24,
-      }}
-      keyboardShouldPersistTaps="handled"
-      bottomOffset={24}
-    >
-      <View className="items-center gap-2 pb-2">
-        <Ionicons name="sparkles-outline" size={40} color={colors.fgSubtle} />
-        <Text variant="body" tone="muted" className="text-center">
-          {t('logManual', 'describeHint')}
-        </Text>
-      </View>
-      <Input
-        value={text}
-        onChangeText={onChangeText}
-        placeholder={t('logManual', 'smartEntryPlaceholder')}
-        autoCapitalize="sentences"
-        returnKeyType="done"
-        autoFocus
-        trailing={
-          <Pressable
-            onPress={() => void toggleListening()}
-            accessibilityRole="button"
-            accessibilityLabel={t(
-              'logManual',
-              isListening ? 'describeStopListening' : 'describeStartListening',
-            )}
-            hitSlop={8}
-          >
-            <Ionicons
-              name={isListening ? 'stop-circle' : 'mic-outline'}
-              size={22}
-              color={isListening ? colors.danger : colors.brand}
-            />
-          </Pressable>
-        }
-      />
-      {isListening ? (
-        <Text variant="caption" tone="brand" className="text-center">
-          {t('logManual', 'describeListening')}
-        </Text>
-      ) : null}
-      <View className="gap-2">
-        <Text variant="caption" tone="subtle">
-          {t('logManual', 'describeExamplesTitle')}
-        </Text>
-        {DESCRIBE_EXAMPLE_KEYS.map((key) => {
-          const example = t('logManual', key);
-          return (
-            <Pressable
-              key={key}
-              onPress={() => {
-                haptics.selection();
-                onChangeText(example.replaceAll('**', ''));
-              }}
-              accessibilityRole="button"
-              className="rounded-card border border-border bg-surface px-3 py-2.5 active:bg-surface-alt"
-            >
-              <Highlighted text={example} />
-            </Pressable>
-          );
-        })}
-      </View>
-      <Button
-        label={t('logManual', 'smartEntryAnalyze')}
-        onPress={onAnalyze}
-        loading={isAnalyzing}
-        disabled={text.trim().length === 0}
-        fullWidth
-        size="lg"
-      />
-    </KeyboardAwareScrollView>
+    <>
+      {isAnalyzing ? (
+        <View className="flex-1 justify-center p-6">
+          <AiAnalyzingView variant="text" />
+        </View>
+      ) : (
+        <KeyboardAwareScrollView
+          className="flex-1"
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'center',
+            gap: 24,
+            padding: 24,
+          }}
+          keyboardShouldPersistTaps="handled"
+          bottomOffset={24}
+        >
+          <View className="items-center gap-2 pb-2">
+            <Ionicons name="sparkles-outline" size={40} color={colors.fgSubtle} />
+            <Text variant="body" tone="muted" className="text-center">
+              {t('logManual', 'describeHint')}
+            </Text>
+          </View>
+          <Input
+            value={text}
+            onChangeText={onChangeText}
+            placeholder={t('logManual', 'smartEntryPlaceholder')}
+            autoCapitalize="sentences"
+            returnKeyType="done"
+            autoFocus
+            trailing={
+              <Pressable
+                onPress={() => void toggleListening()}
+                accessibilityRole="button"
+                accessibilityLabel={t(
+                  'logManual',
+                  isListening ? 'describeStopListening' : 'describeStartListening',
+                )}
+                hitSlop={8}
+              >
+                <Ionicons
+                  name={isListening ? 'stop-circle' : 'mic-outline'}
+                  size={22}
+                  color={isListening ? colors.danger : colors.brand}
+                />
+              </Pressable>
+            }
+          />
+          {isListening ? (
+            <Text variant="caption" tone="brand" className="text-center">
+              {t('logManual', 'describeListening')}
+            </Text>
+          ) : null}
+          <View className="gap-2">
+            <Text variant="caption" tone="subtle">
+              {t('logManual', 'describeExamplesTitle')}
+            </Text>
+            {DESCRIBE_EXAMPLE_KEYS.map((key) => {
+              const example = t('logManual', key);
+              return (
+                <Pressable
+                  key={key}
+                  onPress={() => {
+                    haptics.selection();
+                    onChangeText(example.replaceAll('**', ''));
+                  }}
+                  accessibilityRole="button"
+                  className="rounded-card border border-border bg-surface px-3 py-2.5 active:bg-surface-alt"
+                >
+                  <Highlighted text={example} />
+                </Pressable>
+              );
+            })}
+          </View>
+          <Button
+            label={t('logManual', 'smartEntryAnalyze')}
+            onPress={onAnalyze}
+            loading={isAnalyzing}
+            disabled={text.trim().length === 0}
+            fullWidth
+            size="lg"
+          />
+        </KeyboardAwareScrollView>
+      )}
+    </>
   );
 }

@@ -136,6 +136,9 @@ export const queryKeys = {
     catalog: (accountId: number | undefined) =>
       [...queryKeys.mascots.all, 'catalog', accountId] as const,
   },
+  nutritionTips: {
+    all: ['nutritionTips'] as const,
+  },
   health: {
     all: ['health'] as const,
     steps: (date: string) => [...queryKeys.health.all, 'steps', date] as const,
