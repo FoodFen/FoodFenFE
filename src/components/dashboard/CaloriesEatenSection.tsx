@@ -55,7 +55,7 @@ export function CaloriesEatenSection({
     <MetricSection
       title={t('dashboard', 'caloriesEaten')}
       value={day.totals.kcal}
-      onAdd={() => present('food')}
+      onAdd={() => present()}
     >
       <Text variant="caption" tone={isOver ? 'danger' : 'muted'}>
         {remainingLabel}
@@ -63,7 +63,7 @@ export function CaloriesEatenSection({
 
       {day.entries.length === 0 ? (
         <PressableScale
-          onPress={() => present('food')}
+          onPress={() => present()}
           accessibilityRole="button"
           className="h-10 flex-row items-center gap-2 self-start rounded-pill bg-brand/10 px-4"
         >

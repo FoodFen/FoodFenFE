@@ -9,7 +9,7 @@ import { create } from 'zustand';
  * The sheet itself does the real work through the diary mutation hooks.
  */
 
-export type LogAction = 'weight' | 'water' | 'food' | 'waterGoal';
+export type LogAction = 'weight' | 'water' | 'waterGoal';
 
 interface LogSheetState {
   open: boolean;

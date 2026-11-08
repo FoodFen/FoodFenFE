@@ -36,8 +36,9 @@ import { colorsFor } from '@/theme/colors';
  * Driven by `useLogSheetStore`: an effect presents or dismisses the native
  * sheet when `open` flips, and the sheet's `onClose` syncs a swipe-down back
  * into the store. The visible panel is `store.focus`, so switching panels is a
- * store update rather than local effect state. Weight and water write through
- * the existing diary mutations; the food panel is a placeholder this pass.
+ * store update rather than local effect state. The menu is food-first (snap / describe / search tiles, then
+ * secondary water / weight / activity / manual buttons); weight and water write
+ * through the existing diary mutations.
  */
 
 const DEFAULT_WATER_ML = GLASS_ML;
@@ -95,7 +96,7 @@ export function LogSheet() {
     setError(null);
   }
 
-  function goToPanel(panel: 'weight' | 'water' | 'food') {
+  function goToPanel(panel: 'weight' | 'water') {
     setError(null);
     setFocus(panel);
   }
@@ -174,52 +175,70 @@ export function LogSheet() {
               {focus === null ? (
                 <View className="gap-3">
                   <Text variant="heading">{t('logSheet', 'title')}</Text>
-                  <PressableScale
-                    onPress={() => {
-                      close();
-                      router.push('/log/manual?mode=image');
-                    }}
-                    accessibilityRole="button"
-                    accessibilityLabel={t('logSheet', 'aiCapture')}
-                    className="h-16 flex-row items-center justify-center gap-3 rounded-card bg-brand"
-                  >
-                    <Ionicons name="camera" size={26} color={colors.onBrand} />
-                    <Text variant="label" tone="onBrand">
-                      {t('logSheet', 'aiCapture')}
-                    </Text>
-                  </PressableScale>
-                  <View className="gap-3">
-                    <View className="flex-row gap-3">
-                      <MenuTile
-                        icon="restaurant-outline"
-                        label={t('logSheet', 'food')}
-                        color={colors.brand}
-                        onPress={() => goToPanel('food')}
-                      />
-                      <MenuTile
-                        icon="water-outline"
-                        label={t('logSheet', 'water')}
-                        color={colors.fat}
-                        onPress={() => goToPanel('water')}
-                      />
-                    </View>
-                    <View className="flex-row gap-3">
-                      <MenuTile
-                        icon="body-outline"
-                        label={t('logSheet', 'weight')}
-                        color={colors.carbs}
-                        onPress={() => goToPanel('weight')}
-                      />
-                      <MenuTile
-                        icon="barbell-outline"
-                        label={t('logSheet', 'activity')}
-                        color={colors.protein}
-                        onPress={() => {
-                          close();
-                          router.push('/log/activity');
-                        }}
-                      />
-                    </View>
+                  <View className="flex-row gap-3">
+                    <PrimaryTile
+                      icon="camera"
+                      label={t('logSheet', 'snap')}
+                      color={colors.brand}
+                      emphasized
+                      onPress={() => {
+                        close();
+                        router.push('/log/manual?mode=image');
+                      }}
+                    />
+                    <PrimaryTile
+                      icon="sparkles"
+                      label={t('logSheet', 'describe')}
+                      color={colors.brand}
+                      onPress={() => {
+                        close();
+                        router.push('/log/manual?mode=describe');
+                      }}
+                    />
+                    <PrimaryTile
+                      icon="search"
+                      label={t('logSheet', 'searchFood')}
+                      color={colors.brand}
+                      onPress={() => {
+                        close();
+                        router.push('/log/search');
+                      }}
+                    />
+                  </View>
+                  <Text variant="caption" tone="muted" className="mt-1">
+                    {t('logSheet', 'other')}
+                  </Text>
+                  <View className="flex-row">
+                    <SecondaryButton
+                      icon="water-outline"
+                      label={t('logSheet', 'waterShort')}
+                      color={colors.fat}
+                      onPress={() => goToPanel('water')}
+                    />
+                    <SecondaryButton
+                      icon="body-outline"
+                      label={t('logSheet', 'weightShort')}
+                      color={colors.carbs}
+                      onPress={() => goToPanel('weight')}
+                    />
+                    <SecondaryButton
+                      icon="barbell-outline"
+                      label={t('logSheet', 'activityShort')}
+                      color={colors.protein}
+                      onPress={() => {
+                        close();
+                        router.push('/log/activity');
+                      }}
+                    />
+                    <SecondaryButton
+                      icon="create-outline"
+                      label={t('logSheet', 'manualShort')}
+                      color={colors.fgMuted}
+                      onPress={() => {
+                        close();
+                        router.push('/log/manual');
+                      }}
+                    />
                   </View>
                 </View>
               ) : null}
@@ -281,38 +300,6 @@ export function LogSheet() {
                   onSave={submitWaterGoal}
                 />
               ) : null}
-
-              {focus === 'food' ? (
-                <View className="gap-2">
-                  <MenuRow
-                    icon="search-outline"
-                    label={t('logSheet', 'search')}
-                    color={colors.fgMuted}
-                    onPress={() => {
-                      close();
-                      router.push('/log/search');
-                    }}
-                  />
-                  <MenuRow
-                    icon="create-outline"
-                    label={t('logSheet', 'manualEntry')}
-                    color={colors.fgMuted}
-                    onPress={() => {
-                      close();
-                      router.push('/log/manual');
-                    }}
-                  />
-                  <MenuRow
-                    icon="sparkles-outline"
-                    label={t('logSheet', 'aiCapture')}
-                    color={colors.fgMuted}
-                    onPress={() => {
-                      close();
-                      router.push('/log/manual?mode=image');
-                    }}
-                  />
-                </View>
-              ) : null}
             </Animated.View>
           </View>
         </BottomSheetView>
@@ -367,30 +354,52 @@ function WaterGoalPanel({
   );
 }
 
-function MenuRow({
+// Palette hexes are #RRGGBB; "26" is ~15% alpha.
+const ICON_FILL_ALPHA = '26';
+
+function PrimaryTile({
   icon,
   label,
   color,
+  emphasized,
   onPress,
 }: {
   icon: keyof typeof Ionicons.glyphMap;
   label: string;
   color: string;
+  emphasized?: boolean;
   onPress: () => void;
 }) {
+  const { resolved } = useAppTheme();
+  const { onBrand } = colorsFor(resolved);
+
   return (
     <PressableScale
       onPress={onPress}
       accessibilityRole="button"
-      className="flex-row items-center gap-3 rounded-card border border-border bg-surface p-4"
+      accessibilityLabel={label}
+      className={`h-28 flex-1 items-center justify-center gap-2 rounded-card ${
+        emphasized ? 'bg-brand' : 'bg-surface-alt'
+      }`}
     >
-      <Ionicons name={icon} size={22} color={color} />
-      <Text variant="label">{label}</Text>
+      {emphasized ? (
+        <Ionicons name={icon} size={32} color={onBrand} />
+      ) : (
+        <View
+          style={{ backgroundColor: `${color}${ICON_FILL_ALPHA}` }}
+          className="h-12 w-12 items-center justify-center rounded-pill"
+        >
+          <Ionicons name={icon} size={26} color={color} />
+        </View>
+      )}
+      <Text variant="label" tone={emphasized ? 'onBrand' : 'default'}>
+        {label}
+      </Text>
     </PressableScale>
   );
 }
 
-function MenuTile({
+function SecondaryButton({
   icon,
   label,
   color,
@@ -405,16 +414,18 @@ function MenuTile({
     <PressableScale
       onPress={onPress}
       accessibilityRole="button"
-      className="flex-1 gap-2 rounded-card bg-surface-alt p-4"
+      accessibilityLabel={label}
+      className="flex-1 items-center gap-1"
     >
-      {/* Palette hexes are #RRGGBB; "26" is ~15% alpha. */}
       <View
-        style={{ backgroundColor: `${color}26` }}
-        className="h-10 w-10 items-center justify-center rounded-pill"
+        style={{ backgroundColor: `${color}${ICON_FILL_ALPHA}` }}
+        className="h-12 w-12 items-center justify-center rounded-pill"
       >
         <Ionicons name={icon} size={22} color={color} />
       </View>
-      <Text variant="label">{label}</Text>
+      <Text variant="caption" tone="muted" numberOfLines={1}>
+        {label}
+      </Text>
     </PressableScale>
   );
 }

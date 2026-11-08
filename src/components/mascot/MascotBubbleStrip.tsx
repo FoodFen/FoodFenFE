@@ -117,7 +117,7 @@ export function MascotBubbleStrip({
   };
 
   const onPress = () => {
-    if (bubble?.type === 'hungry') useLogSheetStore.getState().present('food');
+    if (bubble?.type === 'hungry') useLogSheetStore.getState().present();
     else if (bubble?.type === 'thirsty') useLogSheetStore.getState().present('water');
 
     close();
