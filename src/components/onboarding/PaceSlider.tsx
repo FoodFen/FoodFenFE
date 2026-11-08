@@ -53,6 +53,7 @@ export function PaceSlider({
     onMoveShouldSetPanResponder: () => true,
     onPanResponderGrant: (event) => updateFromTouchX(event.nativeEvent.locationX),
     onPanResponderMove: (event) => updateFromTouchX(event.nativeEvent.locationX),
+    onPanResponderTerminationRequest: () => false,
   });
 
   return (
@@ -65,15 +66,19 @@ export function PaceSlider({
         onLayout={(event) => setTrackWidth(event.nativeEvent.layout.width)}
         {...panResponder.panHandlers}
       >
+        {/* pointerEvents="none": otherwise the thumb becomes the touch target and locationX is relative to it, not the track. */}
         <View
+          pointerEvents="none"
           className="absolute w-full rounded-full bg-surface-alt"
           style={{ height: TRACK_HEIGHT }}
         />
         <View
+          pointerEvents="none"
           className={cn('absolute rounded-full', FILL_CLASSES[tone])}
           style={{ height: TRACK_HEIGHT, width: `${fraction * 100}%` }}
         />
         <View
+          pointerEvents="none"
           className={cn('absolute rounded-full border-4 bg-bg', RING_CLASSES[tone])}
           style={{
             width: THUMB_SIZE,
