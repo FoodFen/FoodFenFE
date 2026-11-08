@@ -336,6 +336,7 @@ export const vi = {
     ingredientNameLabel: 'Tên nguyên liệu',
     ingredientGramsLabel: 'Khối lượng (g)',
     swapVerified: 'Đổi sang món chuẩn',
+    editRemovesVerified: 'Sửa số sẽ bỏ dấu đã xác minh',
     lowConfidenceA11y: 'AI đoán — kiểm tra lại mục này',
     fiberMissing: 'Chưa có dữ liệu chất xơ',
     addIngredientA11y: 'Thêm nguyên liệu',

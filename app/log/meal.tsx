@@ -14,6 +14,7 @@ import { VerifiedTick } from '@/components/ui/VerifiedTick';
 import {
   draftName,
   draftTotals,
+  per100gOf,
   useDraftStore,
   type DraftIngredient,
 } from '@/features/diary/draftStore';
@@ -73,6 +74,21 @@ export default function MealComposerScreen() {
       proteinG: n.proteinG,
       fatG: n.fatG,
       fiberG: n.fiberG ?? null,
+    });
+  };
+
+  const changeNumber = (
+    row: DraftIngredient,
+    field: 'kcal' | 'proteinG' | 'carbsG' | 'fatG',
+    value: number | null,
+  ) => {
+    if (value === null) return;
+
+    // per100g is re-derived from the user's numbers so a later grams change scales from them.
+    draft.updateIngredient(row.key, {
+      [field]: value,
+      verified: false,
+      per100g: per100gOf({ ...row, [field]: value }, row.quantityG),
     });
   };
 
@@ -247,6 +263,45 @@ export default function MealComposerScreen() {
                       min={1}
                       max={5000}
                     />
+                    <View className="gap-2">
+                      <View className="flex-row gap-3">
+                        <NumberCell
+                          label="kcal"
+                          value={row.kcal}
+                          onChange={(v) => changeNumber(row, 'kcal', v)}
+                          max={5000}
+                          precision={0}
+                        />
+                        <NumberCell
+                          label={t('onboardingFinalize', 'protein')}
+                          value={row.proteinG}
+                          onChange={(v) => changeNumber(row, 'proteinG', v)}
+                          max={1000}
+                          precision={1}
+                        />
+                      </View>
+                      <View className="flex-row gap-3">
+                        <NumberCell
+                          label={t('onboardingFinalize', 'carbs')}
+                          value={row.carbsG}
+                          onChange={(v) => changeNumber(row, 'carbsG', v)}
+                          max={1000}
+                          precision={1}
+                        />
+                        <NumberCell
+                          label={t('onboardingFinalize', 'fat')}
+                          value={row.fatG}
+                          onChange={(v) => changeNumber(row, 'fatG', v)}
+                          max={1000}
+                          precision={1}
+                        />
+                      </View>
+                      {row.verified === true ? (
+                        <Text variant="caption" tone="subtle">
+                          {t('logMeal', 'editRemovesVerified')}
+                        </Text>
+                      ) : null}
+                    </View>
                     {row.verified === false ? (
                       <Button
                         label={t('logMeal', 'swapVerified')}
@@ -341,6 +396,37 @@ export default function MealComposerScreen() {
         size="lg"
       />
     </KeyboardAwareScrollView>
+  );
+}
+
+function NumberCell({
+  label,
+  value,
+  onChange,
+  max,
+  precision,
+}: {
+  label: string;
+  value: number;
+  onChange: (value: number | null) => void;
+  max: number;
+  precision: number;
+}) {
+  return (
+    <View className="flex-1 flex-row items-center justify-between gap-2">
+      <Text variant="label" tone="muted" numberOfLines={1} className="shrink">
+        {label}
+      </Text>
+      <NumberField
+        compact
+        label={label}
+        value={value}
+        onChange={onChange}
+        min={0}
+        max={max}
+        precision={precision}
+      />
+    </View>
   );
 }
 

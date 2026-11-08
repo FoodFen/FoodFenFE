@@ -320,6 +320,7 @@ export const en: DeepPartial<Translations> = {
     ingredientNameLabel: 'Ingredient name',
     ingredientGramsLabel: 'Amount (g)',
     swapVerified: 'Swap for a verified food',
+    editRemovesVerified: 'Editing numbers removes the verified mark',
     lowConfidenceA11y: 'AI guess — double check this',
     fiberMissing: 'No fiber data',
     addIngredientA11y: 'Add an ingredient',
