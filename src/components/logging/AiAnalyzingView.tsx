@@ -6,8 +6,6 @@ import Animated, {
   Easing,
   FadeIn,
   FadeInDown,
-  FadeOut,
-  FadeOutUp,
   interpolate,
   useAnimatedStyle,
   useReducedMotion,
@@ -79,11 +77,7 @@ export function AiAnalyzingView({
       )}
 
       <View accessibilityLiveRegion="polite" className="min-h-6 items-center">
-        <Animated.View
-          key={stage}
-          entering={FadeIn.duration(300)}
-          exiting={FadeOut.duration(200)}
-        >
+        <Animated.View key={stage} entering={FadeIn.duration(300)}>
           <Text variant="label" tone="brand" className="text-center">
             {t('logManual', STAGE_KEYS[stage] ?? STAGE_KEYS[0])}
           </Text>
@@ -94,7 +88,6 @@ export function AiAnalyzingView({
         <Animated.View
           key={tip.id}
           entering={reducedMotion ? FadeIn : FadeInDown.duration(300)}
-          exiting={reducedMotion ? undefined : FadeOutUp.duration(200)}
           className="gap-2 rounded-card border border-border bg-surface p-4"
         >
           <View className="flex-row items-center gap-2">
