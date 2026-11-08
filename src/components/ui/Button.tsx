@@ -89,8 +89,15 @@ export function Button({
       ) : (
         <>
           {leading}
-          <Text variant="label" tone={VARIANT_TEXT_TONE[variant]} className="text-base">
-            {label}
+          <Text
+            variant="label"
+            tone={VARIANT_TEXT_TONE[variant]}
+            className="text-base"
+            // On Android the label can be drawn slightly wider than it was measured after a re-render (seen on HyperOS), which wrapped its last word onto a line the fixed height hides; non-breaking spaces leave no wrap point.
+            numberOfLines={1}
+            ellipsizeMode="clip"
+          >
+            {label.replace(/ /g, '\u00A0')}
           </Text>
         </>
       )}
