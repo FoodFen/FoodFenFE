@@ -26,7 +26,7 @@ Two orthogonal pieces of identity:
 
 `app/_layout.tsx` holds the boot sequence: fonts, Drizzle `useMigrations`, stored-session hydration, then `enableForeignKeys()` + first profile read. Nothing may query the database before migrations report success — on a fresh install the tables don't exist yet. It also hosts the app-wide `LogSheet` (the tab bar's "+" and every dashboard card's "+" open the same instance via `useLogSheetStore`) and `QuestToast`.
 
-Logging is not a tab. `(tabs)` is Home / Achievements / Dishes / Stats, drawn by the custom `FloatingTabBar`; a green "+" raised in the middle of the bar (between Achievements and Dishes) opens the shared `LogSheet` and returns you to wherever you were. The sheet's menu is food-first: Snap / Describe / Search are the large tiles (into `manual?mode=image`, `manual?mode=describe` and `search`), and Water / Weight / Activity / Manual are small secondary buttons. Routes pushed from it live in the `log` modal stack (`app/log/`: meal → ingredient, plus `activity`, `manual`, `search`, `interstitial`).
+Logging is not a tab. `(tabs)` is Home / Achievements / Dishes / Stats, drawn by the custom `FloatingTabBar`; a green "+" raised in the middle of the bar, which notches around it (between Achievements and Dishes) opens the shared `LogSheet` and returns you to wherever you were. The sheet's menu is food-first: Snap / Describe / Search are the large tiles (into `manual?mode=image`, `manual?mode=describe` and `search`), and Water / Weight / Activity / Manual are small secondary buttons. Routes pushed from it live in the `log` modal stack (`app/log/`: meal → ingredient, plus `activity`, `manual`, `search`, `interstitial`).
 
 ## Data model & domain logic
 

@@ -1,7 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import type { BottomTabBarProps } from 'expo-router/js-tabs';
 import { Fragment, useEffect, useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useReducedMotion,
@@ -10,8 +10,9 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Svg, { Path } from 'react-native-svg';
 
-import { GlassSurface, hasLiquidGlass } from '@/components/ui/GlassSurface';
+import { GlassSurface } from '@/components/ui/GlassSurface';
 import { PressableScale } from '@/components/ui/PressableScale';
 import { useLogSheetStore } from '@/features/logging/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -24,6 +25,56 @@ const MIDDLE_AFTER = 'achievements';
 
 const INDICATOR_SPRING = { damping: 20, stiffness: 260, mass: 0.7 };
 
+const LOG_BUTTON_SIZE = 58;
+const NOTCH_RADIUS = LOG_BUTTON_SIZE / 2 + 6;
+const STROKE_INSET = 0.5;
+
+const LOG_BUTTON_SIZE_STYLE = { width: LOG_BUTTON_SIZE, height: LOG_BUTTON_SIZE };
+
+/**
+ * Outline of a pill-shaped bar (corner radius = half the height) whose top edge
+ * dips in a smooth concave notch of depth ~`notchRadius` around `notchCenterX`.
+ * Inset by half a hairline so the stroke is not clipped by the SVG bounds.
+ */
+export function notchedBarPath(
+  width: number,
+  height: number,
+  notchCenterX: number,
+  notchRadius: number,
+): string {
+  const left = STROKE_INSET;
+  const right = width - STROKE_INSET;
+  const top = STROKE_INSET;
+  const bottom = height - STROKE_INSET;
+  const r = Math.min(height, width) / 2 - STROKE_INSET;
+  const R = notchRadius;
+  const depth = Math.min(R, height - 12);
+  const shoulderDrop = 0.3 * R;
+  const dipControlY = shoulderDrop + (depth - shoulderDrop) / 0.75;
+
+  const x = (dx: number) =>
+    Math.round(Math.min(right - r, Math.max(left + r, notchCenterX + dx * R)) * 100) / 100;
+  const y = (dy: number) => Math.round((top + dy) * 100) / 100;
+  const n = (v: number) => Math.round(v * 100) / 100;
+
+  return [
+    `M${n(left + r)} ${n(top)}`,
+    `H${x(-1.3)}`,
+    `C${x(-0.97)} ${y(0)} ${x(-0.91)} ${y(0.06 * R)} ${x(-0.8)} ${y(shoulderDrop)}`,
+    `C${x(-0.57)} ${y(dipControlY)} ${x(0.57)} ${y(dipControlY)} ${x(0.8)} ${y(shoulderDrop)}`,
+    `C${x(0.91)} ${y(0.06 * R)} ${x(0.97)} ${y(0)} ${x(1.3)} ${y(0)}`,
+    `H${n(right - r)}`,
+    `A${n(r)} ${n(r)} 0 0 1 ${n(right)} ${n(top + r)}`,
+    `V${n(bottom - r)}`,
+    `A${n(r)} ${n(r)} 0 0 1 ${n(right - r)} ${n(bottom)}`,
+    `H${n(left + r)}`,
+    `A${n(r)} ${n(r)} 0 0 1 ${n(left)} ${n(bottom - r)}`,
+    `V${n(top + r)}`,
+    `A${n(r)} ${n(r)} 0 0 1 ${n(left + r)} ${n(top)}`,
+    'Z',
+  ].join(' ');
+}
+
 type IconName = keyof typeof Ionicons.glyphMap;
 
 /** Route name → icon pair. Routes not listed here are left out of the bar. */
@@ -35,13 +86,15 @@ const TAB_ICONS: Record<string, { active: IconName; inactive: IconName }> = {
 };
 
 /**
- * The floating pill bar from the design, with the green log button raised in
- * the middle of it (between the second and third tab).
+ * The floating bar from the design: a pill-shaped SVG outline notched around
+ * the green log button raised in the middle of it (between the second and
+ * third tab). The bar is a plain filled shape, not glass; only the "+" keeps
+ * the glass look.
  *
  * Passed to `<Tabs tabBar={...}>`, so it drives the real navigator state. The
  * log button is not a tab — logging is an action that returns you to wherever
  * you were — so it opens the shared log bottom sheet instead of navigating.
- * The disc is a sibling drawn over the pill (glass would clip it) and the
+ * The disc is a sibling drawn over the bar, centred on its top edge, and the
  * container's top padding keeps it inside the parent's bounds, which Android
  * needs to deliver touches.
  */
@@ -52,16 +105,41 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
   const colors = colorsFor(resolved);
   const presentLogSheet = useLogSheetStore((store) => store.present);
   const [tabX, setTabX] = useState<Record<string, number>>({});
-  const inactiveColor = hasLiquidGlass ? colors.fgMuted : colors.fgSubtle;
+  const [barSize, setBarSize] = useState({ width: 0, height: 0 });
+  const inactiveColor = colors.fgSubtle;
   const indicatorX = tabX[state.routes[state.index]?.key ?? ''];
 
   return (
     <View
       pointerEvents="box-none"
-      className="absolute inset-x-0 px-6 pt-8"
-      style={{ bottom: insets.bottom + 10 }}
+      className="absolute inset-x-0 px-6"
+      style={{ bottom: insets.bottom + 10, paddingTop: LOG_BUTTON_SIZE / 2 }}
     >
-      <GlassSurface className="rounded-full px-2 py-2">
+      <View
+        className="relative px-2 py-2"
+        onLayout={({ nativeEvent: { layout } }) =>
+          setBarSize((prev) =>
+            prev.width === layout.width && prev.height === layout.height
+              ? prev
+              : { width: layout.width, height: layout.height },
+          )
+        }
+      >
+        {barSize.width > 0 && (
+          <Svg
+            pointerEvents="none"
+            width={barSize.width}
+            height={barSize.height}
+            style={StyleSheet.absoluteFill}
+          >
+            <Path
+              d={notchedBarPath(barSize.width, barSize.height, barSize.width / 2, NOTCH_RADIUS)}
+              fill={colors.surface}
+              stroke={colors.border}
+              strokeWidth={StyleSheet.hairlineWidth}
+            />
+          </Svg>
+        )}
         <View className="flex-row items-center justify-around">
           {indicatorX !== undefined && <TabIndicator x={indicatorX} />}
           {state.routes.map((route, index) => {
@@ -105,7 +183,7 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
             );
           })}
         </View>
-      </GlassSurface>
+      </View>
 
       <View pointerEvents="box-none" className="absolute inset-x-0 top-0 items-center">
         <LogButton
@@ -140,13 +218,15 @@ function LogButton({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}
-      className="h-[58px] w-[58px] rounded-full"
+      style={LOG_BUTTON_SIZE_STYLE}
+      className="rounded-full"
     >
       <GlassSurface
         interactive
         tintColor={tint}
         fallbackClassName="bg-brand"
-        className="h-[58px] w-[58px] items-center justify-center rounded-full"
+        style={LOG_BUTTON_SIZE_STYLE}
+        className="items-center justify-center rounded-full"
       >
         <Ionicons name="add" size={32} color={color} />
       </GlassSurface>
