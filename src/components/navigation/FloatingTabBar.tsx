@@ -25,54 +25,43 @@ const MIDDLE_AFTER = 'achievements';
 
 const INDICATOR_SPRING = { damping: 20, stiffness: 260, mass: 0.7 };
 
-const LOG_BUTTON_SIZE = 58;
+const LOG_BUTTON_SIZE = 48;
 const NOTCH_RADIUS = LOG_BUTTON_SIZE / 2 + 6;
 const STROKE_INSET = 0.5;
+const BAR_PADDING = 8;
 
 const LOG_BUTTON_SIZE_STYLE = { width: LOG_BUTTON_SIZE, height: LOG_BUTTON_SIZE };
 
 /**
- * Outline of a pill-shaped bar (corner radius = half the height) whose top edge
- * dips in a smooth concave notch of depth ~`notchRadius` around `notchCenterX`.
- * Inset by half a hairline so the stroke is not clipped by the SVG bounds.
+ * Fill and top-edge stroke of a full-width bar whose top edge is cut by a
+ * circular notch of radius `notchRadius` centred on (`notchCenterX`, top edge).
+ * Cubic shoulders round the corners where the flat edge meets the circle.
  */
 export function notchedBarPath(
   width: number,
   height: number,
   notchCenterX: number,
   notchRadius: number,
-): string {
-  const left = STROKE_INSET;
-  const right = width - STROKE_INSET;
-  const top = STROKE_INSET;
-  const bottom = height - STROKE_INSET;
-  const r = Math.min(height, width) / 2 - STROKE_INSET;
-  const R = notchRadius;
-  const depth = Math.min(R, height - 12);
-  const shoulderDrop = 0.3 * R;
-  const dipControlY = shoulderDrop + (depth - shoulderDrop) / 0.75;
-
-  const x = (dx: number) =>
-    Math.round(Math.min(right - r, Math.max(left + r, notchCenterX + dx * R)) * 100) / 100;
-  const y = (dy: number) => Math.round((top + dy) * 100) / 100;
+): { fill: string; edge: string } {
+  const R = Math.min(notchRadius, height - BAR_PADDING);
   const n = (v: number) => Math.round(v * 100) / 100;
 
-  return [
-    `M${n(left + r)} ${n(top)}`,
-    `H${x(-1.3)}`,
-    `C${x(-0.97)} ${y(0)} ${x(-0.91)} ${y(0.06 * R)} ${x(-0.8)} ${y(shoulderDrop)}`,
-    `C${x(-0.57)} ${y(dipControlY)} ${x(0.57)} ${y(dipControlY)} ${x(0.8)} ${y(shoulderDrop)}`,
-    `C${x(0.91)} ${y(0.06 * R)} ${x(0.97)} ${y(0)} ${x(1.3)} ${y(0)}`,
-    `H${n(right - r)}`,
-    `A${n(r)} ${n(r)} 0 0 1 ${n(right)} ${n(top + r)}`,
-    `V${n(bottom - r)}`,
-    `A${n(r)} ${n(r)} 0 0 1 ${n(right - r)} ${n(bottom)}`,
-    `H${n(left + r)}`,
-    `A${n(r)} ${n(r)} 0 0 1 ${n(left)} ${n(bottom - r)}`,
-    `V${n(top + r)}`,
-    `A${n(r)} ${n(r)} 0 0 1 ${n(left + r)} ${n(top)}`,
-    'Z',
-  ].join(' ');
+  const topEdge = (top: number) => {
+    const x = (dx: number) => n(notchCenterX + dx * R);
+    const y = (dy: number) => n(top + dy * R);
+    return [
+      `H${x(-1.27)}`,
+      `C${x(-1.02)} ${y(0)} ${x(-0.99)} ${y(0.28)} ${x(-0.866)} ${y(0.5)}`,
+      `A${n(R)} ${n(R)} 0 0 0 ${x(0.866)} ${y(0.5)}`,
+      `C${x(0.99)} ${y(0.28)} ${x(1.02)} ${y(0)} ${x(1.27)} ${y(0)}`,
+      `H${n(width)}`,
+    ].join(' ');
+  };
+
+  return {
+    fill: `M0 ${n(height)} V0 ${topEdge(0)} V${n(height)} Z`,
+    edge: `M0 ${STROKE_INSET} ${topEdge(STROKE_INSET)}`,
+  };
 }
 
 type IconName = keyof typeof Ionicons.glyphMap;
@@ -86,10 +75,10 @@ const TAB_ICONS: Record<string, { active: IconName; inactive: IconName }> = {
 };
 
 /**
- * The floating bar from the design: a pill-shaped SVG outline notched around
- * the green log button raised in the middle of it (between the second and
- * third tab). The bar is a plain filled shape, not glass; only the "+" keeps
- * the glass look.
+ * The docked, full-width bar: a flat `surfaceAlt` SVG shape with a circular
+ * notch cut into its top edge around the green log button, which sits centred
+ * on that edge (between the second and third tab). The bar is a plain filled
+ * shape, not glass; only the "+" keeps the glass look.
  *
  * Passed to `<Tabs tabBar={...}>`, so it drives the real navigator state. The
  * log button is not a tab — logging is an action that returns you to wherever
@@ -107,16 +96,26 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
   const [tabX, setTabX] = useState<Record<string, number>>({});
   const [barSize, setBarSize] = useState({ width: 0, height: 0 });
   const inactiveColor = colors.fgSubtle;
+  const barPath =
+    barSize.width > 0
+      ? notchedBarPath(barSize.width, barSize.height, barSize.width / 2, NOTCH_RADIUS)
+      : null;
   const indicatorX = tabX[state.routes[state.index]?.key ?? ''];
 
   return (
     <View
       pointerEvents="box-none"
-      className="absolute inset-x-0 px-6"
-      style={{ bottom: insets.bottom + 10, paddingTop: LOG_BUTTON_SIZE / 2 }}
+      className="absolute inset-x-0 bottom-0"
+      style={{ paddingTop: LOG_BUTTON_SIZE / 2 }}
     >
       <View
-        className="relative px-2 py-2"
+        className="relative"
+        style={{
+          paddingTop: BAR_PADDING,
+          paddingBottom: insets.bottom + BAR_PADDING,
+          boxShadow:
+            resolved === 'dark' ? '0 -2px 12px rgba(0,0,0,0.4)' : '0 -2px 12px rgba(0,0,0,0.08)',
+        }}
         onLayout={({ nativeEvent: { layout } }) =>
           setBarSize((prev) =>
             prev.width === layout.width && prev.height === layout.height
@@ -125,22 +124,18 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
           )
         }
       >
-        {barSize.width > 0 && (
+        {barPath && (
           <Svg
             pointerEvents="none"
             width={barSize.width}
             height={barSize.height}
             style={StyleSheet.absoluteFill}
           >
-            <Path
-              d={notchedBarPath(barSize.width, barSize.height, barSize.width / 2, NOTCH_RADIUS)}
-              fill={colors.surface}
-              stroke={colors.border}
-              strokeWidth={StyleSheet.hairlineWidth}
-            />
+            <Path d={barPath.fill} fill={colors.surfaceAlt} />
+            <Path d={barPath.edge} fill="none" stroke={colors.border} strokeWidth={1} />
           </Svg>
         )}
-        <View className="flex-row items-center justify-around">
+        <View className="flex-row items-center justify-around px-4">
           {indicatorX !== undefined && <TabIndicator x={indicatorX} />}
           {state.routes.map((route, index) => {
             const icons = TAB_ICONS[route.name];
@@ -218,7 +213,7 @@ function LogButton({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}
-      style={LOG_BUTTON_SIZE_STYLE}
+      style={[LOG_BUTTON_SIZE_STYLE, { boxShadow: `0 0 16px ${tint}59` }]}
       className="rounded-full"
     >
       <GlassSurface
@@ -228,7 +223,7 @@ function LogButton({
         style={LOG_BUTTON_SIZE_STYLE}
         className="items-center justify-center rounded-full"
       >
-        <Ionicons name="add" size={32} color={color} />
+        <Ionicons name="add" size={26} color={color} />
       </GlassSurface>
     </PressableScale>
   );

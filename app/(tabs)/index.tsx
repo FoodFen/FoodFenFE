@@ -83,11 +83,11 @@ export default function DashboardScreen() {
       </View>
 
       {isPending ? (
-        <View className="px-4" style={{ paddingBottom: TAB_BAR_CLEARANCE }}>
+        <View className="px-4" style={{ paddingBottom: insets.bottom + TAB_BAR_CLEARANCE }}>
           <DiaryDaySkeleton />
         </View>
       ) : error || !day ? (
-        <View style={{ paddingBottom: TAB_BAR_CLEARANCE }}>
+        <View style={{ paddingBottom: insets.bottom + TAB_BAR_CLEARANCE }}>
           <ErrorState
             description={
               userErrorMessage(error, t('dashboard', 'dayLoadError'))

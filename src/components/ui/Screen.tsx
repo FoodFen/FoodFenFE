@@ -13,20 +13,16 @@ import { cn } from '@/lib/cn';
  */
 
 /**
- * Vertical space the floating tab bar occupies above the safe area.
- *
- * The pill (not the 56pt/`h-14` log button beside it) is the taller of the
- * two: `h-11` (44pt) tab buttons plus `py-2` padding (16pt) plus its 1pt
- * border ≈ 62pt. Add the 10pt it sits off the safe area and ~64pt to
- * breathe, so the last card scrolls comfortably clear of the bar rather than
- * ending just above it: 62 + 10 + 64 = 136. Mirrors the geometry in
- * `FloatingTabBar` — change both together.
+ * Vertical space the docked tab bar occupies above the safe area, plus
+ * breathing room: 60 (8 + 44 tab row + 8) + 24 (the "+" protruding above the
+ * bar) + 40 = 124. Add `insets.bottom` on top, since the bar covers it too.
+ * Mirrors the geometry in `FloatingTabBar` — change both together.
  *
  * The bar is drawn by the tabs navigator as a sibling *over* the scene, so
  * anything a `(tabs)` screen puts at its own bottom edge is hidden underneath
  * it unless that screen reserves this much.
  */
-export const TAB_BAR_CLEARANCE = 136;
+export const TAB_BAR_CLEARANCE = 124;
 
 export interface ScreenProps extends ViewProps {
   className?: string;
@@ -48,7 +44,7 @@ export function Screen({
 }: ScreenProps) {
   const insets = useSafeAreaInsets();
   const bottom =
-    (edgeToEdgeBottom ? insets.bottom : 0) + (tabBar ? TAB_BAR_CLEARANCE : 0);
+    (edgeToEdgeBottom || tabBar ? insets.bottom : 0) + (tabBar ? TAB_BAR_CLEARANCE : 0);
 
   return (
     <View
