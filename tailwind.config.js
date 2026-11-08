@@ -4,6 +4,7 @@ module.exports = {
   presets: [require('nativewind/preset')],
   darkMode: 'class',
   theme: {
+    fontWeight: {},
     extend: {
       colors: {
         brand: {

@@ -62,6 +62,8 @@ export function Text({
       // unreadable layout serves accessibility worse than a slightly smaller
       // maximum does.
       maxFontSizeMultiplier={1.4}
+      // Android's highQuality break strategy can measure text narrower than it draws, wrapping the last word onto a hidden line.
+      textBreakStrategy="simple"
       {...props}
     />
   );
