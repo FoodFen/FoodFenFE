@@ -431,7 +431,7 @@ export const vi = {
     pickSuggestionA11y: '{name}, điền số liệu từ danh sách có sẵn',
     amountEaten: 'Lượng đã ăn',
     grams: 'Gram',
-    serving: 'Khẩu phần',
+    serving: 'Số lượng',
     calories: 'Calo',
     macros: 'Chất dinh dưỡng',
     carbs: 'Tinh bột',

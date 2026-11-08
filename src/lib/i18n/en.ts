@@ -415,7 +415,7 @@ export const en: DeepPartial<Translations> = {
     pickSuggestionA11y: '{name}, fill the numbers from the built-in list',
     amountEaten: 'Amount eaten',
     grams: 'Grams',
-    serving: 'Serving',
+    serving: 'Quantity',
     calories: 'Calories',
     macros: 'Macronutrients',
     carbs: 'Carbs',
