@@ -77,10 +77,12 @@ export function RateStep({
 
   const maxRateKg = maxWeeklyRateKg({ gender, birthYear, height, weightCurrent, activityLevel });
 
-  const fraction = (value - MIN_RATE_KG) / (maxRateKg - MIN_RATE_KG);
+  const displayRate = units.weightFromKg(value, unit).toFixed(1);
+  // Zone follows the rounded number shown so equal labels get the same tone; display-only rounding, stored value stays raw.
+  const shownKg = units.weightToKg(Number(displayRate), unit);
+  const fraction = (shownKg - MIN_RATE_KG) / (maxRateKg - MIN_RATE_KG);
   const zone = zoneFor(Math.min(1, Math.max(0, fraction)));
 
-  const displayRate = units.weightFromKg(value, unit).toFixed(1);
   const deltaDisplay = units.weightFromKg(Math.abs(weightGoal - weightCurrent), unit).toFixed(1);
 
   const subtitle = t('onboardingRate', isGain ? 'subtitleGain' : 'subtitleLose')
