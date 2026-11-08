@@ -11,10 +11,12 @@ import { Text } from './Text';
  * A plain right-aligned numeric field in a rounded container — no −/+ steppers.
  *
  * While focused the field owns a draft string, so a half-typed "1." is not
- * clobbered by a re-render; on blur the draft is parsed, clamped to [min, max]
- * and rounded to `precision` decimals before it flows back out through
- * `onChange`. An empty field reports `null` rather than a number, so callers
- * can tell "not entered yet" from a real `0`.
+ * clobbered by a re-render. Each keystroke that parses to a number inside
+ * [min, max] flows out live through `onChange`, rounded to `precision`
+ * decimals; empty, out-of-range or unparseable text does not. On blur the
+ * draft is parsed, clamped and rounded for the final value. An empty field
+ * reports `null` on blur rather than a number, so callers can tell "not
+ * entered yet" from a real `0`.
  */
 
 export interface NumberFieldProps {
@@ -78,6 +80,19 @@ export function NumberField({
     onChange(Number.isFinite(parsed) ? clamp(roundTo(parsed), min, max) : value);
   };
 
+  const onType = (text: string): void => {
+    setDraft(text);
+
+    const trimmed = text.trim();
+    if (trimmed === '') return;
+
+    const parsed = Number(trimmed.replace(',', '.'));
+    if (!Number.isFinite(parsed)) return;
+
+    const rounded = roundTo(parsed);
+    if (rounded >= min && rounded <= max) onChange(rounded);
+  };
+
   const field = (
     <View
       className={cn(
@@ -88,7 +103,7 @@ export function NumberField({
       <TextInput
         className="h-full flex-1 py-0 text-right font-sans text-[14px] text-fg"
         value={display}
-        onChangeText={setDraft}
+        onChangeText={onType}
         onFocus={() => setDraft(value === null ? '' : format(value))}
         onBlur={() => {
           commit(draft ?? '');

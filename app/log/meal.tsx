@@ -62,8 +62,10 @@ export default function MealComposerScreen() {
       return;
     }
 
-    // Scales the row's own values by grams / old grams (kcal to whole, macros to 0.1 g, as scaleNutrition does).
-    const n = scaleNutrition(row, (grams * 100) / row.quantityG);
+    // Scales from the row's per-100 g base when it has one, else by grams / old grams (kcal to whole, macros to 0.1 g, as scaleNutrition does).
+    const n = row.per100g
+      ? scaleNutrition(row.per100g, grams)
+      : scaleNutrition(row, (grams * 100) / row.quantityG);
     draft.updateIngredient(row.key, {
       quantityG: grams,
       kcal: n.kcal,

@@ -33,7 +33,7 @@ import { VerifiedTick } from '@/components/ui/VerifiedTick';
 import { foodDisplayName } from '@/data/foodCatalog';
 import { useAuthStore } from '@/features/auth/store';
 import { isAiQuotaSpent } from '@/features/diary/aiQuota';
-import { useDraftStore } from '@/features/diary/draftStore';
+import { per100gOf, useDraftStore } from '@/features/diary/draftStore';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import {
   useAiQuota,
@@ -115,6 +115,7 @@ function applyAnalysisToDraft(
       catalogFoodId: ing.catalogFoodId ?? null,
       confidence: ing.confidence,
       verified: ing.verified ?? false,
+      per100g: per100gOf(ing, ing.quantityG),
     });
   }
 

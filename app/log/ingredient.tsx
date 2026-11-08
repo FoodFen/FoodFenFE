@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
 import { VerifiedTick } from '@/components/ui/VerifiedTick';
 import { foodDisplayName } from '@/data/foodCatalog';
-import { useDraftStore } from '@/features/diary/draftStore';
+import { per100gOf, useDraftStore } from '@/features/diary/draftStore';
 import { useCatalogSearch } from '@/features/diary/queries';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -199,6 +199,7 @@ function PortionForm({
       fatG: nutrition.fatG,
       fiberG: nutrition.fiberG ?? null,
       catalogFoodId: food.id,
+      per100g: food.per100g,
     });
     onDone();
   };
@@ -325,15 +326,19 @@ function ManualIngredientForm({ onDone }: { onDone: () => void }) {
 
   const add = () => {
     haptics.success();
-    addIngredient({
-      name: name.trim(),
-      quantityG: toNumber(grams),
+    const values = {
       kcal: Math.round(toNumber(kcal)),
       carbsG: toNumber(carbsG),
       proteinG: toNumber(proteinG),
       fatG: toNumber(fatG),
       fiberG: null,
+    };
+    addIngredient({
+      name: name.trim(),
+      quantityG: toNumber(grams),
+      ...values,
       catalogFoodId: null,
+      per100g: per100gOf(values, toNumber(grams)),
     });
     onDone();
   };

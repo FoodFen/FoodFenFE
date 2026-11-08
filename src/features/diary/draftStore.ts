@@ -36,6 +36,25 @@ export interface DraftIngredient extends IngredientInput {
    * UI-only like `confidence` — never persisted.
    */
   verified?: boolean;
+  /**
+   * Unrounded per-100 g values the row rescales from when its grams change, so
+   * repeated edits never accumulate rounding drift. UI-only — never persisted.
+   */
+  per100g?: Nutrition;
+}
+
+/** Per-100 g values of a portion; undefined when the weight is unknown. Kept unrounded on purpose. */
+export function per100gOf(values: Nutrition, grams: number): Nutrition | undefined {
+  if (grams <= 0) return undefined;
+  const k = 100 / grams;
+
+  return {
+    kcal: values.kcal * k,
+    carbsG: values.carbsG * k,
+    proteinG: values.proteinG * k,
+    fatG: values.fatG * k,
+    fiberG: values.fiberG == null ? values.fiberG : values.fiberG * k,
+  };
 }
 
 interface DraftState {
