@@ -39,6 +39,7 @@ export const vi = {
     mealFallback: 'Món ăn',
     moreIngredients: '{name} + {n} món khác',
     verifiedSource: 'Đã xác minh nguồn',
+    fiberG: 'Chất xơ (g)',
   },
 
   apiError: {

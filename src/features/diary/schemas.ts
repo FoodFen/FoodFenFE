@@ -19,6 +19,7 @@ export const manualEntrySchema = z.object({
   carbsG: z.number().min(0).max(2000).transform(oneDecimal),
   proteinG: z.number().min(0).max(2000).transform(oneDecimal),
   fatG: z.number().min(0).max(2000).transform(oneDecimal),
+  fiberG: z.number().min(0).max(200).transform(oneDecimal).nullable().optional(),
 });
 
 export type ManualEntryValues = z.infer<typeof manualEntrySchema>;

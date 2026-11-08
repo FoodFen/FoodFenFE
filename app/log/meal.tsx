@@ -79,10 +79,10 @@ export default function MealComposerScreen() {
 
   const changeNumber = (
     row: DraftIngredient,
-    field: 'kcal' | 'proteinG' | 'carbsG' | 'fatG',
+    field: 'kcal' | 'proteinG' | 'carbsG' | 'fatG' | 'fiberG',
     value: number | null,
   ) => {
-    if (value === null) return;
+    if (value === null && field !== 'fiberG') return;
 
     // per100g is re-derived from the user's numbers so a later grams change scales from them.
     draft.updateIngredient(row.key, {
@@ -296,6 +296,18 @@ export default function MealComposerScreen() {
                           precision={1}
                         />
                       </View>
+                      {isPremium ? (
+                        <View className="flex-row gap-3">
+                          <NumberCell
+                            label={t('common', 'fiberG')}
+                            value={row.fiberG ?? null}
+                            onChange={(v) => changeNumber(row, 'fiberG', v)}
+                            max={200}
+                            precision={1}
+                          />
+                          <View className="flex-1" />
+                        </View>
+                      ) : null}
                       {row.verified === true ? (
                         <Text variant="caption" tone="subtle">
                           {t('logMeal', 'editRemovesVerified')}
@@ -407,7 +419,7 @@ function NumberCell({
   precision,
 }: {
   label: string;
-  value: number;
+  value: number | null;
   onChange: (value: number | null) => void;
   max: number;
   precision: number;

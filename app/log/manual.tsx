@@ -44,6 +44,7 @@ import {
 import { manualEntrySchema } from '@/features/diary/schemas';
 import { suggestedMealType } from '@/features/diary/selectors';
 import { dismissLogFlow, usePostLogInterstitial } from '@/features/gamification/queries';
+import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -138,6 +139,7 @@ export default function ManualEntryScreen() {
   const logManual = useLogManualEntry();
   const finishLogging = usePostLogInterstitial('food', dismissLogFlow);
   const analyzeFood = useAnalyzeFood();
+  const isPremium = useIsPremium();
 
   // No session needed: signed-out users get a few free AI tries, counted
   // server-side by device id. Running out routes to Premium (see `onAiError`).
@@ -278,6 +280,7 @@ export default function ManualEntryScreen() {
   const [carbsG, setCarbsG] = useState<number | null>(null);
   const [proteinG, setProteinG] = useState<number | null>(null);
   const [fatG, setFatG] = useState<number | null>(null);
+  const [fiberG, setFiberG] = useState<number | null>(null);
 
   const debouncedName = useDebounce(name, 250);
   const search = useCatalogSearch(debouncedName);
@@ -297,8 +300,9 @@ export default function ManualEntryScreen() {
         carbsG,
         proteinG,
         fatG,
+        fiberG: isPremium ? fiberG : null,
       }),
-    [name, amount, amountUnit, kcal, carbsG, proteinG, fatG],
+    [name, amount, amountUnit, kcal, carbsG, proteinG, fatG, fiberG, isPremium],
   );
 
   const canSave =
@@ -323,6 +327,7 @@ export default function ManualEntryScreen() {
     setCarbsG(n.carbsG);
     setProteinG(n.proteinG);
     setFatG(n.fatG);
+    setFiberG(n.fiberG ?? null);
     setNameFocused(false);
     Keyboard.dismiss();
   };
@@ -343,6 +348,7 @@ export default function ManualEntryScreen() {
         carbsG: v.carbsG,
         proteinG: v.proteinG,
         fatG: v.fatG,
+        fiberG: v.fiberG,
       },
       {
         onSuccess: () => {
@@ -559,6 +565,20 @@ export default function ManualEntryScreen() {
                   onChange={setFatG}
                 />
               </View>
+
+              {isPremium ? (
+                <Field label={t('common', 'fiberG')}>
+                  <NumberField
+                    compact
+                    value={fiberG}
+                    onChange={setFiberG}
+                    min={0}
+                    max={200}
+                    precision={1}
+                    placeholder="0"
+                  />
+                </Field>
+              ) : null}
 
               <Button
                 label={t('logManual', 'save')}

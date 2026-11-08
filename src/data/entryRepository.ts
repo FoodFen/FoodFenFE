@@ -66,6 +66,7 @@ export interface CreateManualEntryInput {
   carbsG: number;
   proteinG: number;
   fatG: number;
+  fiberG?: number | null;
 }
 
 function toNutrition(
@@ -170,7 +171,7 @@ export function createEntry(input: CreateEntryInput): FoodEntry {
  * Unlike `createEntry`, the stored header totals are the source of truth: the
  * user typed the final numbers, so there is nothing to sum and
  * `recalculateTotals` — which would zero a header with no ingredient rows — is
- * deliberately not called. `fiberG` stays null: unknown, not measured-none.
+ * deliberately not called. `fiberG` is null unless given: unknown, not measured-none.
  */
 export function createManualEntry(input: CreateManualEntryInput): FoodEntry {
   const now = new Date();
@@ -188,7 +189,7 @@ export function createManualEntry(input: CreateManualEntryInput): FoodEntry {
       carbsG: input.carbsG,
       proteinG: input.proteinG,
       fatG: input.fatG,
-      fiberG: null,
+      fiberG: input.fiberG ?? null,
       amount: input.amount ?? null,
       amountUnit: input.amountUnit ?? null,
       aiFeedback: null,
@@ -355,6 +356,8 @@ export interface UpdateManualEntryInput {
   carbsG?: number;
   proteinG?: number;
   fatG?: number;
+  /** Omit to leave the stored value alone; `null` clears it back to unknown. */
+  fiberG?: number | null;
 }
 
 /**

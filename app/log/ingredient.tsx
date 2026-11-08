@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Input } from '@/components/ui/Input';
+import { NumberField } from '@/components/ui/NumberField';
 import { Text } from '@/components/ui/Text';
 import { VerifiedTick } from '@/components/ui/VerifiedTick';
 import { foodDisplayName } from '@/data/foodCatalog';
@@ -339,6 +340,7 @@ function ManualIngredientForm({ onDone }: { onDone: () => void }) {
   const [proteinG, setProteinG] = useState('');
   const [carbsG, setCarbsG] = useState('');
   const [fatG, setFatG] = useState('');
+  const [fiberG, setFiberG] = useState<number | null>(null);
 
   const toNumber = (value: string): number => {
     const parsed = Number(value.replace(',', '.'));
@@ -355,7 +357,7 @@ function ManualIngredientForm({ onDone }: { onDone: () => void }) {
       carbsG: toNumber(carbsG),
       proteinG: toNumber(proteinG),
       fatG: toNumber(fatG),
-      fiberG: null,
+      fiberG,
     };
     addIngredient({
       name: name.trim(),
@@ -418,6 +420,15 @@ function ManualIngredientForm({ onDone }: { onDone: () => void }) {
           keyboardType="decimal-pad"
         />
       </View>
+
+      <NumberField
+        label={t('common', 'fiberG')}
+        value={fiberG}
+        onChange={setFiberG}
+        min={0}
+        max={200}
+        precision={1}
+      />
 
       <Button label={t('logIngredient', 'addToMeal')} onPress={add} disabled={!canAdd} fullWidth />
     </Card>

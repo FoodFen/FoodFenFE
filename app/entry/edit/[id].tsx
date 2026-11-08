@@ -13,6 +13,7 @@ import { Text } from '@/components/ui/Text';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import { useEntry, useUpdateEntry, useUpdateManualEntry } from '@/features/diary/queries';
 import { MEAL_ICONS } from '@/features/diary/selectors';
+import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
@@ -68,6 +69,7 @@ function EditForm({ entry }: { entry: FoodEntry }) {
 
   const updateManual = useUpdateManualEntry();
   const updateEntry = useUpdateEntry();
+  const isPremium = useIsPremium();
 
   const numbersEditable = entry.ingredients.length <= 1;
 
@@ -78,6 +80,11 @@ function EditForm({ entry }: { entry: FoodEntry }) {
   const [carbsG, setCarbsG] = useState<number | null>(entry.carbsG);
   const [proteinG, setProteinG] = useState<number | null>(entry.proteinG);
   const [fatG, setFatG] = useState<number | null>(entry.fatG);
+  const [fiberG, setFiberG] = useState<number | null>(
+    entry.ingredients.length === 1
+      ? (entry.ingredients[0]?.fiberG ?? null)
+      : (entry.fiberG ?? null),
+  );
 
   const macrosPresent = carbsG !== null && proteinG !== null && fatG !== null;
   const canSave =
@@ -129,6 +136,7 @@ function EditForm({ entry }: { entry: FoodEntry }) {
             carbsG: carbsG ?? 0,
             proteinG: proteinG ?? 0,
             fatG: fatG ?? 0,
+            ...(isPremium ? { fiberG } : {}),
           },
         },
         { onSuccess: done, onError: fail },
@@ -154,7 +162,7 @@ function EditForm({ entry }: { entry: FoodEntry }) {
                 carbsG: carbsG ?? 0,
                 proteinG: proteinG ?? 0,
                 fatG: fatG ?? 0,
-                fiberG: row?.fiberG ?? null,
+                fiberG: isPremium ? fiberG : (row?.fiberG ?? null),
                 catalogFoodId: row?.catalogFoodId ?? null,
               },
             ],
@@ -274,6 +282,20 @@ function EditForm({ entry }: { entry: FoodEntry }) {
               value={fatG}
               onChange={setFatG}
             />
+            {isPremium ? (
+              <View className="flex-row items-center justify-between py-1.5">
+                <Text variant="body">{t('common', 'fiberG')}</Text>
+                <NumberField
+                  compact
+                  value={fiberG}
+                  onChange={setFiberG}
+                  min={0}
+                  max={200}
+                  precision={1}
+                  placeholder="0"
+                />
+              </View>
+            ) : null}
             {showWarning ? (
               <Text variant="caption" tone="warning">
                 {t('entryEdit', 'reconcileWarning')}
