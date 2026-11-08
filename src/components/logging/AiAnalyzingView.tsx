@@ -40,6 +40,7 @@ const STAGE_INTERVAL_MS = 1800;
 const STAGE_KEYS = ['aiStageRecognize', 'aiStagePortion', 'aiStageNutrition'] as const;
 const SCAN_LINE_HEIGHT = 3;
 const SWEEP_EASING = Easing.inOut(Easing.quad);
+const DEFAULT_EASING = Easing.inOut(Easing.quad);
 const CORNERS = [
   'left-2.5 top-2.5 border-l-[3px] border-t-[3px] rounded-tl-[6px]',
   'right-2.5 top-2.5 border-r-[3px] border-t-[3px] rounded-tr-[6px]',
@@ -50,7 +51,7 @@ const CORNERS = [
 function useLoop(
   enabled: boolean,
   duration: number,
-  { reverse = false, easing, delay = 0 }: { reverse?: boolean; easing?: EasingFunction; delay?: number } = {},
+  { reverse = false, easing = DEFAULT_EASING, delay = 0 }: { reverse?: boolean; easing?: EasingFunction; delay?: number } = {},
 ) {
   const value = useSharedValue(0);
 
