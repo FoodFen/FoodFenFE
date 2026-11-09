@@ -17,6 +17,7 @@ import { reconcileNotifications } from '@/features/notifications/reconcile';
 import { useIsPremium, useProfileStore } from '@/features/profile/store';
 import { useSettingsStore } from '@/features/settings/store';
 import type { ThemePreference } from '@/features/settings/store';
+import { useTourStore } from '@/features/tour/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/cn';
@@ -328,6 +329,20 @@ export default function SettingsScreen() {
         >
           <Text variant="label">{t('settings', 'ringColorsRow')}</Text>
           <Ionicons name="chevron-forward" size={16} color={colors.fgMuted} />
+        </Pressable>
+      </Card>
+
+      <Card flush>
+        <Pressable
+          onPress={() => {
+            useTourStore.getState().queue();
+            router.back();
+          }}
+          accessibilityRole="button"
+          className="flex-row items-center justify-between px-4 py-4 active:bg-surface-alt"
+        >
+          <Text variant="label">{t('tour', 'replay')}</Text>
+          <Ionicons name="map-outline" size={20} color={colors.fgMuted} />
         </Pressable>
       </Card>
 

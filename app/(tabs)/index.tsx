@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useFocusEffect } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,18 +15,22 @@ import { WaterSection } from '@/components/dashboard/WaterSection';
 import { WeekStrip } from '@/components/dashboard/WeekStrip';
 import { WeightSection } from '@/components/dashboard/WeightSection';
 import { QuizCard } from '@/components/quiz/QuizCard';
+import { useTourTarget } from '@/components/tour/useTourTarget';
 import { ErrorState } from '@/components/ui/EmptyState';
 import { Screen, ScrollScreen, TAB_BAR_CLEARANCE } from '@/components/ui/Screen';
 import { DiaryDaySkeleton } from '@/components/ui/Skeleton';
 import { MissingGoalError } from '@/data/diaryRepository';
 import { useDiaryDay, useHealMissingGoal } from '@/features/diary/queries';
 import { useProfileStore } from '@/features/profile/store';
+import { useTourStore } from '@/features/tour/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { todayKey } from '@/lib/date';
 import type { DateKey } from '@/lib/date';
 import { env } from '@/lib/env';
 import { colorsFor } from '@/theme/colors';
+
+const TOUR_START_DELAY_MS = 600;
 
 // Staggered entrance plays once per app session, not on every day switch or refetch.
 let hasAnimatedIn = false;
@@ -60,6 +65,17 @@ export default function DashboardScreen() {
   }, [contentShown]);
   const enter = (index: number) =>
     hasAnimatedIn ? undefined : FadeInDown.duration(300).delay(index * 50);
+
+  const tourPending = useTourStore((state) => state.pending);
+  const startTour = useTourStore((state) => state.start);
+  const summaryTarget = useTourTarget('summary');
+  useFocusEffect(
+    useCallback(() => {
+      if (!contentShown || !tourPending) return;
+      const timer = setTimeout(startTour, TOUR_START_DELAY_MS);
+      return () => clearTimeout(timer);
+    }, [contentShown, tourPending, startTour]),
+  );
 
   const profile = useProfileStore((state) => state.profile);
   const { mutate: healGoal, reset: resetHeal, isIdle: healIsIdle } = useHealMissingGoal();
@@ -110,7 +126,9 @@ export default function DashboardScreen() {
           }
         >
           <Animated.View entering={enter(0)}>
-            <SummaryCard day={day} />
+            <View {...summaryTarget}>
+              <SummaryCard day={day} />
+            </View>
           </Animated.View>
           <Animated.View entering={enter(1)}>
             <CaloriesEatenSection day={day} onOpenEntries={() => setEntriesOpen(true)} />

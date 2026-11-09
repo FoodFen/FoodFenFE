@@ -1,6 +1,7 @@
 import { OnboardingWizard } from '@/components/onboarding/OnboardingWizard';
 import { useProfileStore } from '@/features/profile/store';
 import { MEAL_REMINDER_IDS, useSettingsStore } from '@/features/settings/store';
+import { useTourStore } from '@/features/tour/store';
 
 /**
  * First-run setup, reached from the welcome screen.
@@ -20,6 +21,8 @@ export default function OnboardingScreen() {
   return (
     <OnboardingWizard
       onComplete={(draft) => {
+        useTourStore.getState().queue();
+
         // dietType isn't collected by this wizard; the schema's own default
         // ('balanced') is what a fresh profile gets until a diet-type step
         // exists.

@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { View } from 'react-native';
 
+import { useTourTarget } from '@/components/tour/useTourTarget';
 import { PressableScale } from '@/components/ui/PressableScale';
 import { Text } from '@/components/ui/Text';
 import { useCoinBalance } from '@/features/dashboard/queries';
@@ -27,6 +28,7 @@ export function DashboardHeader({
   const colors = colorsFor(resolved);
   const { t } = useTranslation();
   const { data: coins = 0 } = useCoinBalance();
+  const coinsTarget = useTourTarget('coins');
 
   return (
     <View className="flex-row items-center justify-between px-4 pt-2">
@@ -40,18 +42,20 @@ export function DashboardHeader({
 
       {isToday ? (
         <View className="flex-row items-center gap-1">
-          <PressableScale
-            onPress={() => router.push('/shop')}
-            accessibilityRole="button"
-            accessibilityLabel={`${t('dashboard', 'openShop')} — ${t(
-              'dashboard',
-              'pointsA11y',
-            ).replace('{count}', String(coins))}`}
-            className="mr-2 h-9 flex-row items-center gap-1 rounded-pill bg-warning/10 px-3"
-          >
-            <Ionicons name="sparkles" size={16} color={colors.warning} />
-            <Text variant="label">{coins}</Text>
-          </PressableScale>
+          <View {...coinsTarget} className="mr-2">
+            <PressableScale
+              onPress={() => router.push('/shop')}
+              accessibilityRole="button"
+              accessibilityLabel={`${t('dashboard', 'openShop')} — ${t(
+                'dashboard',
+                'pointsA11y',
+              ).replace('{count}', String(coins))}`}
+              className="h-9 flex-row items-center gap-1 rounded-pill bg-warning/10 px-3"
+            >
+              <Ionicons name="sparkles" size={16} color={colors.warning} />
+              <Text variant="label">{coins}</Text>
+            </PressableScale>
+          </View>
 
           <PressableScale
             onPress={() => router.push('/chat')}

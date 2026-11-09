@@ -12,9 +12,11 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 
+import { useTourTarget } from '@/components/tour/useTourTarget';
 import { GlassSurface } from '@/components/ui/GlassSurface';
 import { PressableScale } from '@/components/ui/PressableScale';
 import { useLogSheetStore } from '@/features/logging/store';
+import type { TourTargetId } from '@/features/tour/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { haptics } from '@/lib/haptics';
@@ -22,6 +24,11 @@ import { colorsFor } from '@/theme/colors';
 
 /** The route after which the middle log-button slot is inserted. */
 const MIDDLE_AFTER = 'achievements';
+
+const TAB_TOUR_IDS: Record<string, TourTargetId> = {
+  achievements: 'achievementsTab',
+  insights: 'insightsTab',
+};
 
 const INDICATOR_SPRING = { damping: 20, stiffness: 260, mass: 0.7 };
 
@@ -115,6 +122,7 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
         )
       : null;
   const indicatorX = tabX[state.routes[state.index]?.key ?? ''];
+  const logButtonTarget = useTourTarget('logButton');
 
   return (
     <View
@@ -167,6 +175,7 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
                   icon={focused ? icons.active : icons.inactive}
                   color={focused ? colors.brand : inactiveColor}
                   label={label}
+                  tourId={TAB_TOUR_IDS[route.name]}
                   onLayoutX={(x) =>
                     setTabX((prev) =>
                       prev[route.key] === x ? prev : { ...prev, [route.key]: x },
@@ -195,15 +204,17 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
       </View>
 
       <View pointerEvents="box-none" className="absolute inset-x-0 top-0 items-center">
-        <LogButton
-          color={colors.onBrand}
-          label={t('logSheet', 'openA11y')}
-          tint={colors.brand}
-          onPress={() => {
-            haptics.selection();
-            presentLogSheet();
-          }}
-        />
+        <View {...logButtonTarget}>
+          <LogButton
+            color={colors.onBrand}
+            label={t('logSheet', 'openA11y')}
+            tint={colors.brand}
+            onPress={() => {
+              haptics.selection();
+              presentLogSheet();
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -271,6 +282,7 @@ function TabButton({
   icon,
   color,
   label,
+  tourId,
   onLayoutX,
   onPress,
 }: {
@@ -278,10 +290,12 @@ function TabButton({
   icon: IconName;
   color: string;
   label: string;
+  tourId?: TourTargetId;
   onLayoutX: (x: number) => void;
   onPress: () => void;
 }) {
   const scale = useSharedValue(1);
+  const { onLayout: measureTourTarget, ...tourTarget } = useTourTarget(tourId);
 
   useEffect(() => {
     if (focused) {
@@ -295,10 +309,14 @@ function TabButton({
 
   return (
     <Pressable
+      {...tourTarget}
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ selected: focused }}
-      onLayout={(event) => onLayoutX(event.nativeEvent.layout.x)}
+      onLayout={(event) => {
+        onLayoutX(event.nativeEvent.layout.x);
+        measureTourTarget();
+      }}
       onPress={onPress}
       className="h-11 w-14 items-center justify-center rounded-full"
     >

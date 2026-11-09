@@ -914,6 +914,19 @@ export const vi = {
     guestNote: 'Không cần tài khoản — bạn có thể đăng nhập sau trong Cài đặt để đồng bộ.',
   },
 
+  tour: {
+    logButton: 'Nhấn + để ghi bữa ăn: chụp ảnh, mô tả hoặc tìm món.',
+    summary: 'Xem lượng calo còn lại và macro của hôm nay.',
+    coins: 'Kiếm xu từ nhiệm vụ và chuỗi ngày, rồi tiêu trong cửa hàng.',
+    achievementsTab: 'Giữ chuỗi ngày và hoàn thành nhiệm vụ hằng ngày tại đây.',
+    insightsTab: 'Theo dõi xu hướng của bạn theo thời gian trong Thống kê.',
+    next: 'Tiếp',
+    skip: 'Bỏ qua',
+    done: 'Bắt đầu thôi',
+    counter: '{current}/{total}',
+    replay: 'Xem lại hướng dẫn',
+  },
+
   chat: {
     layoutTitle: 'Trợ lý AI',
     title: 'FoodFen AI',

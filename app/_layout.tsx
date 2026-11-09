@@ -21,6 +21,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { QuestToast } from '@/components/gamification/QuestToast';
 import { LogSheet } from '@/components/logging/LogSheet';
+import { TourOverlay } from '@/components/tour/TourOverlay';
 import { ErrorState } from '@/components/ui/EmptyState';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 // import { clearSeededDays, seedRecentDays } from '@/data/devSeed';
@@ -269,6 +270,9 @@ function AppShell({ migrated }: { migrated: boolean }) {
       {/* One instance for the whole app: the tab-bar "+" and every dashboard
           card's "+" open this same sheet through `useLogSheetStore`. */}
       <LogSheet />
+      <ErrorBoundary name="TourOverlay">
+        <TourOverlay />
+      </ErrorBoundary>
       {/* Decorative — a bug in here must never be able to take the navigator
           down with it. */}
       <ErrorBoundary name="QuestToast">

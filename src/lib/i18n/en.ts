@@ -896,6 +896,19 @@ export const en: DeepPartial<Translations> = {
     guestNote: 'No account needed — sign in later from Settings to sync.',
   },
 
+  tour: {
+    logButton: 'Tap + to log a meal: snap a photo, describe it, or search.',
+    summary: "See how many calories you have left and today's macros.",
+    coins: 'Earn coins from quests and streaks, then spend them in the shop.',
+    achievementsTab: 'Keep your streak going and finish daily quests here.',
+    insightsTab: 'Track your trends over time in Stats.',
+    next: 'Next',
+    skip: 'Skip',
+    done: "Let's go",
+    counter: '{current}/{total}',
+    replay: 'Replay tour',
+  },
+
   chat: {
     layoutTitle: 'AI Assistant',
     title: 'FoodFen AI',
