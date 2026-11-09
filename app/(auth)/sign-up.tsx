@@ -47,13 +47,12 @@ export default function SignUpScreen() {
         displayName: values.displayName,
       });
 
-      // Back to wherever this was opened from — Profile, normally. The root
-      // layout's guard keys on the local profile, not on being signed in, so
-      // nothing swaps the stack on our behalf.
+      // Leaves to wherever this was opened from, or into setup if no profile came back.
       announceAndLeave(
         t('auth', 'signUpSuccessTitle'),
         t('auth', 'signUpSuccessMessage'),
         t('common', 'done'),
+        t('auth', 'signedInNeedsSetup'),
       );
     } catch (error) {
       if (isApiError(error)) {
@@ -99,6 +98,7 @@ export default function SignUpScreen() {
                 t('auth', 'signInSuccessTitle'),
                 t('auth', 'signInSuccessMessage'),
                 t('common', 'done'),
+                t('auth', 'signedInNeedsSetup'),
               )
             }
           />

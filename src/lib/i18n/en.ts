@@ -259,6 +259,7 @@ export const en: DeepPartial<Translations> = {
     signInSuccessMessage: 'Good to see you again!',
     signUpSuccessTitle: 'Account created',
     signUpSuccessMessage: 'You’re all set — let’s get started.',
+    signedInNeedsSetup: 'You’re signed in. We just need a few details to set up your plan.',
     newToApp: 'New to FoodFen?',
     createAccountLink: 'Create an account',
     createYourAccount: 'Create your account',
@@ -885,6 +886,14 @@ export const en: DeepPartial<Translations> = {
     seedData: 'Seed recent days',
     on: 'On',
     off: 'Off',
+  },
+
+  welcome: {
+    tagline: 'Snap your meal. Know your calories.',
+    subtitle: 'AI food tracking that fits your day.',
+    getStarted: 'Get started',
+    haveAccount: 'I already have an account',
+    guestNote: 'No account needed — sign in later from Settings to sync.',
   },
 
   chat: {

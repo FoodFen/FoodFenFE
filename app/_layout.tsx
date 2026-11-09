@@ -219,8 +219,8 @@ function AppShell({ migrated }: { migrated: boolean }) {
         }}
       >
         {/* `Stack.Protected` removes the guarded routes entirely when the guard
-            is false. Onboarding — not signing in — is the only thing between a
-            fresh install and the diary. */}
+            is false. A fresh install goes through the welcome screen, then either
+            the setup wizard or a sign-in that restores the profile. */}
         <Stack.Protected guard={!hasProfile}>
           <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
         </Stack.Protected>

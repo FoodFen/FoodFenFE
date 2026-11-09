@@ -5,9 +5,9 @@ import { useTranslation } from '@/hooks/useTranslation';
 /**
  * Sign in and sign up.
  *
- * Pushed from Profile rather than gating the app, so these screens show a
- * header with a back button — a user who opened them by mistake has to be able
- * to leave without an account.
+ * Pushed from the welcome screen or Profile rather than gating the app, so
+ * these screens show a header with a back button — a user who opened them by
+ * mistake has to be able to leave without an account.
  */
 export default function AuthLayout() {
   const { t } = useTranslation();

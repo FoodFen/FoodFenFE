@@ -275,6 +275,7 @@ export const vi = {
     signInSuccessMessage: 'Chào mừng bạn quay lại!',
     signUpSuccessTitle: 'Tạo tài khoản xong rồi',
     signUpSuccessMessage: 'Mọi thứ đã sẵn sàng, bắt đầu thôi!',
+    signedInNeedsSetup: 'Bạn đã đăng nhập. Chỉ cần thêm vài thông tin để lập kế hoạch cho bạn.',
     newToApp: 'Mới dùng FoodFen?',
     createAccountLink: 'Tạo tài khoản',
     createYourAccount: 'Tạo tài khoản của bạn',
@@ -903,6 +904,14 @@ export const vi = {
     seedData: 'Tạo dữ liệu mẫu cho vài ngày gần đây',
     on: 'Bật',
     off: 'Tắt',
+  },
+
+  welcome: {
+    tagline: 'Chụp ảnh là biết calo.',
+    subtitle: 'Theo dõi dinh dưỡng bằng AI, nhẹ nhàng mỗi ngày.',
+    getStarted: 'Bắt đầu',
+    haveAccount: 'Tôi đã có tài khoản',
+    guestNote: 'Không cần tài khoản — bạn có thể đăng nhập sau trong Cài đặt để đồng bộ.',
   },
 
   chat: {

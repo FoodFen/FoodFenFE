@@ -21,8 +21,10 @@ Root cause of a real bug: `readWithRefresh` in `src/data/sync.ts` used to `await
 
 Two orthogonal pieces of identity:
 
-- `useProfileStore` — the **local profile** (a `user` row). This is what the root layout gates on: onboarding, not sign-in, is the only thing between a fresh install and the diary (`Stack.Protected guard={!hasProfile}` in `app/_layout.tsx`).
+- `useProfileStore` — the **local profile** (a `user` row). This is what the root layout gates on (`Stack.Protected guard={!hasProfile}` in `app/_layout.tsx`), never the session.
 - `useAuthStore` — an **optional session**. It gates nothing; it only decides whether reads try the server first. `(auth)` routes are reachable at any time and gate nothing.
+
+First run: `(onboarding)/index` is a welcome screen with two ways in. "Get started" pushes the wizard (`(onboarding)/setup`); "I already have an account" pushes `/sign-in`. A sign-in (or sign-up) whose server user has a complete profile restores it inside `adoptSession` before the call resolves, so the guard flips to `(tabs)` and `announceAndLeave` goes back/replaces onto the dashboard. When nothing could be restored, `announceAndLeave` shows a "few details still needed" message and `dismissTo('/setup')`, keeping the session. Back from `/sign-in` returns to the welcome screen.
 
 `app/_layout.tsx` holds the boot sequence: fonts, Drizzle `useMigrations`, stored-session hydration, then `enableForeignKeys()` + first profile read. Nothing may query the database before migrations report success — on a fresh install the tables don't exist yet. It also hosts the app-wide `LogSheet` (the tab bar's "+" and every dashboard card's "+" open the same instance via `useLogSheetStore`) and `QuestToast`.
 
