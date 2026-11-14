@@ -42,13 +42,11 @@ const SLIDES: readonly {
 ];
 
 const AUTO_ADVANCE_MS = 4500;
-const SIDE_PADDING = 48;
-const MAX_WIDTH = 448;
 
 export function WelcomeCarousel() {
   const reducedMotion = useReducedMotion();
-  const { width, height } = useWindowDimensions();
-  const slideWidth = Math.min(width - SIDE_PADDING, MAX_WIDTH);
+  const { height } = useWindowDimensions();
+  const [slideWidth, setSlideWidth] = useState(0);
   const stageHeight = height < 720 ? 232 : 288;
 
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -83,14 +81,18 @@ export function WelcomeCarousel() {
   });
 
   useAnimatedReaction(
-    () => Math.min(Math.max(Math.round(scrollX.value / slideWidth), 0), SLIDES.length - 1),
+    () =>
+      Math.min(
+        Math.max(Math.round(scrollX.value / (slideWidth || 1)), 0),
+        SLIDES.length - 1,
+      ),
     (current, previous) => {
       if (previous !== null && current !== previous) runOnJS(onIndexChange)(current);
     },
   );
 
   useEffect(() => {
-    if (reducedMotion || paused) return;
+    if (reducedMotion || paused || slideWidth === 0) return;
 
     const id = setTimeout(() => {
       autoScrolling.current = true;
@@ -102,37 +104,49 @@ export function WelcomeCarousel() {
   }, [index, paused, reducedMotion, slideWidth, scrollRef]);
 
   return (
-    <View className="flex-1 justify-center gap-5">
-      <Animated.ScrollView
-        ref={scrollRef}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={onScroll}
-        scrollEventThrottle={16}
-        style={{ flexGrow: 0 }}
-      >
-        {SLIDES.map((slide, slideIndex) => (
-          <Slide
-            key={slide.title}
-            {...slide}
-            active={slideIndex === index}
-            reducedMotion={reducedMotion}
-            width={slideWidth}
-            stageHeight={stageHeight}
-          />
-        ))}
-      </Animated.ScrollView>
+    <View
+      className="flex-1 justify-center gap-5"
+      onLayout={(event) => setSlideWidth(event.nativeEvent.layout.width)}
+    >
+      {slideWidth > 0 && (
+        <>
+          <Animated.ScrollView
+            ref={scrollRef}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={onScroll}
+            scrollEventThrottle={16}
+            style={{ flexGrow: 0 }}
+          >
+            {SLIDES.map((slide, slideIndex) => (
+              <Slide
+                key={slide.title}
+                {...slide}
+                active={slideIndex === index}
+                reducedMotion={reducedMotion}
+                width={slideWidth}
+                stageHeight={stageHeight}
+              />
+            ))}
+          </Animated.ScrollView>
 
-      <View
-        className="flex-row items-center justify-center gap-2"
-        accessibilityElementsHidden
-        importantForAccessibility="no-hide-descendants"
-      >
-        {SLIDES.map((slide, dotIndex) => (
-          <Dot key={slide.title} index={dotIndex} width={slideWidth} scrollX={scrollX} />
-        ))}
-      </View>
+          <View
+            className="flex-row items-center justify-center gap-2"
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+          >
+            {SLIDES.map((slide, dotIndex) => (
+              <Dot
+                key={slide.title}
+                index={dotIndex}
+                width={slideWidth}
+                scrollX={scrollX}
+              />
+            ))}
+          </View>
+        </>
+      )}
     </View>
   );
 }
@@ -203,7 +217,10 @@ function Dot({
   }));
 
   return (
-    <Animated.View style={trackStyle} className="h-2 overflow-hidden rounded-pill bg-fg-subtle/40">
+    <Animated.View
+      style={trackStyle}
+      className="h-2 overflow-hidden rounded-pill bg-fg-subtle/40"
+    >
       <Animated.View style={fillStyle} className="absolute inset-0 bg-brand" />
     </Animated.View>
   );
