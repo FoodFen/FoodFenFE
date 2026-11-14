@@ -1,7 +1,8 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQueryClient } from '@tanstack/react-query';
 import { router, Stack } from 'expo-router';
-import { useState } from 'react';
+import { Children, Fragment, useState } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 import { Alert, Pressable, Switch, View } from 'react-native';
 
 import { Button } from '@/components/ui/Button';
@@ -26,7 +27,7 @@ import { haptics } from '@/lib/haptics';
 import { getHealthProvider } from '@/lib/health';
 import type { Locale } from '@/lib/i18n';
 import type { TimeOfDay as MascotTime } from '@/lib/notificationScheduler';
-import { ageFromBirthYear, totalDailyEnergyExpenditure } from '@/lib/nutrition';
+import { ageFromBirthYear } from '@/lib/nutrition';
 import { colorsFor } from '@/theme/colors';
 
 const WATER_LAG_MIN = 10;
@@ -57,8 +58,6 @@ export default function SettingsScreen() {
   const setTheme = useSettingsStore((state) => state.setTheme);
   const weightUnit = useSettingsStore((state) => state.weightUnit);
   const setWeightUnit = useSettingsStore((state) => state.setWeightUnit);
-  // const devSeedEnabled = useSettingsStore((state) => state.devSeedEnabled);
-  // const setDevSeedEnabled = useSettingsStore((state) => state.setDevSeedEnabled);
   const hideChallengeProgress = useSettingsStore((state) => state.hideChallengeProgress);
   const setHideChallengeProgress = useSettingsStore(
     (state) => state.setHideChallengeProgress,
@@ -94,14 +93,21 @@ export default function SettingsScreen() {
 
   if (!user) return null;
 
-  const maintenance = Math.round(totalDailyEnergyExpenditure(user));
-
   const genderLabel =
     user.gender === 'male'
       ? t('onboardingGender', 'male')
       : user.gender === 'female'
         ? t('onboardingGender', 'female')
         : t('onboardingGender', 'other');
+
+  const modeLabel =
+    user.calorieCalcMode === 'manual'
+      ? t('targetMode', 'modeManual')
+      : t('targetMode', 'modeAuto');
+  const goalValue = today
+    ? `${today.goal.targetKcal.toLocaleString()} kcal · ${modeLabel}`
+    : modeLabel;
+  const waterValue = `${(today?.goal.targetWaterMl ?? 2000).toLocaleString()} ml`;
 
   const handleSetLocale = (nextLocale: Locale) => {
     setLocale(nextLocale);
@@ -175,7 +181,7 @@ export default function SettingsScreen() {
   };
 
   return (
-    <ScrollScreen>
+    <ScrollScreen contentClassName="gap-6">
       <Stack.Screen options={{ title: t('settings', 'title') }} />
 
       <Card className="gap-3">
@@ -237,72 +243,19 @@ export default function SettingsScreen() {
         )}
       </Card>
 
-      <Card className="gap-3">
-        <Text variant="heading">{t('profile', 'dailyTargets')}</Text>
-
-        <Pressable
+      <SettingsSection title={t('settings', 'sectionGoals')}>
+        <SettingsRow
+          label={t('profile', 'dailyTargets')}
+          value={goalValue}
           onPress={() => router.push('/settings/goals')}
-          accessibilityRole="button"
-          className="flex-row items-center justify-between active:opacity-60"
-        >
-          <Text variant="label" tone="brand">
-            {t('profile', 'editGoals')}
-          </Text>
-          <Ionicons name="chevron-forward" size={16} color={colors.brand} />
-        </Pressable>
-
-        <Text variant="caption" tone="subtle">
-          {user.calorieCalcMode === 'manual'
-            ? t('profile', 'targetsManual')
-            : t('profile', 'targetsAuto').replace('{kcal}', maintenance.toLocaleString())}
-        </Text>
-
-        <View className="flex-row items-center justify-between border-t border-border pt-3">
-          <View className="gap-0.5">
-            <Text variant="label">{t('targetMode', 'title')}</Text>
-            <Text variant="caption" tone="muted">
-              {user.calorieCalcMode === 'manual'
-                ? t('targetMode', 'modeManual')
-                : t('targetMode', 'modeAuto')}
-            </Text>
-          </View>
-
-          <Pressable
-            onPress={() => router.push('/settings/goals')}
-            accessibilityRole="button"
-            accessibilityLabel={t('profile', 'editGoals')}
-            hitSlop={8}
-            className="h-9 w-9 items-center justify-center rounded-full active:bg-surface-alt"
-          >
-            <Ionicons name="pencil" size={16} color={colors.fgMuted} />
-          </Pressable>
-        </View>
-
-        <View className="gap-1 border-t border-border pt-3">
-          <Pressable
-            onPress={() => presentLogSheet('waterGoal')}
-            accessibilityRole="button"
-            accessibilityLabel={t('dashboard', 'editWaterGoalA11y')}
-            className="flex-row items-center justify-between active:opacity-60"
-          >
-            <Text variant="label" tone="brand">
-              {t('logSheet', 'waterGoal')}
-            </Text>
-            <Ionicons name="chevron-forward" size={16} color={colors.brand} />
-          </Pressable>
-
-          <Text variant="caption" tone="subtle">
-            {t('dashboard', 'waterGoal').replace(
-              '{ml}',
-              (today?.goal.targetWaterMl ?? 2000).toLocaleString(),
-            )}
-          </Text>
-        </View>
-      </Card>
-
-      <Card className="gap-3">
-        <Text variant="heading">{t('smartMode', 'title')}</Text>
-        <SegmentedControl
+        />
+        <SettingsRow
+          label={t('logSheet', 'waterGoal')}
+          value={waterValue}
+          onPress={() => presentLogSheet('waterGoal')}
+        />
+        <SegmentedRow
+          label={t('smartMode', 'title')}
           options={[
             { value: 'smart' as const, label: t('smartMode', 'modeSmart') },
             { value: 'all_calories' as const, label: t('smartMode', 'modeAllCalories') },
@@ -310,73 +263,117 @@ export default function SettingsScreen() {
           value={user.calorieLeftMode}
           onChange={(calorieLeftMode) => saveProfile({ calorieLeftMode })}
         />
-        <Pressable
+        <SettingsRow
+          label={t('smartMode', 'explainerLink')}
           onPress={() => router.push('/settings/smart-mode')}
-          accessibilityRole="button"
-          className="active:opacity-60"
-        >
-          <Text variant="caption" tone="brand">
-            {t('smartMode', 'explainerLink')}
-          </Text>
-        </Pressable>
-      </Card>
+        />
+      </SettingsSection>
 
-      <Card flush>
-        <Pressable
-          onPress={() => router.push('/settings/ring-colors')}
-          accessibilityRole="button"
-          className="flex-row items-center justify-between px-4 py-4 active:bg-surface-alt"
-        >
-          <Text variant="label">{t('settings', 'ringColorsRow')}</Text>
-          <Ionicons name="chevron-forward" size={16} color={colors.fgMuted} />
-        </Pressable>
-      </Card>
-
-      <Card flush>
-        <Pressable
-          onPress={() => {
-            useTourStore.getState().queue();
-            router.back();
-          }}
-          accessibilityRole="button"
-          className="flex-row items-center justify-between px-4 py-4 active:bg-surface-alt"
-        >
-          <Text variant="label">{t('tour', 'replay')}</Text>
-          <Ionicons name="map-outline" size={20} color={colors.fgMuted} />
-        </Pressable>
-      </Card>
-
-      <Card className="gap-3">
-        <Text variant="heading">{t('profileBodyStats', 'aboutYou')}</Text>
-
-        <Row label={t('profileBodyStats', 'sex')} value={genderLabel} />
-        <Row label={t('profile', 'age')} value={`${ageFromBirthYear(user.birthYear)}`} />
-        <Row label={t('profile', 'height')} value={`${user.height} cm`} />
-        <Row label={t('profileBodyStats', 'weight')} value={`${user.weightCurrent} kg`} />
-        <Row
+      <SettingsSection title={t('settings', 'sectionBody')}>
+        <SettingsRow label={t('profileBodyStats', 'sex')} value={genderLabel} />
+        <SettingsRow label={t('profile', 'age')} value={`${ageFromBirthYear(user.birthYear)}`} />
+        <SettingsRow label={t('profile', 'height')} value={`${user.height} cm`} />
+        <SettingsRow label={t('profileBodyStats', 'weight')} value={`${user.weightCurrent} kg`} />
+        <SettingsRow
           label={t('onboardingGoal', 'goalWeightLabel')}
           value={`${user.weightGoal} kg`}
         />
-        <Row
+        <SettingsRow
           label={t('profileBodyStats', 'activity')}
           value={t('activityLevel', user.activityLevel)}
         />
-        <Row label={t('profileBodyStats', 'diet')} value={t('dietType', user.dietType)} />
-      </Card>
+        <SettingsRow label={t('profileBodyStats', 'diet')} value={t('dietType', user.dietType)} />
+        <SettingsRow
+          label={t('settings', 'editRow')}
+          onPress={() => router.push('/settings/goals')}
+        />
+      </SettingsSection>
 
-      <Card className="gap-3">
-        <Text variant="heading">{t('profileLanguage', 'heading')}</Text>
-        <SegmentedControl options={languageOptions} value={locale} onChange={handleSetLocale} />
-      </Card>
+      <SettingsSection title={t('settings', 'sectionNotifications')}>
+        <SettingsRow
+          label={t('notifications', 'manageReminders')}
+          onPress={() => router.push('/settings/reminders')}
+        />
+        <SwitchRow
+          label={t('notifications', 'streakRemindersHeading')}
+          caption={t('notifications', 'streakRemindersCaption')}
+          value={streakRemindersEnabled}
+          onValueChange={(value) => void toggleStreakReminders(value)}
+        />
+        <SwitchRow
+          label={t('settings', 'mascotReminders')}
+          caption={t('settings', 'mascotRemindersHint')}
+          value={mascotRemindersEnabled}
+          onValueChange={setMascotRemindersEnabled}
+        />
+        {mascotRemindersEnabled
+          ? [
+              <MascotTimeRow
+                key="wake"
+                label={t('settings', 'mascotWakeTime')}
+                value={mascotWakeTime}
+                onChange={setMascotWakeTime}
+                invalidMessage={t('settings', 'mascotWakeInvalid')}
+              />,
+              <MascotTimeRow
+                key="sleep"
+                label={t('settings', 'mascotSleepTime')}
+                value={mascotSleepTime}
+                onChange={setMascotSleepTime}
+                invalidMessage={t('settings', 'mascotSleepInvalid')}
+              />,
+              <View key="lag" className="gap-1 py-3 pl-8 pr-4">
+                <View className="flex-row items-center justify-between">
+                  <Text variant="body">{t('settings', 'mascotWaterLag')}</Text>
+                  <View className="flex-row items-center gap-3">
+                    <Pressable
+                      onPress={() => setMascotWaterLagPct(mascotWaterLagPct - WATER_LAG_STEP)}
+                      disabled={mascotWaterLagPct <= WATER_LAG_MIN}
+                      accessibilityRole="button"
+                      accessibilityLabel={t('settings', 'mascotWaterLagDecrease')}
+                      hitSlop={8}
+                      className="h-9 w-9 items-center justify-center rounded-full bg-surface-alt active:opacity-60 disabled:opacity-40"
+                    >
+                      <Ionicons name="remove" size={18} color={colors.fg} />
+                    </Pressable>
+                    <Text variant="label" className="min-w-10 text-center">
+                      {mascotWaterLagPct}%
+                    </Text>
+                    <Pressable
+                      onPress={() => setMascotWaterLagPct(mascotWaterLagPct + WATER_LAG_STEP)}
+                      disabled={mascotWaterLagPct >= WATER_LAG_MAX}
+                      accessibilityRole="button"
+                      accessibilityLabel={t('settings', 'mascotWaterLagIncrease')}
+                      hitSlop={8}
+                      className="h-9 w-9 items-center justify-center rounded-full bg-surface-alt active:opacity-60 disabled:opacity-40"
+                    >
+                      <Ionicons name="add" size={18} color={colors.fg} />
+                    </Pressable>
+                  </View>
+                </View>
+                <Text variant="caption" tone="subtle">
+                  {t('settings', 'mascotWaterLagHint')}
+                </Text>
+              </View>,
+            ]
+          : null}
+      </SettingsSection>
 
-      <Card className="gap-3">
-        <Text variant="heading">{t('profile', 'appearance')}</Text>
-        <SegmentedControl options={themeOptions} value={theme} onChange={setTheme} />
-      </Card>
-
-      <Card className="gap-3">
-        <Text variant="heading">{t('profile', 'units')}</Text>
-        <SegmentedControl
+      <SettingsSection title={t('profile', 'appearance')}>
+        <SegmentedRow
+          label={t('profileLanguage', 'heading')}
+          options={languageOptions}
+          value={locale}
+          onChange={handleSetLocale}
+        />
+        <SegmentedRow
+          label={t('settings', 'themeRow')}
+          options={themeOptions}
+          value={theme}
+          onChange={setTheme}
+        />
+        <SegmentedRow
+          label={t('profile', 'units')}
           options={[
             { value: 'kg' as const, label: t('profile', 'kilograms') },
             { value: 'lb' as const, label: t('profile', 'pounds') },
@@ -384,173 +381,179 @@ export default function SettingsScreen() {
           value={weightUnit}
           onChange={setWeightUnit}
         />
-      </Card>
-
-      <Card className="gap-3">
-        <Text variant="heading">{t('profile', 'challengeProgress')}</Text>
-        <SegmentedControl
-          options={[
-            { value: 'on' as const, label: t('developer', 'on') },
-            { value: 'off' as const, label: t('developer', 'off') },
-          ]}
-          value={hideChallengeProgress ? 'off' : 'on'}
-          onChange={(value) => setHideChallengeProgress(value === 'off')}
+        <SettingsRow
+          label={t('settings', 'ringColorsRow')}
+          onPress={() => router.push('/settings/ring-colors')}
         />
-        <Text variant="caption" tone="subtle">
-          {t('profile', 'challengeProgressCaption')}
-        </Text>
-      </Card>
-
-      <Card className="gap-3">
-        <Text variant="heading">{t('healthSync', 'heading')}</Text>
-        <SegmentedControl
-          options={[
-            { value: 'on' as const, label: t('developer', 'on') },
-            { value: 'off' as const, label: t('developer', 'off') },
-          ]}
-          value={healthSyncEnabled ? 'on' : 'off'}
-          onChange={(value) => void toggleHealthSync(value === 'on')}
+        <SwitchRow
+          label={t('profile', 'challengeProgress')}
+          caption={t('profile', 'challengeProgressCaption')}
+          value={!hideChallengeProgress}
+          onValueChange={(value) => setHideChallengeProgress(!value)}
         />
-        <Text variant="caption" tone="subtle">
-          {t('healthSync', 'caption')}
-        </Text>
-      </Card>
+      </SettingsSection>
 
-      <Card flush>
-        <Pressable
-          onPress={() => router.push('/settings/reminders')}
-          accessibilityRole="button"
-          className="flex-row items-center justify-between px-4 py-4 active:bg-surface-alt"
-        >
-          <Text variant="label">{t('notifications', 'manageReminders')}</Text>
-          <Ionicons name="chevron-forward" size={16} color={colors.fgMuted} />
-        </Pressable>
-      </Card>
-
-      <Card className="gap-3">
-        <Text variant="heading">{t('notifications', 'streakRemindersHeading')}</Text>
-        <SegmentedControl
-          options={[
-            { value: 'on' as const, label: t('developer', 'on') },
-            { value: 'off' as const, label: t('developer', 'off') },
-          ]}
-          value={streakRemindersEnabled ? 'on' : 'off'}
-          onChange={(value) => void toggleStreakReminders(value === 'on')}
+      <SettingsSection title={t('settings', 'sectionConnections')}>
+        <SwitchRow
+          label={t('healthSync', 'heading')}
+          caption={t('healthSync', 'caption')}
+          value={healthSyncEnabled}
+          onValueChange={(value) => void toggleHealthSync(value)}
         />
-        <Text variant="caption" tone="subtle">
-          {t('notifications', 'streakRemindersCaption')}
-        </Text>
-      </Card>
+      </SettingsSection>
 
-      <Card className="gap-3">
-        <Text variant="heading">{t('settings', 'mascotHeading')}</Text>
+      <SettingsSection title={t('settings', 'sectionHelp')}>
+        <SettingsRow
+          icon="map-outline"
+          label={t('tour', 'replay')}
+          onPress={() => {
+            useTourStore.getState().queue();
+            router.back();
+          }}
+        />
+      </SettingsSection>
 
-        <View className="flex-row items-center justify-between gap-3">
-          <View className="flex-1 gap-0.5">
-            <Text variant="label">{t('settings', 'mascotReminders')}</Text>
-            <Text variant="caption" tone="subtle">
-              {t('settings', 'mascotRemindersHint')}
-            </Text>
-          </View>
-          <Switch
-            value={mascotRemindersEnabled}
-            onValueChange={setMascotRemindersEnabled}
-            trackColor={{ false: colors.border, true: colors.brand }}
-            accessibilityLabel={t('settings', 'mascotReminders')}
-          />
-        </View>
-
-        {mascotRemindersEnabled ? (
-          <>
-            <MascotTimeRow
-              label={t('settings', 'mascotWakeTime')}
-              value={mascotWakeTime}
-              onChange={setMascotWakeTime}
-              invalidMessage={t('settings', 'mascotWakeInvalid')}
-            />
-            <MascotTimeRow
-              label={t('settings', 'mascotSleepTime')}
-              value={mascotSleepTime}
-              onChange={setMascotSleepTime}
-              invalidMessage={t('settings', 'mascotSleepInvalid')}
-            />
-
-            <View className="gap-1 border-t border-border pt-3">
-              <View className="flex-row items-center justify-between">
-                <Text variant="label">{t('settings', 'mascotWaterLag')}</Text>
-                <View className="flex-row items-center gap-3">
-                  <Pressable
-                    onPress={() => setMascotWaterLagPct(mascotWaterLagPct - WATER_LAG_STEP)}
-                    disabled={mascotWaterLagPct <= WATER_LAG_MIN}
-                    accessibilityRole="button"
-                    accessibilityLabel={t('settings', 'mascotWaterLagDecrease')}
-                    hitSlop={8}
-                    className="h-9 w-9 items-center justify-center rounded-full bg-surface-alt active:opacity-60 disabled:opacity-40"
-                  >
-                    <Ionicons name="remove" size={18} color={colors.fg} />
-                  </Pressable>
-                  <Text variant="label" className="min-w-10 text-center">
-                    {mascotWaterLagPct}%
-                  </Text>
-                  <Pressable
-                    onPress={() => setMascotWaterLagPct(mascotWaterLagPct + WATER_LAG_STEP)}
-                    disabled={mascotWaterLagPct >= WATER_LAG_MAX}
-                    accessibilityRole="button"
-                    accessibilityLabel={t('settings', 'mascotWaterLagIncrease')}
-                    hitSlop={8}
-                    className="h-9 w-9 items-center justify-center rounded-full bg-surface-alt active:opacity-60 disabled:opacity-40"
-                  >
-                    <Ionicons name="add" size={18} color={colors.fg} />
-                  </Pressable>
-                </View>
-              </View>
-              <Text variant="caption" tone="subtle">
-                {t('settings', 'mascotWaterLagHint')}
-              </Text>
-            </View>
-          </>
-        ) : null}
-      </Card>
-
-      {/* Developer seed toggle hidden for now; uncomment to restore (also restore devSeedEnabled/setDevSeedEnabled above). */}
-      {/* {__DEV__ ? (
-        <Card className="gap-3">
-          <Text variant="heading">{t('developer', 'heading')}</Text>
-          <SegmentedControl
-            options={[
-              { value: 'on' as const, label: t('developer', 'on') },
-              { value: 'off' as const, label: t('developer', 'off') },
-            ]}
-            value={devSeedEnabled ? 'on' : 'off'}
-            onChange={(value) => setDevSeedEnabled(value === 'on')}
-          />
-          <Text variant="caption" tone="subtle">
-            {t('developer', 'seedData')}
-          </Text>
-        </Card>
-      ) : null} */}
-
-      {isSignedIn ? (
-        <Card flush>
-          <Pressable
+      <SettingsSection title={t('settings', 'sectionAccount')}>
+        {isSignedIn ? (
+          <SettingsRow
+            icon="log-out-outline"
+            label={t('profile', 'signOut')}
             onPress={confirmSignOut}
-            accessibilityRole="button"
-            className="flex-row items-center justify-between px-4 py-4 active:bg-surface-alt"
-          >
-            <Text variant="body" tone="danger">
-              {t('profile', 'signOut')}
-            </Text>
-            <Ionicons name="log-out-outline" size={20} color={colors.danger} />
-          </Pressable>
-        </Card>
-      ) : null}
-
-      <Button
-        label={t('profile', 'eraseLocalData')}
-        variant="ghost"
-        onPress={confirmErase}
-      />
+            danger
+          />
+        ) : null}
+        <SettingsRow
+          icon="trash-outline"
+          label={t('profile', 'eraseLocalData')}
+          onPress={confirmErase}
+          danger
+        />
+      </SettingsSection>
     </ScrollScreen>
+  );
+}
+
+function SettingsSection({ title, children }: { title: string; children: ReactNode }) {
+  const rows = Children.toArray(children);
+
+  return (
+    <View>
+      <Text variant="label" tone="muted" className="mb-2 ml-1">
+        {title}
+      </Text>
+      <Card flush className="overflow-hidden">
+        {rows.map((row, index) => (
+          <Fragment key={index}>
+            {index > 0 ? <View className="ml-4 h-px bg-border" /> : null}
+            {row}
+          </Fragment>
+        ))}
+      </Card>
+    </View>
+  );
+}
+
+function SettingsRow({
+  label,
+  value,
+  icon,
+  onPress,
+  danger = false,
+}: {
+  label: string;
+  value?: string;
+  icon?: ComponentProps<typeof Ionicons>['name'];
+  onPress?: () => void;
+  danger?: boolean;
+}) {
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
+
+  const content = (
+    <>
+      {icon ? (
+        <Ionicons name={icon} size={20} color={danger ? colors.danger : colors.fgMuted} />
+      ) : null}
+      <Text variant="body" tone={danger ? 'danger' : 'default'} className="flex-1">
+        {label}
+      </Text>
+      {value ? (
+        <Text variant="body" tone="muted" className="max-w-[55%] shrink text-right">
+          {value}
+        </Text>
+      ) : null}
+      {onPress && !danger ? (
+        <Ionicons name="chevron-forward" size={16} color={colors.fgSubtle} />
+      ) : null}
+    </>
+  );
+
+  if (!onPress) {
+    return <View className="min-h-[52px] flex-row items-center gap-3 px-4 py-3">{content}</View>;
+  }
+
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={value ? `${label}, ${value}` : label}
+      className="min-h-[52px] flex-row items-center gap-3 px-4 py-3 active:bg-surface-alt"
+    >
+      {content}
+    </Pressable>
+  );
+}
+
+function SwitchRow({
+  label,
+  caption,
+  value,
+  onValueChange,
+}: {
+  label: string;
+  caption?: string;
+  value: boolean;
+  onValueChange: (value: boolean) => void;
+}) {
+  const { resolved } = useAppTheme();
+  const colors = colorsFor(resolved);
+
+  return (
+    <View className="min-h-[52px] flex-row items-center gap-3 px-4 py-3">
+      <View className="flex-1 gap-0.5">
+        <Text variant="body">{label}</Text>
+        {caption ? (
+          <Text variant="caption" tone="subtle">
+            {caption}
+          </Text>
+        ) : null}
+      </View>
+      <Switch
+        value={value}
+        onValueChange={onValueChange}
+        trackColor={{ false: colors.border, true: colors.brand }}
+        accessibilityLabel={label}
+      />
+    </View>
+  );
+}
+
+function SegmentedRow<T extends string>({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: { value: T; label: string }[];
+  value: T;
+  onChange: (value: T) => void;
+}) {
+  return (
+    <View className="gap-2 px-4 py-3">
+      <Text variant="body">{label}</Text>
+      <SegmentedControl options={options} value={value} onChange={onChange} />
+    </View>
   );
 }
 
@@ -574,7 +577,7 @@ function MascotTimeRow({
   const rejected = draft !== null && (draft.hour !== value.hour || draft.minute !== value.minute);
 
   return (
-    <View className="gap-2 border-t border-border pt-3">
+    <View className="gap-2 py-3 pl-8 pr-4">
       <Pressable
         onPress={() => {
           setOpen(!open);
@@ -584,9 +587,9 @@ function MascotTimeRow({
         accessibilityState={{ expanded: open }}
         className="flex-row items-center justify-between active:opacity-60"
       >
-        <Text variant="label">{label}</Text>
+        <Text variant="body">{label}</Text>
         <View className="flex-row items-center gap-2">
-          <Text variant="body">{`${pad(value.hour)}:${pad(value.minute)}`}</Text>
+          <Text variant="body" tone="muted">{`${pad(value.hour)}:${pad(value.minute)}`}</Text>
           <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={16} color={colors.fgMuted} />
         </View>
       </Pressable>
@@ -608,17 +611,6 @@ function MascotTimeRow({
           ) : null}
         </>
       ) : null}
-    </View>
-  );
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-  return (
-    <View className="flex-row items-center justify-between">
-      <Text variant="body" tone="muted">
-        {label}
-      </Text>
-      <Text variant="body">{value}</Text>
     </View>
   );
 }

@@ -214,9 +214,6 @@ export const en: DeepPartial<Translations> = {
     signInToSync: 'Sign in',
     upgradeToPremium: 'Upgrade to Premium',
     dailyTargets: 'Daily targets',
-    editGoals: 'Edit goals and body stats',
-    targetsManual: 'You set these yourself.',
-    targetsAuto: 'Tailored to you · maintenance about {kcal} kcal',
     age: 'Age',
     height: 'Height',
     appearance: 'Appearance',
@@ -535,7 +532,14 @@ export const en: DeepPartial<Translations> = {
   settings: {
     title: 'Settings',
     ringColorsRow: 'Ring colors explained',
-    mascotHeading: 'Mascot',
+    sectionGoals: 'Goals & nutrition',
+    sectionBody: 'Body profile',
+    sectionNotifications: 'Notifications',
+    sectionConnections: 'Connections',
+    sectionHelp: 'Help',
+    sectionAccount: 'Account & data',
+    editRow: 'Edit',
+    themeRow: 'Theme',
     mascotReminders: 'Mascot reminders',
     mascotRemindersHint: 'Hungry and thirsty looks and bubbles. Reactions to your logs stay on.',
     mascotWakeTime: 'Wake time',
@@ -772,7 +776,6 @@ export const en: DeepPartial<Translations> = {
   },
 
   targetMode: {
-    title: 'Target calculation',
     modeAuto: 'Auto',
     modeManual: 'Manual',
   },
@@ -879,13 +882,6 @@ export const en: DeepPartial<Translations> = {
     dietVegan: 'Vegan',
     suggestForMe: 'Suggest for me',
     suggestPrefix: 'Suggest a dish for me: ',
-  },
-
-  developer: {
-    heading: 'Developer',
-    seedData: 'Seed recent days',
-    on: 'On',
-    off: 'Off',
   },
 
   welcome: {

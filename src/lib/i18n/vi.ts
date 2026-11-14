@@ -230,9 +230,6 @@ export const vi = {
     signInToSync: 'Đăng nhập',
     upgradeToPremium: 'Nâng cấp lên Premium',
     dailyTargets: 'Mục tiêu hằng ngày',
-    editGoals: 'Chỉnh sửa mục tiêu và chỉ số cơ thể',
-    targetsManual: 'Do chính bạn đặt.',
-    targetsAuto: 'Dành riêng cho bạn · duy trì khoảng {kcal} kcal',
     age: 'Tuổi',
     height: 'Chiều cao',
     appearance: 'Giao diện',
@@ -553,7 +550,14 @@ export const vi = {
   settings: {
     title: 'Cài đặt',
     ringColorsRow: 'Giải thích màu vòng tròn',
-    mascotHeading: 'Linh vật',
+    sectionGoals: 'Mục tiêu & dinh dưỡng',
+    sectionBody: 'Hồ sơ cơ thể',
+    sectionNotifications: 'Thông báo',
+    sectionConnections: 'Kết nối',
+    sectionHelp: 'Trợ giúp',
+    sectionAccount: 'Tài khoản & dữ liệu',
+    editRow: 'Chỉnh sửa',
+    themeRow: 'Chủ đề',
     mascotReminders: 'Nhắc nhở từ linh vật',
     mascotRemindersHint: 'Dáng đói, khát và lời nhắc. Linh vật vẫn phản ứng khi bạn ghi nhật ký.',
     mascotWakeTime: 'Giờ thức dậy',
@@ -789,7 +793,6 @@ export const vi = {
   },
 
   targetMode: {
-    title: 'Cách tính mục tiêu',
     modeAuto: 'Tự động',
     modeManual: 'Thủ công',
   },
@@ -897,13 +900,6 @@ export const vi = {
     dietVegan: 'Thuần chay',
     suggestForMe: 'Gợi ý cho tôi',
     suggestPrefix: 'Gợi ý món cho tôi: ',
-  },
-
-  developer: {
-    heading: 'Nhà phát triển',
-    seedData: 'Tạo dữ liệu mẫu cho vài ngày gần đây',
-    on: 'Bật',
-    off: 'Tắt',
   },
 
   welcome: {
