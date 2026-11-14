@@ -23,7 +23,7 @@ export function announceAndLeave(
       onPress: () => {
         if (useProfileStore.getState().profile === null) router.dismissTo('/setup');
         else if (router.canGoBack()) router.back();
-        else router.replace('/');
+        else router.replace('/(tabs)');
       },
     },
   ]);
