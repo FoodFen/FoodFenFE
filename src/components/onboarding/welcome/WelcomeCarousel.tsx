@@ -47,7 +47,7 @@ export function WelcomeCarousel() {
   const reducedMotion = useReducedMotion();
   const { height } = useWindowDimensions();
   const [slideWidth, setSlideWidth] = useState(0);
-  const stageHeight = height < 720 ? 232 : 288;
+  const stageHeight = Math.round(Math.min(Math.max(height * 0.38, 232), 360));
 
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollX = useSharedValue(0);
@@ -182,7 +182,7 @@ function Slide({
         importantForAccessibility="no-hide-descendants"
       >
         <View className="absolute inset-0 items-center justify-center">
-          <SproutWash size={stageHeight} />
+          <SproutWash size={Math.min(stageHeight, width)} />
         </View>
         <Vignette played={played} reducedMotion={reducedMotion} />
       </View>

@@ -23,7 +23,7 @@ import type { VignetteProps } from './useVignette';
 const MASCOT_SIZE = 150;
 const BOB_FROM = -28;
 const BOB = { damping: 6, stiffness: 110 };
-const POP = { damping: 10, stiffness: 220 };
+const POP = { damping: 14, stiffness: 220 };
 
 export function HabitVignette({ played, reducedMotion }: VignetteProps) {
   const { t } = useTranslation();
@@ -80,7 +80,7 @@ export function HabitVignette({ played, reducedMotion }: VignetteProps) {
 
       <Animated.View
         style={streakStyle}
-        className="absolute left-0 top-[22%] h-9 flex-row items-center gap-1.5 rounded-pill border border-border bg-surface px-3"
+        className="absolute left-3 top-[22%] h-9 flex-row items-center gap-1.5 rounded-pill border border-border bg-surface px-3"
       >
         <Ionicons name="flame" size={18} color={colors.warning} />
         <Text variant="label">{t('welcome', 'habitStreak')}</Text>
@@ -88,7 +88,7 @@ export function HabitVignette({ played, reducedMotion }: VignetteProps) {
 
       <Animated.View
         style={coinStyle}
-        className="absolute bottom-[22%] right-0 h-9 flex-row items-center gap-1.5 rounded-pill border border-border bg-surface px-3"
+        className="absolute bottom-[22%] right-3 h-9 flex-row items-center gap-1.5 rounded-pill border border-border bg-surface px-3"
       >
         <Ionicons name="sparkles" size={16} color={colors.warning} />
         <Text variant="label">{t('welcome', 'habitCoins')}</Text>
