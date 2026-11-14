@@ -1,9 +1,10 @@
-import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { useEffect, useState } from 'react';
-import { Platform, View } from 'react-native';
+import { ActivityIndicator, Platform, View } from 'react-native';
 
 import { isApiError } from '@/api/errors';
+import { GoogleLogo } from '@/components/auth/GoogleLogo';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { Text } from '@/components/ui/Text';
 import { useAuthStore } from '@/features/auth/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -11,9 +12,9 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { env } from '@/lib/env';
 
 /**
- * Google and Apple's own official sign-in buttons — never a hand-styled
- * substitute, per both providers' brand/HIG guidelines (see the design
- * spec). Shared by both `app/(auth)/sign-in.tsx` and `sign-up.tsx`, since a
+ * Apple keeps its official native button; Google uses a custom button that
+ * follows Google's sign-in branding guidelines, so its label follows the app
+ * language instead of the phone's. Shared by both `app/(auth)/sign-in.tsx` and `sign-up.tsx`, since a
  * social provider creates-or-signs-in an account in one step.
  */
 export function SocialSignInButtons({
@@ -74,18 +75,34 @@ export function SocialSignInButtons({
   return (
     <View className="gap-3">
       {env.googleWebClientId ? (
-        <GoogleSigninButton
-          size={GoogleSigninButton.Size.Wide}
-          color={isDark ? GoogleSigninButton.Color.Dark : GoogleSigninButton.Color.Light}
+        <PressableScale
+          accessibilityRole="button"
+          accessibilityLabel={t('auth', 'continueWithGoogle')}
+          accessibilityState={{ disabled: loadingProvider === 'google' }}
           disabled={loadingProvider === 'google'}
-          // Google's own button defaults to a fixed 312px "wide" size that sits
-          // narrower than every other control on the page. The library composes
-          // this `style` over its recommended size, so overriding just the width
-          // stretches it to match — same official button, same 48pt height, no
-          // hand-styled substitute.
-          style={{ width: '100%' }}
           onPress={() => void runProvider('google', signInWithGoogle)}
-        />
+          className="h-12 w-full flex-row items-center justify-center gap-3 rounded-card border px-4"
+          // Google's own brand colors for its neutral button, not app tokens.
+          style={{
+            backgroundColor: isDark ? '#131314' : '#FFFFFF',
+            borderColor: isDark ? '#8E918F' : '#747775',
+            opacity: loadingProvider === 'google' ? 0.6 : 1,
+          }}
+        >
+          {loadingProvider === 'google' ? (
+            <ActivityIndicator size="small" color={isDark ? '#E3E3E3' : '#1F1F1F'} />
+          ) : (
+            <GoogleLogo />
+          )}
+          <Text
+            variant="label"
+            className="text-base"
+            numberOfLines={1}
+            style={{ color: isDark ? '#E3E3E3' : '#1F1F1F' }}
+          >
+            {t('auth', 'continueWithGoogle')}
+          </Text>
+        </PressableScale>
       ) : null}
 
       {appleAvailable ? (

@@ -287,6 +287,7 @@ export const vi = {
     passwordNeedsDigitError: 'Thêm ít nhất một chữ số nhé.',
     passwordsMismatchError: 'Hai mật khẩu chưa khớp nhau.',
     orDivider: 'hoặc',
+    continueWithGoogle: 'Tiếp tục với Google',
   },
 
   entryDetail: {

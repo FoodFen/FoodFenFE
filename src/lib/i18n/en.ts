@@ -271,6 +271,7 @@ export const en: DeepPartial<Translations> = {
     passwordNeedsDigitError: 'Include at least one number.',
     passwordsMismatchError: 'Those passwords don’t match.',
     orDivider: 'or',
+    continueWithGoogle: 'Continue with Google',
   },
 
   entryDetail: {
