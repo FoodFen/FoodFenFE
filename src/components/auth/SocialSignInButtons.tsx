@@ -63,7 +63,7 @@ export function SocialSignInButtons({
 
       if (sessionAfter !== sessionBefore) onSuccess();
     } catch (error) {
-      console.error(`[auth] ${provider} sign-in failed`, error);
+      if (env.isDev) console.error(`[auth] ${provider} sign-in failed`, error);
       onError(isApiError(error) ? error.userMessage : t('auth', 'genericError'));
     } finally {
       setLoadingProvider(null);

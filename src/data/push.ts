@@ -13,6 +13,7 @@ import {
   waterLog,
   weightLog,
 } from '@/db/schema';
+import { env } from '@/lib/env';
 import type { UserProfile } from '@/types/models';
 
 import { markSynced } from './sync';
@@ -25,7 +26,7 @@ import { getLocalUser } from './userRepository';
  * envelope). A row that fails just stays dirty and gets retried whenever
  * push next runs (`usePushSync`) — there is no separate retry queue.
  *
- * Failures are logged with `console.warn` so a row stuck dirty is visible; successes are not logged.
+ * In dev builds failures are logged with `console.warn` so a row stuck dirty is visible; successes are not logged.
  */
 
 function isDirty(row: { updatedAt: Date; syncedAt: Date | null }): boolean {
@@ -55,7 +56,7 @@ export async function pushUserProfile(profile: UserProfile): Promise<void> {
 
     markSynced(user, profile.id);
   } catch (error) {
-    console.warn('[push] profile failed, will retry next sync', error);
+    if (env.isDev) console.warn('[push] profile failed, will retry next sync', error);
   }
 }
 
@@ -85,7 +86,7 @@ export async function pushDailyGoals(userId: string): Promise<void> {
 
       markSynced(dailyGoal, row.id, remote.id);
     } catch (error) {
-      console.warn('[push] daily goal failed, will retry next sync', row.id, error);
+      if (env.isDev) console.warn('[push] daily goal failed, will retry next sync', row.id, error);
     }
   }
 }
@@ -114,7 +115,7 @@ export async function pushStreak(userId: string): Promise<void> {
 
     markSynced(streak, row.id, remote.id);
   } catch (error) {
-    console.warn('[push] streak failed, will retry next sync', row.id, error);
+    if (env.isDev) console.warn('[push] streak failed, will retry next sync', row.id, error);
   }
 }
 
@@ -198,7 +199,7 @@ export async function pushFoodEntries(userId: string): Promise<void> {
       // individual remote ids.
       for (const ing of allIngredients) markSynced(ingredient, ing.id);
     } catch (error) {
-      console.warn('[push] food entry failed, will retry next sync', row.id, error);
+      if (env.isDev) console.warn('[push] food entry failed, will retry next sync', row.id, error);
     }
   }
 }
@@ -233,7 +234,7 @@ async function pushActivityLogs(userId: string): Promise<void> {
 
       markSynced(activityLog, row.id, remote.id);
     } catch (error) {
-      console.warn('[push] activity log failed, will retry next sync', row.id, error);
+      if (env.isDev) console.warn('[push] activity log failed, will retry next sync', row.id, error);
     }
   }
 }
@@ -276,7 +277,7 @@ async function pushWaterLogs(userId: string): Promise<void> {
 
       markSynced(waterLog, row.id, remote.id);
     } catch (error) {
-      console.warn('[push] water log failed, will retry next sync', row.id, error);
+      if (env.isDev) console.warn('[push] water log failed, will retry next sync', row.id, error);
     }
   }
 }
@@ -303,7 +304,7 @@ async function pushWeightLogs(userId: string): Promise<void> {
 
       markSynced(weightLog, row.id, remote.id);
     } catch (error) {
-      console.warn('[push] weight log failed, will retry next sync', row.id, error);
+      if (env.isDev) console.warn('[push] weight log failed, will retry next sync', row.id, error);
     }
   }
 }

@@ -115,13 +115,10 @@ function swapLocalData(
   if (!goals) return;
 
   const restored = userRepository.restoreLocalUser(remote);
-  console.warn(
-    '[auth] restore profile',
-    restored ? restored.id : 'not restorable',
-    'goals',
-    goals.length,
-  );
-  if (!restored) return;
+  if (!restored) {
+    if (env.isDev) console.warn('[auth] Local profile could not be restored from the account.');
+    return;
+  }
 
   applyDailyGoals(restored.id, goals);
   if (!userRepository.getGoalForDate(restored.id)) {
@@ -140,13 +137,6 @@ async function adoptSession(session: AuthSession): Promise<void> {
     (erase || !useProfileStore.getState().profile) &&
     userRepository.canRestoreLocalUser(session.user);
 
-  console.warn('[auth] adopt session', {
-    account: session.user.id,
-    erase,
-    hasProfile: Boolean(useProfileStore.getState().profile),
-    needsRestore,
-  });
-
   let goals: RemoteDailyGoal[] | null = null;
   let goalsFetchFailed = false;
 
@@ -163,9 +153,6 @@ async function adoptSession(session: AuthSession): Promise<void> {
   swapLocalData(session.user, goals, erase, goalsFetchFailed);
   await persistSession(session);
   useAuthStore.setState({ session, status: 'authenticated' });
-  console.warn('[auth] session adopted', {
-    profile: useProfileStore.getState().profile?.id ?? null,
-  });
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
