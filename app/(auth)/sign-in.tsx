@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { isApiError } from '@/api/errors';
 import { AuthHeader } from '@/components/auth/AuthHeader';
@@ -19,6 +20,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 
 export default function SignInScreen() {
   const signIn = useAuthStore((state) => state.signIn);
+  const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const schema = useMemo(() => makeSignInSchema(t), [t]);
 
@@ -65,7 +67,7 @@ export default function SignInScreen() {
       contentContainerStyle={{
         flexGrow: 1,
         paddingTop: 24,
-        paddingBottom: 32,
+        paddingBottom: 32 + insets.bottom,
         paddingHorizontal: 24,
       }}
       keyboardShouldPersistTaps="handled"
