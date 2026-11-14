@@ -222,7 +222,6 @@ export default function ChatScreen() {
         initialText={draft}
         textInputRef={inputRef}
         enableGestureHandlerRootView={false}
-        keyboardAvoidingViewProps={{ automaticOffset: true, keyboardVerticalOffset: 0 }}
         colorScheme={isDark ? 'dark' : 'light'}
         theme={chatLightTheme}
         darkTheme={chatDarkTheme}
