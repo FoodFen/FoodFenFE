@@ -271,6 +271,7 @@ function DishSection({
       </View>
     );
   }
+  if (visible?.length === 0) return null;
 
   return (
     <View className="gap-3">
@@ -294,7 +295,7 @@ function DishSection({
       </View>
 
       {visible ? (
-        visible.length > 0 && <DishCarousel dishes={visible} remainingKcal={remainingKcal} add={add} />
+        <DishCarousel dishes={visible} remainingKcal={remainingKcal} add={add} />
       ) : (
         <View className="flex-row gap-3">
           {[0, 1].map((i) => (
