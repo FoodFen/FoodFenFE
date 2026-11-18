@@ -17,6 +17,8 @@ export interface HealthProvider {
   /** Prompts the OS permission dialog. Resolves true only if steps read
    * access was granted. */
   requestPermissions(): Promise<boolean>;
+  /** Opens the OS screen where the user can grant health access manually. */
+  openSettings(): void;
   /**
    * Total steps for the given local calendar day. Both platforms can answer
    * for past days as well as today; returns 0 if the day was successfully

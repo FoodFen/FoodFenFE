@@ -14,6 +14,7 @@ import { dayRingStatus } from '@/features/dashboard/ringStatus';
 import { useEquippedMascotId, useMascotBodyColor, useMascotImages } from '@/features/mascot/queries';
 import { useDashboardMascot } from '@/features/mascot/useDashboardMascot';
 import { useProfileStore } from '@/features/profile/store';
+import { useEnergy } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { todayKey } from '@/lib/date';
@@ -29,6 +30,7 @@ import type { DiaryDay } from '@/types/models';
 export function SummaryCard({ day }: { day: DiaryDay }) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
+  const energy = useEnergy();
   const colors = colorsFor(resolved);
   const iconSize = 18;
   const calorieLeftMode = useProfileStore(
@@ -63,19 +65,22 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
             <StatRow
               icon={<Ionicons name="flag-outline" size={iconSize} color={colors.fgMuted} />}
               label={t('dashboard', 'target')}
-              value={day.goal.targetKcal}
+              value={energy.format(day.goal.targetKcal)}
+              unit={energy.unit}
             />
             <StatRow
               icon={
                 <Ionicons name="restaurant-outline" size={iconSize} color={colors.fgMuted} />
               }
               label={t('dashboard', 'consumed')}
-              value={day.totals.kcal}
+              value={energy.format(day.totals.kcal)}
+              unit={energy.unit}
             />
             <StatRow
               icon={<Ionicons name="flame-outline" size={iconSize} color={colors.fgMuted} />}
               label={t('dashboard', 'burned')}
-              value={day.exerciseKcal}
+              value={energy.format(day.exerciseKcal)}
+              unit={energy.unit}
             />
             <StatRow
               icon={
@@ -86,7 +91,8 @@ export function SummaryCard({ day }: { day: DiaryDay }) {
                 />
               }
               label={t('dashboard', isOver ? 'ringOver' : 'ringLeft')}
-              value={Math.abs(remaining)}
+              value={energy.format(Math.abs(remaining))}
+              unit={energy.unit}
               tone={isOver ? 'danger' : undefined}
             />
           </View>
@@ -116,13 +122,13 @@ function StatRow({
   icon,
   label,
   value,
-  unit = 'kcal',
+  unit,
   tone,
 }: {
   icon: ReactNode;
   label: string;
   value: string | number;
-  unit?: string;
+  unit: string;
   tone?: TextTone;
 }) {
   return (

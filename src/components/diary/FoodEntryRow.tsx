@@ -5,8 +5,8 @@ import Animated, { FadeIn, FadeOutLeft, LinearTransition } from 'react-native-re
 
 import { Text } from '@/components/ui/Text';
 import { describeIngredients } from '@/features/diary/selectors';
+import { useEnergy } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
-import { useTranslation } from '@/hooks/useTranslation';
 import { colorsFor } from '@/theme/colors';
 import type { FoodEntry, InputMethod } from '@/types/models';
 
@@ -45,9 +45,10 @@ export function FoodEntryRow({
   emoji,
   secondaryText,
 }: FoodEntryRowProps) {
-  const { t } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
+  const energy = useEnergy();
+  const kcalText = `${energy.format(entry.totalKcal)} ${energy.unit}`;
   const subtitle = secondaryText ?? describeIngredients(entry);
 
   return (
@@ -60,7 +61,7 @@ export function FoodEntryRow({
         onPress={() => onPress?.(entry)}
         onLongPress={() => onLongPress?.(entry)}
         accessibilityRole="button"
-        accessibilityLabel={`${entry.name}, ${entry.totalKcal} ${t('common', 'calories')}, ${subtitle}`}
+        accessibilityLabel={`${entry.name}, ${kcalText}, ${subtitle}`}
         className="flex-row items-center gap-3 px-4 py-3 active:bg-surface-alt"
       >
         {emoji ? (
@@ -83,7 +84,7 @@ export function FoodEntryRow({
         </View>
 
         <Text variant="mono" tone="muted">
-          {entry.totalKcal}
+          {kcalText}
         </Text>
       </Pressable>
     </Animated.View>

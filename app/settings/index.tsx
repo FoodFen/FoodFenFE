@@ -58,6 +58,8 @@ export default function SettingsScreen() {
   const setTheme = useSettingsStore((state) => state.setTheme);
   const weightUnit = useSettingsStore((state) => state.weightUnit);
   const setWeightUnit = useSettingsStore((state) => state.setWeightUnit);
+  const energyUnit = useSettingsStore((state) => state.energyUnit);
+  const setEnergyUnit = useSettingsStore((state) => state.setEnergyUnit);
   const hideChallengeProgress = useSettingsStore((state) => state.hideChallengeProgress);
   const setHideChallengeProgress = useSettingsStore(
     (state) => state.setHideChallengeProgress,
@@ -138,7 +140,10 @@ export default function SettingsScreen() {
     if (granted) {
       setHealthSyncEnabled(true);
     } else {
-      Alert.alert(t('healthSync', 'heading'), t('healthSync', 'permissionDenied'));
+      Alert.alert(t('healthSync', 'heading'), t('healthSync', 'permissionDenied'), [
+        { text: t('common', 'cancel'), style: 'cancel' },
+        { text: t('healthSync', 'openSettings'), onPress: () => getHealthProvider().openSettings() },
+      ]);
     }
   };
 
@@ -380,6 +385,15 @@ export default function SettingsScreen() {
           ]}
           value={weightUnit}
           onChange={setWeightUnit}
+        />
+        <SegmentedRow
+          label={t('profile', 'energyUnits')}
+          options={[
+            { value: 'kcal' as const, label: 'kcal' },
+            { value: 'kJ' as const, label: 'kJ' },
+          ]}
+          value={energyUnit}
+          onChange={setEnergyUnit}
         />
         <SettingsRow
           label={t('settings', 'ringColorsRow')}

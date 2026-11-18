@@ -10,6 +10,7 @@ import { TAB_BAR_CLEARANCE } from '@/components/ui/Screen';
 import { SheetScrim } from '@/components/ui/SheetScrim';
 import { Text } from '@/components/ui/Text';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
+import { useEnergy } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { formatDiaryDate, formatTime } from '@/lib/date';
@@ -35,6 +36,7 @@ export function DayEntriesSheet({
 }) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
+  const energy = useEnergy();
   const colors = colorsFor(resolved);
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
@@ -70,7 +72,7 @@ export function DayEntriesSheet({
             <View className="h-11 flex-row items-center justify-between px-4">
               <Text variant="heading">{formatDiaryDate(day.date)}</Text>
               <Text variant="mono" tone="muted">
-                {day.totals.kcal.toLocaleString()} kcal
+                {energy.format(day.totals.kcal).toLocaleString()} {energy.unit}
               </Text>
             </View>
 

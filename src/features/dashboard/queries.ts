@@ -74,6 +74,22 @@ export function useWeightAsOf(date: DateKey) {
   });
 }
 
+/** Activities logged on `date`. Local-only — covered by the standard diary invalidation. */
+export function useActivities(date: DateKey) {
+  const userId = useUserId();
+
+  return useQuery({
+    queryKey: queryKeys.diary.activities(date),
+    queryFn: () => {
+      if (!userId) throw new Error('No local profile yet.');
+
+      return logRepository.getActivities(userId, date);
+    },
+    enabled: userId !== null,
+    retry: false,
+  });
+}
+
 /** The coin balance shown in the header. Local-only — coins are not synced yet. */
 export function useCoinBalance() {
   const userId = useUserId();

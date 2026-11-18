@@ -6,6 +6,7 @@ import { Text } from '@/components/ui/Text';
 import { foodEmojiFor } from '@/features/diary/foodEmoji';
 import { useLogSheetStore } from '@/features/logging/store';
 import { useProfileStore } from '@/features/profile/store';
+import { useEnergy } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { kcalRemaining } from '@/lib/nutrition';
@@ -26,6 +27,7 @@ export function CaloriesEatenSection({
 }) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
+  const energy = useEnergy();
   const colors = colorsFor(resolved);
   const present = useLogSheetStore((state) => state.present);
   const calorieLeftMode = useProfileStore(
@@ -45,7 +47,9 @@ export function CaloriesEatenSection({
   const isOver = remaining < 0;
   const remainingLabel = (
     isOver ? t('dashboard', 'kcalOver') : t('dashboard', 'kcalLeft')
-  ).replace('{kcal}', Math.abs(remaining).toLocaleString());
+  )
+    .replace('{kcal}', energy.format(Math.abs(remaining)).toLocaleString())
+    .replace('{unit}', energy.unit);
 
   // Newest first, so the last thing logged leads the peek.
   const peek = [...day.entries].reverse();
@@ -54,7 +58,7 @@ export function CaloriesEatenSection({
   return (
     <MetricSection
       title={t('dashboard', 'caloriesEaten')}
-      value={day.totals.kcal}
+      value={energy.format(day.totals.kcal)}
       onAdd={() => present()}
     >
       <Text variant="caption" tone={isOver ? 'danger' : 'muted'}>

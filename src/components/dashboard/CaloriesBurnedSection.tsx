@@ -1,16 +1,14 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { Pressable, View } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
 
 import { ActivityRow } from '@/components/dashboard/ActivityRow';
 import { ProgressRing } from '@/components/ui/ProgressRing';
 import { Text } from '@/components/ui/Text';
-import * as logRepository from '@/data/logRepository';
 import { DASHBOARD_BURN_GOAL_KCAL, DASHBOARD_STEP_GOAL } from '@/features/dashboard/constants';
-import { useHealthSteps } from '@/features/dashboard/queries';
-import { useProfileStore } from '@/features/profile/store';
-import { useSettingsStore } from '@/features/settings/store';
+import { useActivities, useHealthSteps } from '@/features/dashboard/queries';
+import { useEnergy, useSettingsStore } from '@/features/settings/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { getHealthProvider } from '@/lib/health';
@@ -28,27 +26,34 @@ import { MetricSection } from './MetricSection';
 export function CaloriesBurnedSection({ day }: { day: DiaryDay }) {
   const { t } = useTranslation();
   const { resolved } = useAppTheme();
+  const energy = useEnergy();
   const colors = colorsFor(resolved);
-  const userId = useProfileStore((state) => state.profile?.id ?? null);
   const healthSyncEnabled = useSettingsStore((state) => state.healthSyncEnabled);
+  const setHealthSyncEnabled = useSettingsStore((state) => state.setHealthSyncEnabled);
   const steps = useHealthSteps(day.date);
   const queryClient = useQueryClient();
 
-  const activities = userId ? logRepository.getActivities(userId, day.date) : [];
-  const needsReconnect = healthSyncEnabled && steps.data === null;
+  const activities = useActivities(day.date).data ?? [];
+  const needsConnect = !healthSyncEnabled || steps.data === null;
 
-  const reconnect = async () => {
+  const connect = async () => {
     const granted = await getHealthProvider().requestPermissions();
 
     if (granted) {
+      setHealthSyncEnabled(true);
       void queryClient.invalidateQueries({ queryKey: queryKeys.health.all });
+    } else {
+      Alert.alert(t('healthSync', 'heading'), t('healthSync', 'permissionDenied'), [
+        { text: t('common', 'cancel'), style: 'cancel' },
+        { text: t('healthSync', 'openSettings'), onPress: () => getHealthProvider().openSettings() },
+      ]);
     }
   };
 
   return (
     <MetricSection
       title={t('dashboard', 'caloriesBurned')}
-      value={day.exerciseKcal}
+      value={energy.format(day.exerciseKcal)}
       onAdd={() => router.push('/log/activity')}
     >
       <View className="gap-3 pt-1">
@@ -57,10 +62,10 @@ export function CaloriesBurnedSection({ day }: { day: DiaryDay }) {
             <Text variant="caption" tone="muted">
               {t('dashboard', 'steps')}
             </Text>
-            {needsReconnect ? (
-              <Pressable onPress={() => void reconnect()}>
+            {needsConnect ? (
+              <Pressable accessibilityRole="button" onPress={() => void connect()}>
                 <Text variant="heading" tone="brand">
-                  {t('dashboard', 'reconnectHealth')}
+                  {t('dashboard', healthSyncEnabled ? 'reconnectHealth' : 'connectHealth')}
                 </Text>
               </Pressable>
             ) : (
@@ -91,7 +96,9 @@ export function CaloriesBurnedSection({ day }: { day: DiaryDay }) {
         )}
 
         <Text variant="caption" tone="subtle">
-          {t('dashboard', 'burnGoal').replace('{kcal}', String(DASHBOARD_BURN_GOAL_KCAL))}
+          {t('dashboard', 'burnGoal')
+            .replace('{kcal}', String(energy.format(DASHBOARD_BURN_GOAL_KCAL)))
+            .replace('{unit}', energy.unit)}
         </Text>
       </View>
     </MetricSection>

@@ -302,3 +302,10 @@ export const units = {
   energyFromKcal: (kcal: number, unit: EnergyUnit): number =>
     unit === 'kcal' ? kcal : kcal * KJ_PER_KCAL,
 };
+
+/** Display-only energy conversion; kJ is rounded to whole numbers. */
+export function useEnergy() {
+  const unit = useSettingsStore((state) => state.energyUnit);
+
+  return { unit, format: (kcal: number) => Math.round(units.energyFromKcal(kcal, unit)) };
+}

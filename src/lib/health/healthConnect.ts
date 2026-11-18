@@ -6,6 +6,7 @@ import {
   aggregateRecord,
   getSdkStatus,
   initialize,
+  openHealthConnectSettings,
   requestPermission,
   SdkAvailabilityStatus,
 } from 'react-native-health-connect';
@@ -84,8 +85,17 @@ async function getStepCount(date: DateKey): Promise<number | null> {
   }
 }
 
+function openSettings(): void {
+  try {
+    openHealthConnectSettings();
+  } catch {
+    // Nothing to fall back to if Health Connect can't open its own settings.
+  }
+}
+
 export const healthConnectProvider: HealthProvider = {
   isAvailable,
   requestPermissions,
+  openSettings,
   getStepCount,
 };

@@ -6,6 +6,7 @@ import {
   queryStatisticsForQuantity,
   requestAuthorization,
 } from '@kingstinct/react-native-healthkit';
+import { Linking } from 'react-native';
 
 import type { DateKey } from '@/lib/date';
 
@@ -58,8 +59,13 @@ async function getStepCount(date: DateKey): Promise<number | null> {
   }
 }
 
+function openSettings(): void {
+  void Linking.openSettings();
+}
+
 export const healthKitProvider: HealthProvider = {
   isAvailable,
   requestPermissions,
+  openSettings,
   getStepCount,
 };

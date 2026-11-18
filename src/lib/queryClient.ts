@@ -100,6 +100,7 @@ export const queryKeys = {
     day: (date: string) => [...queryKeys.diary.all, 'day', date] as const,
     range: (from: string, to: string) =>
       [...queryKeys.diary.all, 'range', from, to] as const,
+    activities: (date: string) => [...queryKeys.diary.all, 'activities', date] as const,
   },
   entries: {
     all: ['entries'] as const,
