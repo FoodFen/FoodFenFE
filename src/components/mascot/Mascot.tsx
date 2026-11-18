@@ -48,6 +48,13 @@ export function Mascot({ mascotId, images, bodyColor, action, size }: MascotProp
     return () => clearTimeout(id);
   }, [action, shown, reducedMotion, size, lift]);
 
+  const prefetchKey = [...new Set(Object.values(images ?? {}).filter((u): u is string => !!u).map(mascotImageUrl))].join('\n');
+
+  useEffect(() => {
+    if (!prefetchKey) return;
+    void Image.prefetch(prefetchKey.split('\n'), 'memory-disk').catch(() => {});
+  }, [prefetchKey]);
+
   const style = useAnimatedStyle(() => ({ transform: [{ translateY: lift.get() }] }));
   const current = reducedMotion ? action : shown;
   const url = images?.[current] ?? images?.idle;
@@ -65,7 +72,7 @@ export function Mascot({ mascotId, images, bodyColor, action, size }: MascotProp
           source={{ uri: mascotImageUrl(url) }}
           style={{ width: size, height: size }}
           contentFit="contain"
-          cachePolicy="disk"
+          cachePolicy="memory-disk"
           onError={() => setFailedUrl(url)}
         />
       ) : (
