@@ -14,14 +14,12 @@ import { useTranslation } from '@/hooks/useTranslation';
 /**
  * The post-log challenge interstitial (UC-22).
  *
- * Renders whatever `usePostLogInterstitial` already computed and stashed in
- * `useInterstitialStore` — no fetching here, so there is nothing to flash
- * between "just logged" and "here is your progress".
+ * Opened only by the quest toast's "See more"; renders whatever the toast
+ * was announcing, stashed in `useInterstitialStore` — no fetching here.
  */
 export default function InterstitialScreen() {
   const { t } = useTranslation();
   const quests = useInterstitialStore((state) => state.quests);
-  const leave = useInterstitialStore((state) => state.leave);
   const dismiss = useInterstitialStore((state) => state.dismiss);
   const setHideChallengeProgress = useSettingsStore(
     (state) => state.setHideChallengeProgress,
@@ -29,15 +27,7 @@ export default function InterstitialScreen() {
 
   const finish = () => {
     dismiss();
-    // This screen was always just pushed by `usePostLogInterstitial`, so
-    // popping itself is always exactly one `dismiss()` — safe regardless of
-    // where the caller started from. What that leaves behind depends on the
-    // caller: nothing (a direct dashboard action, already back where it
-    // should be) or a routed log screen still underneath (needs its own pop
-    // too) — which is exactly what the stashed `leave()` does, since it's the
-    // same callback that screen's own Cancel button uses.
     router.dismiss();
-    leave();
   };
 
   const hideProgress = () => {

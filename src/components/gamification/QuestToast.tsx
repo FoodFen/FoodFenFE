@@ -26,25 +26,29 @@ import { colorsFor } from '@/theme/colors';
 const PROGRESS_HIDE_MS = 2600;
 /** Longer than a plain progress nudge — there's a beat more to read (and more rows, possibly). */
 const COMPLETED_HIDE_MS = 3400;
+/** Long enough to reach the "See more" action. */
+const OPEN_HIDE_MS = 5500;
 /** A swipe past this fraction of the screen width dismisses early. */
 const SWIPE_DISMISS_THRESHOLD = 0.3;
 
 /**
- * The lightweight second tier of UC-22's post-log notification: once every
- * active quest type has already earned its one full-screen interstitial,
- * further progress shows this instead. One instance for the whole app, like
- * `LogSheet` — any screen can trigger it through `useQuestToastStore`.
+ * The quest-progress toast (UC-22). One instance for the whole app, like
+ * `LogSheet` — any screen can trigger it through `useQuestToastStore`. It is
+ * the only thing a background quest result shows by itself; nothing navigates.
  *
- * Carries every quest that completed from the triggering action (filtered by
- * `usePostLogInterstitial`), so one log that completes several quests shows
- * them together as stacked rows instead of a burst of separate toasts. A
- * completed row gets a checkmark and a brand accent; swiping the
- * card sideways dismisses it early instead of waiting out the timer.
+ * Carries the quests the triggering action moved (see `announceQuestChanges`
+ * in `@/features/gamification/queries`), so one log that moves several quests
+ * shows them together as stacked rows instead of a burst of separate toasts. A
+ * completed row gets a checkmark and a brand accent. When the store carries
+ * `onOpen` (a quest type's first announcement) the card is tappable and shows
+ * a trailing "See more" that opens the full explanation. Swiping the card
+ * sideways dismisses it early instead of waiting out the timer.
  */
 export function QuestToast() {
   const entries = useQuestToastStore((state) => state.entries);
   const token = useQuestToastStore((state) => state.token);
   const hide = useQuestToastStore((state) => state.hide);
+  const onOpen = useQuestToastStore((state) => state.onOpen);
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
@@ -53,6 +57,7 @@ export function QuestToast() {
 
   const hasEntries = entries.length > 0;
   const anyCompleted = entries.some((entry) => entry.completed);
+  const hasOpen = onOpen !== undefined;
 
   const translateX = useSharedValue(0);
 
@@ -60,10 +65,11 @@ export function QuestToast() {
     if (!hasEntries) return;
 
     translateX.value = 0;
-    const timer = setTimeout(hide, anyCompleted ? COMPLETED_HIDE_MS : PROGRESS_HIDE_MS);
+    const hideMs = hasOpen ? OPEN_HIDE_MS : anyCompleted ? COMPLETED_HIDE_MS : PROGRESS_HIDE_MS;
+    const timer = setTimeout(hide, hideMs);
 
     return () => clearTimeout(timer);
-  }, [hasEntries, anyCompleted, token, hide, translateX]);
+  }, [hasEntries, anyCompleted, hasOpen, token, hide, translateX]);
 
   const pan = Gesture.Pan()
     .activeOffsetX([-10, 10])
@@ -86,6 +92,14 @@ export function QuestToast() {
       }
     });
 
+  const tap = Gesture.Tap()
+    .runOnJS(true)
+    .onEnd((_event, success) => {
+      if (success) onOpen?.();
+    });
+
+  const gesture = onOpen ? Gesture.Race(pan, tap) : pan;
+
   const cardStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
   }));
@@ -105,8 +119,13 @@ export function QuestToast() {
         zIndex: 50,
       }}
     >
-      <GestureDetector gesture={pan}>
-        <Animated.View style={cardStyle}>
+      <GestureDetector gesture={gesture}>
+        <Animated.View
+          style={cardStyle}
+          accessible={onOpen !== undefined}
+          accessibilityRole={onOpen ? 'button' : undefined}
+          onAccessibilityTap={onOpen}
+        >
           <Card className="gap-3">
             {entries.map((entry, index) => (
               <ToastRow
@@ -117,6 +136,12 @@ export function QuestToast() {
                 colors={colors}
               />
             ))}
+
+            {onOpen ? (
+              <Text variant="caption" tone="brand" className="self-end">
+                {t('interstitial', 'seeMore')}
+              </Text>
+            ) : null}
           </Card>
         </Animated.View>
       </GestureDetector>

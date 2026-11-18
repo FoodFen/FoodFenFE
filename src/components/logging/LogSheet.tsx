@@ -76,6 +76,7 @@ export function LogSheet() {
   const addWater = useAddWater();
   const setWaterGoal = useSetWaterGoal();
   const finishLogging = usePostLogInterstitial('water');
+  const finishWeightLogging = usePostLogInterstitial(null);
   const { data: today } = useDiaryDay(todayKey());
   const { data: lastWeight } = useWeightAsOf(todayKey());
   const profileWeightKg = useProfileStore((state) => state.profile?.weightCurrent);
@@ -115,7 +116,13 @@ export function LogSheet() {
 
     logWeight.mutate(
       { weight: kg, date: todayKey() },
-      { onSuccess: close, onError: () => setError(t('auth', 'genericError')) },
+      {
+        onSuccess: () => {
+          close();
+          finishWeightLogging();
+        },
+        onError: () => setError(t('auth', 'genericError')),
+      },
     );
   }
 
