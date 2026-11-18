@@ -11,7 +11,8 @@ export type MascotAction =
   | 'exercising'
   | 'thinking'
   | 'happy'
-  | 'confused';
+  | 'confused'
+  | 'sad';
 
 export type MascotImages = Partial<Record<MascotAction, string>>;
 

@@ -123,6 +123,15 @@ const confused: MascotVisual = (p) => (
   </Face>
 );
 
+const sad: MascotVisual = (p) => (
+  <Face {...p}>
+    {dotEyes(p.colors.brand, 46)}
+    <Path d="M28 34 L42 38" stroke={p.colors.brand} {...STROKE} />
+    <Path d="M72 34 L58 38" stroke={p.colors.brand} {...STROKE} />
+    <Path d="M36 70 Q50 60 64 70" stroke={p.colors.brand} {...STROKE} />
+  </Face>
+);
+
 const FACE_ACTIONS: Record<MascotAction, MascotVisual> = {
   idle,
   hungry,
@@ -133,6 +142,7 @@ const FACE_ACTIONS: Record<MascotAction, MascotVisual> = {
   thinking,
   happy,
   confused,
+  sad,
 };
 
 function tinted(body: string): Record<MascotAction, MascotVisual> {

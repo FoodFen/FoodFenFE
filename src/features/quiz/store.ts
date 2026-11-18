@@ -7,7 +7,6 @@ interface QuizState {
   begin: (quizId: string) => void;
   select: (questionId: string, optionId: string) => void;
   next: () => void;
-  back: () => void;
 }
 
 /**
@@ -22,7 +21,10 @@ export const useQuizStore = create<QuizState>((set, get) => ({
     if (get().quizId !== quizId) set({ quizId, answers: {}, index: 0 });
   },
   select: (questionId, optionId) =>
-    set((state) => ({ answers: { ...state.answers, [questionId]: optionId } })),
+    set((state) =>
+      state.answers[questionId] === undefined
+        ? { answers: { ...state.answers, [questionId]: optionId } }
+        : state,
+    ),
   next: () => set((state) => ({ index: state.index + 1 })),
-  back: () => set((state) => ({ index: Math.max(0, state.index - 1) })),
 }));

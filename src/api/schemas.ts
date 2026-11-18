@@ -452,6 +452,8 @@ export const quizSchema = z.object({
       id: z.string(),
       text: z.string(),
       options: z.array(z.object({ id: z.string(), text: z.string() })),
+      correctOptionId: z.string(),
+      explanation: z.string(),
     }),
   ),
 });

@@ -18,9 +18,12 @@ Coins are already server-authoritative (`GET /quests?date=`,
 `POST /coins/redeem`; see the BE repo's
 `docs/superpowers/specs/2026-09-30-coins-quests-design.md`). Quiz follows the
 same rule: **the client never reports a score.** It submits the chosen
-options; the server grades and pays. Correct answers therefore live only on
-the server and are **never** in a question payload — they appear only in the
-submit response.
+options; the server grades and pays.
+
+Each question does carry its correct option and explanation (decided
+2026-11-15), so the client can show right/wrong the moment an option is tapped.
+Quiz answers are low-stakes, and that knowledge buys nothing: the server still
+grades the submit on its own and is the only one that pays.
 
 Requires a signed-in account (coins are per-account), like quests.
 
@@ -45,7 +48,9 @@ Requires a signed-in account (coins are per-account), like quests.
     {
       "id": "string",
       "text": "string",
-      "options": [{ "id": "string", "text": "string" }]
+      "options": [{ "id": "string", "text": "string" }],
+      "correctOptionId": "string",
+      "explanation": "string"
     }
   ]
 }
@@ -57,7 +62,8 @@ Requires a signed-in account (coins are per-account), like quests.
   `daily`.
 - `status: "completed"` + `result` present when this quiz was already
   submitted; `questions` is still returned so the client can render the review.
-- No field in `Quiz` may reveal a correct option.
+- `correctOptionId` and `explanation` match the question's entry in
+  `QuizResult.answers`. An empty `explanation` means there is none.
 
 `QuizResult`:
 ```json
