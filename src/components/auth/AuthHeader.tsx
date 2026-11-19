@@ -1,6 +1,5 @@
 import { Image } from 'expo-image';
 import { View } from 'react-native';
-import Animated, { useReducedMotion, ZoomIn } from 'react-native-reanimated';
 
 import { BRAND_MASCOT } from '@/components/mascot/brandMascot';
 import { SproutWash } from '@/components/ui/SproutWash';
@@ -12,12 +11,9 @@ const WASH_SIZE = 128;
 const MASCOT_SIZE = 96;
 
 export function AuthHeader({ title, subtitle }: { title: string; subtitle: string }) {
-  const reducedMotion = useReducedMotion();
-
   return (
     <View className="items-center gap-4 pb-6 pt-2">
-      <Animated.View
-        entering={reducedMotion ? undefined : ZoomIn.springify().damping(14)}
+      <View
         style={{ width: WASH_SIZE, height: WASH_SIZE }}
         className="items-center justify-center"
         accessibilityElementsHidden
@@ -32,7 +28,7 @@ export function AuthHeader({ title, subtitle }: { title: string; subtitle: strin
           contentFit="contain"
           accessibilityIgnoresInvertColors
         />
-      </Animated.View>
+      </View>
 
       <View className="items-center gap-1">
         <Text variant="title" className="text-3xl">
