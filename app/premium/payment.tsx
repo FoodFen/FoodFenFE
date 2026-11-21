@@ -2,7 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { onlineManager } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Linking, Pressable, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
@@ -103,11 +103,7 @@ export default function PremiumPaymentScreen() {
   // (`pollFailed`) rather than copied into `stage` here — only the "paid"
   // case needs an effect at all, to call the external `refreshSubscription`
   // mutation exactly once per checkout.
-  useEffect(() => {
-    if (paymentStatus.data?.status !== 'paid' || handledStatusRef.current) return;
-
-    handledStatusRef.current = true;
-
+  const activatePremium = useCallback(() => {
     refreshSubscription.mutate(undefined, {
       onSuccess: () => {
         haptics.success();
@@ -119,7 +115,14 @@ export default function PremiumPaymentScreen() {
         setErrorMessage(t('common', 'somethingWentWrong'));
       },
     });
-  }, [paymentStatus.data?.status, refreshSubscription, t]);
+  }, [refreshSubscription, t]);
+
+  useEffect(() => {
+    if (paymentStatus.data?.status !== 'paid' || handledStatusRef.current) return;
+
+    handledStatusRef.current = true;
+    activatePremium();
+  }, [paymentStatus.data?.status, activatePremium]);
 
   const pollFailed =
     stage === 'awaiting-payment' &&
@@ -154,6 +157,12 @@ export default function PremiumPaymentScreen() {
   };
 
   const onRetry = () => {
+    if (order && paymentStatus.data?.status === 'paid') {
+      setErrorMessage(null);
+      activatePremium();
+      return;
+    }
+
     setStage('idle');
     setOrder(null);
     setErrorMessage(null);
