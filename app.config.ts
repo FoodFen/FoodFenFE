@@ -39,11 +39,10 @@ const OWN_PLUGINS: PluginEntry[] = [
   [
     'expo-splash-screen',
     {
-      image: './assets/splash-icon.png',
-      imageWidth: 180,
+      image: './assets/appicon.png',
+      imageWidth: 140,
       resizeMode: 'contain',
       backgroundColor: '#F9FAFB',
-      dark: { backgroundColor: '#09090B' },
     },
   ],
   [
@@ -129,9 +128,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: BUNDLE_ID,
     adaptiveIcon: {
-      backgroundColor: '#FFFFFF',
+      backgroundColor: '#FAB80A',
       foregroundImage: './assets/android-icon-foreground.png',
-      backgroundImage: './assets/android-icon-background.png',
       monochromeImage: './assets/android-icon-monochrome.png',
     },
     predictiveBackGestureEnabled: false,
