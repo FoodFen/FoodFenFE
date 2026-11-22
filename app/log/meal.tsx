@@ -19,6 +19,7 @@ import {
   type DraftIngredient,
 } from '@/features/diary/draftStore';
 import { useLogMeal } from '@/features/diary/queries';
+import { useSavedToastStore } from '@/features/diary/savedToastStore';
 import { usePostLogInterstitial } from '@/features/gamification/queries';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -108,9 +109,11 @@ export default function MealComposerScreen() {
   const canSave = draft.ingredients.length > 0 && !logMeal.isPending;
 
   const save = () => {
+    const name = draftName(draft.name, draft.ingredients);
+
     logMeal.mutate(
       {
-        name: draftName(draft.name, draft.ingredients),
+        name,
         mealType: draft.mealType,
         inputMethod: draft.inputMethod,
         imageUrl: draft.imageUrl,
@@ -120,6 +123,7 @@ export default function MealComposerScreen() {
       {
         onSuccess: () => {
           haptics.success();
+          useSavedToastStore.getState().show(t('logSaved', 'added').replace('{name}', name));
           draft.reset();
           finishLogging();
         },

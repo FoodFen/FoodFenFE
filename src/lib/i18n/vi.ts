@@ -368,6 +368,10 @@ export const vi = {
     addToMeal: 'Thêm vào bữa ăn',
   },
 
+  logSaved: {
+    added: 'Đã thêm {name} vào nhật ký',
+  },
+
   logSearch: {
     layoutTitle: 'Tìm món ăn',
     searchPlaceholder: 'Phở, trà sữa, cơm tấm…',

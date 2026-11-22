@@ -27,8 +27,9 @@ function useUserId(): string | null {
 
 /**
  * The `leave` to pass from the routed `log/manual`, `log/search` and
- * `log/activity` screens — always exactly one screen deep in the `log`
- * group, same as those screens' own Cancel buttons.
+ * `log/activity` screens — one screen deep in the `log` group, same as those
+ * screens' own Cancel buttons (except `log/search` opened from the barcode
+ * camera, which is two deep and uses `dismissAll` instead).
  *
  * Deliberately the plain `dismiss()` those Cancel buttons already use
  * successfully, not `replace('/')` or `dismissTo('/')`: `replace` swaps the

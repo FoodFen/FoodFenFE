@@ -21,6 +21,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { QuestToast } from '@/components/gamification/QuestToast';
 import { LogSheet } from '@/components/logging/LogSheet';
+import { SavedToast } from '@/components/logging/SavedToast';
 import { TourOverlay } from '@/components/tour/TourOverlay';
 import { ErrorState } from '@/components/ui/EmptyState';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
@@ -277,6 +278,9 @@ function AppShell({ migrated }: { migrated: boolean }) {
           down with it. */}
       <ErrorBoundary name="QuestToast">
         <QuestToast />
+      </ErrorBoundary>
+      <ErrorBoundary name="SavedToast">
+        <SavedToast />
       </ErrorBoundary>
     </ThemeProvider>
   );

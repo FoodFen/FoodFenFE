@@ -352,6 +352,10 @@ export const en: DeepPartial<Translations> = {
     addToMeal: 'Add to meal',
   },
 
+  logSaved: {
+    added: 'Added {name} to your diary',
+  },
+
   logSearch: {
     layoutTitle: 'Find a food',
     searchPlaceholder: 'Pho, milk tea, com tam…',

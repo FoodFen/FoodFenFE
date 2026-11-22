@@ -41,6 +41,7 @@ import {
   useCatalogSearch,
   useLogManualEntry,
 } from '@/features/diary/queries';
+import { useSavedToastStore } from '@/features/diary/savedToastStore';
 import { manualEntrySchema } from '@/features/diary/schemas';
 import { suggestedMealType } from '@/features/diary/selectors';
 import { dismissLogFlow, usePostLogInterstitial } from '@/features/gamification/queries';
@@ -353,6 +354,7 @@ export default function ManualEntryScreen() {
       {
         onSuccess: () => {
           haptics.success();
+          useSavedToastStore.getState().show(t('logSaved', 'added').replace('{name}', v.name));
           finishLogging();
         },
         onError: (error) => {

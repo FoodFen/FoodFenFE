@@ -19,6 +19,7 @@ import {
   useQuickLogFood,
   useRecentFoods,
 } from '@/features/diary/queries';
+import { useSavedToastStore } from '@/features/diary/savedToastStore';
 import { dismissLogFlow, usePostLogInterstitial } from '@/features/gamification/queries';
 import { useIsPremium } from '@/features/profile/store';
 import { useAppTheme } from '@/hooks/useAppTheme';
@@ -75,6 +76,7 @@ export default function SearchFoodScreen() {
         initialServingId={selected.servingId}
         initialQuantity={selected.quantity}
         onBack={() => setSelected(null)}
+        fromBarcode={Boolean(foodId)}
       />
     );
   }
@@ -250,18 +252,23 @@ function PortionStep({
   initialServingId,
   initialQuantity,
   onBack,
+  fromBarcode,
 }: {
   food: CatalogFood;
   initialServingId: string;
   initialQuantity: number;
   onBack: () => void;
+  fromBarcode: boolean;
 }) {
   const { t, locale } = useTranslation();
   const { resolved } = useAppTheme();
   const colors = colorsFor(resolved);
   const isPremium = useIsPremium();
   const quickLog = useQuickLogFood();
-  const finishLogging = usePostLogInterstitial('food', dismissLogFlow);
+  const finishLogging = usePostLogInterstitial(
+    'food',
+    fromBarcode ? () => router.dismissAll() : dismissLogFlow,
+  );
 
   const [servingId, setServingId] = useState(initialServingId);
   const [quantity, setQuantity] = useState(() => {
@@ -285,6 +292,9 @@ function PortionStep({
       {
         onSuccess: () => {
           haptics.success();
+          useSavedToastStore
+            .getState()
+            .show(t('logSaved', 'added').replace('{name}', foodDisplayName(food, locale)));
           finishLogging();
         },
         onError: (error) => {
