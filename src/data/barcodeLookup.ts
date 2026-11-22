@@ -22,7 +22,7 @@ const num = z.unknown().transform((value) => {
   const n = typeof value === 'string' && value.trim() !== '' ? Number(value) : value;
 
   return typeof n === 'number' && Number.isFinite(n) ? n : undefined;
-});
+}).optional();
 
 const responseSchema = z.object({
   status: z.number().optional(),
