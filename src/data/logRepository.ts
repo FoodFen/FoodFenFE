@@ -209,6 +209,8 @@ export function upsertHealthSteps(
     .all()[0];
 
   if (existing) {
+    if (existing.caloriesBurned === caloriesBurned) return;
+
     db.update(activityLog)
       .set({ caloriesBurned, ...touch() })
       .where(eq(activityLog.id, existing.id))

@@ -10,6 +10,8 @@ import { Screen, ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useDiaryRange, useWeightHistory } from '@/features/diary/queries';
+import { useStreak } from '@/features/gamification/queries';
+import { activeStreakDays } from '@/features/gamification/selectors';
 import { averageByMeal, summarizeTrends } from '@/features/insights/trends';
 import { useIsPremium, useProfileStore } from '@/features/profile/store';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -31,6 +33,7 @@ export default function InsightsScreen() {
   const { t } = useTranslation();
   const { data, isPending, error, refetch } = useDiaryRange(WINDOW_DAYS);
   const weightHistory = useWeightHistory(WEIGHT_WINDOW_DAYS);
+  const { data: streak } = useStreak();
   const profile = useProfileStore((state) => state.profile);
   const isPremium = useIsPremium();
 
@@ -101,7 +104,7 @@ export default function InsightsScreen() {
         />
         <StatCard
           label={t('insights', 'loggingStreak')}
-          value={String(summary.streak)}
+          value={String(activeStreakDays(streak))}
           unit={t('insights', 'dayUnit')}
         />
       </View>
