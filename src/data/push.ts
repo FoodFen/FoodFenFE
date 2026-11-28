@@ -54,7 +54,7 @@ export async function pushUserProfile(profile: UserProfile): Promise<void> {
       fatShare: profile.fatShare,
     });
 
-    markSynced(user, profile.id);
+    markSynced(user, profile.id, profile.updatedAt);
   } catch (error) {
     if (env.isDev) console.warn('[push] profile failed, will retry next sync', error);
   }
@@ -84,7 +84,7 @@ export async function pushDailyGoals(userId: string): Promise<void> {
         effectiveDate: row.effectiveDate,
       });
 
-      markSynced(dailyGoal, row.id, remote.id);
+      markSynced(dailyGoal, row.id, row.updatedAt, remote.id);
     } catch (error) {
       if (env.isDev) console.warn('[push] daily goal failed, will retry next sync', row.id, error);
     }
@@ -113,7 +113,7 @@ export async function pushStreak(userId: string): Promise<void> {
       lastActiveDate: row.lastActiveDate,
     });
 
-    markSynced(streak, row.id, remote.id);
+    markSynced(streak, row.id, row.updatedAt, remote.id);
   } catch (error) {
     if (env.isDev) console.warn('[push] streak failed, will retry next sync', row.id, error);
   }
@@ -134,9 +134,6 @@ export async function pushFoodEntries(userId: string): Promise<void> {
   for (const row of rows) {
     try {
       if (row.deletedAt !== null) {
-        if (row.remoteId !== null) await syncApi.deleteFoodEntry(row.remoteId);
-        markSynced(foodEntry, row.id);
-
         // `deleteEntry` soft-deletes the ingredients too — deleting the
         // parent already conveys their deletion server-side, so they just
         // need their own dirty flag cleared, not a push of their own.
@@ -146,7 +143,10 @@ export async function pushFoodEntries(userId: string): Promise<void> {
           .where(eq(ingredient.foodEntryId, row.id))
           .all();
 
-        for (const ing of deletedIngredients) markSynced(ingredient, ing.id);
+        if (row.remoteId !== null) await syncApi.deleteFoodEntry(row.remoteId);
+        markSynced(foodEntry, row.id, row.updatedAt);
+
+        for (const ing of deletedIngredients) markSynced(ingredient, ing.id, ing.updatedAt);
         continue;
       }
 
@@ -191,13 +191,13 @@ export async function pushFoodEntries(userId: string): Promise<void> {
           ? await syncApi.createFoodEntry(body)
           : await syncApi.updateFoodEntry(row.remoteId, body);
 
-      markSynced(foodEntry, row.id, remote.id);
+      markSynced(foodEntry, row.id, row.updatedAt, remote.id);
       // Ingredients are always nested, never independently addressable
       // (docs/backend-contracts/sync.md) — the push above already carries
       // the whole live set, so a successful push just clears every
       // ingredient's dirty flag (live or soft-deleted) rather than mapping
       // individual remote ids.
-      for (const ing of allIngredients) markSynced(ingredient, ing.id);
+      for (const ing of allIngredients) markSynced(ingredient, ing.id, ing.updatedAt);
     } catch (error) {
       if (env.isDev) console.warn('[push] food entry failed, will retry next sync', row.id, error);
     }
@@ -232,7 +232,7 @@ async function pushActivityLogs(userId: string): Promise<void> {
           ? await syncApi.createActivityLog(body)
           : await syncApi.updateActivityLog(row.remoteId, body);
 
-      markSynced(activityLog, row.id, remote.id);
+      markSynced(activityLog, row.id, row.updatedAt, remote.id);
     } catch (error) {
       if (env.isDev) console.warn('[push] activity log failed, will retry next sync', row.id, error);
     }
@@ -255,7 +255,7 @@ async function pushWaterLogs(userId: string): Promise<void> {
     try {
       if (row.deletedAt !== null) {
         if (row.remoteId !== null) await syncApi.deleteWaterLog(row.remoteId);
-        markSynced(waterLog, row.id);
+        markSynced(waterLog, row.id, row.updatedAt);
         continue;
       }
 
@@ -275,7 +275,7 @@ async function pushWaterLogs(userId: string): Promise<void> {
               loggedOn: row.loggedOn,
             });
 
-      markSynced(waterLog, row.id, remote.id);
+      markSynced(waterLog, row.id, row.updatedAt, remote.id);
     } catch (error) {
       if (env.isDev) console.warn('[push] water log failed, will retry next sync', row.id, error);
     }
@@ -296,13 +296,19 @@ async function pushWeightLogs(userId: string): Promise<void> {
 
   for (const row of rows) {
     try {
-      const remote = await syncApi.createWeightLog({
-        clientId: row.id,
-        weight: row.weight,
-        recordedAt: row.recordedAt,
-      });
+      const remote =
+        row.remoteId === null
+          ? await syncApi.createWeightLog({
+              clientId: row.id,
+              weight: row.weight,
+              recordedAt: row.recordedAt,
+            })
+          : await syncApi.updateWeightLog(row.remoteId, {
+              weight: row.weight,
+              recordedAt: row.recordedAt,
+            });
 
-      markSynced(weightLog, row.id, remote.id);
+      markSynced(weightLog, row.id, row.updatedAt, remote.id);
     } catch (error) {
       if (env.isDev) console.warn('[push] weight log failed, will retry next sync', row.id, error);
     }

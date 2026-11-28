@@ -111,7 +111,7 @@ describe('pullDailyGoals', () => {
       '2026-03-10',
     );
 
-    markSynced(dailyGoal, local.id, 'goal_501');
+    markSynced(dailyGoal, local.id, local.updatedAt, 'goal_501');
 
     mockedSyncApi.goals.mockResolvedValue([remoteGoal({ targetKcal: 2500 })]);
 

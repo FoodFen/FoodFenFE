@@ -101,6 +101,7 @@ export const userSchema = z.object({
 
 export const dailyGoalSchema = z.object({
   id: z.string(),
+  clientId: z.string().nullish(),
   userId: z.number().int(),
   targetKcal: z.number().int().positive(),
   targetCarbsG: z.number().nonnegative(),
@@ -143,6 +144,7 @@ export const coinTransactionSchema = z.object({
 
 export const ingredientSchema = z.object({
   id: z.string(),
+  clientId: z.string().nullish(),
   foodEntryId: z.string(),
   name: z.string(),
   quantityG: z.number().nonnegative(),
@@ -155,6 +157,7 @@ export const ingredientSchema = z.object({
 
 export const foodEntrySchema = z.object({
   id: z.string(),
+  clientId: z.string().nullish(),
   userId: z.number().int(),
   name: z.string(),
   inputMethod: inputMethodSchema,
@@ -173,6 +176,7 @@ export const foodEntrySchema = z.object({
 
 export const activityLogSchema = z.object({
   id: z.string(),
+  clientId: z.string().nullish(),
   userId: z.number().int(),
   activityType: z.string(),
   caloriesBurned: z.number().int().nonnegative(),
@@ -183,6 +187,7 @@ export const activityLogSchema = z.object({
 
 export const weightLogSchema = z.object({
   id: z.string(),
+  clientId: z.string().nullish(),
   userId: z.number().int(),
   weight: z.number().positive(),
   recordedAt: dateKeySchema,
@@ -190,6 +195,7 @@ export const weightLogSchema = z.object({
 
 export const waterLogSchema = z.object({
   id: z.string(),
+  clientId: z.string().nullish(),
   userId: z.number().int(),
   amountMl: z.number().int().nonnegative(),
   loggedAt: z.iso.datetime(),

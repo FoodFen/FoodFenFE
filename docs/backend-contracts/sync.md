@@ -211,6 +211,12 @@ rather than a full history dump.
   response doesn't create a duplicate. A `POST` whose `clientId` the server
   has already seen for this account must return the existing row, not
   create a second one.
+- **`clientId` echoed back.** Every `GET`/`POST`/`PATCH` response row (food
+  entries and their ingredients, goals, activity/water/weight logs) includes
+  `clientId` — the one the row was created with, `null` if it was created
+  without one. Pull uses it to match a local row whose create response was lost
+  (still `remote_id` null) instead of inserting a duplicate. Optional on the
+  client until the backend ships it.
 - **Response shape.** Every create/update returns the full canonical row —
   the same shape the matching `GET` above returns — not just the assigned
   id, so the client can reconcile any server-computed/normalized field in
@@ -316,7 +322,9 @@ All built on the backend (`POST`, `GET /food-entries/{id}`, `PATCH`,
 ### Weight logs
 
 - `POST /weight-logs` — `clientId`, `weight`, `recordedAt`.
-- No `PATCH`/`DELETE` — `logWeight` only ever creates.
+- `PATCH /weight-logs/{id}` — `weight`, `recordedAt`; returns the full row. For
+  `logWeight`'s same-day edit-in-place (a `POST` would just return the old row).
+- No `DELETE`.
 
 ### Water logs
 

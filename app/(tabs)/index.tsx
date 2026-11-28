@@ -1,6 +1,6 @@
 import { useFocusEffect } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
-import { RefreshControl, View } from 'react-native';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { AppState, RefreshControl, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -50,10 +50,26 @@ export default function DashboardScreen() {
   const colors = colorsFor(resolved);
 
   const isToday = selectedDate === todayKey();
-  const backToToday = () => {
+  const backToToday = useCallback(() => {
     setSelectedDate(todayKey());
     setWeekOffset(0);
-  };
+  }, []);
+
+  const knownToday = useRef(todayKey());
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state !== 'active') return;
+
+      const today = todayKey();
+      if (today === knownToday.current) return;
+
+      const wasOnOldToday = selectedDate === knownToday.current;
+      knownToday.current = today;
+      if (wasOnOldToday) backToToday();
+    });
+
+    return () => subscription.remove();
+  }, [selectedDate, backToToday]);
 
   const { data: day, isPending, isRefetching, error, refetch } = useDiaryDay(selectedDate);
 

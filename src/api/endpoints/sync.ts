@@ -142,6 +142,8 @@ export interface PushWaterLogInput {
 /** No `clientId` — the `:id` in the URL already identifies the row, same as every other PATCH in this API. */
 export type UpdateWaterLogInput = Omit<PushWaterLogInput, 'clientId'>;
 
+export type UpdateWeightLogInput = Omit<PushWeightLogInput, 'clientId'>;
+
 export const syncApi = {
   me: (signal?: AbortSignal): Promise<RemoteUser> =>
     api.get('auth/me', { schema: userSchema, signal }),
@@ -219,6 +221,9 @@ export const syncApi = {
 
   createWeightLog: (input: PushWeightLogInput): Promise<RemoteWeightLog> =>
     api.post('weight-logs', input, { schema: weightLogSchema }),
+
+  updateWeightLog: (remoteId: string, input: UpdateWeightLogInput): Promise<RemoteWeightLog> =>
+    api.patch(`weight-logs/${remoteId}`, input, { schema: weightLogSchema }),
 
   createWaterLog: (input: PushWaterLogInput): Promise<RemoteWaterLog> =>
     api.post('water-logs', input, { schema: waterLogSchema }),

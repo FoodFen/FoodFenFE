@@ -1,4 +1,5 @@
-import { and, eq, isNotNull, isNull, sql } from 'drizzle-orm';
+import type { AnyColumn } from 'drizzle-orm';
+import { and, eq, isNotNull, isNull, or, sql } from 'drizzle-orm';
 
 import { syncApi } from '@/api/endpoints/sync';
 import type {
@@ -39,6 +40,16 @@ function isDirty(row: { updatedAt: Date; syncedAt: Date | null }): boolean {
   return row.syncedAt === null || row.updatedAt.getTime() > row.syncedAt.getTime();
 }
 
+function matchesRemote(
+  table: { id: AnyColumn; remoteId: AnyColumn },
+  remote: { id: string; clientId?: string | null },
+) {
+  return or(
+    eq(table.remoteId, remote.id),
+    remote.clientId ? eq(table.id, remote.clientId) : undefined,
+  );
+}
+
 function syncedNow(): { updatedAt: Date; syncedAt: Date } {
   const now = new Date();
 
@@ -73,7 +84,7 @@ function upsertDailyGoal(userId: string, remote: RemoteDailyGoal): void {
   const existing = db
     .select()
     .from(dailyGoal)
-    .where(and(eq(dailyGoal.userId, userId), eq(dailyGoal.remoteId, remote.id)))
+    .where(and(eq(dailyGoal.userId, userId), matchesRemote(dailyGoal, remote)))
     .limit(1)
     .all()[0];
 
@@ -118,7 +129,7 @@ function upsertFoodEntry(userId: string, remote: RemoteFoodEntry): void {
   const existing = db
     .select()
     .from(foodEntry)
-    .where(and(eq(foodEntry.userId, userId), eq(foodEntry.remoteId, remote.id)))
+    .where(and(eq(foodEntry.userId, userId), matchesRemote(foodEntry, remote)))
     .limit(1)
     .all()[0];
 
@@ -156,12 +167,41 @@ function upsertFoodEntry(userId: string, remote: RemoteFoodEntry): void {
   // than merged — the server's version of a meal's composition is the whole
   // truth about it, and a leftover local row would show up as a phantom
   // ingredient that nothing accounts for in the totals.
+  const unmatched = db
+    .select()
+    .from(ingredient)
+    .where(and(eq(ingredient.foodEntryId, entryId), isNull(ingredient.deletedAt)))
+    .all();
+
   db.delete(ingredient).where(eq(ingredient.foodEntryId, entryId)).run();
+
+  // catalogFoodId is local-only (the server never sees it), so carry it over from the row this one replaces.
+  const catalogIds: (string | null)[] = remote.ingredients.map(() => null);
+  const claimed = new Set<string>();
+  const claim = (index: number, local: (typeof unmatched)[number] | undefined) => {
+    if (!local) return;
+    claimed.add(local.id);
+    catalogIds[index] = local.catalogFoodId;
+  };
+
+  remote.ingredients.forEach((row, index) => {
+    if (row.clientId) claim(index, unmatched.find((local) => local.id === row.clientId));
+  });
+  remote.ingredients.forEach((row, index) => {
+    if (row.clientId && claimed.has(row.clientId)) return;
+    claim(
+      index,
+      unmatched.find(
+        (local) =>
+          !claimed.has(local.id) && local.name === row.name && local.quantityG === row.quantityG,
+      ),
+    );
+  });
 
   if (remote.ingredients.length > 0) {
     db.insert(ingredient)
       .values(
-        remote.ingredients.map((row) => ({
+        remote.ingredients.map((row, index) => ({
           id: generateLocalId('ing'),
           foodEntryId: entryId,
           name: row.name,
@@ -171,7 +211,7 @@ function upsertFoodEntry(userId: string, remote: RemoteFoodEntry): void {
           proteinG: row.proteinG,
           fatG: row.fatG,
           fiberG: row.fiberG ?? null,
-          catalogFoodId: null,
+          catalogFoodId: catalogIds[index] ?? null,
           remoteId: row.id,
           deletedAt: null,
           ...syncedNow(),
@@ -201,7 +241,7 @@ function upsertWaterLog(userId: string, remote: RemoteWaterLog): void {
   const existing = db
     .select()
     .from(waterLog)
-    .where(and(eq(waterLog.userId, userId), eq(waterLog.remoteId, remote.id)))
+    .where(and(eq(waterLog.userId, userId), matchesRemote(waterLog, remote)))
     .limit(1)
     .all()[0];
 
@@ -231,7 +271,7 @@ function upsertActivityLog(userId: string, remote: RemoteActivityLog): void {
   const existing = db
     .select()
     .from(activityLog)
-    .where(and(eq(activityLog.userId, userId), eq(activityLog.remoteId, remote.id)))
+    .where(and(eq(activityLog.userId, userId), matchesRemote(activityLog, remote)))
     .limit(1)
     .all()[0];
 
@@ -263,7 +303,7 @@ function upsertWeightLog(userId: string, remote: RemoteWeightLog): void {
   const existing = db
     .select()
     .from(weightLog)
-    .where(and(eq(weightLog.userId, userId), eq(weightLog.remoteId, remote.id)))
+    .where(and(eq(weightLog.userId, userId), matchesRemote(weightLog, remote)))
     .limit(1)
     .all()[0];
 

@@ -125,7 +125,7 @@ function swapLocalData(
     const fallback = userRepository.writeCalculatedGoal(restored);
 
     // The diary can't render without a goal, but a guess must never overwrite the account's real one.
-    if (goalsFetchFailed) userRepository.markGoalSynced(fallback.id);
+    if (goalsFetchFailed) userRepository.markGoalSynced(fallback);
   }
 
   useProfileStore.getState().refresh();

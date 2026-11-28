@@ -164,7 +164,11 @@ export function pendingChangeCount(): number {
 }
 
 /**
- * Marks a row as having reached the server. Used by the future push pass.
+ * Marks a row as having reached the server.
+ *
+ * `updatedAt` is the version that was actually sent, not "now": an edit made
+ * while the request was in flight keeps `updatedAt > syncedAt` and is pushed
+ * again.
  *
  * `remoteId` is a UUID string for every table except `user` (an integer,
  * the server's one exception to UUID primary keys) — typed as `string |
@@ -173,11 +177,12 @@ export function pendingChangeCount(): number {
 export function markSynced(
   table: (typeof SYNCED_TABLES)[number],
   id: string,
+  updatedAt: Date,
   remoteId?: string | number,
 ): void {
   db.update(table)
     .set({
-      syncedAt: new Date(),
+      syncedAt: updatedAt,
       ...(remoteId === undefined ? {} : { remoteId: remoteId as never }),
     })
     .where(eq(table.id, id))

@@ -135,7 +135,7 @@ describe('pendingChangeCount / markSynced', () => {
     // The new user row and its opening daily goal are both unsynced.
     expect(pendingChangeCount()).toBe(2);
 
-    markSynced(user, created.user.id, 501);
+    markSynced(user, created.user.id, created.user.updatedAt, 501);
 
     expect(pendingChangeCount()).toBe(1);
   });

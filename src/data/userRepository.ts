@@ -298,8 +298,8 @@ function calculatedTargetsFor(
 }
 
 /** Stops push from sending a goal row the server must not receive. */
-export function markGoalSynced(goalId: string): void {
-  markSynced(dailyGoal, goalId);
+export function markGoalSynced(goal: DailyGoal): void {
+  markSynced(dailyGoal, goal.id, goal.updatedAt);
 }
 
 /**
