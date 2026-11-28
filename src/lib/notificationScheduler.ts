@@ -6,7 +6,9 @@ import * as Notifications from 'expo-notifications';
  * Local, adaptive scheduling for meal and streak reminders. Those triggers are
  * one-shot dates, never repeating — the target time itself shifts day to day
  * as the user's logging history changes, so a repeating trigger would go
- * stale. User-made custom reminders sit at a fixed time and repeat daily.
+ * stale. A meal reminder queues one such date per day for the next week
+ * (`meal-lunch-d0` … `-d6`) so it keeps firing if the app isn't reopened.
+ * User-made custom reminders sit at a fixed time and repeat daily.
  */
 
 export interface TimeOfDay {
@@ -14,10 +16,11 @@ export interface TimeOfDay {
   minute: number;
 }
 
+type MealNotificationId = 'meal-breakfast' | 'meal-lunch' | 'meal-dinner';
+
 export type NotificationId =
-  | 'meal-breakfast'
-  | 'meal-lunch'
-  | 'meal-dinner'
+  | MealNotificationId
+  | `${MealNotificationId}-d${number}`
   | 'streak-risk'
   | `custom-${string}`;
 

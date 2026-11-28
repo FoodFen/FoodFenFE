@@ -21,7 +21,7 @@ import { ScrollScreen } from '@/components/ui/Screen';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
 import { useLoggingHeatmap, useStreak } from '@/features/gamification/queries';
-import { streakDayStatuses } from '@/features/gamification/selectors';
+import { activeStreakDays, streakDayStatuses } from '@/features/gamification/selectors';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { formatWeekdayInitial } from '@/lib/date';
@@ -67,7 +67,7 @@ export default function StreakScreen() {
     );
   }
 
-  const currentStreak = streak?.currentStreak ?? 0;
+  const currentStreak = activeStreakDays(streak);
   const days = streakDayStatuses(streak ?? undefined);
 
   const share = () => {

@@ -93,7 +93,7 @@ describe('reconcileNotifications — meal reminders', () => {
     // TOMORROW, not left uncancelled/unscheduled, so the reminder survives
     // even if the app is never reopened again before then.
     expect(mockedScheduler.scheduleAt).toHaveBeenCalledWith(
-      'meal-lunch',
+      'meal-lunch-d1',
       scheduler.tomorrowAt(mockedScheduler.DEFAULT_MEAL_TIMES.lunch, NOW),
       expect.objectContaining({ title: expect.any(String), body: expect.any(String) }),
     );
@@ -118,7 +118,7 @@ describe('reconcileNotifications — meal reminders', () => {
     // The deleted entry must not count as "already logged" — today's
     // occurrence (not tomorrow's) should still be scheduled.
     expect(mockedScheduler.scheduleAt).toHaveBeenCalledWith(
-      'meal-lunch',
+      'meal-lunch-d0',
       scheduler.nextOccurrence(mockedScheduler.DEFAULT_MEAL_TIMES.lunch, NOW),
       expect.objectContaining({ title: expect.any(String), body: expect.any(String) }),
     );
@@ -130,13 +130,13 @@ describe('reconcileNotifications — meal reminders', () => {
     await reconcileNotifications(user.id, NOW);
 
     expect(mockedScheduler.scheduleAt).toHaveBeenCalledWith(
-      'meal-breakfast',
+      'meal-breakfast-d1',
       expect.any(Date),
       expect.objectContaining({ title: expect.any(String), body: expect.any(String) }),
     );
 
     const [, scheduledAt] = mockedScheduler.scheduleAt.mock.calls.find(
-      (call) => call[0] === 'meal-breakfast',
+      (call) => call[0] === 'meal-breakfast-d1',
     ) as Parameters<typeof mockedScheduler.scheduleAt>;
 
     expect(scheduledAt.getHours()).toBe(mockedScheduler.DEFAULT_MEAL_TIMES.breakfast.hour);

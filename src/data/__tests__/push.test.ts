@@ -40,6 +40,7 @@ jest.mock('@/api/endpoints/sync', () => ({
     pushUser: jest.fn(),
     pushGoal: jest.fn(),
     pushStreak: jest.fn(),
+    getStreak: jest.fn(),
     createFoodEntry: jest.fn(),
     updateFoodEntry: jest.fn(),
     deleteFoodEntry: jest.fn(),
@@ -72,6 +73,7 @@ function createUser() {
 beforeEach(() => {
   mockDb = createTestDatabase();
   jest.clearAllMocks();
+  mockedSyncApi.getStreak.mockResolvedValue(null);
 });
 
 describe('pushUserProfile', () => {

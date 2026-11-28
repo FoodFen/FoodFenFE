@@ -23,6 +23,24 @@ export function questProgressLabel(quest: Quest): string {
   return quest.unit === 'percent' ? `${progress}%` : `${progress}/${quest.target}`;
 }
 
+/**
+ * The streak length to display. `recordActiveDay` only resets `currentStreak`
+ * on the next log, so a run that lapsed days ago still has its old count
+ * stored — it only counts while the last active day is today or yesterday.
+ */
+export function activeStreakDays(
+  streakState: Pick<Streak, 'currentStreak' | 'lastActiveDate'> | null | undefined,
+  today: DateKey = todayKey(),
+): number {
+  const lastActiveDate = streakState?.lastActiveDate;
+
+  if (!streakState || !lastActiveDate) return 0;
+
+  return lastActiveDate === today || lastActiveDate === shiftDateKey(today, -1)
+    ? streakState.currentStreak
+    : 0;
+}
+
 export interface StreakDay {
   date: DateKey;
   active: boolean;

@@ -21,7 +21,11 @@ import {
   useRefreshQuests,
   useStreak,
 } from '@/features/gamification/queries';
-import { questProgressFraction, questProgressLabel } from '@/features/gamification/selectors';
+import {
+  activeStreakDays,
+  questProgressFraction,
+  questProgressLabel,
+} from '@/features/gamification/selectors';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useTranslation } from '@/hooks/useTranslation';
 import { calendarWeek, daysUntil, todayKey } from '@/lib/date';
@@ -137,7 +141,7 @@ export default function AchievementsScreen() {
         {t('achievements', 'title')}
       </Text>
 
-      <StreakSummaryCard currentStreak={streak?.currentStreak ?? 0} />
+      <StreakSummaryCard currentStreak={activeStreakDays(streak)} />
       <QuizCard />
 
       {questSection}

@@ -14,7 +14,7 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { AppState, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -182,11 +182,18 @@ function AppShell({ migrated }: { migrated: boolean }) {
   // }, [migrated, devSeedEnabled, profileId, queryClient]);
 
   // Re-evaluate meal/streak notifications once the profile is available —
-  // covers first boot, and a profile appearing right after onboarding.
+  // covers first boot, and a profile appearing right after onboarding. Also on
+  // every return to the foreground, to top up the rolling week of meal reminders.
   useEffect(() => {
     if (!migrated || !profileId) return;
 
     void reconcileNotifications(profileId);
+
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state === 'active') void reconcileNotifications(profileId);
+    });
+
+    return () => subscription.remove();
   }, [migrated, profileId]);
 
   // The navigator paints the screen background behind our own views during

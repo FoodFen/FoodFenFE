@@ -293,6 +293,12 @@ Request: `currentStreak`, `longestStreak`, `lastActiveDate` (`yyyy-MM-dd` or
 Response `200`: `{ id, userId, currentStreak, longestStreak, lastActiveDate }`
 (with server `id`, assigned on the first-ever push).
 
+`GET /streak` — `200` with the same row, or `200` with a `null` body when the
+account has none. A client that has never reconciled with the server (fresh
+install, new device) reads it before its first `POST`, merges, and pushes the
+merged values, so it doesn't overwrite the account's real streak. On upsert the
+server keeps `longestStreak = max(stored, sent)`.
+
 ### Food entries (+ ingredients)
 
 All built on the backend (`POST`, `GET /food-entries/{id}`, `PATCH`,

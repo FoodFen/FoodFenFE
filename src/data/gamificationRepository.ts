@@ -88,6 +88,37 @@ export function recordActiveDay(userId: string, date: DateKey = todayKey()): Str
   return updated;
 }
 
+type StreakCounters = Pick<Streak, 'currentStreak' | 'longestStreak' | 'lastActiveDate'>;
+
+/**
+ * Reconciles a device's streak with the account's before the first push, so a
+ * fresh install can't overwrite the real run. The later `lastActiveDate` wins;
+ * a local day exactly one after the remote's means this device continued it.
+ */
+export function mergeStreaks(local: StreakCounters, remote: StreakCounters): StreakCounters {
+  const { lastActiveDate: localDate } = local;
+  const { lastActiveDate: remoteDate } = remote;
+  let currentStreak: number;
+  let lastActiveDate = localDate;
+
+  if (remoteDate !== null && (localDate === null || remoteDate > localDate)) {
+    currentStreak = remote.currentStreak;
+    lastActiveDate = remoteDate;
+  } else if (remoteDate === localDate) {
+    currentStreak = Math.max(local.currentStreak, remote.currentStreak);
+  } else if (remoteDate !== null && shiftDateKey(remoteDate, 1) === localDate) {
+    currentStreak = remote.currentStreak + 1;
+  } else {
+    currentStreak = local.currentStreak;
+  }
+
+  return {
+    currentStreak,
+    longestStreak: Math.max(local.longestStreak, remote.longestStreak, currentStreak),
+    lastActiveDate,
+  };
+}
+
 export function getQuests(userId: string, date: DateKey = todayKey()): Quest[] {
   return db
     .select()

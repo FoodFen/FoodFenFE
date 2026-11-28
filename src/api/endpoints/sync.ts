@@ -198,6 +198,10 @@ export const syncApi = {
   pushGoal: (input: PushGoalInput): Promise<RemoteDailyGoal> =>
     api.post('daily-goals', input, { schema: dailyGoalSchema }),
 
+  /** `null` when the account has no streak row yet; a 404 means the backend predates this endpoint. */
+  getStreak: (signal?: AbortSignal): Promise<RemoteStreak | null> =>
+    api.get('streak', { schema: streakSchema.nullable(), signal }),
+
   /** Upserts the account's one streak row — always a POST, never a PATCH. */
   pushStreak: (input: PushStreakInput): Promise<RemoteStreak> =>
     api.post('streak', input, { schema: streakSchema }),

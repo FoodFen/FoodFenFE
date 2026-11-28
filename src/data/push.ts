@@ -2,6 +2,7 @@ import { and, eq, isNull, or, sql } from 'drizzle-orm';
 
 import { syncApi } from '@/api/endpoints/sync';
 import type { PushActivityLogInput, PushFoodEntryInput } from '@/api/endpoints/sync';
+import { isApiError } from '@/api/errors';
 import { db } from '@/db/client';
 import {
   activityLog,
@@ -16,7 +17,8 @@ import {
 import { env } from '@/lib/env';
 import type { UserProfile } from '@/types/models';
 
-import { markSynced } from './sync';
+import { getStreak, mergeStreaks } from './gamificationRepository';
+import { markSynced, touch } from './sync';
 import { getLocalUser } from './userRepository';
 
 /**
@@ -93,7 +95,7 @@ export async function pushDailyGoals(userId: string): Promise<void> {
 
 /** There is at most one dirty streak row per user — a singleton, not a list. */
 export async function pushStreak(userId: string): Promise<void> {
-  const [row] = db
+  const [queued] = db
     .select()
     .from(streak)
     .where(
@@ -104,9 +106,25 @@ export async function pushStreak(userId: string): Promise<void> {
     )
     .all();
 
-  if (!row) return;
+  if (!queued) return;
+
+  let row = queued;
 
   try {
+    if (row.remoteId === null) {
+      const account = await syncApi.getStreak().catch((error: unknown) => {
+        if (isApiError(error) && error.status === 404) return null;
+        throw error;
+      });
+
+      if (account) {
+        // Re-read: a log made while the request was in flight must be merged, not clobbered.
+        const current = getStreak(userId) ?? row;
+        row = { ...current, ...mergeStreaks(current, account), ...touch() };
+        db.update(streak).set(row).where(eq(streak.id, row.id)).run();
+      }
+    }
+
     const remote = await syncApi.pushStreak({
       currentStreak: row.currentStreak,
       longestStreak: row.longestStreak,

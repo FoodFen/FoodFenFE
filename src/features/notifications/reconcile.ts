@@ -1,4 +1,6 @@
 // src/features/notifications/reconcile.ts
+import { addDays } from 'date-fns';
+
 import * as entryRepository from '@/data/entryRepository';
 import * as gamification from '@/data/gamificationRepository';
 import * as notificationRepository from '@/data/notificationRepository';
@@ -14,7 +16,6 @@ import {
   cancelOrphanedCustom,
   DEFAULT_LAST_LOG_TIME,
   DEFAULT_MEAL_TIMES,
-  nextOccurrence,
   scheduleAt,
   scheduleDaily,
   streakNudgeTime,
@@ -24,6 +25,8 @@ import {
 import type { FoodEntry } from '@/types/models';
 
 type Meal = 'breakfast' | 'lunch' | 'dinner';
+
+const MEAL_REMINDER_DAYS = 7;
 
 export const MEAL_COPY_KEYS: Record<
   Meal,
@@ -70,8 +73,9 @@ let reconcileQueue: Promise<void> = Promise.resolve();
 /**
  * Re-evaluates both notification categories against today's actual state
  * and schedules/cancels accordingly. Cheap — a handful of SQLite reads plus
- * at most 4 schedule/cancel calls — so it's safe to call on every trigger
- * point: app boot, after a logging mutation, after a settings toggle flips.
+ * a few dozen schedule/cancel calls — so it's safe to call on every trigger
+ * point: app boot, returning to the foreground, after a logging mutation,
+ * after a settings toggle flips.
  *
  * `now` defaults to the real clock; callers never need to pass it — it
  * exists so tests can pin every date/time decision below instead of
@@ -118,9 +122,16 @@ async function reconcileMeal(
   now: Date,
 ): Promise<void> {
   const { id, meal } = reminder;
+  const slots = Array.from({ length: MEAL_REMINDER_DAYS }, (_, day) => ({
+    slotId: `${id}-d${day}` as const,
+    day,
+  }));
+
+  // The bare `id` is the pre-7-day single trigger; clearing it stops an upgraded install double-firing.
+  await cancel(id);
 
   if (!reminder.enabled) {
-    await cancel(id);
+    await Promise.all(slots.map(({ slotId }) => cancel(slotId)));
     return;
   }
 
@@ -128,18 +139,21 @@ async function reconcileMeal(
 
   const time = resolveMealTime(userId, meal, reminder.time);
   const { titleKey, bodyKey } = MEAL_COPY_KEYS[meal];
-
-  // Today's occurrence is already satisfied — pre-schedule tomorrow's
-  // instead of cancelling outright, so the reminder survives even if the
-  // app is never reopened again before then (reconcile only runs at boot,
-  // after a log, or after a settings change — nothing reruns it purely
-  // because midnight passed).
-  const at = alreadyLogged ? tomorrowAt(time, now) : nextOccurrence(time, now);
-
-  await scheduleAt(id, at, {
+  const content = {
     title: reminder.title ?? translate(locale, 'notifications', titleKey),
     body: reminder.body ?? translate(locale, 'notifications', bodyKey),
-  });
+  };
+
+  // Nothing reruns reconcile purely because midnight passed, so the whole
+  // week is queued up front; today's slot is dropped once logged or passed.
+  await Promise.all(
+    slots.map(({ slotId, day }) => {
+      const at = atTime(addDays(now, day), time);
+      const skipToday = day === 0 && (alreadyLogged || at.getTime() <= now.getTime());
+
+      return skipToday ? cancel(slotId) : scheduleAt(slotId, at, content);
+    }),
+  );
 }
 
 async function reconcileCustom(reminder: CustomReminder): Promise<void> {
