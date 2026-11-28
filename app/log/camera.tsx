@@ -1,12 +1,17 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { onlineManager } from '@tanstack/react-query';
-import { CameraView, useCameraPermissions } from 'expo-camera';
+import {
+  type BarcodeScanningResult,
+  CameraView,
+  useCameraPermissions,
+} from 'expo-camera';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { userErrorMessage } from '@/api/errors';
+import { BarcodeFrame, useBarcodeFrame } from '@/components/logging/BarcodeFrame';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { Text } from '@/components/ui/Text';
@@ -26,11 +31,15 @@ import { colorsFor } from '@/theme/colors';
  * and hands the picture to the AI image mode in `app/log/manual.tsx`.
  *
  * `onBarcodeScanned` fires many times a second, so a code is only acted on
- * when it differs from the last one seen. Scanning works regardless of AI
- * quota; only the shutter is blocked once the image quota is spent.
+ * when it differs from the last one seen; that memory clears once the code has
+ * been out of frame for a moment, so it can be scanned again. A code whose
+ * lookup missed or failed is retried at most once per `RESCAN_COOLDOWN_MS`.
+ * Scanning works regardless of AI quota; only the shutter is blocked once the
+ * image quota is spent.
  */
 
 const BARCODE_TYPES = ['ean13', 'ean8', 'upc_a', 'upc_e'] as const;
+const RESCAN_COOLDOWN_MS = 3000;
 
 export default function CameraScreen() {
   const { t, locale } = useTranslation();
@@ -41,11 +50,44 @@ export default function CameraScreen() {
 
   const camera = useRef<CameraView>(null);
   const lastCode = useRef<string | null>(null);
+  const shownCode = useRef<string | null>(null);
+  const lookedUpAt = useRef(0);
   const [code, setCode] = useState<string | null>(null);
   const [taking, setTaking] = useState(false);
 
   const lookup = useBarcodeLookup(code);
   const food = lookup.data;
+  const lookupRef = useRef(lookup);
+  const frame = useBarcodeFrame(() => {
+    lastCode.current = null;
+  });
+
+  useEffect(() => {
+    lookupRef.current = lookup;
+  });
+
+  const onScanned = (result: BarcodeScanningResult) => {
+    frame.update(result);
+
+    const { data } = result;
+    if (data === lastCode.current) return;
+    lastCode.current = data;
+
+    if (data !== shownCode.current) {
+      shownCode.current = data;
+      lookedUpAt.current = Date.now();
+      setCode(data);
+      return;
+    }
+
+    const current = lookupRef.current;
+    const failed = current.isError || (current.isSuccess && current.data === null);
+    if (!failed || current.isFetching) return;
+    if (Date.now() - lookedUpAt.current < RESCAN_COOLDOWN_MS) return;
+
+    lookedUpAt.current = Date.now();
+    void current.refetch();
+  };
 
   useEffect(() => {
     if (food) haptics.selection();
@@ -114,12 +156,9 @@ export default function CameraScreen() {
         style={{ flex: 1 }}
         facing="back"
         barcodeScannerSettings={{ barcodeTypes: [...BARCODE_TYPES] }}
-        onBarcodeScanned={({ data }) => {
-          if (data === lastCode.current) return;
-          lastCode.current = data;
-          setCode(data);
-        }}
+        onBarcodeScanned={onScanned}
       />
+      <BarcodeFrame style={frame.style} color={colors.brand} />
 
       <Pressable
         onPress={() => router.back()}
